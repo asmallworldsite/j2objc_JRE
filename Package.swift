@@ -1,9 +1,6 @@
 // swift-tools-version:5.3
 // The swift-tools-version declares the minimum version of Swift required to build this package.
 
-// NOTE: this framework is only compiled for ios arm64, ios simulator arm64 and ios simulator x86_64
-// NOTE: which is sufficient if you're developing an iOS app on an Intel or Apple Silicon Mac
-
 import PackageDescription
 
 let package = Package(
