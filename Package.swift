@@ -4,7 +4,7 @@
 import PackageDescription
 
 let package = Package(
-    name: "JRE",
+    name: "j2objc_JRE",
 	products: [
 	        .library(
 	            name: "JREPackage",
