@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaUtilDictionary
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -25,6 +22,8 @@
 #if !defined (JavaUtilDictionary_) && (INCLUDE_ALL_JavaUtilDictionary || defined(INCLUDE_JavaUtilDictionary))
 #define JavaUtilDictionary_
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @protocol JavaUtilEnumeration;
 
 /*!
@@ -163,6 +162,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilDictionary)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaUtilDictionary")

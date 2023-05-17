@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaSqlPreparedStatement
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -32,6 +29,13 @@
 @class IOSByteArray;
 @class JavaIoInputStream;
 @class JavaIoReader;
+@class JavaLangBoolean;
+@class JavaLangByte;
+@class JavaLangDouble;
+@class JavaLangFloat;
+@class JavaLangInteger;
+@class JavaLangLong;
+@class JavaLangShort;
 @class JavaMathBigDecimal;
 @class JavaNetURL;
 @class JavaSqlDate;
@@ -352,7 +356,7 @@
  */
 - (void)setUnicodeStreamWithInt:(jint)parameterIndex
           withJavaIoInputStream:(JavaIoInputStream *)x
-                        withInt:(jint)length __attribute__((deprecated));
+                        withInt:(jint)length;
 
 /*!
  @brief Sets the designated parameter to the given input stream, which will have
@@ -901,11 +905,10 @@
        withJavaSqlSQLXML:(id<JavaSqlSQLXML>)xmlObject;
 
 /*!
- @brief <p>Sets the value of the designated parameter with the given object.
- The second
+ @brief <p>Sets the value of the designated parameter with the given object.The second
   argument must be an object type; for integral values, the 
  <code>java.lang</code> equivalent objects should be used.
-  If the second argument is an <code>InputStream</code> then the stream must contain
+ If the second argument is an <code>InputStream</code> then the stream must contain
   the number of bytes specified by scaleOrLength.  If the second argument is a 
  <code>Reader</code> then the reader must contain the number of characters specified
   by scaleOrLength. If these conditions are not true the driver will generate a 
@@ -1203,6 +1206,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaSqlPreparedStatement)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaSqlPreparedStatement")

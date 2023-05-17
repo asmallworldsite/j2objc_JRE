@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaSecurityCertX509Certificate
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -35,6 +32,7 @@
 
 @class IOSBooleanArray;
 @class IOSByteArray;
+@class JavaLangInteger;
 @class JavaMathBigInteger;
 @class JavaSecurityProvider;
 @class JavaUtilDate;
@@ -46,9 +44,8 @@
 
 /*!
  @brief <p>
-  Abstract class for X.509 certificates.
- This provides a standard
-  way to access all the attributes of an X.509 certificate. 
+  Abstract class for X.509 certificates.This provides a standard
+  way to access all the attributes of an X.509 certificate.
  <p>
   In June of 1996, the basic X.509 v3 format was completed by
   ISO/IEC and ANSI X9, which is described below in ASN.1: 
@@ -663,6 +660,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaSecurityCertX509Certificate)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaSecurityCertX509Certificate")

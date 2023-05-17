@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaSqlArray
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -25,6 +22,8 @@
 #if !defined (JavaSqlArray_) && (INCLUDE_ALL_JavaSqlArray || defined(INCLUDE_JavaSqlArray))
 #define JavaSqlArray_
 
+@class JavaLangInteger;
+@class JavaLangLong;
 @protocol JavaSqlResultSet;
 @protocol JavaUtilMap;
 
@@ -363,6 +362,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaSqlArray)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaSqlArray")

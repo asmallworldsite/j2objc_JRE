@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaNioFileAttributeUserPrincipalLookupService
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -68,7 +65,8 @@
  if an I/O error occurs
  @throw SecurityException
  In the case of the default provider, and a security manager is
-           installed, it checks <code>RuntimePermission</code><tt>("lookupUserInformation")</tt>
+           installed, it checks          
+ <code>RuntimePermission</code><code>("lookupUserInformation")</code>
  */
 - (id<JavaNioFileAttributeGroupPrincipal>)lookupPrincipalByGroupNameWithNSString:(NSString *)group;
 
@@ -82,7 +80,8 @@
  if an I/O error occurs
  @throw SecurityException
  In the case of the default provider, and a security manager is
-           installed, it checks <code>RuntimePermission</code><tt>("lookupUserInformation")</tt>
+           installed, it checks          
+ <code>RuntimePermission</code><code>("lookupUserInformation")</code>
  */
 - (id<JavaNioFileAttributeUserPrincipal>)lookupPrincipalByNameWithNSString:(NSString *)name;
 
@@ -107,6 +106,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaNioFileAttributeUserPrincipalLookupService)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaNioFileAttributeUserPrincipalLookupService")

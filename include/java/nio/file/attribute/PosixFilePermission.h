@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaNioFileAttributePosixFilePermission
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -31,7 +28,7 @@
 
 @class IOSObjectArray;
 
-typedef NS_ENUM(NSUInteger, JavaNioFileAttributePosixFilePermission_Enum) {
+typedef NS_ENUM(jint, JavaNioFileAttributePosixFilePermission_Enum) {
   JavaNioFileAttributePosixFilePermission_Enum_OWNER_READ = 0,
   JavaNioFileAttributePosixFilePermission_Enum_OWNER_WRITE = 1,
   JavaNioFileAttributePosixFilePermission_Enum_OWNER_EXECUTE = 2,
@@ -42,6 +39,12 @@ typedef NS_ENUM(NSUInteger, JavaNioFileAttributePosixFilePermission_Enum) {
   JavaNioFileAttributePosixFilePermission_Enum_OTHERS_WRITE = 7,
   JavaNioFileAttributePosixFilePermission_Enum_OTHERS_EXECUTE = 8,
 };
+#if J2OBJC_IMPORTED_BY_JAVA_IMPLEMENTATION
+#define JavaNioFileAttributePosixFilePermission_ORDINAL jint
+#else
+#define JavaNioFileAttributePosixFilePermission_ORDINAL JavaNioFileAttributePosixFilePermission_Enum
+#endif
+
 
 /*!
  @brief Defines the bits for use with the <code>permissions</code>
@@ -52,15 +55,6 @@ typedef NS_ENUM(NSUInteger, JavaNioFileAttributePosixFilePermission_Enum) {
  */
 @interface JavaNioFileAttributePosixFilePermission : JavaLangEnum
 
-@property (readonly, class, nonnull) JavaNioFileAttributePosixFilePermission *OWNER_READ NS_SWIFT_NAME(OWNER_READ);
-@property (readonly, class, nonnull) JavaNioFileAttributePosixFilePermission *OWNER_WRITE NS_SWIFT_NAME(OWNER_WRITE);
-@property (readonly, class, nonnull) JavaNioFileAttributePosixFilePermission *OWNER_EXECUTE NS_SWIFT_NAME(OWNER_EXECUTE);
-@property (readonly, class, nonnull) JavaNioFileAttributePosixFilePermission *GROUP_READ NS_SWIFT_NAME(GROUP_READ);
-@property (readonly, class, nonnull) JavaNioFileAttributePosixFilePermission *GROUP_WRITE NS_SWIFT_NAME(GROUP_WRITE);
-@property (readonly, class, nonnull) JavaNioFileAttributePosixFilePermission *GROUP_EXECUTE NS_SWIFT_NAME(GROUP_EXECUTE);
-@property (readonly, class, nonnull) JavaNioFileAttributePosixFilePermission *OTHERS_READ NS_SWIFT_NAME(OTHERS_READ);
-@property (readonly, class, nonnull) JavaNioFileAttributePosixFilePermission *OTHERS_WRITE NS_SWIFT_NAME(OTHERS_WRITE);
-@property (readonly, class, nonnull) JavaNioFileAttributePosixFilePermission *OTHERS_EXECUTE NS_SWIFT_NAME(OTHERS_EXECUTE);
 #pragma mark Public
 
 + (JavaNioFileAttributePosixFilePermission *)valueOfWithNSString:(NSString *)name;
@@ -70,6 +64,8 @@ typedef NS_ENUM(NSUInteger, JavaNioFileAttributePosixFilePermission_Enum) {
 #pragma mark Package-Private
 
 - (JavaNioFileAttributePosixFilePermission_Enum)toNSEnum;
+
+- (JavaNioFileAttributePosixFilePermission_ORDINAL)ordinal;
 
 @end
 
@@ -136,7 +132,7 @@ FOUNDATION_EXPORT IOSObjectArray *JavaNioFileAttributePosixFilePermission_values
 
 FOUNDATION_EXPORT JavaNioFileAttributePosixFilePermission *JavaNioFileAttributePosixFilePermission_valueOfWithNSString_(NSString *name);
 
-FOUNDATION_EXPORT JavaNioFileAttributePosixFilePermission *JavaNioFileAttributePosixFilePermission_fromOrdinal(NSUInteger ordinal);
+FOUNDATION_EXPORT JavaNioFileAttributePosixFilePermission *JavaNioFileAttributePosixFilePermission_fromOrdinal(JavaNioFileAttributePosixFilePermission_ORDINAL ordinal);
 
 J2OBJC_TYPE_LITERAL_HEADER(JavaNioFileAttributePosixFilePermission)
 
@@ -146,6 +142,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaNioFileAttributePosixFilePermission)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaNioFileAttributePosixFilePermission")

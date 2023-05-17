@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaSecuritySpecMGF1ParameterSpec
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -60,11 +57,6 @@
  @since 1.5
  */
 @interface JavaSecuritySpecMGF1ParameterSpec : NSObject < JavaSecuritySpecAlgorithmParameterSpec >
-@property (readonly, class, strong) JavaSecuritySpecMGF1ParameterSpec *SHA1 NS_SWIFT_NAME(SHA1);
-@property (readonly, class, strong) JavaSecuritySpecMGF1ParameterSpec *SHA224 NS_SWIFT_NAME(SHA224);
-@property (readonly, class, strong) JavaSecuritySpecMGF1ParameterSpec *SHA256 NS_SWIFT_NAME(SHA256);
-@property (readonly, class, strong) JavaSecuritySpecMGF1ParameterSpec *SHA384 NS_SWIFT_NAME(SHA384);
-@property (readonly, class, strong) JavaSecuritySpecMGF1ParameterSpec *SHA512 NS_SWIFT_NAME(SHA512);
 
 #pragma mark Public
 
@@ -145,6 +137,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaSecuritySpecMGF1ParameterSpec)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaSecuritySpecMGF1ParameterSpec")

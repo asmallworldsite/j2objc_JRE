@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaxCryptoSpecGCMParameterSpec
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -30,6 +27,7 @@
 #include "java/security/spec/AlgorithmParameterSpec.h"
 
 @class IOSByteArray;
+@class JavaLangInteger;
 
 /*!
  @brief Specifies the set of parameters required by a <code>javax.crypto.Cipher</code>
@@ -135,6 +133,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaxCryptoSpecGCMParameterSpec)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaxCryptoSpecGCMParameterSpec")

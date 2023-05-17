@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaLangReflectAnnotatedElement
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -27,6 +24,7 @@
 
 @class IOSClass;
 @class IOSObjectArray;
+@class JavaLangBoolean;
 @protocol JavaLangAnnotationAnnotation;
 
 /*!
@@ -335,6 +333,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaLangReflectAnnotatedElement)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaLangReflectAnnotatedElement")

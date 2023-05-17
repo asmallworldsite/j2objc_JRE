@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaxNetSslHostnameVerifier
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -25,21 +22,21 @@
 #if !defined (JavaxNetSslHostnameVerifier_) && (INCLUDE_ALL_JavaxNetSslHostnameVerifier || defined(INCLUDE_JavaxNetSslHostnameVerifier))
 #define JavaxNetSslHostnameVerifier_
 
+@class JavaLangBoolean;
 @protocol JavaxNetSslSSLSession;
 
 /*!
  @brief This class is the base interface for hostname verification.
  <P>
-  During handshaking, if the URL's hostname and
-  the server's identification hostname mismatch, the
+  During handshaking, the
   verification mechanism can call back to implementers of this
   interface to determine if this connection should be allowed. 
- <P>
+ <p>
+  For more information of the use of this interface on Android, see 
+ <code>HttpsURLConnection.setDefaultHostnameVerifier(HostnameVerifier)</code>.
+  <P>
   The policies can be certificate-based
-  or may depend on other authentication schemes. 
- <P>
-  These callbacks are used when the default rules for URL hostname
-  verification fail.
+  or may depend on other authentication schemes.
  @author Brad R. Wetmore
  @since 1.4
  */
@@ -67,6 +64,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaxNetSslHostnameVerifier)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaxNetSslHostnameVerifier")

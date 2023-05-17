@@ -31,9 +31,6 @@
 #define INCLUDE_JavaUtilHashMap_HashIterator 1
 #endif
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -58,6 +55,9 @@
 @class IOSClass;
 @class IOSObjectArray;
 @class JavaIoObjectOutputStream;
+@class JavaLangBoolean;
+@class JavaLangFloat;
+@class JavaLangInteger;
 @class JavaUtilHashMap_Node;
 @class JavaUtilHashMap_TreeNode;
 @protocol JavaUtilCollection;
@@ -193,12 +193,6 @@
    */
   jfloat loadFactor_;
 }
-@property (readonly, class) jint DEFAULT_INITIAL_CAPACITY NS_SWIFT_NAME(DEFAULT_INITIAL_CAPACITY);
-@property (readonly, class) jint MAXIMUM_CAPACITY NS_SWIFT_NAME(MAXIMUM_CAPACITY);
-@property (readonly, class) jfloat DEFAULT_LOAD_FACTOR NS_SWIFT_NAME(DEFAULT_LOAD_FACTOR);
-@property (readonly, class) jint TREEIFY_THRESHOLD NS_SWIFT_NAME(TREEIFY_THRESHOLD);
-@property (readonly, class) jint UNTREEIFY_THRESHOLD NS_SWIFT_NAME(UNTREEIFY_THRESHOLD);
-@property (readonly, class) jint MIN_TREEIFY_CAPACITY NS_SWIFT_NAME(MIN_TREEIFY_CAPACITY);
 
 #pragma mark Public
 
@@ -654,6 +648,9 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilHashMap)
 #define INCLUDE_JavaUtilMap_Entry 1
 #include "java/util/Map.h"
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
+
 /*!
  @brief Basic hash bin node, used for most entries.
  (See below for
@@ -717,6 +714,8 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilHashMap_Node)
 #define INCLUDE_JavaUtilAbstractSet 1
 #include "java/util/AbstractSet.h"
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @class JavaUtilHashMap;
 @protocol JavaUtilFunctionConsumer;
 @protocol JavaUtilIterator;
@@ -769,6 +768,8 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilHashMap_KeySet)
 #define INCLUDE_JavaUtilAbstractCollection 1
 #include "java/util/AbstractCollection.h"
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @class JavaUtilHashMap;
 @protocol JavaUtilFunctionConsumer;
 @protocol JavaUtilIterator;
@@ -819,6 +820,8 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilHashMap_Values)
 #define INCLUDE_JavaUtilAbstractSet 1
 #include "java/util/AbstractSet.h"
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @class JavaUtilHashMap;
 @protocol JavaUtilFunctionConsumer;
 @protocol JavaUtilIterator;
@@ -867,6 +870,8 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilHashMap_EntrySet)
 #if !defined (JavaUtilHashMap_HashIterator_) && (INCLUDE_ALL_JavaUtilHashMap || defined(INCLUDE_JavaUtilHashMap_HashIterator))
 #define JavaUtilHashMap_HashIterator_
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @class JavaUtilHashMap;
 @class JavaUtilHashMap_Node;
 
@@ -1013,6 +1018,8 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilHashMap_EntryIterator)
 #if !defined (JavaUtilHashMap_HashMapSpliterator_) && (INCLUDE_ALL_JavaUtilHashMap || defined(INCLUDE_JavaUtilHashMap_HashMapSpliterator))
 #define JavaUtilHashMap_HashMapSpliterator_
 
+@class JavaLangInteger;
+@class JavaLangLong;
 @class JavaUtilHashMap;
 @class JavaUtilHashMap_Node;
 
@@ -1068,6 +1075,9 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilHashMap_HashMapSpliterator)
 #define INCLUDE_JavaUtilSpliterator 1
 #include "java/util/Spliterator.h"
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
+@class JavaLangLong;
 @class JavaUtilHashMap;
 @protocol JavaUtilComparator;
 @protocol JavaUtilFunctionConsumer;
@@ -1113,6 +1123,9 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilHashMap_KeySpliterator)
 #define INCLUDE_JavaUtilSpliterator 1
 #include "java/util/Spliterator.h"
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
+@class JavaLangLong;
 @class JavaUtilHashMap;
 @protocol JavaUtilComparator;
 @protocol JavaUtilFunctionConsumer;
@@ -1158,6 +1171,9 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilHashMap_ValueSpliterator)
 #define INCLUDE_JavaUtilSpliterator 1
 #include "java/util/Spliterator.h"
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
+@class JavaLangLong;
 @class JavaUtilHashMap;
 @protocol JavaUtilComparator;
 @protocol JavaUtilFunctionConsumer;
@@ -1205,6 +1221,8 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilHashMap_EntrySpliterator)
 
 @class IOSClass;
 @class IOSObjectArray;
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @class JavaUtilHashMap;
 @class JavaUtilHashMap_Node;
 
@@ -1364,6 +1382,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilHashMap_TreeNode)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaUtilHashMap")

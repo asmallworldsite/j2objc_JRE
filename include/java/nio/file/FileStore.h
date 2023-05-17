@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaNioFileFileStore
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -26,6 +23,8 @@
 #define JavaNioFileFileStore_
 
 @class IOSClass;
+@class JavaLangBoolean;
+@class JavaLangLong;
 @protocol JavaNioFileAttributeFileStoreAttributeView;
 
 /*!
@@ -65,7 +64,7 @@
   
 @endcode
  @param attribute the attribute to read
- @return the attribute value; <code>null</code> may be a valid valid for some
+ @return the attribute value; <code>null</code> may be valid for some
            attributes
  @throw UnsupportedOperationException
  if the attribute view is not available or it does not support
@@ -74,6 +73,21 @@
  if an I/O error occurs
  */
 - (id)getAttributeWithNSString:(NSString *)attribute;
+
+/*!
+ @brief Returns the number of bytes per block in this file store.
+ <p> File storage is typically organized into discrete sequences of bytes
+  called <i>blocks</i>. A block is the smallest storage unit of a file store.
+  Every read and write operation is performed on a multiple of blocks.
+ @return a positive value representing the block size of this file store,
+           in bytes
+ @throw IOException
+ if an I/O error occurs
+ @throw UnsupportedOperationException
+ if the operation is not supported
+ @since 10
+ */
+- (jlong)getBlockSize;
 
 /*!
  @brief Returns a <code>FileStoreAttributeView</code> of the given type.
@@ -207,6 +221,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaNioFileFileStore)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaNioFileFileStore")

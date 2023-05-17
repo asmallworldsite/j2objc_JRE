@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaIoInvalidClassException
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -37,9 +34,12 @@
        descriptor read from the stream 
  <LI> The class contains unknown datatypes 
  <LI> The class does not have an accessible no-arg constructor 
- </UL>
- @author unascribed
- @since JDK1.1
+ <LI> The ObjectStreamClass of an enum constant does not represent
+       an enum type 
+ <LI> Other conditions given in the <cite>Java Object Serialization
+       Specification</cite>
+  </UL>
+ @since 1.1
  */
 @interface JavaIoInvalidClassException : JavaIoObjectStreamException {
  @public
@@ -100,6 +100,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaIoInvalidClassException)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaIoInvalidClassException")

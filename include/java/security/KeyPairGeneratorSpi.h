@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaSecurityKeyPairGeneratorSpi
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -25,6 +22,7 @@
 #if !defined (JavaSecurityKeyPairGeneratorSpi_) && (INCLUDE_ALL_JavaSecurityKeyPairGeneratorSpi || defined(INCLUDE_JavaSecurityKeyPairGeneratorSpi))
 #define JavaSecurityKeyPairGeneratorSpi_
 
+@class JavaLangInteger;
 @class JavaSecurityKeyPair;
 @class JavaSecuritySecureRandom;
 @protocol JavaSecuritySpecAlgorithmParameterSpec;
@@ -42,6 +40,7 @@
   For example, the <i>Sun</i> provider uses a default modulus size (keysize)
   of 1024 bits.
  @author Benjamin Renaud
+ @since 1.2
  - seealso: KeyPairGenerator
  - seealso: java.security.spec.AlgorithmParameterSpec
  */
@@ -107,6 +106,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaSecurityKeyPairGeneratorSpi)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaSecurityKeyPairGeneratorSpi")

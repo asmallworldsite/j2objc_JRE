@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaSecurityInterfacesECPublicKey
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -33,6 +30,7 @@
 #define INCLUDE_JavaSecurityInterfacesECKey 1
 #include "java/security/interfaces/ECKey.h"
 
+@class JavaLangLong;
 @class JavaSecuritySpecECPoint;
 
 /*!
@@ -50,11 +48,6 @@
  @return the public point W.
  */
 - (JavaSecuritySpecECPoint *)getW;
-
-@end
-
-@interface JavaSecurityInterfacesECPublicKey : NSObject
-@property (readonly, class) jlong serialVersionUID NS_SWIFT_NAME(serialVersionUID);
 
 @end
 
@@ -76,6 +69,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaSecurityInterfacesECPublicKey)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaSecurityInterfacesECPublicKey")

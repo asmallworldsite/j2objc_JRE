@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaxNetSslSSLContext
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -26,6 +23,7 @@
 #define JavaxNetSslSSLContext_
 
 @class IOSObjectArray;
+@class JavaLangInteger;
 @class JavaSecurityProvider;
 @class JavaSecuritySecureRandom;
 @class JavaxNetSslSSLContextSpi;
@@ -43,44 +41,48 @@
   secure random bytes.
  <p> Android provides the following <code>SSLContext</code> protocols: 
  <table>
-      <thead>
-          <tr>
-              <th>Name</th>
-              <th>Supported (API Levels)</th>
-          </tr>
-      </thead>
-      <tbody>
-          <tr>
-              <td>Default</td>
-              <td>10+</td>
-          </tr>
-          <tr>
-              <td>SSL</td>
-              <td>10+</td>
-          </tr>
-          <tr>
-              <td>SSLv3</td>
-              <td>10+</td>
-          </tr>
-          <tr>
-              <td>TLS</td>
-              <td>1+</td>
-          </tr>
-          <tr>
-              <td>TLSv1</td>
-              <td>10+</td>
-          </tr>
-          <tr>
-              <td>TLSv1.1</td>
-              <td>16+</td>
-          </tr>
-          <tr>
-              <td>TLSv1.2</td>
-              <td>16+</td>
-          </tr>
-      </tbody>
+    <thead>
+      <tr>
+        <th>Algorithm</th>
+        <th>Supported API Levels</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>Default</td>
+        <td>10+</td>
+      </tr>
+      <tr>
+        <td>SSL</td>
+        <td>10+</td>
+      </tr>
+      <tr class="deprecated">
+        <td>SSLv3</td>
+        <td>10-25</td>
+      </tr>
+      <tr>
+        <td>TLS</td>
+        <td>1+</td>
+      </tr>
+      <tr>
+        <td>TLSv1</td>
+        <td>10+</td>
+      </tr>
+      <tr>
+        <td>TLSv1.1</td>
+        <td>16+</td>
+      </tr>
+      <tr>
+        <td>TLSv1.2</td>
+        <td>16+</td>
+      </tr>
+      <tr>
+        <td>TLSv1.3</td>
+        <td>29+</td>
+      </tr>
+    </tbody>
   </table>
-  This protocol is described in the <a href="{@@docRoot}openjdk-redirect.html?v=8&path=/technotes/guides/security/StandardNames.html#SSLContext">
+  This protocol is described in the <a href="{@@docRoot}/../technotes/guides/security/StandardNames.html#SSLContext">
   SSLContext section</a> of the
   Java Cryptography Architecture Standard Algorithm Name Documentation.
  @since 1.4
@@ -182,13 +184,13 @@
  <p> Note that the list of registered providers may be retrieved via the 
  <code>Security.getProviders()</code> method.
  @param protocol the standard name of the requested protocol.           See the SSLContext section in the 
-  <a href="{@@docRoot}openjdk-redirect.html?v=8&path=/technotes/guides/security/StandardNames.html#SSLContext">
+  <a href="{@@docRoot}/../technotes/guides/security/StandardNames.html#SSLContext">
             Java Cryptography Architecture Standard Algorithm Name
             Documentation
   </a>           for information about standard protocol names.
  @return the new <code>SSLContext</code> object.
  @throw NoSuchAlgorithmExceptionif no Provider supports a
-           TrustManagerFactorySpi implementation for the
+           SSLContextSpi implementation for the
            specified protocol.
  @throw NullPointerExceptionif protocol is null.
  - seealso: java.security.Provider
@@ -203,16 +205,16 @@
   object is returned.  Note that the specified Provider object
   does not have to be registered in the provider list.
  @param protocol the standard name of the requested protocol.           See the SSLContext section in the 
-  <a href="{@@docRoot}openjdk-redirect.html?v=8&path=/technotes/guides/security/StandardNames.html#SSLContext">
+  <a href="{@@docRoot}/../technotes/guides/security/StandardNames.html#SSLContext">
             Java Cryptography Architecture Standard Algorithm Name
             Documentation
   </a>           for information about standard protocol names.
  @param provider an instance of the provider.
  @return the new <code>SSLContext</code> object.
- @throw NoSuchAlgorithmExceptionif a KeyManagerFactorySpi
+ @throw NoSuchAlgorithmExceptionif a SSLContextSpi
            implementation for the specified protocol is not available
            from the specified Provider object.
- @throw IllegalArgumentExceptionif the provider name is null.
+ @throw IllegalArgumentExceptionif the provider is null.
  @throw NullPointerExceptionif protocol is null.
  - seealso: java.security.Provider
  */
@@ -229,7 +231,7 @@
  <p> Note that the list of registered providers may be retrieved via the 
  <code>Security.getProviders()</code> method.
  @param protocol the standard name of the requested protocol.           See the SSLContext section in the 
-  <a href="{@@docRoot}openjdk-redirect.html?v=8&path=/technotes/guides/security/StandardNames.html#SSLContext">
+  <a href="{@@docRoot}/../technotes/guides/security/StandardNames.html#SSLContext">
             Java Cryptography Architecture Standard Algorithm Name
             Documentation
   </a>           for information about standard protocol names.
@@ -332,6 +334,11 @@
   to <code>getDefault</code>.
  The default context must be immediately usable
   and not require initialization.
+  <p>
+  Developers are <em>strongly</em> discouraged from changing the default <code>SSLContext</code> as
+  it is used as the Android default for secure communication by APIs like 
+ <code>SSLSocketFactory.getDefault()</code>, <code>SSLServerSocketFactory.getDefault()</code> and 
+ <code>HttpsURLConnection</code>.
  @param context the SSLContext
  @throw NullPointerExceptionif context is null
  @throw SecurityExceptionif a security manager exists and its
@@ -385,6 +392,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaxNetSslSSLContext)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaxNetSslSSLContext")

@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaNetNetworkInterface
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -27,6 +24,8 @@
 
 @class IOSByteArray;
 @class IOSObjectArray;
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @class JavaNetInetAddress;
 @protocol JavaUtilEnumeration;
 @protocol JavaUtilList;
@@ -40,7 +39,7 @@
  <p>
   <a name="access-restrictions"></a>Note that information about 
  <code>NetworkInterface</code>s may be restricted. For example, non-system apps
-  with <code>targetSdkVersion >= android.os.Build.VERSION_CODES.R</code> will only
+  with <code>targetSdkVersion >= android.internal.Build.VERSION_CODES.R</code> will only
   have access to information about <code>NetworkInterface</code>s that are
   associated with an <code>InetAddress</code>.
  @since 1.4
@@ -131,7 +130,7 @@
            NetPermission("getNetworkInformation"). For example, this
            method will generally return <code>null</code> when called by
            non-system apps having          
- <code>targetSdkVersion >= android.os.Build.VERSION_CODES.R</code>.
+ <code>targetSdkVersion >= android.internal.Build.VERSION_CODES.R</code>.
  @throw SocketExceptionif an I/O error occurs.
  @since 1.6
  */
@@ -202,7 +201,7 @@
         to obtain all IP addresses for this node 
  <p>
   For non-system apps with 
- <code>targetSdkVersion >= android.os.Build.VERSION_CODES.R</code>, this
+ <code>targetSdkVersion >= android.internal.Build.VERSION_CODES.R</code>, this
   method will only return information for <code>NetworkInterface</code>s that
   are associated with an <code>InetAddress</code>.
  @return an Enumeration of NetworkInterfaces found on this machine
@@ -337,6 +336,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaNetNetworkInterface)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaNetNetworkInterface")

@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaUtilConcurrentLinkedBlockingQueue
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -38,9 +35,14 @@
 #include "java/io/Serializable.h"
 
 @class IOSObjectArray;
+@class JavaLangBoolean;
+@class JavaLangInteger;
+@class JavaLangLong;
 @class JavaUtilConcurrentLinkedBlockingQueue_Node;
 @class JavaUtilConcurrentTimeUnit;
 @protocol JavaUtilCollection;
+@protocol JavaUtilFunctionConsumer;
+@protocol JavaUtilFunctionPredicate;
 @protocol JavaUtilIterator;
 @protocol JavaUtilSpliterator;
 
@@ -61,9 +63,11 @@
   is equal to <code>Integer.MAX_VALUE</code>.  Linked nodes are
   dynamically created upon each insertion unless this would bring the
   queue above capacity. 
- <p>This class and its iterator implement all of the 
- <em>optional</em> methods of the <code>Collection</code> and <code>Iterator</code>
-  interfaces.
+ <p>This class and its iterator implement all of the <em>optional</em>
+  methods of the <code>Collection</code> and <code>Iterator</code> interfaces. 
+ <p>This class is a member of the 
+ <a href="{@@docRoot}/java.base/java/util/package-summary.html#CollectionsFramework">
+  Java Collections Framework</a>.
  @since 1.5
  @author Doug Lea
  */
@@ -136,6 +140,11 @@
                               withInt:(jint)maxElements;
 
 /*!
+ @throw NullPointerException
+ */
+- (void)forEachWithJavaUtilFunctionConsumer:(id<JavaUtilFunctionConsumer>)action;
+
+/*!
  @brief Returns an iterator over the elements in this queue in proper sequence.
  The elements will be returned in order from first (head) to last (tail). 
  <p>The returned iterator is 
@@ -206,6 +215,21 @@ withJavaUtilConcurrentTimeUnit:(JavaUtilConcurrentTimeUnit *)unit;
  @return <code>true</code> if this queue changed as a result of the call
  */
 - (jboolean)removeWithId:(id)o;
+
+/*!
+ @throw NullPointerException
+ */
+- (jboolean)removeAllWithJavaUtilCollection:(id<JavaUtilCollection>)c;
+
+/*!
+ @throw NullPointerException
+ */
+- (jboolean)removeIfWithJavaUtilFunctionPredicate:(id<JavaUtilFunctionPredicate>)filter;
+
+/*!
+ @throw NullPointerException
+ */
+- (jboolean)retainAllWithJavaUtilCollection:(id<JavaUtilCollection>)c;
 
 /*!
  @brief Returns the number of elements in this queue.
@@ -283,6 +307,20 @@ withJavaUtilConcurrentTimeUnit:(JavaUtilConcurrentTimeUnit *)unit;
 #pragma mark Package-Private
 
 /*!
+ @brief Returns the predecessor of live node p, given a node that was
+  once a live ancestor of p (or head); allows unlinking of p.
+ */
+- (JavaUtilConcurrentLinkedBlockingQueue_Node *)findPredWithJavaUtilConcurrentLinkedBlockingQueue_Node:(JavaUtilConcurrentLinkedBlockingQueue_Node *)p
+                                                        withJavaUtilConcurrentLinkedBlockingQueue_Node:(JavaUtilConcurrentLinkedBlockingQueue_Node *)ancestor;
+
+/*!
+ @brief Runs action on each element found during a traversal starting at p.
+ If p is null, traversal starts at head.
+ */
+- (void)forEachFromWithJavaUtilFunctionConsumer:(id<JavaUtilFunctionConsumer>)action
+ withJavaUtilConcurrentLinkedBlockingQueue_Node:(JavaUtilConcurrentLinkedBlockingQueue_Node *)p;
+
+/*!
  @brief Locks to prevent both puts and takes.
  */
 - (void)fullyLock;
@@ -293,10 +331,18 @@ withJavaUtilConcurrentTimeUnit:(JavaUtilConcurrentTimeUnit *)unit;
 - (void)fullyUnlock;
 
 /*!
- @brief Unlinks interior Node p with predecessor trail.
+ @brief Used for any element traversal that is not entirely under lock.
+ Such traversals must handle both:
+  - dequeued nodes (p.next == p)
+  - (possibly multiple) interior removed nodes (p.item == null)
+ */
+- (JavaUtilConcurrentLinkedBlockingQueue_Node *)succWithJavaUtilConcurrentLinkedBlockingQueue_Node:(JavaUtilConcurrentLinkedBlockingQueue_Node *)p;
+
+/*!
+ @brief Unlinks interior Node p with predecessor pred.
  */
 - (void)unlinkWithJavaUtilConcurrentLinkedBlockingQueue_Node:(JavaUtilConcurrentLinkedBlockingQueue_Node *)p
-              withJavaUtilConcurrentLinkedBlockingQueue_Node:(JavaUtilConcurrentLinkedBlockingQueue_Node *)trail;
+              withJavaUtilConcurrentLinkedBlockingQueue_Node:(JavaUtilConcurrentLinkedBlockingQueue_Node *)pred;
 
 @end
 
@@ -369,76 +415,8 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentLinkedBlockingQueue_Node)
 
 #endif
 
-#if !defined (JavaUtilConcurrentLinkedBlockingQueue_LBQSpliterator_) && (INCLUDE_ALL_JavaUtilConcurrentLinkedBlockingQueue || defined(INCLUDE_JavaUtilConcurrentLinkedBlockingQueue_LBQSpliterator))
-#define JavaUtilConcurrentLinkedBlockingQueue_LBQSpliterator_
-
-#define RESTRICT_JavaUtilSpliterator 1
-#define INCLUDE_JavaUtilSpliterator 1
-#include "java/util/Spliterator.h"
-
-@class JavaUtilConcurrentLinkedBlockingQueue;
-@class JavaUtilConcurrentLinkedBlockingQueue_Node;
-@protocol JavaUtilComparator;
-@protocol JavaUtilFunctionConsumer;
-
-/*!
- @brief A customized variant of Spliterators.IteratorSpliterator
- */
-@interface JavaUtilConcurrentLinkedBlockingQueue_LBQSpliterator : NSObject < JavaUtilSpliterator > {
- @public
-  JavaUtilConcurrentLinkedBlockingQueue *queue_;
-  JavaUtilConcurrentLinkedBlockingQueue_Node *current_;
-  jint batch_;
-  jboolean exhausted_;
-  jlong est_;
-}
-@property (readonly, class) jint MAX_BATCH NS_SWIFT_NAME(MAX_BATCH);
-
-#pragma mark Public
-
-- (jint)characteristics;
-
-- (jlong)estimateSize;
-
-- (void)forEachRemainingWithJavaUtilFunctionConsumer:(id<JavaUtilFunctionConsumer>)action;
-
-- (jboolean)tryAdvanceWithJavaUtilFunctionConsumer:(id<JavaUtilFunctionConsumer>)action;
-
-- (id<JavaUtilSpliterator>)trySplit;
-
-#pragma mark Package-Private
-
-- (instancetype __nonnull)initWithJavaUtilConcurrentLinkedBlockingQueue:(JavaUtilConcurrentLinkedBlockingQueue *)queue;
-
-// Disallowed inherited constructors, do not use.
-
-- (instancetype __nonnull)init NS_UNAVAILABLE;
-
-@end
-
-J2OBJC_EMPTY_STATIC_INIT(JavaUtilConcurrentLinkedBlockingQueue_LBQSpliterator)
-
-J2OBJC_FIELD_SETTER(JavaUtilConcurrentLinkedBlockingQueue_LBQSpliterator, queue_, JavaUtilConcurrentLinkedBlockingQueue *)
-J2OBJC_FIELD_SETTER(JavaUtilConcurrentLinkedBlockingQueue_LBQSpliterator, current_, JavaUtilConcurrentLinkedBlockingQueue_Node *)
-
-inline jint JavaUtilConcurrentLinkedBlockingQueue_LBQSpliterator_get_MAX_BATCH(void);
-#define JavaUtilConcurrentLinkedBlockingQueue_LBQSpliterator_MAX_BATCH 33554432
-J2OBJC_STATIC_FIELD_CONSTANT(JavaUtilConcurrentLinkedBlockingQueue_LBQSpliterator, MAX_BATCH, jint)
-
-FOUNDATION_EXPORT void JavaUtilConcurrentLinkedBlockingQueue_LBQSpliterator_initWithJavaUtilConcurrentLinkedBlockingQueue_(JavaUtilConcurrentLinkedBlockingQueue_LBQSpliterator *self, JavaUtilConcurrentLinkedBlockingQueue *queue);
-
-FOUNDATION_EXPORT JavaUtilConcurrentLinkedBlockingQueue_LBQSpliterator *new_JavaUtilConcurrentLinkedBlockingQueue_LBQSpliterator_initWithJavaUtilConcurrentLinkedBlockingQueue_(JavaUtilConcurrentLinkedBlockingQueue *queue) NS_RETURNS_RETAINED;
-
-FOUNDATION_EXPORT JavaUtilConcurrentLinkedBlockingQueue_LBQSpliterator *create_JavaUtilConcurrentLinkedBlockingQueue_LBQSpliterator_initWithJavaUtilConcurrentLinkedBlockingQueue_(JavaUtilConcurrentLinkedBlockingQueue *queue);
-
-J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentLinkedBlockingQueue_LBQSpliterator)
-
-#endif
-
 
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaUtilConcurrentLinkedBlockingQueue")

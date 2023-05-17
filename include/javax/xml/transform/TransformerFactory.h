@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaxXmlTransformTransformerFactory
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -25,6 +22,7 @@
 #if !defined (JavaxXmlTransformTransformerFactory_) && (INCLUDE_ALL_JavaxXmlTransformTransformerFactory || defined(INCLUDE_JavaxXmlTransformTransformerFactory))
 #define JavaxXmlTransformTransformerFactory_
 
+@class JavaLangBoolean;
 @class JavaLangClassLoader;
 @class JavaxXmlTransformTransformer;
 @protocol JavaxXmlTransformErrorListener;
@@ -159,10 +157,10 @@
 
 /*!
  @brief <p>Process the <code>Source</code> into a <code>Transformer</code>
-  <code>Object</code>.
- The <code>Source</code> is an XSLT document that
+  <code>Object</code>.The <code>Source</code> is an XSLT document that
   conforms to <a href="http://www.w3.org/TR/xslt">
-  XSL Transformations (XSLT) Version 1.0</a>.  Care must
+  XSL Transformations (XSLT) Version 1.0</a>.
+ Care must
   be taken not to use this <code>Transformer</code> in multiple 
  <code>Thread</code>s running concurrently.
   Different <code>TransformerFactories</code> can be used concurrently by
@@ -277,6 +275,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaxXmlTransformTransformerFactory)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaxXmlTransformTransformerFactory")

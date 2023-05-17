@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaSqlTime
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -29,18 +26,19 @@
 #define INCLUDE_JavaUtilDate 1
 #include "java/util/Date.h"
 
+@class JavaLangInteger;
+@class JavaLangLong;
+
 /*!
  @brief <P>A thin wrapper around the <code>java.util.Date</code> class that allows the JDBC
-  API to identify this as an SQL <code>TIME</code> value.
- The <code>Time</code>
+  API to identify this as an SQL <code>TIME</code> value.The <code>Time</code>
   class adds formatting and
   parsing operations to support the JDBC escape syntax for time
-  values. 
+  values.
  <p>The date components should be set to the "zero epoch"
   value of January 1, 1970 and should not be accessed.
  */
 @interface JavaSqlTime : JavaUtilDate
-@property (readonly, class) jlong serialVersionUID NS_SWIFT_NAME(serialVersionUID);
 
 #pragma mark Public
 
@@ -59,7 +57,7 @@
  */
 - (instancetype __nonnull)initWithInt:(jint)hour
                               withInt:(jint)minute
-                              withInt:(jint)second __attribute__((deprecated));
+                              withInt:(jint)second;
 
 /*!
  @brief Constructs a <code>Time</code> object using a milliseconds time value.
@@ -73,41 +71,41 @@
             method is invoked
  - seealso: #setDate
  */
-- (jint)getDate __attribute__((deprecated));
+- (jint)getDate;
 
 /*!
  @throw java.lang.IllegalArgumentExceptionif this
             method is invoked
  */
-- (jint)getDay __attribute__((deprecated));
+- (jint)getDay;
 
 /*!
  @throw java.lang.IllegalArgumentExceptionif this
             method is invoked
  - seealso: #setMonth
  */
-- (jint)getMonth __attribute__((deprecated));
+- (jint)getMonth;
 
 /*!
  @throw java.lang.IllegalArgumentExceptionif this
             method is invoked
  - seealso: #setYear
  */
-- (jint)getYear __attribute__((deprecated));
+- (jint)getYear;
 
 /*!
  @throw java.lang.IllegalArgumentExceptionif this
             method is invoked
  - seealso: #getDate
  */
-- (void)setDateWithInt:(jint)i __attribute__((deprecated));
+- (void)setDateWithInt:(jint)i;
 
 /*!
  @throw java.lang.IllegalArgumentExceptionif this
             method is invoked
  - seealso: #getMonth
  */
-- (void)setMonthWithInt:(jint)i __attribute__((deprecated));
+- (void)setMonthWithInt:(jint)i;
 
 /*!
  @brief Sets a <code>Time</code> object using a milliseconds time value.
@@ -121,7 +119,7 @@
             method is invoked
  - seealso: #getYear
  */
-- (void)setYearWithInt:(jint)i __attribute__((deprecated));
+- (void)setYearWithInt:(jint)i;
 
 /*!
  @brief Formats a time in JDBC time escape format.
@@ -189,6 +187,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaSqlTime)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaSqlTime")

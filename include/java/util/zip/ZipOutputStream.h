@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaUtilZipZipOutputStream
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -35,6 +32,8 @@
 
 @class IOSByteArray;
 @class JavaIoOutputStream;
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @class JavaNioCharsetCharset;
 @class JavaUtilZipDeflater;
 @class JavaUtilZipZipEntry;
@@ -46,8 +45,6 @@
  @author David Connelly
  */
 @interface JavaUtilZipZipOutputStream : JavaUtilZipDeflaterOutputStream < JavaUtilZipZipConstants >
-@property (readonly, class) jint STORED NS_SWIFT_NAME(STORED);
-@property (readonly, class) jint DEFLATED NS_SWIFT_NAME(DEFLATED);
 
 #pragma mark Public
 
@@ -202,6 +199,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilZipZipOutputStream)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaUtilZipZipOutputStream")

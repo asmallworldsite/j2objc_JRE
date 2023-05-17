@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_OrgJsonJSONStringer
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -25,6 +22,10 @@
 #if !defined (OrgJsonJSONStringer_) && (INCLUDE_ALL_OrgJsonJSONStringer || defined(INCLUDE_OrgJsonJSONStringer))
 #define OrgJsonJSONStringer_
 
+@class JavaLangBoolean;
+@class JavaLangDouble;
+@class JavaLangInteger;
+@class JavaLangLong;
 @class JavaLangStringBuilder;
 @class OrgJsonJSONStringer_Scope;
 
@@ -201,7 +202,7 @@ J2OBJC_TYPE_LITERAL_HEADER(OrgJsonJSONStringer)
 
 @class IOSObjectArray;
 
-typedef NS_ENUM(NSUInteger, OrgJsonJSONStringer_Scope_Enum) {
+typedef NS_ENUM(jint, OrgJsonJSONStringer_Scope_Enum) {
   OrgJsonJSONStringer_Scope_Enum_EMPTY_ARRAY = 0,
   OrgJsonJSONStringer_Scope_Enum_NONEMPTY_ARRAY = 1,
   OrgJsonJSONStringer_Scope_Enum_EMPTY_OBJECT = 2,
@@ -209,6 +210,12 @@ typedef NS_ENUM(NSUInteger, OrgJsonJSONStringer_Scope_Enum) {
   OrgJsonJSONStringer_Scope_Enum_NONEMPTY_OBJECT = 4,
   OrgJsonJSONStringer_Scope_Enum_NULL = 5,
 };
+#if J2OBJC_IMPORTED_BY_JAVA_IMPLEMENTATION
+#define OrgJsonJSONStringer_Scope_ORDINAL jint
+#else
+#define OrgJsonJSONStringer_Scope_ORDINAL OrgJsonJSONStringer_Scope_Enum
+#endif
+
 
 /*!
  @brief Lexical scoping elements within this stringer, necessary to insert the
@@ -217,12 +224,6 @@ typedef NS_ENUM(NSUInteger, OrgJsonJSONStringer_Scope_Enum) {
  */
 @interface OrgJsonJSONStringer_Scope : JavaLangEnum
 
-@property (readonly, class, nonnull) OrgJsonJSONStringer_Scope *EMPTY_ARRAY NS_SWIFT_NAME(EMPTY_ARRAY);
-@property (readonly, class, nonnull) OrgJsonJSONStringer_Scope *NONEMPTY_ARRAY NS_SWIFT_NAME(NONEMPTY_ARRAY);
-@property (readonly, class, nonnull) OrgJsonJSONStringer_Scope *EMPTY_OBJECT NS_SWIFT_NAME(EMPTY_OBJECT);
-@property (readonly, class, nonnull) OrgJsonJSONStringer_Scope *DANGLING_KEY NS_SWIFT_NAME(DANGLING_KEY);
-@property (readonly, class, nonnull) OrgJsonJSONStringer_Scope *NONEMPTY_OBJECT NS_SWIFT_NAME(NONEMPTY_OBJECT);
-@property (readonly, class, nonnull) OrgJsonJSONStringer_Scope *NULL_ NS_SWIFT_NAME(NULL_);
 #pragma mark Public
 
 + (OrgJsonJSONStringer_Scope *)valueOfWithNSString:(NSString *)name;
@@ -232,6 +233,8 @@ typedef NS_ENUM(NSUInteger, OrgJsonJSONStringer_Scope_Enum) {
 #pragma mark Package-Private
 
 - (OrgJsonJSONStringer_Scope_Enum)toNSEnum;
+
+- (OrgJsonJSONStringer_Scope_ORDINAL)ordinal;
 
 @end
 
@@ -286,7 +289,7 @@ FOUNDATION_EXPORT IOSObjectArray *OrgJsonJSONStringer_Scope_values(void);
 
 FOUNDATION_EXPORT OrgJsonJSONStringer_Scope *OrgJsonJSONStringer_Scope_valueOfWithNSString_(NSString *name);
 
-FOUNDATION_EXPORT OrgJsonJSONStringer_Scope *OrgJsonJSONStringer_Scope_fromOrdinal(NSUInteger ordinal);
+FOUNDATION_EXPORT OrgJsonJSONStringer_Scope *OrgJsonJSONStringer_Scope_fromOrdinal(OrgJsonJSONStringer_Scope_ORDINAL ordinal);
 
 J2OBJC_TYPE_LITERAL_HEADER(OrgJsonJSONStringer_Scope)
 
@@ -296,6 +299,4 @@ J2OBJC_TYPE_LITERAL_HEADER(OrgJsonJSONStringer_Scope)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_OrgJsonJSONStringer")

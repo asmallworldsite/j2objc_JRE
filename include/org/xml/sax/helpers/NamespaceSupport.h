@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_OrgXmlSaxHelpersNamespaceSupport
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -26,6 +23,7 @@
 #define OrgXmlSaxHelpersNamespaceSupport_
 
 @class IOSObjectArray;
+@class JavaLangBoolean;
 @protocol JavaUtilEnumeration;
 
 /*!
@@ -82,8 +80,6 @@
  @version 2.0.1 (sax2r2)
  */
 @interface OrgXmlSaxHelpersNamespaceSupport : NSObject
-@property (readonly, copy, class) NSString *XMLNS NS_SWIFT_NAME(XMLNS);
-@property (readonly, copy, class) NSString *NSDECL NS_SWIFT_NAME(NSDECL);
 
 #pragma mark Public
 
@@ -378,6 +374,7 @@ J2OBJC_TYPE_LITERAL_HEADER(OrgXmlSaxHelpersNamespaceSupport)
 #define OrgXmlSaxHelpersNamespaceSupport_Context_
 
 @class IOSObjectArray;
+@class JavaLangBoolean;
 @class JavaUtilHashtable;
 @class OrgXmlSaxHelpersNamespaceSupport;
 @protocol JavaUtilEnumeration;
@@ -511,6 +508,4 @@ J2OBJC_TYPE_LITERAL_HEADER(OrgXmlSaxHelpersNamespaceSupport_Context)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_OrgXmlSaxHelpersNamespaceSupport")

@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaIoEOFException
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -41,7 +38,7 @@
  @author Frank Yellin
  - seealso: java.io.DataInputStream
  - seealso: java.io.IOException
- @since JDK1.0
+ @since 1.0
  */
 @interface JavaIoEOFException : JavaIoIOException
 
@@ -56,7 +53,7 @@
 /*!
  @brief Constructs an <code>EOFException</code> with the specified detail
   message.The string <code>s</code> may later be retrieved by the 
- <code><code>java.lang.Throwable.getMessage</code></code> method of class 
+ <code>java.lang.Throwable.getMessage</code> method of class 
  <code>java.lang.Throwable</code>.
  @param s the detail message.
  */
@@ -93,6 +90,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaIoEOFException)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaIoEOFException")

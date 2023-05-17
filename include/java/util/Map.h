@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaUtilMap
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -25,6 +22,8 @@
 #if !defined (JavaUtilMap_) && (INCLUDE_ALL_JavaUtilMap || defined(INCLUDE_JavaUtilMap))
 #define JavaUtilMap_
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @protocol JavaUtilCollection;
 @protocol JavaUtilFunctionBiConsumer;
 @protocol JavaUtilFunctionBiFunction;
@@ -720,6 +719,8 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilMap)
 #if !defined (JavaUtilMap_Entry_) && (INCLUDE_ALL_JavaUtilMap || defined(INCLUDE_JavaUtilMap_Entry))
 #define JavaUtilMap_Entry_
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @protocol JavaUtilComparator;
 
 /*!
@@ -886,6 +887,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilMap_Entry)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaUtilMap")

@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaUtilTimer
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -25,6 +22,9 @@
 #if !defined (JavaUtilTimer_) && (INCLUDE_ALL_JavaUtilTimer || defined(INCLUDE_JavaUtilTimer))
 #define JavaUtilTimer_
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
+@class JavaLangLong;
 @class JavaUtilDate;
 @class JavaUtilTimerTask;
 
@@ -356,6 +356,8 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilTimer)
 #define INCLUDE_JavaLangThread 1
 #include "java/lang/Thread.h"
 
+@class JavaLangBoolean;
+@class JavaLangLong;
 @class JavaLangThreadGroup;
 @class JavaUtilTaskQueue;
 @protocol JavaLangRunnable;
@@ -430,6 +432,9 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilTimerThread)
 #if !defined (JavaUtilTaskQueue_) && (INCLUDE_ALL_JavaUtilTimer || defined(INCLUDE_JavaUtilTaskQueue))
 #define JavaUtilTaskQueue_
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
+@class JavaLangLong;
 @class JavaUtilTimerTask;
 
 /*!
@@ -526,6 +531,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilTaskQueue)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaUtilTimer")

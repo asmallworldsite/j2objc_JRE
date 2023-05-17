@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaLangReflectUndeclaredThrowableException
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -29,6 +26,8 @@
 #define INCLUDE_JavaLangRuntimeException 1
 #include "java/lang/RuntimeException.h"
 
+@class JavaLangBoolean;
+@class JavaLangLong;
 @class JavaLangThrowable;
 
 /*!
@@ -59,7 +58,6 @@
  @since 1.3
  */
 @interface JavaLangReflectUndeclaredThrowableException : JavaLangRuntimeException
-@property (readonly, class) jlong serialVersionUID NS_SWIFT_NAME(serialVersionUID);
 
 #pragma mark Public
 
@@ -140,6 +138,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaLangReflectUndeclaredThrowableException)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaLangReflectUndeclaredThrowableException")

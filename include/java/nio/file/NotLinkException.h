@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaNioFileNotLinkException
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -29,13 +26,14 @@
 #define INCLUDE_JavaNioFileFileSystemException 1
 #include "java/nio/file/FileSystemException.h"
 
+@class JavaLangLong;
+
 /*!
  @brief Checked exception thrown when a file system operation fails because a file
   is not a symbolic link.
  @since 1.7
  */
 @interface JavaNioFileNotLinkException : JavaNioFileFileSystemException
-@property (readonly, class) jlong serialVersionUID NS_SWIFT_NAME(serialVersionUID);
 
 #pragma mark Public
 
@@ -87,6 +85,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaNioFileNotLinkException)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaNioFileNotLinkException")

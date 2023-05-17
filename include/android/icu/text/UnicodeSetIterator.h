@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_AndroidIcuTextUnicodeSetIterator
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -26,6 +23,8 @@
 #define AndroidIcuTextUnicodeSetIterator_
 
 @class AndroidIcuTextUnicodeSet;
+@class JavaLangBoolean;
+@class JavaLangInteger;
 
 /*!
  @brief UnicodeSetIterator iterates over the contents of a UnicodeSet.It
@@ -89,7 +88,6 @@
    */
   jint nextElement_;
 }
-@property (class) jint IS_STRING NS_SWIFT_NAME(IS_STRING);
 
 #pragma mark Public
 
@@ -109,7 +107,7 @@
 
 /*!
  */
-- (AndroidIcuTextUnicodeSet *)getSet __attribute__((deprecated));
+- (AndroidIcuTextUnicodeSet *)getSet;
 
 /*!
  @brief Gets the current string from the iterator.Only use after calling next(), not nextRange().
@@ -174,7 +172,7 @@
 
 /*!
  */
-- (void)loadRangeWithInt:(jint)aRange __attribute__((deprecated));
+- (void)loadRangeWithInt:(jint)aRange;
 
 @end
 
@@ -214,6 +212,4 @@ J2OBJC_TYPE_LITERAL_HEADER(AndroidIcuTextUnicodeSetIterator)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_AndroidIcuTextUnicodeSetIterator")

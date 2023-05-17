@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_AndroidIcuTextReplaceable
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -26,6 +23,9 @@
 #define AndroidIcuTextReplaceable_
 
 @class IOSCharArray;
+@class JavaLangBoolean;
+@class JavaLangCharacter;
+@class JavaLangInteger;
 
 /*!
  @brief <code>Replaceable</code> is an interface representing a
@@ -207,6 +207,4 @@ J2OBJC_TYPE_LITERAL_HEADER(AndroidIcuTextReplaceable)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_AndroidIcuTextReplaceable")

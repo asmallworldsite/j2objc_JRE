@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaLangStringBuilder
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -38,6 +35,12 @@
 #include "java/lang/CharSequence.h"
 
 @class IOSCharArray;
+@class JavaLangBoolean;
+@class JavaLangCharacter;
+@class JavaLangDouble;
+@class JavaLangFloat;
+@class JavaLangInteger;
+@class JavaLangLong;
 @class JavaLangStringBuffer;
 
 /*!
@@ -84,7 +87,6 @@
  @since 1.5
  */
 @interface JavaLangStringBuilder : JavaLangAbstractStringBuilder < JavaIoSerializable, JavaLangCharSequence >
-@property (readonly, class) jlong serialVersionUID NS_SWIFT_NAME(serialVersionUID);
 
 #pragma mark Public
 
@@ -326,6 +328,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaLangStringBuilder)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaLangStringBuilder")

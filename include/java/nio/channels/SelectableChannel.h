@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaNioChannelsSelectableChannel
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -33,6 +30,8 @@
 #define INCLUDE_JavaNioChannelsChannel 1
 #include "java/nio/channels/Channel.h"
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @class JavaNioChannelsSelectionKey;
 @class JavaNioChannelsSelector;
 @class JavaNioChannelsSpiSelectorProvider;
@@ -274,6 +273,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaNioChannelsSelectableChannel)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaNioChannelsSelectableChannel")

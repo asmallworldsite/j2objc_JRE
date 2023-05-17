@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaNioFileStandardOpenOption
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -35,7 +32,7 @@
 
 @class IOSObjectArray;
 
-typedef NS_ENUM(NSUInteger, JavaNioFileStandardOpenOption_Enum) {
+typedef NS_ENUM(jint, JavaNioFileStandardOpenOption_Enum) {
   JavaNioFileStandardOpenOption_Enum_READ = 0,
   JavaNioFileStandardOpenOption_Enum_WRITE = 1,
   JavaNioFileStandardOpenOption_Enum_APPEND = 2,
@@ -47,6 +44,12 @@ typedef NS_ENUM(NSUInteger, JavaNioFileStandardOpenOption_Enum) {
   JavaNioFileStandardOpenOption_Enum_SYNC = 8,
   JavaNioFileStandardOpenOption_Enum_DSYNC = 9,
 };
+#if J2OBJC_IMPORTED_BY_JAVA_IMPLEMENTATION
+#define JavaNioFileStandardOpenOption_ORDINAL jint
+#else
+#define JavaNioFileStandardOpenOption_ORDINAL JavaNioFileStandardOpenOption_Enum
+#endif
+
 
 /*!
  @brief Defines the standard open options.
@@ -54,16 +57,6 @@ typedef NS_ENUM(NSUInteger, JavaNioFileStandardOpenOption_Enum) {
  */
 @interface JavaNioFileStandardOpenOption : JavaLangEnum < JavaNioFileOpenOption >
 
-@property (readonly, class, nonnull) JavaNioFileStandardOpenOption *READ NS_SWIFT_NAME(READ);
-@property (readonly, class, nonnull) JavaNioFileStandardOpenOption *WRITE NS_SWIFT_NAME(WRITE);
-@property (readonly, class, nonnull) JavaNioFileStandardOpenOption *APPEND NS_SWIFT_NAME(APPEND);
-@property (readonly, class, nonnull) JavaNioFileStandardOpenOption *TRUNCATE_EXISTING NS_SWIFT_NAME(TRUNCATE_EXISTING);
-@property (readonly, class, nonnull) JavaNioFileStandardOpenOption *CREATE NS_SWIFT_NAME(CREATE);
-@property (readonly, class, nonnull) JavaNioFileStandardOpenOption *CREATE_NEW NS_SWIFT_NAME(CREATE_NEW);
-@property (readonly, class, nonnull) JavaNioFileStandardOpenOption *DELETE_ON_CLOSE NS_SWIFT_NAME(DELETE_ON_CLOSE);
-@property (readonly, class, nonnull) JavaNioFileStandardOpenOption *SPARSE NS_SWIFT_NAME(SPARSE);
-@property (readonly, class, nonnull) JavaNioFileStandardOpenOption *SYNC NS_SWIFT_NAME(SYNC);
-@property (readonly, class, nonnull) JavaNioFileStandardOpenOption *DSYNC NS_SWIFT_NAME(DSYNC);
 #pragma mark Public
 
 + (JavaNioFileStandardOpenOption *)valueOfWithNSString:(NSString *)name;
@@ -73,6 +66,8 @@ typedef NS_ENUM(NSUInteger, JavaNioFileStandardOpenOption_Enum) {
 #pragma mark Package-Private
 
 - (JavaNioFileStandardOpenOption_Enum)toNSEnum;
+
+- (JavaNioFileStandardOpenOption_ORDINAL)ordinal;
 
 @end
 
@@ -184,7 +179,7 @@ FOUNDATION_EXPORT IOSObjectArray *JavaNioFileStandardOpenOption_values(void);
 
 FOUNDATION_EXPORT JavaNioFileStandardOpenOption *JavaNioFileStandardOpenOption_valueOfWithNSString_(NSString *name);
 
-FOUNDATION_EXPORT JavaNioFileStandardOpenOption *JavaNioFileStandardOpenOption_fromOrdinal(NSUInteger ordinal);
+FOUNDATION_EXPORT JavaNioFileStandardOpenOption *JavaNioFileStandardOpenOption_fromOrdinal(JavaNioFileStandardOpenOption_ORDINAL ordinal);
 
 J2OBJC_TYPE_LITERAL_HEADER(JavaNioFileStandardOpenOption)
 
@@ -194,6 +189,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaNioFileStandardOpenOption)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaNioFileStandardOpenOption")

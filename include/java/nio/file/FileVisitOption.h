@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaNioFileFileVisitOption
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -31,9 +28,15 @@
 
 @class IOSObjectArray;
 
-typedef NS_ENUM(NSUInteger, JavaNioFileFileVisitOption_Enum) {
+typedef NS_ENUM(jint, JavaNioFileFileVisitOption_Enum) {
   JavaNioFileFileVisitOption_Enum_FOLLOW_LINKS = 0,
 };
+#if J2OBJC_IMPORTED_BY_JAVA_IMPLEMENTATION
+#define JavaNioFileFileVisitOption_ORDINAL jint
+#else
+#define JavaNioFileFileVisitOption_ORDINAL JavaNioFileFileVisitOption_Enum
+#endif
+
 
 /*!
  @brief Defines the file tree traversal options.
@@ -42,7 +45,6 @@ typedef NS_ENUM(NSUInteger, JavaNioFileFileVisitOption_Enum) {
  */
 @interface JavaNioFileFileVisitOption : JavaLangEnum
 
-@property (readonly, class, nonnull) JavaNioFileFileVisitOption *FOLLOW_LINKS NS_SWIFT_NAME(FOLLOW_LINKS);
 #pragma mark Public
 
 + (JavaNioFileFileVisitOption *)valueOfWithNSString:(NSString *)name;
@@ -52,6 +54,8 @@ typedef NS_ENUM(NSUInteger, JavaNioFileFileVisitOption_Enum) {
 #pragma mark Package-Private
 
 - (JavaNioFileFileVisitOption_Enum)toNSEnum;
+
+- (JavaNioFileFileVisitOption_ORDINAL)ordinal;
 
 @end
 
@@ -70,7 +74,7 @@ FOUNDATION_EXPORT IOSObjectArray *JavaNioFileFileVisitOption_values(void);
 
 FOUNDATION_EXPORT JavaNioFileFileVisitOption *JavaNioFileFileVisitOption_valueOfWithNSString_(NSString *name);
 
-FOUNDATION_EXPORT JavaNioFileFileVisitOption *JavaNioFileFileVisitOption_fromOrdinal(NSUInteger ordinal);
+FOUNDATION_EXPORT JavaNioFileFileVisitOption *JavaNioFileFileVisitOption_fromOrdinal(JavaNioFileFileVisitOption_ORDINAL ordinal);
 
 J2OBJC_TYPE_LITERAL_HEADER(JavaNioFileFileVisitOption)
 
@@ -80,6 +84,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaNioFileFileVisitOption)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaNioFileFileVisitOption")

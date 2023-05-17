@@ -17,9 +17,6 @@
 #define INCLUDE_JavaUtilConcurrentFlow_Publisher 1
 #endif
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -28,6 +25,8 @@
 
 #if !defined (JavaUtilConcurrentFlow_) && (INCLUDE_ALL_JavaUtilConcurrentFlow || defined(INCLUDE_JavaUtilConcurrentFlow))
 #define JavaUtilConcurrentFlow_
+
+@class JavaLangInteger;
 
 /*!
  @brief Interrelated interfaces and static methods for establishing
@@ -74,9 +73,9 @@
         this.executor = executor;
       }
       public synchronized void request(long n) {
-        if (n != 0 && !completed) {
+        if (!completed) {
           completed = true;
-          if (n < 0) {
+          if (n <= 0) {
             IllegalArgumentException ex = new IllegalArgumentException();
             executor.execute(() -> subscriber.onError(ex));
           } else {
@@ -150,7 +149,6 @@
  @since 9
  */
 @interface JavaUtilConcurrentFlow : NSObject
-@property (readonly, class) jint DEFAULT_BUFFER_SIZE NS_SWIFT_NAME(DEFAULT_BUFFER_SIZE);
 
 #pragma mark Public
 
@@ -288,6 +286,8 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentFlow_Subscriber)
 #if !defined (JavaUtilConcurrentFlow_Subscription_) && (INCLUDE_ALL_JavaUtilConcurrentFlow || defined(INCLUDE_JavaUtilConcurrentFlow_Subscription))
 #define JavaUtilConcurrentFlow_Subscription_
 
+@class JavaLangLong;
+
 /*!
  @brief Message control linking a <code>Publisher</code> and <code>Subscriber</code>
  .Subscribers receive items only when requested,
@@ -349,6 +349,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentFlow_Processor)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaUtilConcurrentFlow")

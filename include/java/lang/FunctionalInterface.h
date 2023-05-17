@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaLangFunctionalInterface
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -30,6 +27,8 @@
 #include "java/lang/annotation/Annotation.h"
 
 @class IOSClass;
+@class JavaLangBoolean;
+@class JavaLangInteger;
 
 /*!
  @brief An informative annotation type used to indicate that an interface
@@ -82,6 +81,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaLangFunctionalInterface)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaLangFunctionalInterface")

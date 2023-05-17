@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaLangCloneNotSupportedException
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -29,6 +26,7 @@
 #define INCLUDE_JavaLangException 1
 #include "java/lang/Exception.h"
 
+@class JavaLangBoolean;
 @class JavaLangThrowable;
 
 /*!
@@ -40,10 +38,9 @@
   Applications that override the <code>clone</code> method can also
   throw this exception to indicate that an object could not or
   should not be cloned.
- @author unascribed
  - seealso: java.lang.Cloneable
  - seealso: java.lang.Object#clone()
- @since JDK1.0
+ @since 1.0
  */
 @interface JavaLangCloneNotSupportedException : JavaLangException
 
@@ -98,6 +95,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaLangCloneNotSupportedException)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaLangCloneNotSupportedException")

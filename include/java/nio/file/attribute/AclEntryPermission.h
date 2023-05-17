@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaNioFileAttributeAclEntryPermission
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -31,7 +28,7 @@
 
 @class IOSObjectArray;
 
-typedef NS_ENUM(NSUInteger, JavaNioFileAttributeAclEntryPermission_Enum) {
+typedef NS_ENUM(jint, JavaNioFileAttributeAclEntryPermission_Enum) {
   JavaNioFileAttributeAclEntryPermission_Enum_READ_DATA = 0,
   JavaNioFileAttributeAclEntryPermission_Enum_WRITE_DATA = 1,
   JavaNioFileAttributeAclEntryPermission_Enum_APPEND_DATA = 2,
@@ -47,6 +44,12 @@ typedef NS_ENUM(NSUInteger, JavaNioFileAttributeAclEntryPermission_Enum) {
   JavaNioFileAttributeAclEntryPermission_Enum_WRITE_OWNER = 12,
   JavaNioFileAttributeAclEntryPermission_Enum_SYNCHRONIZE = 13,
 };
+#if J2OBJC_IMPORTED_BY_JAVA_IMPLEMENTATION
+#define JavaNioFileAttributeAclEntryPermission_ORDINAL jint
+#else
+#define JavaNioFileAttributeAclEntryPermission_ORDINAL JavaNioFileAttributeAclEntryPermission_Enum
+#endif
+
 
 /*!
  @brief Defines the permissions for use with the permissions component of an ACL 
@@ -54,24 +57,7 @@ typedef NS_ENUM(NSUInteger, JavaNioFileAttributeAclEntryPermission_Enum) {
  @since 1.7
  */
 @interface JavaNioFileAttributeAclEntryPermission : JavaLangEnum
-@property (readonly, class, strong) JavaNioFileAttributeAclEntryPermission *LIST_DIRECTORY NS_SWIFT_NAME(LIST_DIRECTORY);
-@property (readonly, class, strong) JavaNioFileAttributeAclEntryPermission *ADD_FILE NS_SWIFT_NAME(ADD_FILE);
-@property (readonly, class, strong) JavaNioFileAttributeAclEntryPermission *ADD_SUBDIRECTORY NS_SWIFT_NAME(ADD_SUBDIRECTORY);
 
-@property (readonly, class, nonnull) JavaNioFileAttributeAclEntryPermission *READ_DATA NS_SWIFT_NAME(READ_DATA);
-@property (readonly, class, nonnull) JavaNioFileAttributeAclEntryPermission *WRITE_DATA NS_SWIFT_NAME(WRITE_DATA);
-@property (readonly, class, nonnull) JavaNioFileAttributeAclEntryPermission *APPEND_DATA NS_SWIFT_NAME(APPEND_DATA);
-@property (readonly, class, nonnull) JavaNioFileAttributeAclEntryPermission *READ_NAMED_ATTRS NS_SWIFT_NAME(READ_NAMED_ATTRS);
-@property (readonly, class, nonnull) JavaNioFileAttributeAclEntryPermission *WRITE_NAMED_ATTRS NS_SWIFT_NAME(WRITE_NAMED_ATTRS);
-@property (readonly, class, nonnull) JavaNioFileAttributeAclEntryPermission *EXECUTE NS_SWIFT_NAME(EXECUTE);
-@property (readonly, class, nonnull) JavaNioFileAttributeAclEntryPermission *DELETE_CHILD NS_SWIFT_NAME(DELETE_CHILD);
-@property (readonly, class, nonnull) JavaNioFileAttributeAclEntryPermission *READ_ATTRIBUTES NS_SWIFT_NAME(READ_ATTRIBUTES);
-@property (readonly, class, nonnull) JavaNioFileAttributeAclEntryPermission *WRITE_ATTRIBUTES NS_SWIFT_NAME(WRITE_ATTRIBUTES);
-@property (readonly, class, nonnull) JavaNioFileAttributeAclEntryPermission *DELETE NS_SWIFT_NAME(DELETE);
-@property (readonly, class, nonnull) JavaNioFileAttributeAclEntryPermission *READ_ACL NS_SWIFT_NAME(READ_ACL);
-@property (readonly, class, nonnull) JavaNioFileAttributeAclEntryPermission *WRITE_ACL NS_SWIFT_NAME(WRITE_ACL);
-@property (readonly, class, nonnull) JavaNioFileAttributeAclEntryPermission *WRITE_OWNER NS_SWIFT_NAME(WRITE_OWNER);
-@property (readonly, class, nonnull) JavaNioFileAttributeAclEntryPermission *SYNCHRONIZE NS_SWIFT_NAME(SYNCHRONIZE);
 #pragma mark Public
 
 + (JavaNioFileAttributeAclEntryPermission *)valueOfWithNSString:(NSString *)name;
@@ -81,6 +67,8 @@ typedef NS_ENUM(NSUInteger, JavaNioFileAttributeAclEntryPermission_Enum) {
 #pragma mark Package-Private
 
 - (JavaNioFileAttributeAclEntryPermission_Enum)toNSEnum;
+
+- (JavaNioFileAttributeAclEntryPermission_ORDINAL)ordinal;
 
 @end
 
@@ -208,7 +196,7 @@ FOUNDATION_EXPORT IOSObjectArray *JavaNioFileAttributeAclEntryPermission_values(
 
 FOUNDATION_EXPORT JavaNioFileAttributeAclEntryPermission *JavaNioFileAttributeAclEntryPermission_valueOfWithNSString_(NSString *name);
 
-FOUNDATION_EXPORT JavaNioFileAttributeAclEntryPermission *JavaNioFileAttributeAclEntryPermission_fromOrdinal(NSUInteger ordinal);
+FOUNDATION_EXPORT JavaNioFileAttributeAclEntryPermission *JavaNioFileAttributeAclEntryPermission_fromOrdinal(JavaNioFileAttributeAclEntryPermission_ORDINAL ordinal);
 
 J2OBJC_TYPE_LITERAL_HEADER(JavaNioFileAttributeAclEntryPermission)
 
@@ -218,6 +206,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaNioFileAttributeAclEntryPermission)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaNioFileAttributeAclEntryPermission")

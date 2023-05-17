@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaLangExceptionInInitializerError
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -43,7 +40,7 @@
   and may be accessed via the <code>Throwable.getCause()</code> method, as well
   as the aforementioned "legacy method."
  @author Frank Yellin
- @since JDK1.1
+ @since 1.1
  */
 @interface JavaLangExceptionInInitializerError : JavaLangLinkageError
 
@@ -134,6 +131,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaLangExceptionInInitializerError)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaLangExceptionInInitializerError")

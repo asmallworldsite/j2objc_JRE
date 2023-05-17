@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaTextStringCharacterIterator
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -29,12 +26,17 @@
 #define INCLUDE_JavaTextCharacterIterator 1
 #include "java/text/CharacterIterator.h"
 
+@class JavaLangBoolean;
+@class JavaLangCharacter;
+@class JavaLangInteger;
+
 /*!
  @brief <code>StringCharacterIterator</code> implements the 
  <code>CharacterIterator</code> protocol for a <code>String</code>.
  The <code>StringCharacterIterator</code> class iterates over the
   entire <code>String</code>.
  - seealso: CharacterIterator
+ @since 1.1
  */
 @interface JavaTextStringCharacterIterator : NSObject < JavaTextCharacterIterator >
 
@@ -185,6 +187,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaTextStringCharacterIterator)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaTextStringCharacterIterator")

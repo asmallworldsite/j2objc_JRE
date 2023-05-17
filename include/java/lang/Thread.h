@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaLangThread
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -30,7 +27,10 @@
 #include "java/lang/Runnable.h"
 
 @class IOSObjectArray;
+@class JavaLangBoolean;
 @class JavaLangClassLoader;
+@class JavaLangInteger;
+@class JavaLangLong;
 @class JavaLangThreadGroup;
 @class JavaLangThreadLocal_ThreadLocalMap;
 @class JavaLangThread_State;
@@ -61,15 +61,6 @@
   jint threadLocalRandomProbe_;
   jint threadLocalRandomSecondarySeed_;
 }
-@property (readonly, class) jint STATE_NEW NS_SWIFT_NAME(STATE_NEW);
-@property (readonly, class) jint STATE_RUNNABLE NS_SWIFT_NAME(STATE_RUNNABLE);
-@property (readonly, class) jint STATE_BLOCKED NS_SWIFT_NAME(STATE_BLOCKED);
-@property (readonly, class) jint STATE_WAITING NS_SWIFT_NAME(STATE_WAITING);
-@property (readonly, class) jint STATE_TIMED_WAITING NS_SWIFT_NAME(STATE_TIMED_WAITING);
-@property (readonly, class) jint STATE_TERMINATED NS_SWIFT_NAME(STATE_TERMINATED);
-@property (readonly, class) jint MAX_PRIORITY NS_SWIFT_NAME(MAX_PRIORITY);
-@property (readonly, class) jint MIN_PRIORITY NS_SWIFT_NAME(MIN_PRIORITY);
-@property (readonly, class) jint NORM_PRIORITY NS_SWIFT_NAME(NORM_PRIORITY);
 
 #pragma mark Public
 
@@ -200,11 +191,11 @@
 
 - (void)checkAccess;
 
-- (jint)countStackFrames __attribute__((deprecated));
+- (jint)countStackFrames;
 
 + (JavaLangThread * __nonnull)currentThread;
 
-- (void)destroy __attribute__((deprecated));
+- (void)destroy;
 
 /*!
  @brief Prints to the standard error stream a text representation of the current
@@ -417,7 +408,7 @@
  */
 - (void)pushInterruptAction$WithJavaLangRunnable:(id<JavaLangRunnable>)interruptAction;
 
-- (void)resume __attribute__((deprecated));
+- (void)resume;
 
 - (void)run;
 
@@ -460,11 +451,11 @@
 
 - (void)start;
 
-- (void)stop __attribute__((deprecated));
+- (void)stop;
 
-- (void)stopWithJavaLangThrowable:(JavaLangThrowable *)obj __attribute__((deprecated));
+- (void)stopWithJavaLangThrowable:(JavaLangThrowable *)obj;
 
-- (void)suspend __attribute__((deprecated));
+- (void)suspend;
 
 - (NSString * __nonnull)description;
 
@@ -634,7 +625,7 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaLangThread)
 
 @class IOSObjectArray;
 
-typedef NS_ENUM(NSUInteger, JavaLangThread_State_Enum) {
+typedef NS_ENUM(jint, JavaLangThread_State_Enum) {
   JavaLangThread_State_Enum_NEW = 0,
   JavaLangThread_State_Enum_RUNNABLE = 1,
   JavaLangThread_State_Enum_BLOCKED = 2,
@@ -642,6 +633,12 @@ typedef NS_ENUM(NSUInteger, JavaLangThread_State_Enum) {
   JavaLangThread_State_Enum_TIMED_WAITING = 4,
   JavaLangThread_State_Enum_TERMINATED = 5,
 };
+#if J2OBJC_IMPORTED_BY_JAVA_IMPLEMENTATION
+#define JavaLangThread_State_ORDINAL jint
+#else
+#define JavaLangThread_State_ORDINAL JavaLangThread_State_Enum
+#endif
+
 
 /*!
  @brief A representation of a thread's state.A given thread may only be in one
@@ -649,12 +646,6 @@ typedef NS_ENUM(NSUInteger, JavaLangThread_State_Enum) {
  */
 @interface JavaLangThread_State : JavaLangEnum
 
-@property (readonly, class, nonnull) JavaLangThread_State *NEW NS_SWIFT_NAME(NEW);
-@property (readonly, class, nonnull) JavaLangThread_State *RUNNABLE NS_SWIFT_NAME(RUNNABLE);
-@property (readonly, class, nonnull) JavaLangThread_State *BLOCKED NS_SWIFT_NAME(BLOCKED);
-@property (readonly, class, nonnull) JavaLangThread_State *WAITING NS_SWIFT_NAME(WAITING);
-@property (readonly, class, nonnull) JavaLangThread_State *TIMED_WAITING NS_SWIFT_NAME(TIMED_WAITING);
-@property (readonly, class, nonnull) JavaLangThread_State *TERMINATED NS_SWIFT_NAME(TERMINATED);
 #pragma mark Public
 
 + (JavaLangThread_State *)valueOfWithNSString:(NSString *)name;
@@ -664,6 +655,8 @@ typedef NS_ENUM(NSUInteger, JavaLangThread_State_Enum) {
 #pragma mark Package-Private
 
 - (JavaLangThread_State_Enum)toNSEnum;
+
+- (JavaLangThread_State_ORDINAL)ordinal;
 
 @end
 
@@ -712,7 +705,7 @@ FOUNDATION_EXPORT IOSObjectArray *JavaLangThread_State_values(void);
 
 FOUNDATION_EXPORT JavaLangThread_State *JavaLangThread_State_valueOfWithNSString_(NSString *name);
 
-FOUNDATION_EXPORT JavaLangThread_State *JavaLangThread_State_fromOrdinal(NSUInteger ordinal);
+FOUNDATION_EXPORT JavaLangThread_State *JavaLangThread_State_fromOrdinal(JavaLangThread_State_ORDINAL ordinal);
 
 J2OBJC_TYPE_LITERAL_HEADER(JavaLangThread_State)
 
@@ -741,6 +734,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaLangThread_UncaughtExceptionHandler)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaLangThread")

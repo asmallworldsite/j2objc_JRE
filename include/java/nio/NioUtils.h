@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaNioNioUtils
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -27,6 +24,7 @@
 
 @class IOSByteArray;
 @class JavaIoFileDescriptor;
+@class JavaLangInteger;
 @class JavaNioByteBuffer;
 @class JavaNioChannelsFileChannel;
 @protocol JavaIoCloseable;
@@ -84,6 +82,7 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaNioNioUtils)
 #define JavaNioNioUtils_ChannelFactory_
 
 @class JavaIoFileDescriptor;
+@class JavaLangInteger;
 @class JavaNioChannelsFileChannel;
 
 @protocol JavaNioNioUtils_ChannelFactory < JavaObject >
@@ -95,7 +94,6 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaNioNioUtils)
 @end
 
 @interface JavaNioNioUtils_ChannelFactory : NSObject
-@property (readonly, class, strong) id<JavaNioNioUtils_ChannelFactory> INSTANCE NS_SWIFT_NAME(INSTANCE);
 
 @end
 
@@ -114,6 +112,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaNioNioUtils_ChannelFactory)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaNioNioUtils")

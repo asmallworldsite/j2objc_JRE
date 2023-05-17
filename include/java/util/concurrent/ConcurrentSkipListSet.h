@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaUtilConcurrentConcurrentSkipListSet
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -37,6 +34,8 @@
 #define INCLUDE_JavaIoSerializable 1
 #include "java/io/Serializable.h"
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @protocol JavaUtilCollection;
 @protocol JavaUtilComparator;
 @protocol JavaUtilConcurrentConcurrentNavigableMap;
@@ -63,19 +62,21 @@
   method is <em>not</em> a constant-time operation. Because of the
   asynchronous nature of these sets, determining the current number
   of elements requires a traversal of the elements, and so may report
-  inaccurate results if this collection is modified during traversal.
-  Additionally, the bulk operations <code>addAll</code>,
-  <code>removeAll</code>, <code>retainAll</code>, <code>containsAll</code>,
-  <code>equals</code>, and <code>toArray</code> are <em>not</em> guaranteed
-  to be performed atomically. For example, an iterator operating
-  concurrently with an <code>addAll</code> operation might view only some
-  of the added elements. 
+  inaccurate results if this collection is modified during traversal. 
+ <p>Bulk operations that add, remove, or examine multiple elements,
+  such as <code>addAll</code>, <code>removeIf</code> or <code>forEach</code>,
+  are <em>not</em> guaranteed to be performed atomically.
+  For example, a <code>forEach</code> traversal concurrent with an <code>addAll</code>
+  operation might observe only some of the added elements. 
  <p>This class and its iterators implement all of the 
  <em>optional</em> methods of the <code>Set</code> and <code>Iterator</code>
   interfaces. Like most other concurrent collection implementations,
   this class does not permit the use of <code>null</code> elements,
   because <code>null</code> arguments and return values cannot be reliably
-  distinguished from the absence of elements.
+  distinguished from the absence of elements. 
+ <p>This class is a member of the 
+ <a href="{@@docRoot}/java.base/java/util/package-summary.html#CollectionsFramework">
+  Java Collections Framework</a>.
  @author Doug Lea
  @since 1.6
  */
@@ -283,7 +284,7 @@
  @return <code>true</code> if this set changed as a result of the call
  @throw ClassCastExceptionif the class of an element of this set
           is incompatible with the specified collection
-  (<a href="../Collection.html#optional-restrictions">optional</a>)
+  (<a href="{@@docRoot}/java.base/java/util/Collection.html#optional-restrictions">optional</a>)
  @throw NullPointerExceptionif the specified collection or any
           of its elements are null
  */
@@ -312,9 +313,9 @@
   <code>Spliterator.SORTED</code> and <code>Spliterator.ORDERED</code>, with an
   encounter order that is ascending order.  Overriding implementations
   should document the reporting of additional characteristic values. 
- <p>The spliterator's comparator (see 
- <code>java.util.Spliterator.getComparator()</code>) is <code>null</code> if
-  the set's comparator (see <code>comparator()</code>) is <code>null</code>.
+ <p>The spliterator's comparator
+  is <code>null</code> if the set's comparator
+  is <code>null</code>.
   Otherwise, the spliterator's comparator is the same as or imposes the
   same total ordering as the set's comparator.
  @return a <code>Spliterator</code> over the elements in this set
@@ -366,7 +367,7 @@
 
 @end
 
-J2OBJC_STATIC_INIT(JavaUtilConcurrentConcurrentSkipListSet)
+J2OBJC_EMPTY_STATIC_INIT(JavaUtilConcurrentConcurrentSkipListSet)
 
 FOUNDATION_EXPORT void JavaUtilConcurrentConcurrentSkipListSet_init(JavaUtilConcurrentConcurrentSkipListSet *self);
 
@@ -406,6 +407,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentConcurrentSkipListSet)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaUtilConcurrentConcurrentSkipListSet")

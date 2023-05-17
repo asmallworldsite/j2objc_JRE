@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_OrgJsonJSONTokener
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -25,6 +22,9 @@
 #if !defined (OrgJsonJSONTokener_) && (INCLUDE_ALL_OrgJsonJSONTokener || defined(INCLUDE_OrgJsonJSONTokener))
 #define OrgJsonJSONTokener_
 
+@class JavaLangBoolean;
+@class JavaLangCharacter;
+@class JavaLangInteger;
 @class OrgJsonJSONException;
 
 /*!
@@ -154,6 +154,7 @@
     <li>a newline character '\n'
     <li>a carriage return '\r' 
  </ul>
+  
  <p>The returned string shares its backing character array with this
   tokener's input string.
  If a reference to the returned string may be held
@@ -220,6 +221,4 @@ J2OBJC_TYPE_LITERAL_HEADER(OrgJsonJSONTokener)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_OrgJsonJSONTokener")

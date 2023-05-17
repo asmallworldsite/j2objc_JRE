@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaUtilStreamStream
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -30,6 +27,8 @@
 #include "java/util/stream/BaseStream.h"
 
 @class IOSObjectArray;
+@class JavaLangBoolean;
+@class JavaLangLong;
 @class JavaUtilOptional;
 @protocol JavaLangRunnable;
 @protocol JavaUtilComparator;
@@ -57,7 +56,7 @@
  <code>Stream</code> and <code>IntStream</code>:
   
  @code
-    int sum = widgets.stream()
+     int sum = widgets.stream()
                        .filter(w -> w.getColor() == RED)
                        .mapToInt(w -> w.getWeight())
                        .sum(); 
@@ -422,7 +421,7 @@
   accumulation function, and returns the reduced value.This is equivalent
   to: 
  @code
-    T result = identity;
+     T result = identity;
       for (T element : this stream)
           result = accumulator.apply(result, element)
       return result; 
@@ -452,7 +451,7 @@ withJavaUtilFunctionBinaryOperator:(id<JavaUtilFunctionBinaryOperator>)accumulat
   function, and returns an <code>Optional</code> describing the reduced value,
   if any.This is equivalent to: 
  @code
-    boolean foundAny = false;
+     boolean foundAny = false;
       T result = null;
       for (T element : this stream) {
           if (!
@@ -487,7 +486,7 @@ withJavaUtilFunctionBinaryOperator:(id<JavaUtilFunctionBinaryOperator>)accumulat
   elements of this stream, using the provided identity, accumulation and
   combining functions.This is equivalent to: 
  @code
-    U result = identity;
+     U result = identity;
       for (T element : this stream)
           result = accumulator.apply(result, element)
       return result; 
@@ -500,7 +499,7 @@ withJavaUtilFunctionBinaryOperator:(id<JavaUtilFunctionBinaryOperator>)accumulat
   must be compatible with the <code>accumulator</code> function; for all 
  <code>u</code> and <code>t</code>, the following must hold: 
  @code
-    combiner.apply(u, accumulator.apply(identity, t)) == accumulator.apply(u, t) 
+     combiner.apply(u, accumulator.apply(identity, t)) == accumulator.apply(u, t) 
  
 @endcode
   
@@ -531,7 +530,7 @@ withJavaUtilFunctionBinaryOperator:(id<JavaUtilFunctionBinaryOperator>)combiner;
  This
   produces a result equivalent to: 
  @code
-    R result = supplier.get();
+     R result = supplier.get();
       for (T element : this stream)
           accumulator.accept(result, element);
       return result; 
@@ -620,7 +619,7 @@ withJavaUtilFunctionBinaryOperator:(id<JavaUtilFunctionBinaryOperator>)combiner;
  <a href="package-summary.html#Reduction">reduction</a> and is
   equivalent to: 
  @code
-    return mapToLong(e -> 1L).sum(); 
+     return mapToLong(e -> 1L).sum(); 
  
 @endcode
   
@@ -870,6 +869,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilStreamStream_Builder)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaUtilStreamStream")

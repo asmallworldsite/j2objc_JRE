@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaNioFilePath
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -39,6 +36,8 @@
 
 @class IOSObjectArray;
 @class JavaIoFile;
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @class JavaNetURI;
 @class JavaNioFileFileSystem;
 @protocol JavaNioFileWatchKey;
@@ -89,7 +88,7 @@
   
 @endcode
   
- <a name="interop"></a><h2>Interoperability</h2>
+ <a id="interop"></a><h2>Interoperability</h2>
   <p> Paths associated with the default <code>provider</code>
   are generally interoperable
   with the <code>java.io.File</code> class. Paths created by other
@@ -105,7 +104,6 @@
   <p> Implementations of this interface are immutable and safe for use by
   multiple concurrent threads.
  @since 1.7
- - seealso: Paths
  */
 @protocol JavaNioFilePath < JavaLangComparable, JavaLangIterable, JavaNioFileWatchable, JavaObject >
 
@@ -696,6 +694,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaNioFilePath)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaNioFilePath")

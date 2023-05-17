@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaIoRandomAccessFile
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -40,6 +37,14 @@
 @class IOSByteArray;
 @class JavaIoFile;
 @class JavaIoFileDescriptor;
+@class JavaLangBoolean;
+@class JavaLangByte;
+@class JavaLangCharacter;
+@class JavaLangDouble;
+@class JavaLangFloat;
+@class JavaLangInteger;
+@class JavaLangLong;
+@class JavaLangShort;
 @class JavaNioChannelsFileChannel;
 
 /*!
@@ -819,6 +824,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaIoRandomAccessFile)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaIoRandomAccessFile")

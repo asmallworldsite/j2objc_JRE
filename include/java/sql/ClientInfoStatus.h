@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaSqlClientInfoStatus
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -31,12 +28,18 @@
 
 @class IOSObjectArray;
 
-typedef NS_ENUM(NSUInteger, JavaSqlClientInfoStatus_Enum) {
+typedef NS_ENUM(jint, JavaSqlClientInfoStatus_Enum) {
   JavaSqlClientInfoStatus_Enum_REASON_UNKNOWN = 0,
   JavaSqlClientInfoStatus_Enum_REASON_UNKNOWN_PROPERTY = 1,
   JavaSqlClientInfoStatus_Enum_REASON_VALUE_INVALID = 2,
   JavaSqlClientInfoStatus_Enum_REASON_VALUE_TRUNCATED = 3,
 };
+#if J2OBJC_IMPORTED_BY_JAVA_IMPLEMENTATION
+#define JavaSqlClientInfoStatus_ORDINAL jint
+#else
+#define JavaSqlClientInfoStatus_ORDINAL JavaSqlClientInfoStatus_Enum
+#endif
+
 
 /*!
  @brief Enumeration for status of the reason that a property could not be set
@@ -45,10 +48,6 @@ typedef NS_ENUM(NSUInteger, JavaSqlClientInfoStatus_Enum) {
  */
 @interface JavaSqlClientInfoStatus : JavaLangEnum
 
-@property (readonly, class, nonnull) JavaSqlClientInfoStatus *REASON_UNKNOWN NS_SWIFT_NAME(REASON_UNKNOWN);
-@property (readonly, class, nonnull) JavaSqlClientInfoStatus *REASON_UNKNOWN_PROPERTY NS_SWIFT_NAME(REASON_UNKNOWN_PROPERTY);
-@property (readonly, class, nonnull) JavaSqlClientInfoStatus *REASON_VALUE_INVALID NS_SWIFT_NAME(REASON_VALUE_INVALID);
-@property (readonly, class, nonnull) JavaSqlClientInfoStatus *REASON_VALUE_TRUNCATED NS_SWIFT_NAME(REASON_VALUE_TRUNCATED);
 #pragma mark Public
 
 + (JavaSqlClientInfoStatus *)valueOfWithNSString:(NSString *)name;
@@ -58,6 +57,8 @@ typedef NS_ENUM(NSUInteger, JavaSqlClientInfoStatus_Enum) {
 #pragma mark Package-Private
 
 - (JavaSqlClientInfoStatus_Enum)toNSEnum;
+
+- (JavaSqlClientInfoStatus_ORDINAL)ordinal;
 
 @end
 
@@ -99,7 +100,7 @@ FOUNDATION_EXPORT IOSObjectArray *JavaSqlClientInfoStatus_values(void);
 
 FOUNDATION_EXPORT JavaSqlClientInfoStatus *JavaSqlClientInfoStatus_valueOfWithNSString_(NSString *name);
 
-FOUNDATION_EXPORT JavaSqlClientInfoStatus *JavaSqlClientInfoStatus_fromOrdinal(NSUInteger ordinal);
+FOUNDATION_EXPORT JavaSqlClientInfoStatus *JavaSqlClientInfoStatus_fromOrdinal(JavaSqlClientInfoStatus_ORDINAL ordinal);
 
 J2OBJC_TYPE_LITERAL_HEADER(JavaSqlClientInfoStatus)
 
@@ -109,6 +110,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaSqlClientInfoStatus)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaSqlClientInfoStatus")

@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaLangInstantiationException
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -42,9 +39,8 @@
        an array class, a primitive type, or <code>void</code>
   <li> the class has no nullary constructor
  </ul>
- @author unascribed
  - seealso: java.lang.Class#newInstance()
- @since JDK1.0
+ @since 1.0
  */
 @interface JavaLangInstantiationException : JavaLangReflectiveOperationException
 
@@ -93,6 +89,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaLangInstantiationException)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaLangInstantiationException")

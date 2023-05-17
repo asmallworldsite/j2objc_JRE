@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaUtilConcurrentArrayBlockingQueue
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -38,10 +35,15 @@
 #include "java/io/Serializable.h"
 
 @class IOSObjectArray;
+@class JavaLangBoolean;
+@class JavaLangInteger;
+@class JavaLangLong;
 @class JavaUtilConcurrentArrayBlockingQueue_Itrs;
 @class JavaUtilConcurrentLocksReentrantLock;
 @class JavaUtilConcurrentTimeUnit;
 @protocol JavaUtilCollection;
+@protocol JavaUtilFunctionConsumer;
+@protocol JavaUtilFunctionPredicate;
 @protocol JavaUtilIterator;
 @protocol JavaUtilSpliterator;
 
@@ -66,9 +68,11 @@
   to <code>true</code> grants threads access in FIFO order. Fairness
   generally decreases throughput but reduces variability and avoids
   starvation. 
- <p>This class and its iterator implement all of the 
- <em>optional</em> methods of the <code>Collection</code> and <code>Iterator</code>
-  interfaces.
+ <p>This class and its iterator implement all of the <em>optional</em>
+  methods of the <code>Collection</code> and <code>Iterator</code> interfaces. 
+ <p>This class is a member of the 
+ <a href="{@@docRoot}/java.base/java/util/package-summary.html#CollectionsFramework">
+  Java Collections Framework</a>.
  @since 1.5
  @author Doug Lea
  */
@@ -188,6 +192,11 @@
                               withInt:(jint)maxElements;
 
 /*!
+ @throw NullPointerException
+ */
+- (void)forEachWithJavaUtilFunctionConsumer:(id<JavaUtilFunctionConsumer>)action;
+
+/*!
  @brief Returns an iterator over the elements in this queue in proper sequence.
  The elements will be returned in order from first (head) to last (tail). 
  <p>The returned iterator is 
@@ -262,6 +271,21 @@ withJavaUtilConcurrentTimeUnit:(JavaUtilConcurrentTimeUnit *)unit;
 - (jboolean)removeWithId:(id)o;
 
 /*!
+ @throw NullPointerException
+ */
+- (jboolean)removeAllWithJavaUtilCollection:(id<JavaUtilCollection>)c;
+
+/*!
+ @throw NullPointerException
+ */
+- (jboolean)removeIfWithJavaUtilFunctionPredicate:(id<JavaUtilFunctionPredicate>)filter;
+
+/*!
+ @throw NullPointerException
+ */
+- (jboolean)retainAllWithJavaUtilCollection:(id<JavaUtilCollection>)c;
+
+/*!
  @brief Returns the number of elements in this queue.
  @return the number of elements in this queue
  */
@@ -333,14 +357,35 @@ withJavaUtilConcurrentTimeUnit:(JavaUtilConcurrentTimeUnit *)unit;
 #pragma mark Package-Private
 
 /*!
- @brief Circularly decrements array index i.
+ @brief debugging
  */
-- (jint)decWithInt:(jint)i;
+- (void)checkInvariants;
+
+/*!
+ @brief Decrements i, mod modulus.
+ Precondition and postcondition: 0 <= i < modulus.
+ */
++ (jint)decWithInt:(jint)i
+           withInt:(jint)modulus;
+
+/*!
+ @brief Increments i, mod modulus.
+ Precondition and postcondition: 0 <= i < modulus.
+ */
++ (jint)incWithInt:(jint)i
+           withInt:(jint)modulus;
 
 /*!
  @brief Returns item at index i.
  */
 - (id)itemAtWithInt:(jint)i;
+
+/*!
+ @brief Returns element at array index i.
+ This is a slight abuse of generics, accepted by javac.
+ */
++ (id)itemAtWithNSObjectArray:(IOSObjectArray *)items
+                      withInt:(jint)i;
 
 /*!
  @brief Deletes item at array index removeIndex.
@@ -360,6 +405,12 @@ J2OBJC_EMPTY_STATIC_INIT(JavaUtilConcurrentArrayBlockingQueue)
 J2OBJC_FIELD_SETTER(JavaUtilConcurrentArrayBlockingQueue, items_, IOSObjectArray *)
 J2OBJC_FIELD_SETTER(JavaUtilConcurrentArrayBlockingQueue, lock_, JavaUtilConcurrentLocksReentrantLock *)
 J2OBJC_FIELD_SETTER(JavaUtilConcurrentArrayBlockingQueue, itrs_, JavaUtilConcurrentArrayBlockingQueue_Itrs *)
+
+FOUNDATION_EXPORT jint JavaUtilConcurrentArrayBlockingQueue_incWithInt_withInt_(jint i, jint modulus);
+
+FOUNDATION_EXPORT jint JavaUtilConcurrentArrayBlockingQueue_decWithInt_withInt_(jint i, jint modulus);
+
+FOUNDATION_EXPORT id JavaUtilConcurrentArrayBlockingQueue_itemAtWithNSObjectArray_withInt_(IOSObjectArray *items, jint i);
 
 FOUNDATION_EXPORT void JavaUtilConcurrentArrayBlockingQueue_initWithInt_(JavaUtilConcurrentArrayBlockingQueue *self, jint capacity);
 
@@ -386,6 +437,8 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentArrayBlockingQueue)
 #if !defined (JavaUtilConcurrentArrayBlockingQueue_Itrs_) && (INCLUDE_ALL_JavaUtilConcurrentArrayBlockingQueue || defined(INCLUDE_JavaUtilConcurrentArrayBlockingQueue_Itrs))
 #define JavaUtilConcurrentArrayBlockingQueue_Itrs_
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @class JavaUtilConcurrentArrayBlockingQueue;
 @class JavaUtilConcurrentArrayBlockingQueue_Itr;
 
@@ -503,6 +556,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentArrayBlockingQueue_Itrs)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaUtilConcurrentArrayBlockingQueue")

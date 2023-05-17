@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaLangInvokeMethodHandleInfo
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -26,6 +23,8 @@
 #define JavaLangInvokeMethodHandleInfo_
 
 @class IOSClass;
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @class JavaLangInvokeMethodHandles_Lookup;
 @class JavaLangInvokeMethodType;
 @protocol JavaLangReflectMember;
@@ -50,15 +49,6 @@
 @end
 
 @interface JavaLangInvokeMethodHandleInfo : NSObject
-@property (readonly, class) jint REF_getField NS_SWIFT_NAME(REF_getField);
-@property (readonly, class) jint REF_getStatic NS_SWIFT_NAME(REF_getStatic);
-@property (readonly, class) jint REF_putField NS_SWIFT_NAME(REF_putField);
-@property (readonly, class) jint REF_putStatic NS_SWIFT_NAME(REF_putStatic);
-@property (readonly, class) jint REF_invokeVirtual NS_SWIFT_NAME(REF_invokeVirtual);
-@property (readonly, class) jint REF_invokeStatic NS_SWIFT_NAME(REF_invokeStatic);
-@property (readonly, class) jint REF_invokeSpecial NS_SWIFT_NAME(REF_invokeSpecial);
-@property (readonly, class) jint REF_newInvokeSpecial NS_SWIFT_NAME(REF_newInvokeSpecial);
-@property (readonly, class) jint REF_invokeInterface NS_SWIFT_NAME(REF_invokeInterface);
 
 + (NSString *)referenceKindToStringWithInt:(jint)referenceKind;
 
@@ -121,6 +111,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaLangInvokeMethodHandleInfo)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaLangInvokeMethodHandleInfo")

@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaNetInetSocketAddress
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -29,6 +26,8 @@
 #define INCLUDE_JavaNetSocketAddress 1
 #include "java/net/SocketAddress.h"
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @class JavaNetInetAddress;
 
 /*!
@@ -244,6 +243,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaNetInetSocketAddress)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaNetInetSocketAddress")

@@ -19,9 +19,6 @@
 #define INCLUDE_JavaUtilConcurrentLocksReentrantLock_Sync 1
 #endif
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -39,6 +36,9 @@
 #define INCLUDE_JavaIoSerializable 1
 #include "java/io/Serializable.h"
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
+@class JavaLangLong;
 @class JavaLangThread;
 @class JavaUtilConcurrentTimeUnit;
 @protocol JavaUtilCollection;
@@ -534,6 +534,8 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentLocksReentrantLock)
 #define INCLUDE_JavaUtilConcurrentLocksAbstractQueuedSynchronizer 1
 #include "java/util/concurrent/locks/AbstractQueuedSynchronizer.h"
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @class JavaLangThread;
 @class JavaUtilConcurrentLocksAbstractQueuedSynchronizer_ConditionObject;
 
@@ -588,6 +590,9 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentLocksReentrantLock_Sync)
 #if !defined (JavaUtilConcurrentLocksReentrantLock_NonfairSync_) && (INCLUDE_ALL_JavaUtilConcurrentLocksReentrantLock || defined(INCLUDE_JavaUtilConcurrentLocksReentrantLock_NonfairSync))
 #define JavaUtilConcurrentLocksReentrantLock_NonfairSync_
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
+
 /*!
  @brief Sync object for non-fair locks
  */
@@ -623,6 +628,9 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentLocksReentrantLock_NonfairSync)
 
 #if !defined (JavaUtilConcurrentLocksReentrantLock_FairSync_) && (INCLUDE_ALL_JavaUtilConcurrentLocksReentrantLock || defined(INCLUDE_JavaUtilConcurrentLocksReentrantLock_FairSync))
 #define JavaUtilConcurrentLocksReentrantLock_FairSync_
+
+@class JavaLangBoolean;
+@class JavaLangInteger;
 
 /*!
  @brief Sync object for fair locks
@@ -661,6 +669,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentLocksReentrantLock_FairSync)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaUtilConcurrentLocksReentrantLock")

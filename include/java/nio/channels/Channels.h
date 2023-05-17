@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaNioChannelsChannels
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -29,6 +26,8 @@
 @class JavaIoOutputStream;
 @class JavaIoReader;
 @class JavaIoWriter;
+@class JavaLangInteger;
+@class JavaNioCharsetCharset;
 @class JavaNioCharsetCharsetDecoder;
 @class JavaNioCharsetCharsetEncoder;
 @protocol JavaNioChannelsAsynchronousByteChannel;
@@ -38,8 +37,8 @@
 /*!
  @brief Utility methods for channels and streams.
  <p> This class defines static methods that support the interoperation of the
-  stream classes of the <tt><code>java.io</code></tt> package with the channel
-  classes of this package.  </p>
+  stream classes of the <code>java.io</code> package with the channel classes
+  of this package.  </p>
  @author Mark Reinhold
  @author Mike McCloskey
  @author JSR-51 Expert Group
@@ -83,7 +82,7 @@
 
 /*!
  @brief Constructs a stream that reads bytes from the given channel.
- <p> The <tt>read</tt> methods of the resulting stream will throw an 
+ <p> The <code>read</code> methods of the resulting stream will throw an 
  <code>IllegalBlockingModeException</code> if invoked while the underlying
   channel is in non-blocking mode.  The stream will not be buffered, and
   it will not support the <code>mark</code> or <code>reset</code>
@@ -108,7 +107,7 @@
 
 /*!
  @brief Constructs a stream that writes bytes to the given channel.
- <p> The <tt>write</tt> methods of the resulting stream will throw an 
+ <p> The <code>write</code> methods of the resulting stream will throw an 
  <code>IllegalBlockingModeException</code> if invoked while the underlying
   channel is in non-blocking mode.  The stream will not be buffered.  The
   stream will be safe for access by multiple concurrent threads.  Closing
@@ -119,10 +118,35 @@
 + (JavaIoOutputStream *)newOutputStreamWithJavaNioChannelsWritableByteChannel:(id<JavaNioChannelsWritableByteChannel>)ch OBJC_METHOD_FAMILY_NONE;
 
 /*!
+ @brief Constructs a reader that decodes bytes from the given channel according
+  to the given charset.
+ <p> An invocation of this method of the form 
+ @code
+      Channels.newReader(ch, charset) 
+  
+@endcode
+  behaves in exactly the same way as the expression 
+ @code
+      Channels.newReader(ch, Charset.forName(csName).newDecoder(), -1) 
+  
+@endcode
+  
+ <p> The reader's default action for malformed-input and unmappable-character
+  errors is to report
+  them. When more control over the error handling is required, the constructor
+  that takes a java.nio.charset.CharsetDecoder should be used.
+ @param ch The channel from which bytes will be read
+ @param charset The charset to be used
+ @return A new reader
+ */
++ (JavaIoReader *)newReaderWithJavaNioChannelsReadableByteChannel:(id<JavaNioChannelsReadableByteChannel>)ch
+                                        withJavaNioCharsetCharset:(JavaNioCharsetCharset *)charset OBJC_METHOD_FAMILY_NONE;
+
+/*!
  @brief Constructs a reader that decodes bytes from the given channel using the
   given decoder.
  <p> The resulting stream will contain an internal input buffer of at
-  least <tt>minBufferCap</tt> bytes.  The stream's <tt>read</tt> methods
+  least <code>minBufferCap</code> bytes.  The stream's <code>read</code> methods
   will, as needed, fill the buffer by reading bytes from the underlying
   channel; if the channel is in non-blocking mode when bytes are to be
   read then an <code>IllegalBlockingModeException</code> will be thrown.  The
@@ -132,8 +156,8 @@
  @param ch The channel from which bytes will be read
  @param dec The charset decoder to be used
  @param minBufferCap The minimum capacity of the internal byte buffer,
-           or  <tt>
-  -1 </tt>  if an implementation-dependent          default capacity is to be used
+           or <code>-1</code>
+   if an implementation-dependent          default capacity is to be used
  @return A new reader
  */
 + (JavaIoReader *)newReaderWithJavaNioChannelsReadableByteChannel:(id<JavaNioChannelsReadableByteChannel>)ch
@@ -144,18 +168,15 @@
  @brief Constructs a reader that decodes bytes from the given channel according
   to the named charset.
  <p> An invocation of this method of the form 
- <blockquote>@code
-
-  Channels.newReader(ch, csname)
-@endcode</blockquote>
+ @code
+      Channels.newReader(ch, csname) 
+  
+@endcode
   behaves in exactly the same way as the expression 
- <blockquote>@code
-
-  Channels.newReader(ch,
-                     Charset.forName(csName)
-                         .newDecoder(),
-                     -1);
-@endcode</blockquote>
+ @code
+      Channels.newReader(ch, Charset.forName(csName)) 
+  
+@endcode
  @param ch The channel from which bytes will be read
  @param csName The name of the charset to be used
  @return A new reader
@@ -167,10 +188,35 @@
                                                      withNSString:(NSString *)csName OBJC_METHOD_FAMILY_NONE;
 
 /*!
+ @brief Constructs a writer that encodes characters according to the given
+  charset and writes the resulting bytes to the given channel.
+ <p> An invocation of this method of the form 
+ @code
+      Channels.newWriter(ch, charset) 
+  
+@endcode
+  behaves in exactly the same way as the expression 
+ @code
+      Channels.newWriter(ch, Charset.forName(csName).newEncoder(), -1) 
+  
+@endcode
+  
+ <p> The writer's default action for malformed-input and unmappable-character
+  errors is to report
+  them. When more control over the error handling is required, the constructor
+  that takes a java.nio.charset.CharsetEncoder should be used.
+ @param ch The channel to which bytes will be written
+ @param charset The charset to be used
+ @return A new writer
+ */
++ (JavaIoWriter *)newWriterWithJavaNioChannelsWritableByteChannel:(id<JavaNioChannelsWritableByteChannel>)ch
+                                        withJavaNioCharsetCharset:(JavaNioCharsetCharset *)charset OBJC_METHOD_FAMILY_NONE;
+
+/*!
  @brief Constructs a writer that encodes characters using the given encoder and
   writes the resulting bytes to the given channel.
  <p> The resulting stream will contain an internal output buffer of at
-  least <tt>minBufferCap</tt> bytes.  The stream's <tt>write</tt> methods
+  least <code>minBufferCap</code> bytes.  The stream's <code>write</code> methods
   will, as needed, flush the buffer by writing bytes to the underlying
   channel; if the channel is in non-blocking mode when bytes are to be
   written then an <code>IllegalBlockingModeException</code> will be thrown.
@@ -179,8 +225,8 @@
  @param ch The channel to which bytes will be written
  @param enc The charset encoder to be used
  @param minBufferCap The minimum capacity of the internal byte buffer,
-           or  <tt>
-  -1 </tt>  if an implementation-dependent          default capacity is to be used
+           or <code>-1</code>
+   if an implementation-dependent          default capacity is to be used
  @return A new writer
  */
 + (JavaIoWriter *)newWriterWithJavaNioChannelsWritableByteChannel:(id<JavaNioChannelsWritableByteChannel>)ch
@@ -191,18 +237,15 @@
  @brief Constructs a writer that encodes characters according to the named
   charset and writes the resulting bytes to the given channel.
  <p> An invocation of this method of the form 
- <blockquote>@code
-
-  Channels.newWriter(ch, csname)
-@endcode</blockquote>
+ @code
+      Channels.newWriter(ch, csname) 
+  
+@endcode
   behaves in exactly the same way as the expression 
- <blockquote>@code
-
-  Channels.newWriter(ch,
-                     Charset.forName(csName)
-                         .newEncoder(),
-                     -1);
-@endcode</blockquote>
+ @code
+      Channels.newWriter(ch, Charset.forName(csName)) 
+  
+@endcode
  @param ch The channel to which bytes will be written
  @param csName The name of the charset to be used
  @return A new writer
@@ -233,9 +276,13 @@ FOUNDATION_EXPORT JavaIoReader *JavaNioChannelsChannels_newReaderWithJavaNioChan
 
 FOUNDATION_EXPORT JavaIoReader *JavaNioChannelsChannels_newReaderWithJavaNioChannelsReadableByteChannel_withNSString_(id<JavaNioChannelsReadableByteChannel> ch, NSString *csName);
 
+FOUNDATION_EXPORT JavaIoReader *JavaNioChannelsChannels_newReaderWithJavaNioChannelsReadableByteChannel_withJavaNioCharsetCharset_(id<JavaNioChannelsReadableByteChannel> ch, JavaNioCharsetCharset *charset);
+
 FOUNDATION_EXPORT JavaIoWriter *JavaNioChannelsChannels_newWriterWithJavaNioChannelsWritableByteChannel_withJavaNioCharsetCharsetEncoder_withInt_(id<JavaNioChannelsWritableByteChannel> ch, JavaNioCharsetCharsetEncoder *enc, jint minBufferCap);
 
 FOUNDATION_EXPORT JavaIoWriter *JavaNioChannelsChannels_newWriterWithJavaNioChannelsWritableByteChannel_withNSString_(id<JavaNioChannelsWritableByteChannel> ch, NSString *csName);
+
+FOUNDATION_EXPORT JavaIoWriter *JavaNioChannelsChannels_newWriterWithJavaNioChannelsWritableByteChannel_withJavaNioCharsetCharset_(id<JavaNioChannelsWritableByteChannel> ch, JavaNioCharsetCharset *charset);
 
 J2OBJC_TYPE_LITERAL_HEADER(JavaNioChannelsChannels)
 
@@ -245,6 +292,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaNioChannelsChannels)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaNioChannelsChannels")

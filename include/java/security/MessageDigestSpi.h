@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaSecurityMessageDigestSpi
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -26,6 +23,8 @@
 #define JavaSecurityMessageDigestSpi_
 
 @class IOSByteArray;
+@class JavaLangByte;
+@class JavaLangInteger;
 @class JavaNioByteBuffer;
 
 /*!
@@ -39,6 +38,7 @@
   of a particular message digest algorithm. 
  <p> Implementations are free to implement the Cloneable interface.
  @author Benjamin Renaud
+ @since 1.2
  - seealso: MessageDigest
  */
 @interface JavaSecurityMessageDigestSpi : NSObject
@@ -154,6 +154,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaSecurityMessageDigestSpi)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaSecurityMessageDigestSpi")

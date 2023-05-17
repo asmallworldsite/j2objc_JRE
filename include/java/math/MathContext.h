@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaMathMathContext
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -29,6 +26,8 @@
 #define INCLUDE_JavaIoSerializable 1
 #include "java/io/Serializable.h"
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @class JavaMathRoundingMode;
 
 /*!
@@ -67,10 +66,6 @@
    */
   JavaMathRoundingMode *roundingMode_;
 }
-@property (readonly, class, strong) JavaMathMathContext *UNLIMITED NS_SWIFT_NAME(UNLIMITED);
-@property (readonly, class, strong) JavaMathMathContext *DECIMAL32 NS_SWIFT_NAME(DECIMAL32);
-@property (readonly, class, strong) JavaMathMathContext *DECIMAL64 NS_SWIFT_NAME(DECIMAL64);
-@property (readonly, class, strong) JavaMathMathContext *DECIMAL128 NS_SWIFT_NAME(DECIMAL128);
 
 #pragma mark Public
 
@@ -266,6 +261,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaMathMathContext)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaMathMathContext")

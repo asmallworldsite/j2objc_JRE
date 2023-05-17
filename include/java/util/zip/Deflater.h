@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaUtilZipDeflater
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -26,6 +23,9 @@
 #define JavaUtilZipDeflater_
 
 @class IOSByteArray;
+@class JavaLangBoolean;
+@class JavaLangInteger;
+@class JavaLangLong;
 
 /*!
  @brief This class provides support for general purpose compression using the
@@ -82,17 +82,6 @@
   jboolean finish_;
   jboolean finished_;
 }
-@property (readonly, class) jint DEFLATED NS_SWIFT_NAME(DEFLATED);
-@property (readonly, class) jint NO_COMPRESSION NS_SWIFT_NAME(NO_COMPRESSION);
-@property (readonly, class) jint BEST_SPEED NS_SWIFT_NAME(BEST_SPEED);
-@property (readonly, class) jint BEST_COMPRESSION NS_SWIFT_NAME(BEST_COMPRESSION);
-@property (readonly, class) jint DEFAULT_COMPRESSION NS_SWIFT_NAME(DEFAULT_COMPRESSION);
-@property (readonly, class) jint FILTERED NS_SWIFT_NAME(FILTERED);
-@property (readonly, class) jint HUFFMAN_ONLY NS_SWIFT_NAME(HUFFMAN_ONLY);
-@property (readonly, class) jint DEFAULT_STRATEGY NS_SWIFT_NAME(DEFAULT_STRATEGY);
-@property (readonly, class) jint NO_FLUSH NS_SWIFT_NAME(NO_FLUSH);
-@property (readonly, class) jint SYNC_FLUSH NS_SWIFT_NAME(SYNC_FLUSH);
-@property (readonly, class) jint FULL_FLUSH NS_SWIFT_NAME(FULL_FLUSH);
 
 #pragma mark Public
 
@@ -475,6 +464,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilZipDeflater)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaUtilZipDeflater")

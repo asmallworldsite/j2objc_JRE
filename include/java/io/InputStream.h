@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaIoInputStream
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -30,6 +27,10 @@
 #include "java/io/Closeable.h"
 
 @class IOSByteArray;
+@class JavaIoOutputStream;
+@class JavaLangBoolean;
+@class JavaLangInteger;
+@class JavaLangLong;
 
 /*!
  @brief This abstract class is the superclass of all classes representing
@@ -44,35 +45,38 @@
  - seealso: java.io.InputStream#read()
  - seealso: java.io.OutputStream
  - seealso: java.io.PushbackInputStream
- @since JDK1.0
+ @since 1.0
  */
 @interface JavaIoInputStream : NSObject < JavaIoCloseable >
 
 #pragma mark Public
 
+/*!
+ @brief Constructor for subclasses to call.
+ */
 - (instancetype __nonnull)init;
 
 /*!
- @brief Returns an estimate of the number of bytes that can be read (or
-  skipped over) from this input stream without blocking by the next
-  invocation of a method for this input stream.The next invocation
-  might be the same thread or another thread.
- A single read or skip of this
-  many bytes will not block, but may read or skip fewer bytes. 
- <p> Note that while some implementations of <code>InputStream</code> will return
-  the total number of bytes in the stream, many will not.  It is
+ @brief Returns an estimate of the number of bytes that can be read (or skipped
+  over) from this input stream without blocking, which may be 0, or 0 when
+  end of stream is detected.The read might be on the same thread or
+  another thread.
+ A single read or skip of this many bytes will not block,
+  but may read or skip fewer bytes. 
+ <p> Note that while some implementations of <code>InputStream</code> will
+  return the total number of bytes in the stream, many will not.  It is
   never correct to use the return value of this method to allocate
   a buffer intended to hold all data in this stream. 
- <p> A subclass' implementation of this method may choose to throw an 
- <code>IOException</code> if this input stream has been closed by
-  invoking the <code>close()</code> method. 
- <p> The <code>available</code> method for class <code>InputStream</code> always
-  returns <code>0</code>.
+ <p> A subclass's implementation of this method may choose to throw an 
+ <code>IOException</code> if this input stream has been closed by invoking the 
+ <code>close()</code> method. 
+ <p> The <code>available</code> method of <code>InputStream</code> always returns 
+ <code>0</code>.
   
  <p> This method should be overridden by subclasses.
- @return an estimate of the number of bytes that can be read (or skipped
-              over) from this input stream without blocking or <code>0</code> when
-              it reaches the end of the input stream.
+ @return an estimate of the number of bytes that can be read (or
+              skipped over) from this input stream without blocking or             
+ <code>0</code> when it reaches the end of the input stream.
  @throw IOExceptionif an I/O error occurs.
  */
 - (jint)available;
@@ -123,6 +127,28 @@
 - (jboolean)markSupported;
 
 /*!
+ @brief Returns a new <code>InputStream</code> that reads no bytes.The returned
+  stream is initially open.
+ The stream is closed by calling the 
+ <code>close()</code> method.  Subsequent calls to <code>close()</code> have no
+  effect. 
+ <p> While the stream is open, the <code>available()</code>, <code>read()</code>,
+  <code>read(byte[])</code>, <code>read(byte[], int, int)</code>,
+  <code>readAllBytes()</code>, <code>readNBytes(byte[], int, int)</code>,
+  <code>readNBytes(int)</code>, <code>skip(long)</code>, <code>skipNBytes(long)</code>,
+  and <code>transferTo()</code> methods all behave as if end of stream has been
+  reached.  After the stream has been closed, these methods all throw 
+ <code>IOException</code>.
+  
+ <p> The <code>markSupported()</code> method returns <code>false</code>.  The 
+ <code>mark()</code> method does nothing, and the <code>reset()</code> method
+  throws <code>IOException</code>.
+ @return an <code>InputStream</code> which contains no bytes
+ @since 11
+ */
++ (JavaIoInputStream *)nullInputStream;
+
+/*!
  @brief Reads the next byte of data from the input stream.The value byte is
   returned as an <code>int</code> in the range <code>0</code> to 
  <code>255</code>.
@@ -158,15 +184,15 @@
  <code>b[b.length-1]</code> unaffected. 
  <p> The <code>read(b)</code> method for class <code>InputStream</code>
   has the same effect as: @code
-<code> read(b, 0, b.length) </code>
+ read(b, 0, b.length) 
 @endcode
  @param b the buffer into which the data is read.
  @return the total number of bytes read into the buffer, or
               <code>-1</code> if there is no more data because the end of
               the stream has been reached.
  @throw IOExceptionIf the first byte cannot be read for any reason
-  other than the end of the file, if the input stream has been closed, or
-  if some other I/O error occurs.
+              other than the end of the file, if the input stream has been
+              closed, or if some other I/O error occurs.
  @throw NullPointerExceptionif <code>b</code> is <code>null</code>.
  - seealso: java.io.InputStream#read(byte[], int, int)
  */
@@ -193,9 +219,9 @@
   leaving elements <code>b[off+</code><i>k</i><code>]</code> through 
  <code>b[off+len-1]</code> unaffected. 
  <p> In every case, elements <code>b[0]</code> through 
- <code>b[off]</code> and elements <code>b[off+len]</code> through 
+ <code>b[off-1]</code> and elements <code>b[off+len]</code> through 
  <code>b[b.length-1]</code> are unaffected. 
- <p> The <code>read(b,</code> <code>off,</code> <code>len)</code> method
+ <p> The <code>read(b, off, len)</code> method
   for class <code>InputStream</code> simply calls the method 
  <code>read()</code> repeatedly. If the first such call results in an 
  <code>IOException</code>, that exception is returned from the call to the 
@@ -206,27 +232,130 @@
  <code>b</code> and the number of bytes read before the exception
   occurred is returned. The default implementation of this method blocks
   until the requested amount of input data <code>len</code> has been read,
-  end of file is detected, or an exception is thrown. Subclasses are encouraged
-  to provide a more efficient implementation of this method.
+  end of file is detected, or an exception is thrown. Subclasses are
+  encouraged to provide a more efficient implementation of this method.
  @param b the buffer into which the data is read.
- @param off the start offset in array  <code> b </code>
-                     at which the data is written.
+ @param off the start offset in array <code>b</code>                    at which the data is written.
  @param len the maximum number of bytes to read.
  @return the total number of bytes read into the buffer, or
               <code>-1</code> if there is no more data because the end of
               the stream has been reached.
  @throw IOExceptionIf the first byte cannot be read for any reason
-  other than end of file, or if the input stream has been closed, or if
-  some other I/O error occurs.
+              other than end of file, or if the input stream has been closed,
+              or if some other I/O error occurs.
  @throw NullPointerExceptionIf <code>b</code> is <code>null</code>.
- @throw IndexOutOfBoundsExceptionIf <code>off</code> is negative, 
- <code>len</code> is negative, or <code>len</code> is greater than 
- <code>b.length - off</code>
+ @throw IndexOutOfBoundsExceptionIf <code>off</code> is negative,
+              <code>len</code> is negative, or <code>len</code> is greater than
+              <code>b.length - off</code>
  - seealso: java.io.InputStream#read()
  */
 - (jint)readWithByteArray:(IOSByteArray *)b
                   withInt:(jint)off
                   withInt:(jint)len;
+
+/*!
+ @brief Reads all remaining bytes from the input stream.This method blocks until
+  all remaining bytes have been read and end of stream is detected, or an
+  exception is thrown.
+ This method does not close the input stream. 
+ <p> When this stream reaches end of stream, further invocations of this
+  method will return an empty byte array. 
+ <p> Note that this method is intended for simple cases where it is
+  convenient to read all bytes into a byte array. It is not intended for
+  reading input streams with large amounts of data. 
+ <p> The behavior for the case where the input stream is <i>asynchronously
+  closed</i>, or the thread interrupted during the read, is highly input
+  stream specific, and therefore not specified. 
+ <p> If an I/O error occurs reading from the input stream, then it may do
+  so after some, but not all, bytes have been read. Consequently the input
+  stream may not be at end of stream and may be in an inconsistent state.
+  It is strongly recommended that the stream be promptly closed if an I/O
+  error occurs.
+ @return a byte array containing the bytes read from this input stream
+ @throw IOExceptionif an I/O error occurs
+ @throw OutOfMemoryErrorif an array of the required size cannot be
+          allocated.
+ @since 9
+ */
+- (IOSByteArray *)readAllBytes;
+
+/*!
+ @brief Reads the requested number of bytes from the input stream into the given
+  byte array.This method blocks until <code>len</code> bytes of input data have
+  been read, end of stream is detected, or an exception is thrown.
+ The
+  number of bytes actually read, possibly zero, is returned. This method
+  does not close the input stream. 
+ <p> In the case where end of stream is reached before <code>len</code> bytes
+  have been read, then the actual number of bytes read will be returned.
+  When this stream reaches end of stream, further invocations of this
+  method will return zero. 
+ <p> If <code>len</code> is zero, then no bytes are read and <code>0</code> is
+  returned; otherwise, there is an attempt to read up to <code>len</code> bytes. 
+ <p> The first byte read is stored into element <code>b[off]</code>, the next
+  one in to <code>b[off+1]</code>, and so on. The number of bytes read is, at
+  most, equal to <code>len</code>. Let <i>k</i> be the number of bytes actually
+  read; these bytes will be stored in elements <code>b[off]</code> through 
+ <code>b[off+</code><i>k</i><code>-1]</code>, leaving elements <code>b[off+</code><i>k</i>
+  <code>]</code> through <code>b[off+len-1]</code> unaffected. 
+ <p> The behavior for the case where the input stream is <i>asynchronously
+  closed</i>, or the thread interrupted during the read, is highly input
+  stream specific, and therefore not specified. 
+ <p> If an I/O error occurs reading from the input stream, then it may do
+  so after some, but not all, bytes of <code>b</code> have been updated with
+  data from the input stream. Consequently the input stream and <code>b</code>
+  may be in an inconsistent state. It is strongly recommended that the
+  stream be promptly closed if an I/O error occurs.
+ @param b the byte array into which the data is read
+ @param off the start offset in <code>b</code>  at which the data is written
+ @param len the maximum number of bytes to read
+ @return the actual number of bytes read into the buffer
+ @throw IOExceptionif an I/O error occurs
+ @throw NullPointerExceptionif <code>b</code> is <code>null</code>
+ @throw IndexOutOfBoundsExceptionIf <code>off</code> is negative, <code>len</code>
+          is negative, or <code>len</code> is greater than <code>b.length - off</code>
+ @since 9
+ */
+- (jint)readNBytesWithByteArray:(IOSByteArray *)b
+                        withInt:(jint)off
+                        withInt:(jint)len;
+
+/*!
+ @brief Reads up to a specified number of bytes from the input stream.This
+  method blocks until the requested number of bytes has been read, end
+  of stream is detected, or an exception is thrown.
+ This method does not
+  close the input stream. 
+ <p> The length of the returned array equals the number of bytes read
+  from the stream. If <code>len</code> is zero, then no bytes are read and
+  an empty byte array is returned. Otherwise, up to <code>len</code> bytes
+  are read from the stream. Fewer than <code>len</code> bytes may be read if
+  end of stream is encountered. 
+ <p> When this stream reaches end of stream, further invocations of this
+  method will return an empty byte array. 
+ <p> Note that this method is intended for simple cases where it is
+  convenient to read the specified number of bytes into a byte array. The
+  total amount of memory allocated by this method is proportional to the
+  number of bytes read from the stream which is bounded by <code>len</code>.
+  Therefore, the method may be safely called with very large values of 
+ <code>len</code> provided sufficient memory is available. 
+ <p> The behavior for the case where the input stream is <i>asynchronously
+  closed</i>, or the thread interrupted during the read, is highly input
+  stream specific, and therefore not specified. 
+ <p> If an I/O error occurs reading from the input stream, then it may do
+  so after some, but not all, bytes have been read. Consequently the input
+  stream may not be at end of stream and may be in an inconsistent state.
+  It is strongly recommended that the stream be promptly closed if an I/O
+  error occurs.
+ @param len the maximum number of bytes to read
+ @return a byte array containing the bytes read from this input stream
+ @throw IllegalArgumentExceptionif <code>length</code> is negative
+ @throw IOExceptionif an I/O error occurs
+ @throw OutOfMemoryErrorif an array of the required size cannot be
+          allocated.
+ @since 11
+ */
+- (IOSByteArray *)readNBytesWithInt:(jint)len;
 
 /*!
  @brief Repositions this stream to the position at the time the 
@@ -265,7 +394,7 @@
  <p>The method <code>reset</code> for class <code>InputStream</code>
   does nothing except throw an <code>IOException</code>.
  @throw IOExceptionif this stream has not been marked or if the
-                mark has been invalidated.
+           mark has been invalidated.
  - seealso: java.io.InputStream#mark(int)
  - seealso: java.io.IOException
  */
@@ -281,23 +410,73 @@
   negative, the <code>skip</code> method for class <code>InputStream</code> always
   returns 0, and no bytes are skipped. Subclasses may handle the negative
   value differently. 
- <p> The <code>skip</code> method of this class creates a
+ <p> The <code>skip</code> method implementation of this class creates a
   byte array and then repeatedly reads into it until <code>n</code> bytes
   have been read or the end of the stream has been reached. Subclasses are
   encouraged to provide a more efficient implementation of this method.
   For instance, the implementation may depend on the ability to seek.
  @param n the number of bytes to be skipped.
- @return the actual number of bytes skipped.
- @throw IOExceptionif the stream does not support seek,
-                           or if some other I/O error occurs.
+ @return the actual number of bytes skipped which might be zero.
+ @throw IOExceptionif an I/O error occurs.
+ - seealso: java.io.InputStream#skipNBytes(long)
  */
 - (jlong)skipWithLong:(jlong)n;
+
+/*!
+ @brief Skips over and discards exactly <code>n</code> bytes of data from this input
+  stream.If <code>n</code> is zero, then no bytes are skipped.
+ If <code>n</code> is negative, then no bytes are skipped.
+  Subclasses may handle the negative value differently. 
+ <p> This method blocks until the requested number of bytes has been
+  skipped, end of file is reached, or an exception is thrown. 
+ <p> If end of stream is reached before the stream is at the desired
+  position, then an <code>EOFException</code> is thrown. 
+ <p> If an I/O error occurs, then the input stream may be
+  in an inconsistent state. It is strongly recommended that the
+  stream be promptly closed if an I/O error occurs.
+ @param n the number of bytes to be skipped.
+ @throw EOFExceptionif end of stream is encountered before the
+              stream can be positioned <code>n</code> bytes beyond its position
+              when this method was invoked.
+ @throw IOExceptionif the stream cannot be positioned properly or
+              if an I/O error occurs.
+ - seealso: java.io.InputStream#skip(long)
+ @since 12
+ */
+- (void)skipNBytesWithLong:(jlong)n;
+
+/*!
+ @brief Reads all bytes from this input stream and writes the bytes to the
+  given output stream in the order that they are read.On return, this
+  input stream will be at end of stream.
+ This method does not close either stream. 
+ <p>
+  This method may block indefinitely reading from the input stream, or
+  writing to the output stream. The behavior for the case where the input
+  and/or output stream is <i>asynchronously closed</i>, or the thread
+  interrupted during the transfer, is highly input and output stream
+  specific, and therefore not specified. 
+ <p>
+  If an I/O error occurs reading from the input stream or writing to the
+  output stream, then it may do so after some bytes have been read or
+  written. Consequently the input stream may not be at end of stream and
+  one, or both, streams may be in an inconsistent state. It is strongly
+  recommended that both streams be promptly closed if an I/O error occurs.
+ @param outArg the output stream, non-null
+ @return the number of bytes transferred
+ @throw IOExceptionif an I/O error occurs when reading or writing
+ @throw NullPointerExceptionif <code>out</code> is <code>null</code>
+ @since 9
+ */
+- (jlong)transferToWithJavaIoOutputStream:(JavaIoOutputStream *)outArg;
 
 @end
 
 J2OBJC_EMPTY_STATIC_INIT(JavaIoInputStream)
 
 FOUNDATION_EXPORT void JavaIoInputStream_init(JavaIoInputStream *self);
+
+FOUNDATION_EXPORT JavaIoInputStream *JavaIoInputStream_nullInputStream(void);
 
 J2OBJC_TYPE_LITERAL_HEADER(JavaIoInputStream)
 
@@ -307,6 +486,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaIoInputStream)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaIoInputStream")

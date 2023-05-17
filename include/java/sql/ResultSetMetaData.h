@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaSqlResultSetMetaData
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -28,6 +25,9 @@
 #define RESTRICT_JavaSqlWrapper 1
 #define INCLUDE_JavaSqlWrapper 1
 #include "java/sql/Wrapper.h"
+
+@class JavaLangBoolean;
+@class JavaLangInteger;
 
 /*!
  @brief An object that can be used to get information about the types
@@ -241,13 +241,6 @@
 
 @end
 
-@interface JavaSqlResultSetMetaData : NSObject
-@property (readonly, class) jint columnNoNulls NS_SWIFT_NAME(columnNoNulls);
-@property (readonly, class) jint columnNullable NS_SWIFT_NAME(columnNullable);
-@property (readonly, class) jint columnNullableUnknown NS_SWIFT_NAME(columnNullableUnknown);
-
-@end
-
 J2OBJC_EMPTY_STATIC_INIT(JavaSqlResultSetMetaData)
 
 /*!
@@ -282,6 +275,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaSqlResultSetMetaData)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaSqlResultSetMetaData")

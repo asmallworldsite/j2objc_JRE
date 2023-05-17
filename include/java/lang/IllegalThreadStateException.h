@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaLangIllegalThreadStateException
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -36,10 +33,9 @@
   for the requested operation.See, for example, the 
  <code>suspend</code> and <code>resume</code> methods in class 
  <code>Thread</code>.
- @author unascribed
  - seealso: java.lang.Thread#resume()
  - seealso: java.lang.Thread#suspend()
- @since JDK1.0
+ @since 1.0
  */
 @interface JavaLangIllegalThreadStateException : JavaLangIllegalArgumentException
 
@@ -89,6 +85,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaLangIllegalThreadStateException)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaLangIllegalThreadStateException")

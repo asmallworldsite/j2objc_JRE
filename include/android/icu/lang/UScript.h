@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_AndroidIcuLangUScript
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -28,6 +25,8 @@
 @class AndroidIcuLangUScript_ScriptUsage;
 @class AndroidIcuUtilULocale;
 @class IOSIntArray;
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @class JavaUtilBitSet;
 @class JavaUtilLocale;
 
@@ -53,189 +52,6 @@
   may be added at any time.
  */
 @interface AndroidIcuLangUScript : NSObject
-@property (readonly, class) jint INVALID_CODE NS_SWIFT_NAME(INVALID_CODE);
-@property (readonly, class) jint COMMON NS_SWIFT_NAME(COMMON);
-@property (readonly, class) jint INHERITED NS_SWIFT_NAME(INHERITED);
-@property (readonly, class) jint ARABIC NS_SWIFT_NAME(ARABIC);
-@property (readonly, class) jint ARMENIAN NS_SWIFT_NAME(ARMENIAN);
-@property (readonly, class) jint BENGALI NS_SWIFT_NAME(BENGALI);
-@property (readonly, class) jint BOPOMOFO NS_SWIFT_NAME(BOPOMOFO);
-@property (readonly, class) jint CHEROKEE NS_SWIFT_NAME(CHEROKEE);
-@property (readonly, class) jint COPTIC NS_SWIFT_NAME(COPTIC);
-@property (readonly, class) jint CYRILLIC NS_SWIFT_NAME(CYRILLIC);
-@property (readonly, class) jint DESERET NS_SWIFT_NAME(DESERET);
-@property (readonly, class) jint DEVANAGARI NS_SWIFT_NAME(DEVANAGARI);
-@property (readonly, class) jint ETHIOPIC NS_SWIFT_NAME(ETHIOPIC);
-@property (readonly, class) jint GEORGIAN NS_SWIFT_NAME(GEORGIAN);
-@property (readonly, class) jint GOTHIC NS_SWIFT_NAME(GOTHIC);
-@property (readonly, class) jint GREEK NS_SWIFT_NAME(GREEK);
-@property (readonly, class) jint GUJARATI NS_SWIFT_NAME(GUJARATI);
-@property (readonly, class) jint GURMUKHI NS_SWIFT_NAME(GURMUKHI);
-@property (readonly, class) jint HAN NS_SWIFT_NAME(HAN);
-@property (readonly, class) jint HANGUL NS_SWIFT_NAME(HANGUL);
-@property (readonly, class) jint HEBREW NS_SWIFT_NAME(HEBREW);
-@property (readonly, class) jint HIRAGANA NS_SWIFT_NAME(HIRAGANA);
-@property (readonly, class) jint KANNADA NS_SWIFT_NAME(KANNADA);
-@property (readonly, class) jint KATAKANA NS_SWIFT_NAME(KATAKANA);
-@property (readonly, class) jint KHMER NS_SWIFT_NAME(KHMER);
-@property (readonly, class) jint LAO NS_SWIFT_NAME(LAO);
-@property (readonly, class) jint LATIN NS_SWIFT_NAME(LATIN);
-@property (readonly, class) jint MALAYALAM NS_SWIFT_NAME(MALAYALAM);
-@property (readonly, class) jint MONGOLIAN NS_SWIFT_NAME(MONGOLIAN);
-@property (readonly, class) jint MYANMAR NS_SWIFT_NAME(MYANMAR);
-@property (readonly, class) jint OGHAM NS_SWIFT_NAME(OGHAM);
-@property (readonly, class) jint OLD_ITALIC NS_SWIFT_NAME(OLD_ITALIC);
-@property (readonly, class) jint ORIYA NS_SWIFT_NAME(ORIYA);
-@property (readonly, class) jint RUNIC NS_SWIFT_NAME(RUNIC);
-@property (readonly, class) jint SINHALA NS_SWIFT_NAME(SINHALA);
-@property (readonly, class) jint SYRIAC NS_SWIFT_NAME(SYRIAC);
-@property (readonly, class) jint TAMIL NS_SWIFT_NAME(TAMIL);
-@property (readonly, class) jint TELUGU NS_SWIFT_NAME(TELUGU);
-@property (readonly, class) jint THAANA NS_SWIFT_NAME(THAANA);
-@property (readonly, class) jint THAI NS_SWIFT_NAME(THAI);
-@property (readonly, class) jint TIBETAN NS_SWIFT_NAME(TIBETAN);
-@property (readonly, class) jint CANADIAN_ABORIGINAL NS_SWIFT_NAME(CANADIAN_ABORIGINAL);
-@property (readonly, class) jint UCAS NS_SWIFT_NAME(UCAS);
-@property (readonly, class) jint YI NS_SWIFT_NAME(YI);
-@property (readonly, class) jint TAGALOG NS_SWIFT_NAME(TAGALOG);
-@property (readonly, class) jint HANUNOO NS_SWIFT_NAME(HANUNOO);
-@property (readonly, class) jint BUHID NS_SWIFT_NAME(BUHID);
-@property (readonly, class) jint TAGBANWA NS_SWIFT_NAME(TAGBANWA);
-@property (readonly, class) jint BRAILLE NS_SWIFT_NAME(BRAILLE);
-@property (readonly, class) jint CYPRIOT NS_SWIFT_NAME(CYPRIOT);
-@property (readonly, class) jint LIMBU NS_SWIFT_NAME(LIMBU);
-@property (readonly, class) jint LINEAR_B NS_SWIFT_NAME(LINEAR_B);
-@property (readonly, class) jint OSMANYA NS_SWIFT_NAME(OSMANYA);
-@property (readonly, class) jint SHAVIAN NS_SWIFT_NAME(SHAVIAN);
-@property (readonly, class) jint TAI_LE NS_SWIFT_NAME(TAI_LE);
-@property (readonly, class) jint UGARITIC NS_SWIFT_NAME(UGARITIC);
-@property (readonly, class) jint KATAKANA_OR_HIRAGANA NS_SWIFT_NAME(KATAKANA_OR_HIRAGANA);
-@property (readonly, class) jint BUGINESE NS_SWIFT_NAME(BUGINESE);
-@property (readonly, class) jint GLAGOLITIC NS_SWIFT_NAME(GLAGOLITIC);
-@property (readonly, class) jint KHAROSHTHI NS_SWIFT_NAME(KHAROSHTHI);
-@property (readonly, class) jint SYLOTI_NAGRI NS_SWIFT_NAME(SYLOTI_NAGRI);
-@property (readonly, class) jint NEW_TAI_LUE NS_SWIFT_NAME(NEW_TAI_LUE);
-@property (readonly, class) jint TIFINAGH NS_SWIFT_NAME(TIFINAGH);
-@property (readonly, class) jint OLD_PERSIAN NS_SWIFT_NAME(OLD_PERSIAN);
-@property (readonly, class) jint BALINESE NS_SWIFT_NAME(BALINESE);
-@property (readonly, class) jint BATAK NS_SWIFT_NAME(BATAK);
-@property (readonly, class) jint BLISSYMBOLS NS_SWIFT_NAME(BLISSYMBOLS);
-@property (readonly, class) jint BRAHMI NS_SWIFT_NAME(BRAHMI);
-@property (readonly, class) jint CHAM NS_SWIFT_NAME(CHAM);
-@property (readonly, class) jint CIRTH NS_SWIFT_NAME(CIRTH);
-@property (readonly, class) jint OLD_CHURCH_SLAVONIC_CYRILLIC NS_SWIFT_NAME(OLD_CHURCH_SLAVONIC_CYRILLIC);
-@property (readonly, class) jint DEMOTIC_EGYPTIAN NS_SWIFT_NAME(DEMOTIC_EGYPTIAN);
-@property (readonly, class) jint HIERATIC_EGYPTIAN NS_SWIFT_NAME(HIERATIC_EGYPTIAN);
-@property (readonly, class) jint EGYPTIAN_HIEROGLYPHS NS_SWIFT_NAME(EGYPTIAN_HIEROGLYPHS);
-@property (readonly, class) jint KHUTSURI NS_SWIFT_NAME(KHUTSURI);
-@property (readonly, class) jint SIMPLIFIED_HAN NS_SWIFT_NAME(SIMPLIFIED_HAN);
-@property (readonly, class) jint TRADITIONAL_HAN NS_SWIFT_NAME(TRADITIONAL_HAN);
-@property (readonly, class) jint PAHAWH_HMONG NS_SWIFT_NAME(PAHAWH_HMONG);
-@property (readonly, class) jint OLD_HUNGARIAN NS_SWIFT_NAME(OLD_HUNGARIAN);
-@property (readonly, class) jint HARAPPAN_INDUS NS_SWIFT_NAME(HARAPPAN_INDUS);
-@property (readonly, class) jint JAVANESE NS_SWIFT_NAME(JAVANESE);
-@property (readonly, class) jint KAYAH_LI NS_SWIFT_NAME(KAYAH_LI);
-@property (readonly, class) jint LATIN_FRAKTUR NS_SWIFT_NAME(LATIN_FRAKTUR);
-@property (readonly, class) jint LATIN_GAELIC NS_SWIFT_NAME(LATIN_GAELIC);
-@property (readonly, class) jint LEPCHA NS_SWIFT_NAME(LEPCHA);
-@property (readonly, class) jint LINEAR_A NS_SWIFT_NAME(LINEAR_A);
-@property (readonly, class) jint MANDAIC NS_SWIFT_NAME(MANDAIC);
-@property (readonly, class) jint MANDAEAN NS_SWIFT_NAME(MANDAEAN);
-@property (readonly, class) jint MAYAN_HIEROGLYPHS NS_SWIFT_NAME(MAYAN_HIEROGLYPHS);
-@property (readonly, class) jint MEROITIC_HIEROGLYPHS NS_SWIFT_NAME(MEROITIC_HIEROGLYPHS);
-@property (readonly, class) jint MEROITIC NS_SWIFT_NAME(MEROITIC);
-@property (readonly, class) jint NKO NS_SWIFT_NAME(NKO);
-@property (readonly, class) jint ORKHON NS_SWIFT_NAME(ORKHON);
-@property (readonly, class) jint OLD_PERMIC NS_SWIFT_NAME(OLD_PERMIC);
-@property (readonly, class) jint PHAGS_PA NS_SWIFT_NAME(PHAGS_PA);
-@property (readonly, class) jint PHOENICIAN NS_SWIFT_NAME(PHOENICIAN);
-@property (readonly, class) jint MIAO NS_SWIFT_NAME(MIAO);
-@property (readonly, class) jint PHONETIC_POLLARD NS_SWIFT_NAME(PHONETIC_POLLARD);
-@property (readonly, class) jint RONGORONGO NS_SWIFT_NAME(RONGORONGO);
-@property (readonly, class) jint SARATI NS_SWIFT_NAME(SARATI);
-@property (readonly, class) jint ESTRANGELO_SYRIAC NS_SWIFT_NAME(ESTRANGELO_SYRIAC);
-@property (readonly, class) jint WESTERN_SYRIAC NS_SWIFT_NAME(WESTERN_SYRIAC);
-@property (readonly, class) jint EASTERN_SYRIAC NS_SWIFT_NAME(EASTERN_SYRIAC);
-@property (readonly, class) jint TENGWAR NS_SWIFT_NAME(TENGWAR);
-@property (readonly, class) jint VAI NS_SWIFT_NAME(VAI);
-@property (readonly, class) jint VISIBLE_SPEECH NS_SWIFT_NAME(VISIBLE_SPEECH);
-@property (readonly, class) jint CUNEIFORM NS_SWIFT_NAME(CUNEIFORM);
-@property (readonly, class) jint UNWRITTEN_LANGUAGES NS_SWIFT_NAME(UNWRITTEN_LANGUAGES);
-@property (readonly, class) jint UNKNOWN NS_SWIFT_NAME(UNKNOWN);
-@property (readonly, class) jint CARIAN NS_SWIFT_NAME(CARIAN);
-@property (readonly, class) jint JAPANESE NS_SWIFT_NAME(JAPANESE);
-@property (readonly, class) jint LANNA NS_SWIFT_NAME(LANNA);
-@property (readonly, class) jint LYCIAN NS_SWIFT_NAME(LYCIAN);
-@property (readonly, class) jint LYDIAN NS_SWIFT_NAME(LYDIAN);
-@property (readonly, class) jint OL_CHIKI NS_SWIFT_NAME(OL_CHIKI);
-@property (readonly, class) jint REJANG NS_SWIFT_NAME(REJANG);
-@property (readonly, class) jint SAURASHTRA NS_SWIFT_NAME(SAURASHTRA);
-@property (readonly, class) jint SIGN_WRITING NS_SWIFT_NAME(SIGN_WRITING);
-@property (readonly, class) jint SUNDANESE NS_SWIFT_NAME(SUNDANESE);
-@property (readonly, class) jint MOON NS_SWIFT_NAME(MOON);
-@property (readonly, class) jint MEITEI_MAYEK NS_SWIFT_NAME(MEITEI_MAYEK);
-@property (readonly, class) jint IMPERIAL_ARAMAIC NS_SWIFT_NAME(IMPERIAL_ARAMAIC);
-@property (readonly, class) jint AVESTAN NS_SWIFT_NAME(AVESTAN);
-@property (readonly, class) jint CHAKMA NS_SWIFT_NAME(CHAKMA);
-@property (readonly, class) jint KOREAN NS_SWIFT_NAME(KOREAN);
-@property (readonly, class) jint KAITHI NS_SWIFT_NAME(KAITHI);
-@property (readonly, class) jint MANICHAEAN NS_SWIFT_NAME(MANICHAEAN);
-@property (readonly, class) jint INSCRIPTIONAL_PAHLAVI NS_SWIFT_NAME(INSCRIPTIONAL_PAHLAVI);
-@property (readonly, class) jint PSALTER_PAHLAVI NS_SWIFT_NAME(PSALTER_PAHLAVI);
-@property (readonly, class) jint BOOK_PAHLAVI NS_SWIFT_NAME(BOOK_PAHLAVI);
-@property (readonly, class) jint INSCRIPTIONAL_PARTHIAN NS_SWIFT_NAME(INSCRIPTIONAL_PARTHIAN);
-@property (readonly, class) jint SAMARITAN NS_SWIFT_NAME(SAMARITAN);
-@property (readonly, class) jint TAI_VIET NS_SWIFT_NAME(TAI_VIET);
-@property (readonly, class) jint MATHEMATICAL_NOTATION NS_SWIFT_NAME(MATHEMATICAL_NOTATION);
-@property (readonly, class) jint SYMBOLS NS_SWIFT_NAME(SYMBOLS);
-@property (readonly, class) jint BAMUM NS_SWIFT_NAME(BAMUM);
-@property (readonly, class) jint LISU NS_SWIFT_NAME(LISU);
-@property (readonly, class) jint NAKHI_GEBA NS_SWIFT_NAME(NAKHI_GEBA);
-@property (readonly, class) jint OLD_SOUTH_ARABIAN NS_SWIFT_NAME(OLD_SOUTH_ARABIAN);
-@property (readonly, class) jint BASSA_VAH NS_SWIFT_NAME(BASSA_VAH);
-@property (readonly, class) jint DUPLOYAN NS_SWIFT_NAME(DUPLOYAN);
-@property (readonly, class) jint DUPLOYAN_SHORTAND NS_SWIFT_NAME(DUPLOYAN_SHORTAND);
-@property (readonly, class) jint ELBASAN NS_SWIFT_NAME(ELBASAN);
-@property (readonly, class) jint GRANTHA NS_SWIFT_NAME(GRANTHA);
-@property (readonly, class) jint KPELLE NS_SWIFT_NAME(KPELLE);
-@property (readonly, class) jint LOMA NS_SWIFT_NAME(LOMA);
-@property (readonly, class) jint MENDE NS_SWIFT_NAME(MENDE);
-@property (readonly, class) jint MEROITIC_CURSIVE NS_SWIFT_NAME(MEROITIC_CURSIVE);
-@property (readonly, class) jint OLD_NORTH_ARABIAN NS_SWIFT_NAME(OLD_NORTH_ARABIAN);
-@property (readonly, class) jint NABATAEAN NS_SWIFT_NAME(NABATAEAN);
-@property (readonly, class) jint PALMYRENE NS_SWIFT_NAME(PALMYRENE);
-@property (readonly, class) jint KHUDAWADI NS_SWIFT_NAME(KHUDAWADI);
-@property (readonly, class) jint SINDHI NS_SWIFT_NAME(SINDHI);
-@property (readonly, class) jint WARANG_CITI NS_SWIFT_NAME(WARANG_CITI);
-@property (readonly, class) jint AFAKA NS_SWIFT_NAME(AFAKA);
-@property (readonly, class) jint JURCHEN NS_SWIFT_NAME(JURCHEN);
-@property (readonly, class) jint MRO NS_SWIFT_NAME(MRO);
-@property (readonly, class) jint NUSHU NS_SWIFT_NAME(NUSHU);
-@property (readonly, class) jint SHARADA NS_SWIFT_NAME(SHARADA);
-@property (readonly, class) jint SORA_SOMPENG NS_SWIFT_NAME(SORA_SOMPENG);
-@property (readonly, class) jint TAKRI NS_SWIFT_NAME(TAKRI);
-@property (readonly, class) jint TANGUT NS_SWIFT_NAME(TANGUT);
-@property (readonly, class) jint WOLEAI NS_SWIFT_NAME(WOLEAI);
-@property (readonly, class) jint ANATOLIAN_HIEROGLYPHS NS_SWIFT_NAME(ANATOLIAN_HIEROGLYPHS);
-@property (readonly, class) jint KHOJKI NS_SWIFT_NAME(KHOJKI);
-@property (readonly, class) jint TIRHUTA NS_SWIFT_NAME(TIRHUTA);
-@property (readonly, class) jint CAUCASIAN_ALBANIAN NS_SWIFT_NAME(CAUCASIAN_ALBANIAN);
-@property (readonly, class) jint MAHAJANI NS_SWIFT_NAME(MAHAJANI);
-@property (readonly, class) jint AHOM NS_SWIFT_NAME(AHOM);
-@property (readonly, class) jint HATRAN NS_SWIFT_NAME(HATRAN);
-@property (readonly, class) jint MODI NS_SWIFT_NAME(MODI);
-@property (readonly, class) jint MULTANI NS_SWIFT_NAME(MULTANI);
-@property (readonly, class) jint PAU_CIN_HAU NS_SWIFT_NAME(PAU_CIN_HAU);
-@property (readonly, class) jint SIDDHAM NS_SWIFT_NAME(SIDDHAM);
-@property (readonly, class) jint ADLAM NS_SWIFT_NAME(ADLAM);
-@property (readonly, class) jint BHAIKSUKI NS_SWIFT_NAME(BHAIKSUKI);
-@property (readonly, class) jint MARCHEN NS_SWIFT_NAME(MARCHEN);
-@property (readonly, class) jint NEWA NS_SWIFT_NAME(NEWA);
-@property (readonly, class) jint OSAGE NS_SWIFT_NAME(OSAGE);
-@property (readonly, class) jint HAN_WITH_BOPOMOFO NS_SWIFT_NAME(HAN_WITH_BOPOMOFO);
-@property (readonly, class) jint JAMO NS_SWIFT_NAME(JAMO);
-@property (readonly, class) jint SYMBOLS_EMOJI NS_SWIFT_NAME(SYMBOLS_EMOJI);
-@property (readonly, class) jint CODE_LIMIT NS_SWIFT_NAME(CODE_LIMIT);
 
 #pragma mark Public
 
@@ -1724,7 +1540,7 @@ J2OBJC_TYPE_LITERAL_HEADER(AndroidIcuLangUScript)
 
 @class IOSObjectArray;
 
-typedef NS_ENUM(NSUInteger, AndroidIcuLangUScript_ScriptUsage_Enum) {
+typedef NS_ENUM(jint, AndroidIcuLangUScript_ScriptUsage_Enum) {
   AndroidIcuLangUScript_ScriptUsage_Enum_NOT_ENCODED = 0,
   AndroidIcuLangUScript_ScriptUsage_Enum_UNKNOWN = 1,
   AndroidIcuLangUScript_ScriptUsage_Enum_EXCLUDED = 2,
@@ -1732,6 +1548,12 @@ typedef NS_ENUM(NSUInteger, AndroidIcuLangUScript_ScriptUsage_Enum) {
   AndroidIcuLangUScript_ScriptUsage_Enum_ASPIRATIONAL = 4,
   AndroidIcuLangUScript_ScriptUsage_Enum_RECOMMENDED = 5,
 };
+#if J2OBJC_IMPORTED_BY_JAVA_IMPLEMENTATION
+#define AndroidIcuLangUScript_ScriptUsage_ORDINAL jint
+#else
+#define AndroidIcuLangUScript_ScriptUsage_ORDINAL AndroidIcuLangUScript_ScriptUsage_Enum
+#endif
+
 
 /*!
  @brief Script usage constants.
@@ -1740,12 +1562,6 @@ typedef NS_ENUM(NSUInteger, AndroidIcuLangUScript_ScriptUsage_Enum) {
  */
 @interface AndroidIcuLangUScript_ScriptUsage : JavaLangEnum
 
-@property (readonly, class, nonnull) AndroidIcuLangUScript_ScriptUsage *NOT_ENCODED NS_SWIFT_NAME(NOT_ENCODED);
-@property (readonly, class, nonnull) AndroidIcuLangUScript_ScriptUsage *UNKNOWN NS_SWIFT_NAME(UNKNOWN);
-@property (readonly, class, nonnull) AndroidIcuLangUScript_ScriptUsage *EXCLUDED NS_SWIFT_NAME(EXCLUDED);
-@property (readonly, class, nonnull) AndroidIcuLangUScript_ScriptUsage *LIMITED_USE NS_SWIFT_NAME(LIMITED_USE);
-@property (readonly, class, nonnull) AndroidIcuLangUScript_ScriptUsage *ASPIRATIONAL NS_SWIFT_NAME(ASPIRATIONAL);
-@property (readonly, class, nonnull) AndroidIcuLangUScript_ScriptUsage *RECOMMENDED NS_SWIFT_NAME(RECOMMENDED);
 #pragma mark Public
 
 + (AndroidIcuLangUScript_ScriptUsage *)valueOfWithNSString:(NSString *)name;
@@ -1755,6 +1571,8 @@ typedef NS_ENUM(NSUInteger, AndroidIcuLangUScript_ScriptUsage_Enum) {
 #pragma mark Package-Private
 
 - (AndroidIcuLangUScript_ScriptUsage_Enum)toNSEnum;
+
+- (AndroidIcuLangUScript_ScriptUsage_ORDINAL)ordinal;
 
 @end
 
@@ -1803,7 +1621,7 @@ FOUNDATION_EXPORT IOSObjectArray *AndroidIcuLangUScript_ScriptUsage_values(void)
 
 FOUNDATION_EXPORT AndroidIcuLangUScript_ScriptUsage *AndroidIcuLangUScript_ScriptUsage_valueOfWithNSString_(NSString *name);
 
-FOUNDATION_EXPORT AndroidIcuLangUScript_ScriptUsage *AndroidIcuLangUScript_ScriptUsage_fromOrdinal(NSUInteger ordinal);
+FOUNDATION_EXPORT AndroidIcuLangUScript_ScriptUsage *AndroidIcuLangUScript_ScriptUsage_fromOrdinal(AndroidIcuLangUScript_ScriptUsage_ORDINAL ordinal);
 
 J2OBJC_TYPE_LITERAL_HEADER(AndroidIcuLangUScript_ScriptUsage)
 
@@ -1813,6 +1631,4 @@ J2OBJC_TYPE_LITERAL_HEADER(AndroidIcuLangUScript_ScriptUsage)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_AndroidIcuLangUScript")

@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_AndroidIcuTextUForwardCharacterIterator
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -24,6 +21,8 @@
 
 #if !defined (AndroidIcuTextUForwardCharacterIterator_) && (INCLUDE_ALL_AndroidIcuTextUForwardCharacterIterator || defined(INCLUDE_AndroidIcuTextUForwardCharacterIterator))
 #define AndroidIcuTextUForwardCharacterIterator_
+
+@class JavaLangInteger;
 
 /*!
  @brief Interface that defines an API for forward-only iteration
@@ -94,11 +93,6 @@
 
 @end
 
-@interface AndroidIcuTextUForwardCharacterIterator : NSObject
-@property (readonly, class) jint DONE NS_SWIFT_NAME(DONE);
-
-@end
-
 J2OBJC_EMPTY_STATIC_INIT(AndroidIcuTextUForwardCharacterIterator)
 
 /*!
@@ -116,6 +110,4 @@ J2OBJC_TYPE_LITERAL_HEADER(AndroidIcuTextUForwardCharacterIterator)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_AndroidIcuTextUForwardCharacterIterator")

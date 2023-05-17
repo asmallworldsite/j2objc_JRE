@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaUtilFunctionObjDoubleConsumer
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -24,6 +21,8 @@
 
 #if !defined (JavaUtilFunctionObjDoubleConsumer_) && (INCLUDE_ALL_JavaUtilFunctionObjDoubleConsumer || defined(INCLUDE_JavaUtilFunctionObjDoubleConsumer))
 #define JavaUtilFunctionObjDoubleConsumer_
+
+@class JavaLangDouble;
 
 /*!
  @brief Represents an operation that accepts an object-valued and a 
@@ -58,6 +57,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilFunctionObjDoubleConsumer)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaUtilFunctionObjDoubleConsumer")

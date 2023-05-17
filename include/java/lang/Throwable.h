@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaLangThrowable
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -32,6 +29,7 @@
 @class IOSObjectArray;
 @class JavaIoPrintStream;
 @class JavaIoPrintWriter;
+@class JavaLangBoolean;
 
 /*!
  @brief The <code>Throwable</code> class is the superclass of all errors and
@@ -105,10 +103,9 @@
  <code>String</code> (the detail message) and a <code>Throwable</code> (the
   cause).
   J2ObjC: Throwable extends the Objective-C Foundation class NSException.
- @author unascribed
  @author Josh Bloch (Added exception chaining and programmatic access to
            stack trace in 1.4.)
- @since JDK1.0
+ @since 1.0
  */
 @interface JavaLangThrowable : NSException < JavaIoSerializable >
 
@@ -256,7 +253,7 @@
   method, the default implementation returns the same result as 
  <code>getMessage()</code>.
  @return The localized description of this throwable.
- @since JDK1.1
+ @since 1.1
  */
 - (NSString * __nullable)getLocalizedMessage;
 
@@ -462,7 +459,7 @@
   
 @endcode
   Note that the "... n more" notation is used on suppressed exceptions
-  just at it is used on causes. Unlike causes, suppressed exceptions are
+  just as it is used on causes. Unlike causes, suppressed exceptions are
   indented beyond their "containing exceptions." 
  <p>An exception can have both a cause and one or more suppressed
   exceptions: 
@@ -489,7 +486,7 @@
            at Resource2.close(Resource2.java:20)
            at Foo4.main(Foo4.java:5)
    Caused by: java.lang.Exception: Rats, you caught me
-           at Resource2$CloseFailException.<init>(Resource2.java:45)
+           at Resource2$CloseFailException.&lt;init&gt;(Resource2.java:45)
            ... 2 more 
   
 @endcode
@@ -506,7 +503,7 @@
  @brief Prints this throwable and its backtrace to the specified
   print writer.
  @param s<code>PrintWriter</code>  to use for output
- @since JDK1.1
+ @since 1.1
  */
 - (void)printStackTraceWithJavaIoPrintWriter:(JavaIoPrintWriter *)s;
 
@@ -596,6 +593,8 @@
 
 #pragma mark Package-Private
 
+- (void)setCauseWithJavaLangThrowable:(JavaLangThrowable *)t;
+
 @end
 
 J2OBJC_STATIC_INIT(JavaLangThrowable)
@@ -638,6 +637,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaLangThrowable)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaLangThrowable")

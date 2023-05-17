@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaIoFilterWriter
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -30,6 +27,7 @@
 #include "java/io/Writer.h"
 
 @class IOSCharArray;
+@class JavaLangInteger;
 
 /*!
  @brief Abstract class for writing filtered character streams.
@@ -39,7 +37,7 @@
   should override some of these methods and may also
   provide additional methods and fields.
  @author Mark Reinhold
- @since JDK1.1
+ @since 1.1
  */
 @interface JavaIoFilterWriter : JavaIoWriter {
  @public
@@ -64,6 +62,10 @@
  @param cbuf Buffer of characters to be written
  @param off Offset from which to start reading characters
  @param len Number of characters to be written
+ @throw IndexOutOfBoundsException
+ If the values of the <code>off</code> and <code>len</code> parameters
+           cause the corresponding method of the underlying <code>Writer</code>
+           to throw an <code>IndexOutOfBoundsException</code>
  @throw IOExceptionIf an I/O error occurs
  */
 - (void)writeWithCharArray:(IOSCharArray *)cbuf
@@ -81,6 +83,10 @@
  @param str String to be written
  @param off Offset from which to start reading characters
  @param len Number of characters to be written
+ @throw IndexOutOfBoundsException
+ If the values of the <code>off</code> and <code>len</code> parameters
+           cause the corresponding method of the underlying <code>Writer</code>
+           to throw an <code>IndexOutOfBoundsException</code>
  @throw IOExceptionIf an I/O error occurs
  */
 - (void)writeWithNSString:(NSString *)str
@@ -118,6 +124,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaIoFilterWriter)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaIoFilterWriter")

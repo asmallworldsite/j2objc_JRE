@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaSecurityAccessControlException
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -43,6 +40,7 @@
   possible at the time the exception is thrown.
  @author Li Gong
  @author Roland Schemers
+ @since 1.2
  */
 @interface JavaSecurityAccessControlException : JavaLangSecurityException
 
@@ -105,6 +103,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaSecurityAccessControlException)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaSecurityAccessControlException")

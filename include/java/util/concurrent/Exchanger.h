@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaUtilConcurrentExchanger
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -25,6 +22,8 @@
 #if !defined (JavaUtilConcurrentExchanger_) && (INCLUDE_ALL_JavaUtilConcurrentExchanger || defined(INCLUDE_JavaUtilConcurrentExchanger))
 #define JavaUtilConcurrentExchanger_
 
+@class JavaLangInteger;
+@class JavaLangLong;
 @class JavaUtilConcurrentTimeUnit;
 
 /*!
@@ -83,7 +82,6 @@
  @author Doug Lea and Bill Scherer and Michael Scott
  */
 @interface JavaUtilConcurrentExchanger : NSObject
-@property (readonly, class) jint FULL NS_SWIFT_NAME(FULL);
 
 #pragma mark Public
 
@@ -193,6 +191,7 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentExchanger)
 #if !defined (JavaUtilConcurrentExchanger_Node_) && (INCLUDE_ALL_JavaUtilConcurrentExchanger || defined(INCLUDE_JavaUtilConcurrentExchanger_Node))
 #define JavaUtilConcurrentExchanger_Node_
 
+@class JavaLangInteger;
 @class JavaLangThread;
 
 /*!
@@ -256,7 +255,7 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentExchanger_Node)
 
 - (instancetype __nonnull)init;
 
-- (JavaUtilConcurrentExchanger_Node *)childValueWithId:(JavaUtilConcurrentExchanger_Node *)arg0;
+- (JavaUtilConcurrentExchanger_Node *)childValueWithId:(id)arg0;
 
 @end
 
@@ -276,6 +275,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentExchanger_Participant)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaUtilConcurrentExchanger")

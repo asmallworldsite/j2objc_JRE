@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaIoByteArrayInputStream
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -30,6 +27,10 @@
 #include "java/io/InputStream.h"
 
 @class IOSByteArray;
+@class JavaIoOutputStream;
+@class JavaLangBoolean;
+@class JavaLangInteger;
+@class JavaLangLong;
 
 /*!
  @brief A <code>ByteArrayInputStream</code> contains
@@ -38,12 +39,12 @@
   counter keeps track of the next byte to
   be supplied by the <code>read</code> method.
  <p>
-  Closing a <tt>ByteArrayInputStream</tt> has no effect. The methods in
+  Closing a <code>ByteArrayInputStream</code> has no effect. The methods in
   this class can be called after the stream has been closed without
-  generating an <tt>IOException</tt>.
+  generating an <code>IOException</code>.
  @author Arthur van Hoff
  - seealso: java.io.StringBufferInputStream
- @since JDK1.0
+ @since 1.0
  */
 @interface JavaIoByteArrayInputStream : JavaIoInputStream {
  @public
@@ -74,7 +75,7 @@
  <p>
   If no mark has been set, then the value of mark is the offset
   passed to the constructor (or 0 if the offset was not supplied).
-   @since JDK1.1
+   @since 1.1
    */
   jint mark_;
   /*!
@@ -125,7 +126,7 @@
  @brief Returns the number of remaining bytes that can be read (or skipped over)
   from this input stream.
  <p>
-  The value returned is <code>count&nbsp;- pos</code>,
+  The value returned is <code>count - pos</code>,
   which is the number of bytes remaining to be read from the input buffer.
  @return the number of remaining bytes that can be read (or skipped
            over) from this input stream without blocking.
@@ -133,9 +134,9 @@
 - (jint)available;
 
 /*!
- @brief Closing a <tt>ByteArrayInputStream</tt> has no effect.The methods in
+ @brief Closing a <code>ByteArrayInputStream</code> has no effect.The methods in
   this class can be called after the stream has been closed without
-  generating an <tt>IOException</tt>.
+  generating an <code>IOException</code>.
  */
 - (void)close;
 
@@ -150,7 +151,7 @@
   supplied). 
  <p> Note: The <code>readAheadLimit</code> for this class
    has no meaning.
- @since JDK1.1
+ @since 1.1
  */
 - (void)markWithInt:(jint)readAheadLimit;
 
@@ -158,7 +159,7 @@
  @brief Tests if this <code>InputStream</code> supports mark/reset.The
   <code>markSupported</code> method of <code>ByteArrayInputStream</code>
   always returns <code>true</code>.
- @since JDK1.1
+ @since 1.1
  */
 - (jboolean)markSupported;
 
@@ -178,24 +179,19 @@
 - (jint)read;
 
 /*!
- @brief Reads up to <code>len</code> bytes of data into an array of bytes
-  from this input stream.
- If <code>pos</code> equals <code>count</code>,
-  then <code>-1</code> is returned to indicate
-  end of file. Otherwise, the  number <code>k</code>
-  of bytes read is equal to the smaller of 
- <code>len</code> and <code>count-pos</code>.
-  If <code>k</code> is positive, then bytes 
- <code>buf[pos]</code> through <code>buf[pos+k-1]</code>
-  are copied into <code>b[off]</code>  through 
- <code>b[off+k-1]</code> in the manner performed
-  by <code>System.arraycopy</code>. The
-  value <code>k</code> is added into <code>pos</code>
-  and <code>k</code> is returned. 
+ @brief Reads up to <code>len</code> bytes of data into an array of bytes from this
+  input stream.If <code>pos</code> equals <code>count</code>, then <code>-1</code> is
+  returned to indicate end of file.
+ Otherwise, the  number <code>k</code> of
+  bytes read is equal to the smaller of <code>len</code> and <code>count-pos</code>.
+  If <code>k</code> is positive, then bytes <code>buf[pos]</code> through 
+ <code>buf[pos+k-1]</code> are copied into <code>b[off]</code> through 
+ <code>b[off+k-1]</code> in the manner performed by <code>System.arraycopy</code>.
+  The value <code>k</code> is added into <code>pos</code> and <code>k</code> is returned. 
  <p>
   This <code>read</code> method cannot block.
  @param b the buffer into which the data is read.
- @param off the start offset in the destination array  <code> b </code>
+ @param off the start offset in the destination array <code>b</code>
  @param len the maximum number of bytes read.
  @return the total number of bytes read into the buffer, or
            <code>-1</code> if there is no more data because the end of
@@ -208,6 +204,12 @@
 - (jint)readWithByteArray:(IOSByteArray *)b
                   withInt:(jint)off
                   withInt:(jint)len;
+
+- (IOSByteArray *)readAllBytes;
+
+- (jint)readNBytesWithByteArray:(IOSByteArray *)b
+                        withInt:(jint)off
+                        withInt:(jint)len;
 
 /*!
  @brief Resets the buffer to the marked position.The marked position
@@ -228,6 +230,8 @@
  @return the actual number of bytes skipped.
  */
 - (jlong)skipWithLong:(jlong)n;
+
+- (jlong)transferToWithJavaIoOutputStream:(JavaIoOutputStream *)outArg;
 
 // Disallowed inherited constructors, do not use.
 
@@ -259,6 +263,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaIoByteArrayInputStream)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaIoByteArrayInputStream")

@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaxSqlDataSource
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -37,10 +34,10 @@
 
 /*!
  @brief <p>A factory for connections to the physical data source that this 
- <code>DataSource</code> object represents.
- An alternative to the 
+ <code>DataSource</code> object represents.An alternative to the 
  <code>DriverManager</code> facility, a <code>DataSource</code> object
-  is the preferred means of getting a connection. An object that implements the 
+  is the preferred means of getting a connection.
+ An object that implements the 
  <code>DataSource</code> interface will typically be
   registered with a naming service based on the
   Java<sup><font size=-2>TM</font></sup> Naming and Directory (JNDI) API. 
@@ -110,6 +107,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaxSqlDataSource)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaxSqlDataSource")

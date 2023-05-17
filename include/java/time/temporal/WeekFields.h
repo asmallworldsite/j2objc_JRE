@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaTimeTemporalWeekFields
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -29,6 +26,8 @@
 #define INCLUDE_JavaIoSerializable 1
 #include "java/io/Serializable.h"
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @class JavaTimeDayOfWeek;
 @class JavaUtilLocale;
 @protocol JavaTimeTemporalTemporalField;
@@ -36,85 +35,83 @@
 
 /*!
  @brief Localized definitions of the day-of-week, week-of-month and week-of-year fields.
- <p>
-  A standard week is seven days long, but cultures have different definitions for some
-  other aspects of a week. This class represents the definition of the week, for the
-  purpose of providing <code>TemporalField</code> instances. 
- <p>
-  WeekFields provides five fields, 
- <code>dayOfWeek()</code>, <code>weekOfMonth()</code>, <code>weekOfYear()</code>,
-  <code>weekOfWeekBasedYear()</code>, and <code>weekBasedYear()</code>
-  that provide access to the values from any temporal object.
-  <p>
-  The computations for day-of-week, week-of-month, and week-of-year are based
-  on the  proleptic-year,
-  month-of-year,
-  day-of-month, and 
- ISO day-of-week which are based on the 
- epoch-day and the chronology.
-  The values may not be aligned with the year-of-Era
+ <p>A standard week is seven days long, but cultures have different definitions for some other
+  aspects of a week. This class represents the definition of the week, for the purpose of providing 
+ <code>TemporalField</code> instances. 
+ <p>WeekFields provides five fields, <code>dayOfWeek()</code>, <code>weekOfMonth()</code>, <code>weekOfYear()</code>
+ , <code>weekOfWeekBasedYear()</code>, and <code>weekBasedYear()</code> that provide access
+  to the values from any temporal object.
+  
+ <p>The computations for day-of-week, week-of-month, and week-of-year are based on the proleptic-year
+ , month-of-year,
+  day-of-month, and ISO
+  day-of-week
+  which are based on the epoch-day and the
+  chronology. The values may not be aligned with the year-of-Era
   depending on the Chronology. 
  <p>A week is defined by: 
  <ul>
-  <li>The first day-of-week.
-  For example, the ISO-8601 standard considers Monday to be the first day-of-week. 
- <li>The minimal number of days in the first week.
-  For example, the ISO-8601 standard counts the first week as needing at least 4 days. 
+    <li>The first day-of-week. For example, the ISO-8601 standard considers Monday to be the first
+        day-of-week.   
+ <li>The minimal number of days in the first week. For example, the ISO-8601 standard counts the
+        first week as needing at least 4 days. 
  </ul>
   Together these two values allow a year or month to be divided into weeks. 
  <h3>Week of Month</h3>
-  One field is used: week-of-month.
-  The calculation ensures that weeks never overlap a month boundary.
-  The month is divided into periods where each period starts on the defined first day-of-week.
-  The earliest period is referred to as week 0 if it has less than the minimal number of days
-  and week 1 if it has at least the minimal number of days. 
- <table cellpadding="0" cellspacing="3" border="0" style="text-align: left; width: 50%;">
+  One field is used: week-of-month. The calculation ensures that weeks never overlap a month
+  boundary. The month is divided into periods where each period starts on the defined first
+  day-of-week. The earliest period is referred to as week 0 if it has less than the minimal number
+  of days and week 1 if it has at least the minimal number of days. 
+ <table class=striped style="text-align: left">
   <caption>Examples of WeekFields</caption>
-  <tr><th>Date</th><td>Day-of-week</td>
-   <td>First day: Monday<br>Minimal days: 4</td><td>First day: Monday<br>Minimal days: 5</td></tr>
-  <tr><th>2008-12-31</th><td>Wednesday</td>
+  <thead>
+  <tr><th scope="col">Date</th><th scope="col">Day-of-week</th>
+   <th scope="col">First day: Monday<br>Minimal days: 4</th><th scope="col">First day: Monday<br>Minimal days: 5</th></tr>
+  </thead>
+  <tbody>
+  <tr><th scope="row">2008-12-31</th><td>Wednesday</td>
    <td>Week 5 of December 2008</td><td>Week 5 of December 2008</td></tr>
-  <tr><th>2009-01-01</th><td>Thursday</td>
+  <tr><th scope="row">2009-01-01</th><td>Thursday</td>
    <td>Week 1 of January 2009</td><td>Week 0 of January 2009</td></tr>
-  <tr><th>2009-01-04</th><td>Sunday</td>
+  <tr><th scope="row">2009-01-04</th><td>Sunday</td>
    <td>Week 1 of January 2009</td><td>Week 0 of January 2009</td></tr>
-  <tr><th>2009-01-05</th><td>Monday</td>
+  <tr><th scope="row">2009-01-05</th><td>Monday</td>
    <td>Week 2 of January 2009</td><td>Week 1 of January 2009</td></tr>
+  </tbody>
   </table>
   
  <h3>Week of Year</h3>
-  One field is used: week-of-year.
-  The calculation ensures that weeks never overlap a year boundary.
-  The year is divided into periods where each period starts on the defined first day-of-week.
-  The earliest period is referred to as week 0 if it has less than the minimal number of days
-  and week 1 if it has at least the minimal number of days. 
+  One field is used: week-of-year. The calculation ensures that weeks never overlap a year
+  boundary. The year is divided into periods where each period starts on the defined first
+  day-of-week. The earliest period is referred to as week 0 if it has less than the minimal number
+  of days and week 1 if it has at least the minimal number of days. 
  <h3>Week Based Year</h3>
-  Two fields are used for week-based-year, one for the 
- <code>week-of-week-based-year</code> and one for 
- <code>week-based-year</code>.  In a week-based-year, each week
-  belongs to only a single year.  Week 1 of a year is the first week that
-  starts on the first day-of-week and has at least the minimum number of days.
-  The first and last weeks of a year may contain days from the
-  previous calendar year or next calendar year respectively. 
- <table cellpadding="0" cellspacing="3" border="0" style="text-align: left; width: 50%;">
+  Two fields are used for week-based-year, one for the <code>week-of-week-based-year</code>
+  and one for <code>week-based-year</code>. In a
+  week-based-year, each week belongs to only a single year. Week 1 of a year is the first week that
+  starts on the first day-of-week and has at least the minimum number of days. The first and last
+  weeks of a year may contain days from the previous calendar year or next calendar year
+  respectively. 
+ <table class=striped style="text-align: left;">
   <caption>Examples of WeekFields for week-based-year</caption>
-  <tr><th>Date</th><td>Day-of-week</td>
-   <td>First day: Monday<br>Minimal days: 4</td><td>First day: Monday<br>Minimal days: 5</td></tr>
-  <tr><th>2008-12-31</th><td>Wednesday</td>
+  <thead>
+  <tr><th scope="col">Date</th><th scope="col">Day-of-week</th>
+   <th scope="col">First day: Monday<br>Minimal days: 4</th><th scope="col">First day: Monday<br>Minimal days: 5</th></tr>
+  </thead>
+  <tbody>
+  <tr><th scope="row">2008-12-31</th><td>Wednesday</td>
    <td>Week 1 of 2009</td><td>Week 53 of 2008</td></tr>
-  <tr><th>2009-01-01</th><td>Thursday</td>
+  <tr><th scope="row">2009-01-01</th><td>Thursday</td>
    <td>Week 1 of 2009</td><td>Week 53 of 2008</td></tr>
-  <tr><th>2009-01-04</th><td>Sunday</td>
+  <tr><th scope="row">2009-01-04</th><td>Sunday</td>
    <td>Week 1 of 2009</td><td>Week 53 of 2008</td></tr>
-  <tr><th>2009-01-05</th><td>Monday</td>
+  <tr><th scope="row">2009-01-05</th><td>Monday</td>
    <td>Week 2 of 2009</td><td>Week 1 of 2009</td></tr>
+  </tbody>
   </table>
  @since 1.8
  */
 @interface JavaTimeTemporalWeekFields : NSObject < JavaIoSerializable >
-@property (readonly, class, strong) JavaTimeTemporalWeekFields *ISO NS_SWIFT_NAME(ISO);
-@property (readonly, class, strong) JavaTimeTemporalWeekFields *SUNDAY_START NS_SWIFT_NAME(SUNDAY_START);
-@property (readonly, class, strong) id<JavaTimeTemporalTemporalUnit> WEEK_BASED_YEARS NS_SWIFT_NAME(WEEK_BASED_YEARS);
 
 #pragma mark Public
 
@@ -176,30 +173,27 @@
 
 /*!
  @brief Obtains an instance of <code>WeekFields</code> from the first day-of-week and minimal days.
- <p>
-  The first day-of-week defines the ISO <code>DayOfWeek</code> that is day 1 of the week.
-  The minimal number of days in the first week defines how many days must be present
-  in a month or year, starting from the first day-of-week, before the week is counted
-  as the first week. A value of 1 will count the first day of the month or year as part
-  of the first week, whereas a value of 7 will require the whole seven days to be in
-  the new month or year. 
- <p>
-  WeekFields instances are singletons; for each unique combination
-  of <code>firstDayOfWeek</code> and <code>minimalDaysInFirstWeek</code> the
-  the same instance will be returned.
+ <p>The first day-of-week defines the ISO <code>DayOfWeek</code> that is day 1 of the week. The
+  minimal number of days in the first week defines how many days must be present in a month or
+  year, starting from the first day-of-week, before the week is counted as the first week. A
+  value of 1 will count the first day of the month or year as part of the first week, whereas a
+  value of 7 will require the whole seven days to be in the new month or year. 
+ <p>WeekFields instances are singletons; for each unique combination of <code>firstDayOfWeek</code>
+  and <code>minimalDaysInFirstWeek</code> the same instance will be returned.
  @param firstDayOfWeek the first day of the week, not null
  @param minimalDaysInFirstWeek the minimal number of days in the first week, from 1 to 7
  @return the week-definition, not null
- @throw IllegalArgumentExceptionif the minimal days value is less than one
-       or greater than 7
+ @throw IllegalArgumentExceptionif the minimal days value is less than one or greater than 7
  */
 + (JavaTimeTemporalWeekFields *)ofWithJavaTimeDayOfWeek:(JavaTimeDayOfWeek *)firstDayOfWeek
                                                 withInt:(jint)minimalDaysInFirstWeek;
 
 /*!
  @brief Obtains an instance of <code>WeekFields</code> appropriate for a locale.
- <p>
-  This will look up appropriate values from the provider of localization data.
+ <p>This will look up appropriate values from the provider of localization data. Since Android
+  13, if the locale contains "fw" (First day of week) <a href="../../util/Locale.html#def_locale_extension">
+ Unicode extensions</a>, returned instance
+  will reflect the values specified with those extensions.
  @param locale the locale to use, not null
  @return the week-definition, not null
  */
@@ -455,6 +449,8 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaTimeTemporalWeekFields)
 #define INCLUDE_JavaTimeTemporalTemporalField 1
 #include "java/time/temporal/TemporalField.h"
 
+@class JavaLangBoolean;
+@class JavaLangLong;
 @class JavaTimeFormatResolverStyle;
 @class JavaTimeTemporalValueRange;
 @class JavaTimeTemporalWeekFields;
@@ -569,6 +565,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaTimeTemporalWeekFields_ComputedDayOfField)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaTimeTemporalWeekFields")

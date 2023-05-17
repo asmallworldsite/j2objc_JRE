@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaxXmlXpathXPathFactory
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -25,6 +22,7 @@
 #if !defined (JavaxXmlXpathXPathFactory_) && (INCLUDE_ALL_JavaxXmlXpathXPathFactory || defined(INCLUDE_JavaxXmlXpathXPathFactory))
 #define JavaxXmlXpathXPathFactory_
 
+@class JavaLangBoolean;
 @class JavaLangClassLoader;
 @protocol JavaxXmlXpathXPath;
 @protocol JavaxXmlXpathXPathFunctionResolver;
@@ -41,8 +39,6 @@
  @since 1.5
  */
 @interface JavaxXmlXpathXPathFactory : NSObject
-@property (readonly, copy, class) NSString *DEFAULT_PROPERTY_NAME NS_SWIFT_NAME(DEFAULT_PROPERTY_NAME);
-@property (readonly, copy, class) NSString *DEFAULT_OBJECT_MODEL_URI NS_SWIFT_NAME(DEFAULT_OBJECT_MODEL_URI);
 
 #pragma mark Public
 
@@ -268,6 +264,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaxXmlXpathXPathFactory)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaxXmlXpathXPathFactory")

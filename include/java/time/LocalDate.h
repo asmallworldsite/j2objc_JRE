@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaTimeLocalDate
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -41,6 +38,9 @@
 #define INCLUDE_JavaIoSerializable 1
 #include "java/io/Serializable.h"
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
+@class JavaLangLong;
 @class JavaTimeChronoIsoChronology;
 @class JavaTimeClock;
 @class JavaTimeDayOfWeek;
@@ -87,9 +87,6 @@
  @since 1.8
  */
 @interface JavaTimeLocalDate : NSObject < JavaTimeTemporalTemporal, JavaTimeTemporalTemporalAdjuster, JavaTimeChronoChronoLocalDate, JavaIoSerializable >
-@property (readonly, class, strong) JavaTimeLocalDate *MIN NS_SWIFT_NAME(MIN);
-@property (readonly, class, strong) JavaTimeLocalDate *MAX NS_SWIFT_NAME(MAX);
-@property (readonly, class) jlong DAYS_0000_TO_1970 NS_SWIFT_NAME(DAYS_0000_TO_1970);
 
 #pragma mark Public
 
@@ -1425,6 +1422,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaTimeLocalDate)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaTimeLocalDate")

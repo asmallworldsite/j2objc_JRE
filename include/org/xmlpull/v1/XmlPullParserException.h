@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_OrgXmlpullV1XmlPullParserException
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -29,6 +26,8 @@
 #define INCLUDE_JavaLangException 1
 #include "java/lang/Exception.h"
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @class JavaLangThrowable;
 @protocol OrgXmlpullV1XmlPullParser;
 
@@ -99,6 +98,4 @@ J2OBJC_TYPE_LITERAL_HEADER(OrgXmlpullV1XmlPullParserException)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_OrgXmlpullV1XmlPullParserException")

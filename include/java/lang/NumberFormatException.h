@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaLangNumberFormatException
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -29,18 +26,19 @@
 #define INCLUDE_JavaLangIllegalArgumentException 1
 #include "java/lang/IllegalArgumentException.h"
 
+@class JavaLangInteger;
+@class JavaLangLong;
 @class JavaLangThrowable;
+@protocol JavaLangCharSequence;
 
 /*!
  @brief Thrown to indicate that the application has attempted to convert
   a string to one of the numeric types, but that the string does not
   have the appropriate format.
- @author unascribed
  - seealso: java.lang.Integer#parseInt(String)
- @since JDK1.0
+ @since 1.0
  */
 @interface JavaLangNumberFormatException : JavaLangIllegalArgumentException
-@property (readonly, class) jlong serialVersionUID NS_SWIFT_NAME(serialVersionUID);
 
 #pragma mark Public
 
@@ -62,8 +60,29 @@
  @brief Factory method for making a <code>NumberFormatException</code>
   given the specified input which caused the error.
  @param s the input causing the error
+ @param beginIndex the beginning index, inclusive.
+ @param endIndex the ending index, exclusive.
+ @param errorIndex the index of the first error in s
+ */
++ (JavaLangNumberFormatException *)forCharSequenceWithJavaLangCharSequence:(id<JavaLangCharSequence>)s
+                                                                   withInt:(jint)beginIndex
+                                                                   withInt:(jint)endIndex
+                                                                   withInt:(jint)errorIndex;
+
+/*!
+ @brief Factory method for making a <code>NumberFormatException</code>
+  given the specified input which caused the error.
+ @param s the input causing the error
  */
 + (JavaLangNumberFormatException *)forInputStringWithNSString:(NSString *)s;
+
+/*!
+ @brief Factory method for making a <code>NumberFormatException</code>
+  given the specified input which caused the error.
+ @param s the input causing the error
+ */
++ (JavaLangNumberFormatException *)forInputStringWithNSString:(NSString *)s
+                                                      withInt:(jint)radix;
 
 // Disallowed inherited constructors, do not use.
 
@@ -94,6 +113,10 @@ FOUNDATION_EXPORT JavaLangNumberFormatException *create_JavaLangNumberFormatExce
 
 FOUNDATION_EXPORT JavaLangNumberFormatException *JavaLangNumberFormatException_forInputStringWithNSString_(NSString *s);
 
+FOUNDATION_EXPORT JavaLangNumberFormatException *JavaLangNumberFormatException_forInputStringWithNSString_withInt_(NSString *s, jint radix);
+
+FOUNDATION_EXPORT JavaLangNumberFormatException *JavaLangNumberFormatException_forCharSequenceWithJavaLangCharSequence_withInt_withInt_withInt_(id<JavaLangCharSequence> s, jint beginIndex, jint endIndex, jint errorIndex);
+
 J2OBJC_TYPE_LITERAL_HEADER(JavaLangNumberFormatException)
 
 #endif
@@ -102,6 +125,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaLangNumberFormatException)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaLangNumberFormatException")

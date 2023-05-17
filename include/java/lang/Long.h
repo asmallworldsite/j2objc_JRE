@@ -13,14 +13,38 @@
 #endif
 #undef RESTRICT_JavaLangLong
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
 #pragma GCC diagnostic ignored "-Wnullability-completeness"
 #endif
+
+#ifndef JavaLangLong_H
+#define JavaLangLong_H
+
+// Current API, redeclared since this block goes before the transpiled API in the header.
+@class JavaLangLong;
+FOUNDATION_EXPORT void JavaLangLong_initWithLongLong_(JavaLangLong *self, jlong value);
+FOUNDATION_EXPORT JavaLangLong *new_JavaLangLong_initWithLongLong_(jlong value) NS_RETURNS_RETAINED;
+FOUNDATION_EXPORT JavaLangLong *create_JavaLangLong_initWithLongLong_(jlong value);
+
+// Backward compatibility API (b/243948394).
+__attribute__((always_inline)) inline
+void JavaLangLong_initWithLong_(JavaLangLong *self, jlong value) {
+  JavaLangLong_initWithLongLong_(self, value);
+}
+
+__attribute__((always_inline)) inline
+JavaLangLong *new_JavaLangLong_initWithLong_(jlong value) NS_RETURNS_RETAINED {
+  return new_JavaLangLong_initWithLongLong_(value);
+}
+
+__attribute__((always_inline)) inline
+JavaLangLong *create_JavaLangLong_initWithLong_(jlong value) {
+  return create_JavaLangLong_initWithLongLong_(value);
+}
+
+#endif // JavaLangLong_H
 
 #if !defined (JavaLangLong_) && (INCLUDE_ALL_JavaLangLong || defined(INCLUDE_JavaLangLong))
 #define JavaLangLong_
@@ -31,6 +55,13 @@
 
 @class IOSCharArray;
 @class IOSClass;
+@class JavaLangBoolean;
+@class JavaLangByte;
+@class JavaLangDouble;
+@class JavaLangFloat;
+@class JavaLangInteger;
+@class JavaLangShort;
+@protocol JavaLangCharSequence;
 
 /*!
  @brief The <code>Long</code> class wraps a value of the primitive type <code>long</code>
@@ -41,6 +72,14 @@
  , as well as other constants and methods useful when dealing
   with a <code>long</code>.
   
+ <!-- Android-removed: paragraph on ValueBased
+ <p>This is a <a href="{@@docRoot}/java.base/java/lang/doc-files/ValueBased.html">value-based</a>
+ class; programmers should treat instances that are
+ {@@linkplain #equals(Object) equal} as interchangeable and should not
+ use instances for synchronization, or unpredictable behavior may
+ occur. For example, in a future release, synchronization may fail.
+ -->
+  
  <p>Implementation note: The implementations of the "bit twiddling"
   methods (such as <code>highestOneBit</code> and 
  <code>numberOfTrailingZeros</code>) are
@@ -50,14 +89,9 @@
  @author Arthur van Hoff
  @author Josh Bloch
  @author Joseph D. Darcy
- @since JDK1.0
+ @since 1.0
  */
 @interface JavaLangLong : NSNumber < JavaLangComparable >
-@property (readonly, class) jlong MIN_VALUE NS_SWIFT_NAME(MIN_VALUE);
-@property (readonly, class) jlong MAX_VALUE NS_SWIFT_NAME(MAX_VALUE);
-@property (readonly, class, strong) IOSClass *TYPE NS_SWIFT_NAME(TYPE);
-@property (readonly, class) jint SIZE NS_SWIFT_NAME(SIZE);
-@property (readonly, class) jint BYTES NS_SWIFT_NAME(BYTES);
 
 #pragma mark Public
 
@@ -67,7 +101,7 @@
  @param value the value to be represented by the           
  <code>Long</code>  object.
  */
-- (instancetype __nonnull)initWithLong:(jlong)value;
+- (instancetype __nonnull)initWithLongLong:(jlong)value;
 
 /*!
  @brief Constructs a newly allocated <code>Long</code> object that
@@ -79,7 +113,6 @@
  <code>Long</code> .
  @throw NumberFormatExceptionif the <code>String</code> does not
               contain a parsable <code>long</code>.
- - seealso: java.lang.Long#parseLong(java.lang.String, int)
  */
 - (instancetype __nonnull)initWithNSString:(NSString *)s;
 
@@ -167,7 +200,7 @@
   
  <i>DecimalNumeral</i>, <i>HexDigits</i>, and <i>OctalDigits</i>
   are as defined in section 3.10.1 of 
- <cite>The Java&trade; Language Specification</cite>,
+ <cite>The Java Language Specification</cite>,
   except that underscores are not accepted between digits. 
  <p>The sequence of characters following an optional
   sign and/or radix specifier ("<code>0x</code>", "<code>0X</code>",
@@ -463,6 +496,35 @@
 + (jint)numberOfTrailingZerosWithLong:(jlong)i;
 
 /*!
+ @brief Parses the <code>CharSequence</code> argument as a signed <code>long</code> in
+  the specified <code>radix</code>, beginning at the specified 
+ <code>beginIndex</code> and extending to <code>endIndex - 1</code>.
+ <p>The method does not take steps to guard against the 
+ <code>CharSequence</code> being mutated while parsing.
+ @param s the <code>CharSequence</code>  containing the <code>long</code>                   representation to be parsed
+ @param beginIndex the beginning index, inclusive.
+ @param endIndex the ending index, exclusive.
+ @param radix the radix to be used while parsing <code>s</code> .
+ @return the signed <code>long</code> represented by the subsequence in
+              the specified radix.
+ @throw NullPointerExceptionif <code>s</code> is null.
+ @throw IndexOutOfBoundsExceptionif <code>beginIndex</code> is
+              negative, or if <code>beginIndex</code> is greater than
+              <code>endIndex</code> or if <code>endIndex</code> is greater than
+              <code>s.length()</code>.
+ @throw NumberFormatExceptionif the <code>CharSequence</code> does not
+              contain a parsable <code>long</code> in the specified
+              <code>radix</code>, or if <code>radix</code> is either smaller than
+              <code>java.lang.Character.MIN_RADIX</code> or larger than
+              <code>java.lang.Character.MAX_RADIX</code>.
+ @since 9
+ */
++ (jlong)parseLongWithJavaLangCharSequence:(id<JavaLangCharSequence>)s
+                                   withInt:(jint)beginIndex
+                                   withInt:(jint)endIndex
+                                   withInt:(jint)radix;
+
+/*!
  @brief Parses the string argument as a signed decimal <code>long</code>.
  The characters in the string must all be decimal digits, except
   that the first character may be an ASCII minus sign <code>'-'</code>
@@ -548,9 +610,39 @@
                        withInt:(jint)radix;
 
 /*!
+ @brief Parses the <code>CharSequence</code> argument as an unsigned <code>long</code> in
+  the specified <code>radix</code>, beginning at the specified 
+ <code>beginIndex</code> and extending to <code>endIndex - 1</code>.
+ <p>The method does not take steps to guard against the 
+ <code>CharSequence</code> being mutated while parsing.
+ @param s the <code>CharSequence</code>  containing the unsigned                  
+ <code>long</code>  representation to be parsed
+ @param beginIndex the beginning index, inclusive.
+ @param endIndex the ending index, exclusive.
+ @param radix the radix to be used while parsing <code>s</code> .
+ @return the unsigned <code>long</code> represented by the subsequence in
+              the specified radix.
+ @throw NullPointerExceptionif <code>s</code> is null.
+ @throw IndexOutOfBoundsExceptionif <code>beginIndex</code> is
+              negative, or if <code>beginIndex</code> is greater than
+              <code>endIndex</code> or if <code>endIndex</code> is greater than
+              <code>s.length()</code>.
+ @throw NumberFormatExceptionif the <code>CharSequence</code> does not
+              contain a parsable unsigned <code>long</code> in the specified
+              <code>radix</code>, or if <code>radix</code> is either smaller than
+              <code>java.lang.Character.MIN_RADIX</code> or larger than
+              <code>java.lang.Character.MAX_RADIX</code>.
+ @since 9
+ */
++ (jlong)parseUnsignedLongWithJavaLangCharSequence:(id<JavaLangCharSequence>)s
+                                           withInt:(jint)beginIndex
+                                           withInt:(jint)endIndex
+                                           withInt:(jint)radix;
+
+/*!
  @brief Parses the string argument as an unsigned decimal <code>long</code>.The
   characters in the string must all be decimal digits, except
-  that the first character may be an an ASCII plus sign <code>'+'</code>
+  that the first character may be an ASCII plus sign <code>'+'</code>
   (<code>'\u002B'</code>).
  The resulting integer value
   is returned, exactly as if the argument and the radix 10 were
@@ -739,7 +831,7 @@
            value represented by the argument in binary (base&nbsp;2).
  - seealso: #parseUnsignedLong(String, int)
  - seealso: #toUnsignedString(long, int)
- @since JDK 1.0.2
+ @since 1.0.2
  */
 + (NSString * __nonnull)toBinaryStringWithLong:(jlong)i;
 
@@ -779,7 +871,7 @@
            (base&nbsp;16).
  - seealso: #parseUnsignedLong(String, int)
  - seealso: #toUnsignedString(long, int)
- @since JDK 1.0.2
+ @since 1.0.2
  */
 + (NSString * __nonnull)toHexStringWithLong:(jlong)i;
 
@@ -812,7 +904,7 @@
            value represented by the argument in octal (base&nbsp;8).
  - seealso: #parseUnsignedLong(String, int)
  - seealso: #toUnsignedString(long, int)
- @since JDK 1.0.2
+ @since 1.0.2
  */
 + (NSString * __nonnull)toOctalStringWithLong:(jlong)i;
 
@@ -925,10 +1017,8 @@
  <code>Long(long)</code>, as this method is likely to yield
   significantly better space and time performance by caching
   frequently requested values.
-  Note that unlike the corresponding method
-  in the <code>Integer</code> class, this method
-  is <em>not</em> required to cache values within a particular
-  range.
+  This method will always cache values in the range -128 to 127,
+  inclusive, and may cache other values outside of this range.
  @param l a long value.
  @return a <code>Long</code> instance representing <code>l</code>.
  @since 1.5
@@ -998,6 +1088,11 @@
                  withInt:(jint)index
            withCharArray:(IOSCharArray *)buf;
 
+/*!
+ @brief Returns the string representation size for a given long value.
+ @param x long value
+ @return string size
+ */
 + (jint)stringSizeWithLong:(jlong)x;
 
 // Disallowed inherited constructors, do not use.
@@ -1027,7 +1122,7 @@ J2OBJC_STATIC_FIELD_CONSTANT(JavaLangLong, MAX_VALUE, jlong)
 /*!
  @brief The <code>Class</code> instance representing the primitive type 
  <code>long</code>.
- @since JDK1.1
+ @since 1.1
  */
 inline IOSClass *JavaLangLong_get_TYPE(void);
 /*! INTERNAL ONLY - Use accessor function from above. */
@@ -1072,9 +1167,13 @@ FOUNDATION_EXPORT jint JavaLangLong_stringSizeWithLong_(jlong x);
 
 FOUNDATION_EXPORT jlong JavaLangLong_parseLongWithNSString_withInt_(NSString *s, jint radix);
 
+FOUNDATION_EXPORT jlong JavaLangLong_parseLongWithJavaLangCharSequence_withInt_withInt_withInt_(id<JavaLangCharSequence> s, jint beginIndex, jint endIndex, jint radix);
+
 FOUNDATION_EXPORT jlong JavaLangLong_parseLongWithNSString_(NSString *s);
 
 FOUNDATION_EXPORT jlong JavaLangLong_parseUnsignedLongWithNSString_withInt_(NSString *s, jint radix);
+
+FOUNDATION_EXPORT jlong JavaLangLong_parseUnsignedLongWithJavaLangCharSequence_withInt_withInt_withInt_(id<JavaLangCharSequence> s, jint beginIndex, jint endIndex, jint radix);
 
 FOUNDATION_EXPORT jlong JavaLangLong_parseUnsignedLongWithNSString_(NSString *s);
 
@@ -1086,11 +1185,11 @@ FOUNDATION_EXPORT JavaLangLong *JavaLangLong_valueOfWithLong_(jlong l);
 
 FOUNDATION_EXPORT JavaLangLong *JavaLangLong_decodeWithNSString_(NSString *nm);
 
-FOUNDATION_EXPORT void JavaLangLong_initWithLong_(JavaLangLong *self, jlong value);
+FOUNDATION_EXPORT void JavaLangLong_initWithLongLong_(JavaLangLong *self, jlong value);
 
-FOUNDATION_EXPORT JavaLangLong *new_JavaLangLong_initWithLong_(jlong value) NS_RETURNS_RETAINED;
+FOUNDATION_EXPORT JavaLangLong *new_JavaLangLong_initWithLongLong_(jlong value) NS_RETURNS_RETAINED;
 
-FOUNDATION_EXPORT JavaLangLong *create_JavaLangLong_initWithLong_(jlong value);
+FOUNDATION_EXPORT JavaLangLong *create_JavaLangLong_initWithLongLong_(jlong value);
 
 FOUNDATION_EXPORT void JavaLangLong_initWithNSString_(JavaLangLong *self, NSString *s);
 
@@ -1154,6 +1253,4 @@ BOXED_SHIFT_ASSIGN_64(Long, longLongValue, jlong, JavaLangLong)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaLangLong")

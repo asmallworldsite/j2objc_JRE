@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_OrgXmlSaxAttributes
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -24,6 +21,8 @@
 
 #if !defined (OrgXmlSaxAttributes_) && (INCLUDE_ALL_OrgXmlSaxAttributes || defined(INCLUDE_OrgXmlSaxAttributes))
 #define OrgXmlSaxAttributes_
+
+@class JavaLangInteger;
 
 /*!
  @brief Interface for a list of XML attributes.
@@ -237,6 +236,4 @@ J2OBJC_TYPE_LITERAL_HEADER(OrgXmlSaxAttributes)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_OrgXmlSaxAttributes")

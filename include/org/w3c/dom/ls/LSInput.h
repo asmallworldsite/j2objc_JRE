@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_OrgW3cDomLsLSInput
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -27,6 +24,7 @@
 
 @class JavaIoInputStream;
 @class JavaIoReader;
+@class JavaLangBoolean;
 
 /*!
  @brief This interface represents an input source for data.
@@ -260,6 +258,4 @@ J2OBJC_TYPE_LITERAL_HEADER(OrgW3cDomLsLSInput)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_OrgW3cDomLsLSInput")

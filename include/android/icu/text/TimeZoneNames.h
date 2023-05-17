@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_AndroidIcuTextTimeZoneNames
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -32,6 +29,8 @@
 @class AndroidIcuTextTimeZoneNames_NameType;
 @class AndroidIcuUtilULocale;
 @class IOSObjectArray;
+@class JavaLangInteger;
+@class JavaLangLong;
 @class JavaUtilEnumSet;
 @class JavaUtilLocale;
 @protocol JavaLangCharSequence;
@@ -39,59 +38,59 @@
 @protocol JavaUtilSet;
 
 /*!
- @brief <code>TimeZoneNames</code> is an abstract class representing the time zone display name data model defined
-  by <a href="http://www.unicode.org/reports/tr35/">UTS#35 Unicode Locale Data Markup Language (LDML)</a>.
- The model defines meta zone, which is used for storing a set of display names. A meta zone can be shared
-  by multiple time zones. Also a time zone may have multiple meta zone historic mappings. 
- <p>
-  For example, people in the United States refer the zone used by the east part of North America as "Eastern Time".
-  The tz database contains multiple time zones "America/New_York", "America/Detroit", "America/Montreal" and some
-  others that belong to "Eastern Time". However, assigning different display names to these time zones does not make
-  much sense for most of people. 
- <p>
-  In <a href="http://cldr.unicode.org/">CLDR</a> (which uses LDML for representing locale data), the display name
-  "Eastern Time" is stored as long generic display name of a meta zone identified by the ID "America_Eastern".
-  Then, there is another table maintaining the historic mapping to meta zones for each time zone. The time zones in
-  the above example ("America/New_York", "America/Detroit"...) are mapped to the meta zone "America_Eastern". 
- <p>
-  Sometimes, a time zone is mapped to a different time zone in the past. For example, "America/Indiana/Knox"
-  had been moving "Eastern Time" and "Central Time" back and forth. Therefore, it is necessary that time zone
-  to meta zones mapping data are stored by date range.  
+ @brief <code>TimeZoneNames</code> is an abstract class representing the time zone display name data
+  model defined by <a href="http://www.unicode.org/reports/tr35/">UTS#35 Unicode Locale Data Markup
+  Language (LDML)</a>.The model defines meta zone, which is used for storing a set of display
+  names.
+ A meta zone can be shared by multiple time zones. Also a time zone may have multiple meta
+  zone historic mappings. 
+ <p>For example, people in the United States refer the zone used by the east part of North America
+  as "Eastern Time". The tz database contains multiple time zones "America/New_York",
+  "America/Detroit", "America/Montreal" and some others that belong to "Eastern Time". However,
+  assigning different display names to these time zones does not make much sense for most of
+  people. 
+ <p>In <a href="http://cldr.unicode.org/">CLDR</a> (which uses LDML for representing locale data),
+  the display name "Eastern Time" is stored as long generic display name of a meta zone identified
+  by the ID "America_Eastern". Then, there is another table maintaining the historic mapping to
+  meta zones for each time zone. The time zones in the above example ("America/New_York",
+  "America/Detroit"...) are mapped to the meta zone "America_Eastern". 
+ <p>Sometimes, a time zone is mapped to a different time zone in the past. For example,
+  "America/Indiana/Knox" had been moving "Eastern Time" and "Central Time" back and forth.
+  Therefore, it is necessary that time zone to meta zones mapping data are stored by date range. 
  <p><b>Note:</b>
-  <p>
-  <code>TimeZoneFormat</code> assumes an instance of <code>TimeZoneNames</code> is immutable. If you want to provide
-  your own <code>TimeZoneNames</code> implementation and use it with <code>TimeZoneFormat</code>, you must follow
-  the contract. 
- <p>
-  The methods in this class assume that time zone IDs are already canonicalized. For example, you may not get proper
-  result returned by a method with time zone ID "America/Indiana/Indianapolis", because it's not a canonical time zone
-  ID (the canonical time zone ID for the time zone is "America/Indianapolis". See 
- <code>TimeZone.getCanonicalID(String)</code> about ICU canonical time zone IDs.  
- <p>
-  In CLDR, most of time zone display names except location names are provided through meta zones. But a time zone may
-  have a specific name that is not shared with other time zones.
-  For example, time zone "Europe/London" has English long name for standard time "Greenwich Mean Time", which is also
-  shared with other time zones. However, the long name for daylight saving time is "British Summer Time", which is only
-  used for "Europe/London".  
- <p>
-  <code>getTimeZoneDisplayName(String, NameType)</code> is designed for accessing a name only used by a single time zone.
-  But is not necessarily mean that a subclass implementation use the same model with CLDR. A subclass implementation
-  may provide time zone names only through <code>getTimeZoneDisplayName(String, NameType)</code>, or only through 
- <code>getMetaZoneDisplayName(String, NameType)</code>, or both.  
- <p>
-  The default <code>TimeZoneNames</code> implementation returned by <code>getInstance(ULocale)</code> uses the locale data
-  imported from CLDR. In CLDR, set of meta zone IDs and mappings between zone IDs and meta zone IDs are shared by all
-  locales. Therefore, the behavior of <code>getAvailableMetaZoneIDs()</code>, <code>getAvailableMetaZoneIDs(String)</code>,
-  <code>getMetaZoneID(String, long)</code>, and <code>getReferenceZoneID(String, String)</code> won't be changed no matter
-  what locale is used for getting an instance of <code>TimeZoneNames</code>.
+  
+ <p><code>TimeZoneFormat</code> assumes an instance of <code>TimeZoneNames</code> is immutable. If you
+  want to provide your own <code>TimeZoneNames</code> implementation and use it with <code>TimeZoneFormat</code>
+ , you must follow the contract. 
+ <p>The methods in this class assume that time zone IDs are already canonicalized. For example,
+  you may not get proper result returned by a method with time zone ID
+  "America/Indiana/Indianapolis", because it's not a canonical time zone ID (the canonical time
+  zone ID for the time zone is "America/Indianapolis". See <code>TimeZone.getCanonicalID(String)</code>
+  about ICU canonical time zone IDs. 
+ <p>In CLDR, most of time zone display names except location names are provided through meta
+  zones. But a time zone may have a specific name that is not shared with other time zones. 
+ <p>For example, time zone "Europe/London" has English long name for standard time "Greenwich Mean
+  Time", which is also shared with other time zones. However, the long name for daylight saving
+  time is "British Summer Time", which is only used for "Europe/London". 
+ <p><code>getTimeZoneDisplayName(String, NameType)</code> is designed for accessing a name only used
+  by a single time zone. But is not necessarily mean that a subclass implementation use the same
+  model with CLDR. A subclass implementation may provide time zone names only through <code>getTimeZoneDisplayName(String, NameType)</code>
+ , or only through <code>getMetaZoneDisplayName(String, NameType)</code>
+ , or both. 
+ <p>The default <code>TimeZoneNames</code> implementation returned by <code>getInstance(ULocale)</code>
+  uses the locale data imported from CLDR. In CLDR, set of meta zone IDs and
+  mappings between zone IDs and meta zone IDs are shared by all locales. Therefore, the behavior of 
+ <code>getAvailableMetaZoneIDs()</code>, <code>getAvailableMetaZoneIDs(String)</code>, <code>getMetaZoneID(String, long)</code>
+ , and <code>getReferenceZoneID(String, String)</code> won't be changed
+  no matter what locale is used for getting an instance of <code>TimeZoneNames</code>.
  */
 @interface AndroidIcuTextTimeZoneNames : NSObject < JavaIoSerializable >
 
 #pragma mark Public
 
 /*!
- @brief Finds time zone name prefix matches for the input text at the
-  given offset and returns a collection of the matches.
+ @brief Finds time zone name prefix matches for the input text at the given offset and returns a
+  collection of the matches.
  @param text the text.
  @param start the starting offset within the text.
  @param types the set of name types, or  <code> null </code>  for all name types.
@@ -118,16 +117,18 @@
 
 /*!
  @brief Returns the display name of the time zone at the given date.
- <p>
-  <b>Note:</b> This method calls the subclass's <code>getTimeZoneDisplayName(String, NameType)</code> first. When the
-  result is null, this method calls <code>getMetaZoneID(String, long)</code> to get the meta zone ID mapped from the
-  time zone, then calls <code>getMetaZoneDisplayName(String, NameType)</code>.
+ <p><b>Note:</b> This method calls the subclass's <code>getTimeZoneDisplayName(String,
+ NameType)</code>
+  first. When the result is null, this method calls <code>getMetaZoneID(String,
+ long)</code>
+  to get the meta zone ID mapped from the time zone, then calls <code>getMetaZoneDisplayName(String, NameType)</code>
+ .
  @param tzID The canonical time zone ID.
- @param type The display name type. See 
- <code>TimeZoneNames.NameType</code> .
+ @param type The display name type. See <code>TimeZoneNames.NameType</code> .
  @param date The date
- @return The display name for the time zone at the given date. When this object does not have a localized display
-          name for the time zone with the specified type and date, null is returned.
+ @return The display name for the time zone at the given date. When this object does not have a
+      localized display name for the time zone with the specified type and date, null is
+      returned.
  */
 - (NSString *)getDisplayNameWithNSString:(NSString *)tzID
 withAndroidIcuTextTimeZoneNames_NameType:(AndroidIcuTextTimeZoneNames_NameType *)type
@@ -139,31 +140,30 @@ withAndroidIcuTextTimeZoneNames_NameType:(AndroidIcuTextTimeZoneNames_NameType *
 withAndroidIcuTextTimeZoneNames_NameTypeArray:(IOSObjectArray *)types
                            withLong:(jlong)date
                   withNSStringArray:(IOSObjectArray *)dest
-                            withInt:(jint)destOffset __attribute__((deprecated));
+                            withInt:(jint)destOffset;
 
 /*!
- @brief Returns the exemplar location name for the given time zone.When this object does not have a localized location
-  name, the default implementation may still returns a programmatically generated name with the logic described
-  below.
+ @brief Returns the exemplar location name for the given time zone.When this object does not have a
+  localized location name, the default implementation may still returns a programmatically
+  generated name with the logic described below.
  <ol>
-  <li>Check if the ID contains "/". If not, return null. 
- <li>Check if the ID does not start with "Etc/" or "SystemV/". If it does, return null. 
- <li>Extract a substring after the last occurrence of "/". 
- <li>Replace "_" with " ". 
+    <li>Check if the ID contains "/". If not, return null.
+    <li>Check if the ID does not start with "Etc/" or "SystemV/". If it does, return null.
+    <li>Extract a substring after the last occurrence of "/".
+    <li>Replace "_" with " ". 
  </ol>
-  For example, "New York" is returned for the time zone ID "America/New_York" when this object does not have the
-  localized location name.
+  For example, "New York" is returned for the time zone ID "America/New_York" when this object
+  does not have the localized location name.
  @param tzID The canonical time zone ID
- @return The exemplar location name for the given time zone, or null when a localized location name is not
-          available and the fallback logic described above cannot extract location from the ID.
+ @return The exemplar location name for the given time zone, or null when a localized location
+      name is not available and the fallback logic described above cannot extract location from
+      the ID.
  */
 - (NSString *)getExemplarLocationNameWithNSString:(NSString *)tzID;
 
 /*!
- @brief Returns an instance of <code>TimeZoneNames</code> for the specified 
- <code>java.util.Locale</code>.
- @param locale The 
- <code>java.util.Locale</code> .
+ @brief Returns an instance of <code>TimeZoneNames</code> for the specified <code>java.util.Locale</code>.
+ @param locale The <code>java.util.Locale</code> .
  @return An instance of <code>TimeZoneDisplayNames</code>
  */
 + (AndroidIcuTextTimeZoneNames *)getInstanceWithJavaUtilLocale:(JavaUtilLocale *)locale;
@@ -178,11 +178,10 @@ withAndroidIcuTextTimeZoneNames_NameTypeArray:(IOSObjectArray *)types
 /*!
  @brief Returns the display name of the meta zone.
  @param mzID The meta zone ID.
- @param type The display name type. See 
- <code>TimeZoneNames.NameType</code> .
- @return The display name of the meta zone. When this object does not have a localized display name for the given
-          meta zone with the specified type or the implementation does not provide any display names associated
-          with meta zones, null is returned.
+ @param type The display name type. See <code>TimeZoneNames.NameType</code> .
+ @return The display name of the meta zone. When this object does not have a localized display
+      name for the given meta zone with the specified type or the implementation does not provide
+      any display names associated with meta zones, null is returned.
  */
 - (NSString *)getMetaZoneDisplayNameWithNSString:(NSString *)mzID
         withAndroidIcuTextTimeZoneNames_NameType:(AndroidIcuTextTimeZoneNames_NameType *)type;
@@ -191,35 +190,36 @@ withAndroidIcuTextTimeZoneNames_NameTypeArray:(IOSObjectArray *)types
  @brief Returns the meta zone ID for the given canonical time zone ID at the given date.
  @param tzID The canonical time zone ID.
  @param date The date.
- @return The meta zone ID for the given time zone ID at the given date. If the time zone does not have a
-          corresponding meta zone at the given date or the implementation does not support meta zones, null is
-          returned.
+ @return The meta zone ID for the given time zone ID at the given date. If the time zone does
+      not have a corresponding meta zone at the given date or the implementation does not support
+      meta zones, null is returned.
  */
 - (NSString *)getMetaZoneIDWithNSString:(NSString *)tzID
                                withLong:(jlong)date;
 
 /*!
  @brief Returns the reference zone ID for the given meta zone ID for the region.
- Note: Each meta zone must have a reference zone associated with a special region "001" (world).
-  Some meta zones may have region specific reference zone IDs other than the special region
-  "001". When a meta zone does not have any region specific reference zone IDs, this method
-  return the reference zone ID for the special region "001" (world).
+ <p>Note: Each meta zone must have a reference zone associated with a special region "001"
+  (world). Some meta zones may have region specific reference zone IDs other than the special
+  region "001". When a meta zone does not have any region specific reference zone IDs, this
+  method return the reference zone ID for the special region "001" (world).
  @param mzID The meta zone ID.
  @param region The region.
- @return The reference zone ID ("golden zone" in the LDML specification) for the given time zone ID for the
-          region. If the meta zone is unknown or the implementation does not support meta zones, null is returned.
+ @return The reference zone ID ("golden zone" in the LDML specification) for the given time zone
+      ID for the region. If the meta zone is unknown or the implementation does not support meta
+      zones, null is returned.
  */
 - (NSString *)getReferenceZoneIDWithNSString:(NSString *)mzID
                                 withNSString:(NSString *)region;
 
 /*!
- @brief Returns the display name of the time zone.Unlike <code>getDisplayName(String, NameType, long)</code>,
-  this method does not get a name from a meta zone used by the time zone.
+ @brief Returns the display name of the time zone.Unlike <code>getDisplayName(String, NameType,
+ long)</code>
+ , this method does not get a name from a meta zone used by the time zone.
  @param tzID The canonical time zone ID.
- @param type The display name type. See 
- <code>TimeZoneNames.NameType</code> .
- @return The display name for the time zone. When this object does not have a localized display name for the given
-          time zone with the specified type, null is returned.
+ @param type The display name type. See <code>TimeZoneNames.NameType</code> .
+ @return The display name for the time zone. When this object does not have a localized display
+      name for the given time zone with the specified type, null is returned.
  */
 - (NSString *)getTimeZoneDisplayNameWithNSString:(NSString *)tzID
         withAndroidIcuTextTimeZoneNames_NameType:(AndroidIcuTextTimeZoneNames_NameType *)type;
@@ -237,7 +237,7 @@ withAndroidIcuTextTimeZoneNames_NameTypeArray:(IOSObjectArray *)types
 
 /*!
  */
-- (void)loadAllDisplayNames __attribute__((deprecated));
+- (void)loadAllDisplayNames;
 
 #pragma mark Protected
 
@@ -271,7 +271,7 @@ J2OBJC_TYPE_LITERAL_HEADER(AndroidIcuTextTimeZoneNames)
 
 @class IOSObjectArray;
 
-typedef NS_ENUM(NSUInteger, AndroidIcuTextTimeZoneNames_NameType_Enum) {
+typedef NS_ENUM(jint, AndroidIcuTextTimeZoneNames_NameType_Enum) {
   AndroidIcuTextTimeZoneNames_NameType_Enum_LONG_GENERIC = 0,
   AndroidIcuTextTimeZoneNames_NameType_Enum_LONG_STANDARD = 1,
   AndroidIcuTextTimeZoneNames_NameType_Enum_LONG_DAYLIGHT = 2,
@@ -280,19 +280,18 @@ typedef NS_ENUM(NSUInteger, AndroidIcuTextTimeZoneNames_NameType_Enum) {
   AndroidIcuTextTimeZoneNames_NameType_Enum_SHORT_DAYLIGHT = 5,
   AndroidIcuTextTimeZoneNames_NameType_Enum_EXEMPLAR_LOCATION = 6,
 };
+#if J2OBJC_IMPORTED_BY_JAVA_IMPLEMENTATION
+#define AndroidIcuTextTimeZoneNames_NameType_ORDINAL jint
+#else
+#define AndroidIcuTextTimeZoneNames_NameType_ORDINAL AndroidIcuTextTimeZoneNames_NameType_Enum
+#endif
+
 
 /*!
  @brief Time zone display name types
  */
 @interface AndroidIcuTextTimeZoneNames_NameType : JavaLangEnum
 
-@property (readonly, class, nonnull) AndroidIcuTextTimeZoneNames_NameType *LONG_GENERIC NS_SWIFT_NAME(LONG_GENERIC);
-@property (readonly, class, nonnull) AndroidIcuTextTimeZoneNames_NameType *LONG_STANDARD NS_SWIFT_NAME(LONG_STANDARD);
-@property (readonly, class, nonnull) AndroidIcuTextTimeZoneNames_NameType *LONG_DAYLIGHT NS_SWIFT_NAME(LONG_DAYLIGHT);
-@property (readonly, class, nonnull) AndroidIcuTextTimeZoneNames_NameType *SHORT_GENERIC NS_SWIFT_NAME(SHORT_GENERIC);
-@property (readonly, class, nonnull) AndroidIcuTextTimeZoneNames_NameType *SHORT_STANDARD NS_SWIFT_NAME(SHORT_STANDARD);
-@property (readonly, class, nonnull) AndroidIcuTextTimeZoneNames_NameType *SHORT_DAYLIGHT NS_SWIFT_NAME(SHORT_DAYLIGHT);
-@property (readonly, class, nonnull) AndroidIcuTextTimeZoneNames_NameType *EXEMPLAR_LOCATION NS_SWIFT_NAME(EXEMPLAR_LOCATION);
 #pragma mark Public
 
 + (AndroidIcuTextTimeZoneNames_NameType *)valueOfWithNSString:(NSString *)name;
@@ -302,6 +301,8 @@ typedef NS_ENUM(NSUInteger, AndroidIcuTextTimeZoneNames_NameType_Enum) {
 #pragma mark Package-Private
 
 - (AndroidIcuTextTimeZoneNames_NameType_Enum)toNSEnum;
+
+- (AndroidIcuTextTimeZoneNames_NameType_ORDINAL)ordinal;
 
 @end
 
@@ -356,7 +357,7 @@ FOUNDATION_EXPORT IOSObjectArray *AndroidIcuTextTimeZoneNames_NameType_values(vo
 
 FOUNDATION_EXPORT AndroidIcuTextTimeZoneNames_NameType *AndroidIcuTextTimeZoneNames_NameType_valueOfWithNSString_(NSString *name);
 
-FOUNDATION_EXPORT AndroidIcuTextTimeZoneNames_NameType *AndroidIcuTextTimeZoneNames_NameType_fromOrdinal(NSUInteger ordinal);
+FOUNDATION_EXPORT AndroidIcuTextTimeZoneNames_NameType *AndroidIcuTextTimeZoneNames_NameType_fromOrdinal(AndroidIcuTextTimeZoneNames_NameType_ORDINAL ordinal);
 
 J2OBJC_TYPE_LITERAL_HEADER(AndroidIcuTextTimeZoneNames_NameType)
 
@@ -366,10 +367,11 @@ J2OBJC_TYPE_LITERAL_HEADER(AndroidIcuTextTimeZoneNames_NameType)
 #define AndroidIcuTextTimeZoneNames_MatchInfo_
 
 @class AndroidIcuTextTimeZoneNames_NameType;
+@class JavaLangInteger;
 
 /*!
- @brief A <code>MatchInfo</code> represents a time zone name match used by 
- <code>TimeZoneNames.find(CharSequence, int, EnumSet)</code>.
+ @brief A <code>MatchInfo</code> represents a time zone name match used by <code>TimeZoneNames.find(CharSequence, int, EnumSet)</code>
+ .
  */
 @interface AndroidIcuTextTimeZoneNames_MatchInfo : NSObject
 
@@ -381,9 +383,9 @@ J2OBJC_TYPE_LITERAL_HEADER(AndroidIcuTextTimeZoneNames_NameType)
  @param tzID the time zone ID, or null
  @param mzID the meta zone ID, or null
  @param matchLength the match length.
- @throw IllegalArgumentExceptionwhen 1) <code>nameType</code> is <code>null</code>,
-  or 2) both <code>tzID</code> and <code>mzID</code> are <code>null</code>,
-  or 3) <code>matchLength</code> is 0 or smaller.
+ @throw IllegalArgumentExceptionwhen 1) <code>nameType</code> is <code>null</code>, or 2)
+      both <code>tzID</code> and <code>mzID</code> are <code>null</code>, or 3) <code>
+      matchLength</code> is 0 or smaller.
  - seealso: NameType
  */
 - (instancetype __nonnull)initWithAndroidIcuTextTimeZoneNames_NameType:(AndroidIcuTextTimeZoneNames_NameType *)nameType
@@ -399,8 +401,7 @@ J2OBJC_TYPE_LITERAL_HEADER(AndroidIcuTextTimeZoneNames_NameType)
 
 /*!
  @brief Returns the meta zone ID, or <code>null</code> if not available.
- <p><b>Note</b>: A <code>MatchInfo</code> must have either a time zone ID
-  or a meta zone ID.
+ <p><b>Note</b>: A <code>MatchInfo</code> must have either a time zone ID or a meta zone ID.
  @return the meta zone ID, or <code>null</code>.
  - seealso: #tzID()
  */
@@ -415,8 +416,7 @@ J2OBJC_TYPE_LITERAL_HEADER(AndroidIcuTextTimeZoneNames_NameType)
 
 /*!
  @brief Returns the time zone ID, or <code>null</code> if not available.
- <p><b>Note</b>: A <code>MatchInfo</code> must have either a time zone ID
-  or a meta zone ID.
+ <p><b>Note</b>: A <code>MatchInfo</code> must have either a time zone ID or a meta zone ID.
  @return the time zone ID, or <code>null</code>.
  - seealso: #mzID()
  */
@@ -449,7 +449,6 @@ J2OBJC_TYPE_LITERAL_HEADER(AndroidIcuTextTimeZoneNames_MatchInfo)
 /*!
  @brief The super class of <code>TimeZoneNames</code> service factory classes.
  */
-__attribute__((deprecated))
 @interface AndroidIcuTextTimeZoneNames_Factory : NSObject
 
 #pragma mark Public
@@ -459,14 +458,14 @@ __attribute__((deprecated))
  @param locale The display locale
  @return An instance of <code>TimeZoneNames</code>.
  */
-- (AndroidIcuTextTimeZoneNames *)getTimeZoneNamesWithAndroidIcuUtilULocale:(AndroidIcuUtilULocale *)locale __attribute__((deprecated));
+- (AndroidIcuTextTimeZoneNames *)getTimeZoneNamesWithAndroidIcuUtilULocale:(AndroidIcuUtilULocale *)locale;
 
 #pragma mark Protected
 
 /*!
  @brief Sole constructor
  */
-- (instancetype __nonnull)init __attribute__((deprecated));
+- (instancetype __nonnull)init;
 
 @end
 
@@ -482,6 +481,4 @@ J2OBJC_TYPE_LITERAL_HEADER(AndroidIcuTextTimeZoneNames_Factory)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_AndroidIcuTextTimeZoneNames")

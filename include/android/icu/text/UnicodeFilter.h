@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_AndroidIcuTextUnicodeFilter
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -30,6 +27,8 @@
 #include "android/icu/text/UnicodeMatcher.h"
 
 @class IOSIntArray;
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @protocol AndroidIcuTextReplaceable;
 
 /*!
@@ -64,7 +63,7 @@
   happy.Java inserts a synthetic constructor and CheckTags
   can't tell that it's synthetic.)
  */
-- (instancetype __nonnull)init __attribute__((deprecated));
+- (instancetype __nonnull)init;
 
 @end
 
@@ -80,6 +79,4 @@ J2OBJC_TYPE_LITERAL_HEADER(AndroidIcuTextUnicodeFilter)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_AndroidIcuTextUnicodeFilter")

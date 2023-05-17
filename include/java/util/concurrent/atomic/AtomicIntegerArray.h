@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaUtilConcurrentAtomicAtomicIntegerArray
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -30,14 +27,15 @@
 #include "java/io/Serializable.h"
 
 @class IOSIntArray;
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @protocol JavaUtilFunctionIntBinaryOperator;
 @protocol JavaUtilFunctionIntUnaryOperator;
 
 /*!
  @brief An <code>int</code> array in which elements may be updated atomically.
- See the <code>java.util.concurrent.atomic</code> package
-  specification for description of the properties of atomic
-  variables.
+ See the <code>VarHandle</code> specification for descriptions of the
+  properties of atomic accesses.
  @since 1.5
  @author Doug Lea
  */
@@ -61,14 +59,16 @@
 - (instancetype __nonnull)initWithIntArray:(IOSIntArray *)array;
 
 /*!
- @brief Atomically updates the element at index <code>i</code> with the
-  results of applying the given function to the current and
+ @brief Atomically updates (with memory effects as specified by <code>VarHandle.compareAndSet</code>
+ ) the element at index <code>i</code> with
+  the results of applying the given function to the current and
   given values, returning the updated value.The function should
   be side-effect-free, since it may be re-applied when attempted
   updates fail due to contention among threads.
  The function is
-  applied with the current value at index <code>i</code> as its first
-  argument, and the given update as the second argument.
+  applied with the current value of the element at index <code>i</code>
+  as its first argument, and the given update as the second
+  argument.
  @param i the index
  @param x the update value
  @param accumulatorFunction a side-effect-free function of two arguments
@@ -80,7 +80,8 @@
 withJavaUtilFunctionIntBinaryOperator:(id<JavaUtilFunctionIntBinaryOperator>)accumulatorFunction;
 
 /*!
- @brief Atomically adds the given value to the element at index <code>i</code>.
+ @brief Atomically adds the given value to the element at index <code>i</code>,
+  with memory effects as specified by <code>VarHandle.getAndAdd</code>.
  @param i the index
  @param delta the value to add
  @return the updated value
@@ -89,11 +90,12 @@ withJavaUtilFunctionIntBinaryOperator:(id<JavaUtilFunctionIntBinaryOperator>)acc
                  withInt:(jint)delta;
 
 /*!
- @brief Atomically sets the element at position <code>i</code> to the given
-  updated value if the current value <code>==</code> the expected value.
+ @brief Atomically sets the element at index <code>i</code> to <code>newValue</code>
+  if the element's current value <code>== expectedValue</code>,
+  with memory effects as specified by <code>VarHandle.compareAndSet</code>.
  @param i the index
- @param expect the expected value
- @param update the new value
+ @param expectedValue the expected value
+ @param newValue the new value
  @return <code>true</code> if successful. False return indicates that
   the actual value was not equal to the expected value.
  */
@@ -102,28 +104,33 @@ withJavaUtilFunctionIntBinaryOperator:(id<JavaUtilFunctionIntBinaryOperator>)acc
                          withInt:(jint)update;
 
 /*!
- @brief Atomically decrements by one the element at index <code>i</code>.
+ @brief Atomically decrements the value of the element at index <code>i</code>,
+  with memory effects as specified by <code>VarHandle.getAndAdd</code>.
+ <p>Equivalent to <code>addAndGet(i, -1)</code>.
  @param i the index
  @return the updated value
  */
 - (jint)decrementAndGetWithInt:(jint)i;
 
 /*!
- @brief Gets the current value at position <code>i</code>.
+ @brief Returns the current value of the element at index <code>i</code>,
+  with memory effects as specified by <code>VarHandle.getVolatile</code>.
  @param i the index
  @return the current value
  */
 - (jint)getWithInt:(jint)i;
 
 /*!
- @brief Atomically updates the element at index <code>i</code> with the
-  results of applying the given function to the current and
+ @brief Atomically updates (with memory effects as specified by <code>VarHandle.compareAndSet</code>
+ ) the element at index <code>i</code> with
+  the results of applying the given function to the current and
   given values, returning the previous value.The function should
   be side-effect-free, since it may be re-applied when attempted
   updates fail due to contention among threads.
  The function is
-  applied with the current value at index <code>i</code> as its first
-  argument, and the given update as the second argument.
+  applied with the current value of the element at index <code>i</code>
+  as its first argument, and the given update as the second
+  argument.
  @param i the index
  @param x the update value
  @param accumulatorFunction a side-effect-free function of two arguments
@@ -135,7 +142,8 @@ withJavaUtilFunctionIntBinaryOperator:(id<JavaUtilFunctionIntBinaryOperator>)acc
 withJavaUtilFunctionIntBinaryOperator:(id<JavaUtilFunctionIntBinaryOperator>)accumulatorFunction;
 
 /*!
- @brief Atomically adds the given value to the element at index <code>i</code>.
+ @brief Atomically adds the given value to the element at index <code>i</code>,
+  with memory effects as specified by <code>VarHandle.getAndAdd</code>.
  @param i the index
  @param delta the value to add
  @return the previous value
@@ -144,22 +152,27 @@ withJavaUtilFunctionIntBinaryOperator:(id<JavaUtilFunctionIntBinaryOperator>)acc
                  withInt:(jint)delta;
 
 /*!
- @brief Atomically decrements by one the element at index <code>i</code>.
+ @brief Atomically decrements the value of the element at index <code>i</code>,
+  with memory effects as specified by <code>VarHandle.getAndAdd</code>.
+ <p>Equivalent to <code>getAndAdd(i, -1)</code>.
  @param i the index
  @return the previous value
  */
 - (jint)getAndDecrementWithInt:(jint)i;
 
 /*!
- @brief Atomically increments by one the element at index <code>i</code>.
+ @brief Atomically increments the value of the element at index <code>i</code>,
+  with memory effects as specified by <code>VarHandle.getAndAdd</code>.
+ <p>Equivalent to <code>getAndAdd(i, 1)</code>.
  @param i the index
  @return the previous value
  */
 - (jint)getAndIncrementWithInt:(jint)i;
 
 /*!
- @brief Atomically sets the element at position <code>i</code> to the given
-  value and returns the old value.
+ @brief Atomically sets the element at index <code>i</code> to <code>newValue</code>
+  and returns the old value,
+  with memory effects as specified by <code>VarHandle.getAndSet</code>.
  @param i the index
  @param newValue the new value
  @return the previous value
@@ -168,10 +181,12 @@ withJavaUtilFunctionIntBinaryOperator:(id<JavaUtilFunctionIntBinaryOperator>)acc
                  withInt:(jint)newValue;
 
 /*!
- @brief Atomically updates the element at index <code>i</code> with the results
-  of applying the given function, returning the previous value.The
-  function should be side-effect-free, since it may be re-applied
-  when attempted updates fail due to contention among threads.
+ @brief Atomically updates (with memory effects as specified by <code>VarHandle.compareAndSet</code>
+ ) the element at index <code>i</code> with
+  the results of applying the given function, returning the
+  previous value.The function should be side-effect-free, since
+  it may be re-applied when attempted updates fail due to
+  contention among threads.
  @param i the index
  @param updateFunction a side-effect-free function
  @return the previous value
@@ -181,14 +196,17 @@ withJavaUtilFunctionIntBinaryOperator:(id<JavaUtilFunctionIntBinaryOperator>)acc
 withJavaUtilFunctionIntUnaryOperator:(id<JavaUtilFunctionIntUnaryOperator>)updateFunction;
 
 /*!
- @brief Atomically increments by one the element at index <code>i</code>.
+ @brief Atomically increments the value of the element at index <code>i</code>,
+  with memory effects as specified by <code>VarHandle.getAndAdd</code>.
+ <p>Equivalent to <code>addAndGet(i, 1)</code>.
  @param i the index
  @return the updated value
  */
 - (jint)incrementAndGetWithInt:(jint)i;
 
 /*!
- @brief Eventually sets the element at position <code>i</code> to the given value.
+ @brief Sets the element at index <code>i</code> to <code>newValue</code>,
+  with memory effects as specified by <code>VarHandle.setRelease</code>.
  @param i the index
  @param newValue the new value
  @since 1.6
@@ -203,7 +221,8 @@ withJavaUtilFunctionIntUnaryOperator:(id<JavaUtilFunctionIntUnaryOperator>)updat
 - (jint)length;
 
 /*!
- @brief Sets the element at position <code>i</code> to the given value.
+ @brief Sets the element at index <code>i</code> to <code>newValue</code>,
+  with memory effects as specified by <code>VarHandle.setVolatile</code>.
  @param i the index
  @param newValue the new value
  */
@@ -217,10 +236,12 @@ withJavaUtilFunctionIntUnaryOperator:(id<JavaUtilFunctionIntUnaryOperator>)updat
 - (NSString *)description;
 
 /*!
- @brief Atomically updates the element at index <code>i</code> with the results
-  of applying the given function, returning the updated value.The
-  function should be side-effect-free, since it may be re-applied
-  when attempted updates fail due to contention among threads.
+ @brief Atomically updates (with memory effects as specified by <code>VarHandle.compareAndSet</code>
+ ) the element at index <code>i</code> with
+  the results of applying the given function, returning the
+  updated value.The function should be side-effect-free, since it
+  may be re-applied when attempted updates fail due to contention
+  among threads.
  @param i the index
  @param updateFunction a side-effect-free function
  @return the updated value
@@ -230,15 +251,14 @@ withJavaUtilFunctionIntUnaryOperator:(id<JavaUtilFunctionIntUnaryOperator>)updat
 withJavaUtilFunctionIntUnaryOperator:(id<JavaUtilFunctionIntUnaryOperator>)updateFunction;
 
 /*!
- @brief Atomically sets the element at position <code>i</code> to the given
-  updated value if the current value <code>==</code> the expected value.
- <p><a href="package-summary.html#weakCompareAndSet">May fail
-  spuriously and does not provide ordering guarantees</a>, so is
-  only rarely an appropriate alternative to <code>compareAndSet</code>.
+ @brief Possibly atomically sets the element at index <code>i</code> to 
+ <code>newValue</code> if the element's current value <code>== expectedValue</code>,
+  with memory effects as specified by <code>VarHandle.weakCompareAndSetPlain</code>.
  @param i the index
- @param expect the expected value
- @param update the new value
+ @param expectedValue the expected value
+ @param newValue the new value
  @return <code>true</code> if successful
+ - seealso: #weakCompareAndSetPlain
  */
 - (jboolean)weakCompareAndSetWithInt:(jint)i
                              withInt:(jint)expect
@@ -274,6 +294,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentAtomicAtomicIntegerArray)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaUtilConcurrentAtomicAtomicIntegerArray")

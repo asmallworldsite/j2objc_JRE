@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaUtilRegexMatcher
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -30,10 +27,14 @@
 #include "java/util/regex/MatchResult.h"
 
 @class IOSIntArray;
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @class JavaLangStringBuffer;
 @class JavaLangStringBuilder;
 @class JavaUtilRegexPattern;
 @protocol JavaLangCharSequence;
+@protocol JavaUtilFunctionFunction;
+@protocol JavaUtilStreamStream;
 
 /*!
  @brief J2ObjC modified: Synchronizations are removed because they were added in the Android sources
@@ -74,9 +75,23 @@
   matcher's region match anchors such as ^ and $.
    */
   jboolean anchoringBounds_;
+  /*!
+   @brief Number of times this matcher's state has been modified
+   */
+  jint modCount_;
 }
 
 #pragma mark Public
+
+/*!
+ @brief Internal helper method to append a given string to a given string buffer.
+ If the string contains any references to groups, these are replaced by
+  the corresponding group's contents.
+ @param buffer the string builder.
+ @param s the string to append.
+ */
+- (void)appendEvaluatedWithJavaLangStringBuffer:(JavaLangStringBuffer *)buffer
+                                   withNSString:(NSString *)s;
 
 /*!
  @brief Implements a non-terminal append-and-replace step.
@@ -88,7 +103,7 @@
     append position, and appends them to the given string buffer.  It
     stops after reading the last character preceding the previous match,
     that is, the character at index <code>start()</code>
- &nbsp;<tt>-</tt>&nbsp;<tt>1</tt>.  </p></li>
+ &nbsp;<code>-</code>&nbsp;<code>1</code>.  </p></li>
     
  <li><p> It appends the given replacement string to the string buffer.
     </p></li>
@@ -101,30 +116,31 @@
   
  <p> The replacement string may contain references to subsequences
   captured during the previous match: Each occurrence of 
- <tt>${</tt><i>name</i><tt>}</tt> or <tt>$</tt><i>g</i>
+ <code>${</code><i>name</i><code>}</code> or <code>$</code><i>g</i>
   will be replaced by the result of evaluating the corresponding 
  <code>group(name)</code> or <code>group(g)</code>
-  respectively. For  <tt>$</tt><i>g</i>,
-  the first number after the <tt>$</tt> is always treated as part of
+  respectively. For <code>$</code><i>g</i>,
+  the first number after the <code>$</code> is always treated as part of
   the group reference. Subsequent numbers are incorporated into g if
   they would form a legal group reference. Only the numerals '0'
   through '9' are considered as potential components of the group
-  reference. If the second group matched the string <tt>"foo"</tt>, for
-  example, then passing the replacement string <tt>"$2bar"</tt> would
-  cause <tt>"foobar"</tt> to be appended to the string buffer. A dollar
-  sign (<tt>$</tt>) may be included as a literal in the replacement
-  string by preceding it with a backslash (<tt>\$</tt>).
+  reference. If the second group matched the string <code>"foo"</code>, for
+  example, then passing the replacement string <code>"$2bar"</code> would
+  cause <code>"foobar"</code> to be appended to the string buffer. A dollar
+  sign (<code>$</code>) may be included as a literal in the replacement
+  string by preceding it with a backslash (<code>\$</code>).
   
- <p> Note that backslashes (<tt>\</tt>) and dollar signs (<tt>$</tt>) in
+ <p> Note that backslashes (<code>\</code>) and dollar signs (<code>$</code>) in
   the replacement string may cause the results to be different than if it
   were being treated as a literal replacement string. Dollar signs may be
   treated as references to captured subsequences as described above, and
   backslashes are used to escape literal characters in the replacement
   string. 
  <p> This method is intended to be used in a loop together with the 
- <code>appendTail</code> and <code>find</code> methods.  The
-  following code, for example, writes <tt>one dog two dogs in the
-  yard</tt> to the standard-output stream: </p>
+ <code>appendTail</code> and <code>find</code>
+  methods.  The following code, for example, writes <code>one dog two dogs
+  in the yard</code>
+  to the standard-output stream: </p>
   
  <blockquote>@code
 
@@ -176,24 +192,25 @@
  <p> This method reads characters from the input sequence, starting at
   the append position, and appends them to the given string buffer.  It is
   intended to be invoked after one or more invocations of the <code>appendReplacement</code>
-  method in order to copy the
-  remainder of the input sequence.  </p>
+  method in
+  order to copy the remainder of the input sequence.  </p>
  @param sb The target string buffer
  @return The target string buffer
  */
 - (JavaLangStringBuffer * __nonnull)appendTailWithJavaLangStringBuffer:(JavaLangStringBuffer *)sb;
 
 /*!
- @brief Appends the (unmatched) remainder of the input to the given 
- <code>StringBuilder</code>.The method can be used in conjunction with 
- <code>find()</code> and <code>appendReplacement(StringBuilder, String)</code> to
-  walk through the input and replace all matches of the <code>Pattern</code>
-  with something else.
- @return the <code>StringBuilder</code>.
- @throw IllegalStateException
- if no successful match has been made.
+ @brief Implements a terminal append-and-replace step.
+ <p> This method reads characters from the input sequence, starting at
+  the append position, and appends them to the given string builder.  It is
+  intended to be invoked after one or more invocations of the <code>appendReplacement</code>
+  method in order to copy the remainder of the input
+  sequence.  </p>
+ @param sb The target string builder
+ @return The target string builder
+ @since 9
  */
-- (JavaLangStringBuilder *)appendTailWithJavaLangStringBuilder:(JavaLangStringBuilder *)buffer;
+- (JavaLangStringBuilder *)appendTailWithJavaLangStringBuilder:(JavaLangStringBuilder *)sb;
 
 /*!
  @brief Returns the offset after the last character matched.
@@ -209,11 +226,11 @@
   captured by the given group during the previous match operation.
  <p> <a href="Pattern.html#cg">Capturing groups</a> are indexed from left
   to right, starting at one.  Group zero denotes the entire pattern, so
-  the expression <i>m.</i><tt>end(0)</tt> is equivalent to 
- <i>m.</i><tt>end()</tt>.  </p>
+  the expression <i>m.</i><code>end(0)</code> is equivalent to 
+ <i>m.</i><code>end()</code>.  </p>
  @param group The index of a capturing group in this matcher's pattern
  @return The offset after the last character captured by the group,
-           or <tt>-1</tt> if the match was successful
+           or <code>-1</code> if the match was successful
            but the group itself did not match anything
  @throw IllegalStateException
  If no match has yet been attempted,
@@ -250,8 +267,8 @@
   not since been reset, at the first character not matched by the previous
   match. 
  <p> If the match succeeds then more information can be obtained via the 
- <tt>start</tt>, <tt>end</tt>, and <tt>group</tt> methods.  </p>
- @return <tt>true</tt> if, and only if, a subsequence of the input
+ <code>start</code>, <code>end</code>, and <code>group</code> methods.  </p>
+ @return <code>true</code> if, and only if, a subsequence of the input
            sequence matches this matcher's pattern
  */
 - (jboolean)find;
@@ -261,14 +278,14 @@
   the input sequence that matches the pattern, starting at the specified
   index.
  <p> If the match succeeds then more information can be obtained via the 
- <tt>start</tt>, <tt>end</tt>, and <tt>group</tt> methods, and subsequent
+ <code>start</code>, <code>end</code>, and <code>group</code> methods, and subsequent
   invocations of the <code>find()</code> method will start at the first
   character not matched by this match.  </p>
  @param start the index to start searching for a match
  @throw IndexOutOfBoundsException
  If start is less than zero or if start is greater than the
            length of the input sequence.
- @return <tt>true</tt> if, and only if, a subsequence of the input
+ @return <code>true</code> if, and only if, a subsequence of the input
            sequence starting at the given index matches this matcher's
            pattern
  */
@@ -277,11 +294,11 @@
 /*!
  @brief Returns the input subsequence matched by the previous match.
  <p> For a matcher <i>m</i> with input sequence <i>s</i>,
-  the expressions <i>m.</i><tt>group()</tt> and 
- <i>s.</i><tt>substring(</tt><i>m.</i><tt>start(),</tt>&nbsp;<i>m.</i><tt>end())</tt>
-  are equivalent.  </p>
+  the expressions <i>m.</i><code>group()</code> and 
+ <i>s.</i><code>substring(</code><i>m.</i><code>start(),</code>&nbsp;<i>m.</i>
+  <code>end())</code> are equivalent.  </p>
   
- <p> Note that some patterns, for example <tt>a*</tt>, match the empty
+ <p> Note that some patterns, for example <code>a*</code>, match the empty
   string.  This method will return the empty string when the pattern
   successfully matches the empty string in the input.  </p>
  @return The (possibly empty) subsequence matched by the previous match,
@@ -296,23 +313,24 @@
  @brief Returns the input subsequence captured by the given group during the
   previous match operation.
  <p> For a matcher <i>m</i>, input sequence <i>s</i>, and group index 
- <i>g</i>, the expressions <i>m.</i><tt>group(</tt><i>g</i><tt>)</tt> and 
- <i>s.</i><tt>substring(</tt><i>m.</i><tt>start(</tt><i>g</i><tt>),</tt>&nbsp;<i>m.</i><tt>end(</tt><i>g</i><tt>))</tt>
+ <i>g</i>, the expressions <i>m.</i><code>group(</code><i>g</i><code>)</code> and 
+ <i>s.</i><code>substring(</code><i>m.</i><code>start(</code><i>g</i><code>),</code>
+ &nbsp;<i>m.</i><code>end(</code><i>g</i><code>))</code>
   are equivalent.  </p>
   
  <p> <a href="Pattern.html#cg">Capturing groups</a> are indexed from left
   to right, starting at one.  Group zero denotes the entire pattern, so
-  the expression <tt>m.group(0)</tt> is equivalent to <tt>m.group()</tt>.
+  the expression <code>m.group(0)</code> is equivalent to <code>m.group()</code>.
   </p>
   
  <p> If the match was successful but the group specified failed to match
-  any part of the input sequence, then <tt>null</tt> is returned. Note
-  that some groups, for example <tt>(a*)</tt>, match the empty string.
+  any part of the input sequence, then <code>null</code> is returned. Note
+  that some groups, for example <code>(a*)</code>, match the empty string.
   This method will return the empty string when such a group successfully
   matches the empty string in the input.  </p>
  @param group The index of a capturing group in this matcher's pattern
  @return The (possibly empty) subsequence captured by the group
-           during the previous match, or <tt>null</tt> if the group
+           during the previous match, or <code>null</code> if the group
            failed to match part of the input
  @throw IllegalStateException
  If no match has yet been attempted,
@@ -325,16 +343,16 @@
 
 /*!
  @brief Returns the input subsequence captured by the given 
- <a href="Pattern.html#groupname">named-capturing group</a> during the previous
-  match operation.
+ <a href="Pattern.html#groupname">named-capturing group</a> during the
+  previous match operation.
  <p> If the match was successful but the group specified failed to match
-  any part of the input sequence, then <tt>null</tt> is returned. Note
-  that some groups, for example <tt>(a*)</tt>, match the empty string.
+  any part of the input sequence, then <code>null</code> is returned. Note
+  that some groups, for example <code>(a*)</code>, match the empty string.
   This method will return the empty string when such a group successfully
   matches the empty string in the input.  </p>
  @param name The name of a named-capturing group in this matcher's pattern
  @return The (possibly empty) subsequence captured by the named group
-           during the previous match, or <tt>null</tt> if the group
+           during the previous match, or <code>null</code> if the group
            failed to match part of the input
  @throw IllegalStateException
  If no match has yet been attempted,
@@ -359,13 +377,13 @@
 
 /*!
  @brief Queries the anchoring of region bounds for this matcher.
- <p> This method returns <tt>true</tt> if this matcher uses 
- <i>anchoring</i> bounds, <tt>false</tt> otherwise. 
+ <p> This method returns <code>true</code> if this matcher uses 
+ <i>anchoring</i> bounds, <code>false</code> otherwise. 
  <p> See <code>useAnchoringBounds</code> for a
   description of anchoring bounds. 
  <p> By default, a matcher uses anchoring region boundaries.
- @return <tt>true</tt> iff this matcher is using anchoring bounds,
-          <tt>false</tt> otherwise.
+ @return <code>true</code> iff this matcher is using anchoring bounds,
+          <code>false</code> otherwise.
  - seealso: java.util.regex.Matcher#useAnchoringBounds(boolean)
  @since 1.5
  */
@@ -373,14 +391,14 @@
 
 /*!
  @brief Queries the transparency of region bounds for this matcher.
- <p> This method returns <tt>true</tt> if this matcher uses 
- <i>transparent</i> bounds, <tt>false</tt> if it uses <i>opaque</i>
+ <p> This method returns <code>true</code> if this matcher uses 
+ <i>transparent</i> bounds, <code>false</code> if it uses <i>opaque</i>
   bounds. 
  <p> See <code>useTransparentBounds</code> for a
   description of transparent and opaque bounds. 
  <p> By default, a matcher uses opaque region boundaries.
- @return <tt>true</tt> iff this matcher is using transparent bounds,
-          <tt>false</tt> otherwise.
+ @return <code>true</code> iff this matcher is using transparent bounds,
+          <code>false</code> otherwise.
  - seealso: java.util.regex.Matcher#useTransparentBounds(boolean)
  @since 1.5
  */
@@ -404,8 +422,8 @@
   at the beginning of the region; unlike that method, it does not
   require that the entire region be matched. 
  <p> If the match succeeds then more information can be obtained via the 
- <tt>start</tt>, <tt>end</tt>, and <tt>group</tt> methods.  </p>
- @return <tt>true</tt> if, and only if, a prefix of the input
+ <code>start</code>, <code>end</code>, and <code>group</code> methods.  </p>
+ @return <code>true</code> if, and only if, a prefix of the input
            sequence matches this matcher's pattern
  */
 - (jboolean)lookingAt;
@@ -413,8 +431,8 @@
 /*!
  @brief Attempts to match the entire region against the pattern.
  <p> If the match succeeds then more information can be obtained via the 
- <tt>start</tt>, <tt>end</tt>, and <tt>group</tt> methods.  </p>
- @return <tt>true</tt> if, and only if, the entire region sequence
+ <code>start</code>, <code>end</code>, and <code>group</code> methods.  </p>
+ @return <code>true</code> if, and only if, the entire region sequence
            matches this matcher's pattern
  */
 - (jboolean)matches;
@@ -449,9 +467,9 @@
   index specified by the <code>end</code> parameter. 
  <p>Depending on the transparency and anchoring being used (see 
  <code>useTransparentBounds</code> and 
- <code>useAnchoringBounds</code>), certain constructs such
-  as anchors may behave differently at or around the boundaries of the
-  region.
+ <code>useAnchoringBounds</code>), certain
+  constructs such as anchors may behave differently at or around the
+  boundaries of the region.
  @param start The index to start searching at (inclusive)
  @param end The index to end searching at (exclusive)
  @throw IndexOutOfBoundsException
@@ -487,6 +505,56 @@
 
 /*!
  @brief Replaces every subsequence of the input sequence that matches the
+  pattern with the result of applying the given replacer function to the
+  match result of this matcher corresponding to that subsequence.
+ Exceptions thrown by the function are relayed to the caller. 
+ <p> This method first resets this matcher.  It then scans the input
+  sequence looking for matches of the pattern.  Characters that are not
+  part of any match are appended directly to the result string; each match
+  is replaced in the result by the applying the replacer function that
+  returns a replacement string.  Each replacement string may contain
+  references to captured subsequences as in the <code>appendReplacement</code>
+  method. 
+ <p> Note that backslashes (<code>\</code>) and dollar signs (<code>$</code>) in
+  a replacement string may cause the results to be different than if it
+  were being treated as a literal replacement string. Dollar signs may be
+  treated as references to captured subsequences as described above, and
+  backslashes are used to escape literal characters in the replacement
+  string. 
+ <p> Given the regular expression <code>dog</code>, the input 
+ <code>"zzzdogzzzdogzzz"</code>, and the function 
+ <code>mr -> mr.group().toUpperCase()</code>, an invocation of this method on
+  a matcher for that expression would yield the string 
+ <code>"zzzDOGzzzDOGzzz"</code>.
+  
+ <p> Invoking this method changes this matcher's state.  If the matcher
+  is to be used in further matching operations then it should first be
+  reset.  </p>
+  
+ <p> The replacer function should not modify this matcher's state during
+  replacement.  This method will, on a best-effort basis, throw a 
+ <code>java.util.ConcurrentModificationException</code> if such modification is
+  detected. 
+ <p> The state of each match result passed to the replacer function is
+  guaranteed to be constant only for the duration of the replacer function
+  call and only if the replacer function does not modify this matcher's
+  state.
+ @param replacer The function to be applied to the match result of this matcher
+           that returns a replacement string.
+ @return The string constructed by replacing each matching subsequence
+           with the result of applying the replacer function to that
+           matched subsequence, substituting captured subsequences as
+           needed.
+ @throw NullPointerExceptionif the replacer function is null
+ @throw ConcurrentModificationExceptionif it is detected, on a
+          best-effort basis, that the replacer function modified this
+          matcher's state
+ @since 9
+ */
+- (NSString *)replaceAllWithJavaUtilFunctionFunction:(id<JavaUtilFunctionFunction>)replacer;
+
+/*!
+ @brief Replaces every subsequence of the input sequence that matches the
   pattern with the given replacement string.
  <p> This method first resets this matcher.  It then scans the input
   sequence looking for matches of the pattern.  Characters that are not
@@ -494,16 +562,16 @@
   is replaced in the result by the replacement string.  The replacement
   string may contain references to captured subsequences as in the <code>appendReplacement</code>
   method. 
- <p> Note that backslashes (<tt>\</tt>) and dollar signs (<tt>$</tt>) in
+ <p> Note that backslashes (<code>\</code>) and dollar signs (<code>$</code>) in
   the replacement string may cause the results to be different than if it
   were being treated as a literal replacement string. Dollar signs may be
   treated as references to captured subsequences as described above, and
   backslashes are used to escape literal characters in the replacement
   string. 
- <p> Given the regular expression <tt>a*b</tt>, the input 
- <tt>"aabfooaabfooabfoob"</tt>, and the replacement string 
- <tt>"-"</tt>, an invocation of this method on a matcher for that
-  expression would yield the string <tt>"-foo-foo-foo-"</tt>.
+ <p> Given the regular expression <code>a*b</code>, the input 
+ <code>"aabfooaabfooabfoob"</code>, and the replacement string 
+ <code>"-"</code>, an invocation of this method on a matcher for that
+  expression would yield the string <code>"-foo-foo-foo-"</code>.
   
  <p> Invoking this method changes this matcher's state.  If the matcher
   is to be used in further matching operations then it should first be
@@ -524,16 +592,16 @@
   is replaced in the result by the replacement string.  The replacement
   string may contain references to captured subsequences as in the <code>appendReplacement</code>
   method. 
- <p>Note that backslashes (<tt>\</tt>) and dollar signs (<tt>$</tt>) in
+ <p>Note that backslashes (<code>\</code>) and dollar signs (<code>$</code>) in
   the replacement string may cause the results to be different than if it
   were being treated as a literal replacement string. Dollar signs may be
   treated as references to captured subsequences as described above, and
   backslashes are used to escape literal characters in the replacement
   string. 
- <p> Given the regular expression <tt>dog</tt>, the input 
- <tt>"zzzdogzzzdogzzz"</tt>, and the replacement string 
- <tt>"cat"</tt>, an invocation of this method on a matcher for that
-  expression would yield the string <tt>"zzzcatzzzdogzzz"</tt>.  </p>
+ <p> Given the regular expression <code>dog</code>, the input 
+ <code>"zzzdogzzzdogzzz"</code>, and the replacement string 
+ <code>"cat"</code>, an invocation of this method on a matcher for that
+  expression would yield the string <code>"zzzcatzzzdogzzz"</code>.  </p>
   
  <p> Invoking this method changes this matcher's state.  If the matcher
   is to be used in further matching operations then it should first be
@@ -582,6 +650,28 @@
 - (JavaUtilRegexMatcher * __nonnull)resetWithJavaLangCharSequence:(id<JavaLangCharSequence>)input;
 
 /*!
+ @brief Returns a stream of match results for each subsequence of the input
+  sequence that matches the pattern.The match results occur in the
+  same order as the matching subsequences in the input sequence.
+ <p> Each match result is produced as if by <code>toMatchResult()</code>.
+  
+ <p> This method does not reset this matcher.  Matching starts on
+  initiation of the terminal stream operation either at the beginning of
+  this matcher's region, or, if the matcher has not since been reset, at
+  the first character not matched by a previous match. 
+ <p> If the matcher is to be used for further matching operations after
+  the terminal stream operation completes then it should be first reset. 
+ <p> This matcher's state should not be modified during execution of the
+  returned stream's pipeline.  The returned stream's source 
+ <code>Spliterator</code> is <em>fail-fast</em> and will, on a best-effort
+  basis, throw a <code>java.util.ConcurrentModificationException</code> if such
+  modification is detected.
+ @return a sequential stream of match results.
+ @since 9
+ */
+- (id<JavaUtilStreamStream>)results;
+
+/*!
  @brief Returns the start index of the previous match.
  @return The index of the first character matched
  @throw IllegalStateException
@@ -595,11 +685,11 @@
   during the previous match operation.
  <p> <a href="Pattern.html#cg">Capturing groups</a> are indexed from left
   to right, starting at one.  Group zero denotes the entire pattern, so
-  the expression <i>m.</i><tt>start(0)</tt> is equivalent to 
- <i>m.</i><tt>start()</tt>.  </p>
+  the expression <i>m.</i><code>start(0)</code> is equivalent to 
+ <i>m.</i><code>start()</code>.  </p>
  @param group The index of a capturing group in this matcher's pattern
  @return The index of the first character captured by the group,
-           or <tt>-1</tt> if the match was successful but the group
+           or <code>-1</code> if the match was successful but the group
            itself did not match anything
  @throw IllegalStateException
  If no match has yet been attempted,
@@ -633,15 +723,16 @@
  The result is unaffected by subsequent operations performed upon this
   matcher.
  @return a <code>MatchResult</code> with the state of this matcher
+ @throw IllegalStateExceptionif no match is found.
  @since 1.5
  */
 - (id<JavaUtilRegexMatchResult> __nonnull)toMatchResult;
 
 /*!
- @brief <p>Returns the string representation of this matcher.
- The
+ @brief <p>Returns the string representation of this matcher.The
   string representation of a <code>Matcher</code> contains information
-  that may be useful for debugging. The exact format is unspecified.
+  that may be useful for debugging.
+ The exact format is unspecified.
  @return The string representation of this matcher
  @since 1.5
  */
@@ -649,9 +740,9 @@
 
 /*!
  @brief Sets the anchoring of region bounds for this matcher.
- <p> Invoking this method with an argument of <tt>true</tt> will set this
+ <p> Invoking this method with an argument of <code>true</code> will set this
   matcher to use <i>anchoring</i> bounds. If the boolean
-  argument is <tt>false</tt>, then <i>non-anchoring</i> bounds will be
+  argument is <code>false</code>, then <i>non-anchoring</i> bounds will be
   used. 
  <p> Using anchoring bounds, the boundaries of this
   matcher's region match anchors such as ^ and $. 
@@ -666,7 +757,7 @@
 - (JavaUtilRegexMatcher * __nonnull)useAnchoringBoundsWithBoolean:(jboolean)b;
 
 /*!
- @brief Changes the <tt>Pattern</tt> that this <tt>Matcher</tt> uses to
+ @brief Changes the <code>Pattern</code> that this <code>Matcher</code> uses to
   find matches with.
  <p> This method causes this matcher to lose information
   about the groups of the last match that occurred. The
@@ -675,16 +766,16 @@
  @param newPattern The new pattern used by this matcher
  @return This matcher
  @throw IllegalArgumentException
- If newPattern is <tt>null</tt>
+ If newPattern is <code>null</code>
  @since 1.5
  */
 - (JavaUtilRegexMatcher * __nonnull)usePatternWithJavaUtilRegexPattern:(JavaUtilRegexPattern *)newPattern;
 
 /*!
  @brief Sets the transparency of region bounds for this matcher.
- <p> Invoking this method with an argument of <tt>true</tt> will set this
+ <p> Invoking this method with an argument of <code>true</code> will set this
   matcher to use <i>transparent</i> bounds. If the boolean
-  argument is <tt>false</tt>, then <i>opaque</i> bounds will be used. 
+  argument is <code>false</code>, then <i>opaque</i> bounds will be used. 
  <p> Using transparent bounds, the boundaries of this
   matcher's region are transparent to lookahead, lookbehind,
   and boundary matching constructs. Those constructs can see beyond the
@@ -715,10 +806,10 @@
                               withJavaLangCharSequence:(id<JavaLangCharSequence>)text;
 
 /*!
- @brief Generates a String from this Matcher's input in the specified range.
+ @brief Generates a String from this matcher's input in the specified range.
  @param beginIndex the beginning index, inclusive
  @param endIndex the ending index, exclusive
- @return A String generated from this Matcher's input
+ @return A String generated from this matcher's input
  */
 - (id<JavaLangCharSequence>)getSubSequenceWithInt:(jint)beginIndex
                                           withInt:(jint)endIndex;
@@ -728,6 +819,12 @@
  @return the index after the last character in the text
  */
 - (jint)getTextLength;
+
++ (jboolean)isDigitWithInt:(jint)ch;
+
++ (jboolean)isLowerWithInt:(jint)ch;
+
++ (jboolean)isUpperWithInt:(jint)ch;
 
 // Disallowed inherited constructors, do not use.
 
@@ -748,6 +845,12 @@ FOUNDATION_EXPORT JavaUtilRegexMatcher *create_JavaUtilRegexMatcher_initWithJava
 
 FOUNDATION_EXPORT NSString *JavaUtilRegexMatcher_quoteReplacementWithNSString_(NSString *s);
 
+FOUNDATION_EXPORT jboolean JavaUtilRegexMatcher_isLowerWithInt_(jint ch);
+
+FOUNDATION_EXPORT jboolean JavaUtilRegexMatcher_isUpperWithInt_(jint ch);
+
+FOUNDATION_EXPORT jboolean JavaUtilRegexMatcher_isDigitWithInt_(jint ch);
+
 J2OBJC_TYPE_LITERAL_HEADER(JavaUtilRegexMatcher)
 
 #endif
@@ -760,6 +863,7 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilRegexMatcher)
 #include "java/util/regex/MatchResult.h"
 
 @class IOSIntArray;
+@class JavaLangInteger;
 
 /*!
  @brief A trivial match result implementation that's based on an array of integers
@@ -812,6 +916,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilRegexMatcher_OffsetBasedMatchResult)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaUtilRegexMatcher")

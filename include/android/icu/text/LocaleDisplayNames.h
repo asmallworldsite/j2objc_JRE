@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_AndroidIcuTextLocaleDisplayNames
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -30,6 +27,8 @@
 @class AndroidIcuTextLocaleDisplayNames_DialectHandling;
 @class AndroidIcuUtilULocale;
 @class IOSObjectArray;
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @class JavaUtilLocale;
 @protocol JavaUtilComparator;
 @protocol JavaUtilList;
@@ -219,7 +218,7 @@
  @param script the script code
  @return the display name of the provided script code
  */
-- (NSString *)scriptDisplayNameInContextWithNSString:(NSString *)script __attribute__((deprecated));
+- (NSString *)scriptDisplayNameInContextWithNSString:(NSString *)script;
 
 /*!
  @brief Returns the display name of the provided variant.
@@ -235,7 +234,7 @@
  (For invocation by subclass constructors,
   typically implicit.)
  */
-- (instancetype __nonnull)init __attribute__((deprecated));
+- (instancetype __nonnull)init;
 
 @end
 
@@ -266,18 +265,22 @@ J2OBJC_TYPE_LITERAL_HEADER(AndroidIcuTextLocaleDisplayNames)
 
 @class IOSObjectArray;
 
-typedef NS_ENUM(NSUInteger, AndroidIcuTextLocaleDisplayNames_DialectHandling_Enum) {
+typedef NS_ENUM(jint, AndroidIcuTextLocaleDisplayNames_DialectHandling_Enum) {
   AndroidIcuTextLocaleDisplayNames_DialectHandling_Enum_STANDARD_NAMES = 0,
   AndroidIcuTextLocaleDisplayNames_DialectHandling_Enum_DIALECT_NAMES = 1,
 };
+#if J2OBJC_IMPORTED_BY_JAVA_IMPLEMENTATION
+#define AndroidIcuTextLocaleDisplayNames_DialectHandling_ORDINAL jint
+#else
+#define AndroidIcuTextLocaleDisplayNames_DialectHandling_ORDINAL AndroidIcuTextLocaleDisplayNames_DialectHandling_Enum
+#endif
+
 
 /*!
  @brief Enum used in <code>getInstance(ULocale, DialectHandling)</code>.
  */
 @interface AndroidIcuTextLocaleDisplayNames_DialectHandling : JavaLangEnum
 
-@property (readonly, class, nonnull) AndroidIcuTextLocaleDisplayNames_DialectHandling *STANDARD_NAMES NS_SWIFT_NAME(STANDARD_NAMES);
-@property (readonly, class, nonnull) AndroidIcuTextLocaleDisplayNames_DialectHandling *DIALECT_NAMES NS_SWIFT_NAME(DIALECT_NAMES);
 #pragma mark Public
 
 + (AndroidIcuTextLocaleDisplayNames_DialectHandling *)valueOfWithNSString:(NSString *)name;
@@ -287,6 +290,8 @@ typedef NS_ENUM(NSUInteger, AndroidIcuTextLocaleDisplayNames_DialectHandling_Enu
 #pragma mark Package-Private
 
 - (AndroidIcuTextLocaleDisplayNames_DialectHandling_Enum)toNSEnum;
+
+- (AndroidIcuTextLocaleDisplayNames_DialectHandling_ORDINAL)ordinal;
 
 @end
 
@@ -313,7 +318,7 @@ FOUNDATION_EXPORT IOSObjectArray *AndroidIcuTextLocaleDisplayNames_DialectHandli
 
 FOUNDATION_EXPORT AndroidIcuTextLocaleDisplayNames_DialectHandling *AndroidIcuTextLocaleDisplayNames_DialectHandling_valueOfWithNSString_(NSString *name);
 
-FOUNDATION_EXPORT AndroidIcuTextLocaleDisplayNames_DialectHandling *AndroidIcuTextLocaleDisplayNames_DialectHandling_fromOrdinal(NSUInteger ordinal);
+FOUNDATION_EXPORT AndroidIcuTextLocaleDisplayNames_DialectHandling *AndroidIcuTextLocaleDisplayNames_DialectHandling_fromOrdinal(AndroidIcuTextLocaleDisplayNames_DialectHandling_ORDINAL ordinal);
 
 J2OBJC_TYPE_LITERAL_HEADER(AndroidIcuTextLocaleDisplayNames_DialectHandling)
 
@@ -323,6 +328,8 @@ J2OBJC_TYPE_LITERAL_HEADER(AndroidIcuTextLocaleDisplayNames_DialectHandling)
 #define AndroidIcuTextLocaleDisplayNames_UiListItem_
 
 @class AndroidIcuUtilULocale;
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @protocol JavaUtilComparator;
 
 /*!
@@ -413,6 +420,4 @@ J2OBJC_TYPE_LITERAL_HEADER(AndroidIcuTextLocaleDisplayNames_UiListItem)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_AndroidIcuTextLocaleDisplayNames")

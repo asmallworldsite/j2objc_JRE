@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaSqlSQLOutput
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -28,6 +25,13 @@
 @class IOSByteArray;
 @class JavaIoInputStream;
 @class JavaIoReader;
+@class JavaLangBoolean;
+@class JavaLangByte;
+@class JavaLangDouble;
+@class JavaLangFloat;
+@class JavaLangInteger;
+@class JavaLangLong;
+@class JavaLangShort;
 @class JavaMathBigDecimal;
 @class JavaNetURL;
 @class JavaSqlDate;
@@ -406,6 +410,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaSqlSQLOutput)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaSqlSQLOutput")

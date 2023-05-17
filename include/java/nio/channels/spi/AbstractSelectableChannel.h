@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaNioChannelsSpiAbstractSelectableChannel
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -29,6 +26,8 @@
 #define INCLUDE_JavaNioChannelsSelectableChannel 1
 #include "java/nio/channels/SelectableChannel.h"
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @class JavaNioChannelsSelectionKey;
 @class JavaNioChannelsSelector;
 @class JavaNioChannelsSpiSelectorProvider;
@@ -47,10 +46,7 @@
  @author JSR-51 Expert Group
  @since 1.4
  */
-@interface JavaNioChannelsSpiAbstractSelectableChannel : JavaNioChannelsSelectableChannel {
- @public
-  jboolean blocking_;
-}
+@interface JavaNioChannelsSpiAbstractSelectableChannel : JavaNioChannelsSelectableChannel
 
 #pragma mark Public
 
@@ -139,9 +135,8 @@
   method in order to perform the actual work of
   changing the blocking mode.  This method is only invoked if the new mode
   is different from the current mode.  </p>
- @param block If  <tt> true </tt>  then this channel will be placed in
-                  blocking mode; if  <tt> false </tt>  then it will be placed
-                  non-blocking mode
+ @param block If <code>true</code>  then this channel will be placed in                 blocking mode; if 
+ <code>false</code>  then it will be placed                 non-blocking mode
  @throw IOException
  If an I/O error occurs
  */
@@ -169,6 +164,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaNioChannelsSpiAbstractSelectableChannel)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaNioChannelsSpiAbstractSelectableChannel")

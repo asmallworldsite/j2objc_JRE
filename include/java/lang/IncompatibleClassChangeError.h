@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaLangIncompatibleClassChangeError
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -35,8 +32,7 @@
  @brief Thrown when an incompatible class change has occurred to some class
   definition.The definition of some class, on which the currently
   executing method depends, has since changed.
- @author unascribed
- @since JDK1.0
+ @since 1.0
  */
 @interface JavaLangIncompatibleClassChangeError : JavaLangLinkageError
 
@@ -84,6 +80,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaLangIncompatibleClassChangeError)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaLangIncompatibleClassChangeError")

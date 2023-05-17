@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaLangManagementRuntimeMXBean
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -25,6 +22,8 @@
 #if !defined (JavaLangManagementRuntimeMXBean_) && (INCLUDE_ALL_JavaLangManagementRuntimeMXBean || defined(INCLUDE_JavaLangManagementRuntimeMXBean))
 #define JavaLangManagementRuntimeMXBean_
 
+@class JavaLangBoolean;
+@class JavaLangLong;
 @protocol JavaUtilList;
 @protocol JavaUtilMap;
 
@@ -77,6 +76,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaLangManagementRuntimeMXBean)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaLangManagementRuntimeMXBean")

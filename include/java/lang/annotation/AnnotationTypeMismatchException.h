@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaLangAnnotationAnnotationTypeMismatchException
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -29,6 +26,7 @@
 #define INCLUDE_JavaLangRuntimeException 1
 #include "java/lang/RuntimeException.h"
 
+@class JavaLangBoolean;
 @class JavaLangReflectMethod;
 @class JavaLangThrowable;
 
@@ -48,25 +46,29 @@
 #pragma mark Public
 
 /*!
- @brief Constructs an AnnotationTypeMismatchException for the specified
-  annotation type element and found data type.
- @param element the  <tt> Method </tt>  object for the annotation element
- @param foundType the (erroneous) type of data found in the annotation.         This string may, but is not required to, contain the value
-          as well.  The exact format of the string is unspecified.
+ @brief Constructs an AnnotationTypeMismatchException for the specified annotation type element and
+  found data type.
+ @param element the <code>Method</code>  object for the annotation element, may be <code>null</code>
+ @param foundType the (erroneous) type of data found in the annotation. This string may, but is      not required to, contain the value as well. The exact format of the string is unspecified,
+       may be 
+ <code>null</code> .
  */
 - (instancetype __nonnull)initWithJavaLangReflectMethod:(JavaLangReflectMethod *)element
                                            withNSString:(NSString *)foundType;
 
 /*!
- @brief Returns the <tt>Method</tt> object for the incorrectly typed element.
- @return the <tt>Method</tt> object for the incorrectly typed element
+ @brief Returns the <code>Method</code> object for the incorrectly typed element.The value may be
+  unavailable if this exception has been serialized and then read back in.
+ @return the <code>Method</code> object for the incorrectly typed element, or <code>null</code> if
+      unavailable
  */
 - (JavaLangReflectMethod *)element;
 
 /*!
- @brief Returns the type of data found in the incorrectly typed element.
- The returned string may, but is not required to, contain the value
-  as well.  The exact format of the string is unspecified.
+ @brief Returns the type of data found in the incorrectly typed element.The returned string may, but
+  is not required to, contain the value as well.
+ The exact format of the string is unspecified
+  and the string may be <code>null</code>.
  @return the type of data found in the incorrectly typed element
  */
 - (NSString *)foundType;
@@ -105,6 +107,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaLangAnnotationAnnotationTypeMismatchException)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaLangAnnotationAnnotationTypeMismatchException")

@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaSqlDatabaseMetaData
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -31,6 +28,9 @@
 
 @class IOSIntArray;
 @class IOSObjectArray;
+@class JavaLangBoolean;
+@class JavaLangInteger;
+@class JavaLangShort;
 @class JavaSqlRowIdLifetime;
 @protocol JavaSqlConnection;
 @protocol JavaSqlResultSet;
@@ -2676,71 +2676,6 @@
 
 @end
 
-@interface JavaSqlDatabaseMetaData : NSObject
-@property (readonly, class) jint procedureResultUnknown NS_SWIFT_NAME(procedureResultUnknown);
-@property (readonly, class) jint procedureNoResult NS_SWIFT_NAME(procedureNoResult);
-@property (readonly, class) jint procedureReturnsResult NS_SWIFT_NAME(procedureReturnsResult);
-@property (readonly, class) jint procedureColumnUnknown NS_SWIFT_NAME(procedureColumnUnknown);
-@property (readonly, class) jint procedureColumnIn NS_SWIFT_NAME(procedureColumnIn);
-@property (readonly, class) jint procedureColumnInOut NS_SWIFT_NAME(procedureColumnInOut);
-@property (readonly, class) jint procedureColumnOut NS_SWIFT_NAME(procedureColumnOut);
-@property (readonly, class) jint procedureColumnReturn NS_SWIFT_NAME(procedureColumnReturn);
-@property (readonly, class) jint procedureColumnResult NS_SWIFT_NAME(procedureColumnResult);
-@property (readonly, class) jint procedureNoNulls NS_SWIFT_NAME(procedureNoNulls);
-@property (readonly, class) jint procedureNullable NS_SWIFT_NAME(procedureNullable);
-@property (readonly, class) jint procedureNullableUnknown NS_SWIFT_NAME(procedureNullableUnknown);
-@property (readonly, class) jint columnNoNulls NS_SWIFT_NAME(columnNoNulls);
-@property (readonly, class) jint columnNullable NS_SWIFT_NAME(columnNullable);
-@property (readonly, class) jint columnNullableUnknown NS_SWIFT_NAME(columnNullableUnknown);
-@property (readonly, class) jint bestRowTemporary NS_SWIFT_NAME(bestRowTemporary);
-@property (readonly, class) jint bestRowTransaction NS_SWIFT_NAME(bestRowTransaction);
-@property (readonly, class) jint bestRowSession NS_SWIFT_NAME(bestRowSession);
-@property (readonly, class) jint bestRowUnknown NS_SWIFT_NAME(bestRowUnknown);
-@property (readonly, class) jint bestRowNotPseudo NS_SWIFT_NAME(bestRowNotPseudo);
-@property (readonly, class) jint bestRowPseudo NS_SWIFT_NAME(bestRowPseudo);
-@property (readonly, class) jint versionColumnUnknown NS_SWIFT_NAME(versionColumnUnknown);
-@property (readonly, class) jint versionColumnNotPseudo NS_SWIFT_NAME(versionColumnNotPseudo);
-@property (readonly, class) jint versionColumnPseudo NS_SWIFT_NAME(versionColumnPseudo);
-@property (readonly, class) jint importedKeyCascade NS_SWIFT_NAME(importedKeyCascade);
-@property (readonly, class) jint importedKeyRestrict NS_SWIFT_NAME(importedKeyRestrict);
-@property (readonly, class) jint importedKeySetNull NS_SWIFT_NAME(importedKeySetNull);
-@property (readonly, class) jint importedKeyNoAction NS_SWIFT_NAME(importedKeyNoAction);
-@property (readonly, class) jint importedKeySetDefault NS_SWIFT_NAME(importedKeySetDefault);
-@property (readonly, class) jint importedKeyInitiallyDeferred NS_SWIFT_NAME(importedKeyInitiallyDeferred);
-@property (readonly, class) jint importedKeyInitiallyImmediate NS_SWIFT_NAME(importedKeyInitiallyImmediate);
-@property (readonly, class) jint importedKeyNotDeferrable NS_SWIFT_NAME(importedKeyNotDeferrable);
-@property (readonly, class) jint typeNoNulls NS_SWIFT_NAME(typeNoNulls);
-@property (readonly, class) jint typeNullable NS_SWIFT_NAME(typeNullable);
-@property (readonly, class) jint typeNullableUnknown NS_SWIFT_NAME(typeNullableUnknown);
-@property (readonly, class) jint typePredNone NS_SWIFT_NAME(typePredNone);
-@property (readonly, class) jint typePredChar NS_SWIFT_NAME(typePredChar);
-@property (readonly, class) jint typePredBasic NS_SWIFT_NAME(typePredBasic);
-@property (readonly, class) jint typeSearchable NS_SWIFT_NAME(typeSearchable);
-@property (readonly, class) jshort tableIndexStatistic NS_SWIFT_NAME(tableIndexStatistic);
-@property (readonly, class) jshort tableIndexClustered NS_SWIFT_NAME(tableIndexClustered);
-@property (readonly, class) jshort tableIndexHashed NS_SWIFT_NAME(tableIndexHashed);
-@property (readonly, class) jshort tableIndexOther NS_SWIFT_NAME(tableIndexOther);
-@property (readonly, class) jshort attributeNoNulls NS_SWIFT_NAME(attributeNoNulls);
-@property (readonly, class) jshort attributeNullable NS_SWIFT_NAME(attributeNullable);
-@property (readonly, class) jshort attributeNullableUnknown NS_SWIFT_NAME(attributeNullableUnknown);
-@property (readonly, class) jint sqlStateXOpen NS_SWIFT_NAME(sqlStateXOpen);
-@property (readonly, class) jint sqlStateSQL NS_SWIFT_NAME(sqlStateSQL);
-@property (readonly, class) jint sqlStateSQL99 NS_SWIFT_NAME(sqlStateSQL99);
-@property (readonly, class) jint functionColumnUnknown NS_SWIFT_NAME(functionColumnUnknown);
-@property (readonly, class) jint functionColumnIn NS_SWIFT_NAME(functionColumnIn);
-@property (readonly, class) jint functionColumnInOut NS_SWIFT_NAME(functionColumnInOut);
-@property (readonly, class) jint functionColumnOut NS_SWIFT_NAME(functionColumnOut);
-@property (readonly, class) jint functionReturn NS_SWIFT_NAME(functionReturn);
-@property (readonly, class) jint functionColumnResult NS_SWIFT_NAME(functionColumnResult);
-@property (readonly, class) jint functionNoNulls NS_SWIFT_NAME(functionNoNulls);
-@property (readonly, class) jint functionNullable NS_SWIFT_NAME(functionNullable);
-@property (readonly, class) jint functionNullableUnknown NS_SWIFT_NAME(functionNullableUnknown);
-@property (readonly, class) jint functionResultUnknown NS_SWIFT_NAME(functionResultUnknown);
-@property (readonly, class) jint functionNoTable NS_SWIFT_NAME(functionNoTable);
-@property (readonly, class) jint functionReturnsTable NS_SWIFT_NAME(functionReturnsTable);
-
-@end
-
 J2OBJC_EMPTY_STATIC_INIT(JavaSqlDatabaseMetaData)
 
 /*!
@@ -3523,6 +3458,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaSqlDatabaseMetaData)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaSqlDatabaseMetaData")

@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaLangRefWeakReference
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -52,18 +49,18 @@
 #pragma mark Public
 
 /*!
- @brief Creates a new weak reference that refers to the given object.The new
-  reference is not registered with any queue.
+ @brief Creates a new weak reference that refers to the given object.The new reference is not
+  registered with any queue.
  @param referent object the new weak reference will refer to
  */
 - (instancetype __nonnull)initWithId:(id)referent;
 
 /*!
- @brief Creates a new weak reference that refers to the given object and is
-  registered with the given queue.
+ @brief Creates a new weak reference that refers to the given object and is registered with the given
+  queue.
  @param referent object the new weak reference will refer to
- @param q the queue with which the reference is to be registered,           or 
-  <tt> null </tt>  if registration is not required
+ @param q the queue with which the reference is to be registered, or <code>null</code>  if
+       registration is not required
  */
 - (instancetype __nonnull)initWithId:(id)referent
        withJavaLangRefReferenceQueue:(JavaLangRefReferenceQueue *)q;
@@ -92,6 +89,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaLangRefWeakReference)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaLangRefWeakReference")

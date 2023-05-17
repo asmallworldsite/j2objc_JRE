@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaUtilStack
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -29,6 +26,8 @@
 #define INCLUDE_JavaUtilVector 1
 #include "java/util/Vector.h"
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @protocol JavaUtilCollection;
 
 /*!
@@ -46,7 +45,7 @@
   provided by the <code>Deque</code> interface and its implementations, which
   should be used in preference to this class.  For example: 
  @code
-     Deque<Integer> stack = new ArrayDeque<Integer>();
+      Deque<Integer> stack = new ArrayDeque<Integer>();
  
 @endcode
  @author Jonathan Payne
@@ -143,6 +142,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilStack)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaUtilStack")

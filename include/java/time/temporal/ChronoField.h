@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaTimeTemporalChronoField
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -34,6 +31,9 @@
 #include "java/time/temporal/TemporalField.h"
 
 @class IOSObjectArray;
+@class JavaLangBoolean;
+@class JavaLangInteger;
+@class JavaLangLong;
 @class JavaTimeFormatResolverStyle;
 @class JavaTimeTemporalValueRange;
 @class JavaUtilLocale;
@@ -42,7 +42,7 @@
 @protocol JavaTimeTemporalTemporalUnit;
 @protocol JavaUtilMap;
 
-typedef NS_ENUM(NSUInteger, JavaTimeTemporalChronoField_Enum) {
+typedef NS_ENUM(jint, JavaTimeTemporalChronoField_Enum) {
   JavaTimeTemporalChronoField_Enum_NANO_OF_SECOND = 0,
   JavaTimeTemporalChronoField_Enum_NANO_OF_DAY = 1,
   JavaTimeTemporalChronoField_Enum_MICRO_OF_SECOND = 2,
@@ -74,6 +74,12 @@ typedef NS_ENUM(NSUInteger, JavaTimeTemporalChronoField_Enum) {
   JavaTimeTemporalChronoField_Enum_INSTANT_SECONDS = 28,
   JavaTimeTemporalChronoField_Enum_OFFSET_SECONDS = 29,
 };
+#if J2OBJC_IMPORTED_BY_JAVA_IMPLEMENTATION
+#define JavaTimeTemporalChronoField_ORDINAL jint
+#else
+#define JavaTimeTemporalChronoField_ORDINAL JavaTimeTemporalChronoField_Enum
+#endif
+
 
 /*!
  @brief A standard set of fields.
@@ -89,36 +95,6 @@ typedef NS_ENUM(NSUInteger, JavaTimeTemporalChronoField_Enum) {
  */
 @interface JavaTimeTemporalChronoField : JavaLangEnum < JavaTimeTemporalTemporalField >
 
-@property (readonly, class, nonnull) JavaTimeTemporalChronoField *NANO_OF_SECOND NS_SWIFT_NAME(NANO_OF_SECOND);
-@property (readonly, class, nonnull) JavaTimeTemporalChronoField *NANO_OF_DAY NS_SWIFT_NAME(NANO_OF_DAY);
-@property (readonly, class, nonnull) JavaTimeTemporalChronoField *MICRO_OF_SECOND NS_SWIFT_NAME(MICRO_OF_SECOND);
-@property (readonly, class, nonnull) JavaTimeTemporalChronoField *MICRO_OF_DAY NS_SWIFT_NAME(MICRO_OF_DAY);
-@property (readonly, class, nonnull) JavaTimeTemporalChronoField *MILLI_OF_SECOND NS_SWIFT_NAME(MILLI_OF_SECOND);
-@property (readonly, class, nonnull) JavaTimeTemporalChronoField *MILLI_OF_DAY NS_SWIFT_NAME(MILLI_OF_DAY);
-@property (readonly, class, nonnull) JavaTimeTemporalChronoField *SECOND_OF_MINUTE NS_SWIFT_NAME(SECOND_OF_MINUTE);
-@property (readonly, class, nonnull) JavaTimeTemporalChronoField *SECOND_OF_DAY NS_SWIFT_NAME(SECOND_OF_DAY);
-@property (readonly, class, nonnull) JavaTimeTemporalChronoField *MINUTE_OF_HOUR NS_SWIFT_NAME(MINUTE_OF_HOUR);
-@property (readonly, class, nonnull) JavaTimeTemporalChronoField *MINUTE_OF_DAY NS_SWIFT_NAME(MINUTE_OF_DAY);
-@property (readonly, class, nonnull) JavaTimeTemporalChronoField *HOUR_OF_AMPM NS_SWIFT_NAME(HOUR_OF_AMPM);
-@property (readonly, class, nonnull) JavaTimeTemporalChronoField *CLOCK_HOUR_OF_AMPM NS_SWIFT_NAME(CLOCK_HOUR_OF_AMPM);
-@property (readonly, class, nonnull) JavaTimeTemporalChronoField *HOUR_OF_DAY NS_SWIFT_NAME(HOUR_OF_DAY);
-@property (readonly, class, nonnull) JavaTimeTemporalChronoField *CLOCK_HOUR_OF_DAY NS_SWIFT_NAME(CLOCK_HOUR_OF_DAY);
-@property (readonly, class, nonnull) JavaTimeTemporalChronoField *AMPM_OF_DAY NS_SWIFT_NAME(AMPM_OF_DAY);
-@property (readonly, class, nonnull) JavaTimeTemporalChronoField *DAY_OF_WEEK NS_SWIFT_NAME(DAY_OF_WEEK);
-@property (readonly, class, nonnull) JavaTimeTemporalChronoField *ALIGNED_DAY_OF_WEEK_IN_MONTH NS_SWIFT_NAME(ALIGNED_DAY_OF_WEEK_IN_MONTH);
-@property (readonly, class, nonnull) JavaTimeTemporalChronoField *ALIGNED_DAY_OF_WEEK_IN_YEAR NS_SWIFT_NAME(ALIGNED_DAY_OF_WEEK_IN_YEAR);
-@property (readonly, class, nonnull) JavaTimeTemporalChronoField *DAY_OF_MONTH NS_SWIFT_NAME(DAY_OF_MONTH);
-@property (readonly, class, nonnull) JavaTimeTemporalChronoField *DAY_OF_YEAR NS_SWIFT_NAME(DAY_OF_YEAR);
-@property (readonly, class, nonnull) JavaTimeTemporalChronoField *EPOCH_DAY NS_SWIFT_NAME(EPOCH_DAY);
-@property (readonly, class, nonnull) JavaTimeTemporalChronoField *ALIGNED_WEEK_OF_MONTH NS_SWIFT_NAME(ALIGNED_WEEK_OF_MONTH);
-@property (readonly, class, nonnull) JavaTimeTemporalChronoField *ALIGNED_WEEK_OF_YEAR NS_SWIFT_NAME(ALIGNED_WEEK_OF_YEAR);
-@property (readonly, class, nonnull) JavaTimeTemporalChronoField *MONTH_OF_YEAR NS_SWIFT_NAME(MONTH_OF_YEAR);
-@property (readonly, class, nonnull) JavaTimeTemporalChronoField *PROLEPTIC_MONTH NS_SWIFT_NAME(PROLEPTIC_MONTH);
-@property (readonly, class, nonnull) JavaTimeTemporalChronoField *YEAR_OF_ERA NS_SWIFT_NAME(YEAR_OF_ERA);
-@property (readonly, class, nonnull) JavaTimeTemporalChronoField *YEAR NS_SWIFT_NAME(YEAR);
-@property (readonly, class, nonnull) JavaTimeTemporalChronoField *ERA NS_SWIFT_NAME(ERA);
-@property (readonly, class, nonnull) JavaTimeTemporalChronoField *INSTANT_SECONDS NS_SWIFT_NAME(INSTANT_SECONDS);
-@property (readonly, class, nonnull) JavaTimeTemporalChronoField *OFFSET_SECONDS NS_SWIFT_NAME(OFFSET_SECONDS);
 #pragma mark Public
 
 - (id<JavaTimeTemporalTemporal>)adjustIntoWithJavaTimeTemporalTemporal:(id<JavaTimeTemporalTemporal>)temporal
@@ -210,6 +186,8 @@ typedef NS_ENUM(NSUInteger, JavaTimeTemporalChronoField_Enum) {
 #pragma mark Package-Private
 
 - (JavaTimeTemporalChronoField_Enum)toNSEnum;
+
+- (JavaTimeTemporalChronoField_ORDINAL)ordinal;
 
 @end
 
@@ -398,65 +376,55 @@ J2OBJC_ENUM_CONSTANT(JavaTimeTemporalChronoField, MINUTE_OF_DAY)
 
 /*!
  @brief The hour-of-am-pm.
- <p>
-  This counts the hour within the AM/PM, from 0 to 11.
-  This is the hour that would be observed on a standard 12-hour digital clock.
-  This field has the same meaning for all calendar systems. 
- <p>
-  When parsing this field it behaves equivalent to the following:
-  The value is validated from 0 to 11 in strict and smart mode.
-  In lenient mode the value is not validated. It is combined with 
- <code>AMPM_OF_DAY</code> to form <code>HOUR_OF_DAY</code> by multiplying
-  the {AMPM_OF_DAY} value by 12.
+ <p>This counts the hour within the AM/PM, from 0 to 11. This is the hour that would be observed
+  on a standard 12-hour digital clock. This field has the same meaning for all calendar systems. 
+ <p>When parsing this field it behaves equivalent to the following: The value is validated from
+  0 to 11 in strict and smart mode. In lenient mode the value is not validated. It is combined
+  with <code>AMPM_OF_DAY</code> to form <code>HOUR_OF_DAY</code> by multiplying the {AMPM_OF_DAY} value by
+  12. 
+ <p>See <code>CLOCK_HOUR_OF_AMPM</code> for the related field that counts hours from 1 to 12.
  */
 inline JavaTimeTemporalChronoField *JavaTimeTemporalChronoField_get_HOUR_OF_AMPM(void);
 J2OBJC_ENUM_CONSTANT(JavaTimeTemporalChronoField, HOUR_OF_AMPM)
 
 /*!
  @brief The clock-hour-of-am-pm.
- <p>
-  This counts the hour within the AM/PM, from 1 to 12.
-  This is the hour that would be observed on a standard 12-hour analog wall clock.
-  This field has the same meaning for all calendar systems. 
- <p>
-  When parsing this field it behaves equivalent to the following:
-  The value is validated from 1 to 12 in strict mode and from
-  0 to 12 in smart mode. In lenient mode the value is not validated.
-  The field is converted to an <code>HOUR_OF_AMPM</code> with the same value,
-  unless the value is 12, in which case it is converted to 0.
+ <p>This counts the hour within the AM/PM, from 1 to 12. This is the hour that would be observed
+  on a standard 12-hour analog wall clock. This field has the same meaning for all calendar
+  systems. 
+ <p>When parsing this field it behaves equivalent to the following: The value is validated from
+  1 to 12 in strict mode and from 0 to 12 in smart mode. In lenient mode the value is not
+  validated. The field is converted to an <code>HOUR_OF_AMPM</code> with the same value, unless the
+  value is 12, in which case it is converted to 0. 
+ <p>See <code>HOUR_OF_AMPM</code> for the related field that counts hours from 0 to 11.
  */
 inline JavaTimeTemporalChronoField *JavaTimeTemporalChronoField_get_CLOCK_HOUR_OF_AMPM(void);
 J2OBJC_ENUM_CONSTANT(JavaTimeTemporalChronoField, CLOCK_HOUR_OF_AMPM)
 
 /*!
  @brief The hour-of-day.
- <p>
-  This counts the hour within the day, from 0 to 23.
-  This is the hour that would be observed on a standard 24-hour digital clock.
-  This field has the same meaning for all calendar systems. 
- <p>
-  When parsing this field it behaves equivalent to the following:
-  The value is validated in strict and smart mode but not in lenient mode.
-  The field is combined with <code>MINUTE_OF_HOUR</code>, <code>SECOND_OF_MINUTE</code> and 
- <code>NANO_OF_SECOND</code> to produce a <code>LocalTime</code>.
-  In lenient mode, any excess days are added to the parsed date, or
-  made available via <code>java.time.format.DateTimeFormatter.parsedExcessDays()</code>.
+ <p>This counts the hour within the day, from 0 to 23. This is the hour that would be observed
+  on a standard 24-hour digital clock. This field has the same meaning for all calendar systems. 
+ <p>When parsing this field it behaves equivalent to the following: The value is validated in
+  strict and smart mode but not in lenient mode. The field is combined with <code>MINUTE_OF_HOUR</code>
+ , <code>SECOND_OF_MINUTE</code> and <code>NANO_OF_SECOND</code> to produce a <code>LocalTime</code>
+ . In lenient mode, any excess days are added to the parsed date, or made available
+  via <code>java.time.format.DateTimeFormatter.parsedExcessDays()</code>.
+  
+ <p>See <code>CLOCK_HOUR_OF_DAY</code> for the related field that counts hours from 1 to 24.
  */
 inline JavaTimeTemporalChronoField *JavaTimeTemporalChronoField_get_HOUR_OF_DAY(void);
 J2OBJC_ENUM_CONSTANT(JavaTimeTemporalChronoField, HOUR_OF_DAY)
 
 /*!
  @brief The clock-hour-of-day.
- <p>
-  This counts the hour within the AM/PM, from 1 to 24.
-  This is the hour that would be observed on a 24-hour analog wall clock.
-  This field has the same meaning for all calendar systems. 
- <p>
-  When parsing this field it behaves equivalent to the following:
-  The value is validated from 1 to 24 in strict mode and from
-  0 to 24 in smart mode. In lenient mode the value is not validated.
-  The field is converted to an <code>HOUR_OF_DAY</code> with the same value,
-  unless the value is 24, in which case it is converted to 0.
+ <p>This counts the hour within the day, from 1 to 24. This is the hour that would be observed
+  on a 24-hour analog wall clock. This field has the same meaning for all calendar systems. 
+ <p>When parsing this field it behaves equivalent to the following: The value is validated from
+  1 to 24 in strict mode and from 0 to 24 in smart mode. In lenient mode the value is not
+  validated. The field is converted to an <code>HOUR_OF_DAY</code> with the same value, unless the
+  value is 24, in which case it is converted to 0. 
+ <p>See <code>HOUR_OF_DAY</code> for the related field that counts hours from 0 to 23.
  */
 inline JavaTimeTemporalChronoField *JavaTimeTemporalChronoField_get_CLOCK_HOUR_OF_DAY(void);
 J2OBJC_ENUM_CONSTANT(JavaTimeTemporalChronoField, CLOCK_HOUR_OF_DAY)
@@ -571,12 +539,12 @@ J2OBJC_ENUM_CONSTANT(JavaTimeTemporalChronoField, DAY_OF_YEAR)
 
 /*!
  @brief The epoch-day, based on the Java epoch of 1970-01-01 (ISO).
- <p>
-  This field is the sequential count of days where 1970-01-01 (ISO) is zero.
-  Note that this uses the <i>local</i> time-line, ignoring offset and time-zone. 
- <p>
-  This field is strictly defined to have the same meaning in all calendar systems.
-  This is necessary to ensure interoperation between calendars.
+ <p>This field is the sequential count of days where 1970-01-01 (ISO) is zero. Note that this
+  uses the <i>local</i> time-line, ignoring offset and time-zone. 
+ <p>This field is strictly defined to have the same meaning in all calendar systems. This is
+  necessary to ensure interoperation between calendars. 
+ <p>Range of EpochDay is between (LocalDate.MIN.toEpochDay(), LocalDate.MAX.toEpochDay()) both
+  inclusive.
  */
 inline JavaTimeTemporalChronoField *JavaTimeTemporalChronoField_get_EPOCH_DAY(void);
 J2OBJC_ENUM_CONSTANT(JavaTimeTemporalChronoField, EPOCH_DAY)
@@ -632,22 +600,18 @@ J2OBJC_ENUM_CONSTANT(JavaTimeTemporalChronoField, MONTH_OF_YEAR)
 
 /*!
  @brief The proleptic-month based, counting months sequentially from year 0.
- <p>
-  This field is the sequential count of months where the first month
-  in proleptic-year zero has the value zero.
-  Later months have increasingly larger values.
-  Earlier months have increasingly small values.
-  There are no gaps or breaks in the sequence of months.
-  Note that this uses the <i>local</i> time-line, ignoring offset and time-zone. 
- <p>
-  In the default ISO calendar system, June 2012 would have the value 
- <code>(2012 * 12 + 6 - 1)</code>. This field is primarily for internal use. 
- <p>
-  Non-ISO calendar systems must implement this field as per the definition above.
-  It is just a simple zero-based count of elapsed months from the start of proleptic-year 0.
-  All calendar systems with a full proleptic-year definition will have a year zero.
-  If the calendar system has a minimum year that excludes year zero, then one must
-  be extrapolated in order for this method to be defined.
+ <p>This field is the sequential count of months where the first month in proleptic-year zero
+  has the value zero. Later months have increasingly larger values. Earlier months have
+  increasingly small values. There are no gaps or breaks in the sequence of months. Note that
+  this uses the <i>local</i> time-line, ignoring offset and time-zone. 
+ <p>In the default ISO calendar system, June 2012 would have the value <code>(2012 * 12 + 6 -
+  1)</code>
+ . This field is primarily for internal use. 
+ <p>Non-ISO calendar systems must implement this field as per the definition above. It is just a
+  simple zero-based count of elapsed months from the start of proleptic-year 0. All calendar
+  systems with a full proleptic-year definition will have a year zero. If the calendar system has
+  a minimum year that excludes year zero, then one must be extrapolated in order for this method
+  to be defined.
  */
 inline JavaTimeTemporalChronoField *JavaTimeTemporalChronoField_get_PROLEPTIC_MONTH(void);
 J2OBJC_ENUM_CONSTANT(JavaTimeTemporalChronoField, PROLEPTIC_MONTH)
@@ -736,17 +700,14 @@ J2OBJC_ENUM_CONSTANT(JavaTimeTemporalChronoField, ERA)
 
 /*!
  @brief The instant epoch-seconds.
- <p>
-  This represents the concept of the sequential count of seconds where
-  1970-01-01T00:00Z (ISO) is zero.
-  This field may be used with <code>NANO_OF_SECOND</code> to represent the fraction of the second. 
- <p>
-  An <code>Instant</code> represents an instantaneous point on the time-line.
-  On their own, an instant has insufficient information to allow a local date-time to be obtained.
-  Only when paired with an offset or time-zone can the local date or time be calculated. 
- <p>
-  This field is strictly defined to have the same meaning in all calendar systems.
-  This is necessary to ensure interoperation between calendars.
+ <p>This represents the concept of the sequential count of seconds where 1970-01-01T00:00Z (ISO)
+  is zero. This field may be used with <code>NANO_OF_SECOND</code> to represent the fraction of the
+  second. 
+ <p>An <code>Instant</code> represents an instantaneous point on the time-line. On their own, an
+  instant has insufficient information to allow a local date-time to be obtained. Only when
+  paired with an offset or time-zone can the local date or time be calculated. 
+ <p>This field is strictly defined to have the same meaning in all calendar systems. This is
+  necessary to ensure interoperation between calendars.
  */
 inline JavaTimeTemporalChronoField *JavaTimeTemporalChronoField_get_INSTANT_SECONDS(void);
 J2OBJC_ENUM_CONSTANT(JavaTimeTemporalChronoField, INSTANT_SECONDS)
@@ -771,7 +732,7 @@ FOUNDATION_EXPORT IOSObjectArray *JavaTimeTemporalChronoField_values(void);
 
 FOUNDATION_EXPORT JavaTimeTemporalChronoField *JavaTimeTemporalChronoField_valueOfWithNSString_(NSString *name);
 
-FOUNDATION_EXPORT JavaTimeTemporalChronoField *JavaTimeTemporalChronoField_fromOrdinal(NSUInteger ordinal);
+FOUNDATION_EXPORT JavaTimeTemporalChronoField *JavaTimeTemporalChronoField_fromOrdinal(JavaTimeTemporalChronoField_ORDINAL ordinal);
 
 J2OBJC_TYPE_LITERAL_HEADER(JavaTimeTemporalChronoField)
 
@@ -781,6 +742,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaTimeTemporalChronoField)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaTimeTemporalChronoField")

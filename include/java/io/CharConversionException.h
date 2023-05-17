@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaIoCharConversionException
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -34,7 +31,7 @@
 /*!
  @brief Base class for character conversion exceptions.
  @author Asmus Freytag
- @since JDK1.1
+ @since 1.1
  */
 @interface JavaIoCharConversionException : JavaIoIOException
 
@@ -82,6 +79,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaIoCharConversionException)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaIoCharConversionException")

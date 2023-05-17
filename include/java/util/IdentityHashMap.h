@@ -22,9 +22,6 @@
 #define INCLUDE_JavaUtilIdentityHashMap_IdentityHashMapSpliterator 1
 #endif
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -47,6 +44,8 @@
 #include "java/io/Serializable.h"
 
 @class IOSObjectArray;
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @protocol JavaUtilCollection;
 @protocol JavaUtilFunctionBiConsumer;
 @protocol JavaUtilFunctionBiFunction;
@@ -165,7 +164,6 @@
    */
   jint modCount_;
 }
-@property (readonly, class, strong) id NULL_KEY NS_SWIFT_NAME(NULL_KEY);
 
 #pragma mark Public
 
@@ -481,6 +479,8 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilIdentityHashMap)
 #if !defined (JavaUtilIdentityHashMap_IdentityHashMapSpliterator_) && (INCLUDE_ALL_JavaUtilIdentityHashMap || defined(INCLUDE_JavaUtilIdentityHashMap_IdentityHashMapSpliterator))
 #define JavaUtilIdentityHashMap_IdentityHashMapSpliterator_
 
+@class JavaLangInteger;
+@class JavaLangLong;
 @class JavaUtilIdentityHashMap;
 
 /*!
@@ -537,6 +537,9 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilIdentityHashMap_IdentityHashMapSpliterator)
 #define INCLUDE_JavaUtilSpliterator 1
 #include "java/util/Spliterator.h"
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
+@class JavaLangLong;
 @class JavaUtilIdentityHashMap;
 @protocol JavaUtilComparator;
 @protocol JavaUtilFunctionConsumer;
@@ -582,6 +585,9 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilIdentityHashMap_KeySpliterator)
 #define INCLUDE_JavaUtilSpliterator 1
 #include "java/util/Spliterator.h"
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
+@class JavaLangLong;
 @class JavaUtilIdentityHashMap;
 @protocol JavaUtilComparator;
 @protocol JavaUtilFunctionConsumer;
@@ -627,6 +633,9 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilIdentityHashMap_ValueSpliterator)
 #define INCLUDE_JavaUtilSpliterator 1
 #include "java/util/Spliterator.h"
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
+@class JavaLangLong;
 @class JavaUtilIdentityHashMap;
 @protocol JavaUtilComparator;
 @protocol JavaUtilFunctionConsumer;
@@ -669,6 +678,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilIdentityHashMap_EntrySpliterator)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaUtilIdentityHashMap")

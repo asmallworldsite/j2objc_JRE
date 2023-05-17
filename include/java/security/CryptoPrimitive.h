@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaSecurityCryptoPrimitive
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -31,7 +28,7 @@
 
 @class IOSObjectArray;
 
-typedef NS_ENUM(NSUInteger, JavaSecurityCryptoPrimitive_Enum) {
+typedef NS_ENUM(jint, JavaSecurityCryptoPrimitive_Enum) {
   JavaSecurityCryptoPrimitive_Enum_MESSAGE_DIGEST = 0,
   JavaSecurityCryptoPrimitive_Enum_SECURE_RANDOM = 1,
   JavaSecurityCryptoPrimitive_Enum_BLOCK_CIPHER = 2,
@@ -43,6 +40,12 @@ typedef NS_ENUM(NSUInteger, JavaSecurityCryptoPrimitive_Enum) {
   JavaSecurityCryptoPrimitive_Enum_KEY_ENCAPSULATION = 8,
   JavaSecurityCryptoPrimitive_Enum_KEY_AGREEMENT = 9,
 };
+#if J2OBJC_IMPORTED_BY_JAVA_IMPLEMENTATION
+#define JavaSecurityCryptoPrimitive_ORDINAL jint
+#else
+#define JavaSecurityCryptoPrimitive_ORDINAL JavaSecurityCryptoPrimitive_Enum
+#endif
+
 
 /*!
  @brief An enumeration of cryptographic primitives.
@@ -50,16 +53,6 @@ typedef NS_ENUM(NSUInteger, JavaSecurityCryptoPrimitive_Enum) {
  */
 @interface JavaSecurityCryptoPrimitive : JavaLangEnum
 
-@property (readonly, class, nonnull) JavaSecurityCryptoPrimitive *MESSAGE_DIGEST NS_SWIFT_NAME(MESSAGE_DIGEST);
-@property (readonly, class, nonnull) JavaSecurityCryptoPrimitive *SECURE_RANDOM NS_SWIFT_NAME(SECURE_RANDOM);
-@property (readonly, class, nonnull) JavaSecurityCryptoPrimitive *BLOCK_CIPHER NS_SWIFT_NAME(BLOCK_CIPHER);
-@property (readonly, class, nonnull) JavaSecurityCryptoPrimitive *STREAM_CIPHER NS_SWIFT_NAME(STREAM_CIPHER);
-@property (readonly, class, nonnull) JavaSecurityCryptoPrimitive *MAC NS_SWIFT_NAME(MAC);
-@property (readonly, class, nonnull) JavaSecurityCryptoPrimitive *KEY_WRAP NS_SWIFT_NAME(KEY_WRAP);
-@property (readonly, class, nonnull) JavaSecurityCryptoPrimitive *PUBLIC_KEY_ENCRYPTION NS_SWIFT_NAME(PUBLIC_KEY_ENCRYPTION);
-@property (readonly, class, nonnull) JavaSecurityCryptoPrimitive *SIGNATURE NS_SWIFT_NAME(SIGNATURE);
-@property (readonly, class, nonnull) JavaSecurityCryptoPrimitive *KEY_ENCAPSULATION NS_SWIFT_NAME(KEY_ENCAPSULATION);
-@property (readonly, class, nonnull) JavaSecurityCryptoPrimitive *KEY_AGREEMENT NS_SWIFT_NAME(KEY_AGREEMENT);
 #pragma mark Public
 
 + (JavaSecurityCryptoPrimitive *)valueOfWithNSString:(NSString *)name;
@@ -69,6 +62,8 @@ typedef NS_ENUM(NSUInteger, JavaSecurityCryptoPrimitive_Enum) {
 #pragma mark Package-Private
 
 - (JavaSecurityCryptoPrimitive_Enum)toNSEnum;
+
+- (JavaSecurityCryptoPrimitive_ORDINAL)ordinal;
 
 @end
 
@@ -141,7 +136,7 @@ FOUNDATION_EXPORT IOSObjectArray *JavaSecurityCryptoPrimitive_values(void);
 
 FOUNDATION_EXPORT JavaSecurityCryptoPrimitive *JavaSecurityCryptoPrimitive_valueOfWithNSString_(NSString *name);
 
-FOUNDATION_EXPORT JavaSecurityCryptoPrimitive *JavaSecurityCryptoPrimitive_fromOrdinal(NSUInteger ordinal);
+FOUNDATION_EXPORT JavaSecurityCryptoPrimitive *JavaSecurityCryptoPrimitive_fromOrdinal(JavaSecurityCryptoPrimitive_ORDINAL ordinal);
 
 J2OBJC_TYPE_LITERAL_HEADER(JavaSecurityCryptoPrimitive)
 
@@ -151,6 +146,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaSecurityCryptoPrimitive)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaSecurityCryptoPrimitive")

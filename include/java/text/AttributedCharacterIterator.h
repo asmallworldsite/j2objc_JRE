@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaTextAttributedCharacterIterator
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -29,6 +26,7 @@
 #define INCLUDE_JavaTextCharacterIterator 1
 #include "java/text/CharacterIterator.h"
 
+@class JavaLangInteger;
 @class JavaTextAttributedCharacterIterator_Attribute;
 @protocol JavaUtilMap;
 @protocol JavaUtilSet;
@@ -161,6 +159,9 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaTextAttributedCharacterIterator)
 #define INCLUDE_JavaIoSerializable 1
 #include "java/io/Serializable.h"
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
+
 /*!
  @brief Defines attribute keys that are used to identify text attributes.These
   keys are used in <code>AttributedCharacterIterator</code> and <code>AttributedString</code>.
@@ -169,9 +170,6 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaTextAttributedCharacterIterator)
  @since 1.2
  */
 @interface JavaTextAttributedCharacterIterator_Attribute : NSObject < JavaIoSerializable >
-@property (readonly, class, strong) JavaTextAttributedCharacterIterator_Attribute *LANGUAGE NS_SWIFT_NAME(LANGUAGE);
-@property (readonly, class, strong) JavaTextAttributedCharacterIterator_Attribute *READING NS_SWIFT_NAME(READING);
-@property (readonly, class, strong) JavaTextAttributedCharacterIterator_Attribute *INPUT_METHOD_SEGMENT NS_SWIFT_NAME(INPUT_METHOD_SEGMENT);
 
 #pragma mark Public
 
@@ -274,6 +272,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaTextAttributedCharacterIterator_Attribute)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaTextAttributedCharacterIterator")

@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaSecuritySecureRandomSpi
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -30,6 +27,7 @@
 #include "java/io/Serializable.h"
 
 @class IOSByteArray;
+@class JavaLangInteger;
 
 /*!
  @brief This class defines the <i>Service Provider Interface</i> (<b>SPI</b>)
@@ -89,6 +87,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaSecuritySecureRandomSpi)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaSecuritySecureRandomSpi")

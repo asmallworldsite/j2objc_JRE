@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaSqlRowIdLifetime
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -31,13 +28,19 @@
 
 @class IOSObjectArray;
 
-typedef NS_ENUM(NSUInteger, JavaSqlRowIdLifetime_Enum) {
+typedef NS_ENUM(jint, JavaSqlRowIdLifetime_Enum) {
   JavaSqlRowIdLifetime_Enum_ROWID_UNSUPPORTED = 0,
   JavaSqlRowIdLifetime_Enum_ROWID_VALID_OTHER = 1,
   JavaSqlRowIdLifetime_Enum_ROWID_VALID_SESSION = 2,
   JavaSqlRowIdLifetime_Enum_ROWID_VALID_TRANSACTION = 3,
   JavaSqlRowIdLifetime_Enum_ROWID_VALID_FOREVER = 4,
 };
+#if J2OBJC_IMPORTED_BY_JAVA_IMPLEMENTATION
+#define JavaSqlRowIdLifetime_ORDINAL jint
+#else
+#define JavaSqlRowIdLifetime_ORDINAL JavaSqlRowIdLifetime_Enum
+#endif
+
 
 /*!
  @brief Enumeration for RowId life-time values.
@@ -45,11 +48,6 @@ typedef NS_ENUM(NSUInteger, JavaSqlRowIdLifetime_Enum) {
  */
 @interface JavaSqlRowIdLifetime : JavaLangEnum
 
-@property (readonly, class, nonnull) JavaSqlRowIdLifetime *ROWID_UNSUPPORTED NS_SWIFT_NAME(ROWID_UNSUPPORTED);
-@property (readonly, class, nonnull) JavaSqlRowIdLifetime *ROWID_VALID_OTHER NS_SWIFT_NAME(ROWID_VALID_OTHER);
-@property (readonly, class, nonnull) JavaSqlRowIdLifetime *ROWID_VALID_SESSION NS_SWIFT_NAME(ROWID_VALID_SESSION);
-@property (readonly, class, nonnull) JavaSqlRowIdLifetime *ROWID_VALID_TRANSACTION NS_SWIFT_NAME(ROWID_VALID_TRANSACTION);
-@property (readonly, class, nonnull) JavaSqlRowIdLifetime *ROWID_VALID_FOREVER NS_SWIFT_NAME(ROWID_VALID_FOREVER);
 #pragma mark Public
 
 + (JavaSqlRowIdLifetime *)valueOfWithNSString:(NSString *)name;
@@ -59,6 +57,8 @@ typedef NS_ENUM(NSUInteger, JavaSqlRowIdLifetime_Enum) {
 #pragma mark Package-Private
 
 - (JavaSqlRowIdLifetime_Enum)toNSEnum;
+
+- (JavaSqlRowIdLifetime_ORDINAL)ordinal;
 
 @end
 
@@ -106,7 +106,7 @@ FOUNDATION_EXPORT IOSObjectArray *JavaSqlRowIdLifetime_values(void);
 
 FOUNDATION_EXPORT JavaSqlRowIdLifetime *JavaSqlRowIdLifetime_valueOfWithNSString_(NSString *name);
 
-FOUNDATION_EXPORT JavaSqlRowIdLifetime *JavaSqlRowIdLifetime_fromOrdinal(NSUInteger ordinal);
+FOUNDATION_EXPORT JavaSqlRowIdLifetime *JavaSqlRowIdLifetime_fromOrdinal(JavaSqlRowIdLifetime_ORDINAL ordinal);
 
 J2OBJC_TYPE_LITERAL_HEADER(JavaSqlRowIdLifetime)
 
@@ -116,6 +116,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaSqlRowIdLifetime)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaSqlRowIdLifetime")

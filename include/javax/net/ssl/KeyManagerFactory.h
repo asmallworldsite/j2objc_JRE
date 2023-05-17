@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaxNetSslKeyManagerFactory
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -92,7 +89,7 @@
  <p> Note that the list of registered providers may be retrieved via the 
  <code>Security.getProviders()</code> method.
  @param algorithm the standard name of the requested algorithm.           See the 
-  <a href="{@@docRoot}openjdk-redirect.html?v=8&path=/technotes/guides/security/jsse/JSSERefGuide.html">
+  <a href="{@@docRoot}/../technotes/guides/security/jsse/JSSERefGuide.html">
             Java Secure Socket Extension Reference Guide 
   </a>           for information about standard algorithm names.
  @return the new <code>KeyManagerFactory</code> object.
@@ -112,7 +109,7 @@
   object is returned.  Note that the specified Provider object
   does not have to be registered in the provider list.
  @param algorithm the standard name of the requested algorithm.           See the 
-  <a href="{@@docRoot}openjdk-redirect.html?v=8&path=/technotes/guides/security/jsse/JSSERefGuide.html">
+  <a href="{@@docRoot}/../technotes/guides/security/jsse/JSSERefGuide.html">
             Java Secure Socket Extension Reference Guide 
   </a>           for information about standard algorithm names.
  @param provider an instance of the provider.
@@ -137,7 +134,7 @@
  <p> Note that the list of registered providers may be retrieved via the 
  <code>Security.getProviders()</code> method.
  @param algorithm the standard name of the requested algorithm.           See the 
-  <a href="{@@docRoot}openjdk-redirect.html?v=8&path=/technotes/guides/security/jsse/JSSERefGuide.html">
+  <a href="{@@docRoot}/../technotes/guides/security/jsse/JSSERefGuide.html">
             Java Secure Socket Extension Reference Guide 
   </a>           for information about standard algorithm names.
  @param provider the name of the provider.
@@ -246,6 +243,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaxNetSslKeyManagerFactory)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaxNetSslKeyManagerFactory")

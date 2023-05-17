@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaSecurityCertCertificateExpiredException
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -37,6 +34,7 @@
  <code>notAfter</code> date/time specified in the validity period
   of the certificate.
  @author Hemma Prafullchandra
+ @since 1.2
  */
 @interface JavaSecurityCertCertificateExpiredException : JavaSecurityCertCertificateException
 
@@ -88,6 +86,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaSecurityCertCertificateExpiredException)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaSecurityCertCertificateExpiredException")

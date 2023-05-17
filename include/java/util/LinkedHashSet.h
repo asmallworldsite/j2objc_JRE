@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaUtilLinkedHashSet
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -37,15 +34,18 @@
 #define INCLUDE_JavaIoSerializable 1
 #include "java/io/Serializable.h"
 
+@class JavaLangBoolean;
+@class JavaLangFloat;
+@class JavaLangInteger;
 @protocol JavaUtilCollection;
 @protocol JavaUtilSpliterator;
 
 /*!
  @brief <p>Hash table and linked list implementation of the <tt>Set</tt> interface,
-  with predictable iteration order.
- This implementation differs from 
+  with predictable iteration order.This implementation differs from 
  <tt>HashSet</tt> in that it maintains a doubly-linked list running through
-  all of its entries.  This linked list defines the iteration ordering,
+  all of its entries.
+ This linked list defines the iteration ordering,
   which is the order in which elements were inserted into the set
   (<i>insertion-order</i>).  Note that insertion order is <i>not</i> affected
   if an element is <i>re-inserted</i> into the set.  (An element <tt>e</tt>
@@ -221,6 +221,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilLinkedHashSet)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaUtilLinkedHashSet")

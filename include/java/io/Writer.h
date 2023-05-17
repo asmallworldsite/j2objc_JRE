@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaIoWriter
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -38,6 +35,8 @@
 #include "java/io/Flushable.h"
 
 @class IOSCharArray;
+@class JavaLangCharacter;
+@class JavaLangInteger;
 @protocol JavaLangCharSequence;
 
 /*!
@@ -45,7 +44,6 @@
   subclass must implement are write(char[], int, int), flush(), and close().
  Most subclasses, however, will override some of the methods defined here in
   order to provide higher efficiency, additional functionality, or both.
- - seealso: Writer
  - seealso: BufferedWriter
  - seealso: CharArrayWriter
  - seealso: FilterWriter
@@ -56,7 +54,7 @@
  - seealso: StringWriter
  - seealso: Reader
  @author Mark Reinhold
- @since JDK1.1
+ @since 1.1
  */
 @interface JavaIoWriter : NSObject < JavaLangAppendable, JavaIoCloseable, JavaIoFlushable > {
  @public
@@ -65,7 +63,7 @@
   efficiency, a character-stream object may use an object other than
   itself to protect critical sections.
    A subclass should therefore use
-  the object in this field rather than <tt>this</tt> or a synchronized
+  the object in this field rather than <code>this</code> or a synchronized
   method.
    */
   id lock_;
@@ -75,7 +73,7 @@
 
 /*!
  @brief Appends the specified character to this writer.
- <p> An invocation of this method of the form <tt>out.append(c)</tt>
+ <p> An invocation of this method of the form <code>out.append(c)</code>
   behaves in exactly the same way as the invocation 
  @code
 
@@ -91,21 +89,21 @@
 
 /*!
  @brief Appends the specified character sequence to this writer.
- <p> An invocation of this method of the form <tt>out.append(csq)</tt>
+ <p> An invocation of this method of the form <code>out.append(csq)</code>
   behaves in exactly the same way as the invocation 
  @code
 
       out.write(csq.toString()) 
 @endcode
   
- <p> Depending on the specification of <tt>toString</tt> for the
-  character sequence <tt>csq</tt>, the entire sequence may not be
-  appended. For instance, invoking the <tt>toString</tt> method of a
+ <p> Depending on the specification of <code>toString</code> for the
+  character sequence <code>csq</code>, the entire sequence may not be
+  appended. For instance, invoking the <code>toString</code> method of a
   character buffer will return a subsequence whose content depends upon
   the buffer's position and limit.
  @param csq The character sequence to append.  If 
-  <tt> csq </tt>  is           <tt>
-  null </tt> , then the four characters  <tt> "null" </tt>  are          appended to this writer.
+ <code>csq</code>  is          <code>null</code>
+  , then the four characters <code>"null"</code>  are          appended to this writer.
  @return This writer
  @throw IOException
  If an I/O error occurs
@@ -115,28 +113,29 @@
 
 /*!
  @brief Appends a subsequence of the specified character sequence to this writer.
- <tt>Appendable</tt>.
+ <code>Appendable</code>.
   
- <p> An invocation of this method of the form <tt>out.append(csq, start,
-  end)</tt> when <tt>csq</tt> is not <tt>null</tt> behaves in exactly the
+ <p> An invocation of this method of the form 
+ <code>out.append(csq, start, end)</code> when <code>csq</code>
+  is not <code>null</code> behaves in exactly the
   same way as the invocation 
  @code
-
-      out.write(csq.subSequence(start, end).toString()) 
+     out.write(csq.subSequence(start, end).toString()) 
+ 
 @endcode
  @param csq The character sequence from which a subsequence will be
            appended.  If 
-  <tt> csq </tt>  is  <tt> null </tt> , then characters          will be appended as if 
-  <tt> csq </tt>  contained the four          characters 
-  <tt> "null" </tt> .
+ <code>csq</code>  is <code>null</code> , then characters          will be appended as if 
+ <code>csq</code>  contained the four          characters <code>"null"</code>
+  .
  @param start The index of the first character in the subsequence
  @param end The index of the character following the last character in the
            subsequence
  @return This writer
  @throw IndexOutOfBoundsException
- If <tt>start</tt> or <tt>end</tt> are negative, <tt>start</tt>
-           is greater than <tt>end</tt>, or <tt>end</tt> is greater than
-           <tt>csq.length()</tt>
+ If <code>start</code> or <code>end</code> are negative, <code>start</code>
+           is greater than <code>end</code>, or <code>end</code> is greater than
+           <code>csq.length()</code>
  @throw IOException
  If an I/O error occurs
  @since 1.5
@@ -185,6 +184,11 @@
  @param cbuf Array of characters
  @param off Offset from which to start writing characters
  @param len Number of characters to write
+ @throw IndexOutOfBoundsException
+ Implementations should throw this exception
+           if <code>off</code> is negative, or <code>len</code> is negative,
+           or <code>off + len</code> is negative or greater than the length
+           of the given array
  @throw IOException
  If an I/O error occurs
  */
@@ -218,8 +222,9 @@
  @param off Offset from which to start writing characters
  @param len Number of characters to write
  @throw IndexOutOfBoundsException
- If <tt>off</tt> is negative, or <tt>len</tt> is negative,
-           or <tt>off+len</tt> is negative or greater than the length
+ Implementations should throw this exception
+           if <code>off</code> is negative, or <code>len</code> is negative,
+           or <code>off + len</code> is negative or greater than the length
            of the given string
  @throw IOException
  If an I/O error occurs
@@ -261,6 +266,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaIoWriter)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaIoWriter")

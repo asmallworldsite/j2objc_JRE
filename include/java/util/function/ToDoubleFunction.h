@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaUtilFunctionToDoubleFunction
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -24,6 +21,8 @@
 
 #if !defined (JavaUtilFunctionToDoubleFunction_) && (INCLUDE_ALL_JavaUtilFunctionToDoubleFunction || defined(INCLUDE_JavaUtilFunctionToDoubleFunction))
 #define JavaUtilFunctionToDoubleFunction_
+
+@class JavaLangDouble;
 
 /*!
  @brief Represents a function that produces a double-valued result.This is the 
@@ -54,6 +53,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilFunctionToDoubleFunction)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaUtilFunctionToDoubleFunction")

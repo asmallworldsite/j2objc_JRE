@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaNetURLConnection
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -28,6 +25,9 @@
 @class IOSObjectArray;
 @class JavaIoInputStream;
 @class JavaIoOutputStream;
+@class JavaLangBoolean;
+@class JavaLangInteger;
+@class JavaLangLong;
 @class JavaNetContentHandler;
 @class JavaNetURL;
 @class JavaSecurityPermission;
@@ -251,7 +251,6 @@
    */
   jboolean connected_;
 }
-@property (class, strong) id<JavaNetContentHandlerFactory> factory NS_SWIFT_NAME(factory);
 
 #pragma mark Public
 
@@ -453,7 +452,7 @@
  - seealso: java.net.URLConnection#getRequestProperty(java.lang.String)
  - seealso: #setDefaultRequestProperty(java.lang.String, java.lang.String)
  */
-+ (NSString *)getDefaultRequestPropertyWithNSString:(NSString *)key __attribute__((deprecated));
++ (NSString *)getDefaultRequestPropertyWithNSString:(NSString *)key;
 
 /*!
  @brief Returns the default value of a <code>URLConnection</code>'s
@@ -845,7 +844,7 @@
  - seealso: #getDefaultRequestProperty(java.lang.String)
  */
 + (void)setDefaultRequestPropertyWithNSString:(NSString *)key
-                                 withNSString:(NSString *)value __attribute__((deprecated));
+                                 withNSString:(NSString *)value;
 
 /*!
  @brief Sets the default value of the <code>useCaches</code> field to the
@@ -1037,7 +1036,6 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaNetURLConnection)
 @class JavaNetURLConnection;
 
 @interface JavaNetUnknownContentHandler : JavaNetContentHandler
-@property (readonly, class, strong) JavaNetContentHandler *INSTANCE NS_SWIFT_NAME(INSTANCE);
 
 #pragma mark Public
 
@@ -1074,6 +1072,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaNetUnknownContentHandler)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaNetURLConnection")

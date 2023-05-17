@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaNioChannelsSpiAbstractInterruptibleChannel
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -33,6 +30,7 @@
 #define INCLUDE_JavaNioChannelsInterruptibleChannel 1
 #include "java/nio/channels/InterruptibleChannel.h"
 
+@class JavaLangBoolean;
 @protocol SunNioChInterruptible;
 
 /*!
@@ -161,6 +159,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaNioChannelsSpiAbstractInterruptibleChannel)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaNioChannelsSpiAbstractInterruptibleChannel")

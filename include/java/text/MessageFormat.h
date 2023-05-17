@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaTextMessageFormat
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -30,6 +27,8 @@
 #include "java/text/Format.h"
 
 @class IOSObjectArray;
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @class JavaLangStringBuffer;
 @class JavaTextFieldPosition;
 @class JavaTextParsePosition;
@@ -52,7 +51,7 @@
   itself doesn't implement locale specific behavior. Any locale specific
   behavior is defined by the pattern that you provide as well as the
   subformats used for inserted arguments. 
- <h3><a name="patterns">Patterns and Their Interpretation</a></h3>
+ <h3><a id="patterns">Patterns and Their Interpretation</a></h3>
   
  <code>MessageFormat</code> uses patterns of the following form: 
  <blockquote>@code
@@ -127,73 +126,78 @@
   table shows how the values map to <code>Format</code> instances. Combinations not
   shown in the table are illegal. A <i>SubformatPattern</i> must
   be a valid pattern string for the <code>Format</code> subclass used. 
- <table border=1 summary="Shows how FormatType and FormatStyle values map to Format instances">
+ <table class="plain">
+  <caption style="display:none">Shows how FormatType and FormatStyle values map to Format instances</caption>
+  <thead>
      <tr>
-        <th id="ft" class="TableHeadingColor">FormatType
-        <th id="fs" class="TableHeadingColor">FormatStyle
-        <th id="sc" class="TableHeadingColor">Subformat Created
+        <th scope="col" class="TableHeadingColor">FormatType
+        <th scope="col" class="TableHeadingColor">FormatStyle
+        <th scope="col" class="TableHeadingColor">Subformat Created 
+ </thead>
+  <tbody>
      <tr>
-        <td headers="ft"><i>(none)</i>
-        <td headers="fs"><i>(none)</i>
-        <td headers="sc"><code>null</code>
+        <th scope="row" style="text-weight: normal"><i>(none)</i>
+        <th scope="row" style="text-weight: normal"><i>(none)</i>
+        <td><code>null</code>
      <tr>
-        <td headers="ft" rowspan=5><code>number</code>
-        <td headers="fs"><i>(none)</i>
-        <td headers="sc"><code>NumberFormat.getInstance</code><code>(getLocale())</code>
+        <th scope="row" style="text-weight: normal" rowspan=5><code>number</code>
+        <th scope="row" style="text-weight: normal"><i>(none)</i>
+        <td><code>NumberFormat.getInstance</code><code>(getLocale())</code>
      <tr>
-        <td headers="fs"><code>integer</code>
-        <td headers="sc"><code>NumberFormat.getIntegerInstance</code><code>(getLocale())</code>
+        <th scope="row" style="text-weight: normal"><code>integer</code>
+        <td><code>NumberFormat.getIntegerInstance</code><code>(getLocale())</code>
      <tr>
-        <td headers="fs"><code>currency</code>
-        <td headers="sc"><code>NumberFormat.getCurrencyInstance</code><code>(getLocale())</code>
+        <th scope="row" style="text-weight: normal"><code>currency</code>
+        <td><code>NumberFormat.getCurrencyInstance</code><code>(getLocale())</code>
      <tr>
-        <td headers="fs"><code>percent</code>
-        <td headers="sc"><code>NumberFormat.getPercentInstance</code><code>(getLocale())</code>
+        <th scope="row" style="text-weight: normal"><code>percent</code>
+        <td><code>NumberFormat.getPercentInstance</code><code>(getLocale())</code>
      <tr>
-        <td headers="fs"><i>SubformatPattern</i>
-        <td headers="sc"><code>new</code> <code>DecimalFormat</code><code>(subformatPattern,</code> <code>DecimalFormatSymbols.getInstance</code><code>(getLocale()))</code>
+        <th scope="row" style="text-weight: normal"><i>SubformatPattern</i>
+        <td><code>new</code> <code>DecimalFormat</code><code>(subformatPattern,</code> <code>DecimalFormatSymbols.getInstance</code><code>(getLocale()))</code>
      <tr>
-        <td headers="ft" rowspan=6><code>date</code>
-        <td headers="fs"><i>(none)</i>
-        <td headers="sc"><code>DateFormat.getDateInstance</code><code>(</code><code>DateFormat.DEFAULT</code><code>, getLocale())</code>
+        <th scope="row" style="text-weight: normal" rowspan=6><code>date</code>
+        <th scope="row" style="text-weight: normal"><i>(none)</i>
+        <td><code>DateFormat.getDateInstance</code><code>(</code><code>DateFormat.DEFAULT</code><code>, getLocale())</code>
      <tr>
-        <td headers="fs"><code>short</code>
-        <td headers="sc"><code>DateFormat.getDateInstance</code><code>(</code><code>DateFormat.SHORT</code><code>, getLocale())</code>
+        <th scope="row" style="text-weight: normal"><code>short</code>
+        <td><code>DateFormat.getDateInstance</code><code>(</code><code>DateFormat.SHORT</code><code>, getLocale())</code>
      <tr>
-        <td headers="fs"><code>medium</code>
-        <td headers="sc"><code>DateFormat.getDateInstance</code><code>(</code><code>DateFormat.DEFAULT</code><code>, getLocale())</code>
+        <th scope="row" style="text-weight: normal"><code>medium</code>
+        <td><code>DateFormat.getDateInstance</code><code>(</code><code>DateFormat.DEFAULT</code><code>, getLocale())</code>
      <tr>
-        <td headers="fs"><code>long</code>
-        <td headers="sc"><code>DateFormat.getDateInstance</code><code>(</code><code>DateFormat.LONG</code><code>, getLocale())</code>
+        <th scope="row" style="text-weight: normal"><code>long</code>
+        <td><code>DateFormat.getDateInstance</code><code>(</code><code>DateFormat.LONG</code><code>, getLocale())</code>
      <tr>
-        <td headers="fs"><code>full</code>
-        <td headers="sc"><code>DateFormat.getDateInstance</code><code>(</code><code>DateFormat.FULL</code><code>, getLocale())</code>
+        <th scope="row" style="text-weight: normal"><code>full</code>
+        <td><code>DateFormat.getDateInstance</code><code>(</code><code>DateFormat.FULL</code><code>, getLocale())</code>
      <tr>
-        <td headers="fs"><i>SubformatPattern</i>
-        <td headers="sc"><code>new</code> <code>SimpleDateFormat</code><code>(subformatPattern, getLocale())</code>
+        <th scope="row" style="text-weight: normal"><i>SubformatPattern</i>
+        <td><code>new</code> <code>SimpleDateFormat</code><code>(subformatPattern, getLocale())</code>
      <tr>
-        <td headers="ft" rowspan=6><code>time</code>
-        <td headers="fs"><i>(none)</i>
-        <td headers="sc"><code>DateFormat.getTimeInstance</code><code>(</code><code>DateFormat.DEFAULT</code><code>, getLocale())</code>
+        <th scope="row" style="text-weight: normal" rowspan=6><code>time</code>
+        <th scope="row" style="text-weight: normal"><i>(none)</i>
+        <td><code>DateFormat.getTimeInstance</code><code>(</code><code>DateFormat.DEFAULT</code><code>, getLocale())</code>
      <tr>
-        <td headers="fs"><code>short</code>
-        <td headers="sc"><code>DateFormat.getTimeInstance</code><code>(</code><code>DateFormat.SHORT</code><code>, getLocale())</code>
+        <th scope="row" style="text-weight: normal"><code>short</code>
+        <td><code>DateFormat.getTimeInstance</code><code>(</code><code>DateFormat.SHORT</code><code>, getLocale())</code>
      <tr>
-        <td headers="fs"><code>medium</code>
-        <td headers="sc"><code>DateFormat.getTimeInstance</code><code>(</code><code>DateFormat.DEFAULT</code><code>, getLocale())</code>
+        <th scope="row" style="text-weight: normal"><code>medium</code>
+        <td><code>DateFormat.getTimeInstance</code><code>(</code><code>DateFormat.DEFAULT</code><code>, getLocale())</code>
      <tr>
-        <td headers="fs"><code>long</code>
-        <td headers="sc"><code>DateFormat.getTimeInstance</code><code>(</code><code>DateFormat.LONG</code><code>, getLocale())</code>
+        <th scope="row" style="text-weight: normal"><code>long</code>
+        <td><code>DateFormat.getTimeInstance</code><code>(</code><code>DateFormat.LONG</code><code>, getLocale())</code>
      <tr>
-        <td headers="fs"><code>full</code>
-        <td headers="sc"><code>DateFormat.getTimeInstance</code><code>(</code><code>DateFormat.FULL</code><code>, getLocale())</code>
+        <th scope="row" style="text-weight: normal"><code>full</code>
+        <td><code>DateFormat.getTimeInstance</code><code>(</code><code>DateFormat.FULL</code><code>, getLocale())</code>
      <tr>
-        <td headers="fs"><i>SubformatPattern</i>
-        <td headers="sc"><code>new</code> <code>SimpleDateFormat</code><code>(subformatPattern, getLocale())</code>
+        <th scope="row" style="text-weight: normal"><i>SubformatPattern</i>
+        <td><code>new</code> <code>SimpleDateFormat</code><code>(subformatPattern, getLocale())</code>
      <tr>
-        <td headers="ft"><code>choice</code>
-        <td headers="fs"><i>SubformatPattern</i>
-        <td headers="sc"><code>new</code> <code>ChoiceFormat</code><code>(subformatPattern)</code>
+        <th scope="row" style="text-weight: normal"><code>choice</code>
+        <th scope="row" style="text-weight: normal"><i>SubformatPattern</i>
+        <td><code>new</code> <code>ChoiceFormat</code><code>(subformatPattern)</code>
+  </tbody>
   </table>
   
  <h4>Usage Information</h4>
@@ -314,7 +318,7 @@
   
 @endcode</blockquote>
   
- <h4><a name="synchronization">Synchronization</a></h4>
+ <h4><a id="synchronization">Synchronization</a></h4>
   
  <p>
   Message formats are not synchronized.
@@ -330,6 +334,7 @@
  - seealso: DateFormat
  - seealso: SimpleDateFormat
  @author Mark Davis
+ @since 1.1
  */
 @interface JavaTextMessageFormat : JavaTextFormat
 
@@ -345,6 +350,8 @@
  <a href="#patterns">class description</a>.
  @param pattern the pattern for this message format
  @throw IllegalArgumentExceptionif the pattern is invalid
+ @throw NullPointerExceptionif <code>pattern</code> is
+             <code>null</code>
  */
 - (instancetype __nonnull)initWithNSString:(NSString *)pattern;
 
@@ -358,6 +365,8 @@
  @param pattern the pattern for this message format
  @param locale the locale for this message format
  @throw IllegalArgumentExceptionif the pattern is invalid
+ @throw NullPointerExceptionif <code>pattern</code> is
+             <code>null</code>
  @since 1.4
  */
 - (instancetype __nonnull)initWithNSString:(NSString *)pattern
@@ -371,6 +380,8 @@
  <a href="#patterns">class description</a>.
  @param pattern the pattern for this message format
  @throw IllegalArgumentExceptionif the pattern is invalid
+ @throw NullPointerExceptionif <code>pattern</code> is
+             <code>null</code>
  */
 - (void)applyPatternWithNSString:(NSString *)pattern;
 
@@ -395,10 +406,11 @@
   </blockquote>
  @param arguments an array of objects to be formatted and substituted.
  @param result where text is appended.
- @param pos On input: an alignment field, if desired.             On output: the offsets of the alignment field.
+ @param pos keeps track on the position of the first replaced argument             in the output string.
  @throw IllegalArgumentExceptionif an argument in the
              <code>arguments</code> array is not of the type
              expected by the format element(s) that use it.
+ @throw NullPointerExceptionif <code>result</code> is <code>null</code>
  */
 - (JavaLangStringBuffer *)formatWithId:(id)arguments
               withJavaLangStringBuffer:(JavaLangStringBuffer *)result
@@ -415,45 +427,46 @@
   as indicated by the first matching line of the following table. An
   argument is <i>unavailable</i> if <code>arguments</code> is 
  <code>null</code> or has fewer than argumentIndex+1 elements. 
- <table border=1 summary="Examples of subformat,argument,and formatted text">
+ <table class="plain">
+  <caption style="display:none">Examples of subformat,argument,and formatted text</caption>
+  <thead>
      <tr>
-        <th>Subformat
-        <th>Argument
-        <th>Formatted Text
+        <th scope="col">Subformat
+        <th scope="col">Argument
+        <th scope="col">Formatted Text 
+ </thead>
+  <tbody>
      <tr>
-        <td><i>any</i>
-        <td><i>unavailable</i>
+        <th scope="row" style="text-weight-normal" rowspan=2><i>any</i>
+        <th scope="row" style="text-weight-normal"><i>unavailable</i>
         <td><code>"{" + argumentIndex + "}"</code>
      <tr>
-        <td><i>any</i>
-        <td><code>null</code>
+        <th scope="row" style="text-weight-normal"><code>null</code>
         <td><code>"null"</code>
      <tr>
-        <td><code>instanceof ChoiceFormat</code>
-        <td><i>any</i>
+        <th scope="row" style="text-weight-normal"><code>instanceof ChoiceFormat</code>
+        <th scope="row" style="text-weight-normal"><i>any</i>
         <td><code>subformat.format(argument).indexOf('{') &gt;= 0 ?<br>
             (new MessageFormat(subformat.format(argument), getLocale())).format(argument) :
             subformat.format(argument)</code>
      <tr>
-        <td><code>!= null</code>
-        <td><i>any</i>
+        <th scope="row" style="text-weight-normal"><code>!= null</code>
+        <th scope="row" style="text-weight-normal"><i>any</i>
         <td><code>subformat.format(argument)</code>
      <tr>
-        <td><code>null</code>
-        <td><code>instanceof Number</code>
+        <th scope="row" style="text-weight-normal" rowspan=4><code>null</code>
+        <th scope="row" style="text-weight-normal"><code>instanceof Number</code>
         <td><code>NumberFormat.getInstance(getLocale()).format(argument)</code>
      <tr>
-        <td><code>null</code>
-        <td><code>instanceof Date</code>
+        <th scope="row" style="text-weight-normal"><code>instanceof Date</code>
         <td><code>DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT, getLocale()).format(argument)</code>
      <tr>
-        <td><code>null</code>
-        <td><code>instanceof String</code>
+        <th scope="row" style="text-weight-normal"><code>instanceof String</code>
         <td><code>argument</code>
      <tr>
-        <td><code>null</code>
-        <td><i>any</i>
+        <th scope="row" style="text-weight-normal"><i>any</i>
         <td><code>argument.toString()</code>
+  </tbody>
   </table>
   <p>
   If <code>pos</code> is non-null, and refers to 
@@ -461,12 +474,13 @@
   string will be returned.
  @param arguments an array of objects to be formatted and substituted.
  @param result where text is appended.
- @param pos On input: an alignment field, if desired.             On output: the offsets of the alignment field.
+ @param pos keeps track on the position of the first replaced argument                   in the output string.
  @return the string buffer passed in as <code>result</code>, with formatted
   text appended
  @throw IllegalArgumentExceptionif an argument in the
              <code>arguments</code> array is not of the type
              expected by the format element(s) that use it.
+ @throw NullPointerExceptionif <code>result</code> is <code>null</code>
  */
 - (JavaLangStringBuffer *)formatWithNSObjectArray:(IOSObjectArray *)arguments
                          withJavaLangStringBuffer:(JavaLangStringBuffer *)result
@@ -486,6 +500,7 @@
              or if an argument in the <code>arguments</code> array
              is not of the type expected by the format element(s)
              that use it.
+ @throw NullPointerExceptionif <code>pattern</code> is <code>null</code>
  */
 + (NSString *)formatWithNSString:(NSString *)pattern
                withNSObjectArray:(IOSObjectArray *)arguments;
@@ -617,6 +632,8 @@
  @param source the string to parse
  @param pos the parse position
  @return an array of parsed objects
+ @throw NullPointerExceptionif <code>pos</code> is <code>null</code>
+             for a non-null <code>source</code> string.
  */
 - (IOSObjectArray *)parseWithNSString:(NSString *)source
             withJavaTextParsePosition:(JavaTextParsePosition *)pos;
@@ -799,7 +816,6 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaTextMessageFormat)
  @since 1.4
  */
 @interface JavaTextMessageFormat_Field : JavaTextFormat_Field
-@property (readonly, class, strong) JavaTextMessageFormat_Field *ARGUMENT NS_SWIFT_NAME(ARGUMENT);
 
 #pragma mark Protected
 
@@ -847,6 +863,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaTextMessageFormat_Field)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaTextMessageFormat")

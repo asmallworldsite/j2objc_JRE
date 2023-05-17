@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaLangEnum
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -42,14 +39,21 @@
 
 @class IOSClass;
 @class IOSObjectArray;
+@class JavaLangBoolean;
+@class JavaLangInteger;
 
 /*!
- @brief This is the common base class of all Java language enumeration types.
+ @brief This is the common base class of all Java language enumeration classes.
  More information about enums, including descriptions of the
   implicitly declared methods synthesized by the compiler, can be
-  found in section 8.9 of 
- <cite>The Java&trade; Language Specification</cite>.
-  
+  found in section 8.9 of <cite>The Java Language
+  Specification</cite>.
+  Enumeration classes are all serializable and receive special handling
+  by the serialization mechanism. The serialized representation used
+  for enum constants cannot be customized. Declarations of methods
+  and fields that would otherwise interact with serialization are
+  ignored, including <code>serialVersionUID</code>; see the <cite>Java
+  Object Serialization Specification</cite> for details. 
  <p> Note that when using an enumeration type as the type of a set
   or as the type of the keys in a map, specialized and efficient 
  set and map
@@ -136,38 +140,38 @@
  @brief Returns the name of this enum constant, as contained in the
   declaration.This method may be overridden, though it typically
   isn't necessary or desirable.
- An enum type should override this
+ An enum class should override this
   method when a more "programmer-friendly" string form exists.
  @return the name of this enum constant
  */
 - (NSString * __nonnull)description;
 
 /*!
- @brief Returns the enum constant of the specified enum type with the
+ @brief Returns the enum constant of the specified enum class with the
   specified name.The name must match exactly an identifier used
-  to declare an enum constant in this type.
+  to declare an enum constant in this class.
  (Extraneous whitespace
   characters are not permitted.) 
- <p>Note that for a particular enum type <code>T</code>, the
+ <p>Note that for a particular enum class <code>T</code>, the
   implicitly declared <code>public static T valueOf(String)</code>
   method on that enum may be used instead of this method to map
   from a name to the corresponding enum constant.  All the
-  constants of an enum type can be obtained by calling the
+  constants of an enum class can be obtained by calling the
   implicit <code>public static T[] values()</code> method of that
-  type.
- @param enumType the <code>Class</code>  object of the enum type from which
+  class.
+ @param enumClass the <code>Class</code>  object of the enum class from which
         to return a constant
  @param name the name of the constant to return
- @return the enum constant of the specified enum type with the
+ @return the enum constant of the specified enum class with the
        specified name
- @throw IllegalArgumentExceptionif the specified enum type has
+ @throw IllegalArgumentExceptionif the specified enum class has
           no constant with the specified name, or the specified
-          class object does not represent an enum type
- @throw NullPointerExceptionif <code>enumType</code> or <code>name</code>
+          class object does not represent an enum class
+ @throw NullPointerExceptionif <code>enumClass</code> or <code>name</code>
           is null
  @since 1.5
  */
-+ (JavaLangEnum * __nonnull)valueOfWithIOSClass:(IOSClass *)enumType
++ (JavaLangEnum * __nonnull)valueOfWithIOSClass:(IOSClass *)enumClass
                                    withNSString:(NSString *)name;
 
 #pragma mark Protected
@@ -175,7 +179,7 @@
 /*!
  @brief Sole constructor.Programmers cannot invoke this constructor.
  It is for use by code emitted by the compiler in response to
-  enum type declarations.
+  enum class declarations.
  @param name - The name of this enum constant, which is the identifier                used to declare it.
  @param ordinal - The ordinal of this enumeration constant (its position          in the enum declaration, where the initial constant is assigned
            an ordinal of zero).
@@ -208,7 +212,7 @@ J2OBJC_STATIC_INIT(JavaLangEnum)
 
 FOUNDATION_EXPORT void JavaLangEnum_initWithNSString_withInt_(JavaLangEnum *self, NSString *name, jint ordinal);
 
-FOUNDATION_EXPORT JavaLangEnum *JavaLangEnum_valueOfWithIOSClass_withNSString_(IOSClass *enumType, NSString *name);
+FOUNDATION_EXPORT JavaLangEnum *JavaLangEnum_valueOfWithIOSClass_withNSString_(IOSClass *enumClass, NSString *name);
 
 FOUNDATION_EXPORT IOSObjectArray *JavaLangEnum_getSharedConstantsWithIOSClass_(IOSClass *enumType);
 
@@ -220,6 +224,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaLangEnum)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaLangEnum")

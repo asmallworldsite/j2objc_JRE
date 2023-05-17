@@ -13,7 +13,7 @@
 #endif
 #undef RESTRICT_JavaTimeFormatDateTimeFormatterBuilder
 #ifdef INCLUDE_JavaTimeFormatDateTimeFormatterBuilder_WeekBasedFieldPrinterParser
-#define INCLUDE_JavaTimeFormatDateTimeFormatterBuilder_DateTimePrinterParser 1
+#define INCLUDE_JavaTimeFormatDateTimeFormatterBuilder_NumberPrinterParser 1
 #endif
 #ifdef INCLUDE_JavaTimeFormatDateTimeFormatterBuilder_LocalizedPrinterParser
 #define INCLUDE_JavaTimeFormatDateTimeFormatterBuilder_DateTimePrinterParser 1
@@ -40,7 +40,7 @@
 #define INCLUDE_JavaTimeFormatDateTimeFormatterBuilder_DateTimePrinterParser 1
 #endif
 #ifdef INCLUDE_JavaTimeFormatDateTimeFormatterBuilder_FractionPrinterParser
-#define INCLUDE_JavaTimeFormatDateTimeFormatterBuilder_DateTimePrinterParser 1
+#define INCLUDE_JavaTimeFormatDateTimeFormatterBuilder_NumberPrinterParser 1
 #endif
 #ifdef INCLUDE_JavaTimeFormatDateTimeFormatterBuilder_ReducedPrinterParser
 #define INCLUDE_JavaTimeFormatDateTimeFormatterBuilder_NumberPrinterParser 1
@@ -67,9 +67,6 @@
 #define INCLUDE_JavaTimeFormatDateTimeFormatterBuilder_DateTimePrinterParser 1
 #endif
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -79,6 +76,10 @@
 #if !defined (JavaTimeFormatDateTimeFormatterBuilder_) && (INCLUDE_ALL_JavaTimeFormatDateTimeFormatterBuilder || defined(INCLUDE_JavaTimeFormatDateTimeFormatterBuilder))
 #define JavaTimeFormatDateTimeFormatterBuilder_
 
+@class JavaLangBoolean;
+@class JavaLangCharacter;
+@class JavaLangInteger;
+@class JavaLangLong;
 @class JavaTimeFormatDateTimeFormatter;
 @class JavaTimeFormatFormatStyle;
 @class JavaTimeFormatResolverStyle;
@@ -120,7 +121,6 @@
  @since 1.8
  */
 @interface JavaTimeFormatDateTimeFormatterBuilder : NSObject
-@property (readonly, class, strong) id<JavaUtilComparator> LENGTH_SORT NS_SWIFT_NAME(LENGTH_SORT);
 
 #pragma mark Public
 
@@ -171,34 +171,30 @@
 
 /*!
  @brief Appends the fractional value of a date-time field to the formatter.
- <p>
-  The fractional value of the field will be output including the
-  preceding decimal point. The preceding value is not output.
-  For example, the second-of-minute value of 15 would be output as <code>.25</code>.
-  <p>
-  The width of the printed fraction can be controlled. Setting the
-  minimum width to zero will cause no output to be generated.
-  The printed fraction will have the minimum width necessary between
-  the minimum and maximum widths - trailing zeroes are omitted.
-  No rounding occurs due to the maximum width - digits are simply dropped. 
- <p>
-  When parsing in strict mode, the number of parsed digits must be between
-  the minimum and maximum width. When parsing in lenient mode, the minimum
+ <p>The fractional value of the field will be output including the preceding decimal point. The
+  preceding value is not output. For example, the second-of-minute value of 15 would be output as 
+ <code>.25</code>.
+  
+ <p>The width of the printed fraction can be controlled. Setting the minimum width to zero will
+  cause no output to be generated. The printed fraction will have the minimum width necessary
+  between the minimum and maximum widths - trailing zeroes are omitted. No rounding occurs due to
+  the maximum width - digits are simply dropped. 
+ <p>When parsing in strict mode, the number of parsed digits must be between the minimum and
+  maximum width. In strict mode, if the minimum and maximum widths are equal and there is no
+  decimal point then the parser will participate in adjacent value parsing, see <code>appendValue(java.time.temporal.TemporalField, int)</code>
+ . When parsing in lenient mode, the minimum
   width is considered to be zero and the maximum is nine. 
- <p>
-  If the value cannot be obtained then an exception will be thrown.
-  If the value is negative an exception will be thrown.
-  If the field does not have a fixed set of valid values then an
-  exception will be thrown.
-  If the field value in the date-time to be printed is invalid it
+ <p>If the value cannot be obtained then an exception will be thrown. If the value is negative
+  an exception will be thrown. If the field does not have a fixed set of valid values then an
+  exception will be thrown. If the field value in the date-time to be printed is invalid it
   cannot be printed and an exception will be thrown.
  @param field the field to append, not null
  @param minWidth the minimum width of the field excluding the decimal point, from 0 to 9
  @param maxWidth the maximum width of the field excluding the decimal point, from 1 to 9
  @param decimalPoint whether to output the localized decimal point symbol
  @return this, for chaining, not null
- @throw IllegalArgumentExceptionif the field has a variable set of valid values or
-   either width is invalid
+ @throw IllegalArgumentExceptionif the field has a variable set of valid values or either
+      width is invalid
  */
 - (JavaTimeFormatDateTimeFormatterBuilder *)appendFractionWithJavaTimeTemporalTemporalField:(id<JavaTimeTemporalTemporalField>)field
                                                                                     withInt:(jint)minWidth
@@ -206,63 +202,96 @@
                                                                                 withBoolean:(jboolean)decimalPoint;
 
 /*!
- @brief Appends an instant using ISO-8601 to the formatter, formatting fractional
-  digits in groups of three.
- <p>
-  Instants have a fixed output format.
-  They are converted to a date-time with a zone-offset of UTC and formatted
-  using the standard ISO-8601 format.
-  With this method, formatting nano-of-second outputs zero, three, six
-  or nine digits digits as necessary.
-  The localized decimal style is not used. 
- <p>
-  The instant is obtained using <code>INSTANT_SECONDS</code>
-  and optionally (@@code NANO_OF_SECOND). The value of <code>INSTANT_SECONDS</code>
-  may be outside the maximum range of <code>LocalDateTime</code>.
-  <p>
-  The resolver style has no effect on instant parsing.
-  The end-of-day time of '24:00' is handled as midnight at the start of the following day.
-  The leap-second time of '23:59:59' is handled to some degree, see 
- <code>DateTimeFormatter.parsedLeapSecond()</code> for full details. 
- <p>
-  An alternative to this method is to format/parse the instant as a single
-  epoch-seconds value. That is achieved using <code>appendValue(INSTANT_SECONDS)</code>.
+ @brief Appends the generic time-zone name, such as 'Pacific Time', to the formatter.
+ <p>This appends an instruction to format/parse the generic textual name of the zone to the
+  builder. The generic name is the same throughout the whole year, ignoring any daylight saving
+  changes. For example, 'Pacific Time' is the generic name, whereas 'Pacific Standard Time' and
+  'Pacific Daylight Time' are the specific names, see <code>appendZoneText(TextStyle)</code>.
+  
+ <p>During formatting, the zone is obtained using a mechanism equivalent to querying the
+  temporal with <code>TemporalQueries.zoneId()</code>. If the zone is a <code>ZoneOffset</code> it will be
+  printed using the result of <code>ZoneOffset.getId()</code>. If the zone is not an offset, the
+  textual name will be looked up for the locale set in the <code>DateTimeFormatter</code>. If the
+  lookup for text does not find any suitable result, then the <code>ID</code> will be
+  printed. If the zone cannot be obtained then an exception is thrown unless the section of the
+  formatter is optional. 
+ <p>During parsing, either the textual zone name, the zone ID or the offset is accepted. Many
+  textual zone names are not unique, such as CST can be for both "Central Standard Time" and
+  "China Standard Time". In this situation, the zone id will be determined by the region
+  information from formatter's <code>locale</code> and the standard zone
+  id for that area, for example, America/New_York for the America Eastern zone. The <code>appendGenericZoneText(TextStyle, Set)</code>
+  may be used to specify a set of preferred <code>ZoneId</code>
+  in this situation.
+ @param textStyle the text style to use, not null
+ @return this, for chaining, not null
+ @since 9
+ */
+- (JavaTimeFormatDateTimeFormatterBuilder *)appendGenericZoneTextWithJavaTimeFormatTextStyle:(JavaTimeFormatTextStyle *)textStyle;
+
+/*!
+ @brief Appends the generic time-zone name, such as 'Pacific Time', to the formatter.
+ <p>This appends an instruction to format/parse the generic textual name of the zone to the
+  builder. The generic name is the same throughout the whole year, ignoring any daylight saving
+  changes. For example, 'Pacific Time' is the generic name, whereas 'Pacific Standard Time' and
+  'Pacific Daylight Time' are the specific names, see <code>appendZoneText(TextStyle)</code>.
+  
+ <p>This method also allows a set of preferred <code>ZoneId</code> to be specified for parsing. The
+  matched preferred zone id will be used if the textural zone name being parsed is not unique. 
+ <p>See <code>appendGenericZoneText(TextStyle)</code> for details about formatting and parsing.
+ @param textStyle the text style to use, not null
+ @param preferredZones the set of preferred zone ids, not null
+ @return this, for chaining, not null
+ @since 9
+ */
+- (JavaTimeFormatDateTimeFormatterBuilder *)appendGenericZoneTextWithJavaTimeFormatTextStyle:(JavaTimeFormatTextStyle *)textStyle
+                                                                             withJavaUtilSet:(id<JavaUtilSet>)preferredZones;
+
+/*!
+ @brief Appends an instant using ISO-8601 to the formatter, formatting fractional digits in groups of
+  three.
+ <p>Instants have a fixed output format. They are converted to a date-time with a zone-offset of
+  UTC and formatted using the standard ISO-8601 format. With this method, formatting
+  nano-of-second outputs zero, three, six or nine digits as necessary. The localized decimal
+  style is not used. 
+ <p>The instant is obtained using <code>INSTANT_SECONDS</code> and
+  optionally <code>NANO_OF_SECOND</code>. The value of <code>INSTANT_SECONDS</code> may be outside the
+  maximum range of <code>LocalDateTime</code>.
+  
+ <p>The resolver style has no effect on instant parsing. The
+  end-of-day time of '24:00' is handled as midnight at the start of the following day. The
+  leap-second time of '23:59:59' is handled to some degree, see <code>DateTimeFormatter.parsedLeapSecond()</code>
+  for full details. 
+ <p>An alternative to this method is to format/parse the instant as a single epoch-seconds
+  value. That is achieved using <code>appendValue(INSTANT_SECONDS)</code>.
  @return this, for chaining, not null
  */
 - (JavaTimeFormatDateTimeFormatterBuilder *)appendInstant;
 
 /*!
- @brief Appends an instant using ISO-8601 to the formatter with control over
-  the number of fractional digits.
- <p>
-  Instants have a fixed output format, although this method provides some
-  control over the fractional digits. They are converted to a date-time
-  with a zone-offset of UTC and printed using the standard ISO-8601 format.
-  The localized decimal style is not used. 
- <p>
-  The <code>fractionalDigits</code> parameter allows the output of the fractional
-  second to be controlled. Specifying zero will cause no fractional digits
-  to be output. From 1 to 9 will output an increasing number of digits, using
-  zero right-padding if necessary. The special value -1 is used to output as
-  many digits as necessary to avoid any trailing zeroes. 
- <p>
-  When parsing in strict mode, the number of parsed digits must match the
-  fractional digits. When parsing in lenient mode, any number of fractional
-  digits from zero to nine are accepted. 
- <p>
-  The instant is obtained using <code>INSTANT_SECONDS</code>
-  and optionally (@@code NANO_OF_SECOND). The value of <code>INSTANT_SECONDS</code>
-  may be outside the maximum range of <code>LocalDateTime</code>.
-  <p>
-  The resolver style has no effect on instant parsing.
-  The end-of-day time of '24:00' is handled as midnight at the start of the following day.
-  The leap-second time of '23:59:60' is handled to some degree, see 
- <code>DateTimeFormatter.parsedLeapSecond()</code> for full details. 
- <p>
-  An alternative to this method is to format/parse the instant as a single
-  epoch-seconds value. That is achieved using <code>appendValue(INSTANT_SECONDS)</code>.
- @param fractionalDigits the number of fractional second digits to format with,   from 0 to 9, or -1 to use as many digits as necessary
+ @brief Appends an instant using ISO-8601 to the formatter with control over the number of fractional
+  digits.
+ <p>Instants have a fixed output format, although this method provides some control over the
+  fractional digits. They are converted to a date-time with a zone-offset of UTC and printed
+  using the standard ISO-8601 format. The localized decimal style is not used. 
+ <p>The <code>fractionalDigits</code> parameter allows the output of the fractional second to be
+  controlled. Specifying zero will cause no fractional digits to be output. From 1 to 9 will
+  output an increasing number of digits, using zero right-padding if necessary. The special value
+  -1 is used to output as many digits as necessary to avoid any trailing zeroes. 
+ <p>When parsing in strict mode, the number of parsed digits must match the fractional digits.
+  When parsing in lenient mode, any number of fractional digits from zero to nine are accepted. 
+ <p>The instant is obtained using <code>INSTANT_SECONDS</code> and
+  optionally <code>NANO_OF_SECOND</code>. The value of <code>INSTANT_SECONDS</code> may be outside the
+  maximum range of <code>LocalDateTime</code>.
+  
+ <p>The resolver style has no effect on instant parsing. The
+  end-of-day time of '24:00' is handled as midnight at the start of the following day. The
+  leap-second time of '23:59:60' is handled to some degree, see <code>DateTimeFormatter.parsedLeapSecond()</code>
+  for full details. 
+ <p>An alternative to this method is to format/parse the instant as a single epoch-seconds
+  value. That is achieved using <code>appendValue(INSTANT_SECONDS)</code>.
+ @param fractionalDigits the number of fractional second digits to format with, from 0 to 9, or      -1 to use as many digits as necessary
  @return this, for chaining, not null
+ @throw IllegalArgumentExceptionif the number of fractional digits is invalid
  */
 - (JavaTimeFormatDateTimeFormatterBuilder *)appendInstantWithInt:(jint)fractionalDigits;
 
@@ -288,26 +317,26 @@
 
 /*!
  @brief Appends a localized date-time pattern to the formatter.
- <p>
-  This appends a localized section to the builder, suitable for outputting
-  a date, time or date-time combination. The format of the localized
-  section is lazily looked up based on four items: 
+ <p>This appends a localized section to the builder, suitable for outputting a date, time or
+  date-time combination. The format of the localized section is lazily looked up based on four
+  items: 
  <ul>
-  <li>the <code>dateStyle</code> specified to this method 
- <li>the <code>timeStyle</code> specified to this method 
- <li>the <code>Locale</code> of the <code>DateTimeFormatter</code>
-  <li>the <code>Chronology</code>, selecting the best available 
+    <li>the <code>dateStyle</code> specified to this method
+    <li>the <code>timeStyle</code> specified to this method
+    <li>the <code>Locale</code> of the <code>DateTimeFormatter</code>
+    <li>the <code>Chronology</code>, selecting the best available 
  </ul>
-  During formatting, the chronology is obtained from the temporal object
-  being formatted, which may have been overridden by 
- <code>DateTimeFormatter.withChronology(Chronology)</code>.
-  <p>
-  During parsing, if a chronology has already been parsed, then it is used.
-  Otherwise the default from <code>DateTimeFormatter.withChronology(Chronology)</code>
-  is used, with <code>IsoChronology</code> as the fallback. 
- <p>
-  Note that this method provides similar functionality to methods on 
- <code>DateFormat</code> such as <code>java.text.DateFormat.getDateTimeInstance(int, int)</code>.
+  During formatting, the chronology is obtained from the temporal object being formatted, which
+  may have been overridden by <code>DateTimeFormatter.withChronology(Chronology)</code>. The <code>FULL</code>
+  and <code>LONG</code> styles typically require a time-zone. When formatting using these
+  styles, a <code>ZoneId</code> must be available, either by using <code>ZonedDateTime</code> or <code>DateTimeFormatter.withZone</code>
+ .
+  
+ <p>During parsing, if a chronology has already been parsed, then it is used. Otherwise the
+  default from <code>DateTimeFormatter.withChronology(Chronology)</code> is used, with <code>IsoChronology</code>
+  as the fallback. 
+ <p>Note that this method provides similar functionality to methods on <code>DateFormat</code> such
+  as <code>java.text.DateFormat.getDateTimeInstance(int, int)</code>.
  @param dateStyle the date style to use, null means no date required
  @param timeStyle the time style to use, null means no time required
  @return this, for chaining, not null
@@ -318,80 +347,90 @@
 
 /*!
  @brief Appends the localized zone offset, such as 'GMT+01:00', to the formatter.
- <p>
-  This appends a localized zone offset to the builder, the format of the
-  localized offset is controlled by the specified <code>style</code>
-  to this method: 
+ <p>This appends a localized zone offset to the builder, the format of the localized offset is
+  controlled by the specified <code>style</code> to this method: 
  <ul>
-  <li><code>full</code> - formats with localized offset text, such
-  as 'GMT, 2-digit hour and minute field, optional second field if non-zero,
-  and colon. 
- <li><code>short</code> - formats with localized offset text,
-  such as 'GMT, hour without leading zero, optional 2-digit minute and
-  second if non-zero, and colon. 
+    <li><code>full</code> - formats with localized offset text, such as 'GMT, 2-digit
+        hour and minute field, optional second field if non-zero, and colon.   
+ <li><code>short</code> - formats with localized offset text, such as 'GMT, hour
+        without leading zero, optional 2-digit minute and second if non-zero, and colon. 
  </ul>
-  <p>
-  During formatting, the offset is obtained using a mechanism equivalent
-  to querying the temporal with <code>TemporalQueries.offset()</code>.
-  If the offset cannot be obtained then an exception is thrown unless the
-  section of the formatter is optional. 
- <p>
-  During parsing, the offset is parsed using the format defined above.
-  If the offset cannot be parsed then an exception is thrown unless the
-  section of the formatter is optional. 
- <p>
+  
+ <p>During formatting, the offset is obtained using a mechanism equivalent to querying the
+  temporal with <code>TemporalQueries.offset()</code>. If the offset cannot be obtained then an
+  exception is thrown unless the section of the formatter is optional. 
+ <p>During parsing, the offset is parsed using the format defined above. If the offset cannot be
+  parsed then an exception is thrown unless the section of the formatter is optional.
  @param style the format style to use, not null
  @return this, for chaining, not null
- @throw IllegalArgumentExceptionif style is neither <code>full</code>
-  nor <code>short</code>
+ @throw IllegalArgumentExceptionif style is neither <code>full</code> nor <code>short</code>
  */
 - (JavaTimeFormatDateTimeFormatterBuilder *)appendLocalizedOffsetWithJavaTimeFormatTextStyle:(JavaTimeFormatTextStyle *)style;
 
 /*!
  @brief Appends the zone offset, such as '+01:00', to the formatter.
- <p>
-  This appends an instruction to format/parse the offset ID to the builder. 
- <p>
-  During formatting, the offset is obtained using a mechanism equivalent
-  to querying the temporal with <code>TemporalQueries.offset()</code>.
-  It will be printed using the format defined below.
-  If the offset cannot be obtained then an exception is thrown unless the
+ <p>This appends an instruction to format/parse the offset ID to the builder. 
+ <p>During formatting, the offset is obtained using a mechanism equivalent to querying the
+  temporal with <code>TemporalQueries.offset()</code>. It will be printed using the format defined
+  below. If the offset cannot be obtained then an exception is thrown unless the section of the
+  formatter is optional. 
+ <p>When parsing in strict mode, the input must contain the mandatory and optional elements are
+  defined by the specified pattern. If the offset cannot be parsed then an exception is thrown
+  unless the section of the formatter is optional. 
+ <p>When parsing in lenient mode, only the hours are mandatory - minutes and seconds are
+  optional. The colons are required if the specified pattern contains a colon. If the specified
+  pattern is "+HH", the presence of colons is determined by whether the character after the hour
+  digits is a colon or not. If the offset cannot be parsed then an exception is thrown unless the
   section of the formatter is optional. 
- <p>
-  During parsing, the offset is parsed using the format defined below.
-  If the offset cannot be parsed then an exception is thrown unless the
-  section of the formatter is optional. 
- <p>
-  The format of the offset is controlled by a pattern which must be one
-  of the following: 
+ <p>The format of the offset is controlled by a pattern which must be one of the following: 
  <ul>
-  <li><code>+HH</code> - hour only, ignoring minute and second 
- <li><code>+HHmm</code> - hour, with minute if non-zero, ignoring second, no colon 
- <li><code>+HH:mm</code> - hour, with minute if non-zero, ignoring second, with colon 
- <li><code>+HHMM</code> - hour and minute, ignoring second, no colon 
- <li><code>+HH:MM</code> - hour and minute, ignoring second, with colon 
- <li><code>+HHMMss</code> - hour and minute, with second if non-zero, no colon 
- <li><code>+HH:MM:ss</code> - hour and minute, with second if non-zero, with colon 
- <li><code>+HHMMSS</code> - hour, minute and second, no colon 
- <li><code>+HH:MM:SS</code> - hour, minute and second, with colon 
+    <li><code>+HH</code> - hour only, ignoring minute and second
+    <li><code>+HHmm</code> - hour, with minute if non-zero, ignoring second, no colon
+    <li><code>+HH:mm</code> - hour, with minute if non-zero, ignoring second, with colon
+    <li><code>+HHMM</code> - hour and minute, ignoring second, no colon
+    <li><code>+HH:MM</code> - hour and minute, ignoring second, with colon
+    <li><code>+HHMMss</code> - hour and minute, with second if non-zero, no colon
+    <li><code>+HH:MM:ss</code> - hour and minute, with second if non-zero, with colon
+    <li><code>+HHMMSS</code> - hour, minute and second, no colon
+    <li><code>+HH:MM:SS</code> - hour, minute and second, with colon
+    <li><code>+HHmmss</code> - hour, with minute if non-zero or with minute and second if non-zero, no
+        colon   
+ <li><code>+HH:mm:ss</code> - hour, with minute if non-zero or with minute and second if non-zero,
+        with colon   
+ <li><code>+H</code> - hour only, ignoring minute and second
+    <li><code>+Hmm</code> - hour, with minute if non-zero, ignoring second, no colon
+    <li><code>+H:mm</code> - hour, with minute if non-zero, ignoring second, with colon
+    <li><code>+HMM</code> - hour and minute, ignoring second, no colon
+    <li><code>+H:MM</code> - hour and minute, ignoring second, with colon
+    <li><code>+HMMss</code> - hour and minute, with second if non-zero, no colon
+    <li><code>+H:MM:ss</code> - hour and minute, with second if non-zero, with colon
+    <li><code>+HMMSS</code> - hour, minute and second, no colon
+    <li><code>+H:MM:SS</code> - hour, minute and second, with colon
+    <li><code>+Hmmss</code> - hour, with minute if non-zero or with minute and second if non-zero, no
+        colon   
+ <li><code>+H:mm:ss</code> - hour, with minute if non-zero or with minute and second if non-zero,
+        with colon 
  </ul>
-  The "no offset" text controls what text is printed when the total amount of
-  the offset fields to be output is zero.
-  Example values would be 'Z', '+00:00', 'UTC' or 'GMT'.
-  Three formats are accepted for parsing UTC - the "no offset" text, and the
-  plus and minus versions of zero defined by the pattern.
+  Patterns containing "HH" will format and parse a two digit hour, zero-padded if necessary.
+  Patterns containing "H" will format with no zero-padding, and parse either one or two digits.
+  In lenient mode, the parser will be greedy and parse the maximum digits possible. The "no
+  offset" text controls what text is printed when the total amount of the offset fields to be
+  output is zero. Example values would be 'Z', '+00:00', 'UTC' or 'GMT'. Three formats are
+  accepted for parsing UTC - the "no offset" text, and the plus and minus versions of zero
+  defined by the pattern.
  @param pattern the pattern to use, not null
  @param noOffsetText the text to use when the offset is zero, not null
  @return this, for chaining, not null
+ @throw IllegalArgumentExceptionif the pattern is invalid
  */
 - (JavaTimeFormatDateTimeFormatterBuilder *)appendOffsetWithNSString:(NSString *)pattern
                                                         withNSString:(NSString *)noOffsetText;
 
 /*!
  @brief Appends the zone offset, such as '+01:00', to the formatter.
- <p>
-  This appends an instruction to format/parse the offset ID to the builder.
-  This is equivalent to calling <code>appendOffset("+HH:MM:ss", "Z")</code>.
+ <p>This appends an instruction to format/parse the offset ID to the builder. This is equivalent
+  to calling <code>appendOffset("+HH:mm:ss", "Z")</code>. See <code>appendOffset(String, String)</code>
+  for details on formatting and parsing.
  @return this, for chaining, not null
  */
 - (JavaTimeFormatDateTimeFormatterBuilder *)appendOffsetId;
@@ -412,10 +451,8 @@
 
 /*!
  @brief Appends the elements defined by the specified pattern to the builder.
- <p>
-  All letters 'A' to 'Z' and 'a' to 'z' are reserved as pattern letters.
-  The characters '#', '{' and '}' are reserved for future use.
-  The characters '[' and ']' indicate optional patterns.
+ <p>All letters 'A' to 'Z' and 'a' to 'z' are reserved as pattern letters. The characters '#',
+  '{' and '}' are reserved for future use. The characters '[' and ']' indicate optional patterns.
   The following pattern letters are defined: 
  @code
 
@@ -427,17 +464,18 @@
     D       day-of-year                 number            189
     M/L     month-of-year               number/text       7; 07; Jul; July; J
     d       day-of-month                number            10
+    g       modified-julian-day         number            2451334
     Q/q     quarter-of-year             number/text       3; 03; Q3; 3rd quarter
     Y       week-based-year             year              1996; 96
     w       week-of-week-based-year     number            27
     W       week-of-month               number            4
     E       day-of-week                 text              Tue; Tuesday; T
     e/c     localized day-of-week       number/text       2; 02; Tue; Tuesday; T
-    F       week-of-month               number            3
+    F       day-of-week-in-month        number            3
     a       am-pm-of-day                text              PM
     h       clock-hour-of-am-pm (1-12)  number            12
     K       hour-of-am-pm (0-11)        number            0
-    k       clock-hour-of-am-pm (1-24)  number            0
+    k       clock-hour-of-day (1-24)    number            24
     H       hour-of-day (0-23)          number            0
     m       minute-of-hour              number            30
     s       second-of-minute            number            55
@@ -446,11 +484,12 @@
     n       nano-of-second              number            987654321
     N       nano-of-day                 number            1234000000
     V       time-zone ID                zone-id           America/Los_Angeles; Z; -08:30
+    v       generic time-zone name      zone-name         PT, Pacific Time
     z       time-zone name              zone-name         Pacific Standard Time; PST
     O       localized zone-offset       offset-O          GMT+8; GMT+08:00; UTC-08:00;
-    X       zone-offset 'Z' for zero    offset-X          Z; -08; -0830; -08:30; -083015; -08:30:15;
-    x       zone-offset                 offset-x          +0000; -08; -0830; -08:30; -083015; -08:30:15;
-    Z       zone-offset                 offset-Z          +0000; -0800; -08:00;
+    X       zone-offset 'Z' for zero    offset-X          Z; -08; -0830; -08:30; -083015; -08:30:15
+    x       zone-offset                 offset-x          +0000; -08; -0830; -08:30; -083015; -08:30:15
+    Z       zone-offset                 offset-Z          +0000; -0800; -08:00
     p       pad next                    pad modifier      1
     '       escape for text             delimiter
     ''      single quote                literal           '
@@ -461,12 +500,11 @@
     }       reserved for future use 
   
 @endcode
-  <p>
-  The count of pattern letters determine the format.
-  See <a href="DateTimeFormatter.html#patterns">DateTimeFormatter</a> for a user-focused description of the patterns.
-  The following tables define how the pattern letters map to the builder. 
- <p>
-  <b>Date fields</b>: Pattern letters to output a date. 
+  
+ <p>The count of pattern letters determine the format. See <a href="DateTimeFormatter.html#patterns">
+ DateTimeFormatter</a> for a user-focused description of
+  the patterns. The following tables define how the pattern letters map to the builder. 
+ <p><b>Date fields</b>: Pattern letters to output a date. 
  @code
 
    Pattern  Count  Equivalent builder methods
@@ -476,35 +514,35 @@
      GGG     3      appendText(ChronoField.ERA, TextStyle.SHORT)
      GGGG    4      appendText(ChronoField.ERA, TextStyle.FULL)
      GGGGG   5      appendText(ChronoField.ERA, TextStyle.NARROW)
-     u       1      appendValue(ChronoField.YEAR, 1, 19, SignStyle.NORMAL);
-     uu      2      appendValueReduced(ChronoField.YEAR, 2, 2000);
-     uuu     3      appendValue(ChronoField.YEAR, 3, 19, SignStyle.NORMAL);
-     u..u    4..n   appendValue(ChronoField.YEAR, n, 19, SignStyle.EXCEEDS_PAD);
-     y       1      appendValue(ChronoField.YEAR_OF_ERA, 1, 19, SignStyle.NORMAL);
-     yy      2      appendValueReduced(ChronoField.YEAR_OF_ERA, 2, 2000);
-     yyy     3      appendValue(ChronoField.YEAR_OF_ERA, 3, 19, SignStyle.NORMAL);
-     y..y    4..n   appendValue(ChronoField.YEAR_OF_ERA, n, 19, SignStyle.EXCEEDS_PAD);
+     u       1      appendValue(ChronoField.YEAR, 1, 19, SignStyle.NORMAL)
+     uu      2      appendValueReduced(ChronoField.YEAR, 2, 2000)
+     uuu     3      appendValue(ChronoField.YEAR, 3, 19, SignStyle.NORMAL)
+     u..u    4..n   appendValue(ChronoField.YEAR, n, 19, SignStyle.EXCEEDS_PAD)
+     y       1      appendValue(ChronoField.YEAR_OF_ERA, 1, 19, SignStyle.NORMAL)
+     yy      2      appendValueReduced(ChronoField.YEAR_OF_ERA, 2, 2000)
+     yyy     3      appendValue(ChronoField.YEAR_OF_ERA, 3, 19, SignStyle.NORMAL)
+     y..y    4..n   appendValue(ChronoField.YEAR_OF_ERA, n, 19, SignStyle.EXCEEDS_PAD)
      Y       1      append special localized WeekFields element for numeric week-based-year
-     YY      2      append special localized WeekFields element for reduced numeric week-based-year 2 digits;
-     YYY     3      append special localized WeekFields element for numeric week-based-year (3, 19, SignStyle.NORMAL);
-     Y..Y    4..n   append special localized WeekFields element for numeric week-based-year (n, 19, SignStyle.EXCEEDS_PAD);
-     Q       1      appendValue(IsoFields.QUARTER_OF_YEAR);
-     QQ      2      appendValue(IsoFields.QUARTER_OF_YEAR, 2);
+     YY      2      append special localized WeekFields element for reduced numeric week-based-year 2 digits
+     YYY     3      append special localized WeekFields element for numeric week-based-year (3, 19, SignStyle.NORMAL)
+     Y..Y    4..n   append special localized WeekFields element for numeric week-based-year (n, 19, SignStyle.EXCEEDS_PAD)
+     Q       1      appendValue(IsoFields.QUARTER_OF_YEAR)
+     QQ      2      appendValue(IsoFields.QUARTER_OF_YEAR, 2)
      QQQ     3      appendText(IsoFields.QUARTER_OF_YEAR, TextStyle.SHORT)
      QQQQ    4      appendText(IsoFields.QUARTER_OF_YEAR, TextStyle.FULL)
      QQQQQ   5      appendText(IsoFields.QUARTER_OF_YEAR, TextStyle.NARROW)
-     q       1      appendValue(IsoFields.QUARTER_OF_YEAR);
-     qq      2      appendValue(IsoFields.QUARTER_OF_YEAR, 2);
+     q       1      appendValue(IsoFields.QUARTER_OF_YEAR)
+     qq      2      appendValue(IsoFields.QUARTER_OF_YEAR, 2)
      qqq     3      appendText(IsoFields.QUARTER_OF_YEAR, TextStyle.SHORT_STANDALONE)
      qqqq    4      appendText(IsoFields.QUARTER_OF_YEAR, TextStyle.FULL_STANDALONE)
      qqqqq   5      appendText(IsoFields.QUARTER_OF_YEAR, TextStyle.NARROW_STANDALONE)
-     M       1      appendValue(ChronoField.MONTH_OF_YEAR);
-     MM      2      appendValue(ChronoField.MONTH_OF_YEAR, 2);
+     M       1      appendValue(ChronoField.MONTH_OF_YEAR)
+     MM      2      appendValue(ChronoField.MONTH_OF_YEAR, 2)
      MMM     3      appendText(ChronoField.MONTH_OF_YEAR, TextStyle.SHORT)
      MMMM    4      appendText(ChronoField.MONTH_OF_YEAR, TextStyle.FULL)
      MMMMM   5      appendText(ChronoField.MONTH_OF_YEAR, TextStyle.NARROW)
-     L       1      appendValue(ChronoField.MONTH_OF_YEAR);
-     LL      2      appendValue(ChronoField.MONTH_OF_YEAR, 2);
+     L       1      appendValue(ChronoField.MONTH_OF_YEAR)
+     LL      2      appendValue(ChronoField.MONTH_OF_YEAR, 2)
      LLL     3      appendText(ChronoField.MONTH_OF_YEAR, TextStyle.SHORT_STANDALONE)
      LLLL    4      appendText(ChronoField.MONTH_OF_YEAR, TextStyle.FULL_STANDALONE)
      LLLLL   5      appendText(ChronoField.MONTH_OF_YEAR, TextStyle.NARROW_STANDALONE)
@@ -514,9 +552,10 @@
      d       1      appendValue(ChronoField.DAY_OF_MONTH)
      dd      2      appendValue(ChronoField.DAY_OF_MONTH, 2)
      D       1      appendValue(ChronoField.DAY_OF_YEAR)
-     DD      2      appendValue(ChronoField.DAY_OF_YEAR, 2)
+     DD      2      appendValue(ChronoField.DAY_OF_YEAR, 2, 3, SignStyle.NOT_NEGATIVE)
      DDD     3      appendValue(ChronoField.DAY_OF_YEAR, 3)
      F       1      appendValue(ChronoField.ALIGNED_DAY_OF_WEEK_IN_MONTH)
+     g..g    1..n   appendValue(JulianFields.MODIFIED_JULIAN_DAY, n, 19, SignStyle.NORMAL)
      E       1      appendText(ChronoField.DAY_OF_WEEK, TextStyle.SHORT)
      EE      2      appendText(ChronoField.DAY_OF_WEEK, TextStyle.SHORT)
      EEE     3      appendText(ChronoField.DAY_OF_WEEK, TextStyle.SHORT)
@@ -533,8 +572,8 @@
      ccccc   5      appendText(ChronoField.DAY_OF_WEEK, TextStyle.NARROW_STANDALONE) 
   
 @endcode
-  <p>
-  <b>Time fields</b>: Pattern letters to output a time. 
+  
+ <p><b>Time fields</b>: Pattern letters to output a time. 
  @code
 
    Pattern  Count  Equivalent builder methods
@@ -553,35 +592,36 @@
      s       1      appendValue(ChronoField.SECOND_OF_MINUTE)
      ss      2      appendValue(ChronoField.SECOND_OF_MINUTE, 2)
      S..S    1..n   appendFraction(ChronoField.NANO_OF_SECOND, n, n, false)
-     A       1      appendValue(ChronoField.MILLI_OF_DAY)
-     A..A    2..n   appendValue(ChronoField.MILLI_OF_DAY, n)
-     n       1      appendValue(ChronoField.NANO_OF_SECOND)
-     n..n    2..n   appendValue(ChronoField.NANO_OF_SECOND, n)
-     N       1      appendValue(ChronoField.NANO_OF_DAY)
-     N..N    2..n   appendValue(ChronoField.NANO_OF_DAY, n) 
+     A..A    1..n   appendValue(ChronoField.MILLI_OF_DAY, n, 19, SignStyle.NOT_NEGATIVE)
+     n..n    1..n   appendValue(ChronoField.NANO_OF_SECOND, n, 19, SignStyle.NOT_NEGATIVE)
+     N..N    1..n   appendValue(ChronoField.NANO_OF_DAY, n, 19, SignStyle.NOT_NEGATIVE) 
   
 @endcode
-  <p>
-  <b>Zone ID</b>: Pattern letters to output <code>ZoneId</code>.
-  @code
+  
+ <p><b>Zone ID</b>: Pattern letters to output <code>ZoneId</code>.
+  
+ @code
 
    Pattern  Count  Equivalent builder methods
    -------  -----  --------------------------
      VV      2      appendZoneId()
+     v       1      appendGenericZoneText(TextStyle.SHORT)
+     vvvv    4      appendGenericZoneText(TextStyle.FULL)
      z       1      appendZoneText(TextStyle.SHORT)
      zz      2      appendZoneText(TextStyle.SHORT)
      zzz     3      appendZoneText(TextStyle.SHORT)
      zzzz    4      appendZoneText(TextStyle.FULL) 
   
 @endcode
-  <p>
-  <b>Zone offset</b>: Pattern letters to output <code>ZoneOffset</code>.
-  @code
+  
+ <p><b>Zone offset</b>: Pattern letters to output <code>ZoneOffset</code>.
+  
+ @code
 
    Pattern  Count  Equivalent builder methods
    -------  -----  --------------------------
-     O       1      appendLocalizedOffsetPrefixed(TextStyle.SHORT);
-     OOOO    4      appendLocalizedOffsetPrefixed(TextStyle.FULL);
+     O       1      appendLocalizedOffset(TextStyle.SHORT)
+     OOOO    4      appendLocalizedOffset(TextStyle.FULL)
      X       1      appendOffset("+HHmm","Z")
      XX      2      appendOffset("+HHMM","Z")
      XXX     3      appendOffset("+HH:MM","Z")
@@ -595,12 +635,12 @@
      Z       1      appendOffset("+HHMM","+0000")
      ZZ      2      appendOffset("+HHMM","+0000")
      ZZZ     3      appendOffset("+HHMM","+0000")
-     ZZZZ    4      appendLocalizedOffset(TextStyle.FULL);
+     ZZZZ    4      appendLocalizedOffset(TextStyle.FULL)
      ZZZZZ   5      appendOffset("+HH:MM:ss","Z") 
   
 @endcode
-  <p>
-  <b>Modifiers</b>: Pattern letters that modify the rest of the pattern: 
+  
+ <p><b>Modifiers</b>: Pattern letters that modify the rest of the pattern: 
  @code
 
    Pattern  Count  Equivalent builder methods
@@ -610,22 +650,18 @@
      p..p    1..n   padNext(n) 
   
 @endcode
-  <p>
-  Any sequence of letters not specified above, unrecognized letter or
-  reserved character will throw an exception.
-  Future versions may add to the set of patterns.
-  It is recommended to use single quotes around all characters that you want
-  to output directly to ensure that future changes do not break your application. 
- <p>
-  Note that the pattern string is similar, but not identical, to 
- <code>SimpleDateFormat</code>.
-  The pattern string is also similar, but not identical, to that defined by the
-  Unicode Common Locale Data Repository (CLDR/LDML).
-  Pattern letters 'X' and 'u' are aligned with Unicode CLDR/LDML.
-  By contrast, <code>SimpleDateFormat</code> uses 'u' for the numeric day of week.
-  Pattern letters 'y' and 'Y' parse years of two digits and more than 4 digits differently.
-  Pattern letters 'n', 'A', 'N', and 'p' are added.
-  Number types will reject large numbers.
+  
+ <p>Any sequence of letters not specified above, unrecognized letter or reserved character will
+  throw an exception. Future versions may add to the set of patterns. It is recommended to use
+  single quotes around all characters that you want to output directly to ensure that future
+  changes do not break your application. 
+ <p>Note that the pattern string is similar, but not identical, to <code>SimpleDateFormat</code>
+ . The pattern string is also similar, but not
+  identical, to that defined by the Unicode Common Locale Data Repository (CLDR/LDML). Pattern
+  letters 'X' and 'u' are aligned with Unicode CLDR/LDML. By contrast, <code>SimpleDateFormat</code>
+  uses 'u' for the numeric day of week. Pattern letters 'y' and 'Y' parse years of two digits and
+  more than 4 digits differently. Pattern letters 'n', 'A', 'N', and 'p' are added. Number types
+  will reject large numbers.
  @param pattern the pattern to add, not null
  @return this, for chaining, not null
  @throw IllegalArgumentExceptionif the pattern is invalid
@@ -1063,31 +1099,23 @@
 
 /*!
  @brief Appends the time-zone name, such as 'British Summer Time', to the formatter.
- <p>
-  This appends an instruction to format/parse the textual name of the zone to
-  the builder. 
- <p>
-  During formatting, the zone is obtained using a mechanism equivalent
-  to querying the temporal with <code>TemporalQueries.zoneId()</code>.
-  If the zone is a <code>ZoneOffset</code> it will be printed using the
-  result of <code>ZoneOffset.getId()</code>.
-  If the zone is not an offset, the textual name will be looked up
-  for the locale set in the <code>DateTimeFormatter</code>.
-  If the temporal object being printed represents an instant, then the text
-  will be the summer or winter time text as appropriate.
-  If the lookup for text does not find any suitable result, then the 
- <code>ID</code> will be printed instead.
-  If the zone cannot be obtained then an exception is thrown unless the
-  section of the formatter is optional. 
- <p>
-  During parsing, either the textual zone name, the zone ID or the offset
-  is accepted. Many textual zone names are not unique, such as CST can be
-  for both "Central Standard Time" and "China Standard Time". In this
-  situation, the zone id will be determined by the region information from
-  formatter's  <code>locale</code> and the standard
-  zone id for that area, for example, America/New_York for the America Eastern
-  zone. The <code>appendZoneText(TextStyle, Set)</code> may be used
-  to specify a set of preferred <code>ZoneId</code> in this situation.
+ <p>This appends an instruction to format/parse the textual name of the zone to the builder. 
+ <p>During formatting, the zone is obtained using a mechanism equivalent to querying the
+  temporal with <code>TemporalQueries.zoneId()</code>. If the zone is a <code>ZoneOffset</code> it will be
+  printed using the result of <code>ZoneOffset.getId()</code>. If the zone is not an offset, the
+  textual name will be looked up for the locale set in the <code>DateTimeFormatter</code>. If the
+  temporal object being printed represents an instant, or if it is a local date-time that is not
+  in a daylight saving gap or overlap then the text will be the summer or winter time text as
+  appropriate. If the lookup for text does not find any suitable result, then the <code>ID</code>
+  will be printed. If the zone cannot be obtained then an exception is thrown
+  unless the section of the formatter is optional. 
+ <p>During parsing, either the textual zone name, the zone ID or the offset is accepted. Many
+  textual zone names are not unique, such as CST can be for both "Central Standard Time" and
+  "China Standard Time". In this situation, the zone id will be determined by the region
+  information from formatter's <code>locale</code> and the standard zone
+  id for that area, for example, America/New_York for the America Eastern zone. The <code>appendZoneText(TextStyle, Set)</code>
+  may be used to specify a set of preferred <code>ZoneId</code> in
+  this situation.
  @param textStyle the text style to use, not null
  @return this, for chaining, not null
  */
@@ -1095,35 +1123,25 @@
 
 /*!
  @brief Appends the time-zone name, such as 'British Summer Time', to the formatter.
- <p>
-  This appends an instruction to format/parse the textual name of the zone to
-  the builder. 
- <p>
-  During formatting, the zone is obtained using a mechanism equivalent
-  to querying the temporal with <code>TemporalQueries.zoneId()</code>.
-  If the zone is a <code>ZoneOffset</code> it will be printed using the
-  result of <code>ZoneOffset.getId()</code>.
-  If the zone is not an offset, the textual name will be looked up
-  for the locale set in the <code>DateTimeFormatter</code>.
-  If the temporal object being printed represents an instant, then the text
-  will be the summer or winter time text as appropriate.
-  If the lookup for text does not find any suitable result, then the 
- <code>ID</code> will be printed instead.
-  If the zone cannot be obtained then an exception is thrown unless the
-  section of the formatter is optional. 
- <p>
-  During parsing, either the textual zone name, the zone ID or the offset
-  is accepted. Many textual zone names are not unique, such as CST can be
-  for both "Central Standard Time" and "China Standard Time". In this
-  situation, the zone id will be determined by the region information from
-  formatter's  <code>locale</code> and the standard
-  zone id for that area, for example, America/New_York for the America Eastern
-  zone. This method also allows a set of preferred <code>ZoneId</code> to be
-  specified for parsing. The matched preferred zone id will be used if the
-  textural zone name being parsed is not unique. 
- <p>
-  If the zone cannot be parsed then an exception is thrown unless the
-  section of the formatter is optional.
+ <p>This appends an instruction to format/parse the textual name of the zone to the builder. 
+ <p>During formatting, the zone is obtained using a mechanism equivalent to querying the
+  temporal with <code>TemporalQueries.zoneId()</code>. If the zone is a <code>ZoneOffset</code> it will be
+  printed using the result of <code>ZoneOffset.getId()</code>. If the zone is not an offset, the
+  textual name will be looked up for the locale set in the <code>DateTimeFormatter</code>. If the
+  temporal object being printed represents an instant, or if it is a local date-time that is not
+  in a daylight saving gap or overlap, then the text will be the summer or winter time text as
+  appropriate. If the lookup for text does not find any suitable result, then the <code>ID</code>
+  will be printed. If the zone cannot be obtained then an exception is thrown
+  unless the section of the formatter is optional. 
+ <p>During parsing, either the textual zone name, the zone ID or the offset is accepted. Many
+  textual zone names are not unique, such as CST can be for both "Central Standard Time" and
+  "China Standard Time". In this situation, the zone id will be determined by the region
+  information from formatter's <code>locale</code> and the standard zone
+  id for that area, for example, America/New_York for the America Eastern zone. This method also
+  allows a set of preferred <code>ZoneId</code> to be specified for parsing. The matched preferred
+  zone id will be used if the textural zone name being parsed is not unique. 
+ <p>If the zone cannot be parsed then an exception is thrown unless the section of the formatter
+  is optional.
  @param textStyle the text style to use, not null
  @param preferredZones the set of preferred zone ids, not null
  @return this, for chaining, not null
@@ -1132,9 +1150,9 @@
                                                                       withJavaUtilSet:(id<JavaUtilSet>)preferredZones;
 
 /*!
- @brief Gets the formatting pattern for date and time styles for a locale and chronology.
- The locale and chronology are used to lookup the locale specific format
-  for the requested dateStyle and/or timeStyle.
+ @brief Gets the formatting pattern for date and time styles for a locale and chronology.The locale
+  and chronology are used to lookup the locale specific format for the requested dateStyle and/or
+  timeStyle.
  @param dateStyle the FormatStyle for the date, null for time-only pattern
  @param timeStyle the FormatStyle for the time, null for date-only pattern
  @param chrono the Chronology, non-null
@@ -1402,6 +1420,8 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaTimeFormatDateTimeFormatterBuilder)
 #if !defined (JavaTimeFormatDateTimeFormatterBuilder_DateTimePrinterParser_) && (INCLUDE_ALL_JavaTimeFormatDateTimeFormatterBuilder || defined(INCLUDE_JavaTimeFormatDateTimeFormatterBuilder_DateTimePrinterParser))
 #define JavaTimeFormatDateTimeFormatterBuilder_DateTimePrinterParser_
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @class JavaLangStringBuilder;
 @class JavaTimeFormatDateTimeParseContext;
 @class JavaTimeFormatDateTimePrintContext;
@@ -1471,6 +1491,8 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaTimeFormatDateTimeFormatterBuilder_DateTimePrinte
 #define JavaTimeFormatDateTimeFormatterBuilder_CompositePrinterParser_
 
 @class IOSObjectArray;
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @class JavaLangStringBuilder;
 @class JavaTimeFormatDateTimeParseContext;
 @class JavaTimeFormatDateTimePrintContext;
@@ -1535,6 +1557,9 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaTimeFormatDateTimeFormatterBuilder_CompositePrint
 #if !defined (JavaTimeFormatDateTimeFormatterBuilder_PadPrinterParserDecorator_) && (INCLUDE_ALL_JavaTimeFormatDateTimeFormatterBuilder || defined(INCLUDE_JavaTimeFormatDateTimeFormatterBuilder_PadPrinterParserDecorator))
 #define JavaTimeFormatDateTimeFormatterBuilder_PadPrinterParserDecorator_
 
+@class JavaLangBoolean;
+@class JavaLangCharacter;
+@class JavaLangInteger;
 @class JavaLangStringBuilder;
 @class JavaTimeFormatDateTimeParseContext;
 @class JavaTimeFormatDateTimePrintContext;
@@ -1595,27 +1620,31 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaTimeFormatDateTimeFormatterBuilder_PadPrinterPars
 #include "java/lang/Enum.h"
 
 @class IOSObjectArray;
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @class JavaLangStringBuilder;
 @class JavaTimeFormatDateTimeParseContext;
 @class JavaTimeFormatDateTimePrintContext;
 @protocol JavaLangCharSequence;
 
-typedef NS_ENUM(NSUInteger, JavaTimeFormatDateTimeFormatterBuilder_SettingsParser_Enum) {
+typedef NS_ENUM(jint, JavaTimeFormatDateTimeFormatterBuilder_SettingsParser_Enum) {
   JavaTimeFormatDateTimeFormatterBuilder_SettingsParser_Enum_SENSITIVE = 0,
   JavaTimeFormatDateTimeFormatterBuilder_SettingsParser_Enum_INSENSITIVE = 1,
   JavaTimeFormatDateTimeFormatterBuilder_SettingsParser_Enum_STRICT = 2,
   JavaTimeFormatDateTimeFormatterBuilder_SettingsParser_Enum_LENIENT = 3,
 };
+#if J2OBJC_IMPORTED_BY_JAVA_IMPLEMENTATION
+#define JavaTimeFormatDateTimeFormatterBuilder_SettingsParser_ORDINAL jint
+#else
+#define JavaTimeFormatDateTimeFormatterBuilder_SettingsParser_ORDINAL JavaTimeFormatDateTimeFormatterBuilder_SettingsParser_Enum
+#endif
+
 
 /*!
  @brief Enumeration to apply simple parse settings.
  */
 @interface JavaTimeFormatDateTimeFormatterBuilder_SettingsParser : JavaLangEnum < JavaTimeFormatDateTimeFormatterBuilder_DateTimePrinterParser >
 
-@property (readonly, class, nonnull) JavaTimeFormatDateTimeFormatterBuilder_SettingsParser *SENSITIVE NS_SWIFT_NAME(SENSITIVE);
-@property (readonly, class, nonnull) JavaTimeFormatDateTimeFormatterBuilder_SettingsParser *INSENSITIVE NS_SWIFT_NAME(INSENSITIVE);
-@property (readonly, class, nonnull) JavaTimeFormatDateTimeFormatterBuilder_SettingsParser *STRICT NS_SWIFT_NAME(STRICT);
-@property (readonly, class, nonnull) JavaTimeFormatDateTimeFormatterBuilder_SettingsParser *LENIENT NS_SWIFT_NAME(LENIENT);
 #pragma mark Public
 
 - (jboolean)formatWithJavaTimeFormatDateTimePrintContext:(JavaTimeFormatDateTimePrintContext *)context
@@ -1634,6 +1663,8 @@ typedef NS_ENUM(NSUInteger, JavaTimeFormatDateTimeFormatterBuilder_SettingsParse
 #pragma mark Package-Private
 
 - (JavaTimeFormatDateTimeFormatterBuilder_SettingsParser_Enum)toNSEnum;
+
+- (JavaTimeFormatDateTimeFormatterBuilder_SettingsParser_ORDINAL)ordinal;
 
 @end
 
@@ -1658,7 +1689,7 @@ FOUNDATION_EXPORT IOSObjectArray *JavaTimeFormatDateTimeFormatterBuilder_Setting
 
 FOUNDATION_EXPORT JavaTimeFormatDateTimeFormatterBuilder_SettingsParser *JavaTimeFormatDateTimeFormatterBuilder_SettingsParser_valueOfWithNSString_(NSString *name);
 
-FOUNDATION_EXPORT JavaTimeFormatDateTimeFormatterBuilder_SettingsParser *JavaTimeFormatDateTimeFormatterBuilder_SettingsParser_fromOrdinal(NSUInteger ordinal);
+FOUNDATION_EXPORT JavaTimeFormatDateTimeFormatterBuilder_SettingsParser *JavaTimeFormatDateTimeFormatterBuilder_SettingsParser_fromOrdinal(JavaTimeFormatDateTimeFormatterBuilder_SettingsParser_ORDINAL ordinal);
 
 J2OBJC_TYPE_LITERAL_HEADER(JavaTimeFormatDateTimeFormatterBuilder_SettingsParser)
 
@@ -1667,6 +1698,9 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaTimeFormatDateTimeFormatterBuilder_SettingsParser
 #if !defined (JavaTimeFormatDateTimeFormatterBuilder_DefaultValueParser_) && (INCLUDE_ALL_JavaTimeFormatDateTimeFormatterBuilder || defined(INCLUDE_JavaTimeFormatDateTimeFormatterBuilder_DefaultValueParser))
 #define JavaTimeFormatDateTimeFormatterBuilder_DefaultValueParser_
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
+@class JavaLangLong;
 @class JavaLangStringBuilder;
 @class JavaTimeFormatDateTimeParseContext;
 @class JavaTimeFormatDateTimePrintContext;
@@ -1713,6 +1747,9 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaTimeFormatDateTimeFormatterBuilder_DefaultValuePa
 #if !defined (JavaTimeFormatDateTimeFormatterBuilder_CharLiteralPrinterParser_) && (INCLUDE_ALL_JavaTimeFormatDateTimeFormatterBuilder || defined(INCLUDE_JavaTimeFormatDateTimeFormatterBuilder_CharLiteralPrinterParser))
 #define JavaTimeFormatDateTimeFormatterBuilder_CharLiteralPrinterParser_
 
+@class JavaLangBoolean;
+@class JavaLangCharacter;
+@class JavaLangInteger;
 @class JavaLangStringBuilder;
 @class JavaTimeFormatDateTimeParseContext;
 @class JavaTimeFormatDateTimePrintContext;
@@ -1759,6 +1796,8 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaTimeFormatDateTimeFormatterBuilder_CharLiteralPri
 #if !defined (JavaTimeFormatDateTimeFormatterBuilder_StringLiteralPrinterParser_) && (INCLUDE_ALL_JavaTimeFormatDateTimeFormatterBuilder || defined(INCLUDE_JavaTimeFormatDateTimeFormatterBuilder_StringLiteralPrinterParser))
 #define JavaTimeFormatDateTimeFormatterBuilder_StringLiteralPrinterParser_
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @class JavaLangStringBuilder;
 @class JavaTimeFormatDateTimeParseContext;
 @class JavaTimeFormatDateTimePrintContext;
@@ -1806,6 +1845,9 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaTimeFormatDateTimeFormatterBuilder_StringLiteralP
 #define JavaTimeFormatDateTimeFormatterBuilder_NumberPrinterParser_
 
 @class IOSLongArray;
+@class JavaLangBoolean;
+@class JavaLangInteger;
+@class JavaLangLong;
 @class JavaLangStringBuilder;
 @class JavaTimeFormatDateTimeParseContext;
 @class JavaTimeFormatDateTimePrintContext;
@@ -1823,7 +1865,6 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaTimeFormatDateTimeFormatterBuilder_StringLiteralP
   jint maxWidth_;
   jint subsequentWidth_;
 }
-@property (readonly, class, strong) IOSLongArray *EXCEED_POINTS NS_SWIFT_NAME(EXCEED_POINTS);
 
 #pragma mark Public
 
@@ -1947,6 +1988,9 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaTimeFormatDateTimeFormatterBuilder_NumberPrinterP
 #if !defined (JavaTimeFormatDateTimeFormatterBuilder_ReducedPrinterParser_) && (INCLUDE_ALL_JavaTimeFormatDateTimeFormatterBuilder || defined(INCLUDE_JavaTimeFormatDateTimeFormatterBuilder_ReducedPrinterParser))
 #define JavaTimeFormatDateTimeFormatterBuilder_ReducedPrinterParser_
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
+@class JavaLangLong;
 @class JavaTimeFormatDateTimeParseContext;
 @class JavaTimeFormatDateTimePrintContext;
 @class JavaTimeFormatSignStyle;
@@ -1958,7 +2002,6 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaTimeFormatDateTimeFormatterBuilder_NumberPrinterP
  @brief Prints and parses a reduced numeric date-time field.
  */
 @interface JavaTimeFormatDateTimeFormatterBuilder_ReducedPrinterParser : JavaTimeFormatDateTimeFormatterBuilder_NumberPrinterParser
-@property (readonly, class, strong) JavaTimeLocalDate *BASE_DATE NS_SWIFT_NAME(BASE_DATE);
 
 #pragma mark Public
 
@@ -2048,16 +2091,19 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaTimeFormatDateTimeFormatterBuilder_ReducedPrinter
 #if !defined (JavaTimeFormatDateTimeFormatterBuilder_FractionPrinterParser_) && (INCLUDE_ALL_JavaTimeFormatDateTimeFormatterBuilder || defined(INCLUDE_JavaTimeFormatDateTimeFormatterBuilder_FractionPrinterParser))
 #define JavaTimeFormatDateTimeFormatterBuilder_FractionPrinterParser_
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @class JavaLangStringBuilder;
 @class JavaTimeFormatDateTimeParseContext;
 @class JavaTimeFormatDateTimePrintContext;
+@class JavaTimeFormatSignStyle;
 @protocol JavaLangCharSequence;
 @protocol JavaTimeTemporalTemporalField;
 
 /*!
  @brief Prints and parses a numeric date-time field with optional padding.
  */
-@interface JavaTimeFormatDateTimeFormatterBuilder_FractionPrinterParser : NSObject < JavaTimeFormatDateTimeFormatterBuilder_DateTimePrinterParser >
+@interface JavaTimeFormatDateTimeFormatterBuilder_FractionPrinterParser : JavaTimeFormatDateTimeFormatterBuilder_NumberPrinterParser
 
 #pragma mark Public
 
@@ -2084,9 +2130,55 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaTimeFormatDateTimeFormatterBuilder_ReducedPrinter
                                                         withInt:(jint)maxWidth
                                                     withBoolean:(jboolean)decimalPoint;
 
+/*!
+ @brief Constructor.
+ @param field the field to output, not null
+ @param minWidth the minimum width to output, from 0 to 9
+ @param maxWidth the maximum width to output, from 0 to 9
+ @param decimalPoint whether to output the localized decimal point symbol
+ @param subsequentWidth the subsequentWidth for this instance
+ */
+- (instancetype __nonnull)initWithJavaTimeTemporalTemporalField:(id<JavaTimeTemporalTemporalField>)field
+                                                        withInt:(jint)minWidth
+                                                        withInt:(jint)maxWidth
+                                                    withBoolean:(jboolean)decimalPoint
+                                                        withInt:(jint)subsequentWidth;
+
+/*!
+ @brief For FractionPrinterPrinterParser, the width is fixed if context is sttrict, minWidth equal to
+  maxWidth and decimalpoint is absent.
+ @param context the context
+ @return if the field is fixed width
+ - seealso: DateTimeFormatterBuilder#appendValueFraction(java.time.temporal.TemporalField, int, int,
+     boolean)
+ */
+- (jboolean)isFixedWidthWithJavaTimeFormatDateTimeParseContext:(JavaTimeFormatDateTimeParseContext *)context;
+
+/*!
+ @brief Returns a new instance with fixed width flag set.
+ @return a new updated printer-parser, not null
+ */
+- (JavaTimeFormatDateTimeFormatterBuilder_FractionPrinterParser *)withFixedWidth;
+
+/*!
+ @brief Returns a new instance with an updated subsequent width.
+ @param subsequentWidth the width of subsequent non-negative numbers, 0 or greater
+ @return a new updated printer-parser, not null
+ */
+- (JavaTimeFormatDateTimeFormatterBuilder_FractionPrinterParser *)withSubsequentWidthWithInt:(jint)subsequentWidth;
+
 // Disallowed inherited constructors, do not use.
 
-- (instancetype __nonnull)init NS_UNAVAILABLE;
+- (instancetype __nonnull)initWithJavaTimeTemporalTemporalField:(id<JavaTimeTemporalTemporalField>)arg0
+                                                        withInt:(jint)arg1
+                                                        withInt:(jint)arg2
+                                    withJavaTimeFormatSignStyle:(JavaTimeFormatSignStyle *)arg3 NS_UNAVAILABLE;
+
+- (instancetype __nonnull)initWithJavaTimeTemporalTemporalField:(id<JavaTimeTemporalTemporalField>)arg0
+                                                        withInt:(jint)arg1
+                                                        withInt:(jint)arg2
+                                    withJavaTimeFormatSignStyle:(JavaTimeFormatSignStyle *)arg3
+                                                        withInt:(jint)arg4 NS_UNAVAILABLE;
 
 @end
 
@@ -2098,6 +2190,12 @@ FOUNDATION_EXPORT JavaTimeFormatDateTimeFormatterBuilder_FractionPrinterParser *
 
 FOUNDATION_EXPORT JavaTimeFormatDateTimeFormatterBuilder_FractionPrinterParser *create_JavaTimeFormatDateTimeFormatterBuilder_FractionPrinterParser_initWithJavaTimeTemporalTemporalField_withInt_withInt_withBoolean_(id<JavaTimeTemporalTemporalField> field, jint minWidth, jint maxWidth, jboolean decimalPoint);
 
+FOUNDATION_EXPORT void JavaTimeFormatDateTimeFormatterBuilder_FractionPrinterParser_initWithJavaTimeTemporalTemporalField_withInt_withInt_withBoolean_withInt_(JavaTimeFormatDateTimeFormatterBuilder_FractionPrinterParser *self, id<JavaTimeTemporalTemporalField> field, jint minWidth, jint maxWidth, jboolean decimalPoint, jint subsequentWidth);
+
+FOUNDATION_EXPORT JavaTimeFormatDateTimeFormatterBuilder_FractionPrinterParser *new_JavaTimeFormatDateTimeFormatterBuilder_FractionPrinterParser_initWithJavaTimeTemporalTemporalField_withInt_withInt_withBoolean_withInt_(id<JavaTimeTemporalTemporalField> field, jint minWidth, jint maxWidth, jboolean decimalPoint, jint subsequentWidth) NS_RETURNS_RETAINED;
+
+FOUNDATION_EXPORT JavaTimeFormatDateTimeFormatterBuilder_FractionPrinterParser *create_JavaTimeFormatDateTimeFormatterBuilder_FractionPrinterParser_initWithJavaTimeTemporalTemporalField_withInt_withInt_withBoolean_withInt_(id<JavaTimeTemporalTemporalField> field, jint minWidth, jint maxWidth, jboolean decimalPoint, jint subsequentWidth);
+
 J2OBJC_TYPE_LITERAL_HEADER(JavaTimeFormatDateTimeFormatterBuilder_FractionPrinterParser)
 
 #endif
@@ -2105,6 +2203,8 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaTimeFormatDateTimeFormatterBuilder_FractionPrinte
 #if !defined (JavaTimeFormatDateTimeFormatterBuilder_TextPrinterParser_) && (INCLUDE_ALL_JavaTimeFormatDateTimeFormatterBuilder || defined(INCLUDE_JavaTimeFormatDateTimeFormatterBuilder_TextPrinterParser))
 #define JavaTimeFormatDateTimeFormatterBuilder_TextPrinterParser_
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @class JavaLangStringBuilder;
 @class JavaTimeFormatDateTimeParseContext;
 @class JavaTimeFormatDateTimePrintContext;
@@ -2162,6 +2262,8 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaTimeFormatDateTimeFormatterBuilder_TextPrinterPar
 #if !defined (JavaTimeFormatDateTimeFormatterBuilder_InstantPrinterParser_) && (INCLUDE_ALL_JavaTimeFormatDateTimeFormatterBuilder || defined(INCLUDE_JavaTimeFormatDateTimeFormatterBuilder_InstantPrinterParser))
 #define JavaTimeFormatDateTimeFormatterBuilder_InstantPrinterParser_
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @class JavaLangStringBuilder;
 @class JavaTimeFormatDateTimeParseContext;
 @class JavaTimeFormatDateTimePrintContext;
@@ -2209,6 +2311,8 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaTimeFormatDateTimeFormatterBuilder_InstantPrinter
 #define JavaTimeFormatDateTimeFormatterBuilder_OffsetIdPrinterParser_
 
 @class IOSObjectArray;
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @class JavaLangStringBuilder;
 @class JavaTimeFormatDateTimeParseContext;
 @class JavaTimeFormatDateTimePrintContext;
@@ -2218,9 +2322,6 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaTimeFormatDateTimeFormatterBuilder_InstantPrinter
  @brief Prints or parses an offset ID.
  */
 @interface JavaTimeFormatDateTimeFormatterBuilder_OffsetIdPrinterParser : NSObject < JavaTimeFormatDateTimeFormatterBuilder_DateTimePrinterParser >
-@property (readonly, class, strong) IOSObjectArray *PATTERNS NS_SWIFT_NAME(PATTERNS);
-@property (readonly, class, strong) JavaTimeFormatDateTimeFormatterBuilder_OffsetIdPrinterParser *INSTANCE_ID_Z NS_SWIFT_NAME(INSTANCE_ID_Z);
-@property (readonly, class, strong) JavaTimeFormatDateTimeFormatterBuilder_OffsetIdPrinterParser *INSTANCE_ID_ZERO NS_SWIFT_NAME(INSTANCE_ID_ZERO);
 
 #pragma mark Public
 
@@ -2279,6 +2380,8 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaTimeFormatDateTimeFormatterBuilder_OffsetIdPrinte
 #if !defined (JavaTimeFormatDateTimeFormatterBuilder_LocalizedOffsetIdPrinterParser_) && (INCLUDE_ALL_JavaTimeFormatDateTimeFormatterBuilder || defined(INCLUDE_JavaTimeFormatDateTimeFormatterBuilder_LocalizedOffsetIdPrinterParser))
 #define JavaTimeFormatDateTimeFormatterBuilder_LocalizedOffsetIdPrinterParser_
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @class JavaLangStringBuilder;
 @class JavaTimeFormatDateTimeParseContext;
 @class JavaTimeFormatDateTimePrintContext;
@@ -2333,6 +2436,8 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaTimeFormatDateTimeFormatterBuilder_LocalizedOffse
 #if !defined (JavaTimeFormatDateTimeFormatterBuilder_ZoneIdPrinterParser_) && (INCLUDE_ALL_JavaTimeFormatDateTimeFormatterBuilder || defined(INCLUDE_JavaTimeFormatDateTimeFormatterBuilder_ZoneIdPrinterParser))
 #define JavaTimeFormatDateTimeFormatterBuilder_ZoneIdPrinterParser_
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @class JavaLangStringBuilder;
 @class JavaTimeFormatDateTimeFormatterBuilder_PrefixTree;
 @class JavaTimeFormatDateTimeParseContext;
@@ -2391,6 +2496,7 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaTimeFormatDateTimeFormatterBuilder_ZoneIdPrinterP
 #if !defined (JavaTimeFormatDateTimeFormatterBuilder_ZoneTextPrinterParser_) && (INCLUDE_ALL_JavaTimeFormatDateTimeFormatterBuilder || defined(INCLUDE_JavaTimeFormatDateTimeFormatterBuilder_ZoneTextPrinterParser))
 #define JavaTimeFormatDateTimeFormatterBuilder_ZoneTextPrinterParser_
 
+@class JavaLangBoolean;
 @class JavaLangStringBuilder;
 @class JavaTimeFormatDateTimeFormatterBuilder_PrefixTree;
 @class JavaTimeFormatDateTimeParseContext;
@@ -2416,7 +2522,8 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaTimeFormatDateTimeFormatterBuilder_ZoneIdPrinterP
 #pragma mark Package-Private
 
 - (instancetype __nonnull)initWithJavaTimeFormatTextStyle:(JavaTimeFormatTextStyle *)textStyle
-                                          withJavaUtilSet:(id<JavaUtilSet>)preferredZones;
+                                          withJavaUtilSet:(id<JavaUtilSet>)preferredZones
+                                              withBoolean:(jboolean)isGeneric;
 
 // Disallowed inherited constructors, do not use.
 
@@ -2427,11 +2534,11 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaTimeFormatDateTimeFormatterBuilder_ZoneIdPrinterP
 
 J2OBJC_STATIC_INIT(JavaTimeFormatDateTimeFormatterBuilder_ZoneTextPrinterParser)
 
-FOUNDATION_EXPORT void JavaTimeFormatDateTimeFormatterBuilder_ZoneTextPrinterParser_initWithJavaTimeFormatTextStyle_withJavaUtilSet_(JavaTimeFormatDateTimeFormatterBuilder_ZoneTextPrinterParser *self, JavaTimeFormatTextStyle *textStyle, id<JavaUtilSet> preferredZones);
+FOUNDATION_EXPORT void JavaTimeFormatDateTimeFormatterBuilder_ZoneTextPrinterParser_initWithJavaTimeFormatTextStyle_withJavaUtilSet_withBoolean_(JavaTimeFormatDateTimeFormatterBuilder_ZoneTextPrinterParser *self, JavaTimeFormatTextStyle *textStyle, id<JavaUtilSet> preferredZones, jboolean isGeneric);
 
-FOUNDATION_EXPORT JavaTimeFormatDateTimeFormatterBuilder_ZoneTextPrinterParser *new_JavaTimeFormatDateTimeFormatterBuilder_ZoneTextPrinterParser_initWithJavaTimeFormatTextStyle_withJavaUtilSet_(JavaTimeFormatTextStyle *textStyle, id<JavaUtilSet> preferredZones) NS_RETURNS_RETAINED;
+FOUNDATION_EXPORT JavaTimeFormatDateTimeFormatterBuilder_ZoneTextPrinterParser *new_JavaTimeFormatDateTimeFormatterBuilder_ZoneTextPrinterParser_initWithJavaTimeFormatTextStyle_withJavaUtilSet_withBoolean_(JavaTimeFormatTextStyle *textStyle, id<JavaUtilSet> preferredZones, jboolean isGeneric) NS_RETURNS_RETAINED;
 
-FOUNDATION_EXPORT JavaTimeFormatDateTimeFormatterBuilder_ZoneTextPrinterParser *create_JavaTimeFormatDateTimeFormatterBuilder_ZoneTextPrinterParser_initWithJavaTimeFormatTextStyle_withJavaUtilSet_(JavaTimeFormatTextStyle *textStyle, id<JavaUtilSet> preferredZones);
+FOUNDATION_EXPORT JavaTimeFormatDateTimeFormatterBuilder_ZoneTextPrinterParser *create_JavaTimeFormatDateTimeFormatterBuilder_ZoneTextPrinterParser_initWithJavaTimeFormatTextStyle_withJavaUtilSet_withBoolean_(JavaTimeFormatTextStyle *textStyle, id<JavaUtilSet> preferredZones, jboolean isGeneric);
 
 J2OBJC_TYPE_LITERAL_HEADER(JavaTimeFormatDateTimeFormatterBuilder_ZoneTextPrinterParser)
 
@@ -2440,6 +2547,9 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaTimeFormatDateTimeFormatterBuilder_ZoneTextPrinte
 #if !defined (JavaTimeFormatDateTimeFormatterBuilder_PrefixTree_) && (INCLUDE_ALL_JavaTimeFormatDateTimeFormatterBuilder || defined(INCLUDE_JavaTimeFormatDateTimeFormatterBuilder_PrefixTree))
 #define JavaTimeFormatDateTimeFormatterBuilder_PrefixTree_
 
+@class JavaLangBoolean;
+@class JavaLangCharacter;
+@class JavaLangInteger;
 @class JavaTextParsePosition;
 @class JavaTimeFormatDateTimeParseContext;
 @protocol JavaLangCharSequence;
@@ -2549,6 +2659,8 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaTimeFormatDateTimeFormatterBuilder_PrefixTree)
 #if !defined (JavaTimeFormatDateTimeFormatterBuilder_ChronoPrinterParser_) && (INCLUDE_ALL_JavaTimeFormatDateTimeFormatterBuilder || defined(INCLUDE_JavaTimeFormatDateTimeFormatterBuilder_ChronoPrinterParser))
 #define JavaTimeFormatDateTimeFormatterBuilder_ChronoPrinterParser_
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @class JavaLangStringBuilder;
 @class JavaTimeFormatDateTimeParseContext;
 @class JavaTimeFormatDateTimePrintContext;
@@ -2594,6 +2706,8 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaTimeFormatDateTimeFormatterBuilder_ChronoPrinterP
 #if !defined (JavaTimeFormatDateTimeFormatterBuilder_LocalizedPrinterParser_) && (INCLUDE_ALL_JavaTimeFormatDateTimeFormatterBuilder || defined(INCLUDE_JavaTimeFormatDateTimeFormatterBuilder_LocalizedPrinterParser))
 #define JavaTimeFormatDateTimeFormatterBuilder_LocalizedPrinterParser_
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @class JavaLangStringBuilder;
 @class JavaTimeFormatDateTimeParseContext;
 @class JavaTimeFormatDateTimePrintContext;
@@ -2647,19 +2761,24 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaTimeFormatDateTimeFormatterBuilder_LocalizedPrint
 #if !defined (JavaTimeFormatDateTimeFormatterBuilder_WeekBasedFieldPrinterParser_) && (INCLUDE_ALL_JavaTimeFormatDateTimeFormatterBuilder || defined(INCLUDE_JavaTimeFormatDateTimeFormatterBuilder_WeekBasedFieldPrinterParser))
 #define JavaTimeFormatDateTimeFormatterBuilder_WeekBasedFieldPrinterParser_
 
+@class JavaLangBoolean;
+@class JavaLangCharacter;
+@class JavaLangInteger;
 @class JavaLangStringBuilder;
 @class JavaTimeFormatDateTimeParseContext;
 @class JavaTimeFormatDateTimePrintContext;
+@class JavaTimeFormatSignStyle;
 @protocol JavaLangCharSequence;
+@protocol JavaTimeTemporalTemporalField;
 
 /*!
- @brief Prints or parses a localized pattern from a localized field.
- The specific formatter and parameters is not selected until the
-  the field is to be printed or parsed.
-  The locale is needed to select the proper WeekFields from which
-  the field for day-of-week, week-of-month, or week-of-year is selected.
+ @brief Prints or parses a localized pattern from a localized field.The specific formatter and
+  parameters is not selected until the field is to be printed or parsed.
+ The locale is needed to
+  select the proper WeekFields from which the field for day-of-week, week-of-month, or
+  week-of-year is selected. Hence the inherited field NumberPrinterParser.field is unused.
  */
-@interface JavaTimeFormatDateTimeFormatterBuilder_WeekBasedFieldPrinterParser : NSObject < JavaTimeFormatDateTimeFormatterBuilder_DateTimePrinterParser >
+@interface JavaTimeFormatDateTimeFormatterBuilder_WeekBasedFieldPrinterParser : JavaTimeFormatDateTimeFormatterBuilder_NumberPrinterParser
 
 #pragma mark Public
 
@@ -2678,23 +2797,69 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaTimeFormatDateTimeFormatterBuilder_LocalizedPrint
  @brief Constructor.
  @param chr the pattern format letter that added this PrinterParser.
  @param count the repeat count of the format letter
+ @param minWidth the minimum field width, from 1 to 19
+ @param maxWidth the maximum field width, from minWidth to 19
  */
 - (instancetype __nonnull)initWithChar:(jchar)chr
-                               withInt:(jint)count;
+                               withInt:(jint)count
+                               withInt:(jint)minWidth
+                               withInt:(jint)maxWidth;
+
+/*!
+ @brief Constructor.
+ @param chr the pattern format letter that added this PrinterParser.
+ @param count the repeat count of the format letter
+ @param minWidth the minimum field width, from 1 to 19
+ @param maxWidth the maximum field width, from minWidth to 19
+ @param subsequentWidth the width of subsequent non-negative numbers, 0 or greater, -1 if      fixed width due to active adjacent parsing
+ */
+- (instancetype __nonnull)initWithChar:(jchar)chr
+                               withInt:(jint)count
+                               withInt:(jint)minWidth
+                               withInt:(jint)maxWidth
+                               withInt:(jint)subsequentWidth;
+
+/*!
+ @brief Returns a new instance with fixed width flag set.
+ @return a new updated printer-parser, not null
+ */
+- (JavaTimeFormatDateTimeFormatterBuilder_WeekBasedFieldPrinterParser *)withFixedWidth;
+
+/*!
+ @brief Returns a new instance with an updated subsequent width.
+ @param subsequentWidth the width of subsequent non-negative numbers, 0 or greater
+ @return a new updated printer-parser, not null
+ */
+- (JavaTimeFormatDateTimeFormatterBuilder_WeekBasedFieldPrinterParser *)withSubsequentWidthWithInt:(jint)subsequentWidth;
 
 // Disallowed inherited constructors, do not use.
 
-- (instancetype __nonnull)init NS_UNAVAILABLE;
+- (instancetype __nonnull)initWithJavaTimeTemporalTemporalField:(id<JavaTimeTemporalTemporalField>)arg0
+                                                        withInt:(jint)arg1
+                                                        withInt:(jint)arg2
+                                    withJavaTimeFormatSignStyle:(JavaTimeFormatSignStyle *)arg3 NS_UNAVAILABLE;
+
+- (instancetype __nonnull)initWithJavaTimeTemporalTemporalField:(id<JavaTimeTemporalTemporalField>)arg0
+                                                        withInt:(jint)arg1
+                                                        withInt:(jint)arg2
+                                    withJavaTimeFormatSignStyle:(JavaTimeFormatSignStyle *)arg3
+                                                        withInt:(jint)arg4 NS_UNAVAILABLE;
 
 @end
 
 J2OBJC_EMPTY_STATIC_INIT(JavaTimeFormatDateTimeFormatterBuilder_WeekBasedFieldPrinterParser)
 
-FOUNDATION_EXPORT void JavaTimeFormatDateTimeFormatterBuilder_WeekBasedFieldPrinterParser_initWithChar_withInt_(JavaTimeFormatDateTimeFormatterBuilder_WeekBasedFieldPrinterParser *self, jchar chr, jint count);
+FOUNDATION_EXPORT void JavaTimeFormatDateTimeFormatterBuilder_WeekBasedFieldPrinterParser_initWithChar_withInt_withInt_withInt_(JavaTimeFormatDateTimeFormatterBuilder_WeekBasedFieldPrinterParser *self, jchar chr, jint count, jint minWidth, jint maxWidth);
 
-FOUNDATION_EXPORT JavaTimeFormatDateTimeFormatterBuilder_WeekBasedFieldPrinterParser *new_JavaTimeFormatDateTimeFormatterBuilder_WeekBasedFieldPrinterParser_initWithChar_withInt_(jchar chr, jint count) NS_RETURNS_RETAINED;
+FOUNDATION_EXPORT JavaTimeFormatDateTimeFormatterBuilder_WeekBasedFieldPrinterParser *new_JavaTimeFormatDateTimeFormatterBuilder_WeekBasedFieldPrinterParser_initWithChar_withInt_withInt_withInt_(jchar chr, jint count, jint minWidth, jint maxWidth) NS_RETURNS_RETAINED;
 
-FOUNDATION_EXPORT JavaTimeFormatDateTimeFormatterBuilder_WeekBasedFieldPrinterParser *create_JavaTimeFormatDateTimeFormatterBuilder_WeekBasedFieldPrinterParser_initWithChar_withInt_(jchar chr, jint count);
+FOUNDATION_EXPORT JavaTimeFormatDateTimeFormatterBuilder_WeekBasedFieldPrinterParser *create_JavaTimeFormatDateTimeFormatterBuilder_WeekBasedFieldPrinterParser_initWithChar_withInt_withInt_withInt_(jchar chr, jint count, jint minWidth, jint maxWidth);
+
+FOUNDATION_EXPORT void JavaTimeFormatDateTimeFormatterBuilder_WeekBasedFieldPrinterParser_initWithChar_withInt_withInt_withInt_withInt_(JavaTimeFormatDateTimeFormatterBuilder_WeekBasedFieldPrinterParser *self, jchar chr, jint count, jint minWidth, jint maxWidth, jint subsequentWidth);
+
+FOUNDATION_EXPORT JavaTimeFormatDateTimeFormatterBuilder_WeekBasedFieldPrinterParser *new_JavaTimeFormatDateTimeFormatterBuilder_WeekBasedFieldPrinterParser_initWithChar_withInt_withInt_withInt_withInt_(jchar chr, jint count, jint minWidth, jint maxWidth, jint subsequentWidth) NS_RETURNS_RETAINED;
+
+FOUNDATION_EXPORT JavaTimeFormatDateTimeFormatterBuilder_WeekBasedFieldPrinterParser *create_JavaTimeFormatDateTimeFormatterBuilder_WeekBasedFieldPrinterParser_initWithChar_withInt_withInt_withInt_withInt_(jchar chr, jint count, jint minWidth, jint maxWidth, jint subsequentWidth);
 
 J2OBJC_TYPE_LITERAL_HEADER(JavaTimeFormatDateTimeFormatterBuilder_WeekBasedFieldPrinterParser)
 
@@ -2704,6 +2869,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaTimeFormatDateTimeFormatterBuilder_WeekBasedField
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaTimeFormatDateTimeFormatterBuilder")

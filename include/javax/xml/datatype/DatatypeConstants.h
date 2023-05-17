@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaxXmlDatatypeDatatypeConstants
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -25,6 +22,7 @@
 #if !defined (JavaxXmlDatatypeDatatypeConstants_) && (INCLUDE_ALL_JavaxXmlDatatypeDatatypeConstants || defined(INCLUDE_JavaxXmlDatatypeDatatypeConstants))
 #define JavaxXmlDatatypeDatatypeConstants_
 
+@class JavaLangInteger;
 @class JavaxXmlDatatypeDatatypeConstants_Field;
 @class JavaxXmlNamespaceQName;
 
@@ -36,42 +34,6 @@
  @since 1.5
  */
 @interface JavaxXmlDatatypeDatatypeConstants : NSObject
-@property (readonly, class) jint JANUARY NS_SWIFT_NAME(JANUARY);
-@property (readonly, class) jint FEBRUARY NS_SWIFT_NAME(FEBRUARY);
-@property (readonly, class) jint MARCH NS_SWIFT_NAME(MARCH);
-@property (readonly, class) jint APRIL NS_SWIFT_NAME(APRIL);
-@property (readonly, class) jint MAY NS_SWIFT_NAME(MAY);
-@property (readonly, class) jint JUNE NS_SWIFT_NAME(JUNE);
-@property (readonly, class) jint JULY NS_SWIFT_NAME(JULY);
-@property (readonly, class) jint AUGUST NS_SWIFT_NAME(AUGUST);
-@property (readonly, class) jint SEPTEMBER NS_SWIFT_NAME(SEPTEMBER);
-@property (readonly, class) jint OCTOBER NS_SWIFT_NAME(OCTOBER);
-@property (readonly, class) jint NOVEMBER NS_SWIFT_NAME(NOVEMBER);
-@property (readonly, class) jint DECEMBER NS_SWIFT_NAME(DECEMBER);
-@property (readonly, class) jint LESSER NS_SWIFT_NAME(LESSER);
-@property (readonly, class) jint EQUAL NS_SWIFT_NAME(EQUAL);
-@property (readonly, class) jint GREATER NS_SWIFT_NAME(GREATER);
-@property (readonly, class) jint INDETERMINATE NS_SWIFT_NAME(INDETERMINATE);
-@property (readonly, class) jint FIELD_UNDEFINED NS_SWIFT_NAME(FIELD_UNDEFINED);
-@property (readonly, class, strong) JavaxXmlDatatypeDatatypeConstants_Field *YEARS NS_SWIFT_NAME(YEARS);
-@property (readonly, class, strong) JavaxXmlDatatypeDatatypeConstants_Field *MONTHS NS_SWIFT_NAME(MONTHS);
-@property (readonly, class, strong) JavaxXmlDatatypeDatatypeConstants_Field *DAYS NS_SWIFT_NAME(DAYS);
-@property (readonly, class, strong) JavaxXmlDatatypeDatatypeConstants_Field *HOURS NS_SWIFT_NAME(HOURS);
-@property (readonly, class, strong) JavaxXmlDatatypeDatatypeConstants_Field *MINUTES NS_SWIFT_NAME(MINUTES);
-@property (readonly, class, strong) JavaxXmlDatatypeDatatypeConstants_Field *SECONDS NS_SWIFT_NAME(SECONDS);
-@property (readonly, class, strong) JavaxXmlNamespaceQName *DATETIME NS_SWIFT_NAME(DATETIME);
-@property (readonly, class, strong) JavaxXmlNamespaceQName *TIME NS_SWIFT_NAME(TIME);
-@property (readonly, class, strong) JavaxXmlNamespaceQName *DATE NS_SWIFT_NAME(DATE);
-@property (readonly, class, strong) JavaxXmlNamespaceQName *GYEARMONTH NS_SWIFT_NAME(GYEARMONTH);
-@property (readonly, class, strong) JavaxXmlNamespaceQName *GMONTHDAY NS_SWIFT_NAME(GMONTHDAY);
-@property (readonly, class, strong) JavaxXmlNamespaceQName *GYEAR NS_SWIFT_NAME(GYEAR);
-@property (readonly, class, strong) JavaxXmlNamespaceQName *GMONTH NS_SWIFT_NAME(GMONTH);
-@property (readonly, class, strong) JavaxXmlNamespaceQName *GDAY NS_SWIFT_NAME(GDAY);
-@property (readonly, class, strong) JavaxXmlNamespaceQName *DURATION NS_SWIFT_NAME(DURATION);
-@property (readonly, class, strong) JavaxXmlNamespaceQName *DURATION_DAYTIME NS_SWIFT_NAME(DURATION_DAYTIME);
-@property (readonly, class, strong) JavaxXmlNamespaceQName *DURATION_YEARMONTH NS_SWIFT_NAME(DURATION_YEARMONTH);
-@property (readonly, class) jint MAX_TIMEZONE_OFFSET NS_SWIFT_NAME(MAX_TIMEZONE_OFFSET);
-@property (readonly, class) jint MIN_TIMEZONE_OFFSET NS_SWIFT_NAME(MIN_TIMEZONE_OFFSET);
 
 @end
 
@@ -374,6 +336,8 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaxXmlDatatypeDatatypeConstants)
 #if !defined (JavaxXmlDatatypeDatatypeConstants_Field_) && (INCLUDE_ALL_JavaxXmlDatatypeDatatypeConstants || defined(INCLUDE_JavaxXmlDatatypeDatatypeConstants_Field))
 #define JavaxXmlDatatypeDatatypeConstants_Field_
 
+@class JavaLangInteger;
+
 /*!
  @brief Type-safe enum class that represents six fields
   of the <code>Duration</code> class.
@@ -413,6 +377,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaxXmlDatatypeDatatypeConstants_Field)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaxXmlDatatypeDatatypeConstants")

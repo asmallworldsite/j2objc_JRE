@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaLangArithmeticException
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -29,6 +26,7 @@
 #define INCLUDE_JavaLangRuntimeException 1
 #include "java/lang/RuntimeException.h"
 
+@class JavaLangBoolean;
 @class JavaLangThrowable;
 
 /*!
@@ -39,8 +37,7 @@
   virtual machine as if suppression were disabled and/or the
   stack trace was not writable
  .
- @author unascribed
- @since JDK1.0
+ @since 1.0
  */
 @interface JavaLangArithmeticException : JavaLangRuntimeException
 
@@ -95,6 +92,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaLangArithmeticException)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaLangArithmeticException")

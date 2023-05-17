@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaSqlDate
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -29,12 +26,14 @@
 #define INCLUDE_JavaUtilDate 1
 #include "java/util/Date.h"
 
+@class JavaLangInteger;
+@class JavaLangLong;
+
 /*!
  @brief <P>A thin wrapper around a millisecond value that allows
-  JDBC to identify this as an SQL <code>DATE</code> value.
- A
+  JDBC to identify this as an SQL <code>DATE</code> value.A
   milliseconds value represents the number of milliseconds that
-  have passed since January 1, 1970 00:00:00.000 GMT. 
+  have passed since January 1, 1970 00:00:00.000 GMT.
  <p>
   To conform with the definition of SQL <code>DATE</code>, the
   millisecond values wrapped by a <code>java.sql.Date</code> instance
@@ -43,7 +42,6 @@
   time zone with which the instance is associated.
  */
 @interface JavaSqlDate : JavaUtilDate
-@property (readonly, class) jlong serialVersionUID NS_SWIFT_NAME(serialVersionUID);
 
 #pragma mark Public
 
@@ -58,7 +56,7 @@
  */
 - (instancetype __nonnull)initWithInt:(jint)year
                               withInt:(jint)month
-                              withInt:(jint)day __attribute__((deprecated));
+                              withInt:(jint)day;
 
 /*!
  @brief Constructs a <code>Date</code> object using the given milliseconds
@@ -76,37 +74,37 @@
  @throw java.lang.IllegalArgumentExceptionif this method is invoked
  - seealso: #setHours
  */
-- (jint)getHours __attribute__((deprecated));
+- (jint)getHours;
 
 /*!
  @throw java.lang.IllegalArgumentExceptionif this method is invoked
  - seealso: #setMinutes
  */
-- (jint)getMinutes __attribute__((deprecated));
+- (jint)getMinutes;
 
 /*!
  @throw java.lang.IllegalArgumentExceptionif this method is invoked
  - seealso: #setSeconds
  */
-- (jint)getSeconds __attribute__((deprecated));
+- (jint)getSeconds;
 
 /*!
  @throw java.lang.IllegalArgumentExceptionif this method is invoked
  - seealso: #getHours
  */
-- (void)setHoursWithInt:(jint)i __attribute__((deprecated));
+- (void)setHoursWithInt:(jint)i;
 
 /*!
  @throw java.lang.IllegalArgumentExceptionif this method is invoked
  - seealso: #getMinutes
  */
-- (void)setMinutesWithInt:(jint)i __attribute__((deprecated));
+- (void)setMinutesWithInt:(jint)i;
 
 /*!
  @throw java.lang.IllegalArgumentExceptionif this method is invoked
  - seealso: #getSeconds
  */
-- (void)setSecondsWithInt:(jint)i __attribute__((deprecated));
+- (void)setSecondsWithInt:(jint)i;
 
 /*!
  @brief Sets an existing <code>Date</code> object
@@ -194,6 +192,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaSqlDate)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaSqlDate")

@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaUtilFormatFlagsConversionMismatchException
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -28,6 +25,8 @@
 #define RESTRICT_JavaUtilIllegalFormatException 1
 #define INCLUDE_JavaUtilIllegalFormatException 1
 #include "java/util/IllegalFormatException.h"
+
+@class JavaLangCharacter;
 
 /*!
  @brief Unchecked exception thrown when a conversion and flag are incompatible.
@@ -85,6 +84,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilFormatFlagsConversionMismatchException)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaUtilFormatFlagsConversionMismatchException")

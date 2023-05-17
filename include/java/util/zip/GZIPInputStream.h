@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaUtilZipGZIPInputStream
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -31,6 +28,8 @@
 
 @class IOSByteArray;
 @class JavaIoInputStream;
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @class JavaUtilZipCRC32;
 @class JavaUtilZipInflater;
 
@@ -51,7 +50,6 @@
    */
   jboolean eos_;
 }
-@property (readonly, class) jint GZIP_MAGIC NS_SWIFT_NAME(GZIP_MAGIC);
 
 #pragma mark Public
 
@@ -145,6 +143,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilZipGZIPInputStream)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaUtilZipGZIPInputStream")

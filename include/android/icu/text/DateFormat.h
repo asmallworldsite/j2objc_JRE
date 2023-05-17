@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_AndroidIcuTextDateFormat
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -37,6 +34,8 @@
 @class AndroidIcuUtilTimeZone;
 @class AndroidIcuUtilULocale;
 @class IOSObjectArray;
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @class JavaLangStringBuffer;
 @class JavaTextFieldPosition;
 @class JavaTextParsePosition;
@@ -169,109 +168,6 @@
    */
   AndroidIcuTextNumberFormat *numberFormat_;
 }
-@property (readonly, class) jint ERA_FIELD NS_SWIFT_NAME(ERA_FIELD);
-@property (readonly, class) jint YEAR_FIELD NS_SWIFT_NAME(YEAR_FIELD);
-@property (readonly, class) jint MONTH_FIELD NS_SWIFT_NAME(MONTH_FIELD);
-@property (readonly, class) jint DATE_FIELD NS_SWIFT_NAME(DATE_FIELD);
-@property (readonly, class) jint HOUR_OF_DAY1_FIELD NS_SWIFT_NAME(HOUR_OF_DAY1_FIELD);
-@property (readonly, class) jint HOUR_OF_DAY0_FIELD NS_SWIFT_NAME(HOUR_OF_DAY0_FIELD);
-@property (readonly, class) jint MINUTE_FIELD NS_SWIFT_NAME(MINUTE_FIELD);
-@property (readonly, class) jint SECOND_FIELD NS_SWIFT_NAME(SECOND_FIELD);
-@property (readonly, class) jint FRACTIONAL_SECOND_FIELD NS_SWIFT_NAME(FRACTIONAL_SECOND_FIELD);
-@property (readonly, class) jint MILLISECOND_FIELD NS_SWIFT_NAME(MILLISECOND_FIELD);
-@property (readonly, class) jint DAY_OF_WEEK_FIELD NS_SWIFT_NAME(DAY_OF_WEEK_FIELD);
-@property (readonly, class) jint DAY_OF_YEAR_FIELD NS_SWIFT_NAME(DAY_OF_YEAR_FIELD);
-@property (readonly, class) jint DAY_OF_WEEK_IN_MONTH_FIELD NS_SWIFT_NAME(DAY_OF_WEEK_IN_MONTH_FIELD);
-@property (readonly, class) jint WEEK_OF_YEAR_FIELD NS_SWIFT_NAME(WEEK_OF_YEAR_FIELD);
-@property (readonly, class) jint WEEK_OF_MONTH_FIELD NS_SWIFT_NAME(WEEK_OF_MONTH_FIELD);
-@property (readonly, class) jint AM_PM_FIELD NS_SWIFT_NAME(AM_PM_FIELD);
-@property (readonly, class) jint HOUR1_FIELD NS_SWIFT_NAME(HOUR1_FIELD);
-@property (readonly, class) jint HOUR0_FIELD NS_SWIFT_NAME(HOUR0_FIELD);
-@property (readonly, class) jint TIMEZONE_FIELD NS_SWIFT_NAME(TIMEZONE_FIELD);
-@property (readonly, class) jint YEAR_WOY_FIELD NS_SWIFT_NAME(YEAR_WOY_FIELD);
-@property (readonly, class) jint DOW_LOCAL_FIELD NS_SWIFT_NAME(DOW_LOCAL_FIELD);
-@property (readonly, class) jint EXTENDED_YEAR_FIELD NS_SWIFT_NAME(EXTENDED_YEAR_FIELD);
-@property (readonly, class) jint JULIAN_DAY_FIELD NS_SWIFT_NAME(JULIAN_DAY_FIELD);
-@property (readonly, class) jint MILLISECONDS_IN_DAY_FIELD NS_SWIFT_NAME(MILLISECONDS_IN_DAY_FIELD);
-@property (readonly, class) jint TIMEZONE_RFC_FIELD NS_SWIFT_NAME(TIMEZONE_RFC_FIELD);
-@property (readonly, class) jint TIMEZONE_GENERIC_FIELD NS_SWIFT_NAME(TIMEZONE_GENERIC_FIELD);
-@property (readonly, class) jint STANDALONE_DAY_FIELD NS_SWIFT_NAME(STANDALONE_DAY_FIELD);
-@property (readonly, class) jint STANDALONE_MONTH_FIELD NS_SWIFT_NAME(STANDALONE_MONTH_FIELD);
-@property (readonly, class) jint QUARTER_FIELD NS_SWIFT_NAME(QUARTER_FIELD);
-@property (readonly, class) jint STANDALONE_QUARTER_FIELD NS_SWIFT_NAME(STANDALONE_QUARTER_FIELD);
-@property (readonly, class) jint TIMEZONE_SPECIAL_FIELD NS_SWIFT_NAME(TIMEZONE_SPECIAL_FIELD);
-@property (readonly, class) jint YEAR_NAME_FIELD NS_SWIFT_NAME(YEAR_NAME_FIELD);
-@property (readonly, class) jint TIMEZONE_LOCALIZED_GMT_OFFSET_FIELD NS_SWIFT_NAME(TIMEZONE_LOCALIZED_GMT_OFFSET_FIELD);
-@property (readonly, class) jint TIMEZONE_ISO_FIELD NS_SWIFT_NAME(TIMEZONE_ISO_FIELD);
-@property (readonly, class) jint TIMEZONE_ISO_LOCAL_FIELD NS_SWIFT_NAME(TIMEZONE_ISO_LOCAL_FIELD);
-@property (readonly, class) jint RELATED_YEAR NS_SWIFT_NAME(RELATED_YEAR);
-@property (readonly, class) jint AM_PM_MIDNIGHT_NOON_FIELD NS_SWIFT_NAME(AM_PM_MIDNIGHT_NOON_FIELD);
-@property (readonly, class) jint FLEXIBLE_DAY_PERIOD_FIELD NS_SWIFT_NAME(FLEXIBLE_DAY_PERIOD_FIELD);
-@property (readonly, class) jint TIME_SEPARATOR NS_SWIFT_NAME(TIME_SEPARATOR);
-@property (readonly, class) jint FIELD_COUNT NS_SWIFT_NAME(FIELD_COUNT);
-@property (readonly, class) jint currentSerialVersion NS_SWIFT_NAME(currentSerialVersion);
-@property (readonly, class) jint NONE NS_SWIFT_NAME(NONE);
-@property (readonly, class) jint FULL NS_SWIFT_NAME(FULL);
-@property (readonly, class) jint LONG NS_SWIFT_NAME(LONG);
-@property (readonly, class) jint MEDIUM NS_SWIFT_NAME(MEDIUM);
-@property (readonly, class) jint SHORT NS_SWIFT_NAME(SHORT);
-@property (readonly, class) jint DEFAULT NS_SWIFT_NAME(DEFAULT);
-@property (readonly, class) jint RELATIVE NS_SWIFT_NAME(RELATIVE);
-@property (readonly, class) jint RELATIVE_FULL NS_SWIFT_NAME(RELATIVE_FULL);
-@property (readonly, class) jint RELATIVE_LONG NS_SWIFT_NAME(RELATIVE_LONG);
-@property (readonly, class) jint RELATIVE_MEDIUM NS_SWIFT_NAME(RELATIVE_MEDIUM);
-@property (readonly, class) jint RELATIVE_SHORT NS_SWIFT_NAME(RELATIVE_SHORT);
-@property (readonly, class) jint RELATIVE_DEFAULT NS_SWIFT_NAME(RELATIVE_DEFAULT);
-@property (readonly, copy, class) NSString *YEAR NS_SWIFT_NAME(YEAR);
-@property (readonly, copy, class) NSString *QUARTER NS_SWIFT_NAME(QUARTER);
-@property (readonly, copy, class) NSString *ABBR_QUARTER NS_SWIFT_NAME(ABBR_QUARTER);
-@property (readonly, copy, class) NSString *YEAR_QUARTER NS_SWIFT_NAME(YEAR_QUARTER);
-@property (readonly, copy, class) NSString *YEAR_ABBR_QUARTER NS_SWIFT_NAME(YEAR_ABBR_QUARTER);
-@property (readonly, copy, class) NSString *MONTH NS_SWIFT_NAME(MONTH);
-@property (readonly, copy, class) NSString *ABBR_MONTH NS_SWIFT_NAME(ABBR_MONTH);
-@property (readonly, copy, class) NSString *NUM_MONTH NS_SWIFT_NAME(NUM_MONTH);
-@property (readonly, copy, class) NSString *YEAR_MONTH NS_SWIFT_NAME(YEAR_MONTH);
-@property (readonly, copy, class) NSString *YEAR_ABBR_MONTH NS_SWIFT_NAME(YEAR_ABBR_MONTH);
-@property (readonly, copy, class) NSString *YEAR_NUM_MONTH NS_SWIFT_NAME(YEAR_NUM_MONTH);
-@property (readonly, copy, class) NSString *DAY NS_SWIFT_NAME(DAY);
-@property (readonly, copy, class) NSString *YEAR_MONTH_DAY NS_SWIFT_NAME(YEAR_MONTH_DAY);
-@property (readonly, copy, class) NSString *YEAR_ABBR_MONTH_DAY NS_SWIFT_NAME(YEAR_ABBR_MONTH_DAY);
-@property (readonly, copy, class) NSString *YEAR_NUM_MONTH_DAY NS_SWIFT_NAME(YEAR_NUM_MONTH_DAY);
-@property (readonly, copy, class) NSString *WEEKDAY NS_SWIFT_NAME(WEEKDAY);
-@property (readonly, copy, class) NSString *ABBR_WEEKDAY NS_SWIFT_NAME(ABBR_WEEKDAY);
-@property (readonly, copy, class) NSString *YEAR_MONTH_WEEKDAY_DAY NS_SWIFT_NAME(YEAR_MONTH_WEEKDAY_DAY);
-@property (readonly, copy, class) NSString *YEAR_ABBR_MONTH_WEEKDAY_DAY NS_SWIFT_NAME(YEAR_ABBR_MONTH_WEEKDAY_DAY);
-@property (readonly, copy, class) NSString *YEAR_NUM_MONTH_WEEKDAY_DAY NS_SWIFT_NAME(YEAR_NUM_MONTH_WEEKDAY_DAY);
-@property (readonly, copy, class) NSString *MONTH_DAY NS_SWIFT_NAME(MONTH_DAY);
-@property (readonly, copy, class) NSString *ABBR_MONTH_DAY NS_SWIFT_NAME(ABBR_MONTH_DAY);
-@property (readonly, copy, class) NSString *NUM_MONTH_DAY NS_SWIFT_NAME(NUM_MONTH_DAY);
-@property (readonly, copy, class) NSString *MONTH_WEEKDAY_DAY NS_SWIFT_NAME(MONTH_WEEKDAY_DAY);
-@property (readonly, copy, class) NSString *ABBR_MONTH_WEEKDAY_DAY NS_SWIFT_NAME(ABBR_MONTH_WEEKDAY_DAY);
-@property (readonly, copy, class) NSString *NUM_MONTH_WEEKDAY_DAY NS_SWIFT_NAME(NUM_MONTH_WEEKDAY_DAY);
-@property (readonly, class, strong) id<JavaUtilList> DATE_SKELETONS NS_SWIFT_NAME(DATE_SKELETONS);
-@property (readonly, copy, class) NSString *HOUR NS_SWIFT_NAME(HOUR);
-@property (readonly, copy, class) NSString *HOUR24 NS_SWIFT_NAME(HOUR24);
-@property (readonly, copy, class) NSString *MINUTE NS_SWIFT_NAME(MINUTE);
-@property (readonly, copy, class) NSString *HOUR_MINUTE NS_SWIFT_NAME(HOUR_MINUTE);
-@property (readonly, copy, class) NSString *HOUR24_MINUTE NS_SWIFT_NAME(HOUR24_MINUTE);
-@property (readonly, copy, class) NSString *SECOND NS_SWIFT_NAME(SECOND);
-@property (readonly, copy, class) NSString *HOUR_MINUTE_SECOND NS_SWIFT_NAME(HOUR_MINUTE_SECOND);
-@property (readonly, copy, class) NSString *HOUR24_MINUTE_SECOND NS_SWIFT_NAME(HOUR24_MINUTE_SECOND);
-@property (readonly, copy, class) NSString *MINUTE_SECOND NS_SWIFT_NAME(MINUTE_SECOND);
-@property (readonly, class, strong) id<JavaUtilList> TIME_SKELETONS NS_SWIFT_NAME(TIME_SKELETONS);
-@property (readonly, copy, class) NSString *LOCATION_TZ NS_SWIFT_NAME(LOCATION_TZ);
-@property (readonly, copy, class) NSString *GENERIC_TZ NS_SWIFT_NAME(GENERIC_TZ);
-@property (readonly, copy, class) NSString *ABBR_GENERIC_TZ NS_SWIFT_NAME(ABBR_GENERIC_TZ);
-@property (readonly, copy, class) NSString *SPECIFIC_TZ NS_SWIFT_NAME(SPECIFIC_TZ);
-@property (readonly, copy, class) NSString *ABBR_SPECIFIC_TZ NS_SWIFT_NAME(ABBR_SPECIFIC_TZ);
-@property (readonly, copy, class) NSString *ABBR_UTC_TZ NS_SWIFT_NAME(ABBR_UTC_TZ);
-@property (readonly, class, strong) id<JavaUtilList> ZONE_SKELETONS NS_SWIFT_NAME(ZONE_SKELETONS);
-@property (readonly, copy, class) NSString *STANDALONE_MONTH NS_SWIFT_NAME(STANDALONE_MONTH);
-@property (readonly, copy, class) NSString *ABBR_STANDALONE_MONTH NS_SWIFT_NAME(ABBR_STANDALONE_MONTH);
-@property (readonly, copy, class) NSString *HOUR_MINUTE_GENERIC_TZ NS_SWIFT_NAME(HOUR_MINUTE_GENERIC_TZ);
-@property (readonly, copy, class) NSString *HOUR_MINUTE_TZ NS_SWIFT_NAME(HOUR_MINUTE_TZ);
-@property (readonly, copy, class) NSString *HOUR_GENERIC_TZ NS_SWIFT_NAME(HOUR_GENERIC_TZ);
-@property (readonly, copy, class) NSString *HOUR_TZ NS_SWIFT_NAME(HOUR_TZ);
 
 #pragma mark Public
 
@@ -1991,24 +1887,25 @@ J2OBJC_TYPE_LITERAL_HEADER(AndroidIcuTextDateFormat)
 
 @class IOSObjectArray;
 
-typedef NS_ENUM(NSUInteger, AndroidIcuTextDateFormat_BooleanAttribute_Enum) {
+typedef NS_ENUM(jint, AndroidIcuTextDateFormat_BooleanAttribute_Enum) {
   AndroidIcuTextDateFormat_BooleanAttribute_Enum_PARSE_ALLOW_WHITESPACE = 0,
   AndroidIcuTextDateFormat_BooleanAttribute_Enum_PARSE_ALLOW_NUMERIC = 1,
   AndroidIcuTextDateFormat_BooleanAttribute_Enum_PARSE_MULTIPLE_PATTERNS_FOR_MATCH = 2,
   AndroidIcuTextDateFormat_BooleanAttribute_Enum_PARSE_PARTIAL_LITERAL_MATCH = 3,
   AndroidIcuTextDateFormat_BooleanAttribute_Enum_PARSE_PARTIAL_MATCH = 4,
 };
+#if J2OBJC_IMPORTED_BY_JAVA_IMPLEMENTATION
+#define AndroidIcuTextDateFormat_BooleanAttribute_ORDINAL jint
+#else
+#define AndroidIcuTextDateFormat_BooleanAttribute_ORDINAL AndroidIcuTextDateFormat_BooleanAttribute_Enum
+#endif
+
 
 /*!
  @brief boolean attributes
  */
 @interface AndroidIcuTextDateFormat_BooleanAttribute : JavaLangEnum
 
-@property (readonly, class, nonnull) AndroidIcuTextDateFormat_BooleanAttribute *PARSE_ALLOW_WHITESPACE NS_SWIFT_NAME(PARSE_ALLOW_WHITESPACE);
-@property (readonly, class, nonnull) AndroidIcuTextDateFormat_BooleanAttribute *PARSE_ALLOW_NUMERIC NS_SWIFT_NAME(PARSE_ALLOW_NUMERIC);
-@property (readonly, class, nonnull) AndroidIcuTextDateFormat_BooleanAttribute *PARSE_MULTIPLE_PATTERNS_FOR_MATCH NS_SWIFT_NAME(PARSE_MULTIPLE_PATTERNS_FOR_MATCH);
-@property (readonly, class, nonnull) AndroidIcuTextDateFormat_BooleanAttribute *PARSE_PARTIAL_LITERAL_MATCH NS_SWIFT_NAME(PARSE_PARTIAL_LITERAL_MATCH);
-@property (readonly, class, nonnull) AndroidIcuTextDateFormat_BooleanAttribute *PARSE_PARTIAL_MATCH NS_SWIFT_NAME(PARSE_PARTIAL_MATCH);
 #pragma mark Public
 
 + (AndroidIcuTextDateFormat_BooleanAttribute *)valueOfWithNSString:(NSString *)name;
@@ -2018,6 +1915,8 @@ typedef NS_ENUM(NSUInteger, AndroidIcuTextDateFormat_BooleanAttribute_Enum) {
 #pragma mark Package-Private
 
 - (AndroidIcuTextDateFormat_BooleanAttribute_Enum)toNSEnum;
+
+- (AndroidIcuTextDateFormat_BooleanAttribute_ORDINAL)ordinal;
 
 @end
 
@@ -2063,7 +1962,7 @@ FOUNDATION_EXPORT IOSObjectArray *AndroidIcuTextDateFormat_BooleanAttribute_valu
 
 FOUNDATION_EXPORT AndroidIcuTextDateFormat_BooleanAttribute *AndroidIcuTextDateFormat_BooleanAttribute_valueOfWithNSString_(NSString *name);
 
-FOUNDATION_EXPORT AndroidIcuTextDateFormat_BooleanAttribute *AndroidIcuTextDateFormat_BooleanAttribute_fromOrdinal(NSUInteger ordinal);
+FOUNDATION_EXPORT AndroidIcuTextDateFormat_BooleanAttribute *AndroidIcuTextDateFormat_BooleanAttribute_fromOrdinal(AndroidIcuTextDateFormat_BooleanAttribute_ORDINAL ordinal);
 
 J2OBJC_TYPE_LITERAL_HEADER(AndroidIcuTextDateFormat_BooleanAttribute)
 
@@ -2076,6 +1975,8 @@ J2OBJC_TYPE_LITERAL_HEADER(AndroidIcuTextDateFormat_BooleanAttribute)
 #define INCLUDE_JavaTextFormat_Field 1
 #include "java/text/Format.h"
 
+@class JavaLangInteger;
+
 /*!
  @brief The instances of this inner class are used as attribute keys and values
   in AttributedCharacterIterator that
@@ -2085,34 +1986,6 @@ J2OBJC_TYPE_LITERAL_HEADER(AndroidIcuTextDateFormat_BooleanAttribute)
  <p>
  */
 @interface AndroidIcuTextDateFormat_Field : JavaTextFormat_Field
-@property (readonly, class, strong) AndroidIcuTextDateFormat_Field *AM_PM NS_SWIFT_NAME(AM_PM);
-@property (readonly, class, strong) AndroidIcuTextDateFormat_Field *DAY_OF_MONTH NS_SWIFT_NAME(DAY_OF_MONTH);
-@property (readonly, class, strong) AndroidIcuTextDateFormat_Field *DAY_OF_WEEK NS_SWIFT_NAME(DAY_OF_WEEK);
-@property (readonly, class, strong) AndroidIcuTextDateFormat_Field *DAY_OF_WEEK_IN_MONTH NS_SWIFT_NAME(DAY_OF_WEEK_IN_MONTH);
-@property (readonly, class, strong) AndroidIcuTextDateFormat_Field *DAY_OF_YEAR NS_SWIFT_NAME(DAY_OF_YEAR);
-@property (readonly, class, strong) AndroidIcuTextDateFormat_Field *ERA NS_SWIFT_NAME(ERA);
-@property (readonly, class, strong) AndroidIcuTextDateFormat_Field *HOUR_OF_DAY0 NS_SWIFT_NAME(HOUR_OF_DAY0);
-@property (readonly, class, strong) AndroidIcuTextDateFormat_Field *HOUR_OF_DAY1 NS_SWIFT_NAME(HOUR_OF_DAY1);
-@property (readonly, class, strong) AndroidIcuTextDateFormat_Field *HOUR0 NS_SWIFT_NAME(HOUR0);
-@property (readonly, class, strong) AndroidIcuTextDateFormat_Field *HOUR1 NS_SWIFT_NAME(HOUR1);
-@property (readonly, class, strong) AndroidIcuTextDateFormat_Field *MILLISECOND NS_SWIFT_NAME(MILLISECOND);
-@property (readonly, class, strong) AndroidIcuTextDateFormat_Field *MINUTE NS_SWIFT_NAME(MINUTE);
-@property (readonly, class, strong) AndroidIcuTextDateFormat_Field *MONTH NS_SWIFT_NAME(MONTH);
-@property (readonly, class, strong) AndroidIcuTextDateFormat_Field *SECOND NS_SWIFT_NAME(SECOND);
-@property (readonly, class, strong) AndroidIcuTextDateFormat_Field *TIME_ZONE NS_SWIFT_NAME(TIME_ZONE);
-@property (readonly, class, strong) AndroidIcuTextDateFormat_Field *WEEK_OF_MONTH NS_SWIFT_NAME(WEEK_OF_MONTH);
-@property (readonly, class, strong) AndroidIcuTextDateFormat_Field *WEEK_OF_YEAR NS_SWIFT_NAME(WEEK_OF_YEAR);
-@property (readonly, class, strong) AndroidIcuTextDateFormat_Field *YEAR NS_SWIFT_NAME(YEAR);
-@property (readonly, class, strong) AndroidIcuTextDateFormat_Field *DOW_LOCAL NS_SWIFT_NAME(DOW_LOCAL);
-@property (readonly, class, strong) AndroidIcuTextDateFormat_Field *EXTENDED_YEAR NS_SWIFT_NAME(EXTENDED_YEAR);
-@property (readonly, class, strong) AndroidIcuTextDateFormat_Field *JULIAN_DAY NS_SWIFT_NAME(JULIAN_DAY);
-@property (readonly, class, strong) AndroidIcuTextDateFormat_Field *MILLISECONDS_IN_DAY NS_SWIFT_NAME(MILLISECONDS_IN_DAY);
-@property (readonly, class, strong) AndroidIcuTextDateFormat_Field *YEAR_WOY NS_SWIFT_NAME(YEAR_WOY);
-@property (readonly, class, strong) AndroidIcuTextDateFormat_Field *QUARTER NS_SWIFT_NAME(QUARTER);
-@property (readonly, class, strong) AndroidIcuTextDateFormat_Field *RELATED_YEAR NS_SWIFT_NAME(RELATED_YEAR);
-@property (readonly, class, strong) AndroidIcuTextDateFormat_Field *AM_PM_MIDNIGHT_NOON NS_SWIFT_NAME(AM_PM_MIDNIGHT_NOON);
-@property (readonly, class, strong) AndroidIcuTextDateFormat_Field *FLEXIBLE_DAY_PERIOD NS_SWIFT_NAME(FLEXIBLE_DAY_PERIOD);
-@property (readonly, class, strong) AndroidIcuTextDateFormat_Field *TIME_SEPARATOR NS_SWIFT_NAME(TIME_SEPARATOR);
 
 #pragma mark Public
 
@@ -2403,6 +2276,4 @@ J2OBJC_TYPE_LITERAL_HEADER(AndroidIcuTextDateFormat_Field)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_AndroidIcuTextDateFormat")

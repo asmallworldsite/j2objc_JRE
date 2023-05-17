@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaLangAnnotationInherited
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -30,23 +27,21 @@
 #include "java/lang/annotation/Annotation.h"
 
 @class IOSClass;
+@class JavaLangBoolean;
+@class JavaLangInteger;
 
 /*!
- @brief Indicates that an annotation type is automatically inherited.If
-  an Inherited meta-annotation is present on an annotation type
-  declaration, and the user queries the annotation type on a class
-  declaration, and the class declaration has no annotation for this type,
-  then the class's superclass will automatically be queried for the
-  annotation type.
- This process will be repeated until an annotation for this
-  type is found, or the top of the class hierarchy (Object)
-  is reached.  If no superclass has an annotation for this type, then
-  the query will indicate that the class in question has no such annotation. 
- <p>Note that this meta-annotation type has no effect if the annotated
-  type is used to annotate anything other than a class.  Note also
-  that this meta-annotation only causes annotations to be inherited
-  from superclasses; annotations on implemented interfaces have no
-  effect.
+ @brief Indicates that an annotation type is automatically inherited.If an Inherited meta-annotation is
+  present on an annotation type declaration, and the user queries the annotation type on a class
+  declaration, and the class declaration has no annotation for this type, then the class's
+  superclass will automatically be queried for the annotation type.
+ This process will be repeated
+  until an annotation for this type is found, or the top of the class hierarchy (Object) is
+  reached. If no superclass has an annotation for this type, then the query will indicate that the
+  class in question has no such annotation. 
+ <p>Note that this meta-annotation type has no effect if the annotated type is used to annotate
+  anything other than a class. Note also that this meta-annotation only causes annotations to be
+  inherited from superclasses; annotations on implemented interfaces have no effect.
  @author Joshua Bloch
  @since 1.5
  */
@@ -74,6 +69,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaLangAnnotationInherited)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaLangAnnotationInherited")

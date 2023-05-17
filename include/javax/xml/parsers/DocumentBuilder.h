@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaxXmlParsersDocumentBuilder
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -27,6 +24,7 @@
 
 @class JavaIoFile;
 @class JavaIoInputStream;
+@class JavaLangBoolean;
 @class JavaxXmlValidationSchema;
 @class OrgXmlSaxInputSource;
 @protocol OrgW3cDomDOMImplementation;
@@ -185,17 +183,15 @@
 - (id<OrgW3cDomDocument>)parseWithNSString:(NSString *)uri;
 
 /*!
- @brief <p>Reset this <code>DocumentBuilder</code> to its original configuration.
+ @brief <p>Reset this <code>DocumentBuilder</code>.
  </p>
-  
- <p><code>DocumentBuilder</code> is reset to the same state as when it was created with 
- <code>DocumentBuilderFactory.newDocumentBuilder()</code>.
-  <code>reset()</code> is designed to allow the reuse of existing <code>DocumentBuilder</code>s
-  thus saving resources associated with the creation of new <code>DocumentBuilder</code>s.</p>
-  
- <p>The reset <code>DocumentBuilder</code> is not guaranteed to have the same <code>EntityResolver</code> or <code>ErrorHandler</code>
-  <code>Object</code>s, e.g. <code>Object.equals(Object obj)</code>.  It is guaranteed to have a functionally equal 
- <code>EntityResolver</code> and <code>ErrorHandler</code>.</p>
+  This method removes both the <code>EntityResolver</code> and <code>ErrorHandler</code>
+  instances associated with this <code>DocumentBuilder</code> and sets all internal
+  properties to false including those set by the <code>DocumentBuilderFactory</code> when
+  this <code>DocumentBuilder</code> was created.
+ - seealso: #setEntityResolver(EntityResolver)
+ - seealso: #setErrorHandler(ErrorHandler)
+ - seealso: DocumentBuilderFactory
  @since 1.5
  */
 - (void)reset;
@@ -241,6 +237,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaxXmlParsersDocumentBuilder)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaxXmlParsersDocumentBuilder")

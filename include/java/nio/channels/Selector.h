@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaNioChannelsSelector
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -29,6 +26,9 @@
 #define INCLUDE_JavaIoCloseable 1
 #include "java/io/Closeable.h"
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
+@class JavaLangLong;
 @class JavaNioChannelsSpiSelectorProvider;
 @protocol JavaUtilSet;
 
@@ -41,7 +41,7 @@
  <code>openSelector</code>
   method of a custom selector provider.  A selector remains open until it is
   closed via its <code>close</code> method. 
- <a name="ks"></a>
+ <a id="ks"></a>
   
  <p> A selectable channel's registration with a selector is represented by a 
  <code>SelectionKey</code> object.  A selector maintains three sets of selection
@@ -52,7 +52,8 @@
  <code>keys</code> method. </p></li>
     <li><p> The <i>selected-key set</i> is the set of keys such that each
     key's channel was detected to be ready for at least one of the operations
-    identified in the key's interest set during a prior selection operation.
+    identified in the key's interest set during a prior selection operation
+    that adds keys or updates keys in the set.
     This set is returned by the <code>selectedKeys</code> method.
     The selected-key set is always a subset of the key set. </p></li>
     <li><p> The <i>cancelled-key</i> set is the set of keys that have been
@@ -70,19 +71,37 @@
  <p> A key is added to its selector's cancelled-key set when it is cancelled,
   whether by closing its channel or by invoking its <code>cancel</code>
   method.  Cancelling a key will cause its channel to be deregistered
-  during the next selection operation, at which time the key will removed from
-  all of the selector's key sets. 
- <a name="sks"></a><p> Keys are added to the selected-key set by selection
+  during the next selection operation, at which time the key will be removed
+  from all of the selector's key sets. 
+ <a id="sks"></a><p> Keys are added to the selected-key set by selection
   operations.  A key may be removed directly from the selected-key set by
   invoking the set's <code>remove</code>
   method or by invoking the <code>remove</code> method
-  of an <code>iterator</code> obtained from the
-  set.  Keys are never removed from the selected-key set in any other way;
-  they are not, in particular, removed as a side effect of selection
-  operations.  Keys may not be added directly to the selected-key set. </p>
+  of an <code>iterator</code> obtained from the set.
+  All keys may be removed from the selected-key set by invoking the set's 
+ <code>clear</code> method.  Keys may not be added directly
+  to the selected-key set. </p>
   
- <a name="selop"></a>
+ <a id="selop"></a>
   <h2>Selection</h2>
+  
+ <p> A selection operation queries the underlying operating system for an
+  update as to the readiness of each registered channel to perform any of the
+  operations identified by its key's interest set.  There are two forms of
+  selection operation: 
+ <ol>
+    <li><p> The <code>select()</code>, <code>select(long)</code>, and <code>selectNow()</code>
+    methods add the keys of channels ready to perform an operation to the
+    selected-key set, or update the ready-operation set of keys already in the
+    selected-key set. </p></li>
+    <li><p> The <code>select(Consumer)</code>, <code>select(Consumer, long)</code>, and
+    <code>selectNow(Consumer)</code> methods perform an <i>action</i> on the key
+    of each channel that is ready to perform an operation.  These methods do
+    not add to the selected-key set. </p></li>
+  
+ </ol>
+  
+ <h3>Selection operations that add to the selected-key set</h3>
   
  <p> During each selection operation, keys may be added to and removed from a
   selector's selected-key set and may be removed from its key and
@@ -124,24 +143,56 @@
   channels to become ready, and if so for how long, is the only essential
   difference between the three selection methods. </p>
   
+ <h3>Selection operations that perform an action on selected keys</h3>
+  
+ <p> During each selection operation, keys may be removed from the selector's
+  key, selected-key, and cancelled-key sets.  Selection is performed by the 
+ <code>select(Consumer)</code>, <code>select(Consumer,long)</code>, and <code>selectNow(Consumer)</code>
+  methods, and involves three steps:  </p>
+  
+ <ol>
+    <li><p> Each key in the cancelled-key set is removed from each key set of
+    which it is a member, and its channel is deregistered.  This step leaves
+    the cancelled-key set empty. </p></li>
+    <li><p> The underlying operating system is queried for an update as to the
+    readiness of each remaining channel to perform any of the operations
+    identified by its key's interest set as of the moment that the selection
+    operation began.   
+ <p> For a channel that is ready for at least one such operation, the
+    ready-operation set of the channel's key is set to identify exactly the
+    operations for which the channel is ready and the <i>action</i> specified
+    to the <code>select</code> method is invoked to consume the channel's key.  Any
+    readiness information previously recorded in the ready set is discarded
+    prior to invoking the <i>action</i>.
+    <p> Alternatively, where a channel is ready for more than one operation,
+    the <i>action</i> may be invoked more than once with the channel's key and
+    ready-operation set modified to a subset of the operations for which the
+    channel is ready.  Where the <i>action</i> is invoked more than once for
+    the same key then its ready-operation set never contains operation bits
+    that were contained in the set at previous calls to the <i>action</i>
+    in the same selection operation.  </p></li>
+    <li><p> If any keys were added to the cancelled-key set while step (2) was
+    in progress then they are processed as in step (1). </p></li>
+  
+ </ol>
+  
  <h2>Concurrency</h2>
   
- <p> Selectors are themselves safe for use by multiple concurrent threads;
-  their key sets, however, are not. 
- <p> The selection operations synchronize on the selector itself, on the key
-  set, and on the selected-key set, in that order.  They also synchronize on
-  the cancelled-key set during steps (1) and (3) above. 
+ <p> A Selector and its key set are safe for use by multiple concurrent
+  threads.  Its selected-key set and cancelled-key set, however, are not. 
+ <p> The selection operations synchronize on the selector itself, on the
+  selected-key set, in that order.  They also synchronize on the cancelled-key
+  set during steps (1) and (3) above. 
  <p> Changes made to the interest sets of a selector's keys while a
   selection operation is in progress have no effect upon that operation; they
   will be seen by the next selection operation. 
  <p> Keys may be cancelled and channels may be closed at any time.  Hence the
   presence of a key in one or more of a selector's key sets does not imply
-  that the key is valid or that its channel is open.  Application code should
+  that the key is valid or that its channel is open. Application code should
   be careful to synchronize and check these conditions as necessary if there
   is any possibility that another thread will cancel a key or close a channel. 
- <p> A thread blocked in one of the <code>select()</code> or <code>select(long)</code>
-  methods may be interrupted by some other thread in one of
-  three ways: 
+ <p> A thread blocked in a selection operation may be interrupted by some
+  other thread in one of three ways: 
  <ul>
     <li><p> By invoking the selector's <code>wakeup</code> method,
     </p></li>
@@ -154,18 +205,26 @@
   
  </ul>
   
- <p> The <code>close</code> method synchronizes on the selector and all
-  three key sets in the same order as in a selection operation. 
- <a name="ksc"></a>
+ <p> The <code>close</code> method synchronizes on the selector and its
+  selected-key set in the same order as in a selection operation. 
+ <a id="ksc"></a>
+  <p> A Selector's key set is safe for use by multiple concurrent threads.
+  Retrieval operations from the key set do not generally block and so may
+  overlap with new registrations that add to the set, or with the cancellation
+  steps of selection operations that remove keys from the set.  Iterators and
+  spliterators return elements reflecting the state of the set at some point at
+  or since the creation of the iterator/spliterator.  They do not throw 
+ <code>ConcurrentModificationException</code>.
   
- <p> A selector's key and selected-key sets are not, in general, safe for use
-  by multiple concurrent threads.  If such a thread might modify one of these
-  sets directly then access should be controlled by synchronizing on the set
-  itself.  The iterators returned by these sets' <code>iterator</code>
-  methods are <i>fail-fast:</i> If the set
-  is modified after the iterator is created, in any way except by invoking the
-  iterator's own <code>remove</code> method, then a 
- <code>java.util.ConcurrentModificationException</code> will be thrown. </p>
+ <a id="sksc"></a>
+  <p> A selector's selected-key set is not, in general, safe for use by
+  multiple concurrent threads.  If such a thread might modify the set directly
+  then access should be controlled by synchronizing on the set itself.  The
+  iterators returned by the set's <code>iterator</code>
+  methods are <i>fail-fast:</i> If the set is modified after the iterator is
+  created, in any way except by invoking the iterator's own <code>remove</code>
+  method, then a <code>java.util.ConcurrentModificationException</code>
+  will be thrown. </p>
  @author Mark Reinhold
  @author JSR-51 Expert Group
  @since 1.4
@@ -196,7 +255,7 @@
 
 /*!
  @brief Tells whether or not this selector is open.
- @return <tt>true</tt> if, and only if, this selector is open
+ @return <code>true</code> if, and only if, this selector is open
  */
 - (jboolean)isOpen;
 
@@ -206,7 +265,8 @@
   it has been cancelled and its channel has been deregistered.  Any
   attempt to modify the key set will cause an <code>UnsupportedOperationException</code>
   to be thrown. 
- <p> The key set is <a href="#ksc">not thread-safe</a>. </p>
+ <p> The set is <a href="#ksc">safe</a> for use by multiple concurrent
+  threads.  </p>
  @return This selector's key set
  @throw ClosedSelectorException
  If this selector is closed
@@ -257,8 +317,8 @@
   comes first. 
  <p> This method does not offer real-time guarantees: It schedules the
   timeout as if by invoking the <code>Object.wait(long)</code> method. </p>
- @param timeout If positive, block for up to  <tt> timeout </tt>
-                    milliseconds, more or less, while waiting for a                   channel to become ready; if zero, block indefinitely;
+ @param timeout If positive, block for up to <code>timeout</code>                   milliseconds, more or less, while waiting for a
+                    channel to become ready; if zero, block indefinitely;
                     must not be negative
  @return The number of keys, possibly zero,
            whose ready-operation sets were updated
@@ -276,7 +336,7 @@
  <p> Keys may be removed from, but not directly added to, the
   selected-key set.  Any attempt to add an object to the key set will
   cause an <code>UnsupportedOperationException</code> to be thrown. 
- <p> The selected-key set is <a href="#ksc">not thread-safe</a>. </p>
+ <p> The selected-key set is <a href="#sksc">not thread-safe</a>.  </p>
  @return This selector's selected-key set
  @throw ClosedSelectorException
  If this selector is closed
@@ -303,15 +363,14 @@
 /*!
  @brief Causes the first selection operation that has not yet returned to return
   immediately.
- <p> If another thread is currently blocked in an invocation of the 
- <code>select()</code> or <code>select(long)</code> methods then that invocation
-  will return immediately.  If no selection operation is currently in
-  progress then the next invocation of one of these methods will return
-  immediately unless the <code>selectNow()</code> method is invoked in the
-  meantime.  In any case the value returned by that invocation may be
-  non-zero.  Subsequent invocations of the <code>select()</code> or <code>select(long)</code>
-  methods will block as usual unless this method is invoked
-  again in the meantime. 
+ <p> If another thread is currently blocked in a selection operation then
+  that invocation will return immediately.  If no selection operation is
+  currently in progress then the next invocation of a selection operation
+  will return immediately unless <code>selectNow()</code> or <code>selectNow(Consumer)</code>
+  is invoked in the meantime.  In any case the value
+  returned by that invocation may be non-zero.  Subsequent selection
+  operations will block as usual unless this method is invoked again in the
+  meantime. 
  <p> Invoking this method more than once between two successive selection
   operations has the same effect as invoking it just once.  </p>
  @return This selector
@@ -341,6 +400,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaNioChannelsSelector)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaNioChannelsSelector")

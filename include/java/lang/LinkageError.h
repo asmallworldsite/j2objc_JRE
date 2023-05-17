@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaLangLinkageError
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -29,6 +26,7 @@
 #define INCLUDE_JavaLangError 1
 #include "java/lang/Error.h"
 
+@class JavaLangBoolean;
 @class JavaLangThrowable;
 
 /*!
@@ -36,7 +34,7 @@
   some dependency on another class; however, the latter class has
   incompatibly changed after the compilation of the former class.
  @author Frank Yellin
- @since JDK1.0
+ @since 1.0
  */
 @interface JavaLangLinkageError : JavaLangError
 
@@ -103,6 +101,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaLangLinkageError)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaLangLinkageError")

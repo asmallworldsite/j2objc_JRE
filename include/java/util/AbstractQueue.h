@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaUtilAbstractQueue
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -33,6 +30,7 @@
 #define INCLUDE_JavaUtilQueue 1
 #include "java/util/Queue.h"
 
+@class JavaLangBoolean;
 @protocol JavaUtilCollection;
 
 /*!
@@ -162,6 +160,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilAbstractQueue)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaUtilAbstractQueue")

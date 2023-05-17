@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaNetInterfaceAddress
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -25,6 +22,9 @@
 #if !defined (JavaNetInterfaceAddress_) && (INCLUDE_ALL_JavaNetInterfaceAddress || defined(INCLUDE_JavaNetInterfaceAddress))
 #define JavaNetInterfaceAddress_
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
+@class JavaLangShort;
 @class JavaNetInet4Address;
 @class JavaNetInetAddress;
 
@@ -130,6 +130,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaNetInterfaceAddress)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaNetInterfaceAddress")

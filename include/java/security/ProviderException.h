@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaSecurityProviderException
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -29,6 +26,7 @@
 #define INCLUDE_JavaLangRuntimeException 1
 #include "java/lang/RuntimeException.h"
 
+@class JavaLangBoolean;
 @class JavaLangThrowable;
 
 /*!
@@ -37,6 +35,7 @@
   which may be subclassed by Providers to
   throw specialized, provider-specific runtime errors.
  @author Benjamin Renaud
+ @since 1.1
  */
 @interface JavaSecurityProviderException : JavaLangRuntimeException
 
@@ -124,6 +123,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaSecurityProviderException)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaSecurityProviderException")

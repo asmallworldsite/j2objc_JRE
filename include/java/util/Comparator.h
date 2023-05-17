@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaUtilComparator
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -25,6 +22,8 @@
 #if !defined (JavaUtilComparator_) && (INCLUDE_ALL_JavaUtilComparator || defined(INCLUDE_JavaUtilComparator))
 #define JavaUtilComparator_
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @protocol JavaUtilFunctionFunction;
 @protocol JavaUtilFunctionToDoubleFunction;
 @protocol JavaUtilFunctionToIntFunction;
@@ -432,6 +431,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilComparator)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaUtilComparator")

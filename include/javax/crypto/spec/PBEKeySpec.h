@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaxCryptoSpecPBEKeySpec
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -31,6 +28,7 @@
 
 @class IOSByteArray;
 @class IOSCharArray;
+@class JavaLangInteger;
 
 /*!
  @brief A user-chosen password that can be used with password-based encryption
@@ -186,6 +184,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaxCryptoSpecPBEKeySpec)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaxCryptoSpecPBEKeySpec")

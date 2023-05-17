@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaNetCookieStore
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -25,6 +22,7 @@
 #if !defined (JavaNetCookieStore_) && (INCLUDE_ALL_JavaNetCookieStore || defined(INCLUDE_JavaNetCookieStore))
 #define JavaNetCookieStore_
 
+@class JavaLangBoolean;
 @class JavaNetHttpCookie;
 @class JavaNetURI;
 @protocol JavaUtilList;
@@ -117,6 +115,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaNetCookieStore)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaNetCookieStore")

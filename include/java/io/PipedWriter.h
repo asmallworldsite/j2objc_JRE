@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaIoPipedWriter
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -31,11 +28,12 @@
 
 @class IOSCharArray;
 @class JavaIoPipedReader;
+@class JavaLangInteger;
 
 /*!
  @brief Piped character-output streams.
  @author Mark Reinhold
- @since JDK1.1
+ @since 1.1
  */
 @interface JavaIoPipedWriter : JavaIoWriter
 
@@ -109,8 +107,12 @@
  @param cbuf the data.
  @param off the start offset in the data.
  @param len the number of characters to write.
+ @throw IndexOutOfBoundsException
+ If <code>off</code> is negative, or <code>len</code> is negative,
+           or <code>off + len</code> is negative or greater than the length
+           of the given array
  @throw IOExceptionif the pipe is
-           <a href=PipedOutputStream.html#BROKEN> <code>broken</code></a>,
+           <a href=PipedOutputStream.html#BROKEN><code>broken</code></a>,
            <code>unconnected</code>, closed
            or an I/O error occurs.
  */
@@ -161,6 +163,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaIoPipedWriter)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaIoPipedWriter")

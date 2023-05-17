@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaNioFileStandardCopyOption
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -35,11 +32,17 @@
 
 @class IOSObjectArray;
 
-typedef NS_ENUM(NSUInteger, JavaNioFileStandardCopyOption_Enum) {
+typedef NS_ENUM(jint, JavaNioFileStandardCopyOption_Enum) {
   JavaNioFileStandardCopyOption_Enum_REPLACE_EXISTING = 0,
   JavaNioFileStandardCopyOption_Enum_COPY_ATTRIBUTES = 1,
   JavaNioFileStandardCopyOption_Enum_ATOMIC_MOVE = 2,
 };
+#if J2OBJC_IMPORTED_BY_JAVA_IMPLEMENTATION
+#define JavaNioFileStandardCopyOption_ORDINAL jint
+#else
+#define JavaNioFileStandardCopyOption_ORDINAL JavaNioFileStandardCopyOption_Enum
+#endif
+
 
 /*!
  @brief Defines the standard copy options.
@@ -47,9 +50,6 @@ typedef NS_ENUM(NSUInteger, JavaNioFileStandardCopyOption_Enum) {
  */
 @interface JavaNioFileStandardCopyOption : JavaLangEnum < JavaNioFileCopyOption >
 
-@property (readonly, class, nonnull) JavaNioFileStandardCopyOption *REPLACE_EXISTING NS_SWIFT_NAME(REPLACE_EXISTING);
-@property (readonly, class, nonnull) JavaNioFileStandardCopyOption *COPY_ATTRIBUTES NS_SWIFT_NAME(COPY_ATTRIBUTES);
-@property (readonly, class, nonnull) JavaNioFileStandardCopyOption *ATOMIC_MOVE NS_SWIFT_NAME(ATOMIC_MOVE);
 #pragma mark Public
 
 + (JavaNioFileStandardCopyOption *)valueOfWithNSString:(NSString *)name;
@@ -59,6 +59,8 @@ typedef NS_ENUM(NSUInteger, JavaNioFileStandardCopyOption_Enum) {
 #pragma mark Package-Private
 
 - (JavaNioFileStandardCopyOption_Enum)toNSEnum;
+
+- (JavaNioFileStandardCopyOption_ORDINAL)ordinal;
 
 @end
 
@@ -89,7 +91,7 @@ FOUNDATION_EXPORT IOSObjectArray *JavaNioFileStandardCopyOption_values(void);
 
 FOUNDATION_EXPORT JavaNioFileStandardCopyOption *JavaNioFileStandardCopyOption_valueOfWithNSString_(NSString *name);
 
-FOUNDATION_EXPORT JavaNioFileStandardCopyOption *JavaNioFileStandardCopyOption_fromOrdinal(NSUInteger ordinal);
+FOUNDATION_EXPORT JavaNioFileStandardCopyOption *JavaNioFileStandardCopyOption_fromOrdinal(JavaNioFileStandardCopyOption_ORDINAL ordinal);
 
 J2OBJC_TYPE_LITERAL_HEADER(JavaNioFileStandardCopyOption)
 
@@ -99,6 +101,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaNioFileStandardCopyOption)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaNioFileStandardCopyOption")

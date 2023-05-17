@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaSecuritySpecRSAKeyGenParameterSpec
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -29,6 +26,7 @@
 #define INCLUDE_JavaSecuritySpecAlgorithmParameterSpec 1
 #include "java/security/spec/AlgorithmParameterSpec.h"
 
+@class JavaLangInteger;
 @class JavaMathBigInteger;
 
 /*!
@@ -39,8 +37,6 @@
  @since 1.3
  */
 @interface JavaSecuritySpecRSAKeyGenParameterSpec : NSObject < JavaSecuritySpecAlgorithmParameterSpec >
-@property (readonly, class, strong) JavaMathBigInteger *F0 NS_SWIFT_NAME(F0);
-@property (readonly, class, strong) JavaMathBigInteger *F4 NS_SWIFT_NAME(F4);
 
 #pragma mark Public
 
@@ -103,6 +99,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaSecuritySpecRSAKeyGenParameterSpec)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaSecuritySpecRSAKeyGenParameterSpec")

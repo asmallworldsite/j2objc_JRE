@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaSecurityInterfacesRSAMultiPrimePrivateCrtKey
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -30,12 +27,13 @@
 #include "java/security/interfaces/RSAPrivateKey.h"
 
 @class IOSObjectArray;
+@class JavaLangLong;
 @class JavaMathBigInteger;
 
 /*!
- @brief The interface to an RSA multi-prime private key, as defined in the
-  PKCS#1 v2.1, using the <i>Chinese Remainder Theorem</i>
-  (CRT) information values.
+ @brief The interface to an RSA multi-prime private key, as defined in the 
+ <a href="https://tools.ietf.org/rfc/rfc8017.txt">PKCS#1 v2.2</a> standard,
+  using the <i>Chinese Remainder Theorem</i> (CRT) information values.
  @author Valerie Peng
  - seealso: java.security.spec.RSAPrivateKeySpec
  - seealso: java.security.spec.RSAMultiPrimePrivateCrtKeySpec
@@ -90,11 +88,6 @@
 
 @end
 
-@interface JavaSecurityInterfacesRSAMultiPrimePrivateCrtKey : NSObject
-@property (readonly, class) jlong serialVersionUID NS_SWIFT_NAME(serialVersionUID);
-
-@end
-
 J2OBJC_EMPTY_STATIC_INIT(JavaSecurityInterfacesRSAMultiPrimePrivateCrtKey)
 
 /*!
@@ -114,6 +107,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaSecurityInterfacesRSAMultiPrimePrivateCrtKey)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaSecurityInterfacesRSAMultiPrimePrivateCrtKey")

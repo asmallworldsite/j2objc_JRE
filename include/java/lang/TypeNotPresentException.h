@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaLangTypeNotPresentException
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -29,13 +26,14 @@
 #define INCLUDE_JavaLangRuntimeException 1
 #include "java/lang/RuntimeException.h"
 
+@class JavaLangBoolean;
 @class JavaLangThrowable;
 
 /*!
  @brief Thrown when an application tries to access a type using a string
   representing the type's name, but no definition for the type with
   the specified name can be found.This exception differs from 
- <code>ClassNotFoundException</code> in that <tt>ClassNotFoundException</tt> is a
+ <code>ClassNotFoundException</code> in that <code>ClassNotFoundException</code> is a
   checked exception, whereas this exception is unchecked.
  <p>Note that this exception may be used when undefined type variables
   are accessed as well as when types (e.g., classes, interfaces or
@@ -52,11 +50,11 @@
 #pragma mark Public
 
 /*!
- @brief Constructs a <tt>TypeNotPresentException</tt> for the named type
+ @brief Constructs a <code>TypeNotPresentException</code> for the named type
   with the specified cause.
  @param typeName the fully qualified name of the unavailable type
  @param cause the exception that was thrown when the system attempted to     load the named type, or 
-  <tt> null </tt>  if unavailable or inapplicable
+ <code>null</code>  if unavailable or inapplicable
  */
 - (instancetype __nonnull)initWithNSString:(NSString *)typeName
                      withJavaLangThrowable:(JavaLangThrowable *)cause;
@@ -98,6 +96,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaLangTypeNotPresentException)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaLangTypeNotPresentException")

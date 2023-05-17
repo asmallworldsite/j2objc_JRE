@@ -22,9 +22,6 @@
 #define INCLUDE_JavaUtilLinkedHashMap_LinkedHashIterator 1
 #endif
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -43,6 +40,9 @@
 #include "java/util/Map.h"
 
 @class JavaIoObjectOutputStream;
+@class JavaLangBoolean;
+@class JavaLangFloat;
+@class JavaLangInteger;
 @class JavaUtilHashMap_Node;
 @class JavaUtilHashMap_TreeNode;
 @class JavaUtilLinkedHashMap_LinkedHashMapEntry;
@@ -54,10 +54,10 @@
 
 /*!
  @brief <p>Hash table and linked list implementation of the <tt>Map</tt> interface,
-  with predictable iteration order.
- This implementation differs from 
+  with predictable iteration order.This implementation differs from 
  <tt>HashMap</tt> in that it maintains a doubly-linked list running through
-  all of its entries.  This linked list defines the iteration ordering,
+  all of its entries.
+ This linked list defines the iteration ordering,
   which is normally the order in which keys were inserted into the map
   (<i>insertion-order</i>).  Note that insertion order is not affected
   if a key is <i>re-inserted</i> into the map.  (A key <tt>k</tt> is
@@ -269,11 +269,6 @@
 - (jboolean)containsValueWithId:(id)value;
 
 /*!
- @brief Returns the eldest entry in the map, or <code>null</code> if the map is empty.
- */
-- (id<JavaUtilMap_Entry>)eldest;
-
-/*!
  @brief Returns a <code>Set</code> view of the mappings contained in this map.
  The set is backed by the map, so changes to the map are
   reflected in the set, and vice-versa.  If the map is modified
@@ -474,6 +469,8 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilLinkedHashMap)
 #define INCLUDE_JavaUtilHashMap_Node 1
 #include "java/util/HashMap.h"
 
+@class JavaLangInteger;
+
 /*!
  @brief HashMap.Node subclass for normal LinkedHashMap entries.
  */
@@ -511,6 +508,8 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilLinkedHashMap_LinkedHashMapEntry)
 #define INCLUDE_JavaUtilAbstractSet 1
 #include "java/util/AbstractSet.h"
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @class JavaUtilLinkedHashMap;
 @protocol JavaUtilFunctionConsumer;
 @protocol JavaUtilIterator;
@@ -563,6 +562,8 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilLinkedHashMap_LinkedKeySet)
 #define INCLUDE_JavaUtilAbstractCollection 1
 #include "java/util/AbstractCollection.h"
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @class JavaUtilLinkedHashMap;
 @protocol JavaUtilFunctionConsumer;
 @protocol JavaUtilIterator;
@@ -613,6 +614,8 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilLinkedHashMap_LinkedValues)
 #define INCLUDE_JavaUtilAbstractSet 1
 #include "java/util/AbstractSet.h"
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @class JavaUtilLinkedHashMap;
 @protocol JavaUtilFunctionConsumer;
 @protocol JavaUtilIterator;
@@ -661,6 +664,8 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilLinkedHashMap_LinkedEntrySet)
 #if !defined (JavaUtilLinkedHashMap_LinkedHashIterator_) && (INCLUDE_ALL_JavaUtilLinkedHashMap || defined(INCLUDE_JavaUtilLinkedHashMap_LinkedHashIterator))
 #define JavaUtilLinkedHashMap_LinkedHashIterator_
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @class JavaUtilLinkedHashMap;
 @class JavaUtilLinkedHashMap_LinkedHashMapEntry;
 
@@ -807,6 +812,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilLinkedHashMap_LinkedEntryIterator)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaUtilLinkedHashMap")

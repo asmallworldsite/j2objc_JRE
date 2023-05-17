@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaTimeZoneZoneRules
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -29,6 +26,8 @@
 #define INCLUDE_JavaIoSerializable 1
 #include "java/io/Serializable.h"
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @class JavaTimeDuration;
 @class JavaTimeInstant;
 @class JavaTimeLocalDateTime;
@@ -145,28 +144,25 @@
 
 /*!
  @brief Gets the offset transition applicable at the specified local date-time in these rules.
- <p>
-  The mapping from a local date-time to an offset is not straightforward.
-  There are three cases: 
+ <p>The mapping from a local date-time to an offset is not straightforward. There are three
+  cases: 
  <ul>
-  <li>Normal, with one valid offset. For the vast majority of the year, the normal
-   case applies, where there is a single valid offset for the local date-time.</li>
-  <li>Gap, with zero valid offsets. This is when clocks jump forward typically
-   due to the spring daylight savings change from "winter" to "summer".
-   In a gap there are local date-time values with no valid offset.</li>
-  <li>Overlap, with two valid offsets. This is when clocks are set back typically
-   due to the autumn daylight savings change from "summer" to "winter".
-   In an overlap there are local date-time values with two valid offsets.</li>
-  </ul>
-  A transition is used to model the cases of a Gap or Overlap.
-  The Normal case will return null. 
- <p>
-  There are various ways to handle the conversion from a <code>LocalDateTime</code>.
-  One technique, using this method, would be: 
+    <li>Normal, with one valid offset. For the vast majority of the year, the normal case
+        applies, where there is a single valid offset for the local date-time.   
+ <li>Gap, with zero valid offsets. This is when clocks jump forward typically due to the
+        spring daylight savings change from "winter" to "summer". In a gap there are local
+        date-time values with no valid offset.   
+ <li>Overlap, with two valid offsets. This is when clocks are set back typically due to the
+        autumn daylight savings change from "summer" to "winter". In an overlap there are local
+        date-time values with two valid offsets. 
+ </ul>
+  A transition is used to model the cases of a Gap or Overlap. The Normal case will return null. 
+ <p>There are various ways to handle the conversion from a <code>LocalDateTime</code>. One technique,
+  using this method, would be: 
  @code
 
    ZoneOffsetTransition trans = rules.getTransition(localDT);
-   if (trans == null) {
+   if (trans != null) {
      // Gap or Overlap: determine what to do from transition
    } else {
      // Normal case: only one valid offset
@@ -174,7 +170,7 @@
    } 
   
 @endcode
- @param localDateTime the local date-time to query for offset transition, not null, but null   may be ignored if the rules have a single offset for all instants
+ @param localDateTime the local date-time to query for offset transition, not null, but null may      be ignored if the rules have a single offset for all instants
  @return the offset transition, null if the local date-time is not in transition
  */
 - (JavaTimeZoneZoneOffsetTransition *)getTransitionWithJavaTimeLocalDateTime:(JavaTimeLocalDateTime *)localDateTime;
@@ -335,12 +331,12 @@
 
 /*!
  @brief Gets the previous transition before the specified instant.
- <p>
-  This returns details of the previous transition after the specified instant.
-  For example, if the instant represents a point where "summer" daylight saving time
-  applies, then the method will return the transition from the previous "winter" time.
- @param instant the instant to get the previous transition after, not null, but null   may be ignored if the rules have a single offset for all instants
- @return the previous transition after the specified instant, null if this is before the first transition
+ <p>This returns details of the previous transition before the specified instant. For example,
+  if the instant represents a point where "summer" daylight saving time applies, then the method
+  will return the transition from the previous "winter" time.
+ @param instant the instant to get the previous transition after, not null, but null may be      ignored if the rules have a single offset for all instants
+ @return the previous transition before the specified instant, null if this is before the first
+      transition
  */
 - (JavaTimeZoneZoneOffsetTransition *)previousTransitionWithJavaTimeInstant:(JavaTimeInstant *)instant;
 
@@ -367,7 +363,9 @@
                                     withJavaUtilList:(id<JavaUtilList>)lastRules;
 
 /*!
- @brief Reads the state from the stream.
+ @brief Reads the state from the stream.The 1,024 limit to the lengths of stdTrans and savSize is
+  intended to be the size well enough to accommodate the max number of transitions in current
+  tzdb data (203 for Asia/Tehran).
  @param inArg the input stream, not null
  @return the created object, not null
  @throw IOExceptionif an error occurs
@@ -409,6 +407,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaTimeZoneZoneRules)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaTimeZoneZoneRules")

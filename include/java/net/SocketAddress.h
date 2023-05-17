@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaNetSocketAddress
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -29,6 +26,8 @@
 #define INCLUDE_JavaIoSerializable 1
 #include "java/io/Serializable.h"
 
+@class JavaLangLong;
+
 /*!
  @brief This class represents a Socket Address with no protocol attachment.
  As an abstract class, it is meant to be subclassed with a specific,
@@ -41,7 +40,6 @@
  @since 1.4
  */
 @interface JavaNetSocketAddress : NSObject < JavaIoSerializable >
-@property (readonly, class) jlong serialVersionUID NS_SWIFT_NAME(serialVersionUID);
 
 #pragma mark Public
 
@@ -65,6 +63,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaNetSocketAddress)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaNetSocketAddress")

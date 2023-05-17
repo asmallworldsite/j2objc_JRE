@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaIoObjectOutput
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -34,73 +31,70 @@
 #include "java/lang/AutoCloseable.h"
 
 @class IOSByteArray;
+@class JavaLangInteger;
 
 /*!
- @brief Defines an interface for classes that allow reading serialized objects.
- - seealso: ObjectOutputStream
- - seealso: ObjectInput
+ @brief ObjectOutput extends the DataOutput interface to include writing of objects.
+ DataOutput includes methods for output of primitive types, ObjectOutput
+  extends that interface to include objects, arrays, and Strings.
+ @author unascribed
+ - seealso: java.io.InputStream
+ - seealso: java.io.ObjectOutputStream
+ - seealso: java.io.ObjectInputStream
+ @since 1.1
  */
 @protocol JavaIoObjectOutput < JavaIoDataOutput, JavaLangAutoCloseable, JavaObject >
 
 /*!
- @brief Closes the target stream.Implementations of this method should free any
-  resources used by the stream.
- @throw IOException
- if an error occurs while closing the target stream.
+ @brief Write an object to the underlying storage or stream.The
+  class that implements this interface defines how the object is
+  written.
+ @param obj the object to be written
+ @throw IOExceptionAny of the usual Input/Output related exceptions.
  */
-- (void)close;
+- (void)writeObjectWithId:(id)obj;
 
 /*!
- @brief Flushes the target stream.Implementations of this method should ensure
-  that any pending writes are written out to the target stream.
- @throw IOException
- if an error occurs while flushing the target stream.
+ @brief Writes a byte.This method will block until the byte is actually
+  written.
+ @param b the byte
+ @throw IOExceptionIf an I/O error has occurred.
+ */
+- (void)writeWithInt:(jint)b;
+
+/*!
+ @brief Writes an array of bytes.This method will block until the bytes
+  are actually written.
+ @param b the data to be written
+ @throw IOExceptionIf an I/O error has occurred.
+ */
+- (void)writeWithByteArray:(IOSByteArray *)b;
+
+/*!
+ @brief Writes a sub array of bytes.
+ @param b the data to be written
+ @param off the start offset in the data
+ @param len the number of bytes that are written
+ @throw IOExceptionIf an I/O error has occurred.
+ */
+- (void)writeWithByteArray:(IOSByteArray *)b
+                   withInt:(jint)off
+                   withInt:(jint)len;
+
+/*!
+ @brief Flushes the stream.This will write any buffered
+  output bytes.
+ @throw IOExceptionIf an I/O error has occurred.
  */
 - (void)flush;
 
 /*!
- @brief Writes the entire contents of the byte array <code>buffer</code> to the output
-  stream.Blocks until all bytes are written.
- @param buffer the buffer to write.
- @throw IOException
- if an error occurs while writing to the target stream.
+ @brief Closes the stream.This method must be called
+  to release any resources associated with the
+  stream.
+ @throw IOExceptionIf an I/O error has occurred.
  */
-- (void)writeWithByteArray:(IOSByteArray *)buffer;
-
-/*!
- @brief Writes <code>count</code> bytes from the byte array <code>buffer</code> starting at
-  position <code>offset</code> to the target stream.Blocks until all bytes are
-  written.
- @param buffer the buffer to write.
- @param offset the index of the first byte in 
- <code>buffer</code>  to write.
- @param count the number of bytes from 
- <code>buffer</code>  to write to the target             stream.
- @throw IOException
- if an error occurs while writing to the target stream.
- */
-- (void)writeWithByteArray:(IOSByteArray *)buffer
-                   withInt:(jint)offset
-                   withInt:(jint)count;
-
-/*!
- @brief Writes a single byte to the target stream.Only the least significant
-  byte of the integer <code>value</code> is written to the stream.
- Blocks until
-  the byte is actually written.
- @param value the byte to write.
- @throw IOException
- if an error occurs while writing to the target stream.
- */
-- (void)writeWithInt:(jint)value;
-
-/*!
- @brief Writes the specified object <code>obj</code> to the target stream.
- @param obj the object to write.
- @throw IOException
- if an error occurs while writing to the target stream.
- */
-- (void)writeObjectWithId:(id)obj;
+- (void)close;
 
 @end
 
@@ -114,6 +108,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaIoObjectOutput)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaIoObjectOutput")

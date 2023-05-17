@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaUtilList
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -30,6 +27,8 @@
 #include "java/util/Collection.h"
 
 @class IOSObjectArray;
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @protocol JavaUtilComparator;
 @protocol JavaUtilFunctionUnaryOperator;
 @protocol JavaUtilIterator;
@@ -201,7 +200,7 @@
   allocated array of <code>String</code>:
   
  @code
-    String[] y = x.toArray(new String[0]); 
+     String[] y = x.toArray(new String[0]); 
  
 @endcode
   Note that <code>toArray(new Object[0])</code> is identical in function to 
@@ -462,7 +461,7 @@
  @brief Returns the hash code value for this list.The hash code of a list
   is defined to be the result of the following calculation: 
  @code
-    int hashCode = 1;
+     int hashCode = 1;
       for (E e : list)
           hashCode = 31*hashCode + (e==null ?
  0 : e.hashCode()); 
@@ -618,7 +617,7 @@
   instead of a whole list.  For example, the following idiom
   removes a range of elements from a list: 
  @code
-     list.subList(from, to).clear(); 
+      list.subList(from, to).clear(); 
  
 @endcode
   Similar idioms may be constructed for <code>indexOf</code> and 
@@ -668,6 +667,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilList)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaUtilList")

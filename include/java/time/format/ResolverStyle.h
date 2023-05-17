@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaTimeFormatResolverStyle
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -31,11 +28,17 @@
 
 @class IOSObjectArray;
 
-typedef NS_ENUM(NSUInteger, JavaTimeFormatResolverStyle_Enum) {
+typedef NS_ENUM(jint, JavaTimeFormatResolverStyle_Enum) {
   JavaTimeFormatResolverStyle_Enum_STRICT = 0,
   JavaTimeFormatResolverStyle_Enum_SMART = 1,
   JavaTimeFormatResolverStyle_Enum_LENIENT = 2,
 };
+#if J2OBJC_IMPORTED_BY_JAVA_IMPLEMENTATION
+#define JavaTimeFormatResolverStyle_ORDINAL jint
+#else
+#define JavaTimeFormatResolverStyle_ORDINAL JavaTimeFormatResolverStyle_Enum
+#endif
+
 
 /*!
  @brief Enumeration of different ways to resolve dates and times.
@@ -48,9 +51,6 @@ typedef NS_ENUM(NSUInteger, JavaTimeFormatResolverStyle_Enum) {
  */
 @interface JavaTimeFormatResolverStyle : JavaLangEnum
 
-@property (readonly, class, nonnull) JavaTimeFormatResolverStyle *STRICT NS_SWIFT_NAME(STRICT);
-@property (readonly, class, nonnull) JavaTimeFormatResolverStyle *SMART NS_SWIFT_NAME(SMART);
-@property (readonly, class, nonnull) JavaTimeFormatResolverStyle *LENIENT NS_SWIFT_NAME(LENIENT);
 #pragma mark Public
 
 + (JavaTimeFormatResolverStyle *)valueOfWithNSString:(NSString *)name;
@@ -60,6 +60,8 @@ typedef NS_ENUM(NSUInteger, JavaTimeFormatResolverStyle_Enum) {
 #pragma mark Package-Private
 
 - (JavaTimeFormatResolverStyle_Enum)toNSEnum;
+
+- (JavaTimeFormatResolverStyle_ORDINAL)ordinal;
 
 @end
 
@@ -114,7 +116,7 @@ FOUNDATION_EXPORT IOSObjectArray *JavaTimeFormatResolverStyle_values(void);
 
 FOUNDATION_EXPORT JavaTimeFormatResolverStyle *JavaTimeFormatResolverStyle_valueOfWithNSString_(NSString *name);
 
-FOUNDATION_EXPORT JavaTimeFormatResolverStyle *JavaTimeFormatResolverStyle_fromOrdinal(NSUInteger ordinal);
+FOUNDATION_EXPORT JavaTimeFormatResolverStyle *JavaTimeFormatResolverStyle_fromOrdinal(JavaTimeFormatResolverStyle_ORDINAL ordinal);
 
 J2OBJC_TYPE_LITERAL_HEADER(JavaTimeFormatResolverStyle)
 
@@ -124,6 +126,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaTimeFormatResolverStyle)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaTimeFormatResolverStyle")

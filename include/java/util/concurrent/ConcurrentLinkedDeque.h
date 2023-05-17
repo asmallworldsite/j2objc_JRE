@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaUtilConcurrentConcurrentLinkedDeque
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -38,8 +35,11 @@
 #include "java/io/Serializable.h"
 
 @class IOSObjectArray;
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @class JavaUtilConcurrentConcurrentLinkedDeque_Node;
 @protocol JavaUtilCollection;
+@protocol JavaUtilFunctionConsumer;
 @protocol JavaUtilIterator;
 @protocol JavaUtilSpliterator;
 
@@ -58,13 +58,12 @@
   is <em>NOT</em> a constant-time operation. Because of the
   asynchronous nature of these deques, determining the current number
   of elements requires a traversal of the elements, and so may report
-  inaccurate results if this collection is modified during traversal.
-  Additionally, the bulk operations <code>addAll</code>,
-  <code>removeAll</code>, <code>retainAll</code>, <code>containsAll</code>,
-  <code>equals</code>, and <code>toArray</code> are <em>not</em> guaranteed
-  to be performed atomically. For example, an iterator operating
-  concurrently with an <code>addAll</code> operation might view only some
-  of the added elements. 
+  inaccurate results if this collection is modified during traversal. 
+ <p>Bulk operations that add, remove, or examine multiple elements,
+  such as <code>addAll</code>, <code>removeIf</code> or <code>forEach</code>,
+  are <em>not</em> guaranteed to be performed atomically.
+  For example, a <code>forEach</code> traversal concurrent with an <code>addAll</code>
+  operation might observe only some of the added elements. 
  <p>This class and its iterator implement all of the <em>optional</em>
   methods of the <code>Deque</code> and <code>Iterator</code> interfaces. 
  <p>Memory consistency effects: As with other concurrent collections,
@@ -72,7 +71,10 @@
  <code>ConcurrentLinkedDeque</code>
   <a href="package-summary.html#MemoryVisibility"><i>happen-before</i></a>
   actions subsequent to the access or removal of that element from the 
- <code>ConcurrentLinkedDeque</code> in another thread.
+ <code>ConcurrentLinkedDeque</code> in another thread. 
+ <p>This class is a member of the 
+ <a href="{@@docRoot}/java.base/java/util/package-summary.html#CollectionsFramework">
+  Java Collections Framework</a>.
  @since 1.7
  @author Doug Lea
  @author Martin Buchholz
@@ -164,6 +166,11 @@
  @throw NoSuchElementException
  */
 - (id)element;
+
+/*!
+ @throw NullPointerException
+ */
+- (void)forEachWithJavaUtilFunctionConsumer:(id<JavaUtilFunctionConsumer>)action;
 
 /*!
  @throw NoSuchElementException
@@ -443,6 +450,8 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentConcurrentLinkedDeque)
 #if !defined (JavaUtilConcurrentConcurrentLinkedDeque_Node_) && (INCLUDE_ALL_JavaUtilConcurrentConcurrentLinkedDeque || defined(INCLUDE_JavaUtilConcurrentConcurrentLinkedDeque_Node))
 #define JavaUtilConcurrentConcurrentLinkedDeque_Node_
 
+@class JavaLangBoolean;
+
 @interface JavaUtilConcurrentConcurrentLinkedDeque_Node : NSObject {
  @public
   volatile_id prev_;
@@ -504,6 +513,9 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentConcurrentLinkedDeque_Node)
 #define INCLUDE_JavaUtilSpliterator 1
 #include "java/util/Spliterator.h"
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
+@class JavaLangLong;
 @class JavaUtilConcurrentConcurrentLinkedDeque;
 @class JavaUtilConcurrentConcurrentLinkedDeque_Node;
 @protocol JavaUtilComparator;
@@ -514,12 +526,10 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentConcurrentLinkedDeque_Node)
  */
 @interface JavaUtilConcurrentConcurrentLinkedDeque_CLDSpliterator : NSObject < JavaUtilSpliterator > {
  @public
-  JavaUtilConcurrentConcurrentLinkedDeque *queue_;
   JavaUtilConcurrentConcurrentLinkedDeque_Node *current_;
   jint batch_;
   jboolean exhausted_;
 }
-@property (readonly, class) jint MAX_BATCH NS_SWIFT_NAME(MAX_BATCH);
 
 #pragma mark Public
 
@@ -535,7 +545,7 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentConcurrentLinkedDeque_Node)
 
 #pragma mark Package-Private
 
-- (instancetype __nonnull)initWithJavaUtilConcurrentConcurrentLinkedDeque:(JavaUtilConcurrentConcurrentLinkedDeque *)queue;
+- (instancetype __nonnull)initWithJavaUtilConcurrentConcurrentLinkedDeque:(JavaUtilConcurrentConcurrentLinkedDeque *)outer$;
 
 // Disallowed inherited constructors, do not use.
 
@@ -545,18 +555,17 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentConcurrentLinkedDeque_Node)
 
 J2OBJC_EMPTY_STATIC_INIT(JavaUtilConcurrentConcurrentLinkedDeque_CLDSpliterator)
 
-J2OBJC_FIELD_SETTER(JavaUtilConcurrentConcurrentLinkedDeque_CLDSpliterator, queue_, JavaUtilConcurrentConcurrentLinkedDeque *)
 J2OBJC_FIELD_SETTER(JavaUtilConcurrentConcurrentLinkedDeque_CLDSpliterator, current_, JavaUtilConcurrentConcurrentLinkedDeque_Node *)
 
 inline jint JavaUtilConcurrentConcurrentLinkedDeque_CLDSpliterator_get_MAX_BATCH(void);
 #define JavaUtilConcurrentConcurrentLinkedDeque_CLDSpliterator_MAX_BATCH 33554432
 J2OBJC_STATIC_FIELD_CONSTANT(JavaUtilConcurrentConcurrentLinkedDeque_CLDSpliterator, MAX_BATCH, jint)
 
-FOUNDATION_EXPORT void JavaUtilConcurrentConcurrentLinkedDeque_CLDSpliterator_initWithJavaUtilConcurrentConcurrentLinkedDeque_(JavaUtilConcurrentConcurrentLinkedDeque_CLDSpliterator *self, JavaUtilConcurrentConcurrentLinkedDeque *queue);
+FOUNDATION_EXPORT void JavaUtilConcurrentConcurrentLinkedDeque_CLDSpliterator_initWithJavaUtilConcurrentConcurrentLinkedDeque_(JavaUtilConcurrentConcurrentLinkedDeque_CLDSpliterator *self, JavaUtilConcurrentConcurrentLinkedDeque *outer$);
 
-FOUNDATION_EXPORT JavaUtilConcurrentConcurrentLinkedDeque_CLDSpliterator *new_JavaUtilConcurrentConcurrentLinkedDeque_CLDSpliterator_initWithJavaUtilConcurrentConcurrentLinkedDeque_(JavaUtilConcurrentConcurrentLinkedDeque *queue) NS_RETURNS_RETAINED;
+FOUNDATION_EXPORT JavaUtilConcurrentConcurrentLinkedDeque_CLDSpliterator *new_JavaUtilConcurrentConcurrentLinkedDeque_CLDSpliterator_initWithJavaUtilConcurrentConcurrentLinkedDeque_(JavaUtilConcurrentConcurrentLinkedDeque *outer$) NS_RETURNS_RETAINED;
 
-FOUNDATION_EXPORT JavaUtilConcurrentConcurrentLinkedDeque_CLDSpliterator *create_JavaUtilConcurrentConcurrentLinkedDeque_CLDSpliterator_initWithJavaUtilConcurrentConcurrentLinkedDeque_(JavaUtilConcurrentConcurrentLinkedDeque *queue);
+FOUNDATION_EXPORT JavaUtilConcurrentConcurrentLinkedDeque_CLDSpliterator *create_JavaUtilConcurrentConcurrentLinkedDeque_CLDSpliterator_initWithJavaUtilConcurrentConcurrentLinkedDeque_(JavaUtilConcurrentConcurrentLinkedDeque *outer$);
 
 J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentConcurrentLinkedDeque_CLDSpliterator)
 
@@ -566,6 +575,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentConcurrentLinkedDeque_CLDSpliterato
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaUtilConcurrentConcurrentLinkedDeque")

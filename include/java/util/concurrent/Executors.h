@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaUtilConcurrentExecutors
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -25,6 +22,7 @@
 #if !defined (JavaUtilConcurrentExecutors_) && (INCLUDE_ALL_JavaUtilConcurrentExecutors || defined(INCLUDE_JavaUtilConcurrentExecutors))
 #define JavaUtilConcurrentExecutors_
 
+@class JavaLangInteger;
 @protocol JavaLangRunnable;
 @protocol JavaSecurityPrivilegedAction;
 @protocol JavaSecurityPrivilegedExceptionAction;
@@ -385,6 +383,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentExecutors)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaUtilConcurrentExecutors")

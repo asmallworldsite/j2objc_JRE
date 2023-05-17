@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaNetInet4Address
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -30,6 +27,8 @@
 #include "java/net/InetAddress.h"
 
 @class IOSByteArray;
+@class JavaLangBoolean;
+@class JavaLangInteger;
 
 /*!
  @brief This class represents an Internet Protocol version 4 (IPv4) address.
@@ -78,10 +77,6 @@
  @since 1.4
  */
 @interface JavaNetInet4Address : JavaNetInetAddress
-@property (readonly, class) jint INADDRSZ NS_SWIFT_NAME(INADDRSZ);
-@property (readonly, class, strong) JavaNetInetAddress *ANY NS_SWIFT_NAME(ANY);
-@property (readonly, class, strong) JavaNetInetAddress *ALL NS_SWIFT_NAME(ALL);
-@property (readonly, class, strong) JavaNetInetAddress *LOOPBACK NS_SWIFT_NAME(LOOPBACK);
 
 #pragma mark Public
 
@@ -280,6 +275,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaNetInet4Address)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaNetInet4Address")

@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaxLangModelTypeTypeKind
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -30,8 +27,9 @@
 #include "java/lang/Enum.h"
 
 @class IOSObjectArray;
+@class JavaLangBoolean;
 
-typedef NS_ENUM(NSUInteger, JavaxLangModelTypeTypeKind_Enum) {
+typedef NS_ENUM(jint, JavaxLangModelTypeTypeKind_Enum) {
   JavaxLangModelTypeTypeKind_Enum_BOOLEAN = 0,
   JavaxLangModelTypeTypeKind_Enum_BYTE = 1,
   JavaxLangModelTypeTypeKind_Enum_SHORT = 2,
@@ -54,30 +52,15 @@ typedef NS_ENUM(NSUInteger, JavaxLangModelTypeTypeKind_Enum) {
   JavaxLangModelTypeTypeKind_Enum_UNION = 19,
   JavaxLangModelTypeTypeKind_Enum_INTERSECTION = 20,
 };
+#if J2OBJC_IMPORTED_BY_JAVA_IMPLEMENTATION
+#define JavaxLangModelTypeTypeKind_ORDINAL jint
+#else
+#define JavaxLangModelTypeTypeKind_ORDINAL JavaxLangModelTypeTypeKind_Enum
+#endif
+
 
 @interface JavaxLangModelTypeTypeKind : JavaLangEnum
 
-@property (readonly, class, nonnull) JavaxLangModelTypeTypeKind *BOOLEAN NS_SWIFT_NAME(BOOLEAN);
-@property (readonly, class, nonnull) JavaxLangModelTypeTypeKind *BYTE NS_SWIFT_NAME(BYTE);
-@property (readonly, class, nonnull) JavaxLangModelTypeTypeKind *SHORT NS_SWIFT_NAME(SHORT);
-@property (readonly, class, nonnull) JavaxLangModelTypeTypeKind *INT NS_SWIFT_NAME(INT);
-@property (readonly, class, nonnull) JavaxLangModelTypeTypeKind *LONG NS_SWIFT_NAME(LONG);
-@property (readonly, class, nonnull) JavaxLangModelTypeTypeKind *CHAR NS_SWIFT_NAME(CHAR);
-@property (readonly, class, nonnull) JavaxLangModelTypeTypeKind *FLOAT NS_SWIFT_NAME(FLOAT);
-@property (readonly, class, nonnull) JavaxLangModelTypeTypeKind *DOUBLE NS_SWIFT_NAME(DOUBLE);
-@property (readonly, class, nonnull) JavaxLangModelTypeTypeKind *VOID NS_SWIFT_NAME(VOID);
-@property (readonly, class, nonnull) JavaxLangModelTypeTypeKind *NONE NS_SWIFT_NAME(NONE);
-@property (readonly, class, nonnull) JavaxLangModelTypeTypeKind *NULL_ NS_SWIFT_NAME(NULL_);
-@property (readonly, class, nonnull) JavaxLangModelTypeTypeKind *ARRAY NS_SWIFT_NAME(ARRAY);
-@property (readonly, class, nonnull) JavaxLangModelTypeTypeKind *DECLARED NS_SWIFT_NAME(DECLARED);
-@property (readonly, class, nonnull) JavaxLangModelTypeTypeKind *ERROR NS_SWIFT_NAME(ERROR);
-@property (readonly, class, nonnull) JavaxLangModelTypeTypeKind *TYPEVAR NS_SWIFT_NAME(TYPEVAR);
-@property (readonly, class, nonnull) JavaxLangModelTypeTypeKind *WILDCARD NS_SWIFT_NAME(WILDCARD);
-@property (readonly, class, nonnull) JavaxLangModelTypeTypeKind *PACKAGE NS_SWIFT_NAME(PACKAGE);
-@property (readonly, class, nonnull) JavaxLangModelTypeTypeKind *EXECUTABLE NS_SWIFT_NAME(EXECUTABLE);
-@property (readonly, class, nonnull) JavaxLangModelTypeTypeKind *OTHER NS_SWIFT_NAME(OTHER);
-@property (readonly, class, nonnull) JavaxLangModelTypeTypeKind *UNION NS_SWIFT_NAME(UNION);
-@property (readonly, class, nonnull) JavaxLangModelTypeTypeKind *INTERSECTION NS_SWIFT_NAME(INTERSECTION);
 #pragma mark Public
 
 - (jboolean)isPrimitive;
@@ -89,6 +72,8 @@ typedef NS_ENUM(NSUInteger, JavaxLangModelTypeTypeKind_Enum) {
 #pragma mark Package-Private
 
 - (JavaxLangModelTypeTypeKind_Enum)toNSEnum;
+
+- (JavaxLangModelTypeTypeKind_ORDINAL)ordinal;
 
 @end
 
@@ -164,7 +149,7 @@ FOUNDATION_EXPORT IOSObjectArray *JavaxLangModelTypeTypeKind_values(void);
 
 FOUNDATION_EXPORT JavaxLangModelTypeTypeKind *JavaxLangModelTypeTypeKind_valueOfWithNSString_(NSString *name);
 
-FOUNDATION_EXPORT JavaxLangModelTypeTypeKind *JavaxLangModelTypeTypeKind_fromOrdinal(NSUInteger ordinal);
+FOUNDATION_EXPORT JavaxLangModelTypeTypeKind *JavaxLangModelTypeTypeKind_fromOrdinal(JavaxLangModelTypeTypeKind_ORDINAL ordinal);
 
 J2OBJC_TYPE_LITERAL_HEADER(JavaxLangModelTypeTypeKind)
 
@@ -174,6 +159,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaxLangModelTypeTypeKind)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaxLangModelTypeTypeKind")

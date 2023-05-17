@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaIoNotSerializableException
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -33,8 +30,7 @@
  @brief Thrown when an instance is required to have a Serializable interface.
  The serialization runtime or the class of the instance can throw
   this exception. The argument should be the name of the class.
- @author unascribed
- @since JDK1.1
+ @since 1.1
  */
 @interface JavaIoNotSerializableException : JavaIoObjectStreamException
 
@@ -75,6 +71,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaIoNotSerializableException)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaIoNotSerializableException")

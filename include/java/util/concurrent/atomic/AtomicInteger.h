@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaUtilConcurrentAtomicAtomicInteger
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -29,19 +26,23 @@
 #define INCLUDE_JavaIoSerializable 1
 #include "java/io/Serializable.h"
 
+@class JavaLangBoolean;
+@class JavaLangDouble;
+@class JavaLangFloat;
+@class JavaLangInteger;
+@class JavaLangLong;
 @protocol JavaUtilFunctionIntBinaryOperator;
 @protocol JavaUtilFunctionIntUnaryOperator;
 
 /*!
  @brief An <code>int</code> value that may be updated atomically.See the 
- <code>java.util.concurrent.atomic</code> package specification for
-  description of the properties of atomic variables.
- An 
- <code>AtomicInteger</code> is used in applications such as atomically
-  incremented counters, and cannot be used as a replacement for an 
- <code>java.lang.Integer</code>. However, this class does extend 
- <code>Number</code> to allow uniform access by tools and utilities that
-  deal with numerically-based classes.
+ <code>VarHandle</code> specification for descriptions of the properties
+  of atomic accesses.
+ An <code>AtomicInteger</code> is used in
+  applications such as atomically incremented counters, and cannot be
+  used as a replacement for an <code>java.lang.Integer</code>. However,
+  this class does extend <code>Number</code> to allow uniform access by
+  tools and utilities that deal with numerically-based classes.
  @since 1.5
  @author Doug Lea
  */
@@ -61,14 +62,15 @@
 - (instancetype __nonnull)initWithInt:(jint)initialValue;
 
 /*!
- @brief Atomically updates the current value with the results of
+ @brief Atomically updates (with memory effects as specified by <code>VarHandle.compareAndSet</code>
+ ) the current value with the results of
   applying the given function to the current and given values,
   returning the updated value.The function should be
   side-effect-free, since it may be re-applied when attempted
   updates fail due to contention among threads.
- The function
-  is applied with the current value as its first argument,
-  and the given update as the second argument.
+ The function is
+  applied with the current value as its first argument, and the
+  given update as the second argument.
  @param x the update value
  @param accumulatorFunction a side-effect-free function of two arguments
  @return the updated value
@@ -78,17 +80,19 @@
 withJavaUtilFunctionIntBinaryOperator:(id<JavaUtilFunctionIntBinaryOperator>)accumulatorFunction;
 
 /*!
- @brief Atomically adds the given value to the current value.
+ @brief Atomically adds the given value to the current value,
+  with memory effects as specified by <code>VarHandle.getAndAdd</code>.
  @param delta the value to add
  @return the updated value
  */
 - (jint)addAndGetWithInt:(jint)delta;
 
 /*!
- @brief Atomically sets the value to the given updated value
-  if the current value <code>==</code> the expected value.
- @param expect the expected value
- @param update the new value
+ @brief Atomically sets the value to <code>newValue</code>
+  if the current value <code>== expectedValue</code>,
+  with memory effects as specified by <code>VarHandle.compareAndSet</code>.
+ @param expectedValue the expected value
+ @param newValue the new value
  @return <code>true</code> if successful. False return indicates that
   the actual value was not equal to the expected value.
  */
@@ -96,38 +100,44 @@ withJavaUtilFunctionIntBinaryOperator:(id<JavaUtilFunctionIntBinaryOperator>)acc
                          withInt:(jint)update;
 
 /*!
- @brief Atomically decrements by one the current value.
+ @brief Atomically decrements the current value,
+  with memory effects as specified by <code>VarHandle.getAndAdd</code>.
+ <p>Equivalent to <code>addAndGet(-1)</code>.
  @return the updated value
  */
 - (jint)decrementAndGet;
 
 /*!
- @brief Returns the value of this <code>AtomicInteger</code> as a <code>double</code>
-  after a widening primitive conversion.
+ @brief Returns the current value of this <code>AtomicInteger</code> as a 
+ <code>double</code> after a widening primitive conversion,
+  with memory effects as specified by <code>VarHandle.getVolatile</code>.
  */
 - (jdouble)doubleValue;
 
 /*!
- @brief Returns the value of this <code>AtomicInteger</code> as a <code>float</code>
-  after a widening primitive conversion.
+ @brief Returns the current value of this <code>AtomicInteger</code> as a 
+ <code>float</code> after a widening primitive conversion,
+  with memory effects as specified by <code>VarHandle.getVolatile</code>.
  */
 - (jfloat)floatValue;
 
 /*!
- @brief Gets the current value.
+ @brief Returns the current value,
+  with memory effects as specified by <code>VarHandle.getVolatile</code>.
  @return the current value
  */
 - (jint)get;
 
 /*!
- @brief Atomically updates the current value with the results of
+ @brief Atomically updates (with memory effects as specified by <code>VarHandle.compareAndSet</code>
+ ) the current value with the results of
   applying the given function to the current and given values,
   returning the previous value.The function should be
   side-effect-free, since it may be re-applied when attempted
   updates fail due to contention among threads.
- The function
-  is applied with the current value as its first argument,
-  and the given update as the second argument.
+ The function is
+  applied with the current value as its first argument, and the
+  given update as the second argument.
  @param x the update value
  @param accumulatorFunction a side-effect-free function of two arguments
  @return the previous value
@@ -137,33 +147,40 @@ withJavaUtilFunctionIntBinaryOperator:(id<JavaUtilFunctionIntBinaryOperator>)acc
 withJavaUtilFunctionIntBinaryOperator:(id<JavaUtilFunctionIntBinaryOperator>)accumulatorFunction;
 
 /*!
- @brief Atomically adds the given value to the current value.
+ @brief Atomically adds the given value to the current value,
+  with memory effects as specified by <code>VarHandle.getAndAdd</code>.
  @param delta the value to add
  @return the previous value
  */
 - (jint)getAndAddWithInt:(jint)delta;
 
 /*!
- @brief Atomically decrements by one the current value.
+ @brief Atomically decrements the current value,
+  with memory effects as specified by <code>VarHandle.getAndAdd</code>.
+ <p>Equivalent to <code>getAndAdd(-1)</code>.
  @return the previous value
  */
 - (jint)getAndDecrement;
 
 /*!
- @brief Atomically increments by one the current value.
+ @brief Atomically increments the current value,
+  with memory effects as specified by <code>VarHandle.getAndAdd</code>.
+ <p>Equivalent to <code>getAndAdd(1)</code>.
  @return the previous value
  */
 - (jint)getAndIncrement;
 
 /*!
- @brief Atomically sets to the given value and returns the old value.
+ @brief Atomically sets the value to <code>newValue</code> and returns the old value,
+  with memory effects as specified by <code>VarHandle.getAndSet</code>.
  @param newValue the new value
  @return the previous value
  */
 - (jint)getAndSetWithInt:(jint)newValue;
 
 /*!
- @brief Atomically updates the current value with the results of
+ @brief Atomically updates (with memory effects as specified by <code>VarHandle.compareAndSet</code>
+ ) the current value with the results of
   applying the given function, returning the previous value.The
   function should be side-effect-free, since it may be re-applied
   when attempted updates fail due to contention among threads.
@@ -176,13 +193,17 @@ withJavaUtilFunctionIntBinaryOperator:(id<JavaUtilFunctionIntBinaryOperator>)acc
 - (NSUInteger)hash;
 
 /*!
- @brief Atomically increments by one the current value.
+ @brief Atomically increments the current value,
+  with memory effects as specified by <code>VarHandle.getAndAdd</code>.
+ <p>Equivalent to <code>addAndGet(1)</code>.
  @return the updated value
  */
 - (jint)incrementAndGet;
 
 /*!
- @brief Returns the value of this <code>AtomicInteger</code> as an <code>int</code>.
+ @brief Returns the current value of this <code>AtomicInteger</code> as an 
+ <code>int</code>,
+  with memory effects as specified by <code>VarHandle.getVolatile</code>.
  Equivalent to <code>get()</code>.
  */
 - (jint)intValue;
@@ -190,20 +211,23 @@ withJavaUtilFunctionIntBinaryOperator:(id<JavaUtilFunctionIntBinaryOperator>)acc
 - (jboolean)isEqual:(id)obj;
 
 /*!
- @brief Eventually sets to the given value.
+ @brief Sets the value to <code>newValue</code>,
+  with memory effects as specified by <code>VarHandle.setRelease</code>.
  @param newValue the new value
  @since 1.6
  */
 - (void)lazySetWithInt:(jint)newValue;
 
 /*!
- @brief Returns the value of this <code>AtomicInteger</code> as a <code>long</code>
-  after a widening primitive conversion.
+ @brief Returns the current value of this <code>AtomicInteger</code> as a 
+ <code>long</code> after a widening primitive conversion,
+  with memory effects as specified by <code>VarHandle.getVolatile</code>.
  */
 - (jlong)longLongValue;
 
 /*!
- @brief Sets to the given value.
+ @brief Sets the value to <code>newValue</code>,
+  with memory effects as specified by <code>VarHandle.setVolatile</code>.
  @param newValue the new value
  */
 - (void)setWithInt:(jint)newValue;
@@ -215,7 +239,8 @@ withJavaUtilFunctionIntBinaryOperator:(id<JavaUtilFunctionIntBinaryOperator>)acc
 - (NSString *)description;
 
 /*!
- @brief Atomically updates the current value with the results of
+ @brief Atomically updates (with memory effects as specified by <code>VarHandle.compareAndSet</code>
+ ) the current value with the results of
   applying the given function, returning the updated value.The
   function should be side-effect-free, since it may be re-applied
   when attempted updates fail due to contention among threads.
@@ -226,14 +251,13 @@ withJavaUtilFunctionIntBinaryOperator:(id<JavaUtilFunctionIntBinaryOperator>)acc
 - (jint)updateAndGetWithJavaUtilFunctionIntUnaryOperator:(id<JavaUtilFunctionIntUnaryOperator>)updateFunction;
 
 /*!
- @brief Atomically sets the value to the given updated value
-  if the current value <code>==</code> the expected value.
- <p><a href="package-summary.html#weakCompareAndSet">May fail
-  spuriously and does not provide ordering guarantees</a>, so is
-  only rarely an appropriate alternative to <code>compareAndSet</code>.
- @param expect the expected value
- @param update the new value
+ @brief Possibly atomically sets the value to <code>newValue</code>
+  if the current value <code>== expectedValue</code>,
+  with memory effects as specified by <code>VarHandle.weakCompareAndSetPlain</code>.
+ @param expectedValue the expected value
+ @param newValue the new value
  @return <code>true</code> if successful
+ - seealso: #weakCompareAndSetPlain
  */
 - (jboolean)weakCompareAndSetWithInt:(jint)expect
                              withInt:(jint)update;
@@ -264,6 +288,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentAtomicAtomicInteger)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaUtilConcurrentAtomicAtomicInteger")

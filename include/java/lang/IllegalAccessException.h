@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaLangIllegalAccessException
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -37,7 +34,6 @@
   set or get a field, or invoke a method, but the currently
   executing method does not have access to the definition of
   the specified class, field, method or constructor.
- @author unascribed
  - seealso: Class#newInstance()
  - seealso: java.lang.reflect.Field#set(Object, Object)
  - seealso: java.lang.reflect.Field#setBoolean(Object, boolean)
@@ -59,7 +55,7 @@
  - seealso: java.lang.reflect.Field#getDouble(Object)
  - seealso: java.lang.reflect.Method#invoke(Object, Object[])
  - seealso: java.lang.reflect.Constructor#newInstance(Object[])
- @since JDK1.0
+ @since 1.0
  */
 @interface JavaLangIllegalAccessException : JavaLangReflectiveOperationException
 
@@ -108,6 +104,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaLangIllegalAccessException)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaLangIllegalAccessException")

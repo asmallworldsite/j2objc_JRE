@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaLangUnsupportedOperationException
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -29,19 +26,20 @@
 #define INCLUDE_JavaLangRuntimeException 1
 #include "java/lang/RuntimeException.h"
 
+@class JavaLangBoolean;
+@class JavaLangLong;
 @class JavaLangThrowable;
 
 /*!
  @brief Thrown to indicate that the requested operation is not supported.
  <p>
   This class is a member of the 
- <a href="{@@docRoot}openjdk-redirect.html?v=8&path=/technotes/guides/collections/index.html">
+ <a href="{@@docRoot}/java.base/java/util/package-summary.html#CollectionsFramework">
   Java Collections Framework</a>.
  @author Josh Bloch
  @since 1.2
  */
 @interface JavaLangUnsupportedOperationException : JavaLangRuntimeException
-@property (readonly, class) jlong serialVersionUID NS_SWIFT_NAME(serialVersionUID);
 
 #pragma mark Public
 
@@ -66,7 +64,7 @@
  @param message the detail message (which is saved for later retrieval          by the 
  <code>Throwable.getMessage()</code>  method).
  @param cause the cause (which is saved for later retrieval by the          
- <code>Throwable.getCause()</code>  method).  (A  <tt> null </tt>  value          is permitted, and indicates that the cause is nonexistent or
+ <code>Throwable.getCause()</code>  method).  (A <code>null</code>  value          is permitted, and indicates that the cause is nonexistent or
            unknown.)
  @since 1.5
  */
@@ -75,14 +73,14 @@
 
 /*!
  @brief Constructs a new exception with the specified cause and a detail
-  message of <tt>(cause==null ?
- null : cause.toString())</tt> (which
-  typically contains the class and detail message of <tt>cause</tt>).
+  message of <code>(cause==null ?
+ null : cause.toString())</code> (which
+  typically contains the class and detail message of <code>cause</code>).
  This constructor is useful for exceptions that are little more than
   wrappers for other throwables (for example, <code>java.security.PrivilegedActionException</code>
  ).
  @param cause the cause (which is saved for later retrieval by the          
- <code>Throwable.getCause()</code>  method).  (A  <tt> null </tt>  value is          permitted, and indicates that the cause is nonexistent or
+ <code>Throwable.getCause()</code>  method).  (A <code>null</code>  value is          permitted, and indicates that the cause is nonexistent or
            unknown.)
  @since 1.5
  */
@@ -135,6 +133,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaLangUnsupportedOperationException)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaLangUnsupportedOperationException")

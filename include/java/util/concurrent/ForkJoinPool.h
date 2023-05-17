@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaUtilConcurrentForkJoinPool
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -30,6 +27,9 @@
 #include "java/util/concurrent/AbstractExecutorService.h"
 
 @class IOSObjectArray;
+@class JavaLangBoolean;
+@class JavaLangInteger;
+@class JavaLangLong;
 @class JavaLangRuntimePermission;
 @class JavaLangThrowable;
 @class JavaUtilConcurrentCountedCompleter;
@@ -165,23 +165,6 @@
   id<JavaUtilConcurrentForkJoinPool_ForkJoinWorkerThreadFactory> factory_;
   id<JavaLangThread_UncaughtExceptionHandler> ueh_;
 }
-@property (readonly, class) jint SMASK NS_SWIFT_NAME(SMASK);
-@property (readonly, class) jint MAX_CAP NS_SWIFT_NAME(MAX_CAP);
-@property (readonly, class) jint EVENMASK NS_SWIFT_NAME(EVENMASK);
-@property (readonly, class) jint SQMASK NS_SWIFT_NAME(SQMASK);
-@property (readonly, class) jint UNSIGNALLED NS_SWIFT_NAME(UNSIGNALLED);
-@property (readonly, class) jint SS_SEQ NS_SWIFT_NAME(SS_SEQ);
-@property (readonly, class) jint MODE_MASK NS_SWIFT_NAME(MODE_MASK);
-@property (readonly, class) jint SPARE_WORKER NS_SWIFT_NAME(SPARE_WORKER);
-@property (readonly, class) jint UNREGISTERED NS_SWIFT_NAME(UNREGISTERED);
-@property (readonly, class) jint FIFO_QUEUE NS_SWIFT_NAME(FIFO_QUEUE);
-@property (readonly, class) jint LIFO_QUEUE NS_SWIFT_NAME(LIFO_QUEUE);
-@property (readonly, class) jint IS_OWNED NS_SWIFT_NAME(IS_OWNED);
-@property (readonly, class) jint POLL_LIMIT NS_SWIFT_NAME(POLL_LIMIT);
-@property (readonly, class, strong) id<JavaUtilConcurrentForkJoinPool_ForkJoinWorkerThreadFactory> defaultForkJoinWorkerThreadFactory NS_SWIFT_NAME(defaultForkJoinWorkerThreadFactory);
-@property (readonly, class, strong) JavaLangRuntimePermission *modifyThreadPermission NS_SWIFT_NAME(modifyThreadPermission);
-@property (readonly, class, strong) JavaUtilConcurrentForkJoinPool *common NS_SWIFT_NAME(common);
-@property (readonly, class) jint COMMON_PARALLELISM NS_SWIFT_NAME(COMMON_PARALLELISM);
 
 #pragma mark Public
 
@@ -933,6 +916,8 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentForkJoinPool_ForkJoinWorkerThreadFa
 #define INCLUDE_JavaUtilConcurrentLocksReentrantLock 1
 #include "java/util/concurrent/locks/ReentrantLock.h"
 
+@class JavaLangLong;
+
 /*!
  @brief Additional fields and lock created upon initialization.
  */
@@ -964,6 +949,8 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentForkJoinPool_AuxState)
 #define JavaUtilConcurrentForkJoinPool_WorkQueue_
 
 @class IOSObjectArray;
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @class JavaLangThread;
 @class JavaUtilConcurrentCountedCompleter;
 @class JavaUtilConcurrentForkJoinPool;
@@ -996,8 +983,6 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentForkJoinPool_AuxState)
   volatile_id currentJoin_;
   volatile_id currentSteal_;
 }
-@property (readonly, class) jint INITIAL_QUEUE_CAPACITY NS_SWIFT_NAME(INITIAL_QUEUE_CAPACITY);
-@property (readonly, class) jint MAXIMUM_QUEUE_CAPACITY NS_SWIFT_NAME(MAXIMUM_QUEUE_CAPACITY);
 
 #pragma mark Package-Private
 
@@ -1185,6 +1170,8 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentForkJoinPool_WorkQueue)
 #if !defined (JavaUtilConcurrentForkJoinPool_ManagedBlocker_) && (INCLUDE_ALL_JavaUtilConcurrentForkJoinPool || defined(INCLUDE_JavaUtilConcurrentForkJoinPool_ManagedBlocker))
 #define JavaUtilConcurrentForkJoinPool_ManagedBlocker_
 
+@class JavaLangBoolean;
+
 /*!
  @brief Interface for extending managed parallelism for tasks running
   in <code>ForkJoinPool</code>s.
@@ -1270,6 +1257,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentForkJoinPool_ManagedBlocker)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaUtilConcurrentForkJoinPool")

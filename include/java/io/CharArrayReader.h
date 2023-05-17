@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaIoCharArrayReader
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -30,12 +27,15 @@
 #include "java/io/Reader.h"
 
 @class IOSCharArray;
+@class JavaLangBoolean;
+@class JavaLangInteger;
+@class JavaLangLong;
 
 /*!
  @brief This class implements a character buffer that can be used as a
   character-input stream.
  @author Herb Jellinek
- @since JDK1.1
+ @since 1.1
  */
 @interface JavaIoCharArrayReader : JavaIoReader {
  @public
@@ -69,12 +69,12 @@
 /*!
  @brief Creates a CharArrayReader from the specified array of chars.
  <p> The resulting reader will start reading at the given 
- <tt>offset</tt>.  The total number of <tt>char</tt> values that can be
-  read from this reader will be either <tt>length</tt> or 
- <tt>buf.length-offset</tt>, whichever is smaller.
+ <code>offset</code>.  The total number of <code>char</code> values that can be
+  read from this reader will be either <code>length</code> or 
+ <code>buf.length-offset</code>, whichever is smaller.
  @throw IllegalArgumentException
- If <tt>offset</tt> is negative or greater than
-          <tt>buf.length</tt>, or if <tt>length</tt> is negative, or if
+ If <code>offset</code> is negative or greater than
+          <code>buf.length</code>, or if <code>length</code> is negative, or if
           the sum of these two values is negative.
  @param buf Input buffer (not copied)
  @param offset Offset of the first char to read
@@ -88,7 +88,8 @@
  @brief Closes the stream and releases any system resources associated with
   it.Once the stream has been closed, further read(), ready(),
   mark(), reset(), or skip() invocations will throw an IOException.
- Closing a previously closed stream has no effect.
+ Closing a previously closed stream has no effect. This method will block
+  while there is another thread blocking on the reader.
  */
 - (void)close;
 
@@ -122,6 +123,7 @@
  @return The actual number of characters read, or -1 if
            the end of the stream has been reached
  @throw IOExceptionIf an I/O error occurs
+ @throw IndexOutOfBoundsException
  */
 - (jint)readWithCharArray:(IOSCharArray *)b
                   withInt:(jint)off
@@ -185,6 +187,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaIoCharArrayReader)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaIoCharArrayReader")

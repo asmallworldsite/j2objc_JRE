@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaUtilLinkedList
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -42,6 +39,8 @@
 #include "java/io/Serializable.h"
 
 @class IOSObjectArray;
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @class JavaUtilLinkedList_Node;
 @protocol JavaUtilCollection;
 @protocol JavaUtilIterator;
@@ -626,6 +625,9 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilLinkedList_Node)
 #define INCLUDE_JavaUtilSpliterator 1
 #include "java/util/Spliterator.h"
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
+@class JavaLangLong;
 @class JavaUtilLinkedList;
 @class JavaUtilLinkedList_Node;
 @protocol JavaUtilComparator;
@@ -642,8 +644,6 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilLinkedList_Node)
   jint expectedModCount_;
   jint batch_;
 }
-@property (readonly, class) jint BATCH_UNIT NS_SWIFT_NAME(BATCH_UNIT);
-@property (readonly, class) jint MAX_BATCH NS_SWIFT_NAME(MAX_BATCH);
 
 #pragma mark Public
 
@@ -698,6 +698,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilLinkedList_LLSpliterator)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaUtilLinkedList")

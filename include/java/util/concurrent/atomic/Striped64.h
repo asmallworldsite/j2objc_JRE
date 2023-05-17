@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaUtilConcurrentAtomicStriped64
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -26,6 +23,10 @@
 #define JavaUtilConcurrentAtomicStriped64_
 
 @class IOSObjectArray;
+@class JavaLangBoolean;
+@class JavaLangDouble;
+@class JavaLangInteger;
+@class JavaLangLong;
 @protocol JavaUtilFunctionDoubleBinaryOperator;
 @protocol JavaUtilFunctionLongBinaryOperator;
 
@@ -50,7 +51,6 @@
    */
   volatile_jint cellsBusy_;
 }
-@property (readonly, class) jint NCPU NS_SWIFT_NAME(NCPU);
 
 #pragma mark Public
 
@@ -145,6 +145,9 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentAtomicStriped64)
 #if !defined (JavaUtilConcurrentAtomicStriped64_Cell_) && (INCLUDE_ALL_JavaUtilConcurrentAtomicStriped64 || defined(INCLUDE_JavaUtilConcurrentAtomicStriped64_Cell))
 #define JavaUtilConcurrentAtomicStriped64_Cell_
 
+@class JavaLangBoolean;
+@class JavaLangLong;
+
 /*!
  @brief Padded variant of AtomicLong supporting only raw accesses plus CAS.
  JVM intrinsics note: It would be possible to use a release-only
@@ -188,6 +191,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentAtomicStriped64_Cell)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaUtilConcurrentAtomicStriped64")

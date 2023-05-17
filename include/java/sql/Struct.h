@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaSqlStruct
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -30,11 +27,10 @@
 
 /*!
  @brief <p>The standard mapping in the Java programming language for an SQL
-  structured type.
- A <code>Struct</code> object contains a
+  structured type.A <code>Struct</code> object contains a
   value for each attribute of the SQL structured type that
   it represents.
-  By default, an instance of<code>Struct</code> is valid as long as the
+ By default, an instance of<code>Struct</code> is valid as long as the
   application has a reference to it. 
  <p>
   All methods on the <code>Struct</code> interface must be fully implemented if the
@@ -115,6 +111,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaSqlStruct)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaSqlStruct")

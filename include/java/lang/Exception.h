@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaLangException
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -29,6 +26,9 @@
 #define INCLUDE_JavaLangThrowable 1
 #include "java/lang/Throwable.h"
 
+@class JavaLangBoolean;
+@class JavaLangLong;
+
 /*!
  @brief The class <code>Exception</code> and its subclasses are a form of 
  <code>Throwable</code> that indicates conditions that a reasonable
@@ -41,10 +41,9 @@
   the method or constructor boundary.
  @author Frank Yellin
  - seealso: java.lang.Error
- @since JDK1.0
+ @since 1.0
  */
 @interface JavaLangException : JavaLangThrowable
-@property (readonly, class) jlong serialVersionUID NS_SWIFT_NAME(serialVersionUID);
 
 #pragma mark Public
 
@@ -73,7 +72,7 @@
  @param message the detail message (which is saved for later retrieval          by the 
  <code>getMessage()</code>  method).
  @param cause the cause (which is saved for later retrieval by the          
- <code>getCause()</code>  method).  (A  <tt> null </tt>  value is          permitted, and indicates that the cause is nonexistent or
+ <code>getCause()</code>  method).  (A <code>null</code>  value is          permitted, and indicates that the cause is nonexistent or
            unknown.)
  @since 1.4
  */
@@ -82,14 +81,14 @@
 
 /*!
  @brief Constructs a new exception with the specified cause and a detail
-  message of <tt>(cause==null ?
- null : cause.toString())</tt> (which
-  typically contains the class and detail message of <tt>cause</tt>).
+  message of <code>(cause==null ?
+ null : cause.toString())</code> (which
+  typically contains the class and detail message of <code>cause</code>).
  This constructor is useful for exceptions that are little more than
   wrappers for other throwables (for example, <code>java.security.PrivilegedActionException</code>
  ).
  @param cause the cause (which is saved for later retrieval by the          
- <code>getCause()</code>  method).  (A  <tt> null </tt>  value is          permitted, and indicates that the cause is nonexistent or
+ <code>getCause()</code>  method).  (A <code>null</code>  value is          permitted, and indicates that the cause is nonexistent or
            unknown.)
  @since 1.4
  */
@@ -159,6 +158,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaLangException)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaLangException")

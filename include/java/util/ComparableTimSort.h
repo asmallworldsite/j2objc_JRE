@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaUtilComparableTimSort
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -26,6 +23,7 @@
 #define JavaUtilComparableTimSort_
 
 @class IOSObjectArray;
+@class JavaLangInteger;
 
 /*!
  @brief This is a near duplicate of <code>TimSort</code>, modified for use with
@@ -81,6 +79,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilComparableTimSort)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaUtilComparableTimSort")

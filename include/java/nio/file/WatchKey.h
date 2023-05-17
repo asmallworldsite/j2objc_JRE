@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaNioFileWatchKey
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -25,6 +22,7 @@
 #if !defined (JavaNioFileWatchKey_) && (INCLUDE_ALL_JavaNioFileWatchKey || defined(INCLUDE_JavaNioFileWatchKey))
 #define JavaNioFileWatchKey_
 
+@class JavaLangBoolean;
 @protocol JavaNioFileWatchable;
 @protocol JavaUtilList;
 
@@ -148,6 +146,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaNioFileWatchKey)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaNioFileWatchKey")

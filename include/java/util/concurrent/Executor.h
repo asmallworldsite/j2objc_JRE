@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaUtilConcurrentExecutor
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -75,14 +72,13 @@
     SerialExecutor(Executor executor) {
       this.executor = executor;
     }
-    public synchronized void execute(final Runnable r) {
-      tasks.add(new Runnable() {
-        public void run() {
-          try {
-            r.run();
-          } finally {
-            scheduleNext();
-          }        }
+    public synchronized void execute(Runnable r) {
+      tasks.add(() -> {
+        try {
+          r.run();
+        } finally {
+          scheduleNext();
+        }
       });
       if (active == null) {
         scheduleNext();
@@ -130,6 +126,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentExecutor)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaUtilConcurrentExecutor")

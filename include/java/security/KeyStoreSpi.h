@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaSecurityKeyStoreSpi
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -31,6 +28,8 @@
 @class IOSObjectArray;
 @class JavaIoInputStream;
 @class JavaIoOutputStream;
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @class JavaSecurityCertCertificate;
 @class JavaUtilDate;
 @protocol JavaSecurityKey;
@@ -264,6 +263,17 @@
 - (void)engineLoadWithJavaSecurityKeyStore_LoadStoreParameter:(id<JavaSecurityKeyStore_LoadStoreParameter>)param;
 
 /*!
+ @brief Probes the specified input stream to determine whether it contains a
+  keystore that is supported by this implementation, or not.
+ @param stream the keystore data to be probed
+ @return true if the keystore data is supported, otherwise false
+ @throw IOExceptionif there is an I/O problem with the keystore data.
+ @throw NullPointerExceptionif stream is <code>null</code>.
+ @since 9
+ */
+- (jboolean)engineProbeWithJavaIoInputStream:(JavaIoInputStream *)stream;
+
+/*!
  @brief Assigns the given certificate to the given alias.
  <p> If the given alias identifies an existing entry
   created by a call to <code>setCertificateEntry</code>,
@@ -381,6 +391,11 @@ withJavaSecurityKeyStore_ProtectionParameter:(id<JavaSecurityKeyStore_Protection
 - (void)engineStoreWithJavaIoOutputStream:(JavaIoOutputStream *)stream
                             withCharArray:(IOSCharArray *)password;
 
+#pragma mark Package-Private
+
+- (void)engineLoadWithJavaIoInputStream:(JavaIoInputStream *)stream
+withJavaSecurityKeyStore_LoadStoreParameter:(id<JavaSecurityKeyStore_LoadStoreParameter>)param;
+
 @end
 
 J2OBJC_EMPTY_STATIC_INIT(JavaSecurityKeyStoreSpi)
@@ -395,6 +410,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaSecurityKeyStoreSpi)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaSecurityKeyStoreSpi")

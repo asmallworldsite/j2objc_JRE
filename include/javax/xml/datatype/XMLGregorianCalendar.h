@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaxXmlDatatypeXMLGregorianCalendar
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -25,6 +22,8 @@
 #if !defined (JavaxXmlDatatypeXMLGregorianCalendar_) && (INCLUDE_ALL_JavaxXmlDatatypeXMLGregorianCalendar || defined(INCLUDE_JavaxXmlDatatypeXMLGregorianCalendar))
 #define JavaxXmlDatatypeXMLGregorianCalendar_
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @class JavaMathBigDecimal;
 @class JavaMathBigInteger;
 @class JavaUtilGregorianCalendar;
@@ -403,8 +402,8 @@
 
 /*!
  @brief <p>Return the name of the XML Schema date/time type that this instance
-  maps to.
- Type is computed based on fields that are set.</p>
+  maps to.Type is computed based on fields that are set.
+ </p>
   
  <table border="2" rules="all" cellpadding="2">
     <thead>
@@ -981,6 +980,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaxXmlDatatypeXMLGregorianCalendar)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaxXmlDatatypeXMLGregorianCalendar")

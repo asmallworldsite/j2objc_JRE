@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaIoStringBufferInputStream
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -30,6 +27,8 @@
 #include "java/io/InputStream.h"
 
 @class IOSByteArray;
+@class JavaLangInteger;
+@class JavaLangLong;
 
 /*!
  @brief This class allows an application to create an input stream in
@@ -42,9 +41,8 @@
  @author Arthur van Hoff
  - seealso: java.io.ByteArrayInputStream
  - seealso: java.io.StringReader
- @since JDK1.0
+ @since 1.0
  */
-__attribute__((deprecated))
 @interface JavaIoStringBufferInputStream : JavaIoInputStream {
  @public
   /*!
@@ -152,6 +150,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaIoStringBufferInputStream)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaIoStringBufferInputStream")

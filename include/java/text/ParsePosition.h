@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaTextParsePosition
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -24,6 +21,9 @@
 
 #if !defined (JavaTextParsePosition_) && (INCLUDE_ALL_JavaTextParsePosition || defined(INCLUDE_JavaTextParsePosition))
 #define JavaTextParsePosition_
+
+@class JavaLangBoolean;
+@class JavaLangInteger;
 
 /*!
  @brief <code>ParsePosition</code> is a simple class used by <code>Format</code>
@@ -35,6 +35,7 @@
   you can use the same <code>ParsePosition</code>, since the index parameter
   records the current position.
  @author Mark Davis
+ @since 1.1
  - seealso: java.text.Format
  */
 @interface JavaTextParsePosition : NSObject {
@@ -128,6 +129,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaTextParsePosition)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaTextParsePosition")

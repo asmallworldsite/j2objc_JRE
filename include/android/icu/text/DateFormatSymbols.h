@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_AndroidIcuTextDateFormatSymbols
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -30,55 +27,55 @@
 #include "java/io/Serializable.h"
 
 @class AndroidIcuImplICUResourceBundle;
+@class AndroidIcuTextDateFormatSymbols_AospExtendedDateFormatSymbols;
 @class AndroidIcuUtilCalendar;
 @class AndroidIcuUtilULocale;
 @class AndroidIcuUtilULocale_Type;
 @class IOSClass;
 @class IOSObjectArray;
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @class JavaUtilLocale;
 @class JavaUtilResourceBundle;
 @protocol JavaUtilMap;
 
 /*!
- @brief <strong>[icu enhancement]</strong> ICU's replacement for <code>java.text.DateFormatSymbols</code>.
- &nbsp;Methods, fields, and other functionality specific to ICU are labeled '<strong>[icu]</strong>'.
- <p><code>DateFormatSymbols</code> is a public class for encapsulating
-  localizable date-time formatting data, such as the names of the
-  months, the names of the days of the week, and the time zone data. 
- <code>DateFormat</code> and <code>SimpleDateFormat</code> both use 
- <code>DateFormatSymbols</code> to encapsulate this information. 
- <p>Typically you shouldn't use <code>DateFormatSymbols</code> directly.
-  Rather, you are encouraged to create a date-time formatter with the 
- <code>DateFormat</code> class's factory methods: <code>getTimeInstance</code>,
-  <code>getDateInstance</code>, or <code>getDateTimeInstance</code>.
-  These methods automatically create a <code>DateFormatSymbols</code> for
-  the formatter so that you don't have to. After the
-  formatter is created, you may modify its format pattern using the 
- <code>setPattern</code> method. For more information about
-  creating formatters using <code>DateFormat</code>'s factory methods,
-  see <code>DateFormat</code>.
+ @brief <strong>[icu enhancement]</strong> ICU's replacement for <code>java.text.DateFormatSymbols</code>
+ .
+ &nbsp;Methods, fields, and other functionality specific to ICU are
+  labeled '<strong>[icu]</strong>'.
+ <p><code>DateFormatSymbols</code> is a public class for encapsulating localizable date-time
+  formatting data, such as the names of the months, the names of the days of the week, and the time
+  zone data. <code>DateFormat</code> and <code>SimpleDateFormat</code> both use <code>
+  DateFormatSymbols</code> to encapsulate this information. 
+ <p>Typically you shouldn't use <code>DateFormatSymbols</code> directly. Rather, you are
+  encouraged to create a date-time formatter with the <code>DateFormat</code> class's factory
+  methods: <code>getTimeInstance</code>, <code>getDateInstance</code>, or <code>getDateTimeInstance
+  </code>. These methods automatically create a <code>DateFormatSymbols</code> for the formatter so
+  that you don't have to. After the formatter is created, you may modify its format pattern using the 
+ <code>setPattern</code> method. For more information about creating formatters using <code>
+  DateFormat</code>'s factory methods, see <code>DateFormat</code>.
   
- <p>If you decide to create a date-time formatter with a specific
-  format pattern for a specific locale, you can do so with: 
+ <p>If you decide to create a date-time formatter with a specific format pattern for a specific
+  locale, you can do so with: 
  <blockquote>
-  @code
+  
+ @code
 
   new SimpleDateFormat(aPattern, new DateFormatSymbols(aLocale)). 
   
 @endcode
-  </blockquote>
   
- <p><code>DateFormatSymbols</code> objects are clonable. When you obtain
-  a <code>DateFormatSymbols</code> object, feel free to modify the
-  date-time formatting data. For instance, you can replace the localized
-  date-time format pattern characters with the ones that you feel easy
-  to remember. Or you can change the representative cities
-  to your favorite ones. 
- <p>New <code>DateFormatSymbols</code> subclasses may be added to support 
- <code>SimpleDateFormat</code> for date-time formatting for additional locales.
+ </blockquote>
+  
+ <p><code>DateFormatSymbols</code> objects are clonable. When you obtain a <code>DateFormatSymbols
+  </code> object, feel free to modify the date-time formatting data. For instance, you can replace
+  the localized date-time format pattern characters with the ones that you feel easy to remember.
+  Or you can change the representative cities to your favorite ones. 
+ <p>New <code>DateFormatSymbols</code> subclasses may be added to support <code>SimpleDateFormat
+  </code> for date-time formatting for additional locales.
  - seealso: DateFormat
  - seealso: SimpleDateFormat
- - seealso: android.icu.util.SimpleTimeZone
  @author Chen-Lieh Huang
  */
 @interface AndroidIcuTextDateFormatSymbols : NSObject < JavaIoSerializable, NSCopying > {
@@ -223,6 +220,12 @@
    */
   IOSObjectArray *shortQuarters_;
   /*!
+   @brief Narrow quarter names.For example: "1", "2", "3", "4".
+   An array of 4 strings indexed by the
+  month divided by 3.
+   */
+  IOSObjectArray *narrowQuarters_;
+  /*!
    @brief Full quarter names.For example: "1st Quarter", "2nd Quarter", "3rd Quarter",
   "4th Quarter".
    An array of 4 strings, indexed by the month divided by 3.
@@ -234,6 +237,12 @@
   of 4 strings indexed by the month divided by 3.
    */
   IOSObjectArray *standaloneShortQuarters_;
+  /*!
+   @brief Standalone narrow quarter names.For example: "1", "2", "3", "4".
+   An array of 4 strings indexed
+  by the month divided by 3.
+   */
+  IOSObjectArray *standaloneNarrowQuarters_;
   /*!
    @brief Standalone full quarter names.For example: "1st Quarter", "2nd Quarter", "3rd Quarter",
   "4th Quarter".
@@ -307,27 +316,6 @@
    */
   id<JavaUtilMap> capitalization_;
 }
-@property (readonly, class) jint FORMAT NS_SWIFT_NAME(FORMAT);
-@property (readonly, class) jint STANDALONE NS_SWIFT_NAME(STANDALONE);
-@property (readonly, class) jint NUMERIC NS_SWIFT_NAME(NUMERIC);
-@property (readonly, class) jint DT_CONTEXT_COUNT NS_SWIFT_NAME(DT_CONTEXT_COUNT);
-@property (readonly, class) jint ABBREVIATED NS_SWIFT_NAME(ABBREVIATED);
-@property (readonly, class) jint WIDE NS_SWIFT_NAME(WIDE);
-@property (readonly, class) jint NARROW NS_SWIFT_NAME(NARROW);
-@property (readonly, class) jint SHORT NS_SWIFT_NAME(SHORT);
-@property (readonly, class) jint DT_WIDTH_COUNT NS_SWIFT_NAME(DT_WIDTH_COUNT);
-@property (readonly, class) jint DT_LEAP_MONTH_PATTERN_FORMAT_WIDE NS_SWIFT_NAME(DT_LEAP_MONTH_PATTERN_FORMAT_WIDE);
-@property (readonly, class) jint DT_LEAP_MONTH_PATTERN_FORMAT_ABBREV NS_SWIFT_NAME(DT_LEAP_MONTH_PATTERN_FORMAT_ABBREV);
-@property (readonly, class) jint DT_LEAP_MONTH_PATTERN_FORMAT_NARROW NS_SWIFT_NAME(DT_LEAP_MONTH_PATTERN_FORMAT_NARROW);
-@property (readonly, class) jint DT_LEAP_MONTH_PATTERN_STANDALONE_WIDE NS_SWIFT_NAME(DT_LEAP_MONTH_PATTERN_STANDALONE_WIDE);
-@property (readonly, class) jint DT_LEAP_MONTH_PATTERN_STANDALONE_ABBREV NS_SWIFT_NAME(DT_LEAP_MONTH_PATTERN_STANDALONE_ABBREV);
-@property (readonly, class) jint DT_LEAP_MONTH_PATTERN_STANDALONE_NARROW NS_SWIFT_NAME(DT_LEAP_MONTH_PATTERN_STANDALONE_NARROW);
-@property (readonly, class) jint DT_LEAP_MONTH_PATTERN_NUMERIC NS_SWIFT_NAME(DT_LEAP_MONTH_PATTERN_NUMERIC);
-@property (readonly, class) jint DT_MONTH_PATTERN_COUNT NS_SWIFT_NAME(DT_MONTH_PATTERN_COUNT);
-@property (readonly, copy, class) NSString *DEFAULT_TIME_SEPARATOR NS_SWIFT_NAME(DEFAULT_TIME_SEPARATOR);
-@property (readonly, copy, class) NSString *ALTERNATE_TIME_SEPARATOR NS_SWIFT_NAME(ALTERNATE_TIME_SEPARATOR);
-@property (readonly, copy, class) NSString *patternChars NS_SWIFT_NAME(patternChars);
-@property (readonly, class) jint millisPerHour NS_SWIFT_NAME(millisPerHour);
 
 #pragma mark Public
 
@@ -341,55 +329,8 @@
 - (instancetype __nonnull)init;
 
 /*!
- @brief Returns the <code>DateFormatSymbols</code> object that should be used to format a
-  calendar system's dates in the given locale.
- <p>
-  <b>Subclassing:</b><br>
-  When creating a new Calendar subclass, you must create the 
- <code>ResourceBundle</code>
-  containing its <code>DateFormatSymbols</code> in a specific place.
-  The resource bundle name is based on the calendar's fully-specified
-  class name, with ".resources" inserted at the end of the package name
-  (just before the class name) and "Symbols" appended to the end.
-  For example, the bundle corresponding to "android.icu.util.HebrewCalendar"
-  is "android.icu.impl.data.HebrewCalendarSymbols". 
- <p>
-  Within the ResourceBundle, this method searches for five keys: 
- <ul>
-  <li><b>DayNames</b> -
-       An array of strings corresponding to each possible
-       value of the <code>DAY_OF_WEEK</code> field.  Even though
-       <code>DAY_OF_WEEK</code> starts with <code>SUNDAY</code> = 1,
-       This array is 0-based; the name for Sunday goes in the
-       first position, at index 0.  If this key is not found
-       in the bundle, the day names are inherited from the
-       default <code>DateFormatSymbols</code> for the requested locale. 
- <li><b>DayAbbreviations</b> -
-       An array of abbreviated day names corresponding
-       to the values in the "DayNames" array.  If this key
-       is not found in the resource bundle, the "DayNames"
-       values are used instead.  If neither key is found,
-       the day abbreviations are inherited from the default      
- <code>DateFormatSymbols</code> for the locale. 
- <li><b>MonthNames</b> -
-       An array of strings corresponding to each possible
-       value of the <code>MONTH</code> field.  If this key is not found
-       in the bundle, the month names are inherited from the
-       default <code>DateFormatSymbols</code> for the requested locale. 
- <li><b>MonthAbbreviations</b> -
-       An array of abbreviated day names corresponding
-       to the values in the "MonthNames" array.  If this key
-       is not found in the resource bundle, the "MonthNames"
-       values are used instead.  If neither key is found,
-       the day abbreviations are inherited from the default      
- <code>DateFormatSymbols</code> for the locale. 
- <li><b>Eras</b> -
-       An array of strings corresponding to each possible
-       value of the <code>ERA</code> field.  If this key is not found
-       in the bundle, the era names are inherited from the
-       default <code>DateFormatSymbols</code> for the requested locale. 
- </ul>
-  <p>
+ @brief Returns the <code>DateFormatSymbols</code> object that should be used to format a calendar system's
+  dates in the given locale.
  @param cal The calendar system whose date format symbols are desired.
  @param locale The locale whose symbols are desired.
  - seealso: DateFormatSymbols#DateFormatSymbols(java.util.Locale)
@@ -398,55 +339,8 @@
                                       withJavaUtilLocale:(JavaUtilLocale *)locale;
 
 /*!
- @brief Returns the <code>DateFormatSymbols</code> object that should be used to format a
-  calendar system's dates in the given locale.
- <p>
-  <b>Subclassing:</b><br>
-  When creating a new Calendar subclass, you must create the 
- <code>ResourceBundle</code>
-  containing its <code>DateFormatSymbols</code> in a specific place.
-  The resource bundle name is based on the calendar's fully-specified
-  class name, with ".resources" inserted at the end of the package name
-  (just before the class name) and "Symbols" appended to the end.
-  For example, the bundle corresponding to "android.icu.util.HebrewCalendar"
-  is "android.icu.impl.data.HebrewCalendarSymbols". 
- <p>
-  Within the ResourceBundle, this method searches for five keys: 
- <ul>
-  <li><b>DayNames</b> -
-       An array of strings corresponding to each possible
-       value of the <code>DAY_OF_WEEK</code> field.  Even though
-       <code>DAY_OF_WEEK</code> starts with <code>SUNDAY</code> = 1,
-       This array is 0-based; the name for Sunday goes in the
-       first position, at index 0.  If this key is not found
-       in the bundle, the day names are inherited from the
-       default <code>DateFormatSymbols</code> for the requested locale. 
- <li><b>DayAbbreviations</b> -
-       An array of abbreviated day names corresponding
-       to the values in the "DayNames" array.  If this key
-       is not found in the resource bundle, the "DayNames"
-       values are used instead.  If neither key is found,
-       the day abbreviations are inherited from the default      
- <code>DateFormatSymbols</code> for the locale. 
- <li><b>MonthNames</b> -
-       An array of strings corresponding to each possible
-       value of the <code>MONTH</code> field.  If this key is not found
-       in the bundle, the month names are inherited from the
-       default <code>DateFormatSymbols</code> for the requested locale. 
- <li><b>MonthAbbreviations</b> -
-       An array of abbreviated day names corresponding
-       to the values in the "MonthNames" array.  If this key
-       is not found in the resource bundle, the "MonthNames"
-       values are used instead.  If neither key is found,
-       the day abbreviations are inherited from the default      
- <code>DateFormatSymbols</code> for the locale. 
- <li><b>Eras</b> -
-       An array of strings corresponding to each possible
-       value of the <code>ERA</code> field.  If this key is not found
-       in the bundle, the era names are inherited from the
-       default <code>DateFormatSymbols</code> for the requested locale. 
- </ul>
-  <p>
+ @brief Returns the <code>DateFormatSymbols</code> object that should be used to format a calendar system's
+  dates in the given locale.
  @param cal The calendar system whose date format symbols are desired.
  @param locale The ulocale whose symbols are desired.
  - seealso: DateFormatSymbols#DateFormatSymbols(java.util.Locale)
@@ -510,7 +404,7 @@
  - seealso: #DateFormatSymbols(Calendar, Locale)
  */
 - (instancetype __nonnull)initWithAndroidIcuUtilULocale:(AndroidIcuUtilULocale *)locale
-                                           withNSString:(NSString *)calType __attribute__((deprecated));
+                                           withNSString:(NSString *)calType;
 
 /*!
  @brief Overrides clone.
@@ -521,6 +415,12 @@
  @brief Overrides equals.
  */
 - (jboolean)isEqual:(id)obj;
+
+/*!
+ @brief Returns narrow am/pm strings.For example: "a" and "p".
+ @return narrow ampm strings
+ */
+- (IOSObjectArray *)getAmpmNarrowStrings;
 
 /*!
  @brief Returns am/pm strings.For example: "AM" and "PM".
@@ -561,7 +461,7 @@
  - seealso: #getDateFormatBundle(java.lang.Class, java.util.Locale)
  */
 + (JavaUtilResourceBundle *)getDateFormatBundleWithAndroidIcuUtilCalendar:(AndroidIcuUtilCalendar *)cal
-                                                       withJavaUtilLocale:(JavaUtilLocale *)locale __attribute__((deprecated));
+                                                       withJavaUtilLocale:(JavaUtilLocale *)locale;
 
 /*!
  @brief Variant of getDateFormatBundle(java.lang.Class, java.util.Locale) that takes
@@ -572,7 +472,7 @@
  - seealso: #getDateFormatBundle(java.lang.Class, java.util.Locale)
  */
 + (JavaUtilResourceBundle *)getDateFormatBundleWithAndroidIcuUtilCalendar:(AndroidIcuUtilCalendar *)cal
-                                                withAndroidIcuUtilULocale:(AndroidIcuUtilULocale *)locale __attribute__((deprecated));
+                                                withAndroidIcuUtilULocale:(AndroidIcuUtilULocale *)locale;
 
 /*!
  @brief Finds the ResourceBundle containing the date format information for
@@ -588,7 +488,7 @@
   this API no longer works as described.  This method always returns null.
  */
 + (JavaUtilResourceBundle *)getDateFormatBundleWithIOSClass:(IOSClass *)calendarClass
-                                         withJavaUtilLocale:(JavaUtilLocale *)locale __attribute__((deprecated));
+                                         withJavaUtilLocale:(JavaUtilLocale *)locale;
 
 /*!
  @brief Finds the ResourceBundle containing the date format information for
@@ -604,19 +504,24 @@
   this API no longer works as described.  This method always returns null.
  */
 + (JavaUtilResourceBundle *)getDateFormatBundleWithIOSClass:(IOSClass *)calendarClass
-                                  withAndroidIcuUtilULocale:(AndroidIcuUtilULocale *)locale __attribute__((deprecated));
+                                  withAndroidIcuUtilULocale:(AndroidIcuUtilULocale *)locale;
 
 /*!
- @brief <strong>[icu]</strong> Returns era name strings.For example: "Anno Domini" and "Before Christ".
+ @brief <strong>[icu]</strong> Returns full era name strings.For example: "Anno Domini" and "Before
+  Christ".
  @return the era strings.
  */
 - (IOSObjectArray *)getEraNames;
 
 /*!
- @brief Returns era strings.For example: "AD" and "BC".
+ @brief Returns abbreviated era strings.For example: "AD" and "BC".
  @return the era strings.
  */
 - (IOSObjectArray *)getEras;
+
+/*!
+ */
++ (AndroidIcuTextDateFormatSymbols_AospExtendedDateFormatSymbols *)getExtendedInstanceWithAndroidIcuUtilULocale:(AndroidIcuUtilULocale *)locale;
 
 /*!
  @brief Returns a DateFormatSymbols instance for the default locale.
@@ -659,25 +564,22 @@
                    this calendar.
  */
 - (NSString *)getLeapMonthPatternWithInt:(jint)context
-                                 withInt:(jint)width __attribute__((deprecated));
+                                 withInt:(jint)width;
 
 /*!
- @brief Returns the locale that was used to create this object, or null.
- This may may differ from the locale requested at the time of
-  this object's creation.  For example, if an object is created
-  for locale <tt>en_US_CALIFORNIA</tt>, the actual data may be
-  drawn from <tt>en</tt> (the <i>actual</i> locale), and 
- <tt>en_US</tt> may be the most specific locale that exists (the 
+ @brief Returns the locale that was used to create this object, or null.This may may differ from the
+  locale requested at the time of this object's creation.
+ For example, if an object is created
+  for locale <tt>en_US_CALIFORNIA</tt>, the actual data may be drawn from <tt>en</tt> (the 
+ <i>actual</i> locale), and <tt>en_US</tt> may be the most specific locale that exists (the 
  <i>valid</i> locale). 
- <p>Note: This method will be implemented in ICU 3.0; ICU 2.8
-  contains a partial preview implementation.  The * <i>actual</i>
-  locale is returned correctly, but the <i>valid</i> locale is
-  not, in most cases.
- @param type type of information requested, either <code>android.icu.util.ULocale.VALID_LOCALE</code>
-   or <code>android.icu.util.ULocale.ACTUAL_LOCALE</code>
-  .
- @return the information specified by <i>type</i>, or null if
-  this object was not constructed from locale data.
+ <p>Note: This method will be implemented in ICU 3.0; ICU 2.8 contains a partial preview
+  implementation. The * <i>actual</i> locale is returned correctly, but the <i>valid</i> locale
+  is not, in most cases.
+ @param type type of information requested, either <code>android.icu.util.ULocale.VALID_LOCALE</code>      or 
+ <code>android.icu.util.ULocale.ACTUAL_LOCALE</code> .
+ @return the information specified by <i>type</i>, or null if this object was not constructed
+      from locale data.
  - seealso: android.icu.util.ULocale
  - seealso: android.icu.util.ULocale#VALID_LOCALE
  - seealso: android.icu.util.ULocale#ACTUAL_LOCALE
@@ -710,14 +612,14 @@
 
 /*!
  @brief <strong>[icu]</strong> Returns narrow era name strings.For example: "A" and "B".
- @return the era strings.
+ @return the narrow era strings.
  */
-- (IOSObjectArray *)getNarrowEras __attribute__((deprecated));
+- (IOSObjectArray *)getNarrowEras;
 
 /*!
  @brief <strong>[icu]</strong> Returns quarter strings.For example: "1st Quarter", "2nd Quarter", etc.
  @param context The quarter context, FORMAT or STANDALONE.
- @param width The width or the returned quarter string,                    either WIDE or ABBREVIATED. There are no NARROW quarters.
+ @param width The width or the returned quarter string, WIDE, NARROW, or ABBREVIATED.
  @return the quarter strings.
  */
 - (IOSObjectArray *)getQuartersWithInt:(jint)context
@@ -742,7 +644,7 @@
  @brief Returns the time separator string.For example: ":".
  @return the time separator string.
  */
-- (NSString *)getTimeSeparatorString __attribute__((deprecated));
+- (NSString *)getTimeSeparatorString;
 
 /*!
  @brief Returns wide weekday strings.For example: "Sunday", "Monday", etc.
@@ -822,13 +724,14 @@
 - (void)setAmPmStringsWithNSStringArray:(IOSObjectArray *)newAmpms;
 
 /*!
- @brief <strong>[icu]</strong> Sets era name strings.For example: "Anno Domini" and "Before Christ".
+ @brief <strong>[icu]</strong> Sets full era name strings.For example: "Anno Domini" and "Before
+  Christ".
  @param newEraNames the new era strings.
  */
 - (void)setEraNamesWithNSStringArray:(IOSObjectArray *)newEraNames;
 
 /*!
- @brief Sets era strings.For example: "AD" and "BC".
+ @brief Sets abbreviated era strings.For example: "AD" and "BC".
  @param newEras the new era strings.
  */
 - (void)setErasWithNSStringArray:(IOSObjectArray *)newEras;
@@ -841,7 +744,7 @@
  */
 - (void)setLeapMonthPatternWithNSString:(NSString *)leapMonthPattern
                                 withInt:(jint)context
-                                withInt:(jint)width __attribute__((deprecated));
+                                withInt:(jint)width;
 
 /*!
  @brief Sets localized date-time pattern characters.For example: 'u', 't', etc.
@@ -866,10 +769,16 @@
                            withInt:(jint)width;
 
 /*!
+ @brief <strong>[icu]</strong> Sets narrow era name strings.For example: "A" and "B".
+ @param newNarrowEras the new narrow era strings.
+ */
+- (void)setNarrowErasWithNSStringArray:(IOSObjectArray *)newNarrowEras;
+
+/*!
  @brief <strong>[icu]</strong> Sets quarter strings.For example: "1st Quarter", "2nd Quarter", etc.
  @param newQuarters the new quarter strings.
  @param context The formatting context, FORMAT or STANDALONE.
- @param width The width of the quarter string,                    either WIDE or ABBREVIATED. There are no NARROW quarters.
+ @param width The width of the quarter string, WIDE, NARROW, or ABBREVIATED.
  */
 - (void)setQuartersWithNSStringArray:(IOSObjectArray *)newQuarters
                              withInt:(jint)context
@@ -895,7 +804,7 @@
  @brief Sets the time separator string.For example: ":".
  @param newTimeSeparator the new time separator string.
  */
-- (void)setTimeSeparatorStringWithNSString:(NSString *)newTimeSeparator __attribute__((deprecated));
+- (void)setTimeSeparatorStringWithNSString:(NSString *)newTimeSeparator;
 
 /*!
  @brief Sets wide weekday strings.For example: "Sunday", "Monday", etc.
@@ -961,7 +870,7 @@
  */
 - (void)initializeDataWithAndroidIcuUtilULocale:(AndroidIcuUtilULocale *)desiredLocale
             withAndroidIcuImplICUResourceBundle:(AndroidIcuImplICUResourceBundle *)b
-                                   withNSString:(NSString *)calendarType OBJC_METHOD_FAMILY_NONE __attribute__((deprecated));
+                                   withNSString:(NSString *)calendarType OBJC_METHOD_FAMILY_NONE;
 
 /*!
  @brief Initializes format symbols for the locale and calendar type
@@ -975,7 +884,7 @@
 
 /*!
  @brief Initializes format symbols using another instance.
- TODO Clean up initialization methods for subclasses
+ <p>TODO Clean up initialization methods for subclasses
  */
 - (void)initializeDataWithAndroidIcuTextDateFormatSymbols:(AndroidIcuTextDateFormatSymbols *)dfs OBJC_METHOD_FAMILY_NONE;
 
@@ -1021,8 +930,10 @@ J2OBJC_FIELD_SETTER(AndroidIcuTextDateFormatSymbols, standaloneNarrowWeekdays_, 
 J2OBJC_FIELD_SETTER(AndroidIcuTextDateFormatSymbols, ampms_, IOSObjectArray *)
 J2OBJC_FIELD_SETTER(AndroidIcuTextDateFormatSymbols, ampmsNarrow_, IOSObjectArray *)
 J2OBJC_FIELD_SETTER(AndroidIcuTextDateFormatSymbols, shortQuarters_, IOSObjectArray *)
+J2OBJC_FIELD_SETTER(AndroidIcuTextDateFormatSymbols, narrowQuarters_, IOSObjectArray *)
 J2OBJC_FIELD_SETTER(AndroidIcuTextDateFormatSymbols, quarters_, IOSObjectArray *)
 J2OBJC_FIELD_SETTER(AndroidIcuTextDateFormatSymbols, standaloneShortQuarters_, IOSObjectArray *)
+J2OBJC_FIELD_SETTER(AndroidIcuTextDateFormatSymbols, standaloneNarrowQuarters_, IOSObjectArray *)
 J2OBJC_FIELD_SETTER(AndroidIcuTextDateFormatSymbols, standaloneQuarters_, IOSObjectArray *)
 J2OBJC_FIELD_SETTER(AndroidIcuTextDateFormatSymbols, leapMonthPatterns_, IOSObjectArray *)
 J2OBJC_FIELD_SETTER(AndroidIcuTextDateFormatSymbols, shortYearNames_, IOSObjectArray *)
@@ -1217,6 +1128,8 @@ FOUNDATION_EXPORT IOSObjectArray *AndroidIcuTextDateFormatSymbols_getAvailableLo
 
 FOUNDATION_EXPORT IOSObjectArray *AndroidIcuTextDateFormatSymbols_getAvailableULocales(void);
 
+FOUNDATION_EXPORT AndroidIcuTextDateFormatSymbols_AospExtendedDateFormatSymbols *AndroidIcuTextDateFormatSymbols_getExtendedInstanceWithAndroidIcuUtilULocale_(AndroidIcuUtilULocale *locale);
+
 FOUNDATION_EXPORT void AndroidIcuTextDateFormatSymbols_initWithAndroidIcuUtilCalendar_withJavaUtilLocale_(AndroidIcuTextDateFormatSymbols *self, AndroidIcuUtilCalendar *cal, JavaUtilLocale *locale);
 
 FOUNDATION_EXPORT AndroidIcuTextDateFormatSymbols *new_AndroidIcuTextDateFormatSymbols_initWithAndroidIcuUtilCalendar_withJavaUtilLocale_(AndroidIcuUtilCalendar *cal, JavaUtilLocale *locale) NS_RETURNS_RETAINED;
@@ -1280,7 +1193,7 @@ J2OBJC_TYPE_LITERAL_HEADER(AndroidIcuTextDateFormatSymbols)
 
 @class IOSObjectArray;
 
-typedef NS_ENUM(NSUInteger, AndroidIcuTextDateFormatSymbols_CapitalizationContextUsage_Enum) {
+typedef NS_ENUM(jint, AndroidIcuTextDateFormatSymbols_CapitalizationContextUsage_Enum) {
   AndroidIcuTextDateFormatSymbols_CapitalizationContextUsage_Enum_OTHER = 0,
   AndroidIcuTextDateFormatSymbols_CapitalizationContextUsage_Enum_MONTH_FORMAT = 1,
   AndroidIcuTextDateFormatSymbols_CapitalizationContextUsage_Enum_MONTH_STANDALONE = 2,
@@ -1296,6 +1209,12 @@ typedef NS_ENUM(NSUInteger, AndroidIcuTextDateFormatSymbols_CapitalizationContex
   AndroidIcuTextDateFormatSymbols_CapitalizationContextUsage_Enum_METAZONE_LONG = 12,
   AndroidIcuTextDateFormatSymbols_CapitalizationContextUsage_Enum_METAZONE_SHORT = 13,
 };
+#if J2OBJC_IMPORTED_BY_JAVA_IMPLEMENTATION
+#define AndroidIcuTextDateFormatSymbols_CapitalizationContextUsage_ORDINAL jint
+#else
+#define AndroidIcuTextDateFormatSymbols_CapitalizationContextUsage_ORDINAL AndroidIcuTextDateFormatSymbols_CapitalizationContextUsage_Enum
+#endif
+
 
 /*!
  @brief <strong>[icu]</strong> Constants for capitalization context usage types
@@ -1303,20 +1222,6 @@ typedef NS_ENUM(NSUInteger, AndroidIcuTextDateFormatSymbols_CapitalizationContex
  */
 @interface AndroidIcuTextDateFormatSymbols_CapitalizationContextUsage : JavaLangEnum
 
-@property (readonly, class, nonnull) AndroidIcuTextDateFormatSymbols_CapitalizationContextUsage *OTHER NS_SWIFT_NAME(OTHER);
-@property (readonly, class, nonnull) AndroidIcuTextDateFormatSymbols_CapitalizationContextUsage *MONTH_FORMAT NS_SWIFT_NAME(MONTH_FORMAT);
-@property (readonly, class, nonnull) AndroidIcuTextDateFormatSymbols_CapitalizationContextUsage *MONTH_STANDALONE NS_SWIFT_NAME(MONTH_STANDALONE);
-@property (readonly, class, nonnull) AndroidIcuTextDateFormatSymbols_CapitalizationContextUsage *MONTH_NARROW NS_SWIFT_NAME(MONTH_NARROW);
-@property (readonly, class, nonnull) AndroidIcuTextDateFormatSymbols_CapitalizationContextUsage *DAY_FORMAT NS_SWIFT_NAME(DAY_FORMAT);
-@property (readonly, class, nonnull) AndroidIcuTextDateFormatSymbols_CapitalizationContextUsage *DAY_STANDALONE NS_SWIFT_NAME(DAY_STANDALONE);
-@property (readonly, class, nonnull) AndroidIcuTextDateFormatSymbols_CapitalizationContextUsage *DAY_NARROW NS_SWIFT_NAME(DAY_NARROW);
-@property (readonly, class, nonnull) AndroidIcuTextDateFormatSymbols_CapitalizationContextUsage *ERA_WIDE NS_SWIFT_NAME(ERA_WIDE);
-@property (readonly, class, nonnull) AndroidIcuTextDateFormatSymbols_CapitalizationContextUsage *ERA_ABBREV NS_SWIFT_NAME(ERA_ABBREV);
-@property (readonly, class, nonnull) AndroidIcuTextDateFormatSymbols_CapitalizationContextUsage *ERA_NARROW NS_SWIFT_NAME(ERA_NARROW);
-@property (readonly, class, nonnull) AndroidIcuTextDateFormatSymbols_CapitalizationContextUsage *ZONE_LONG NS_SWIFT_NAME(ZONE_LONG);
-@property (readonly, class, nonnull) AndroidIcuTextDateFormatSymbols_CapitalizationContextUsage *ZONE_SHORT NS_SWIFT_NAME(ZONE_SHORT);
-@property (readonly, class, nonnull) AndroidIcuTextDateFormatSymbols_CapitalizationContextUsage *METAZONE_LONG NS_SWIFT_NAME(METAZONE_LONG);
-@property (readonly, class, nonnull) AndroidIcuTextDateFormatSymbols_CapitalizationContextUsage *METAZONE_SHORT NS_SWIFT_NAME(METAZONE_SHORT);
 #pragma mark Public
 
 + (AndroidIcuTextDateFormatSymbols_CapitalizationContextUsage *)valueOfWithNSString:(NSString *)name;
@@ -1326,6 +1231,8 @@ typedef NS_ENUM(NSUInteger, AndroidIcuTextDateFormatSymbols_CapitalizationContex
 #pragma mark Package-Private
 
 - (AndroidIcuTextDateFormatSymbols_CapitalizationContextUsage_Enum)toNSEnum;
+
+- (AndroidIcuTextDateFormatSymbols_CapitalizationContextUsage_ORDINAL)ordinal;
 
 @end
 
@@ -1380,9 +1287,58 @@ FOUNDATION_EXPORT IOSObjectArray *AndroidIcuTextDateFormatSymbols_Capitalization
 
 FOUNDATION_EXPORT AndroidIcuTextDateFormatSymbols_CapitalizationContextUsage *AndroidIcuTextDateFormatSymbols_CapitalizationContextUsage_valueOfWithNSString_(NSString *name);
 
-FOUNDATION_EXPORT AndroidIcuTextDateFormatSymbols_CapitalizationContextUsage *AndroidIcuTextDateFormatSymbols_CapitalizationContextUsage_fromOrdinal(NSUInteger ordinal);
+FOUNDATION_EXPORT AndroidIcuTextDateFormatSymbols_CapitalizationContextUsage *AndroidIcuTextDateFormatSymbols_CapitalizationContextUsage_fromOrdinal(AndroidIcuTextDateFormatSymbols_CapitalizationContextUsage_ORDINAL ordinal);
 
 J2OBJC_TYPE_LITERAL_HEADER(AndroidIcuTextDateFormatSymbols_CapitalizationContextUsage)
+
+#endif
+
+#if !defined (AndroidIcuTextDateFormatSymbols_AospExtendedDateFormatSymbols_) && (INCLUDE_ALL_AndroidIcuTextDateFormatSymbols || defined(INCLUDE_AndroidIcuTextDateFormatSymbols_AospExtendedDateFormatSymbols))
+#define AndroidIcuTextDateFormatSymbols_AospExtendedDateFormatSymbols_
+
+@class AndroidIcuTextDateFormatSymbols;
+@class IOSObjectArray;
+@class JavaLangInteger;
+
+/*!
+ @brief This class contains an instance of <code>DateFormatSymbols</code>, and the extra fields needed by
+  libcore.The below alternative implementations are considered, but creating this new class is
+  better. 1.
+ Use <code>ICUResourceBundle.getWithFallback(String)</code> directly to load the extra
+  data, but the logic of resolving date related resources is complicated, and needs to handle
+  resource alias. - With this class re-using <code>CalendarDataSink</code> to load the data, this
+  Android patch does not need to resolve the resource alias ourselves. Resource alias is used
+  extensively in date related data, because in some locales, the narrow format could be the same
+  as abbreviated format. 2. Store the extra fields in <code>DateFormatSymbols</code>. This change may
+  become visible to all apps because <code>DateFormatSymbols</code> is serializable. - This class is
+  not serializable, and not visible to any public app. 3. Provide narrow quarters from the
+  existing API <code>getQuarters(int, int)</code>. However, the method documentation explicitly
+  states that <code>NARROW</code> is not allowed.
+ */
+@interface AndroidIcuTextDateFormatSymbols_AospExtendedDateFormatSymbols : NSObject
+
+#pragma mark Public
+
+/*!
+ */
+- (AndroidIcuTextDateFormatSymbols *)getDateFormatSymbols;
+
+/*!
+ @brief Note that the implementation should mirror <code>getQuarters(int, int)</code>.
+ @param context The quarter context, FORMAT or STANDALONE.
+ @throw IllegalArgumentExceptionfor bad context or no data.
+ */
+- (IOSObjectArray *)getNarrowQuartersWithInt:(jint)context;
+
+// Disallowed inherited constructors, do not use.
+
+- (instancetype __nonnull)init NS_UNAVAILABLE;
+
+@end
+
+J2OBJC_EMPTY_STATIC_INIT(AndroidIcuTextDateFormatSymbols_AospExtendedDateFormatSymbols)
+
+J2OBJC_TYPE_LITERAL_HEADER(AndroidIcuTextDateFormatSymbols_AospExtendedDateFormatSymbols)
 
 #endif
 
@@ -1390,6 +1346,4 @@ J2OBJC_TYPE_LITERAL_HEADER(AndroidIcuTextDateFormatSymbols_CapitalizationContext
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_AndroidIcuTextDateFormatSymbols")

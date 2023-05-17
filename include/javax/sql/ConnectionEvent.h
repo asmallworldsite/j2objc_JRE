@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaxSqlConnectionEvent
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -29,6 +26,7 @@
 #define INCLUDE_JavaUtilEventObject 1
 #include "java/util/EventObject.h"
 
+@class JavaLangLong;
 @class JavaSqlSQLException;
 @protocol JavaxSqlPooledConnection;
 
@@ -47,7 +45,6 @@
  @since 1.4
  */
 @interface JavaxSqlConnectionEvent : JavaUtilEventObject
-@property (readonly, class) jlong serialVersionUID NS_SWIFT_NAME(serialVersionUID);
 
 #pragma mark Public
 
@@ -74,8 +71,7 @@
 
 /*!
  @brief <P>Retrieves the <code>SQLException</code> for this 
- <code>ConnectionEvent</code> object.
- May be <code>null</code>.
+ <code>ConnectionEvent</code> object.May be <code>null</code>.
  @return the SQLException about to be thrown or <code>null</code>
  */
 - (JavaSqlSQLException *)getSQLException;
@@ -116,6 +112,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaxSqlConnectionEvent)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaxSqlConnectionEvent")

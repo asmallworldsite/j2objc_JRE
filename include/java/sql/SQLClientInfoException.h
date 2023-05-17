@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaSqlSQLClientInfoException
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -29,6 +26,7 @@
 #define INCLUDE_JavaSqlSQLException 1
 #include "java/sql/SQLException.h"
 
+@class JavaLangInteger;
 @class JavaLangThrowable;
 @protocol JavaUtilMap;
 
@@ -349,6 +347,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaSqlSQLClientInfoException)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaSqlSQLClientInfoException")

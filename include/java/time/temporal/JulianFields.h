@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaTimeTemporalJulianFields
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -40,9 +37,6 @@
  @since 1.8
  */
 @interface JavaTimeTemporalJulianFields : NSObject
-@property (readonly, class, strong) id<JavaTimeTemporalTemporalField> JULIAN_DAY NS_SWIFT_NAME(JULIAN_DAY);
-@property (readonly, class, strong) id<JavaTimeTemporalTemporalField> MODIFIED_JULIAN_DAY NS_SWIFT_NAME(MODIFIED_JULIAN_DAY);
-@property (readonly, class, strong) id<JavaTimeTemporalTemporalField> RATA_DIE NS_SWIFT_NAME(RATA_DIE);
 
 @end
 
@@ -50,31 +44,31 @@ J2OBJC_STATIC_INIT(JavaTimeTemporalJulianFields)
 
 /*!
  @brief Julian Day field.
- <p>
-  This is an integer-based version of the Julian Day Number.
-  Julian Day is a well-known system that represents the count of whole days since day 0,
-  which is defined to be January 1, 4713 BCE in the Julian calendar, and -4713-11-24 Gregorian.
-  The field  has "JulianDay" as 'name', and 'DAYS' as 'baseUnit'.
-  The field always refers to the local date-time, ignoring the offset or zone. 
- <p>
-  For date-times, 'JULIAN_DAY.getFrom()' assumes the same value from
-  midnight until just before the next midnight.
-  When 'JULIAN_DAY.adjustInto()' is applied to a date-time, the time of day portion remains unaltered.
-  'JULIAN_DAY.adjustInto()' and 'JULIAN_DAY.getFrom()' only apply to <code>Temporal</code> objects that
-  can be converted into <code>ChronoField.EPOCH_DAY</code>.
-  An <code>UnsupportedTemporalTypeException</code> is thrown for any other type of object. 
- <p>
-  In the resolving phase of parsing, a date can be created from a Julian Day field. In 
+ <p>This is an integer-based version of the Julian Day Number. Julian Day is a well-known system
+  that represents the count of whole days since day 0, which is defined to be January 1, 4713 BCE
+  in the Julian calendar, and -4713-11-24 Gregorian. The field has "JulianDay" as 'name', and
+  'DAYS' as 'baseUnit'. The field always refers to the local date-time, ignoring the offset or
+  zone. 
+ <p>For date-times, 'JULIAN_DAY.getFrom()' assumes the same value from midnight until just
+  before the next midnight. When 'JULIAN_DAY.adjustInto()' is applied to a date-time, the time of
+  day portion remains unaltered. 'JULIAN_DAY.adjustInto()' and 'JULIAN_DAY.getFrom()' only apply
+  to <code>Temporal</code> objects that can be converted into <code>ChronoField.EPOCH_DAY</code>. An <code>UnsupportedTemporalTypeException</code>
+  is thrown for any other type of object. 
+ <p>In the resolving phase of parsing, a date can be created from a Julian Day field. In 
  strict mode and smart mode
-  the Julian Day value is validated against the range of valid values.
-  In lenient mode no validation occurs. 
+  the Julian Day value is validated against the range of valid values. In lenient mode
+  no validation occurs. 
  <h3>Astronomical and Scientific Notes</h3>
-  The standard astronomical definition uses a fraction to indicate the time-of-day,
-  thus 3.25 would represent the time 18:00, since days start at midday.
-  This implementation uses an integer and days starting at midnight.
-  The integer value for the Julian Day Number is the astronomical Julian Day value at midday
-  of the date in question.
-  This amounts to the astronomical Julian Day, rounded to an integer <code>JDN = floor(JD + 0.5)</code>.
+  The standard astronomical definition uses a fraction to indicate the time-of-day, where each
+  day is counted from midday to midday. For example, a fraction of 0 represents midday, a
+  fraction of 0.25 represents 18:00, a fraction of 0.5 represents midnight and a fraction of 0.75
+  represents 06:00. 
+ <p>By contrast, this implementation has no fractional part, and counts days from midnight to
+  midnight. This implementation uses an integer and days starting at midnight. The integer value
+  for the Julian Day Number is the astronomical Julian Day value at midday of the date in
+  question. This amounts to the astronomical Julian Day, rounded to an integer <code>JDN =
+  floor(JD + 0.5)</code>
+ .
   
  @code
 
@@ -88,10 +82,9 @@ J2OBJC_STATIC_INIT(JavaTimeTemporalJulianFields)
    | 1970-01-02T12:00  |         2,440,589  |         2,440,589.0     | 
   
 @endcode
-  <p>
-  Julian Days are sometimes taken to imply Universal Time or UTC, but this
-  implementation always uses the Julian Day number for the local date,
-  regardless of the offset or time-zone.
+  
+ <p>Julian Days are sometimes taken to imply Universal Time or UTC, but this implementation
+  always uses the Julian Day number for the local date, regardless of the offset or time-zone.
  */
 inline id<JavaTimeTemporalTemporalField> JavaTimeTemporalJulianFields_get_JULIAN_DAY(void);
 /*! INTERNAL ONLY - Use accessor function from above. */
@@ -173,6 +166,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaTimeTemporalJulianFields)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaTimeTemporalJulianFields")

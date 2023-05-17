@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_AndroidIcuMathMathContext
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -28,6 +25,9 @@
 #define RESTRICT_JavaIoSerializable 1
 #define INCLUDE_JavaIoSerializable 1
 #include "java/io/Serializable.h"
+
+@class JavaLangBoolean;
+@class JavaLangInteger;
 
 /*!
  @brief The <code>MathContext</code> immutable class encapsulates the
@@ -129,18 +129,6 @@
    */
   jint roundingMode_;
 }
-@property (readonly, class) jint PLAIN NS_SWIFT_NAME(PLAIN);
-@property (readonly, class) jint SCIENTIFIC NS_SWIFT_NAME(SCIENTIFIC);
-@property (readonly, class) jint ENGINEERING NS_SWIFT_NAME(ENGINEERING);
-@property (readonly, class) jint ROUND_CEILING NS_SWIFT_NAME(ROUND_CEILING);
-@property (readonly, class) jint ROUND_DOWN NS_SWIFT_NAME(ROUND_DOWN);
-@property (readonly, class) jint ROUND_FLOOR NS_SWIFT_NAME(ROUND_FLOOR);
-@property (readonly, class) jint ROUND_HALF_DOWN NS_SWIFT_NAME(ROUND_HALF_DOWN);
-@property (readonly, class) jint ROUND_HALF_EVEN NS_SWIFT_NAME(ROUND_HALF_EVEN);
-@property (readonly, class) jint ROUND_HALF_UP NS_SWIFT_NAME(ROUND_HALF_UP);
-@property (readonly, class) jint ROUND_UNNECESSARY NS_SWIFT_NAME(ROUND_UNNECESSARY);
-@property (readonly, class) jint ROUND_UP NS_SWIFT_NAME(ROUND_UP);
-@property (readonly, class, strong) AndroidIcuMathMathContext *DEFAULT NS_SWIFT_NAME(DEFAULT);
 
 #pragma mark Public
 
@@ -510,6 +498,4 @@ J2OBJC_TYPE_LITERAL_HEADER(AndroidIcuMathMathContext)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_AndroidIcuMathMathContext")

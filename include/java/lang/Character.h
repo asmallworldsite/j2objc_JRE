@@ -16,9 +16,6 @@
 #define INCLUDE_JavaLangCharacter_Subset 1
 #endif
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -38,11 +35,14 @@
 
 @class IOSCharArray;
 @class IOSClass;
+@class JavaLangBoolean;
+@class JavaLangByte;
+@class JavaLangInteger;
 @protocol JavaLangCharSequence;
 
 /*!
  @brief The <code>Character</code> class wraps a value of the primitive
-  type <code>char</code> in an object.An object of type 
+  type <code>char</code> in an object.An object of class 
  <code>Character</code> contains a single field whose type is 
  <code>char</code>.
  <p>
@@ -50,7 +50,7 @@
   a character's category (lowercase letter, digit, etc.) and for converting
   characters from uppercase to lowercase and vice versa. 
  <p>
-  Character information is based on the Unicode Standard, version 6.2.0. 
+  Character information is based on the Unicode Standard 
  <p>
   The methods and data of class <code>Character</code> are defined by
   the information in the <i>UnicodeData</i> file that is part of the
@@ -64,7 +64,55 @@
   <li><a href="http://www.unicode.org">http://www.unicode.org</a>
   </ul>
   
- <h3><a name="unicode">Unicode Character Representations</a></h3>
+ <h2><a id="conformance">Unicode Conformance</a></h2>
+  <p>
+  The fields and methods of class <code>Character</code> are defined in terms
+  of character information from the Unicode Standard, specifically the 
+ <i>UnicodeData</i> file that is part of the Unicode Character Database.
+  This file specifies properties including name and category for every
+  assigned Unicode code point or character range. The file is available
+  from the Unicode Consortium at 
+ <a href="http://www.unicode.org">http://www.unicode.org</a>.
+  <p>
+  Character information is based on the Unicode Standard, version 13.0. 
+ <p>
+  The Java platform has supported different versions of the Unicode
+  Standard over time. Upgrades to newer versions of the Unicode Standard
+  occurred in the following Java releases, each indicating the new version: 
+ <table class="striped">
+  <caption style="display:none">Shows Java releases and supported Unicode versions</caption>
+  <thead>
+  <tr><th scope="col">Java release</th>
+      <th scope="col">Unicode version</th></tr>
+  </thead>
+  <tbody>
+  <tr><td>Java SE 15</td>
+      <td>Unicode 13.0</td></tr>
+  <tr><td>Java SE 13</td>
+      <td>Unicode 12.1</td></tr>
+  <tr><td>Java SE 12</td>
+      <td>Unicode 11.0</td></tr>
+  <tr><td>Java SE 11</td>
+      <td>Unicode 10.0</td></tr>
+  <tr><td>Java SE 9</td>
+      <td>Unicode 8.0</td></tr>
+  <tr><td>Java SE 8</td>
+      <td>Unicode 6.2</td></tr>
+  <tr><td>Java SE 7</td>
+      <td>Unicode 6.0</td></tr>
+  <tr><td>Java SE 5.0</td>
+      <td>Unicode 4.0</td></tr>
+  <tr><td>Java SE 1.4</td>
+      <td>Unicode 3.0</td></tr>
+  <tr><td>JDK 1.1</td>
+      <td>Unicode 2.0</td></tr>
+  <tr><td>JDK 1.0.2</td>
+      <td>Unicode 1.1.5</td></tr>
+  </tbody>
+  </table>
+  Variations from these base Unicode versions, such as recognized appendixes,
+  are documented elsewhere. 
+ <h2><a id="unicode">Unicode Character Representations</a></h2>
   
  <p>The <code>char</code> data type (and therefore the value that a 
  <code>Character</code> object encapsulates) are based on the
@@ -77,9 +125,9 @@
  <i>
   definition</i></a> of the U+<i>n</i> notation in the Unicode
   Standard.) 
- <p><a name="BMP">The set of characters from U+0000 to U+FFFF</a> is
+ <p><a id="BMP">The set of characters from U+0000 to U+FFFF</a> is
   sometimes referred to as the <em>Basic Multilingual Plane (BMP)</em>.
-  <a name="supplementary">Characters</a> whose code points are greater
+  <a id="supplementary">Characters</a> whose code points are greater
   than U+FFFF are called <em>supplementary character</em>s.  The Java
   platform uses the UTF-16 representation in <code>char</code> arrays and
   in the <code>String</code> and <code>StringBuffer</code> classes. In
@@ -118,6 +166,14 @@
  <code>char</code> values that are code units of the <em>UTF-16</em>
   encoding. For more information on Unicode terminology, refer to the 
  <a href="http://www.unicode.org/glossary/">Unicode Glossary</a>.
+  
+ <!-- Android-removed: paragraph on ValueBased
+ <p>This is a <a href="{@@docRoot}/java.base/java/lang/doc-files/ValueBased.html">value-based</a>
+ class; programmers should treat instances that are
+ {@@linkplain #equals(Object) equal} as interchangeable and should not
+ use instances for synchronization, or unpredictable behavior may
+ occur. For example, in a future release, synchronization may fail.
+ -->
  @author Lee Boynton
  @author Guy Steele
  @author Akira Tanaka
@@ -126,73 +182,6 @@
  @since 1.0
  */
 @interface JavaLangCharacter : NSObject < JavaIoSerializable, JavaLangComparable >
-@property (readonly, class) jint MIN_RADIX NS_SWIFT_NAME(MIN_RADIX);
-@property (readonly, class) jint MAX_RADIX NS_SWIFT_NAME(MAX_RADIX);
-@property (readonly, class) jchar MIN_VALUE NS_SWIFT_NAME(MIN_VALUE);
-@property (readonly, class) jchar MAX_VALUE NS_SWIFT_NAME(MAX_VALUE);
-@property (readonly, class, strong) IOSClass *TYPE NS_SWIFT_NAME(TYPE);
-@property (readonly, class) jbyte UNASSIGNED NS_SWIFT_NAME(UNASSIGNED);
-@property (readonly, class) jbyte UPPERCASE_LETTER NS_SWIFT_NAME(UPPERCASE_LETTER);
-@property (readonly, class) jbyte LOWERCASE_LETTER NS_SWIFT_NAME(LOWERCASE_LETTER);
-@property (readonly, class) jbyte TITLECASE_LETTER NS_SWIFT_NAME(TITLECASE_LETTER);
-@property (readonly, class) jbyte MODIFIER_LETTER NS_SWIFT_NAME(MODIFIER_LETTER);
-@property (readonly, class) jbyte OTHER_LETTER NS_SWIFT_NAME(OTHER_LETTER);
-@property (readonly, class) jbyte NON_SPACING_MARK NS_SWIFT_NAME(NON_SPACING_MARK);
-@property (readonly, class) jbyte ENCLOSING_MARK NS_SWIFT_NAME(ENCLOSING_MARK);
-@property (readonly, class) jbyte COMBINING_SPACING_MARK NS_SWIFT_NAME(COMBINING_SPACING_MARK);
-@property (readonly, class) jbyte DECIMAL_DIGIT_NUMBER NS_SWIFT_NAME(DECIMAL_DIGIT_NUMBER);
-@property (readonly, class) jbyte LETTER_NUMBER NS_SWIFT_NAME(LETTER_NUMBER);
-@property (readonly, class) jbyte OTHER_NUMBER NS_SWIFT_NAME(OTHER_NUMBER);
-@property (readonly, class) jbyte SPACE_SEPARATOR NS_SWIFT_NAME(SPACE_SEPARATOR);
-@property (readonly, class) jbyte LINE_SEPARATOR NS_SWIFT_NAME(LINE_SEPARATOR);
-@property (readonly, class) jbyte PARAGRAPH_SEPARATOR NS_SWIFT_NAME(PARAGRAPH_SEPARATOR);
-@property (readonly, class) jbyte CONTROL NS_SWIFT_NAME(CONTROL);
-@property (readonly, class) jbyte FORMAT NS_SWIFT_NAME(FORMAT);
-@property (readonly, class) jbyte PRIVATE_USE NS_SWIFT_NAME(PRIVATE_USE);
-@property (readonly, class) jbyte SURROGATE NS_SWIFT_NAME(SURROGATE);
-@property (readonly, class) jbyte DASH_PUNCTUATION NS_SWIFT_NAME(DASH_PUNCTUATION);
-@property (readonly, class) jbyte START_PUNCTUATION NS_SWIFT_NAME(START_PUNCTUATION);
-@property (readonly, class) jbyte END_PUNCTUATION NS_SWIFT_NAME(END_PUNCTUATION);
-@property (readonly, class) jbyte CONNECTOR_PUNCTUATION NS_SWIFT_NAME(CONNECTOR_PUNCTUATION);
-@property (readonly, class) jbyte OTHER_PUNCTUATION NS_SWIFT_NAME(OTHER_PUNCTUATION);
-@property (readonly, class) jbyte MATH_SYMBOL NS_SWIFT_NAME(MATH_SYMBOL);
-@property (readonly, class) jbyte CURRENCY_SYMBOL NS_SWIFT_NAME(CURRENCY_SYMBOL);
-@property (readonly, class) jbyte MODIFIER_SYMBOL NS_SWIFT_NAME(MODIFIER_SYMBOL);
-@property (readonly, class) jbyte OTHER_SYMBOL NS_SWIFT_NAME(OTHER_SYMBOL);
-@property (readonly, class) jbyte INITIAL_QUOTE_PUNCTUATION NS_SWIFT_NAME(INITIAL_QUOTE_PUNCTUATION);
-@property (readonly, class) jbyte FINAL_QUOTE_PUNCTUATION NS_SWIFT_NAME(FINAL_QUOTE_PUNCTUATION);
-@property (readonly, class) jint ERROR NS_SWIFT_NAME(ERROR);
-@property (readonly, class) jbyte DIRECTIONALITY_UNDEFINED NS_SWIFT_NAME(DIRECTIONALITY_UNDEFINED);
-@property (readonly, class) jbyte DIRECTIONALITY_LEFT_TO_RIGHT NS_SWIFT_NAME(DIRECTIONALITY_LEFT_TO_RIGHT);
-@property (readonly, class) jbyte DIRECTIONALITY_RIGHT_TO_LEFT NS_SWIFT_NAME(DIRECTIONALITY_RIGHT_TO_LEFT);
-@property (readonly, class) jbyte DIRECTIONALITY_RIGHT_TO_LEFT_ARABIC NS_SWIFT_NAME(DIRECTIONALITY_RIGHT_TO_LEFT_ARABIC);
-@property (readonly, class) jbyte DIRECTIONALITY_EUROPEAN_NUMBER NS_SWIFT_NAME(DIRECTIONALITY_EUROPEAN_NUMBER);
-@property (readonly, class) jbyte DIRECTIONALITY_EUROPEAN_NUMBER_SEPARATOR NS_SWIFT_NAME(DIRECTIONALITY_EUROPEAN_NUMBER_SEPARATOR);
-@property (readonly, class) jbyte DIRECTIONALITY_EUROPEAN_NUMBER_TERMINATOR NS_SWIFT_NAME(DIRECTIONALITY_EUROPEAN_NUMBER_TERMINATOR);
-@property (readonly, class) jbyte DIRECTIONALITY_ARABIC_NUMBER NS_SWIFT_NAME(DIRECTIONALITY_ARABIC_NUMBER);
-@property (readonly, class) jbyte DIRECTIONALITY_COMMON_NUMBER_SEPARATOR NS_SWIFT_NAME(DIRECTIONALITY_COMMON_NUMBER_SEPARATOR);
-@property (readonly, class) jbyte DIRECTIONALITY_NONSPACING_MARK NS_SWIFT_NAME(DIRECTIONALITY_NONSPACING_MARK);
-@property (readonly, class) jbyte DIRECTIONALITY_BOUNDARY_NEUTRAL NS_SWIFT_NAME(DIRECTIONALITY_BOUNDARY_NEUTRAL);
-@property (readonly, class) jbyte DIRECTIONALITY_PARAGRAPH_SEPARATOR NS_SWIFT_NAME(DIRECTIONALITY_PARAGRAPH_SEPARATOR);
-@property (readonly, class) jbyte DIRECTIONALITY_SEGMENT_SEPARATOR NS_SWIFT_NAME(DIRECTIONALITY_SEGMENT_SEPARATOR);
-@property (readonly, class) jbyte DIRECTIONALITY_WHITESPACE NS_SWIFT_NAME(DIRECTIONALITY_WHITESPACE);
-@property (readonly, class) jbyte DIRECTIONALITY_OTHER_NEUTRALS NS_SWIFT_NAME(DIRECTIONALITY_OTHER_NEUTRALS);
-@property (readonly, class) jbyte DIRECTIONALITY_LEFT_TO_RIGHT_EMBEDDING NS_SWIFT_NAME(DIRECTIONALITY_LEFT_TO_RIGHT_EMBEDDING);
-@property (readonly, class) jbyte DIRECTIONALITY_LEFT_TO_RIGHT_OVERRIDE NS_SWIFT_NAME(DIRECTIONALITY_LEFT_TO_RIGHT_OVERRIDE);
-@property (readonly, class) jbyte DIRECTIONALITY_RIGHT_TO_LEFT_EMBEDDING NS_SWIFT_NAME(DIRECTIONALITY_RIGHT_TO_LEFT_EMBEDDING);
-@property (readonly, class) jbyte DIRECTIONALITY_RIGHT_TO_LEFT_OVERRIDE NS_SWIFT_NAME(DIRECTIONALITY_RIGHT_TO_LEFT_OVERRIDE);
-@property (readonly, class) jbyte DIRECTIONALITY_POP_DIRECTIONAL_FORMAT NS_SWIFT_NAME(DIRECTIONALITY_POP_DIRECTIONAL_FORMAT);
-@property (readonly, class) jchar MIN_HIGH_SURROGATE NS_SWIFT_NAME(MIN_HIGH_SURROGATE);
-@property (readonly, class) jchar MAX_HIGH_SURROGATE NS_SWIFT_NAME(MAX_HIGH_SURROGATE);
-@property (readonly, class) jchar MIN_LOW_SURROGATE NS_SWIFT_NAME(MIN_LOW_SURROGATE);
-@property (readonly, class) jchar MAX_LOW_SURROGATE NS_SWIFT_NAME(MAX_LOW_SURROGATE);
-@property (readonly, class) jchar MIN_SURROGATE NS_SWIFT_NAME(MIN_SURROGATE);
-@property (readonly, class) jchar MAX_SURROGATE NS_SWIFT_NAME(MAX_SURROGATE);
-@property (readonly, class) jint MIN_SUPPLEMENTARY_CODE_POINT NS_SWIFT_NAME(MIN_SUPPLEMENTARY_CODE_POINT);
-@property (readonly, class) jint MIN_CODE_POINT NS_SWIFT_NAME(MIN_CODE_POINT);
-@property (readonly, class) jint MAX_CODE_POINT NS_SWIFT_NAME(MAX_CODE_POINT);
-@property (readonly, class) jint SIZE NS_SWIFT_NAME(SIZE);
-@property (readonly, class) jint BYTES NS_SWIFT_NAME(BYTES);
 
 #pragma mark Public
 
@@ -640,6 +629,10 @@
  - seealso: Character#DIRECTIONALITY_RIGHT_TO_LEFT_EMBEDDING
  - seealso: Character#DIRECTIONALITY_RIGHT_TO_LEFT_OVERRIDE
  - seealso: Character#DIRECTIONALITY_POP_DIRECTIONAL_FORMAT
+ - seealso: Character#DIRECTIONALITY_LEFT_TO_RIGHT_ISOLATE
+ - seealso: Character#DIRECTIONALITY_RIGHT_TO_LEFT_ISOLATE
+ - seealso: Character#DIRECTIONALITY_FIRST_STRONG_ISOLATE
+ - seealso: Character#DIRECTIONALITY_POP_DIRECTIONAL_ISOLATE
  @since 1.4
  */
 + (jbyte)getDirectionalityWithChar:(jchar)ch;
@@ -673,6 +666,10 @@
  - seealso: Character#DIRECTIONALITY_RIGHT_TO_LEFT_EMBEDDINGDIRECTIONALITY_RIGHT_TO_LEFT_EMBEDDING
  - seealso: Character#DIRECTIONALITY_RIGHT_TO_LEFT_OVERRIDEDIRECTIONALITY_RIGHT_TO_LEFT_OVERRIDE
  - seealso: Character#DIRECTIONALITY_POP_DIRECTIONAL_FORMATDIRECTIONALITY_POP_DIRECTIONAL_FORMAT
+ - seealso: Character#DIRECTIONALITY_LEFT_TO_RIGHT_ISOLATEDIRECTIONALITY_LEFT_TO_RIGHT_ISOLATE
+ - seealso: Character#DIRECTIONALITY_RIGHT_TO_LEFT_ISOLATEDIRECTIONALITY_RIGHT_TO_LEFT_ISOLATE
+ - seealso: Character#DIRECTIONALITY_FIRST_STRONG_ISOLATEDIRECTIONALITY_FIRST_STRONG_ISOLATE
+ - seealso: Character#DIRECTIONALITY_POP_DIRECTIONAL_ISOLATEDIRECTIONALITY_POP_DIRECTIONAL_ISOLATE
  @since 1.5
  */
 + (jbyte)getDirectionalityWithInt:(jint)codePoint;
@@ -685,10 +682,10 @@
   Note: if the specified character is not assigned a name by the 
  <i>UnicodeData</i> file (part of the Unicode Character
   Database maintained by the Unicode Consortium), the returned
-  name is the same as the result of expression. 
+  name is the same as the result of expression: 
  <blockquote><code>Character.UnicodeBlock.of(codePoint).toString().replace('_', ' ')
       + " "
-      + Integer.toHexString(codePoint).toUpperCase(Locale.ENGLISH);</code>
+      + Integer.toHexString(codePoint).toUpperCase(Locale.ROOT);</code>
  </blockquote>
  @param codePoint the character (Unicode code point)
  @return the Unicode name of the specified character, or null if
@@ -726,8 +723,9 @@
   the <code>getNumericValue(int)</code> method.
  @param ch the character to be converted.
  @return the numeric value of the character, as a nonnegative <code>int</code>
-            value; -2 if the character has a numeric value that is not a
-           nonnegative integer; -1 if the character has no numeric value.
+           value; -2 if the character has a numeric value but the value
+           can not be represented as a nonnegative <code>int</code> value;
+           -1 if the character has no numeric value.
  - seealso: Character#forDigit(int, int)
  - seealso: Character#isDigit(char)
  @since 1.1
@@ -756,8 +754,9 @@
   is returned.
  @param codePoint the character (Unicode code point) to be converted.
  @return the numeric value of the character, as a nonnegative <code>int</code>
-           value; -2 if the character has a numeric value that is not a
-           nonnegative integer; -1 if the character has no numeric value.
+           value; -2 if the character has a numeric value but the value
+           can not be represented as a nonnegative <code>int</code> value;
+           -1 if the character has no numeric value.
  - seealso: Character#forDigit(int, int)
  - seealso: Character#isDigit(int)
  @since 1.5
@@ -887,7 +886,7 @@
 + (jchar)highSurrogateWithInt:(jint)codePoint;
 
 /*!
- @brief Determines if the specified character (Unicode code point) is an alphabet.
+ @brief Determines if the specified character (Unicode code point) is alphabetic.
  <p>
   A character is considered to be alphabetic if its general category type,
   provided by <code>getType(codePoint)</code>, is any of
@@ -913,7 +912,7 @@
  @brief Determines whether the specified character (Unicode code point)
   is in the <a href="#BMP">Basic Multilingual Plane (BMP)</a>.
  Such code points can be represented using a single <code>char</code>.
- @param codePoint the character (Unicode code point) to be tested
+ @param codePoint the character (Unicode code point) to be to
  @return <code>true</code> if the specified code point is between
           <code>MIN_VALUE</code> and <code>MAX_VALUE</code> inclusive;
           <code>false</code> otherwise.
@@ -1161,7 +1160,7 @@
   identifier as other than the first character.
  <p>
   A character may be part of a Java identifier if any of the following
-  are true: 
+  conditions are true: 
  <ul>
   <li>  it is a letter 
  <li>  it is a currency symbol (such as <code>'$'</code>)
@@ -1185,7 +1184,6 @@
  - seealso: Character#isJavaIdentifierStart(char)
  - seealso: Character#isLetterOrDigit(char)
  - seealso: Character#isUnicodeIdentifierPart(char)
- - seealso: javax.lang.model.SourceVersion#isIdentifier(CharSequence)
  @since 1.1
  */
 + (jboolean)isJavaIdentifierPartWithChar:(jchar)ch;
@@ -1195,7 +1193,7 @@
   identifier as other than the first character.
  <p>
   A character may be part of a Java identifier if any of the following
-  are true: 
+  conditions are true: 
  <ul>
   <li>  it is a letter 
  <li>  it is a currency symbol (such as <code>'$'</code>)
@@ -1206,7 +1204,7 @@
  <li>  it is a non-spacing mark 
  <li> <code>isIdentifierIgnorable(codePoint)</code>
   returns <code>true</code> for
-  the character 
+  the code point 
  </ul>
  @param codePoint the character (Unicode code point) to be tested.
  @return <code>true</code> if the character may be part of a
@@ -1215,7 +1213,6 @@
  - seealso: Character#isJavaIdentifierStart(int)
  - seealso: Character#isLetterOrDigit(int)
  - seealso: Character#isUnicodeIdentifierPart(int)
- - seealso: javax.lang.model.SourceVersion#isIdentifier(CharSequence)
  @since 1.5
  */
 + (jboolean)isJavaIdentifierPartWithInt:(jint)codePoint;
@@ -1243,7 +1240,6 @@
  - seealso: Character#isJavaIdentifierPart(char)
  - seealso: Character#isLetter(char)
  - seealso: Character#isUnicodeIdentifierStart(char)
- - seealso: javax.lang.model.SourceVersion#isIdentifier(CharSequence)
  @since 1.1
  */
 + (jboolean)isJavaIdentifierStartWithChar:(jchar)ch;
@@ -1269,7 +1265,6 @@
  - seealso: Character#isJavaIdentifierPart(int)
  - seealso: Character#isLetter(int)
  - seealso: Character#isUnicodeIdentifierStart(int)
- - seealso: javax.lang.model.SourceVersion#isIdentifier(CharSequence)
  @since 1.5
  */
 + (jboolean)isJavaIdentifierStartWithInt:(jint)codePoint;
@@ -1279,7 +1274,7 @@
   character in a Java identifier.
  <p>
   A character may start a Java identifier if and only if
-  one of the following is true: 
+  one of the following conditions is true: 
  <ul>
   <li> <code>isLetter(ch)</code> returns <code>true</code>
   <li> <code>getType(ch)</code> returns <code>LETTER_NUMBER</code>
@@ -1295,16 +1290,16 @@
  - seealso: Character#isLetter(char)
  - seealso: Character#isLetterOrDigit(char)
  - seealso: Character#isUnicodeIdentifierStart(char)
- @since 1.02
+ @since 1.0.2
  */
-+ (jboolean)isJavaLetterWithChar:(jchar)ch __attribute__((deprecated));
++ (jboolean)isJavaLetterWithChar:(jchar)ch;
 
 /*!
  @brief Determines if the specified character may be part of a Java
   identifier as other than the first character.
  <p>
-  A character may be part of a Java identifier if and only if any
-  of the following are true: 
+  A character may be part of a Java identifier if and only if one
+  of the following conditions is true: 
  <ul>
   <li>  it is a letter 
  <li>  it is a currency symbol (such as <code>'$'</code>)
@@ -1326,9 +1321,9 @@
  - seealso: Character#isLetterOrDigit(char)
  - seealso: Character#isUnicodeIdentifierPart(char)
  - seealso: Character#isIdentifierIgnorable(char)
- @since 1.02
+ @since 1.0.2
  */
-+ (jboolean)isJavaLetterOrDigitWithChar:(jchar)ch __attribute__((deprecated));
++ (jboolean)isJavaLetterOrDigitWithChar:(jchar)ch;
 
 /*!
  @brief Determines if the specified character is a letter.
@@ -1559,17 +1554,25 @@
  @brief Determines if the specified character is ISO-LATIN-1 white space.
  This method returns <code>true</code> for the following five
   characters only: 
- <table summary="truechars">
-  <tr><td><code>'\t'</code></td>            <td><code>U+0009</code></td>
+ <table class="striped">
+  <caption style="display:none">truechars</caption>
+  <thead>
+  <tr><th scope="col">Character
+      <th scope="col">Code
+      <th scope="col">Name
+  </thead>
+  <tbody>
+  <tr><th scope="row"><code>'\t'</code></th>            <td><code>U+0009</code></td>
       <td><code>HORIZONTAL TABULATION</code></td></tr>
-  <tr><td><code>'\n'</code></td>            <td><code>U+000A</code></td>
+  <tr><th scope="row"><code>'\n'</code></th>            <td><code>U+000A</code></td>
       <td><code>NEW LINE</code></td></tr>
-  <tr><td><code>'\f'</code></td>            <td><code>U+000C</code></td>
+  <tr><th scope="row"><code>'\f'</code></th>            <td><code>U+000C</code></td>
       <td><code>FORM FEED</code></td></tr>
-  <tr><td><code>'\r'</code></td>            <td><code>U+000D</code></td>
+  <tr><th scope="row"><code>'\r'</code></th>            <td><code>U+000D</code></td>
       <td><code>CARRIAGE RETURN</code></td></tr>
-  <tr><td><code>'&nbsp;'</code></td>  <td><code>U+0020</code></td>
+  <tr><th scope="row"><code>' '</code></th>  <td><code>U+0020</code></td>
       <td><code>SPACE</code></td></tr>
+  </tbody>
   </table>
  @param ch the character to be tested.
  @return <code>true</code> if the character is ISO-LATIN-1 white
@@ -1577,7 +1580,7 @@
  - seealso: Character#isSpaceChar(char)
  - seealso: Character#isWhitespace(char)
  */
-+ (jboolean)isSpaceWithChar:(jchar)ch __attribute__((deprecated));
++ (jboolean)isSpaceWithChar:(jchar)ch;
 
 /*!
  @brief Determines if the specified character is a Unicode space character.
@@ -1732,7 +1735,7 @@
   <li><code>LATIN CAPITAL LETTER N WITH SMALL LETTER J</code>
   <li><code>LATIN CAPITAL LETTER D WITH SMALL LETTER Z</code>
   </ul>
-  <p> Many other Unicode characters are titlecase too.<p>
+  <p> Many other Unicode characters are titlecase too.
  @param codePoint the character (Unicode code point) to be tested.
  @return <code>true</code> if the character is titlecase;
            <code>false</code> otherwise.
@@ -1759,8 +1762,24 @@
  <li>  it is a non-spacing mark 
  <li> <code>isIdentifierIgnorable</code> returns 
  <code>true</code> for this character. 
+ <li> it is an <a href="http://www.unicode.org/reports/tr44/#Other_ID_Start">
+       <code>Other_ID_Start</code></a> character. 
+ <li> it is an <a href="http://www.unicode.org/reports/tr44/#Other_ID_Continue">
+       <code>Other_ID_Continue</code></a> character. 
  </ul>
+  <p>
+  This method conforms to <a href="https://unicode.org/reports/tr31/#R1">
+  UAX31-R1: Default Identifiers</a> requirement of the Unicode Standard,
+  with the following profile of UAX31: 
+ @code
+
+  Continue := Start + ID_Continue + ignorable
+  Medial := empty
+  ignorable := isIdentifierIgnorable(char) returns true for the character 
   
+@endcode
+  <code>ignorable</code> is added to <code>Continue</code> for backward
+  compatibility. 
  <p><b>Note:</b> This method cannot handle <a href="#supplementary">
   supplementary characters</a>. To support
   all Unicode characters, including supplementary characters, use
@@ -1791,7 +1810,24 @@
  <li>  it is a non-spacing mark 
  <li> <code>isIdentifierIgnorable</code> returns 
  <code>true</code> for this character. 
+ <li> it is an <a href="http://www.unicode.org/reports/tr44/#Other_ID_Start">
+       <code>Other_ID_Start</code></a> character. 
+ <li> it is an <a href="http://www.unicode.org/reports/tr44/#Other_ID_Continue">
+       <code>Other_ID_Continue</code></a> character. 
  </ul>
+  <p>
+  This method conforms to <a href="https://unicode.org/reports/tr31/#R1">
+  UAX31-R1: Default Identifiers</a> requirement of the Unicode Standard,
+  with the following profile of UAX31: 
+ @code
+
+  Continue := Start + ID_Continue + ignorable
+  Medial := empty
+  ignorable := isIdentifierIgnorable(int) returns true for the character 
+  
+@endcode
+  <code>ignorable</code> is added to <code>Continue</code> for backward
+  compatibility.
  @param codePoint the character (Unicode code point) to be tested.
  @return <code>true</code> if the character may be part of a
            Unicode identifier; <code>false</code> otherwise.
@@ -1813,8 +1849,20 @@
   <li> <code>isLetter(ch)</code> returns <code>true</code>
   <li> <code>getType(ch)</code> returns
        <code>LETTER_NUMBER</code>.
-  </ul>
+  <li> it is an <a href="http://www.unicode.org/reports/tr44/#Other_ID_Start">
+       <code>Other_ID_Start</code></a> character. 
+ </ul>
+  <p>
+  This method conforms to <a href="https://unicode.org/reports/tr31/#R1">
+  UAX31-R1: Default Identifiers</a> requirement of the Unicode Standard,
+  with the following profile of UAX31: 
+ @code
+
+  Start := ID_Start + 'VERTICAL TILDE' (U+2E2F) 
   
+@endcode
+  <code>'VERTICAL TILDE'</code> is added to <code>Start</code> for backward
+  compatibility. 
  <p><b>Note:</b> This method cannot handle <a href="#supplementary">
   supplementary characters</a>. To support
   all Unicode characters, including supplementary characters, use
@@ -1840,7 +1888,20 @@
        returns <code>true</code>
   <li> <code>getType(codePoint)</code>
        returns <code>LETTER_NUMBER</code>.
-  </ul>
+  <li> it is an <a href="http://www.unicode.org/reports/tr44/#Other_ID_Start">
+       <code>Other_ID_Start</code></a> character. 
+ </ul>
+  <p>
+  This method conforms to <a href="https://unicode.org/reports/tr31/#R1">
+  UAX31-R1: Default Identifiers</a> requirement of the Unicode Standard,
+  with the following profile of UAX31: 
+ @code
+
+  Start := ID_Start + 'VERTICAL TILDE' (U+2E2F) 
+  
+@endcode
+  <code>'VERTICAL TILDE'</code> is added to <code>Start</code> for backward
+  compatibility.
  @param codePoint the character (Unicode code point) to be tested.
  @return <code>true</code> if the character may start a Unicode
            identifier; <code>false</code> otherwise.
@@ -1901,7 +1962,7 @@
   '&#92;u00D9' '&#92;u00DA' '&#92;u00DB' '&#92;u00DC' '&#92;u00DD' '&#92;u00DE'
    
 @endcode</blockquote>
-  <p> Many other Unicode characters are uppercase too.<p>
+  <p> Many other Unicode characters are uppercase too.
  @param codePoint the character (Unicode code point) to be tested.
  @return <code>true</code> if the character is uppercase;
            <code>false</code> otherwise.
@@ -1978,7 +2039,6 @@
  <li> It is <code>'\u001E'</code>, U+001E RECORD SEPARATOR. 
  <li> It is <code>'\u001F'</code>, U+001F UNIT SEPARATOR. 
  </ul>
-  <p>
  @param codePoint the character (Unicode code point) to be tested.
  @return <code>true</code> if the character is a Java whitespace
            character; <code>false</code> otherwise.
@@ -2077,10 +2137,10 @@
 
 /*!
  @brief Returns the value obtained by reversing the order of the bytes in the
-  specified <tt>char</tt> value.
+  specified <code>char</code> value.
  @param ch The <code>char</code>  of which to reverse the byte order.
  @return the value obtained by reversing (or, equivalently, swapping)
-      the bytes in the specified <tt>char</tt> value.
+      the bytes in the specified <code>char</code> value.
  @since 1.5
  */
 + (jchar)reverseBytesWithChar:(jchar)ch;
@@ -2324,9 +2384,9 @@
 + (jint)toUpperCaseWithInt:(jint)codePoint;
 
 /*!
- @brief Returns a <tt>Character</tt> instance representing the specified 
- <tt>char</tt> value.
- If a new <tt>Character</tt> instance is not required, this method
+ @brief Returns a <code>Character</code> instance representing the specified 
+ <code>char</code> value.
+ If a new <code>Character</code> instance is not required, this method
   should generally be used in preference to the constructor 
  <code>Character(char)</code>, as this method is likely to yield
   significantly better space and time performance by caching
@@ -2335,7 +2395,7 @@
   to <code>'\u007F'</code>, inclusive, and may
   cache other values outside of this range.
  @param c a char value.
- @return a <tt>Character</tt> instance representing <tt>c</tt>.
+ @return a <code>Character</code> instance representing <code>c</code>.
  @since 1.5
  */
 + (JavaLangCharacter * __nonnull)valueOfWithChar:(jchar)c;
@@ -2884,6 +2944,38 @@ inline jbyte JavaLangCharacter_get_DIRECTIONALITY_POP_DIRECTIONAL_FORMAT(void);
 J2OBJC_STATIC_FIELD_CONSTANT(JavaLangCharacter, DIRECTIONALITY_POP_DIRECTIONAL_FORMAT, jbyte)
 
 /*!
+ @brief Weak bidirectional character type "LRI" in the Unicode specification.
+ @since 9
+ */
+inline jbyte JavaLangCharacter_get_DIRECTIONALITY_LEFT_TO_RIGHT_ISOLATE(void);
+#define JavaLangCharacter_DIRECTIONALITY_LEFT_TO_RIGHT_ISOLATE 19
+J2OBJC_STATIC_FIELD_CONSTANT(JavaLangCharacter, DIRECTIONALITY_LEFT_TO_RIGHT_ISOLATE, jbyte)
+
+/*!
+ @brief Weak bidirectional character type "RLI" in the Unicode specification.
+ @since 9
+ */
+inline jbyte JavaLangCharacter_get_DIRECTIONALITY_RIGHT_TO_LEFT_ISOLATE(void);
+#define JavaLangCharacter_DIRECTIONALITY_RIGHT_TO_LEFT_ISOLATE 20
+J2OBJC_STATIC_FIELD_CONSTANT(JavaLangCharacter, DIRECTIONALITY_RIGHT_TO_LEFT_ISOLATE, jbyte)
+
+/*!
+ @brief Weak bidirectional character type "FSI" in the Unicode specification.
+ @since 9
+ */
+inline jbyte JavaLangCharacter_get_DIRECTIONALITY_FIRST_STRONG_ISOLATE(void);
+#define JavaLangCharacter_DIRECTIONALITY_FIRST_STRONG_ISOLATE 21
+J2OBJC_STATIC_FIELD_CONSTANT(JavaLangCharacter, DIRECTIONALITY_FIRST_STRONG_ISOLATE, jbyte)
+
+/*!
+ @brief Weak bidirectional character type "PDI" in the Unicode specification.
+ @since 9
+ */
+inline jbyte JavaLangCharacter_get_DIRECTIONALITY_POP_DIRECTIONAL_ISOLATE(void);
+#define JavaLangCharacter_DIRECTIONALITY_POP_DIRECTIONAL_ISOLATE 22
+J2OBJC_STATIC_FIELD_CONSTANT(JavaLangCharacter, DIRECTIONALITY_POP_DIRECTIONAL_ISOLATE, jbyte)
+
+/*!
  @brief The minimum value of a 
  <a href="http://www.unicode.org/glossary/#high_surrogate_code_unit">
   Unicode high-surrogate code unit</a>
@@ -2980,7 +3072,7 @@ inline jint JavaLangCharacter_get_MAX_CODE_POINT(void);
 J2OBJC_STATIC_FIELD_CONSTANT(JavaLangCharacter, MAX_CODE_POINT, jint)
 
 /*!
- @brief The number of bits used to represent a <tt>char</tt> value in unsigned
+ @brief The number of bits used to represent a <code>char</code> value in unsigned
   binary form, constant <code>16</code>.
  @since 1.5
  */
@@ -3228,6 +3320,9 @@ BOXED_INC_AND_DEC(Char, charValue, JavaLangCharacter)
 #if !defined (JavaLangCharacter_Subset_) && (INCLUDE_ALL_JavaLangCharacter || defined(INCLUDE_JavaLangCharacter_Subset))
 #define JavaLangCharacter_Subset_
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
+
 /*!
  @brief Instances of this class represent particular subsets of the Unicode
   character set.The only family of subsets defined in the 
@@ -3293,6 +3388,9 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaLangCharacter_Subset)
 #if !defined (JavaLangCharacter_UnicodeBlock_) && (INCLUDE_ALL_JavaLangCharacter || defined(INCLUDE_JavaLangCharacter_UnicodeBlock))
 #define JavaLangCharacter_UnicodeBlock_
 
+@class JavaLangCharacter;
+@class JavaLangInteger;
+
 /*!
  @brief A family of character subsets representing the character blocks in the
   Unicode specification.Character blocks generally define characters
@@ -3302,235 +3400,14 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaLangCharacter_Subset)
  @since 1.2
  */
 @interface JavaLangCharacter_UnicodeBlock : JavaLangCharacter_Subset
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *BASIC_LATIN NS_SWIFT_NAME(BASIC_LATIN);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *LATIN_1_SUPPLEMENT NS_SWIFT_NAME(LATIN_1_SUPPLEMENT);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *LATIN_EXTENDED_A NS_SWIFT_NAME(LATIN_EXTENDED_A);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *LATIN_EXTENDED_B NS_SWIFT_NAME(LATIN_EXTENDED_B);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *IPA_EXTENSIONS NS_SWIFT_NAME(IPA_EXTENSIONS);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *SPACING_MODIFIER_LETTERS NS_SWIFT_NAME(SPACING_MODIFIER_LETTERS);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *COMBINING_DIACRITICAL_MARKS NS_SWIFT_NAME(COMBINING_DIACRITICAL_MARKS);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *GREEK NS_SWIFT_NAME(GREEK);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *CYRILLIC NS_SWIFT_NAME(CYRILLIC);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *ARMENIAN NS_SWIFT_NAME(ARMENIAN);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *HEBREW NS_SWIFT_NAME(HEBREW);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *ARABIC NS_SWIFT_NAME(ARABIC);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *DEVANAGARI NS_SWIFT_NAME(DEVANAGARI);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *BENGALI NS_SWIFT_NAME(BENGALI);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *GURMUKHI NS_SWIFT_NAME(GURMUKHI);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *GUJARATI NS_SWIFT_NAME(GUJARATI);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *ORIYA NS_SWIFT_NAME(ORIYA);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *TAMIL NS_SWIFT_NAME(TAMIL);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *TELUGU NS_SWIFT_NAME(TELUGU);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *KANNADA NS_SWIFT_NAME(KANNADA);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *MALAYALAM NS_SWIFT_NAME(MALAYALAM);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *THAI NS_SWIFT_NAME(THAI);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *LAO NS_SWIFT_NAME(LAO);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *TIBETAN NS_SWIFT_NAME(TIBETAN);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *GEORGIAN NS_SWIFT_NAME(GEORGIAN);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *HANGUL_JAMO NS_SWIFT_NAME(HANGUL_JAMO);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *LATIN_EXTENDED_ADDITIONAL NS_SWIFT_NAME(LATIN_EXTENDED_ADDITIONAL);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *GREEK_EXTENDED NS_SWIFT_NAME(GREEK_EXTENDED);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *GENERAL_PUNCTUATION NS_SWIFT_NAME(GENERAL_PUNCTUATION);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *SUPERSCRIPTS_AND_SUBSCRIPTS NS_SWIFT_NAME(SUPERSCRIPTS_AND_SUBSCRIPTS);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *CURRENCY_SYMBOLS NS_SWIFT_NAME(CURRENCY_SYMBOLS);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *COMBINING_MARKS_FOR_SYMBOLS NS_SWIFT_NAME(COMBINING_MARKS_FOR_SYMBOLS);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *LETTERLIKE_SYMBOLS NS_SWIFT_NAME(LETTERLIKE_SYMBOLS);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *NUMBER_FORMS NS_SWIFT_NAME(NUMBER_FORMS);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *ARROWS NS_SWIFT_NAME(ARROWS);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *MATHEMATICAL_OPERATORS NS_SWIFT_NAME(MATHEMATICAL_OPERATORS);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *MISCELLANEOUS_TECHNICAL NS_SWIFT_NAME(MISCELLANEOUS_TECHNICAL);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *CONTROL_PICTURES NS_SWIFT_NAME(CONTROL_PICTURES);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *OPTICAL_CHARACTER_RECOGNITION NS_SWIFT_NAME(OPTICAL_CHARACTER_RECOGNITION);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *ENCLOSED_ALPHANUMERICS NS_SWIFT_NAME(ENCLOSED_ALPHANUMERICS);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *BOX_DRAWING NS_SWIFT_NAME(BOX_DRAWING);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *BLOCK_ELEMENTS NS_SWIFT_NAME(BLOCK_ELEMENTS);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *GEOMETRIC_SHAPES NS_SWIFT_NAME(GEOMETRIC_SHAPES);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *MISCELLANEOUS_SYMBOLS NS_SWIFT_NAME(MISCELLANEOUS_SYMBOLS);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *DINGBATS NS_SWIFT_NAME(DINGBATS);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *CJK_SYMBOLS_AND_PUNCTUATION NS_SWIFT_NAME(CJK_SYMBOLS_AND_PUNCTUATION);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *HIRAGANA NS_SWIFT_NAME(HIRAGANA);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *KATAKANA NS_SWIFT_NAME(KATAKANA);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *BOPOMOFO NS_SWIFT_NAME(BOPOMOFO);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *HANGUL_COMPATIBILITY_JAMO NS_SWIFT_NAME(HANGUL_COMPATIBILITY_JAMO);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *KANBUN NS_SWIFT_NAME(KANBUN);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *ENCLOSED_CJK_LETTERS_AND_MONTHS NS_SWIFT_NAME(ENCLOSED_CJK_LETTERS_AND_MONTHS);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *CJK_COMPATIBILITY NS_SWIFT_NAME(CJK_COMPATIBILITY);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *CJK_UNIFIED_IDEOGRAPHS NS_SWIFT_NAME(CJK_UNIFIED_IDEOGRAPHS);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *HANGUL_SYLLABLES NS_SWIFT_NAME(HANGUL_SYLLABLES);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *PRIVATE_USE_AREA NS_SWIFT_NAME(PRIVATE_USE_AREA);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *CJK_COMPATIBILITY_IDEOGRAPHS NS_SWIFT_NAME(CJK_COMPATIBILITY_IDEOGRAPHS);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *ALPHABETIC_PRESENTATION_FORMS NS_SWIFT_NAME(ALPHABETIC_PRESENTATION_FORMS);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *ARABIC_PRESENTATION_FORMS_A NS_SWIFT_NAME(ARABIC_PRESENTATION_FORMS_A);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *COMBINING_HALF_MARKS NS_SWIFT_NAME(COMBINING_HALF_MARKS);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *CJK_COMPATIBILITY_FORMS NS_SWIFT_NAME(CJK_COMPATIBILITY_FORMS);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *SMALL_FORM_VARIANTS NS_SWIFT_NAME(SMALL_FORM_VARIANTS);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *ARABIC_PRESENTATION_FORMS_B NS_SWIFT_NAME(ARABIC_PRESENTATION_FORMS_B);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *HALFWIDTH_AND_FULLWIDTH_FORMS NS_SWIFT_NAME(HALFWIDTH_AND_FULLWIDTH_FORMS);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *SPECIALS NS_SWIFT_NAME(SPECIALS);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *SURROGATES_AREA NS_SWIFT_NAME(SURROGATES_AREA);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *SYRIAC NS_SWIFT_NAME(SYRIAC);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *THAANA NS_SWIFT_NAME(THAANA);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *SINHALA NS_SWIFT_NAME(SINHALA);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *MYANMAR NS_SWIFT_NAME(MYANMAR);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *ETHIOPIC NS_SWIFT_NAME(ETHIOPIC);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *CHEROKEE NS_SWIFT_NAME(CHEROKEE);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *UNIFIED_CANADIAN_ABORIGINAL_SYLLABICS NS_SWIFT_NAME(UNIFIED_CANADIAN_ABORIGINAL_SYLLABICS);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *OGHAM NS_SWIFT_NAME(OGHAM);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *RUNIC NS_SWIFT_NAME(RUNIC);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *KHMER NS_SWIFT_NAME(KHMER);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *MONGOLIAN NS_SWIFT_NAME(MONGOLIAN);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *BRAILLE_PATTERNS NS_SWIFT_NAME(BRAILLE_PATTERNS);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *CJK_RADICALS_SUPPLEMENT NS_SWIFT_NAME(CJK_RADICALS_SUPPLEMENT);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *KANGXI_RADICALS NS_SWIFT_NAME(KANGXI_RADICALS);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *IDEOGRAPHIC_DESCRIPTION_CHARACTERS NS_SWIFT_NAME(IDEOGRAPHIC_DESCRIPTION_CHARACTERS);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *BOPOMOFO_EXTENDED NS_SWIFT_NAME(BOPOMOFO_EXTENDED);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *CJK_UNIFIED_IDEOGRAPHS_EXTENSION_A NS_SWIFT_NAME(CJK_UNIFIED_IDEOGRAPHS_EXTENSION_A);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *YI_SYLLABLES NS_SWIFT_NAME(YI_SYLLABLES);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *YI_RADICALS NS_SWIFT_NAME(YI_RADICALS);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *CYRILLIC_SUPPLEMENTARY NS_SWIFT_NAME(CYRILLIC_SUPPLEMENTARY);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *TAGALOG NS_SWIFT_NAME(TAGALOG);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *HANUNOO NS_SWIFT_NAME(HANUNOO);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *BUHID NS_SWIFT_NAME(BUHID);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *TAGBANWA NS_SWIFT_NAME(TAGBANWA);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *LIMBU NS_SWIFT_NAME(LIMBU);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *TAI_LE NS_SWIFT_NAME(TAI_LE);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *KHMER_SYMBOLS NS_SWIFT_NAME(KHMER_SYMBOLS);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *PHONETIC_EXTENSIONS NS_SWIFT_NAME(PHONETIC_EXTENSIONS);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *MISCELLANEOUS_MATHEMATICAL_SYMBOLS_A NS_SWIFT_NAME(MISCELLANEOUS_MATHEMATICAL_SYMBOLS_A);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *SUPPLEMENTAL_ARROWS_A NS_SWIFT_NAME(SUPPLEMENTAL_ARROWS_A);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *SUPPLEMENTAL_ARROWS_B NS_SWIFT_NAME(SUPPLEMENTAL_ARROWS_B);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *MISCELLANEOUS_MATHEMATICAL_SYMBOLS_B NS_SWIFT_NAME(MISCELLANEOUS_MATHEMATICAL_SYMBOLS_B);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *SUPPLEMENTAL_MATHEMATICAL_OPERATORS NS_SWIFT_NAME(SUPPLEMENTAL_MATHEMATICAL_OPERATORS);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *MISCELLANEOUS_SYMBOLS_AND_ARROWS NS_SWIFT_NAME(MISCELLANEOUS_SYMBOLS_AND_ARROWS);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *KATAKANA_PHONETIC_EXTENSIONS NS_SWIFT_NAME(KATAKANA_PHONETIC_EXTENSIONS);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *YIJING_HEXAGRAM_SYMBOLS NS_SWIFT_NAME(YIJING_HEXAGRAM_SYMBOLS);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *VARIATION_SELECTORS NS_SWIFT_NAME(VARIATION_SELECTORS);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *LINEAR_B_SYLLABARY NS_SWIFT_NAME(LINEAR_B_SYLLABARY);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *LINEAR_B_IDEOGRAMS NS_SWIFT_NAME(LINEAR_B_IDEOGRAMS);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *AEGEAN_NUMBERS NS_SWIFT_NAME(AEGEAN_NUMBERS);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *OLD_ITALIC NS_SWIFT_NAME(OLD_ITALIC);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *GOTHIC NS_SWIFT_NAME(GOTHIC);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *UGARITIC NS_SWIFT_NAME(UGARITIC);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *DESERET NS_SWIFT_NAME(DESERET);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *SHAVIAN NS_SWIFT_NAME(SHAVIAN);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *OSMANYA NS_SWIFT_NAME(OSMANYA);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *CYPRIOT_SYLLABARY NS_SWIFT_NAME(CYPRIOT_SYLLABARY);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *BYZANTINE_MUSICAL_SYMBOLS NS_SWIFT_NAME(BYZANTINE_MUSICAL_SYMBOLS);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *MUSICAL_SYMBOLS NS_SWIFT_NAME(MUSICAL_SYMBOLS);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *TAI_XUAN_JING_SYMBOLS NS_SWIFT_NAME(TAI_XUAN_JING_SYMBOLS);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *MATHEMATICAL_ALPHANUMERIC_SYMBOLS NS_SWIFT_NAME(MATHEMATICAL_ALPHANUMERIC_SYMBOLS);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *CJK_UNIFIED_IDEOGRAPHS_EXTENSION_B NS_SWIFT_NAME(CJK_UNIFIED_IDEOGRAPHS_EXTENSION_B);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *CJK_COMPATIBILITY_IDEOGRAPHS_SUPPLEMENT NS_SWIFT_NAME(CJK_COMPATIBILITY_IDEOGRAPHS_SUPPLEMENT);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *TAGS NS_SWIFT_NAME(TAGS);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *VARIATION_SELECTORS_SUPPLEMENT NS_SWIFT_NAME(VARIATION_SELECTORS_SUPPLEMENT);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *SUPPLEMENTARY_PRIVATE_USE_AREA_A NS_SWIFT_NAME(SUPPLEMENTARY_PRIVATE_USE_AREA_A);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *SUPPLEMENTARY_PRIVATE_USE_AREA_B NS_SWIFT_NAME(SUPPLEMENTARY_PRIVATE_USE_AREA_B);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *HIGH_SURROGATES NS_SWIFT_NAME(HIGH_SURROGATES);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *HIGH_PRIVATE_USE_SURROGATES NS_SWIFT_NAME(HIGH_PRIVATE_USE_SURROGATES);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *LOW_SURROGATES NS_SWIFT_NAME(LOW_SURROGATES);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *ARABIC_SUPPLEMENT NS_SWIFT_NAME(ARABIC_SUPPLEMENT);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *NKO NS_SWIFT_NAME(NKO);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *SAMARITAN NS_SWIFT_NAME(SAMARITAN);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *MANDAIC NS_SWIFT_NAME(MANDAIC);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *ETHIOPIC_SUPPLEMENT NS_SWIFT_NAME(ETHIOPIC_SUPPLEMENT);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *UNIFIED_CANADIAN_ABORIGINAL_SYLLABICS_EXTENDED NS_SWIFT_NAME(UNIFIED_CANADIAN_ABORIGINAL_SYLLABICS_EXTENDED);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *NEW_TAI_LUE NS_SWIFT_NAME(NEW_TAI_LUE);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *BUGINESE NS_SWIFT_NAME(BUGINESE);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *TAI_THAM NS_SWIFT_NAME(TAI_THAM);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *BALINESE NS_SWIFT_NAME(BALINESE);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *SUNDANESE NS_SWIFT_NAME(SUNDANESE);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *BATAK NS_SWIFT_NAME(BATAK);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *LEPCHA NS_SWIFT_NAME(LEPCHA);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *OL_CHIKI NS_SWIFT_NAME(OL_CHIKI);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *VEDIC_EXTENSIONS NS_SWIFT_NAME(VEDIC_EXTENSIONS);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *PHONETIC_EXTENSIONS_SUPPLEMENT NS_SWIFT_NAME(PHONETIC_EXTENSIONS_SUPPLEMENT);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *COMBINING_DIACRITICAL_MARKS_SUPPLEMENT NS_SWIFT_NAME(COMBINING_DIACRITICAL_MARKS_SUPPLEMENT);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *GLAGOLITIC NS_SWIFT_NAME(GLAGOLITIC);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *LATIN_EXTENDED_C NS_SWIFT_NAME(LATIN_EXTENDED_C);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *COPTIC NS_SWIFT_NAME(COPTIC);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *GEORGIAN_SUPPLEMENT NS_SWIFT_NAME(GEORGIAN_SUPPLEMENT);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *TIFINAGH NS_SWIFT_NAME(TIFINAGH);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *ETHIOPIC_EXTENDED NS_SWIFT_NAME(ETHIOPIC_EXTENDED);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *CYRILLIC_EXTENDED_A NS_SWIFT_NAME(CYRILLIC_EXTENDED_A);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *SUPPLEMENTAL_PUNCTUATION NS_SWIFT_NAME(SUPPLEMENTAL_PUNCTUATION);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *CJK_STROKES NS_SWIFT_NAME(CJK_STROKES);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *LISU NS_SWIFT_NAME(LISU);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *VAI NS_SWIFT_NAME(VAI);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *CYRILLIC_EXTENDED_B NS_SWIFT_NAME(CYRILLIC_EXTENDED_B);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *BAMUM NS_SWIFT_NAME(BAMUM);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *MODIFIER_TONE_LETTERS NS_SWIFT_NAME(MODIFIER_TONE_LETTERS);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *LATIN_EXTENDED_D NS_SWIFT_NAME(LATIN_EXTENDED_D);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *SYLOTI_NAGRI NS_SWIFT_NAME(SYLOTI_NAGRI);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *COMMON_INDIC_NUMBER_FORMS NS_SWIFT_NAME(COMMON_INDIC_NUMBER_FORMS);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *PHAGS_PA NS_SWIFT_NAME(PHAGS_PA);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *SAURASHTRA NS_SWIFT_NAME(SAURASHTRA);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *DEVANAGARI_EXTENDED NS_SWIFT_NAME(DEVANAGARI_EXTENDED);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *KAYAH_LI NS_SWIFT_NAME(KAYAH_LI);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *REJANG NS_SWIFT_NAME(REJANG);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *HANGUL_JAMO_EXTENDED_A NS_SWIFT_NAME(HANGUL_JAMO_EXTENDED_A);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *JAVANESE NS_SWIFT_NAME(JAVANESE);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *CHAM NS_SWIFT_NAME(CHAM);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *MYANMAR_EXTENDED_A NS_SWIFT_NAME(MYANMAR_EXTENDED_A);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *TAI_VIET NS_SWIFT_NAME(TAI_VIET);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *ETHIOPIC_EXTENDED_A NS_SWIFT_NAME(ETHIOPIC_EXTENDED_A);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *MEETEI_MAYEK NS_SWIFT_NAME(MEETEI_MAYEK);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *HANGUL_JAMO_EXTENDED_B NS_SWIFT_NAME(HANGUL_JAMO_EXTENDED_B);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *VERTICAL_FORMS NS_SWIFT_NAME(VERTICAL_FORMS);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *ANCIENT_GREEK_NUMBERS NS_SWIFT_NAME(ANCIENT_GREEK_NUMBERS);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *ANCIENT_SYMBOLS NS_SWIFT_NAME(ANCIENT_SYMBOLS);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *PHAISTOS_DISC NS_SWIFT_NAME(PHAISTOS_DISC);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *LYCIAN NS_SWIFT_NAME(LYCIAN);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *CARIAN NS_SWIFT_NAME(CARIAN);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *OLD_PERSIAN NS_SWIFT_NAME(OLD_PERSIAN);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *IMPERIAL_ARAMAIC NS_SWIFT_NAME(IMPERIAL_ARAMAIC);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *PHOENICIAN NS_SWIFT_NAME(PHOENICIAN);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *LYDIAN NS_SWIFT_NAME(LYDIAN);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *KHAROSHTHI NS_SWIFT_NAME(KHAROSHTHI);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *OLD_SOUTH_ARABIAN NS_SWIFT_NAME(OLD_SOUTH_ARABIAN);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *AVESTAN NS_SWIFT_NAME(AVESTAN);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *INSCRIPTIONAL_PARTHIAN NS_SWIFT_NAME(INSCRIPTIONAL_PARTHIAN);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *INSCRIPTIONAL_PAHLAVI NS_SWIFT_NAME(INSCRIPTIONAL_PAHLAVI);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *OLD_TURKIC NS_SWIFT_NAME(OLD_TURKIC);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *RUMI_NUMERAL_SYMBOLS NS_SWIFT_NAME(RUMI_NUMERAL_SYMBOLS);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *BRAHMI NS_SWIFT_NAME(BRAHMI);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *KAITHI NS_SWIFT_NAME(KAITHI);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *CUNEIFORM NS_SWIFT_NAME(CUNEIFORM);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *CUNEIFORM_NUMBERS_AND_PUNCTUATION NS_SWIFT_NAME(CUNEIFORM_NUMBERS_AND_PUNCTUATION);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *EGYPTIAN_HIEROGLYPHS NS_SWIFT_NAME(EGYPTIAN_HIEROGLYPHS);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *BAMUM_SUPPLEMENT NS_SWIFT_NAME(BAMUM_SUPPLEMENT);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *KANA_SUPPLEMENT NS_SWIFT_NAME(KANA_SUPPLEMENT);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *ANCIENT_GREEK_MUSICAL_NOTATION NS_SWIFT_NAME(ANCIENT_GREEK_MUSICAL_NOTATION);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *COUNTING_ROD_NUMERALS NS_SWIFT_NAME(COUNTING_ROD_NUMERALS);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *MAHJONG_TILES NS_SWIFT_NAME(MAHJONG_TILES);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *DOMINO_TILES NS_SWIFT_NAME(DOMINO_TILES);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *PLAYING_CARDS NS_SWIFT_NAME(PLAYING_CARDS);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *ENCLOSED_ALPHANUMERIC_SUPPLEMENT NS_SWIFT_NAME(ENCLOSED_ALPHANUMERIC_SUPPLEMENT);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *ENCLOSED_IDEOGRAPHIC_SUPPLEMENT NS_SWIFT_NAME(ENCLOSED_IDEOGRAPHIC_SUPPLEMENT);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *MISCELLANEOUS_SYMBOLS_AND_PICTOGRAPHS NS_SWIFT_NAME(MISCELLANEOUS_SYMBOLS_AND_PICTOGRAPHS);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *EMOTICONS NS_SWIFT_NAME(EMOTICONS);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *TRANSPORT_AND_MAP_SYMBOLS NS_SWIFT_NAME(TRANSPORT_AND_MAP_SYMBOLS);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *ALCHEMICAL_SYMBOLS NS_SWIFT_NAME(ALCHEMICAL_SYMBOLS);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *CJK_UNIFIED_IDEOGRAPHS_EXTENSION_C NS_SWIFT_NAME(CJK_UNIFIED_IDEOGRAPHS_EXTENSION_C);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *CJK_UNIFIED_IDEOGRAPHS_EXTENSION_D NS_SWIFT_NAME(CJK_UNIFIED_IDEOGRAPHS_EXTENSION_D);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *ARABIC_EXTENDED_A NS_SWIFT_NAME(ARABIC_EXTENDED_A);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *SUNDANESE_SUPPLEMENT NS_SWIFT_NAME(SUNDANESE_SUPPLEMENT);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *MEETEI_MAYEK_EXTENSIONS NS_SWIFT_NAME(MEETEI_MAYEK_EXTENSIONS);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *MEROITIC_HIEROGLYPHS NS_SWIFT_NAME(MEROITIC_HIEROGLYPHS);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *MEROITIC_CURSIVE NS_SWIFT_NAME(MEROITIC_CURSIVE);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *SORA_SOMPENG NS_SWIFT_NAME(SORA_SOMPENG);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *CHAKMA NS_SWIFT_NAME(CHAKMA);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *SHARADA NS_SWIFT_NAME(SHARADA);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *TAKRI NS_SWIFT_NAME(TAKRI);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *MIAO NS_SWIFT_NAME(MIAO);
-@property (readonly, class, strong) JavaLangCharacter_UnicodeBlock *ARABIC_MATHEMATICAL_ALPHABETIC_SYMBOLS NS_SWIFT_NAME(ARABIC_MATHEMATICAL_ALPHABETIC_SYMBOLS);
 
 #pragma mark Public
 
 /*!
  @brief Returns the UnicodeBlock with the given name.Block
   names are determined by The Unicode Standard.
- The file
-  Blocks-&lt;version&gt;.txt defines blocks for a particular
+ The file 
+ <code>Blocks-<version>.txt</code> defines blocks for a particular
   version of the standard. The <code>Character</code> class specifies
   the version of the standard that it supports. 
  <p>
@@ -4374,7 +4251,8 @@ FOUNDATION_EXPORT JavaLangCharacter_UnicodeBlock *JavaLangCharacter_UnicodeBlock
 J2OBJC_STATIC_FIELD_OBJ_FINAL(JavaLangCharacter_UnicodeBlock, YI_RADICALS, JavaLangCharacter_UnicodeBlock *)
 
 /*!
- @brief Constant for the "Cyrillic Supplementary" Unicode character block.
+ @brief Constant for the "Cyrillic Supplement" Unicode character block.
+ This block was previously known as the "Cyrillic Supplementary" block.
  @since 1.5
  */
 inline JavaLangCharacter_UnicodeBlock *JavaLangCharacter_UnicodeBlock_get_CYRILLIC_SUPPLEMENTARY(void);
@@ -5642,8 +5520,9 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaLangCharacter_UnicodeBlock)
 #include "java/lang/Enum.h"
 
 @class IOSObjectArray;
+@class JavaLangInteger;
 
-typedef NS_ENUM(NSUInteger, JavaLangCharacter_UnicodeScript_Enum) {
+typedef NS_ENUM(jint, JavaLangCharacter_UnicodeScript_Enum) {
   JavaLangCharacter_UnicodeScript_Enum_COMMON = 0,
   JavaLangCharacter_UnicodeScript_Enum_LATIN = 1,
   JavaLangCharacter_UnicodeScript_Enum_GREEK = 2,
@@ -5748,6 +5627,12 @@ typedef NS_ENUM(NSUInteger, JavaLangCharacter_UnicodeScript_Enum) {
   JavaLangCharacter_UnicodeScript_Enum_MIAO = 101,
   JavaLangCharacter_UnicodeScript_Enum_UNKNOWN = 102,
 };
+#if J2OBJC_IMPORTED_BY_JAVA_IMPLEMENTATION
+#define JavaLangCharacter_UnicodeScript_ORDINAL jint
+#else
+#define JavaLangCharacter_UnicodeScript_ORDINAL JavaLangCharacter_UnicodeScript_Enum
+#endif
+
 
 /*!
  @brief A family of character subsets representing the character scripts
@@ -5763,125 +5648,21 @@ typedef NS_ENUM(NSUInteger, JavaLangCharacter_UnicodeScript_Enum) {
  */
 @interface JavaLangCharacter_UnicodeScript : JavaLangEnum
 
-@property (readonly, class, nonnull) JavaLangCharacter_UnicodeScript *COMMON NS_SWIFT_NAME(COMMON);
-@property (readonly, class, nonnull) JavaLangCharacter_UnicodeScript *LATIN NS_SWIFT_NAME(LATIN);
-@property (readonly, class, nonnull) JavaLangCharacter_UnicodeScript *GREEK NS_SWIFT_NAME(GREEK);
-@property (readonly, class, nonnull) JavaLangCharacter_UnicodeScript *CYRILLIC NS_SWIFT_NAME(CYRILLIC);
-@property (readonly, class, nonnull) JavaLangCharacter_UnicodeScript *ARMENIAN NS_SWIFT_NAME(ARMENIAN);
-@property (readonly, class, nonnull) JavaLangCharacter_UnicodeScript *HEBREW NS_SWIFT_NAME(HEBREW);
-@property (readonly, class, nonnull) JavaLangCharacter_UnicodeScript *ARABIC NS_SWIFT_NAME(ARABIC);
-@property (readonly, class, nonnull) JavaLangCharacter_UnicodeScript *SYRIAC NS_SWIFT_NAME(SYRIAC);
-@property (readonly, class, nonnull) JavaLangCharacter_UnicodeScript *THAANA NS_SWIFT_NAME(THAANA);
-@property (readonly, class, nonnull) JavaLangCharacter_UnicodeScript *DEVANAGARI NS_SWIFT_NAME(DEVANAGARI);
-@property (readonly, class, nonnull) JavaLangCharacter_UnicodeScript *BENGALI NS_SWIFT_NAME(BENGALI);
-@property (readonly, class, nonnull) JavaLangCharacter_UnicodeScript *GURMUKHI NS_SWIFT_NAME(GURMUKHI);
-@property (readonly, class, nonnull) JavaLangCharacter_UnicodeScript *GUJARATI NS_SWIFT_NAME(GUJARATI);
-@property (readonly, class, nonnull) JavaLangCharacter_UnicodeScript *ORIYA NS_SWIFT_NAME(ORIYA);
-@property (readonly, class, nonnull) JavaLangCharacter_UnicodeScript *TAMIL NS_SWIFT_NAME(TAMIL);
-@property (readonly, class, nonnull) JavaLangCharacter_UnicodeScript *TELUGU NS_SWIFT_NAME(TELUGU);
-@property (readonly, class, nonnull) JavaLangCharacter_UnicodeScript *KANNADA NS_SWIFT_NAME(KANNADA);
-@property (readonly, class, nonnull) JavaLangCharacter_UnicodeScript *MALAYALAM NS_SWIFT_NAME(MALAYALAM);
-@property (readonly, class, nonnull) JavaLangCharacter_UnicodeScript *SINHALA NS_SWIFT_NAME(SINHALA);
-@property (readonly, class, nonnull) JavaLangCharacter_UnicodeScript *THAI NS_SWIFT_NAME(THAI);
-@property (readonly, class, nonnull) JavaLangCharacter_UnicodeScript *LAO NS_SWIFT_NAME(LAO);
-@property (readonly, class, nonnull) JavaLangCharacter_UnicodeScript *TIBETAN NS_SWIFT_NAME(TIBETAN);
-@property (readonly, class, nonnull) JavaLangCharacter_UnicodeScript *MYANMAR NS_SWIFT_NAME(MYANMAR);
-@property (readonly, class, nonnull) JavaLangCharacter_UnicodeScript *GEORGIAN NS_SWIFT_NAME(GEORGIAN);
-@property (readonly, class, nonnull) JavaLangCharacter_UnicodeScript *HANGUL NS_SWIFT_NAME(HANGUL);
-@property (readonly, class, nonnull) JavaLangCharacter_UnicodeScript *ETHIOPIC NS_SWIFT_NAME(ETHIOPIC);
-@property (readonly, class, nonnull) JavaLangCharacter_UnicodeScript *CHEROKEE NS_SWIFT_NAME(CHEROKEE);
-@property (readonly, class, nonnull) JavaLangCharacter_UnicodeScript *CANADIAN_ABORIGINAL NS_SWIFT_NAME(CANADIAN_ABORIGINAL);
-@property (readonly, class, nonnull) JavaLangCharacter_UnicodeScript *OGHAM NS_SWIFT_NAME(OGHAM);
-@property (readonly, class, nonnull) JavaLangCharacter_UnicodeScript *RUNIC NS_SWIFT_NAME(RUNIC);
-@property (readonly, class, nonnull) JavaLangCharacter_UnicodeScript *KHMER NS_SWIFT_NAME(KHMER);
-@property (readonly, class, nonnull) JavaLangCharacter_UnicodeScript *MONGOLIAN NS_SWIFT_NAME(MONGOLIAN);
-@property (readonly, class, nonnull) JavaLangCharacter_UnicodeScript *HIRAGANA NS_SWIFT_NAME(HIRAGANA);
-@property (readonly, class, nonnull) JavaLangCharacter_UnicodeScript *KATAKANA NS_SWIFT_NAME(KATAKANA);
-@property (readonly, class, nonnull) JavaLangCharacter_UnicodeScript *BOPOMOFO NS_SWIFT_NAME(BOPOMOFO);
-@property (readonly, class, nonnull) JavaLangCharacter_UnicodeScript *HAN NS_SWIFT_NAME(HAN);
-@property (readonly, class, nonnull) JavaLangCharacter_UnicodeScript *YI NS_SWIFT_NAME(YI);
-@property (readonly, class, nonnull) JavaLangCharacter_UnicodeScript *OLD_ITALIC NS_SWIFT_NAME(OLD_ITALIC);
-@property (readonly, class, nonnull) JavaLangCharacter_UnicodeScript *GOTHIC NS_SWIFT_NAME(GOTHIC);
-@property (readonly, class, nonnull) JavaLangCharacter_UnicodeScript *DESERET NS_SWIFT_NAME(DESERET);
-@property (readonly, class, nonnull) JavaLangCharacter_UnicodeScript *INHERITED NS_SWIFT_NAME(INHERITED);
-@property (readonly, class, nonnull) JavaLangCharacter_UnicodeScript *TAGALOG NS_SWIFT_NAME(TAGALOG);
-@property (readonly, class, nonnull) JavaLangCharacter_UnicodeScript *HANUNOO NS_SWIFT_NAME(HANUNOO);
-@property (readonly, class, nonnull) JavaLangCharacter_UnicodeScript *BUHID NS_SWIFT_NAME(BUHID);
-@property (readonly, class, nonnull) JavaLangCharacter_UnicodeScript *TAGBANWA NS_SWIFT_NAME(TAGBANWA);
-@property (readonly, class, nonnull) JavaLangCharacter_UnicodeScript *LIMBU NS_SWIFT_NAME(LIMBU);
-@property (readonly, class, nonnull) JavaLangCharacter_UnicodeScript *TAI_LE NS_SWIFT_NAME(TAI_LE);
-@property (readonly, class, nonnull) JavaLangCharacter_UnicodeScript *LINEAR_B NS_SWIFT_NAME(LINEAR_B);
-@property (readonly, class, nonnull) JavaLangCharacter_UnicodeScript *UGARITIC NS_SWIFT_NAME(UGARITIC);
-@property (readonly, class, nonnull) JavaLangCharacter_UnicodeScript *SHAVIAN NS_SWIFT_NAME(SHAVIAN);
-@property (readonly, class, nonnull) JavaLangCharacter_UnicodeScript *OSMANYA NS_SWIFT_NAME(OSMANYA);
-@property (readonly, class, nonnull) JavaLangCharacter_UnicodeScript *CYPRIOT NS_SWIFT_NAME(CYPRIOT);
-@property (readonly, class, nonnull) JavaLangCharacter_UnicodeScript *BRAILLE NS_SWIFT_NAME(BRAILLE);
-@property (readonly, class, nonnull) JavaLangCharacter_UnicodeScript *BUGINESE NS_SWIFT_NAME(BUGINESE);
-@property (readonly, class, nonnull) JavaLangCharacter_UnicodeScript *COPTIC NS_SWIFT_NAME(COPTIC);
-@property (readonly, class, nonnull) JavaLangCharacter_UnicodeScript *NEW_TAI_LUE NS_SWIFT_NAME(NEW_TAI_LUE);
-@property (readonly, class, nonnull) JavaLangCharacter_UnicodeScript *GLAGOLITIC NS_SWIFT_NAME(GLAGOLITIC);
-@property (readonly, class, nonnull) JavaLangCharacter_UnicodeScript *TIFINAGH NS_SWIFT_NAME(TIFINAGH);
-@property (readonly, class, nonnull) JavaLangCharacter_UnicodeScript *SYLOTI_NAGRI NS_SWIFT_NAME(SYLOTI_NAGRI);
-@property (readonly, class, nonnull) JavaLangCharacter_UnicodeScript *OLD_PERSIAN NS_SWIFT_NAME(OLD_PERSIAN);
-@property (readonly, class, nonnull) JavaLangCharacter_UnicodeScript *KHAROSHTHI NS_SWIFT_NAME(KHAROSHTHI);
-@property (readonly, class, nonnull) JavaLangCharacter_UnicodeScript *BALINESE NS_SWIFT_NAME(BALINESE);
-@property (readonly, class, nonnull) JavaLangCharacter_UnicodeScript *CUNEIFORM NS_SWIFT_NAME(CUNEIFORM);
-@property (readonly, class, nonnull) JavaLangCharacter_UnicodeScript *PHOENICIAN NS_SWIFT_NAME(PHOENICIAN);
-@property (readonly, class, nonnull) JavaLangCharacter_UnicodeScript *PHAGS_PA NS_SWIFT_NAME(PHAGS_PA);
-@property (readonly, class, nonnull) JavaLangCharacter_UnicodeScript *NKO NS_SWIFT_NAME(NKO);
-@property (readonly, class, nonnull) JavaLangCharacter_UnicodeScript *SUNDANESE NS_SWIFT_NAME(SUNDANESE);
-@property (readonly, class, nonnull) JavaLangCharacter_UnicodeScript *BATAK NS_SWIFT_NAME(BATAK);
-@property (readonly, class, nonnull) JavaLangCharacter_UnicodeScript *LEPCHA NS_SWIFT_NAME(LEPCHA);
-@property (readonly, class, nonnull) JavaLangCharacter_UnicodeScript *OL_CHIKI NS_SWIFT_NAME(OL_CHIKI);
-@property (readonly, class, nonnull) JavaLangCharacter_UnicodeScript *VAI NS_SWIFT_NAME(VAI);
-@property (readonly, class, nonnull) JavaLangCharacter_UnicodeScript *SAURASHTRA NS_SWIFT_NAME(SAURASHTRA);
-@property (readonly, class, nonnull) JavaLangCharacter_UnicodeScript *KAYAH_LI NS_SWIFT_NAME(KAYAH_LI);
-@property (readonly, class, nonnull) JavaLangCharacter_UnicodeScript *REJANG NS_SWIFT_NAME(REJANG);
-@property (readonly, class, nonnull) JavaLangCharacter_UnicodeScript *LYCIAN NS_SWIFT_NAME(LYCIAN);
-@property (readonly, class, nonnull) JavaLangCharacter_UnicodeScript *CARIAN NS_SWIFT_NAME(CARIAN);
-@property (readonly, class, nonnull) JavaLangCharacter_UnicodeScript *LYDIAN NS_SWIFT_NAME(LYDIAN);
-@property (readonly, class, nonnull) JavaLangCharacter_UnicodeScript *CHAM NS_SWIFT_NAME(CHAM);
-@property (readonly, class, nonnull) JavaLangCharacter_UnicodeScript *TAI_THAM NS_SWIFT_NAME(TAI_THAM);
-@property (readonly, class, nonnull) JavaLangCharacter_UnicodeScript *TAI_VIET NS_SWIFT_NAME(TAI_VIET);
-@property (readonly, class, nonnull) JavaLangCharacter_UnicodeScript *AVESTAN NS_SWIFT_NAME(AVESTAN);
-@property (readonly, class, nonnull) JavaLangCharacter_UnicodeScript *EGYPTIAN_HIEROGLYPHS NS_SWIFT_NAME(EGYPTIAN_HIEROGLYPHS);
-@property (readonly, class, nonnull) JavaLangCharacter_UnicodeScript *SAMARITAN NS_SWIFT_NAME(SAMARITAN);
-@property (readonly, class, nonnull) JavaLangCharacter_UnicodeScript *MANDAIC NS_SWIFT_NAME(MANDAIC);
-@property (readonly, class, nonnull) JavaLangCharacter_UnicodeScript *LISU NS_SWIFT_NAME(LISU);
-@property (readonly, class, nonnull) JavaLangCharacter_UnicodeScript *BAMUM NS_SWIFT_NAME(BAMUM);
-@property (readonly, class, nonnull) JavaLangCharacter_UnicodeScript *JAVANESE NS_SWIFT_NAME(JAVANESE);
-@property (readonly, class, nonnull) JavaLangCharacter_UnicodeScript *MEETEI_MAYEK NS_SWIFT_NAME(MEETEI_MAYEK);
-@property (readonly, class, nonnull) JavaLangCharacter_UnicodeScript *IMPERIAL_ARAMAIC NS_SWIFT_NAME(IMPERIAL_ARAMAIC);
-@property (readonly, class, nonnull) JavaLangCharacter_UnicodeScript *OLD_SOUTH_ARABIAN NS_SWIFT_NAME(OLD_SOUTH_ARABIAN);
-@property (readonly, class, nonnull) JavaLangCharacter_UnicodeScript *INSCRIPTIONAL_PARTHIAN NS_SWIFT_NAME(INSCRIPTIONAL_PARTHIAN);
-@property (readonly, class, nonnull) JavaLangCharacter_UnicodeScript *INSCRIPTIONAL_PAHLAVI NS_SWIFT_NAME(INSCRIPTIONAL_PAHLAVI);
-@property (readonly, class, nonnull) JavaLangCharacter_UnicodeScript *OLD_TURKIC NS_SWIFT_NAME(OLD_TURKIC);
-@property (readonly, class, nonnull) JavaLangCharacter_UnicodeScript *BRAHMI NS_SWIFT_NAME(BRAHMI);
-@property (readonly, class, nonnull) JavaLangCharacter_UnicodeScript *KAITHI NS_SWIFT_NAME(KAITHI);
-@property (readonly, class, nonnull) JavaLangCharacter_UnicodeScript *MEROITIC_HIEROGLYPHS NS_SWIFT_NAME(MEROITIC_HIEROGLYPHS);
-@property (readonly, class, nonnull) JavaLangCharacter_UnicodeScript *MEROITIC_CURSIVE NS_SWIFT_NAME(MEROITIC_CURSIVE);
-@property (readonly, class, nonnull) JavaLangCharacter_UnicodeScript *SORA_SOMPENG NS_SWIFT_NAME(SORA_SOMPENG);
-@property (readonly, class, nonnull) JavaLangCharacter_UnicodeScript *CHAKMA NS_SWIFT_NAME(CHAKMA);
-@property (readonly, class, nonnull) JavaLangCharacter_UnicodeScript *SHARADA NS_SWIFT_NAME(SHARADA);
-@property (readonly, class, nonnull) JavaLangCharacter_UnicodeScript *TAKRI NS_SWIFT_NAME(TAKRI);
-@property (readonly, class, nonnull) JavaLangCharacter_UnicodeScript *MIAO NS_SWIFT_NAME(MIAO);
-@property (readonly, class, nonnull) JavaLangCharacter_UnicodeScript *UNKNOWN NS_SWIFT_NAME(UNKNOWN);
 #pragma mark Public
 
 /*!
  @brief Returns the UnicodeScript constant with the given Unicode script
   name or the script name alias.Script names and their aliases are
   determined by The Unicode Standard.
- The files Scripts&lt;version&gt;.txt
-  and PropertyValueAliases&lt;version&gt;.txt define script names
+ The files <code>Scripts<version>.txt</code>
+  and <code>PropertyValueAliases<version>.txt</code> define script names
   and the script name aliases for a particular version of the
   standard. The <code>Character</code> class specifies the version of
   the standard that it supports. 
  <p>
   Character case is ignored for all of the valid script names.
   The en_US locale's case mapping rules are used to provide
-  case-insensitive string comparisons for script name validation. 
- <p>
+  case-insensitive string comparisons for script name validation.
  @param scriptName A <code>UnicodeScript</code>  name.
  @return The <code>UnicodeScript</code> constant identified
           by <code>scriptName</code>
@@ -5910,6 +5691,8 @@ typedef NS_ENUM(NSUInteger, JavaLangCharacter_UnicodeScript_Enum) {
 #pragma mark Package-Private
 
 - (JavaLangCharacter_UnicodeScript_Enum)toNSEnum;
+
+- (JavaLangCharacter_UnicodeScript_ORDINAL)ordinal;
 
 @end
 
@@ -6490,42 +6273,49 @@ J2OBJC_ENUM_CONSTANT(JavaLangCharacter_UnicodeScript, KAITHI)
 
 /*!
  @brief Unicode script "Meroitic Hieroglyphs".
+ @since 1.8
  */
 inline JavaLangCharacter_UnicodeScript *JavaLangCharacter_UnicodeScript_get_MEROITIC_HIEROGLYPHS(void);
 J2OBJC_ENUM_CONSTANT(JavaLangCharacter_UnicodeScript, MEROITIC_HIEROGLYPHS)
 
 /*!
  @brief Unicode script "Meroitic Cursive".
+ @since 1.8
  */
 inline JavaLangCharacter_UnicodeScript *JavaLangCharacter_UnicodeScript_get_MEROITIC_CURSIVE(void);
 J2OBJC_ENUM_CONSTANT(JavaLangCharacter_UnicodeScript, MEROITIC_CURSIVE)
 
 /*!
  @brief Unicode script "Sora Sompeng".
+ @since 1.8
  */
 inline JavaLangCharacter_UnicodeScript *JavaLangCharacter_UnicodeScript_get_SORA_SOMPENG(void);
 J2OBJC_ENUM_CONSTANT(JavaLangCharacter_UnicodeScript, SORA_SOMPENG)
 
 /*!
  @brief Unicode script "Chakma".
+ @since 1.8
  */
 inline JavaLangCharacter_UnicodeScript *JavaLangCharacter_UnicodeScript_get_CHAKMA(void);
 J2OBJC_ENUM_CONSTANT(JavaLangCharacter_UnicodeScript, CHAKMA)
 
 /*!
  @brief Unicode script "Sharada".
+ @since 1.8
  */
 inline JavaLangCharacter_UnicodeScript *JavaLangCharacter_UnicodeScript_get_SHARADA(void);
 J2OBJC_ENUM_CONSTANT(JavaLangCharacter_UnicodeScript, SHARADA)
 
 /*!
  @brief Unicode script "Takri".
+ @since 1.8
  */
 inline JavaLangCharacter_UnicodeScript *JavaLangCharacter_UnicodeScript_get_TAKRI(void);
 J2OBJC_ENUM_CONSTANT(JavaLangCharacter_UnicodeScript, TAKRI)
 
 /*!
  @brief Unicode script "Miao".
+ @since 1.8
  */
 inline JavaLangCharacter_UnicodeScript *JavaLangCharacter_UnicodeScript_get_MIAO(void);
 J2OBJC_ENUM_CONSTANT(JavaLangCharacter_UnicodeScript, MIAO)
@@ -6544,7 +6334,7 @@ FOUNDATION_EXPORT IOSObjectArray *JavaLangCharacter_UnicodeScript_values(void);
 
 FOUNDATION_EXPORT JavaLangCharacter_UnicodeScript *JavaLangCharacter_UnicodeScript_valueOfWithNSString_(NSString *name);
 
-FOUNDATION_EXPORT JavaLangCharacter_UnicodeScript *JavaLangCharacter_UnicodeScript_fromOrdinal(NSUInteger ordinal);
+FOUNDATION_EXPORT JavaLangCharacter_UnicodeScript *JavaLangCharacter_UnicodeScript_fromOrdinal(JavaLangCharacter_UnicodeScript_ORDINAL ordinal);
 
 J2OBJC_TYPE_LITERAL_HEADER(JavaLangCharacter_UnicodeScript)
 
@@ -6554,6 +6344,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaLangCharacter_UnicodeScript)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaLangCharacter")

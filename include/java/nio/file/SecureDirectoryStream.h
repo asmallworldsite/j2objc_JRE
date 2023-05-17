@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaNioFileSecureDirectoryStream
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -106,7 +103,7 @@
  <p> The channel, once created, is not dependent upon the directory stream
   used to create it. Closing this directory stream has no effect upon the
   channel.
- @param path the path of the file to open open or create
+ @param path the path of the file to open or create
  @param options options specifying how the file is opened
  @param attrs an optional list of attributes to set atomically when creating
             the file
@@ -280,6 +277,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaNioFileSecureDirectoryStream)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaNioFileSecureDirectoryStream")

@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaSqlDriverPropertyInfo
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -26,11 +23,11 @@
 #define JavaSqlDriverPropertyInfo_
 
 @class IOSObjectArray;
+@class JavaLangBoolean;
 
 /*!
- @brief <p>Driver properties for making a connection.
- The 
- <code>DriverPropertyInfo</code> class is of interest only to advanced programmers
+ @brief <p>Driver properties for making a connection.The
+  <code>DriverPropertyInfo</code> class is of interest only to advanced programmers
   who need to interact with a Driver via the method 
  <code>getDriverProperties</code> to discover
   and supply properties for connections.
@@ -107,6 +104,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaSqlDriverPropertyInfo)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaSqlDriverPropertyInfo")

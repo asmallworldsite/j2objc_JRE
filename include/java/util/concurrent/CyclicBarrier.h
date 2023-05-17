@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaUtilConcurrentCyclicBarrier
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -25,6 +22,9 @@
 #if !defined (JavaUtilConcurrentCyclicBarrier_) && (INCLUDE_ALL_JavaUtilConcurrentCyclicBarrier || defined(INCLUDE_JavaUtilConcurrentCyclicBarrier))
 #define JavaUtilConcurrentCyclicBarrier_
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
+@class JavaLangLong;
 @class JavaUtilConcurrentTimeUnit;
 @protocol JavaLangRunnable;
 
@@ -64,8 +64,7 @@
     public Solver(float[][] matrix) {
       data = matrix;
       N = matrix.length;
-      Runnable barrierAction =
-        new Runnable() { public void run() { mergeRows(...); }};
+      Runnable barrierAction = () -> mergeRows(...);
       barrier = new CyclicBarrier(N, barrierAction);
       List<Thread> threads = new ArrayList<>(N);
       for (int i = 0; i < N; i++) {
@@ -111,9 +110,9 @@
   actions that are part of the barrier action, which in turn 
  <i>happen-before</i> actions following a successful return from the
   corresponding <code>await()</code> in other threads.
- @since 1.5
  - seealso: CountDownLatch
  @author Doug Lea
+ @since 1.5
  */
 @interface JavaUtilConcurrentCyclicBarrier : NSObject
 
@@ -314,6 +313,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentCyclicBarrier)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaUtilConcurrentCyclicBarrier")

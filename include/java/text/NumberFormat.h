@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaTextNumberFormat
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -30,6 +27,10 @@
 #include "java/text/Format.h"
 
 @class IOSObjectArray;
+@class JavaLangBoolean;
+@class JavaLangDouble;
+@class JavaLangInteger;
+@class JavaLangLong;
 @class JavaLangStringBuffer;
 @class JavaMathRoundingMode;
 @class JavaTextFieldPosition;
@@ -53,9 +54,8 @@
   class methods: 
  <blockquote>
   @code
-
-   myString = NumberFormat.getInstance().format(myNumber); 
-  
+ myString = NumberFormat.getInstance().format(myNumber); 
+ 
 @endcode
   </blockquote>
   If you are formatting multiple numbers, it is
@@ -64,29 +64,30 @@
   language and country conventions multiple times. 
  <blockquote>
   @code
-
-  NumberFormat nf = NumberFormat.getInstance();
+ NumberFormat nf = NumberFormat.getInstance();
   for (int i = 0; i < myNumber.length; ++i) {
       output.println(nf.format(myNumber[i]) + "; ");
   } 
-  
+ 
 @endcode
   </blockquote>
   To format a number for a different Locale, specify it in the
   call to <code>getInstance</code>.
   <blockquote>
   @code
-
-  NumberFormat nf = NumberFormat.getInstance(Locale.FRENCH); 
-  
+ NumberFormat nf = NumberFormat.getInstance(Locale.FRENCH); 
+ 
 @endcode
   </blockquote>
-  You can also use a <code>NumberFormat</code> to parse numbers: 
+  
+ <p>If the locale contains "nu" (numbers) 
+ <a href="../util/Locale.html#def_locale_extension">Unicode extensions</a>,
+  the decimal digits, and/or the country used for formatting are overridden. 
+ <p>You can also use a <code>NumberFormat</code> to parse numbers: 
  <blockquote>
   @code
-
-  myNumber = nf.parse(myString); 
-  
+ myNumber = nf.parse(myString); 
+ 
 @endcode
   </blockquote>
   Use <code>getInstance</code> or <code>getNumberInstance</code> to get the
@@ -110,8 +111,8 @@
   the detailed description for each these control methods, 
  <p>
   setParseIntegerOnly : only affects parsing, e.g.
-  if true,  "3456.78" -> 3456 (and leaves the parse position just after index 6)
-  if false, "3456.78" -> 3456.78 (and leaves the parse position just after index 8)
+  if true,  "3456.78" &rarr; 3456 (and leaves the parse position just after index 6)
+  if false, "3456.78" &rarr; 3456.78 (and leaves the parse position just after index 8)
   This is independent of formatting.  If you want to not show a decimal point
   where there might be no digits after the decimal point, use
   setDecimalSeparatorAlwaysShown. 
@@ -119,8 +120,8 @@
   setDecimalSeparatorAlwaysShown : only affects formatting, and only where
   there might be no digits after the decimal point, such as with a pattern
   like "#,##0.##", e.g.,
-  if true,  3456.00 -> "3,456."
-  if false, 3456.00 -> "3456"
+  if true,  3456.00 &rarr; "3,456."
+  if false, 3456.00 &rarr; "3456"
   This is independent of parsing.  If you want parsing to stop at the decimal
   point, use setParseIntegerOnly. 
  <p>
@@ -149,7 +150,7 @@
        numbers: "(12)" for -12. 
  </ol>
   
- <h4><a name="synchronization">Synchronization</a></h4>
+ <h3><a id="synchronization">Synchronization</a></h3>
   
  <p>
   Number formats are generally not synchronized.
@@ -160,27 +161,26 @@
  - seealso: ChoiceFormat
  @author Mark Davis
  @author Helena Shih
+ @since 1.1
  */
 @interface JavaTextNumberFormat : JavaTextFormat
-@property (readonly, class) jint INTEGER_FIELD NS_SWIFT_NAME(INTEGER_FIELD);
-@property (readonly, class) jint FRACTION_FIELD NS_SWIFT_NAME(FRACTION_FIELD);
-@property (readonly, class) jint currentSerialVersion NS_SWIFT_NAME(currentSerialVersion);
-@property (readonly, class) jlong serialVersionUID NS_SWIFT_NAME(serialVersionUID);
 
 #pragma mark Public
 
 /*!
- @brief Overrides Cloneable
+ @brief Overrides Cloneable.
  */
 - (id __nonnull)java_clone;
 
 /*!
- @brief Overrides equals
+ @brief Overrides equals.
  */
 - (jboolean)isEqual:(id)obj;
 
 /*!
  @brief Specialization of format.
+ @param number the double number to format
+ @return the formatted String
  @throw ArithmeticExceptionif rounding is needed with rounding
                     mode being set to RoundingMode.UNNECESSARY
  - seealso: java.text.Format#format
@@ -189,6 +189,17 @@
 
 /*!
  @brief Specialization of format.
+ @param number the double number to format
+ @param toAppendTo the StringBuffer to which the formatted text is to be                    appended
+ @param pos keeps track on the position of the field within the                    returned string. For example, for formatting a number
+                     
+ <code>1234567.89</code>  in <code>Locale.US</code>  locale,                    if the given 
+ <code>fieldPosition</code>  is                    <code>NumberFormat.INTEGER_FIELD</code>
+  , the begin index                    and end index of 
+ <code>fieldPosition</code>  will be set                    to 0 and 9, respectively for the output string
+                     <code>1,234,567.89</code>
+  .
+ @return the formatted StringBuffer
  @throw ArithmeticExceptionif rounding is needed with rounding
                     mode being set to RoundingMode.UNNECESSARY
  - seealso: java.text.Format#format
@@ -199,6 +210,8 @@
 
 /*!
  @brief Specialization of format.
+ @param number the long number to format
+ @return the formatted String
  @throw ArithmeticExceptionif rounding is needed with rounding
                     mode being set to RoundingMode.UNNECESSARY
  - seealso: java.text.Format#format
@@ -207,6 +220,17 @@
 
 /*!
  @brief Specialization of format.
+ @param number the long number to format
+ @param toAppendTo the StringBuffer to which the formatted text is to be                    appended
+ @param pos keeps track on the position of the field within the                    returned string. For example, for formatting a number
+                     
+ <code>123456789</code>  in <code>Locale.US</code>  locale,                    if the given 
+ <code>fieldPosition</code>  is                    <code>NumberFormat.INTEGER_FIELD</code>
+  , the begin index                    and end index of 
+ <code>fieldPosition</code>  will be set                    to 0 and 11, respectively for the output string
+                     <code>123,456,789</code>
+  .
+ @return the formatted StringBuffer
  @throw ArithmeticExceptionif rounding is needed with rounding
                     mode being set to RoundingMode.UNNECESSARY
  - seealso: java.text.Format#format
@@ -234,7 +258,14 @@
  @param number the number to format
  @param toAppendTo the  <code> StringBuffer </code>  to which the formatted
                      text is to be appended
- @param pos On input: an alignment field, if desired.                    On output: the offsets of the alignment field.
+ @param pos keeps track on the position of the field within the                    returned string. For example, for formatting a number
+                     
+ <code>1234567.89</code>  in <code>Locale.US</code>  locale,                    if the given 
+ <code>fieldPosition</code>  is                    <code>NumberFormat.INTEGER_FIELD</code>
+  , the begin index                    and end index of 
+ <code>fieldPosition</code>  will be set                    to 0 and 9, respectively for the output string
+                     <code>1,234,567.89</code>
+  .
  @return the value passed in as <code>toAppendTo</code>
  @throw IllegalArgumentExceptionif <code>number</code> is
                     null or not an instance of <code>Number</code>.
@@ -252,11 +283,6 @@
  @brief Returns an array of all locales for which the 
  <code>get*Instance</code> methods of this class can return
   localized instances.
- The returned array represents the union of locales supported by the Java
-  runtime and by installed 
- <code>NumberFormatProvider</code> implementations.
-  It must contain at least a <code>Locale</code> instance equal to 
- <code>Locale.US</code>.
  @return An array of locales for which localized
           <code>NumberFormat</code> instances are available.
  */
@@ -280,19 +306,31 @@
 - (JavaUtilCurrency * __nullable)getCurrency;
 
 /*!
- @brief Returns a currency format for the current default locale.
+ @brief Returns a currency format for the current default 
+ <code>FORMAT</code> locale.
+ <p>This is equivalent to calling 
+ <code>getCurrencyInstance(Locale.getDefault(Locale.Category.FORMAT))</code>
+ .
+ @return the <code>NumberFormat</code> instance for currency formatting
+ - seealso: java.util.Locale#getDefault(java.util.Locale.Category)
+ - seealso: java.util.Locale.Category#FORMAT
  */
 + (JavaTextNumberFormat * __nonnull)getCurrencyInstance;
 
 /*!
  @brief Returns a currency format for the specified locale.
+ @param inLocale the desired locale
+ @return the <code>NumberFormat</code> instance for currency formatting
  */
 + (JavaTextNumberFormat * __nonnull)getCurrencyInstanceWithJavaUtilLocale:(JavaUtilLocale *)inLocale;
 
 /*!
- @brief Returns a general-purpose number format for the current default locale.
+ @brief Returns a general-purpose number format for the current default 
+ <code>FORMAT</code> locale.
  This is the same as calling 
  <code>getNumberInstance()</code>.
+ @return the <code>NumberFormat</code> instance for general-purpose number
+  formatting
  */
 + (JavaTextNumberFormat * __nonnull)getInstance;
 
@@ -300,17 +338,26 @@
  @brief Returns a general-purpose number format for the specified locale.
  This is the same as calling 
  <code>getNumberInstance(inLocale)</code>.
+ @param inLocale the desired locale
+ @return the <code>NumberFormat</code> instance for general-purpose number
+  formatting
  */
 + (JavaTextNumberFormat * __nonnull)getInstanceWithJavaUtilLocale:(JavaUtilLocale *)inLocale;
 
 /*!
- @brief Returns an integer number format for the current default locale.The
+ @brief Returns an integer number format for the current default 
+ <code>FORMAT</code> locale.The
   returned number format is configured to round floating point numbers
   to the nearest integer using half-even rounding (see <code>RoundingMode.HALF_EVEN</code>
  ) for formatting,
   and to parse only the integer part of an input string (see <code>isParseIntegerOnly</code>
  ).
+ <p>This is equivalent to calling 
+ <code>getIntegerInstance(Locale.getDefault(Locale.Category.FORMAT))</code>
+ .
  - seealso: #getRoundingMode()
+ - seealso: java.util.Locale#getDefault(java.util.Locale.Category)
+ - seealso: java.util.Locale.Category#FORMAT
  @return a number format for integer values
  @since 1.4
  */
@@ -323,6 +370,7 @@
  ) for formatting,
   and to parse only the integer part of an input string (see <code>isParseIntegerOnly</code>
  ).
+ @param inLocale the desired locale
  - seealso: #getRoundingMode()
  @return a number format for integer values
  @since 1.4
@@ -332,6 +380,7 @@
 /*!
  @brief Returns the maximum number of digits allowed in the fraction portion of a
   number.
+ @return the maximum number of digits.
  - seealso: #setMaximumFractionDigits
  */
 - (jint)getMaximumFractionDigits;
@@ -339,6 +388,7 @@
 /*!
  @brief Returns the maximum number of digits allowed in the integer portion of a
   number.
+ @return the maximum number of digits
  - seealso: #setMaximumIntegerDigits
  */
 - (jint)getMaximumIntegerDigits;
@@ -346,6 +396,7 @@
 /*!
  @brief Returns the minimum number of digits allowed in the fraction portion of a
   number.
+ @return the minimum number of digits
  - seealso: #setMinimumFractionDigits
  */
 - (jint)getMinimumFractionDigits;
@@ -353,27 +404,48 @@
 /*!
  @brief Returns the minimum number of digits allowed in the integer portion of a
   number.
+ @return the minimum number of digits
  - seealso: #setMinimumIntegerDigits
  */
 - (jint)getMinimumIntegerDigits;
 
 /*!
- @brief Returns a general-purpose number format for the current default locale.
+ @brief Returns a general-purpose number format for the current default 
+ <code>FORMAT</code> locale.
+ <p>This is equivalent to calling 
+ <code>getNumberInstance(Locale.getDefault(Locale.Category.FORMAT))</code>
+ .
+ @return the <code>NumberFormat</code> instance for general-purpose number
+  formatting
+ - seealso: java.util.Locale#getDefault(java.util.Locale.Category)
+ - seealso: java.util.Locale.Category#FORMAT
  */
 + (JavaTextNumberFormat * __nonnull)getNumberInstance;
 
 /*!
  @brief Returns a general-purpose number format for the specified locale.
+ @param inLocale the desired locale
+ @return the <code>NumberFormat</code> instance for general-purpose number
+  formatting
  */
 + (JavaTextNumberFormat * __nonnull)getNumberInstanceWithJavaUtilLocale:(JavaUtilLocale *)inLocale;
 
 /*!
- @brief Returns a percentage format for the current default locale.
+ @brief Returns a percentage format for the current default 
+ <code>FORMAT</code> locale.
+ <p>This is equivalent to calling 
+ <code>getPercentInstance(Locale.getDefault(Locale.Category.FORMAT))</code>
+ .
+ @return the <code>NumberFormat</code> instance for percentage formatting
+ - seealso: java.util.Locale#getDefault(java.util.Locale.Category)
+ - seealso: java.util.Locale.Category#FORMAT
  */
 + (JavaTextNumberFormat * __nonnull)getPercentInstance;
 
 /*!
  @brief Returns a percentage format for the specified locale.
+ @param inLocale the desired locale
+ @return the <code>NumberFormat</code> instance for percentage formatting
  */
 + (JavaTextNumberFormat * __nonnull)getPercentInstanceWithJavaUtilLocale:(JavaUtilLocale *)inLocale;
 
@@ -392,7 +464,7 @@
 - (JavaMathRoundingMode * __nonnull)getRoundingMode;
 
 /*!
- @brief Overrides hashCode
+ @brief Overrides hashCode.
  */
 - (NSUInteger)hash;
 
@@ -401,7 +473,9 @@
   English locale, with grouping on, the number 1234567 might be formatted
   as "1,234,567".
  The grouping separator as well as the size of each group
-  is locale dependant and is determined by sub-classes of NumberFormat.
+  is locale dependent and is determined by sub-classes of NumberFormat.
+ @return <code>true</code> if grouping is used;
+          <code>false</code> otherwise
  - seealso: #setGroupingUsed
  */
 - (jboolean)isGroupingUsed;
@@ -411,8 +485,10 @@
  For example in the English locale, with ParseIntegerOnly true, the
   string "1234." would be parsed as the integer value 1234 and parsing
   would stop at the "." character.  Of course, the exact format accepted
-  by the parse operation is locale dependant and determined by sub-classes
+  by the parse operation is locale dependent and determined by sub-classes
   of NumberFormat.
+ @return <code>true</code> if numbers should be parsed as integers only;
+          <code>false</code> otherwise
  */
 - (jboolean)isParseIntegerOnly;
 
@@ -437,6 +513,9 @@
   after the 1).
   Does not throw an exception; if no object can be parsed, index is
   unchanged!
+ @param source the String to parse
+ @param parsePosition the parse position
+ @return the parsed value
  - seealso: java.text.NumberFormat#isParseIntegerOnly
  - seealso: java.text.Format#parseObject
  */
@@ -464,7 +543,7 @@
               index information as described above.
  @return A <code>Number</code> parsed from the string. In case of
           error, returns null.
- @throw NullPointerExceptionif <code>pos</code> is null.
+ @throw NullPointerExceptionif <code>source</code> or <code>pos</code> is null.
  */
 - (id __nullable)parseObjectWithNSString:(NSString *)source
                withJavaTextParsePosition:(JavaTextParsePosition *)pos;
@@ -486,13 +565,15 @@
 
 /*!
  @brief Set whether or not grouping will be used in this format.
+ @param newValue<code>true</code>  if grouping is used;                  
+ <code>false</code>  otherwise
  - seealso: #isGroupingUsed
  */
 - (void)setGroupingUsedWithBoolean:(jboolean)newValue;
 
 /*!
  @brief Sets the maximum number of digits allowed in the fraction portion of a
-  number.maximumFractionDigits must be >= minimumFractionDigits.
+  number.maximumFractionDigits must be &ge; minimumFractionDigits.
  If the
   new value for maximumFractionDigits is less than the current value
   of minimumFractionDigits, then minimumFractionDigits will also be set to
@@ -505,7 +586,7 @@
 
 /*!
  @brief Sets the maximum number of digits allowed in the integer portion of a
-  number.maximumIntegerDigits must be >= minimumIntegerDigits.
+  number.maximumIntegerDigits must be &ge; minimumIntegerDigits.
  If the
   new value for maximumIntegerDigits is less than the current value
   of minimumIntegerDigits, then minimumIntegerDigits will also be set to
@@ -518,7 +599,7 @@
 
 /*!
  @brief Sets the minimum number of digits allowed in the fraction portion of a
-  number.minimumFractionDigits must be <= maximumFractionDigits.
+  number.minimumFractionDigits must be &le; maximumFractionDigits.
  If the
   new value for minimumFractionDigits exceeds the current value
   of maximumFractionDigits, then maximumIntegerDigits will also be set to
@@ -531,7 +612,7 @@
 
 /*!
  @brief Sets the minimum number of digits allowed in the integer portion of a
-  number.minimumIntegerDigits must be <= maximumIntegerDigits.
+  number.minimumIntegerDigits must be &le; maximumIntegerDigits.
  If the
   new value for minimumIntegerDigits exceeds the current value
   of maximumIntegerDigits, then maximumIntegerDigits will also be set to
@@ -544,6 +625,8 @@
 
 /*!
  @brief Sets whether or not numbers should be parsed as integers only.
+ @param value<code>true</code>  if numbers should be parsed as integers only;               
+ <code>false</code>  otherwise
  - seealso: #isParseIntegerOnly
  */
 - (void)setParseIntegerOnlyWithBoolean:(jboolean)value;
@@ -645,17 +728,6 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaTextNumberFormat)
  @since 1.4
  */
 @interface JavaTextNumberFormat_Field : JavaTextFormat_Field
-@property (readonly, class, strong) JavaTextNumberFormat_Field *INTEGER NS_SWIFT_NAME(INTEGER);
-@property (readonly, class, strong) JavaTextNumberFormat_Field *FRACTION NS_SWIFT_NAME(FRACTION);
-@property (readonly, class, strong) JavaTextNumberFormat_Field *EXPONENT NS_SWIFT_NAME(EXPONENT);
-@property (readonly, class, strong) JavaTextNumberFormat_Field *DECIMAL_SEPARATOR NS_SWIFT_NAME(DECIMAL_SEPARATOR);
-@property (readonly, class, strong) JavaTextNumberFormat_Field *SIGN NS_SWIFT_NAME(SIGN);
-@property (readonly, class, strong) JavaTextNumberFormat_Field *GROUPING_SEPARATOR NS_SWIFT_NAME(GROUPING_SEPARATOR);
-@property (readonly, class, strong) JavaTextNumberFormat_Field *EXPONENT_SYMBOL NS_SWIFT_NAME(EXPONENT_SYMBOL);
-@property (readonly, class, strong) JavaTextNumberFormat_Field *PERCENT NS_SWIFT_NAME(PERCENT);
-@property (readonly, class, strong) JavaTextNumberFormat_Field *PERMILLE NS_SWIFT_NAME(PERMILLE);
-@property (readonly, class, strong) JavaTextNumberFormat_Field *CURRENCY NS_SWIFT_NAME(CURRENCY);
-@property (readonly, class, strong) JavaTextNumberFormat_Field *EXPONENT_SIGN NS_SWIFT_NAME(EXPONENT_SIGN);
 
 #pragma mark Protected
 
@@ -779,6 +851,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaTextNumberFormat_Field)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaTextNumberFormat")

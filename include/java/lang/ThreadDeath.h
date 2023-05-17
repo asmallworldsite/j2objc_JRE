@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaLangThreadDeath
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -29,6 +26,7 @@
 #define INCLUDE_JavaLangError 1
 #include "java/lang/Error.h"
 
+@class JavaLangBoolean;
 @class JavaLangThrowable;
 
 /*!
@@ -46,7 +44,7 @@
  <code>Error</code> rather than <code>Exception</code>, even though it is a
   "normal occurrence", because many applications catch all
   occurrences of <code>Exception</code> and then discard the exception.
- @since JDK1.0
+ @since 1.0
  */
 @interface JavaLangThreadDeath : JavaLangError
 
@@ -86,6 +84,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaLangThreadDeath)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaLangThreadDeath")

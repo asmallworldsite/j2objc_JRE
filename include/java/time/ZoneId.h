@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaTimeZoneId
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -29,6 +26,8 @@
 #define INCLUDE_JavaIoSerializable 1
 #include "java/io/Serializable.h"
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @class JavaTimeFormatTextStyle;
 @class JavaTimeZoneOffset;
 @class JavaTimeZoneZoneRules;
@@ -115,7 +114,6 @@
  @since 1.8
  */
 @interface JavaTimeZoneId : NSObject < JavaIoSerializable >
-@property (readonly, class, strong) id<JavaUtilMap> SHORT_IDS NS_SWIFT_NAME(SHORT_IDS);
 
 #pragma mark Public
 
@@ -424,6 +422,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaTimeZoneId)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaTimeZoneId")

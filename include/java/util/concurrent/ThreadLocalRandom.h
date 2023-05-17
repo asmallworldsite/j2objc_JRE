@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaUtilConcurrentThreadLocalRandom
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -29,6 +26,11 @@
 #define INCLUDE_JavaUtilRandom 1
 #include "java/util/Random.h"
 
+@class JavaLangBoolean;
+@class JavaLangDouble;
+@class JavaLangFloat;
+@class JavaLangInteger;
+@class JavaLangLong;
 @protocol JavaUtilStreamDoubleStream;
 @protocol JavaUtilStreamIntStream;
 @protocol JavaUtilStreamLongStream;
@@ -49,7 +51,7 @@
  <code>ThreadLocalRandom.current().nextX(...)</code> (where 
  <code>X</code> is <code>Int</code>, <code>Long</code>, etc).
   When all usages are of this form, it is never possible to
-  accidently share a <code>ThreadLocalRandom</code> across multiple threads. 
+  accidentally share a <code>ThreadLocalRandom</code> across multiple threads. 
  <p>This class also provides additional commonly used bounded random
   generation methods. 
  <p>Instances of <code>ThreadLocalRandom</code> are not cryptographically
@@ -69,10 +71,6 @@
    */
   jboolean initialized_;
 }
-@property (readonly, copy, class) NSString *BAD_BOUND NS_SWIFT_NAME(BAD_BOUND);
-@property (readonly, copy, class) NSString *BAD_RANGE NS_SWIFT_NAME(BAD_RANGE);
-@property (readonly, copy, class) NSString *BAD_SIZE NS_SWIFT_NAME(BAD_SIZE);
-@property (readonly, class, strong) JavaUtilConcurrentThreadLocalRandom *instance NS_SWIFT_NAME(instance);
 
 #pragma mark Public
 
@@ -128,8 +126,7 @@
  @return a stream of pseudorandom <code>double</code> values,
           each with the given origin (inclusive) and bound (exclusive)
  @throw IllegalArgumentExceptionif <code>streamSize</code> is
-          less than zero
- @throw IllegalArgumentExceptionif <code>randomNumberOrigin</code>
+          less than zero, or <code>randomNumberOrigin</code>
           is greater than or equal to <code>randomNumberBound</code>
  @since 1.8
  */
@@ -355,6 +352,14 @@
 
 #pragma mark Protected
 
+/*!
+ @brief Generates a pseudorandom number with the indicated number of
+  low-order bits.Because this class has no subclasses, this
+  method cannot be invoked or overridden.
+ @param bits random bits
+ @return the next pseudorandom value from this random number
+          generator's sequence
+ */
 - (jint)nextWithInt:(jint)bits;
 
 #pragma mark Package-Private
@@ -468,6 +473,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentThreadLocalRandom)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaUtilConcurrentThreadLocalRandom")

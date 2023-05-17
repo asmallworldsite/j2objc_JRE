@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaUtilConcurrentLinkedTransferQueue
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -38,6 +35,9 @@
 #include "java/io/Serializable.h"
 
 @class IOSObjectArray;
+@class JavaLangBoolean;
+@class JavaLangInteger;
+@class JavaLangLong;
 @class JavaUtilConcurrentLinkedTransferQueue_Node;
 @class JavaUtilConcurrentTimeUnit;
 @protocol JavaUtilCollection;
@@ -55,33 +55,42 @@
   is <em>NOT</em> a constant-time operation. Because of the
   asynchronous nature of these queues, determining the current number
   of elements requires a traversal of the elements, and so may report
-  inaccurate results if this collection is modified during traversal.
-  Additionally, the bulk operations <code>addAll</code>,
-  <code>removeAll</code>, <code>retainAll</code>, <code>containsAll</code>,
-  <code>equals</code>, and <code>toArray</code> are <em>not</em> guaranteed
-  to be performed atomically. For example, an iterator operating
-  concurrently with an <code>addAll</code> operation might view only some
-  of the added elements. 
- <p>This class and its iterator implement all of the 
- <em>optional</em> methods of the <code>Collection</code> and <code>Iterator</code>
-  interfaces. 
+  inaccurate results if this collection is modified during traversal. 
+ <p>Bulk operations that add, remove, or examine multiple elements,
+  such as <code>addAll</code>, <code>removeIf</code> or <code>forEach</code>,
+  are <em>not</em> guaranteed to be performed atomically.
+  For example, a <code>forEach</code> traversal concurrent with an <code>addAll</code>
+  operation might observe only some of the added elements. 
+ <p>This class and its iterator implement all of the <em>optional</em>
+  methods of the <code>Collection</code> and <code>Iterator</code> interfaces. 
  <p>Memory consistency effects: As with other concurrent
   collections, actions in a thread prior to placing an object into a 
  <code>LinkedTransferQueue</code>
   <a href="package-summary.html#MemoryVisibility"><i>happen-before</i></a>
   actions subsequent to the access or removal of that element from the 
- <code>LinkedTransferQueue</code> in another thread.
+ <code>LinkedTransferQueue</code> in another thread. 
+ <p>This class is a member of the 
+ <a href="{@@docRoot}/java.base/java/util/package-summary.html#CollectionsFramework">
+  Java Collections Framework</a>.
  @since 1.7
  @author Doug Lea
  */
 @interface JavaUtilConcurrentLinkedTransferQueue : JavaUtilAbstractQueue < JavaUtilConcurrentTransferQueue, JavaIoSerializable > {
  @public
   /*!
-   @brief head of the queue; null until first enqueue
+   @brief A node from which the first live (non-matched) node (if any)
+  can be reached in O(1) time.
+   Invariants:
+  - all live nodes are reachable from head via .next
+  - head != null
+  - (tmp = head).next != tmp || tmp != head
+  Non-invariants:
+  - head may or may not be live
+  - it is permitted for tail to lag behind head, that is, for tail
+    to not be reachable from head!
    */
   volatile_id head_;
 }
-@property (readonly, class) jint SWEEP_THRESHOLD NS_SWIFT_NAME(SWEEP_THRESHOLD);
 
 #pragma mark Public
 
@@ -163,8 +172,7 @@
  As the queue is unbounded, this method will never block or
   return <code>false</code>.
  @return <code>true</code> (as specified by
-   <code>BlockingQueue.offer</code>
- )
+   <code>BlockingQueue.offer</code>)
  @throw NullPointerExceptionif the specified element is null
  */
 - (jboolean)offerWithId:(id)e
@@ -189,8 +197,7 @@ withJavaUtilConcurrentTimeUnit:(JavaUtilConcurrentTimeUnit *)unit;
  @brief Always returns <code>Integer.MAX_VALUE</code> because a 
  <code>LinkedTransferQueue</code> is not capacity constrained.
  @return <code>Integer.MAX_VALUE</code> (as specified by
-          <code>BlockingQueue.remainingCapacity</code>
- )
+          <code>BlockingQueue.remainingCapacity()</code>)
  */
 - (jint)remainingCapacity;
 
@@ -322,8 +329,8 @@ withJavaUtilConcurrentTimeUnit:(JavaUtilConcurrentTimeUnit *)unit;
 
 /*!
  @brief Returns the first unmatched data node, or null if none.
- Callers must recheck if the returned node's item field is null
-  or self-linked before using.
+ Callers must recheck if the returned node is unmatched
+  before using.
  */
 - (JavaUtilConcurrentLinkedTransferQueue_Node *)firstDataNode;
 
@@ -337,7 +344,7 @@ withJavaUtilConcurrentTimeUnit:(JavaUtilConcurrentTimeUnit *)unit;
 /*!
  @brief Unsplices (now or later) the given deleted/cancelled node with
   the given predecessor.
- @param pred a node that was at one time known to be the  predecessor of s, or null or s itself if s is/was at head
+ @param pred a node that was at one time known to be the  predecessor of s
  @param s the node to be unspliced
  */
 - (void)unspliceWithJavaUtilConcurrentLinkedTransferQueue_Node:(JavaUtilConcurrentLinkedTransferQueue_Node *)pred
@@ -380,14 +387,14 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentLinkedTransferQueue)
 #if !defined (JavaUtilConcurrentLinkedTransferQueue_Node_) && (INCLUDE_ALL_JavaUtilConcurrentLinkedTransferQueue || defined(INCLUDE_JavaUtilConcurrentLinkedTransferQueue_Node))
 #define JavaUtilConcurrentLinkedTransferQueue_Node_
 
+@class JavaLangBoolean;
 @class JavaLangThread;
 
 /*!
  @brief Queue nodes.Uses Object, not E, for items to allow forgetting
   them after use.
- Relies heavily on Unsafe mechanics to minimize
-  unnecessary ordering constraints: Writes that are intrinsically
-  ordered wrt other accesses or CASes use simple relaxed forms.
+ Writes that are intrinsically ordered wrt
+  other accesses or CASes use simple relaxed forms.
  */
 @interface JavaUtilConcurrentLinkedTransferQueue_Node : NSObject {
  @public
@@ -398,6 +405,11 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentLinkedTransferQueue)
 }
 
 #pragma mark Package-Private
+
+/*!
+ @brief Constructs a (matched data) dummy node.
+ */
+- (instancetype __nonnull)init;
 
 /*!
  @brief Constructs a new node.Uses relaxed write because item can
@@ -420,14 +432,14 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentLinkedTransferQueue)
                    withJavaUtilConcurrentLinkedTransferQueue_Node:(JavaUtilConcurrentLinkedTransferQueue_Node *)val;
 
 /*!
- @brief Sets item to self and waiter to null, to avoid garbage
-  retention after matching or cancelling.Uses relaxed writes
-  because order is already constrained in the only calling
-  contexts: item is forgotten only after volatile/atomic
-  mechanics that extract items.
- Similarly, clearing waiter
-  follows either CAS or return from park (if ever parked;
-  else we don't care).
+ @brief Sets item (of a request node) to self and waiter to null,
+  to avoid garbage retention after matching or cancelling.
+ Uses relaxed writes because order is already constrained in
+  the only calling contexts: item is forgotten only after
+  volatile/atomic mechanics that extract items, and visitors
+  of request nodes only ever check whether item is null.
+  Similarly, clearing waiter follows either CAS or return
+  from park (if ever parked; else we don't care).
  */
 - (void)forgetContents;
 
@@ -444,18 +456,15 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentLinkedTransferQueue)
 - (jboolean)isMatched;
 
 /*!
- @brief Returns true if this is an unmatched request node.
+ @brief Tries to CAS-match this node; if successful, wakes waiter.
  */
-- (jboolean)isUnmatchedRequest;
+- (jboolean)tryMatchWithId:(id)cmp
+                    withId:(id)val;
 
 /*!
  @brief Tries to artificially match a data node -- used by remove.
  */
 - (jboolean)tryMatchData;
-
-// Disallowed inherited constructors, do not use.
-
-- (instancetype __nonnull)init NS_UNAVAILABLE;
 
 @end
 
@@ -464,6 +473,12 @@ J2OBJC_STATIC_INIT(JavaUtilConcurrentLinkedTransferQueue_Node)
 J2OBJC_VOLATILE_FIELD_SETTER(JavaUtilConcurrentLinkedTransferQueue_Node, item_, id)
 J2OBJC_VOLATILE_FIELD_SETTER(JavaUtilConcurrentLinkedTransferQueue_Node, next_, JavaUtilConcurrentLinkedTransferQueue_Node *)
 J2OBJC_VOLATILE_FIELD_SETTER(JavaUtilConcurrentLinkedTransferQueue_Node, waiter_, JavaLangThread *)
+
+FOUNDATION_EXPORT void JavaUtilConcurrentLinkedTransferQueue_Node_init(JavaUtilConcurrentLinkedTransferQueue_Node *self);
+
+FOUNDATION_EXPORT JavaUtilConcurrentLinkedTransferQueue_Node *new_JavaUtilConcurrentLinkedTransferQueue_Node_init(void) NS_RETURNS_RETAINED;
+
+FOUNDATION_EXPORT JavaUtilConcurrentLinkedTransferQueue_Node *create_JavaUtilConcurrentLinkedTransferQueue_Node_init(void);
 
 FOUNDATION_EXPORT void JavaUtilConcurrentLinkedTransferQueue_Node_initWithId_withBoolean_(JavaUtilConcurrentLinkedTransferQueue_Node *self, id item, jboolean isData);
 
@@ -482,12 +497,20 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentLinkedTransferQueue_Node)
 #define INCLUDE_JavaUtilIterator 1
 #include "java/util/Iterator.h"
 
+@class JavaLangBoolean;
 @class JavaUtilConcurrentLinkedTransferQueue;
 @protocol JavaUtilFunctionConsumer;
 
+/*!
+ @brief Weakly-consistent iterator.
+ Lazily updated ancestor is expected to be amortized O(1) remove(),
+  but O(n) in the worst case, when lastRet is concurrently deleted.
+ */
 @interface JavaUtilConcurrentLinkedTransferQueue_Itr : NSObject < JavaUtilIterator >
 
 #pragma mark Public
+
+- (void)forEachRemainingWithJavaUtilFunctionConsumer:(id<JavaUtilFunctionConsumer>)action;
 
 - (jboolean)hasNext;
 
@@ -524,6 +547,9 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentLinkedTransferQueue_Itr)
 #define INCLUDE_JavaUtilSpliterator 1
 #include "java/util/Spliterator.h"
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
+@class JavaLangLong;
 @class JavaUtilConcurrentLinkedTransferQueue;
 @class JavaUtilConcurrentLinkedTransferQueue_Node;
 @protocol JavaUtilComparator;
@@ -538,7 +564,6 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentLinkedTransferQueue_Itr)
   jint batch_;
   jboolean exhausted_;
 }
-@property (readonly, class) jint MAX_BATCH NS_SWIFT_NAME(MAX_BATCH);
 
 #pragma mark Public
 
@@ -584,6 +609,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentLinkedTransferQueue_LTQSpliterator)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaUtilConcurrentLinkedTransferQueue")

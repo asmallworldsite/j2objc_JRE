@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaNioFileAttributeAclFileAttributeView
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -88,19 +85,24 @@
   <p> Where dynamic access to file attributes is required, the attributes
   supported by this attribute view are as follows: 
  <blockquote>
-  <table border="1" cellpadding="8" summary="Supported attributes">
+  <table class="striped">
+  <caption style="display:none">Supported attributes</caption>
+  <thead>
     <tr>
-      <th> Name </th>
-      <th> Type </th>
+      <th scope="col"> Name </th>
+      <th scope="col"> Type </th>
     </tr>
+  </thead>
+  <tbody>
     <tr>
-      <td> "acl" </td>
+      <th scope="row"> "acl" </th>
       <td> <code>List</code>&lt;<code>AclEntry</code>&gt; </td>
     </tr>
     <tr>
-      <td> "owner" </td>
+      <th scope="row"> "owner" </th>
       <td> <code>UserPrincipal</code> </td>
     </tr>
+  </tbody>
   </table>
   </blockquote>
   
@@ -148,7 +150,7 @@
  if an I/O error occurs
  @throw SecurityException
  In the case of the default provider, a security manager is
-           installed, and it denies <code>RuntimePermission</code><tt>("accessUserInformation")</tt>
+           installed, and it denies <code>RuntimePermission</code><code>("accessUserInformation")</code>
            or its <code>checkRead</code> method
            denies read access to the file.
  */
@@ -178,7 +180,7 @@
  if an I/O error occurs or the ACL is invalid
  @throw SecurityException
  In the case of the default provider, a security manager is
-           installed, it denies <code>RuntimePermission</code><tt>("accessUserInformation")</tt>
+           installed, it denies <code>RuntimePermission</code><code>("accessUserInformation")</code>
            or its <code>checkWrite</code>
            method denies write access to the file.
  */
@@ -196,6 +198,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaNioFileAttributeAclFileAttributeView)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaNioFileAttributeAclFileAttributeView")

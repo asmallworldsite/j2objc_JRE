@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaIoInvalidObjectException
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -33,9 +30,8 @@
  @brief Indicates that one or more deserialized objects failed validation
   tests.The argument should provide the reason for the failure.
  - seealso: ObjectInputValidation
- @since JDK1.1
- @author unascribed
- @since JDK1.1
+ @since 1.1
+ @since 1.1
  */
 @interface JavaIoInvalidObjectException : JavaIoObjectStreamException
 
@@ -70,6 +66,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaIoInvalidObjectException)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaIoInvalidObjectException")

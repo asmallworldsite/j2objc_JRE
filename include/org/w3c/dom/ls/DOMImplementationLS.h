@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_OrgW3cDomLsDOMImplementationLS
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -25,6 +22,7 @@
 #if !defined (OrgW3cDomLsDOMImplementationLS_) && (INCLUDE_ALL_OrgW3cDomLsDOMImplementationLS || defined(INCLUDE_OrgW3cDomLsDOMImplementationLS))
 #define OrgW3cDomLsDOMImplementationLS_
 
+@class JavaLangShort;
 @protocol OrgW3cDomLsLSInput;
 @protocol OrgW3cDomLsLSOutput;
 @protocol OrgW3cDomLsLSParser;
@@ -126,12 +124,6 @@
 
 @end
 
-@interface OrgW3cDomLsDOMImplementationLS : NSObject
-@property (readonly, class) jshort MODE_SYNCHRONOUS NS_SWIFT_NAME(MODE_SYNCHRONOUS);
-@property (readonly, class) jshort MODE_ASYNCHRONOUS NS_SWIFT_NAME(MODE_ASYNCHRONOUS);
-
-@end
-
 J2OBJC_EMPTY_STATIC_INIT(OrgW3cDomLsDOMImplementationLS)
 
 /*!
@@ -156,6 +148,4 @@ J2OBJC_TYPE_LITERAL_HEADER(OrgW3cDomLsDOMImplementationLS)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_OrgW3cDomLsDOMImplementationLS")

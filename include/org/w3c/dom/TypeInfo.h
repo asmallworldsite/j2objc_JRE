@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_OrgW3cDomTypeInfo
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -24,6 +21,9 @@
 
 #if !defined (OrgW3cDomTypeInfo_) && (INCLUDE_ALL_OrgW3cDomTypeInfo || defined(INCLUDE_OrgW3cDomTypeInfo))
 #define OrgW3cDomTypeInfo_
+
+@class JavaLangBoolean;
+@class JavaLangInteger;
 
 /*!
  @brief The <code>TypeInfo</code> interface represents a type referenced from 
@@ -146,14 +146,6 @@
 
 @end
 
-@interface OrgW3cDomTypeInfo : NSObject
-@property (readonly, class) jint DERIVATION_RESTRICTION NS_SWIFT_NAME(DERIVATION_RESTRICTION);
-@property (readonly, class) jint DERIVATION_EXTENSION NS_SWIFT_NAME(DERIVATION_EXTENSION);
-@property (readonly, class) jint DERIVATION_UNION NS_SWIFT_NAME(DERIVATION_UNION);
-@property (readonly, class) jint DERIVATION_LIST NS_SWIFT_NAME(DERIVATION_LIST);
-
-@end
-
 J2OBJC_EMPTY_STATIC_INIT(OrgW3cDomTypeInfo)
 
 /*!
@@ -225,6 +217,4 @@ J2OBJC_TYPE_LITERAL_HEADER(OrgW3cDomTypeInfo)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_OrgW3cDomTypeInfo")

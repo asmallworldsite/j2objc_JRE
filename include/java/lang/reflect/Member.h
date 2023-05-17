@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaLangReflectMember
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -26,6 +23,8 @@
 #define JavaLangReflectMember_
 
 @class IOSClass;
+@class JavaLangBoolean;
+@class JavaLangInteger;
 
 /*!
  @brief Member is an interface that reflects identifying information about
@@ -74,12 +73,6 @@
 
 @end
 
-@interface JavaLangReflectMember : NSObject
-@property (readonly, class) jint PUBLIC NS_SWIFT_NAME(PUBLIC);
-@property (readonly, class) jint DECLARED NS_SWIFT_NAME(DECLARED);
-
-@end
-
 J2OBJC_EMPTY_STATIC_INIT(JavaLangReflectMember)
 
 /*!
@@ -106,6 +99,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaLangReflectMember)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaLangReflectMember")

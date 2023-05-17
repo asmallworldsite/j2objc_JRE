@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaUtilConcurrentPriorityBlockingQueue
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -38,9 +35,14 @@
 #include "java/io/Serializable.h"
 
 @class IOSObjectArray;
+@class JavaLangBoolean;
+@class JavaLangInteger;
+@class JavaLangLong;
 @class JavaUtilConcurrentTimeUnit;
 @protocol JavaUtilCollection;
 @protocol JavaUtilComparator;
+@protocol JavaUtilFunctionConsumer;
+@protocol JavaUtilFunctionPredicate;
 @protocol JavaUtilIterator;
 @protocol JavaUtilSpliterator;
 
@@ -56,15 +58,15 @@
   non-comparable objects (doing so results in 
  <code>ClassCastException</code>).
   
- <p>This class and its iterator implement all of the 
- <em>optional</em> methods of the <code>Collection</code> and <code>Iterator</code>
-  interfaces.  The Iterator provided in method <code>iterator()</code>
-  is <em>not</em> guaranteed to traverse the elements of
-  the PriorityBlockingQueue in any particular order. If you need
-  ordered traversal, consider using 
- <code>Arrays.sort(pq.toArray())</code>.  Also, method <code>drainTo</code>
-  can be used to <em>remove</em> some or all elements in priority
-  order and place them in another collection. 
+ <p>This class and its iterator implement all of the <em>optional</em>
+  methods of the <code>Collection</code> and <code>Iterator</code> interfaces.
+  The Iterator provided in method <code>iterator()</code> and the
+  Spliterator provided in method <code>spliterator()</code> are <em>not</em>
+  guaranteed to traverse the elements of the PriorityBlockingQueue in
+  any particular order. If you need ordered traversal, consider using 
+ <code>Arrays.sort(pq.toArray())</code>.  Also, method <code>drainTo</code> can
+  be used to <em>remove</em> some or all elements in priority order and
+  place them in another collection. 
  <p>Operations on this class make no guarantees about the ordering
   of elements with equal priority. If you need to enforce an
   ordering, you can define custom classes or comparators that use a
@@ -91,6 +93,10 @@
     }  }
  
 @endcode
+  
+ <p>This class is a member of the 
+ <a href="{@@docRoot}/java.base/java/util/package-summary.html#CollectionsFramework">
+  Java Collections Framework</a>.
  @since 1.5
  @author Doug Lea
  */
@@ -199,6 +205,11 @@
                               withInt:(jint)maxElements;
 
 /*!
+ @throw NullPointerException
+ */
+- (void)forEachWithJavaUtilFunctionConsumer:(id<JavaUtilFunctionConsumer>)action;
+
+/*!
  @brief Returns an iterator over the elements in this queue.The
   iterator does not return the elements in any particular order.
  <p>The returned iterator is 
@@ -275,10 +286,27 @@ withJavaUtilConcurrentTimeUnit:(JavaUtilConcurrentTimeUnit *)unit;
  */
 - (jboolean)removeWithId:(id)o;
 
+/*!
+ @throw NullPointerException
+ */
+- (jboolean)removeAllWithJavaUtilCollection:(id<JavaUtilCollection>)c;
+
+/*!
+ @throw NullPointerException
+ */
+- (jboolean)removeIfWithJavaUtilFunctionPredicate:(id<JavaUtilFunctionPredicate>)filter;
+
+/*!
+ @throw NullPointerException
+ */
+- (jboolean)retainAllWithJavaUtilCollection:(id<JavaUtilCollection>)c;
+
 - (jint)size;
 
 /*!
  @brief Returns a <code>Spliterator</code> over the elements in this queue.
+ The spliterator does not traverse elements in any particular order
+  (the <code>ORDERED</code> characteristic is not reported). 
  <p>The returned spliterator is 
  <a href="package-summary.html#Weakly"><i>weakly consistent</i></a>.
   
@@ -344,8 +372,9 @@ withJavaUtilConcurrentTimeUnit:(JavaUtilConcurrentTimeUnit *)unit;
 
 /*!
  @brief Identity-based version for use in Itr.remove.
+ @param o element to be removed from this queue, if present
  */
-- (void)removeEQWithId:(id)o;
+- (void)removeEqWithId:(id)o;
 
 @end
 
@@ -387,6 +416,8 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentPriorityBlockingQueue)
 #include "java/util/Iterator.h"
 
 @class IOSObjectArray;
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @class JavaUtilConcurrentPriorityBlockingQueue;
 @protocol JavaUtilFunctionConsumer;
 
@@ -401,6 +432,8 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentPriorityBlockingQueue)
 }
 
 #pragma mark Public
+
+- (void)forEachRemainingWithJavaUtilFunctionConsumer:(id<JavaUtilFunctionConsumer>)action;
 
 - (jboolean)hasNext;
 
@@ -441,13 +474,18 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentPriorityBlockingQueue_Itr)
 #include "java/util/Spliterator.h"
 
 @class IOSObjectArray;
+@class JavaLangBoolean;
+@class JavaLangInteger;
+@class JavaLangLong;
 @class JavaUtilConcurrentPriorityBlockingQueue;
 @protocol JavaUtilComparator;
 @protocol JavaUtilFunctionConsumer;
 
+/*!
+ @brief Immutable snapshot spliterator that binds to elements "late".
+ */
 @interface JavaUtilConcurrentPriorityBlockingQueue_PBQSpliterator : NSObject < JavaUtilSpliterator > {
  @public
-  JavaUtilConcurrentPriorityBlockingQueue *queue_;
   IOSObjectArray *array_;
   jint index_;
   jint fence_;
@@ -467,12 +505,12 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentPriorityBlockingQueue_Itr)
 
 #pragma mark Package-Private
 
-- (instancetype __nonnull)initWithJavaUtilConcurrentPriorityBlockingQueue:(JavaUtilConcurrentPriorityBlockingQueue *)queue
+- (instancetype __nonnull)initWithJavaUtilConcurrentPriorityBlockingQueue:(JavaUtilConcurrentPriorityBlockingQueue *)outer$;
+
+- (instancetype __nonnull)initWithJavaUtilConcurrentPriorityBlockingQueue:(JavaUtilConcurrentPriorityBlockingQueue *)outer$
                                                         withNSObjectArray:(IOSObjectArray *)array
                                                                   withInt:(jint)index
                                                                   withInt:(jint)fence;
-
-- (jint)getFence;
 
 // Disallowed inherited constructors, do not use.
 
@@ -482,14 +520,19 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentPriorityBlockingQueue_Itr)
 
 J2OBJC_EMPTY_STATIC_INIT(JavaUtilConcurrentPriorityBlockingQueue_PBQSpliterator)
 
-J2OBJC_FIELD_SETTER(JavaUtilConcurrentPriorityBlockingQueue_PBQSpliterator, queue_, JavaUtilConcurrentPriorityBlockingQueue *)
 J2OBJC_FIELD_SETTER(JavaUtilConcurrentPriorityBlockingQueue_PBQSpliterator, array_, IOSObjectArray *)
 
-FOUNDATION_EXPORT void JavaUtilConcurrentPriorityBlockingQueue_PBQSpliterator_initWithJavaUtilConcurrentPriorityBlockingQueue_withNSObjectArray_withInt_withInt_(JavaUtilConcurrentPriorityBlockingQueue_PBQSpliterator *self, JavaUtilConcurrentPriorityBlockingQueue *queue, IOSObjectArray *array, jint index, jint fence);
+FOUNDATION_EXPORT void JavaUtilConcurrentPriorityBlockingQueue_PBQSpliterator_initWithJavaUtilConcurrentPriorityBlockingQueue_(JavaUtilConcurrentPriorityBlockingQueue_PBQSpliterator *self, JavaUtilConcurrentPriorityBlockingQueue *outer$);
 
-FOUNDATION_EXPORT JavaUtilConcurrentPriorityBlockingQueue_PBQSpliterator *new_JavaUtilConcurrentPriorityBlockingQueue_PBQSpliterator_initWithJavaUtilConcurrentPriorityBlockingQueue_withNSObjectArray_withInt_withInt_(JavaUtilConcurrentPriorityBlockingQueue *queue, IOSObjectArray *array, jint index, jint fence) NS_RETURNS_RETAINED;
+FOUNDATION_EXPORT JavaUtilConcurrentPriorityBlockingQueue_PBQSpliterator *new_JavaUtilConcurrentPriorityBlockingQueue_PBQSpliterator_initWithJavaUtilConcurrentPriorityBlockingQueue_(JavaUtilConcurrentPriorityBlockingQueue *outer$) NS_RETURNS_RETAINED;
 
-FOUNDATION_EXPORT JavaUtilConcurrentPriorityBlockingQueue_PBQSpliterator *create_JavaUtilConcurrentPriorityBlockingQueue_PBQSpliterator_initWithJavaUtilConcurrentPriorityBlockingQueue_withNSObjectArray_withInt_withInt_(JavaUtilConcurrentPriorityBlockingQueue *queue, IOSObjectArray *array, jint index, jint fence);
+FOUNDATION_EXPORT JavaUtilConcurrentPriorityBlockingQueue_PBQSpliterator *create_JavaUtilConcurrentPriorityBlockingQueue_PBQSpliterator_initWithJavaUtilConcurrentPriorityBlockingQueue_(JavaUtilConcurrentPriorityBlockingQueue *outer$);
+
+FOUNDATION_EXPORT void JavaUtilConcurrentPriorityBlockingQueue_PBQSpliterator_initWithJavaUtilConcurrentPriorityBlockingQueue_withNSObjectArray_withInt_withInt_(JavaUtilConcurrentPriorityBlockingQueue_PBQSpliterator *self, JavaUtilConcurrentPriorityBlockingQueue *outer$, IOSObjectArray *array, jint index, jint fence);
+
+FOUNDATION_EXPORT JavaUtilConcurrentPriorityBlockingQueue_PBQSpliterator *new_JavaUtilConcurrentPriorityBlockingQueue_PBQSpliterator_initWithJavaUtilConcurrentPriorityBlockingQueue_withNSObjectArray_withInt_withInt_(JavaUtilConcurrentPriorityBlockingQueue *outer$, IOSObjectArray *array, jint index, jint fence) NS_RETURNS_RETAINED;
+
+FOUNDATION_EXPORT JavaUtilConcurrentPriorityBlockingQueue_PBQSpliterator *create_JavaUtilConcurrentPriorityBlockingQueue_PBQSpliterator_initWithJavaUtilConcurrentPriorityBlockingQueue_withNSObjectArray_withInt_withInt_(JavaUtilConcurrentPriorityBlockingQueue *outer$, IOSObjectArray *array, jint index, jint fence);
 
 J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentPriorityBlockingQueue_PBQSpliterator)
 
@@ -499,6 +542,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentPriorityBlockingQueue_PBQSpliterato
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaUtilConcurrentPriorityBlockingQueue")

@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaUtilTimeZone
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -31,6 +28,9 @@
 
 @class IOSIntArray;
 @class IOSObjectArray;
+@class JavaLangBoolean;
+@class JavaLangInteger;
+@class JavaLangLong;
 @class JavaUtilDate;
 @class JavaUtilLocale;
 
@@ -117,10 +117,6 @@
  @since JDK1.1
  */
 @interface JavaUtilTimeZone : NSObject < JavaIoSerializable, NSCopying >
-@property (readonly, class) jint SHORT NS_SWIFT_NAME(SHORT);
-@property (readonly, class) jint LONG NS_SWIFT_NAME(LONG);
-@property (readonly, class) jlong serialVersionUID NS_SWIFT_NAME(serialVersionUID);
-@property (readonly, class, strong) JavaUtilTimeZone *NO_TIMEZONE NS_SWIFT_NAME(NO_TIMEZONE);
 
 #pragma mark Public
 
@@ -519,7 +515,6 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilTimeZone)
 @class JavaUtilTimeZone;
 
 @interface JavaUtilTimeZone_GMTHolder : NSObject
-@property (readonly, class, strong) JavaUtilTimeZone *INSTANCE NS_SWIFT_NAME(INSTANCE);
 
 #pragma mark Package-Private
 
@@ -550,7 +545,6 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilTimeZone_GMTHolder)
 @class JavaUtilTimeZone;
 
 @interface JavaUtilTimeZone_UTCHolder : NSObject
-@property (readonly, class, strong) JavaUtilTimeZone *INSTANCE NS_SWIFT_NAME(INSTANCE);
 
 #pragma mark Package-Private
 
@@ -585,7 +579,6 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilTimeZone_UTCHolder)
  A static class is used for lazy-initialization of available time zone IDs.
  */
 @interface JavaUtilTimeZone_AvailableIDsGetter : NSObject
-@property (readonly, class, strong) IOSObjectArray *IDS NS_SWIFT_NAME(IDS);
 
 #pragma mark Package-Private
 
@@ -618,6 +611,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilTimeZone_AvailableIDsGetter)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaUtilTimeZone")

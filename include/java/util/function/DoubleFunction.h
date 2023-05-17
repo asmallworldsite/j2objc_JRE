@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaUtilFunctionDoubleFunction
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -24,6 +21,8 @@
 
 #if !defined (JavaUtilFunctionDoubleFunction_) && (INCLUDE_ALL_JavaUtilFunctionDoubleFunction || defined(INCLUDE_JavaUtilFunctionDoubleFunction))
 #define JavaUtilFunctionDoubleFunction_
+
+@class JavaLangDouble;
 
 /*!
  @brief Represents a function that accepts a double-valued argument and produces a
@@ -55,6 +54,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilFunctionDoubleFunction)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaUtilFunctionDoubleFunction")

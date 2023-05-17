@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaLangArrayIndexOutOfBoundsException
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -29,36 +26,43 @@
 #define INCLUDE_JavaLangIndexOutOfBoundsException 1
 #include "java/lang/IndexOutOfBoundsException.h"
 
+@class JavaLangInteger;
+@class JavaLangLong;
+
 /*!
- @brief Thrown to indicate that an array has been accessed with an
-  illegal index.The index is either negative or greater than or
-  equal to the size of the array.
- @author unascribed
- @since JDK1.0
+ @brief Thrown to indicate that an array has been accessed with an illegal index.The
+  index is either negative or greater than or equal to the size of the array.
+ @since 1.0
  */
 @interface JavaLangArrayIndexOutOfBoundsException : JavaLangIndexOutOfBoundsException
 
 #pragma mark Public
 
 /*!
- @brief Constructs an <code>ArrayIndexOutOfBoundsException</code> with no
-  detail message.
+ @brief Constructs an <code>ArrayIndexOutOfBoundsException</code> with no detail
+  message.
  */
 - (instancetype __nonnull)init;
 
 /*!
- @brief Constructs a new <code>ArrayIndexOutOfBoundsException</code>
-  class with an argument indicating the illegal index.
+ @brief Constructs a new <code>ArrayIndexOutOfBoundsException</code> class with an
+  argument indicating the illegal index.
+ <p>The index is included in this exception's detail message.  The
+  exact presentation format of the detail message is unspecified.
  @param index the illegal index.
  */
 - (instancetype __nonnull)initWithInt:(jint)index;
 
 /*!
- @brief Constructs an <code>ArrayIndexOutOfBoundsException</code> class
-  with the specified detail message.
+ @brief Constructs an <code>ArrayIndexOutOfBoundsException</code> class with the
+  specified detail message.
  @param s the detail message.
  */
 - (instancetype __nonnull)initWithNSString:(NSString *)s;
+
+// Disallowed inherited constructors, do not use.
+
+- (instancetype __nonnull)initWithLong:(jlong)arg0 NS_UNAVAILABLE;
 
 @end
 
@@ -70,17 +74,17 @@ FOUNDATION_EXPORT JavaLangArrayIndexOutOfBoundsException *new_JavaLangArrayIndex
 
 FOUNDATION_EXPORT JavaLangArrayIndexOutOfBoundsException *create_JavaLangArrayIndexOutOfBoundsException_init(void);
 
-FOUNDATION_EXPORT void JavaLangArrayIndexOutOfBoundsException_initWithInt_(JavaLangArrayIndexOutOfBoundsException *self, jint index);
-
-FOUNDATION_EXPORT JavaLangArrayIndexOutOfBoundsException *new_JavaLangArrayIndexOutOfBoundsException_initWithInt_(jint index) NS_RETURNS_RETAINED;
-
-FOUNDATION_EXPORT JavaLangArrayIndexOutOfBoundsException *create_JavaLangArrayIndexOutOfBoundsException_initWithInt_(jint index);
-
 FOUNDATION_EXPORT void JavaLangArrayIndexOutOfBoundsException_initWithNSString_(JavaLangArrayIndexOutOfBoundsException *self, NSString *s);
 
 FOUNDATION_EXPORT JavaLangArrayIndexOutOfBoundsException *new_JavaLangArrayIndexOutOfBoundsException_initWithNSString_(NSString *s) NS_RETURNS_RETAINED;
 
 FOUNDATION_EXPORT JavaLangArrayIndexOutOfBoundsException *create_JavaLangArrayIndexOutOfBoundsException_initWithNSString_(NSString *s);
+
+FOUNDATION_EXPORT void JavaLangArrayIndexOutOfBoundsException_initWithInt_(JavaLangArrayIndexOutOfBoundsException *self, jint index);
+
+FOUNDATION_EXPORT JavaLangArrayIndexOutOfBoundsException *new_JavaLangArrayIndexOutOfBoundsException_initWithInt_(jint index) NS_RETURNS_RETAINED;
+
+FOUNDATION_EXPORT JavaLangArrayIndexOutOfBoundsException *create_JavaLangArrayIndexOutOfBoundsException_initWithInt_(jint index);
 
 J2OBJC_TYPE_LITERAL_HEADER(JavaLangArrayIndexOutOfBoundsException)
 
@@ -90,6 +94,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaLangArrayIndexOutOfBoundsException)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaLangArrayIndexOutOfBoundsException")

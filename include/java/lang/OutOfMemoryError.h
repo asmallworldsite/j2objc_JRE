@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaLangOutOfMemoryError
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -39,8 +36,7 @@
   machine as if suppression were disabled and/or the stack trace was not
   writable
  .
- @author unascribed
- @since JDK1.0
+ @since 1.0
  */
 @interface JavaLangOutOfMemoryError : JavaLangVirtualMachineError
 
@@ -89,6 +85,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaLangOutOfMemoryError)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaLangOutOfMemoryError")

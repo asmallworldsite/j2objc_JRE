@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_OrgW3cDomDOMStringList
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -24,6 +21,9 @@
 
 #if !defined (OrgW3cDomDOMStringList_) && (INCLUDE_ALL_OrgW3cDomDOMStringList || defined(INCLUDE_OrgW3cDomDOMStringList))
 #define OrgW3cDomDOMStringList_
+
+@class JavaLangBoolean;
+@class JavaLangInteger;
 
 /*!
  @brief The <code>DOMStringList</code> interface provides the abstraction of an
@@ -73,6 +73,4 @@ J2OBJC_TYPE_LITERAL_HEADER(OrgW3cDomDOMStringList)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_OrgW3cDomDOMStringList")

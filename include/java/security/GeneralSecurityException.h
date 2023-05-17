@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaSecurityGeneralSecurityException
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -29,6 +26,7 @@
 #define INCLUDE_JavaLangException 1
 #include "java/lang/Exception.h"
 
+@class JavaLangBoolean;
 @class JavaLangThrowable;
 
 /*!
@@ -36,6 +34,7 @@
   security exception class that provides type safety for all the
   security-related exception classes that extend from it.
  @author Jan Luehe
+ @since 1.2
  */
 @interface JavaSecurityGeneralSecurityException : JavaLangException
 
@@ -122,6 +121,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaSecurityGeneralSecurityException)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaSecurityGeneralSecurityException")

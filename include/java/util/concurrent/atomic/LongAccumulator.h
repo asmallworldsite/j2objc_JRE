@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaUtilConcurrentAtomicLongAccumulator
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -33,6 +30,11 @@
 #define INCLUDE_JavaIoSerializable 1
 #include "java/io/Serializable.h"
 
+@class JavaLangBoolean;
+@class JavaLangDouble;
+@class JavaLangFloat;
+@class JavaLangInteger;
+@class JavaLangLong;
 @protocol JavaUtilFunctionLongBinaryOperator;
 
 /*!
@@ -55,15 +57,16 @@
   applicable to functions for which the order of accumulation does
   not matter. The supplied accumulator function should be
   side-effect-free, since it may be re-applied when attempted updates
-  fail due to contention among threads. The function is applied with
-  the current value as its first argument, and the given update as
-  the second argument.  For example, to maintain a running maximum
-  value, you could supply <code>Long::max</code> along with <code>Long.MIN_VALUE</code>
-  as the identity. 
+  fail due to contention among threads. For predictable results, the
+  accumulator function should be associative and commutative. The
+  function is applied with an existing value (or identity) as one
+  argument, and a given update as the other argument.  For example,
+  to maintain a running maximum value, you could supply <code>Long::max</code>
+  along with <code>Long.MIN_VALUE</code> as the identity. 
  <p>Class <code>LongAdder</code> provides analogs of the functionality of
   this class for the common special case of maintaining counts and
   sums.  The call <code>new LongAdder()</code> is equivalent to <code>new
-  LongAccumulator((x, y) -> x + y, 0L</code>
+  LongAccumulator((x, y) -> x + y, 0L)</code>
  .
   
  <p>This class extends <code>Number</code>, but does <em>not</em> define
@@ -180,6 +183,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentAtomicLongAccumulator)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaUtilConcurrentAtomicLongAccumulator")

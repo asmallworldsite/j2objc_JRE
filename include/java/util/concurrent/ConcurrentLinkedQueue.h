@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaUtilConcurrentConcurrentLinkedQueue
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -38,6 +35,8 @@
 #include "java/io/Serializable.h"
 
 @class IOSObjectArray;
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @class JavaUtilConcurrentConcurrentLinkedQueue_Node;
 @protocol JavaUtilCollection;
 @protocol JavaUtilIterator;
@@ -71,13 +70,12 @@
   is <em>NOT</em> a constant-time operation. Because of the
   asynchronous nature of these queues, determining the current number
   of elements requires a traversal of the elements, and so may report
-  inaccurate results if this collection is modified during traversal.
-  Additionally, the bulk operations <code>addAll</code>,
-  <code>removeAll</code>, <code>retainAll</code>, <code>containsAll</code>,
-  <code>equals</code>, and <code>toArray</code> are <em>not</em> guaranteed
-  to be performed atomically. For example, an iterator operating
-  concurrently with an <code>addAll</code> operation might view only some
-  of the added elements. 
+  inaccurate results if this collection is modified during traversal. 
+ <p>Bulk operations that add, remove, or examine multiple elements,
+  such as <code>addAll</code>, <code>removeIf</code> or <code>forEach</code>,
+  are <em>not</em> guaranteed to be performed atomically.
+  For example, a <code>forEach</code> traversal concurrent with an <code>addAll</code>
+  operation might observe only some of the added elements. 
  <p>This class and its iterator implement all of the <em>optional</em>
   methods of the <code>Queue</code> and <code>Iterator</code> interfaces. 
  <p>Memory consistency effects: As with other concurrent
@@ -85,7 +83,10 @@
  <code>ConcurrentLinkedQueue</code>
   <a href="package-summary.html#MemoryVisibility"><i>happen-before</i></a>
   actions subsequent to the access or removal of that element from the 
- <code>ConcurrentLinkedQueue</code> in another thread.
+ <code>ConcurrentLinkedQueue</code> in another thread. 
+ <p>This class is a member of the 
+ <a href="{@@docRoot}/java.base/java/util/package-summary.html#CollectionsFramework">
+  Java Collections Framework</a>.
  @since 1.5
  @author Doug Lea
  */
@@ -294,8 +295,8 @@
                    withJavaUtilConcurrentConcurrentLinkedQueue_Node:(JavaUtilConcurrentConcurrentLinkedQueue_Node *)val;
 
 /*!
- @brief Returns a new node holding item.Uses relaxed write because item
-  can only be seen after piggy-backing publication via casNext.
+ @brief Constructs a node holding item.Uses relaxed write because
+  item can only be seen after piggy-backing publication via CAS.
  */
 + (JavaUtilConcurrentConcurrentLinkedQueue_Node *)newNodeWithId:(id)item OBJC_METHOD_FAMILY_NONE;
 
@@ -352,12 +353,22 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentConcurrentLinkedQueue)
   volatile_id next_;
 }
 
+#pragma mark Package-Private
+
+- (instancetype __nonnull)init;
+
 @end
 
 J2OBJC_EMPTY_STATIC_INIT(JavaUtilConcurrentConcurrentLinkedQueue_Node)
 
 J2OBJC_VOLATILE_FIELD_SETTER(JavaUtilConcurrentConcurrentLinkedQueue_Node, item_, id)
 J2OBJC_VOLATILE_FIELD_SETTER(JavaUtilConcurrentConcurrentLinkedQueue_Node, next_, JavaUtilConcurrentConcurrentLinkedQueue_Node *)
+
+FOUNDATION_EXPORT void JavaUtilConcurrentConcurrentLinkedQueue_Node_init(JavaUtilConcurrentConcurrentLinkedQueue_Node *self);
+
+FOUNDATION_EXPORT JavaUtilConcurrentConcurrentLinkedQueue_Node *new_JavaUtilConcurrentConcurrentLinkedQueue_Node_init(void) NS_RETURNS_RETAINED;
+
+FOUNDATION_EXPORT JavaUtilConcurrentConcurrentLinkedQueue_Node *create_JavaUtilConcurrentConcurrentLinkedQueue_Node_init(void);
 
 J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentConcurrentLinkedQueue_Node)
 
@@ -370,6 +381,9 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentConcurrentLinkedQueue_Node)
 #define INCLUDE_JavaUtilSpliterator 1
 #include "java/util/Spliterator.h"
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
+@class JavaLangLong;
 @class JavaUtilConcurrentConcurrentLinkedQueue;
 @class JavaUtilConcurrentConcurrentLinkedQueue_Node;
 @protocol JavaUtilComparator;
@@ -385,7 +399,6 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentConcurrentLinkedQueue_Node)
   jint batch_;
   jboolean exhausted_;
 }
-@property (readonly, class) jint MAX_BATCH NS_SWIFT_NAME(MAX_BATCH);
 
 #pragma mark Public
 
@@ -432,6 +445,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentConcurrentLinkedQueue_CLQSpliterato
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaUtilConcurrentConcurrentLinkedQueue")

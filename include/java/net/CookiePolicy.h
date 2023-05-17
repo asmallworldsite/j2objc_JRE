@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaNetCookiePolicy
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -25,6 +22,7 @@
 #if !defined (JavaNetCookiePolicy_) && (INCLUDE_ALL_JavaNetCookiePolicy || defined(INCLUDE_JavaNetCookiePolicy))
 #define JavaNetCookiePolicy_
 
+@class JavaLangBoolean;
 @class JavaNetHttpCookie;
 @class JavaNetURI;
 
@@ -51,9 +49,6 @@
 @end
 
 @interface JavaNetCookiePolicy : NSObject
-@property (readonly, class, strong) id<JavaNetCookiePolicy> ACCEPT_ALL NS_SWIFT_NAME(ACCEPT_ALL);
-@property (readonly, class, strong) id<JavaNetCookiePolicy> ACCEPT_NONE NS_SWIFT_NAME(ACCEPT_NONE);
-@property (readonly, class, strong) id<JavaNetCookiePolicy> ACCEPT_ORIGINAL_SERVER NS_SWIFT_NAME(ACCEPT_ORIGINAL_SERVER);
 
 @end
 
@@ -91,6 +86,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaNetCookiePolicy)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaNetCookiePolicy")

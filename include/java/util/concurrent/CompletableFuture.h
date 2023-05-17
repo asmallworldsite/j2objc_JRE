@@ -85,9 +85,6 @@
 #define INCLUDE_JavaUtilConcurrentCompletableFuture_AsynchronousCompletionTask 1
 #endif
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -106,6 +103,9 @@
 #include "java/util/concurrent/CompletionStage.h"
 
 @class IOSObjectArray;
+@class JavaLangBoolean;
+@class JavaLangInteger;
+@class JavaLangLong;
 @class JavaLangThrowable;
 @class JavaUtilConcurrentCompletableFuture_AltResult;
 @class JavaUtilConcurrentCompletableFuture_BiAccept;
@@ -200,11 +200,6 @@
   volatile_id result_;
   volatile_id stack_;
 }
-@property (readonly, class, strong) JavaUtilConcurrentCompletableFuture_AltResult *NIL NS_SWIFT_NAME(NIL);
-@property (readonly, class) jint SYNC NS_SWIFT_NAME(SYNC);
-@property (readonly, class) jint ASYNC NS_SWIFT_NAME(ASYNC);
-@property (readonly, class) jint NESTED NS_SWIFT_NAME(NESTED);
-@property (readonly, class) jint SPINS NS_SWIFT_NAME(SPINS);
 
 #pragma mark Public
 
@@ -556,6 +551,13 @@ withJavaUtilConcurrentTimeUnit:(JavaUtilConcurrentTimeUnit *)unit;
   exceptionally, then the returned CompletionStage completes
   exceptionally with a CompletionException with this exception as
   cause.
+ <p>Unless overridden by a subclass, a new non-minimal
+  CompletableFuture with all methods available can be obtained from
+  a minimal CompletionStage via <code>toCompletableFuture()</code>.
+  For example, completion of a minimal stage can be awaited by 
+ @code
+ minimalStage.toCompletableFuture().join(); 
+@endcode
  @return the new CompletionStage
  @since 9
  */
@@ -775,6 +777,7 @@ withJavaUtilConcurrentTimeUnit:(JavaUtilConcurrentTimeUnit *)unit;
 
 /*!
  @brief Pushes completion to this and b unless both done.
+ Caller should first check that either result or b.result is null.
  */
 - (void)bipushWithJavaUtilConcurrentCompletableFuture:(JavaUtilConcurrentCompletableFuture *)b
  withJavaUtilConcurrentCompletableFuture_BiCompletion:(JavaUtilConcurrentCompletableFuture_BiCompletion *)c;
@@ -782,16 +785,16 @@ withJavaUtilConcurrentTimeUnit:(JavaUtilConcurrentTimeUnit *)unit;
 - (jboolean)biRelayWithJavaUtilConcurrentCompletableFuture:(JavaUtilConcurrentCompletableFuture *)a
                    withJavaUtilConcurrentCompletableFuture:(JavaUtilConcurrentCompletableFuture *)b;
 
-- (jboolean)biRunWithJavaUtilConcurrentCompletableFuture:(JavaUtilConcurrentCompletableFuture *)a
-                 withJavaUtilConcurrentCompletableFuture:(JavaUtilConcurrentCompletableFuture *)b
-                                    withJavaLangRunnable:(id<JavaLangRunnable>)f
-           withJavaUtilConcurrentCompletableFuture_BiRun:(JavaUtilConcurrentCompletableFuture_BiRun *)c;
+- (jboolean)biRunWithId:(id)r
+                 withId:(id)s
+   withJavaLangRunnable:(id<JavaLangRunnable>)f
+withJavaUtilConcurrentCompletableFuture_BiRun:(JavaUtilConcurrentCompletableFuture_BiRun *)c;
 
 - (jboolean)casStackWithJavaUtilConcurrentCompletableFuture_Completion:(JavaUtilConcurrentCompletableFuture_Completion *)cmp
                     withJavaUtilConcurrentCompletableFuture_Completion:(JavaUtilConcurrentCompletableFuture_Completion *)val;
 
 /*!
- @brief Traverses stack and unlinks dead Completions.
+ @brief Traverses stack and unlinks one or more dead Completions, if found.
  */
 - (void)cleanStack;
 
@@ -879,6 +882,7 @@ withJavaUtilConcurrentTimeUnit:(JavaUtilConcurrentTimeUnit *)unit;
 
 /*!
  @brief Pushes completion to this and b unless either done.
+ Caller should first check that result and b.result are both null.
  */
 - (void)orpushWithJavaUtilConcurrentCompletableFuture:(JavaUtilConcurrentCompletableFuture *)b
  withJavaUtilConcurrentCompletableFuture_BiCompletion:(JavaUtilConcurrentCompletableFuture_BiCompletion *)c;
@@ -912,15 +916,16 @@ withJavaUtilConcurrentTimeUnit:(JavaUtilConcurrentTimeUnit *)unit;
                                                                                  withInt:(jint)mode;
 
 /*!
- @brief Post-processing by dependent after successful UniCompletion
-  tryFire.Tries to clean stack of source a, and then either runs
-  postComplete or returns this to caller, depending on mode.
+ @brief Post-processing by dependent after successful UniCompletion tryFire.
+ Tries to clean stack of source a, and then either runs postComplete
+  or returns this to caller, depending on mode.
  */
 - (JavaUtilConcurrentCompletableFuture *)postFireWithJavaUtilConcurrentCompletableFuture:(JavaUtilConcurrentCompletableFuture *)a
                                                                                  withInt:(jint)mode;
 
 /*!
- @brief Pushes the given completion (if it exists) unless done.
+ @brief Pushes the given completion unless it completes while trying.
+ Caller should first check that result is null.
  */
 - (void)pushWithJavaUtilConcurrentCompletableFuture_UniCompletion:(JavaUtilConcurrentCompletableFuture_UniCompletion *)c;
 
@@ -1163,6 +1168,9 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentCompletableFuture_ThreadPerTaskExec
 #define INCLUDE_JavaLangRunnable 1
 #include "java/lang/Runnable.h"
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
+@class JavaLangLong;
 @class JavaLangVoid;
 @class JavaUtilConcurrentCompletableFuture;
 @class JavaUtilConcurrentTimeUnit;
@@ -1222,6 +1230,8 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentCompletableFuture_Completion)
 #if !defined (JavaUtilConcurrentCompletableFuture_UniCompletion_) && (INCLUDE_ALL_JavaUtilConcurrentCompletableFuture || defined(INCLUDE_JavaUtilConcurrentCompletableFuture_UniCompletion))
 #define JavaUtilConcurrentCompletableFuture_UniCompletion_
 
+@class JavaLangBoolean;
+@class JavaLangLong;
 @class JavaLangVoid;
 @class JavaUtilConcurrentCompletableFuture;
 @class JavaUtilConcurrentTimeUnit;
@@ -1286,6 +1296,8 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentCompletableFuture_UniCompletion)
 #if !defined (JavaUtilConcurrentCompletableFuture_UniApply_) && (INCLUDE_ALL_JavaUtilConcurrentCompletableFuture || defined(INCLUDE_JavaUtilConcurrentCompletableFuture_UniApply))
 #define JavaUtilConcurrentCompletableFuture_UniApply_
 
+@class JavaLangInteger;
+@class JavaLangLong;
 @class JavaLangVoid;
 @class JavaUtilConcurrentCompletableFuture;
 @class JavaUtilConcurrentTimeUnit;
@@ -1342,6 +1354,8 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentCompletableFuture_UniApply)
 #if !defined (JavaUtilConcurrentCompletableFuture_UniAccept_) && (INCLUDE_ALL_JavaUtilConcurrentCompletableFuture || defined(INCLUDE_JavaUtilConcurrentCompletableFuture_UniAccept))
 #define JavaUtilConcurrentCompletableFuture_UniAccept_
 
+@class JavaLangInteger;
+@class JavaLangLong;
 @class JavaLangVoid;
 @class JavaUtilConcurrentCompletableFuture;
 @class JavaUtilConcurrentTimeUnit;
@@ -1398,6 +1412,8 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentCompletableFuture_UniAccept)
 #if !defined (JavaUtilConcurrentCompletableFuture_UniRun_) && (INCLUDE_ALL_JavaUtilConcurrentCompletableFuture || defined(INCLUDE_JavaUtilConcurrentCompletableFuture_UniRun))
 #define JavaUtilConcurrentCompletableFuture_UniRun_
 
+@class JavaLangInteger;
+@class JavaLangLong;
 @class JavaLangVoid;
 @class JavaUtilConcurrentCompletableFuture;
 @class JavaUtilConcurrentTimeUnit;
@@ -1454,6 +1470,8 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentCompletableFuture_UniRun)
 #if !defined (JavaUtilConcurrentCompletableFuture_UniWhenComplete_) && (INCLUDE_ALL_JavaUtilConcurrentCompletableFuture || defined(INCLUDE_JavaUtilConcurrentCompletableFuture_UniWhenComplete))
 #define JavaUtilConcurrentCompletableFuture_UniWhenComplete_
 
+@class JavaLangInteger;
+@class JavaLangLong;
 @class JavaLangVoid;
 @class JavaUtilConcurrentCompletableFuture;
 @class JavaUtilConcurrentTimeUnit;
@@ -1510,6 +1528,8 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentCompletableFuture_UniWhenComplete)
 #if !defined (JavaUtilConcurrentCompletableFuture_UniHandle_) && (INCLUDE_ALL_JavaUtilConcurrentCompletableFuture || defined(INCLUDE_JavaUtilConcurrentCompletableFuture_UniHandle))
 #define JavaUtilConcurrentCompletableFuture_UniHandle_
 
+@class JavaLangInteger;
+@class JavaLangLong;
 @class JavaLangVoid;
 @class JavaUtilConcurrentCompletableFuture;
 @class JavaUtilConcurrentTimeUnit;
@@ -1566,6 +1586,8 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentCompletableFuture_UniHandle)
 #if !defined (JavaUtilConcurrentCompletableFuture_UniExceptionally_) && (INCLUDE_ALL_JavaUtilConcurrentCompletableFuture || defined(INCLUDE_JavaUtilConcurrentCompletableFuture_UniExceptionally))
 #define JavaUtilConcurrentCompletableFuture_UniExceptionally_
 
+@class JavaLangInteger;
+@class JavaLangLong;
 @class JavaLangVoid;
 @class JavaUtilConcurrentCompletableFuture;
 @class JavaUtilConcurrentTimeUnit;
@@ -1621,6 +1643,8 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentCompletableFuture_UniExceptionally)
 #if !defined (JavaUtilConcurrentCompletableFuture_UniRelay_) && (INCLUDE_ALL_JavaUtilConcurrentCompletableFuture || defined(INCLUDE_JavaUtilConcurrentCompletableFuture_UniRelay))
 #define JavaUtilConcurrentCompletableFuture_UniRelay_
 
+@class JavaLangInteger;
+@class JavaLangLong;
 @class JavaLangVoid;
 @class JavaUtilConcurrentCompletableFuture;
 @class JavaUtilConcurrentTimeUnit;
@@ -1669,6 +1693,8 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentCompletableFuture_UniRelay)
 #if !defined (JavaUtilConcurrentCompletableFuture_UniCompose_) && (INCLUDE_ALL_JavaUtilConcurrentCompletableFuture || defined(INCLUDE_JavaUtilConcurrentCompletableFuture_UniCompose))
 #define JavaUtilConcurrentCompletableFuture_UniCompose_
 
+@class JavaLangInteger;
+@class JavaLangLong;
 @class JavaLangVoid;
 @class JavaUtilConcurrentCompletableFuture;
 @class JavaUtilConcurrentTimeUnit;
@@ -1725,6 +1751,7 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentCompletableFuture_UniCompose)
 #if !defined (JavaUtilConcurrentCompletableFuture_BiCompletion_) && (INCLUDE_ALL_JavaUtilConcurrentCompletableFuture || defined(INCLUDE_JavaUtilConcurrentCompletableFuture_BiCompletion))
 #define JavaUtilConcurrentCompletableFuture_BiCompletion_
 
+@class JavaLangLong;
 @class JavaLangVoid;
 @class JavaUtilConcurrentCompletableFuture;
 @class JavaUtilConcurrentTimeUnit;
@@ -1777,6 +1804,9 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentCompletableFuture_BiCompletion)
 #if !defined (JavaUtilConcurrentCompletableFuture_CoCompletion_) && (INCLUDE_ALL_JavaUtilConcurrentCompletableFuture || defined(INCLUDE_JavaUtilConcurrentCompletableFuture_CoCompletion))
 #define JavaUtilConcurrentCompletableFuture_CoCompletion_
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
+@class JavaLangLong;
 @class JavaLangVoid;
 @class JavaUtilConcurrentCompletableFuture;
 @class JavaUtilConcurrentCompletableFuture_BiCompletion;
@@ -1832,6 +1862,8 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentCompletableFuture_CoCompletion)
 #if !defined (JavaUtilConcurrentCompletableFuture_BiApply_) && (INCLUDE_ALL_JavaUtilConcurrentCompletableFuture || defined(INCLUDE_JavaUtilConcurrentCompletableFuture_BiApply))
 #define JavaUtilConcurrentCompletableFuture_BiApply_
 
+@class JavaLangInteger;
+@class JavaLangLong;
 @class JavaLangVoid;
 @class JavaUtilConcurrentCompletableFuture;
 @class JavaUtilConcurrentTimeUnit;
@@ -1890,6 +1922,8 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentCompletableFuture_BiApply)
 #if !defined (JavaUtilConcurrentCompletableFuture_BiAccept_) && (INCLUDE_ALL_JavaUtilConcurrentCompletableFuture || defined(INCLUDE_JavaUtilConcurrentCompletableFuture_BiAccept))
 #define JavaUtilConcurrentCompletableFuture_BiAccept_
 
+@class JavaLangInteger;
+@class JavaLangLong;
 @class JavaLangVoid;
 @class JavaUtilConcurrentCompletableFuture;
 @class JavaUtilConcurrentTimeUnit;
@@ -1948,6 +1982,8 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentCompletableFuture_BiAccept)
 #if !defined (JavaUtilConcurrentCompletableFuture_BiRun_) && (INCLUDE_ALL_JavaUtilConcurrentCompletableFuture || defined(INCLUDE_JavaUtilConcurrentCompletableFuture_BiRun))
 #define JavaUtilConcurrentCompletableFuture_BiRun_
 
+@class JavaLangInteger;
+@class JavaLangLong;
 @class JavaLangVoid;
 @class JavaUtilConcurrentCompletableFuture;
 @class JavaUtilConcurrentTimeUnit;
@@ -2006,6 +2042,8 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentCompletableFuture_BiRun)
 #if !defined (JavaUtilConcurrentCompletableFuture_BiRelay_) && (INCLUDE_ALL_JavaUtilConcurrentCompletableFuture || defined(INCLUDE_JavaUtilConcurrentCompletableFuture_BiRelay))
 #define JavaUtilConcurrentCompletableFuture_BiRelay_
 
+@class JavaLangInteger;
+@class JavaLangLong;
 @class JavaLangVoid;
 @class JavaUtilConcurrentCompletableFuture;
 @class JavaUtilConcurrentTimeUnit;
@@ -2056,6 +2094,8 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentCompletableFuture_BiRelay)
 #if !defined (JavaUtilConcurrentCompletableFuture_OrApply_) && (INCLUDE_ALL_JavaUtilConcurrentCompletableFuture || defined(INCLUDE_JavaUtilConcurrentCompletableFuture_OrApply))
 #define JavaUtilConcurrentCompletableFuture_OrApply_
 
+@class JavaLangInteger;
+@class JavaLangLong;
 @class JavaLangVoid;
 @class JavaUtilConcurrentCompletableFuture;
 @class JavaUtilConcurrentTimeUnit;
@@ -2114,6 +2154,8 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentCompletableFuture_OrApply)
 #if !defined (JavaUtilConcurrentCompletableFuture_OrAccept_) && (INCLUDE_ALL_JavaUtilConcurrentCompletableFuture || defined(INCLUDE_JavaUtilConcurrentCompletableFuture_OrAccept))
 #define JavaUtilConcurrentCompletableFuture_OrAccept_
 
+@class JavaLangInteger;
+@class JavaLangLong;
 @class JavaLangVoid;
 @class JavaUtilConcurrentCompletableFuture;
 @class JavaUtilConcurrentTimeUnit;
@@ -2172,6 +2214,8 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentCompletableFuture_OrAccept)
 #if !defined (JavaUtilConcurrentCompletableFuture_OrRun_) && (INCLUDE_ALL_JavaUtilConcurrentCompletableFuture || defined(INCLUDE_JavaUtilConcurrentCompletableFuture_OrRun))
 #define JavaUtilConcurrentCompletableFuture_OrRun_
 
+@class JavaLangInteger;
+@class JavaLangLong;
 @class JavaLangVoid;
 @class JavaUtilConcurrentCompletableFuture;
 @class JavaUtilConcurrentTimeUnit;
@@ -2230,6 +2274,8 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentCompletableFuture_OrRun)
 #if !defined (JavaUtilConcurrentCompletableFuture_OrRelay_) && (INCLUDE_ALL_JavaUtilConcurrentCompletableFuture || defined(INCLUDE_JavaUtilConcurrentCompletableFuture_OrRelay))
 #define JavaUtilConcurrentCompletableFuture_OrRelay_
 
+@class JavaLangInteger;
+@class JavaLangLong;
 @class JavaLangVoid;
 @class JavaUtilConcurrentCompletableFuture;
 @class JavaUtilConcurrentTimeUnit;
@@ -2288,6 +2334,8 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentCompletableFuture_OrRelay)
 #define INCLUDE_JavaLangRunnable 1
 #include "java/lang/Runnable.h"
 
+@class JavaLangBoolean;
+@class JavaLangLong;
 @class JavaLangVoid;
 @class JavaUtilConcurrentCompletableFuture;
 @class JavaUtilConcurrentTimeUnit;
@@ -2355,6 +2403,8 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentCompletableFuture_AsyncSupply)
 #define INCLUDE_JavaLangRunnable 1
 #include "java/lang/Runnable.h"
 
+@class JavaLangBoolean;
+@class JavaLangLong;
 @class JavaLangVoid;
 @class JavaUtilConcurrentCompletableFuture;
 @class JavaUtilConcurrentTimeUnit;
@@ -2417,6 +2467,9 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentCompletableFuture_AsyncRun)
 #define INCLUDE_JavaUtilConcurrentForkJoinPool_ManagedBlocker 1
 #include "java/util/concurrent/ForkJoinPool.h"
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
+@class JavaLangLong;
 @class JavaLangThread;
 @class JavaLangVoid;
 @class JavaUtilConcurrentCompletableFuture;
@@ -2484,6 +2537,7 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentCompletableFuture_Signaller)
 #if !defined (JavaUtilConcurrentCompletableFuture_Delayer_) && (INCLUDE_ALL_JavaUtilConcurrentCompletableFuture || defined(INCLUDE_JavaUtilConcurrentCompletableFuture_Delayer))
 #define JavaUtilConcurrentCompletableFuture_Delayer_
 
+@class JavaLangLong;
 @class JavaUtilConcurrentScheduledThreadPoolExecutor;
 @class JavaUtilConcurrentTimeUnit;
 @protocol JavaLangRunnable;
@@ -2494,7 +2548,6 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentCompletableFuture_Signaller)
   cancelling tasks.
  */
 @interface JavaUtilConcurrentCompletableFuture_Delayer : NSObject
-@property (readonly, class, strong) JavaUtilConcurrentScheduledThreadPoolExecutor *delayer NS_SWIFT_NAME(delayer);
 
 #pragma mark Package-Private
 
@@ -2566,6 +2619,7 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentCompletableFuture_Delayer_DaemonThr
 #define INCLUDE_JavaUtilConcurrentExecutor 1
 #include "java/util/concurrent/Executor.h"
 
+@class JavaLangLong;
 @class JavaUtilConcurrentTimeUnit;
 @protocol JavaLangRunnable;
 
@@ -2798,6 +2852,9 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentCompletableFuture_Canceller)
 #if !defined (JavaUtilConcurrentCompletableFuture_MinimalStage_) && (INCLUDE_ALL_JavaUtilConcurrentCompletableFuture || defined(INCLUDE_JavaUtilConcurrentCompletableFuture_MinimalStage))
 #define JavaUtilConcurrentCompletableFuture_MinimalStage_
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
+@class JavaLangLong;
 @class JavaLangThrowable;
 @class JavaUtilConcurrentCompletableFuture;
 @class JavaUtilConcurrentTimeUnit;
@@ -2882,6 +2939,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentCompletableFuture_MinimalStage)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaUtilConcurrentCompletableFuture")

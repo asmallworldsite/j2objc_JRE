@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaBeansIndexedPropertyChangeEvent
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -29,6 +26,7 @@
 #define INCLUDE_JavaBeansPropertyChangeEvent 1
 #include "java/beans/PropertyChangeEvent.h"
 
+@class JavaLangInteger;
 @class JavaLangStringBuilder;
 
 /*!
@@ -100,6 +98,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaBeansIndexedPropertyChangeEvent)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaBeansIndexedPropertyChangeEvent")

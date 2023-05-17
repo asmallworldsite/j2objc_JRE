@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaSecurityDigestOutputStream
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -31,6 +28,8 @@
 
 @class IOSByteArray;
 @class JavaIoOutputStream;
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @class JavaSecurityMessageDigest;
 
 /*!
@@ -48,6 +47,7 @@
  - seealso: MessageDigest
  - seealso: DigestInputStream
  @author Benjamin Renaud
+ @since 1.2
  */
 @interface JavaSecurityDigestOutputStream : JavaIoFilterOutputStream {
  @public
@@ -160,6 +160,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaSecurityDigestOutputStream)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaSecurityDigestOutputStream")

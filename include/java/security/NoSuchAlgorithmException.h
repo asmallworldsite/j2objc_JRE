@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaSecurityNoSuchAlgorithmException
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -35,6 +32,7 @@
  @brief This exception is thrown when a particular cryptographic algorithm is
   requested but is not available in the environment.
  @author Benjamin Renaud
+ @since 1.1
  */
 @interface JavaSecurityNoSuchAlgorithmException : JavaSecurityGeneralSecurityException
 
@@ -116,6 +114,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaSecurityNoSuchAlgorithmException)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaSecurityNoSuchAlgorithmException")

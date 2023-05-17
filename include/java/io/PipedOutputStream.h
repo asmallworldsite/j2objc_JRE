@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaIoPipedOutputStream
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -31,124 +28,127 @@
 
 @class IOSByteArray;
 @class JavaIoPipedInputStream;
+@class JavaLangInteger;
 
 /*!
- @brief Places information on a communications pipe.When two threads want to pass
-  data back and forth, one creates a piped output stream and the other one
-  creates a piped input stream.
- - seealso: PipedInputStream
+ @brief A piped output stream can be connected to a piped input stream
+  to create a communications pipe.The piped output stream is the
+  sending end of the pipe.
+ Typically, data is written to a 
+ <code>PipedOutputStream</code> object by one thread and data is
+  read from the connected <code>PipedInputStream</code> by some
+  other thread. Attempting to use both objects from a single thread
+  is not recommended as it may deadlock the thread.
+  The pipe is said to be <a id=BROKEN> <i>broken</i> </a> if a
+  thread that was reading data bytes from the connected piped input
+  stream is no longer alive.
+ @author James Gosling
+ - seealso: java.io.PipedInputStream
+ @since 1.0
  */
 @interface JavaIoPipedOutputStream : JavaIoOutputStream
 
 #pragma mark Public
 
 /*!
- @brief Constructs a new unconnected <code>PipedOutputStream</code>.The resulting
-  stream must be connected to a <code>PipedInputStream</code> before data can be
-  written to it.
+ @brief Creates a piped output stream that is not yet connected to a
+  piped input stream.It must be connected to a piped input stream,
+  either by the receiver or the sender, before being used.
+ - seealso: java.io.PipedInputStream#connect(java.io.PipedOutputStream)
+ - seealso: java.io.PipedOutputStream#connect(java.io.PipedInputStream)
  */
 - (instancetype __nonnull)init;
 
 /*!
- @brief Constructs a new <code>PipedOutputStream</code> connected to the 
- <code>PipedInputStream</code> <code>target</code>.Any data written to this stream
-  can be read from the target stream.
- @param target the piped input stream to connect to.
- @throw IOException
- if this stream or <code>target</code> are already connected.
+ @brief Creates a piped output stream connected to the specified piped
+  input stream.Data bytes written to this stream will then be
+  available as input from <code>snk</code>.
+ @param snk The piped input stream to connect to.
+ @throw IOExceptionif an I/O error occurs.
  */
-- (instancetype __nonnull)initWithJavaIoPipedInputStream:(JavaIoPipedInputStream *)target;
+- (instancetype __nonnull)initWithJavaIoPipedInputStream:(JavaIoPipedInputStream *)snk;
 
 /*!
- @brief Closes this stream.If this stream is connected to an input stream, the
-  input stream is closed and the pipe is disconnected.
- @throw IOException
- if an error occurs while closing this stream.
+ @brief Closes this piped output stream and releases any system resources
+  associated with this stream.This stream may no longer be used for
+  writing bytes.
+ @throw IOExceptionif an I/O error occurs.
  */
 - (void)close;
 
 /*!
- @brief Connects this stream to a <code>PipedInputStream</code>.Any data written to
-  this output stream becomes readable in the input stream.
- @param stream the piped input stream to connect to.
- @throw IOException
- if either stream is already connected.
+ @brief Connects this piped output stream to a receiver.If this object
+  is already connected to some other piped input stream, an 
+ <code>IOException</code> is thrown.
+ <p>
+  If <code>snk</code> is an unconnected piped input stream and 
+ <code>src</code> is an unconnected piped output stream, they may
+  be connected by either the call: 
+ <blockquote>@code
+
+  src.connect(snk)
+@endcode</blockquote>
+  or the call: 
+ <blockquote>@code
+
+  snk.connect(src)
+@endcode</blockquote>
+  The two calls have the same effect.
+ @param snk the piped input stream to connect to.
+ @throw IOExceptionif an I/O error occurs.
  */
-- (void)connectWithJavaIoPipedInputStream:(JavaIoPipedInputStream *)stream;
+- (void)connectWithJavaIoPipedInputStream:(JavaIoPipedInputStream *)snk;
 
 /*!
- @brief Notifies the readers of this <code>PipedInputStream</code> that bytes can be
-  read.This method does nothing if this stream is not connected.
- @throw IOException
- if an I/O error occurs while flushing this stream.
+ @brief Flushes this output stream and forces any buffered output bytes
+  to be written out.
+ This will notify any readers that bytes are waiting in the pipe.
+ @throw IOExceptionif an I/O error occurs.
  */
 - (void)flush;
 
 /*!
- @brief Writes <code>count</code> bytes from the byte array <code>buffer</code> starting at 
- <code>offset</code> to this stream.The written data can then be read from the
-  connected input stream.
- <p>
-  Separate threads should be used to write to a <code>PipedOutputStream</code>
-  and to read from the connected <code>PipedInputStream</code>. If the same
-  thread is used, a deadlock may occur.
- @param buffer the buffer to write.
- @param offset the index of the first byte in 
- <code>buffer</code>  to write.
- @param count the number of bytes from 
- <code>buffer</code>  to write to this             stream.
- @throw IndexOutOfBoundsException
- if <code>offset < 0</code> or <code>count < 0</code>, or if <code>offset + count</code>
-  is bigger than the length of <code>buffer</code>.
- @throw InterruptedIOException
- if the pipe is full and the current thread is interrupted
-              waiting for space to write data. This case is not currently
-              handled correctly.
- @throw IOException
- if this stream is not connected, if the target stream is
-              closed or if the thread reading from the target stream is no
-              longer alive. This case is currently not handled correctly.
+ @brief Writes <code>len</code> bytes from the specified byte array
+  starting at offset <code>off</code> to this piped output stream.
+ This method blocks until all the bytes are written to the output
+  stream.
+ @param b the data.
+ @param off the start offset in the data.
+ @param len the number of bytes to write.
+ @throw IOExceptionif the pipe is <a href=#BROKEN> broken</a>,
+           <code>unconnected</code>,
+           closed, or if an I/O error occurs.
  */
-- (void)writeWithByteArray:(IOSByteArray *)buffer
-                   withInt:(jint)offset
-                   withInt:(jint)count;
+- (void)writeWithByteArray:(IOSByteArray *)b
+                   withInt:(jint)off
+                   withInt:(jint)len;
 
 /*!
- @brief Writes a single byte to this stream.Only the least significant byte of
-  the integer <code>oneByte</code> is written.
- The written byte can then be read
-  from the connected input stream. 
+ @brief Writes the specified <code>byte</code> to the piped output stream.
  <p>
-  Separate threads should be used to write to a <code>PipedOutputStream</code>
-  and to read from the connected <code>PipedInputStream</code>. If the same
-  thread is used, a deadlock may occur.
- @param oneByte the byte to write.
- @throw InterruptedIOException
- if the pipe is full and the current thread is interrupted
-              waiting for space to write data. This case is not currently
-              handled correctly.
- @throw IOException
- if this stream is not connected, if the target stream is
-              closed or if the thread reading from the target stream is no
-              longer alive. This case is currently not handled correctly.
+  Implements the <code>write</code> method of <code>OutputStream</code>.
+ @param b the  <code> byte </code>  to be written.
+ @throw IOExceptionif the pipe is <a href=#BROKEN> broken</a>,
+           <code>unconnected</code>,
+           closed, or if an I/O error occurs.
  */
-- (void)writeWithInt:(jint)oneByte;
+- (void)writeWithInt:(jint)b;
 
 @end
 
 J2OBJC_EMPTY_STATIC_INIT(JavaIoPipedOutputStream)
+
+FOUNDATION_EXPORT void JavaIoPipedOutputStream_initWithJavaIoPipedInputStream_(JavaIoPipedOutputStream *self, JavaIoPipedInputStream *snk);
+
+FOUNDATION_EXPORT JavaIoPipedOutputStream *new_JavaIoPipedOutputStream_initWithJavaIoPipedInputStream_(JavaIoPipedInputStream *snk) NS_RETURNS_RETAINED;
+
+FOUNDATION_EXPORT JavaIoPipedOutputStream *create_JavaIoPipedOutputStream_initWithJavaIoPipedInputStream_(JavaIoPipedInputStream *snk);
 
 FOUNDATION_EXPORT void JavaIoPipedOutputStream_init(JavaIoPipedOutputStream *self);
 
 FOUNDATION_EXPORT JavaIoPipedOutputStream *new_JavaIoPipedOutputStream_init(void) NS_RETURNS_RETAINED;
 
 FOUNDATION_EXPORT JavaIoPipedOutputStream *create_JavaIoPipedOutputStream_init(void);
-
-FOUNDATION_EXPORT void JavaIoPipedOutputStream_initWithJavaIoPipedInputStream_(JavaIoPipedOutputStream *self, JavaIoPipedInputStream *target);
-
-FOUNDATION_EXPORT JavaIoPipedOutputStream *new_JavaIoPipedOutputStream_initWithJavaIoPipedInputStream_(JavaIoPipedInputStream *target) NS_RETURNS_RETAINED;
-
-FOUNDATION_EXPORT JavaIoPipedOutputStream *create_JavaIoPipedOutputStream_initWithJavaIoPipedInputStream_(JavaIoPipedInputStream *target);
 
 J2OBJC_TYPE_LITERAL_HEADER(JavaIoPipedOutputStream)
 
@@ -158,6 +158,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaIoPipedOutputStream)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaIoPipedOutputStream")

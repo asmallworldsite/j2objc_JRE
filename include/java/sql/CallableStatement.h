@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaSqlCallableStatement
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -32,6 +29,13 @@
 @class IOSByteArray;
 @class JavaIoInputStream;
 @class JavaIoReader;
+@class JavaLangBoolean;
+@class JavaLangByte;
+@class JavaLangDouble;
+@class JavaLangFloat;
+@class JavaLangInteger;
+@class JavaLangLong;
+@class JavaLangShort;
 @class JavaMathBigDecimal;
 @class JavaNetURL;
 @class JavaSqlDate;
@@ -290,7 +294,7 @@
  - seealso: #setBigDecimal
  */
 - (JavaMathBigDecimal *)getBigDecimalWithInt:(jint)parameterIndex
-                                     withInt:(jint)scale_ __attribute__((deprecated));
+                                     withInt:(jint)scale_;
 
 /*!
  @brief Retrieves the value of the designated JDBC <code>BINARY</code> or 
@@ -2362,6 +2366,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaSqlCallableStatement)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaSqlCallableStatement")

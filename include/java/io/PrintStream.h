@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaIoPrintStream
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -42,6 +39,13 @@
 @class IOSObjectArray;
 @class JavaIoFile;
 @class JavaIoOutputStream;
+@class JavaLangBoolean;
+@class JavaLangCharacter;
+@class JavaLangDouble;
+@class JavaLangFloat;
+@class JavaLangInteger;
+@class JavaLangLong;
+@class JavaNioCharsetCharset;
 @class JavaUtilLocale;
 @protocol JavaLangCharSequence;
 
@@ -54,17 +58,22 @@
  <code>IOException</code>; instead, exceptional situations merely set an
   internal flag that can be tested via the <code>checkError</code> method.
   Optionally, a <code>PrintStream</code> can be created so as to flush
-  automatically; this means that the <code>flush</code> method is
-  automatically invoked after a byte array is written, one of the 
- <code>println</code> methods is invoked, or a newline character or byte
+  automatically; this means that the <code>flush</code> method of the underlying
+  output stream is automatically invoked after a byte array is written, one
+  of the <code>println</code> methods is invoked, or a newline character or byte
   (<code>'\n'</code>) is written. 
  <p> All characters printed by a <code>PrintStream</code> are converted into
-  bytes using the platform's default character encoding.  The <code><code>PrintWriter</code>
- </code> class should be used in situations that require writing
-  characters rather than bytes.
+  bytes using the given encoding or charset, or the platform's default
+  character encoding if not specified.
+  The <code>PrintWriter</code> class should be used in situations that require
+  writing characters rather than bytes. 
+ <p> This class always replaces malformed and unmappable character sequences
+  with the charset's default replacement string.
+  The java.nio.charset.CharsetEncoder class should be used when more
+  control over the encoding process is required.
  @author Frank Yellin
  @author Mark Reinhold
- @since JDK1.0
+ @since 1.0
  */
 @interface JavaIoPrintStream : JavaIoFilterOutputStream < JavaLangAppendable, JavaIoCloseable >
 
@@ -103,6 +112,28 @@
            file exists, then it will be truncated to zero size; otherwise,
            a new file will be created.  The output will be written to the
            file and is buffered.
+ @param charset A 
+ charset
+ @throw IOException
+ if an I/O error occurs while opening or creating the file
+ @throw SecurityException
+ If a security manager is present and <code>checkWrite(file.getPath())</code>
+           denies write access to the file
+ @since 10
+ */
+- (instancetype __nonnull)initWithJavaIoFile:(JavaIoFile *)file
+                   withJavaNioCharsetCharset:(JavaNioCharsetCharset *)charset;
+
+/*!
+ @brief Creates a new print stream, without automatic line flushing, with the
+  specified file and charset.This convenience constructor creates
+  the necessary intermediate <code>OutputStreamWriter</code>
+ , which will encode characters using the provided
+  charset.
+ @param file The file to use as the destination of this print stream.  If the
+           file exists, then it will be truncated to zero size; otherwise,
+           a new file will be created.  The output will be written to the
+           file and is buffered.
  @param csn The name of a supported 
  charset
  @throw FileNotFoundException
@@ -121,31 +152,53 @@
                                 withNSString:(NSString *)csn;
 
 /*!
- @brief Creates a new print stream.This stream will not flush automatically.
+ @brief Creates a new print stream, without automatic line flushing, with the
+  specified OutputStream.Characters written to the stream are converted
+  to bytes using the platform's default character encoding.
  @param outArg The output stream to which values and objects will be                     printed
  - seealso: java.io.PrintWriter#PrintWriter(java.io.OutputStream)
  */
 - (instancetype __nonnull)initWithJavaIoOutputStream:(JavaIoOutputStream *)outArg;
 
 /*!
- @brief Creates a new print stream.
+ @brief Creates a new print stream, with the specified OutputStream and line
+  flushing.Characters written to the stream are converted to bytes using
+  the platform's default character encoding.
  @param outArg The output stream to which values and objects will be                     printed
- @param autoFlush A boolean; if true, the output buffer will be flushed                     whenever a byte array is written, one of the
+ @param autoFlush Whether the output buffer will be flushed                     whenever a byte array is written, one of the
                       
-  <code> println </code>  methods is invoked, or a newline                     character or byte (
-  <code> '\n' </code> ) is written
+ <code>println</code>  methods is invoked, or a newline                     character or byte (
+ <code>'\n'</code> ) is written
  - seealso: java.io.PrintWriter#PrintWriter(java.io.OutputStream, boolean)
  */
 - (instancetype __nonnull)initWithJavaIoOutputStream:(JavaIoOutputStream *)outArg
                                          withBoolean:(jboolean)autoFlush;
 
 /*!
- @brief Creates a new print stream.
+ @brief Creates a new print stream, with the specified OutputStream, line
+  flushing and charset.This convenience constructor creates the necessary
+  intermediate <code>OutputStreamWriter</code>,
+  which will encode characters using the provided charset.
  @param outArg The output stream to which values and objects will be                     printed
- @param autoFlush A boolean; if true, the output buffer will be flushed                     whenever a byte array is written, one of the
+ @param autoFlush Whether the output buffer will be flushed                     whenever a byte array is written, one of the
                       
-  <code> println </code>  methods is invoked, or a newline                     character or byte (
-  <code> '\n' </code> ) is written
+ <code>println</code>  methods is invoked, or a newline                     character or byte (
+ <code>'\n'</code> ) is written
+ @param charset A charset
+ @since 10
+ */
+- (instancetype __nonnull)initWithJavaIoOutputStream:(JavaIoOutputStream *)outArg
+                                         withBoolean:(jboolean)autoFlush
+                           withJavaNioCharsetCharset:(JavaNioCharsetCharset *)charset;
+
+/*!
+ @brief Creates a new print stream, with the specified OutputStream, line
+  flushing, and character encoding.
+ @param outArg The output stream to which values and objects will be                     printed
+ @param autoFlush Whether the output buffer will be flushed                     whenever a byte array is written, one of the
+                      
+ <code>println</code>  methods is invoked, or a newline                     character or byte (
+ <code>'\n'</code> ) is written
  @param encoding The name of a supported                     
   <a href="../lang/package-summary.html#charenc">                     character encoding
   </a>
@@ -191,6 +244,29 @@
            stream.  If the file exists, then it will be truncated to
            zero size; otherwise, a new file will be created.  The output
            will be written to the file and is buffered.
+ @param charset A 
+ charset
+ @throw IOException
+ if an I/O error occurs while opening or creating the file
+ @throw SecurityException
+ If a security manager is present and <code>checkWrite(fileName)</code>
+  denies write
+           access to the file
+ @since 10
+ */
+- (instancetype __nonnull)initWithNSString:(NSString *)fileName
+                 withJavaNioCharsetCharset:(JavaNioCharsetCharset *)charset;
+
+/*!
+ @brief Creates a new print stream, without automatic line flushing, with the
+  specified file name and charset.This convenience constructor creates
+  the necessary intermediate <code>OutputStreamWriter</code>
+ , which will encode characters using the provided
+  charset.
+ @param fileName The name of the file to use as the destination of this print
+           stream.  If the file exists, then it will be truncated to
+           zero size; otherwise, a new file will be created.  The output
+           will be written to the file and is buffered.
  @param csn The name of a supported 
  charset
  @throw FileNotFoundException
@@ -211,11 +287,11 @@
 
 /*!
  @brief Appends the specified character to this output stream.
- <p> An invocation of this method of the form <tt>out.append(c)</tt>
+ <p> An invocation of this method of the form <code>out.append(c)</code>
   behaves in exactly the same way as the invocation 
  @code
-
-      out.print(c) 
+     out.print(c) 
+ 
 @endcode
  @param c The 16-bit character to append
  @return This output stream
@@ -225,21 +301,21 @@
 
 /*!
  @brief Appends the specified character sequence to this output stream.
- <p> An invocation of this method of the form <tt>out.append(csq)</tt>
+ <p> An invocation of this method of the form <code>out.append(csq)</code>
   behaves in exactly the same way as the invocation 
  @code
-
-      out.print(csq.toString()) 
+     out.print(csq.toString()) 
+ 
 @endcode
   
- <p> Depending on the specification of <tt>toString</tt> for the
-  character sequence <tt>csq</tt>, the entire sequence may not be
-  appended.  For instance, invoking then <tt>toString</tt> method of a
+ <p> Depending on the specification of <code>toString</code> for the
+  character sequence <code>csq</code>, the entire sequence may not be
+  appended.  For instance, invoking then <code>toString</code> method of a
   character buffer will return a subsequence whose content depends upon
   the buffer's position and limit.
  @param csq The character sequence to append.  If 
-  <tt> csq </tt>  is           <tt>
-  null </tt> , then the four characters  <tt> "null" </tt>  are          appended to this output stream.
+ <code>csq</code>  is          <code>null</code>
+  , then the four characters <code>"null"</code>  are          appended to this output stream.
  @return This output stream
  @since 1.5
  */
@@ -248,26 +324,27 @@
 /*!
  @brief Appends a subsequence of the specified character sequence to this output
   stream.
- <p> An invocation of this method of the form <tt>out.append(csq, start,
-  end)</tt> when <tt>csq</tt> is not <tt>null</tt>, behaves in
+ <p> An invocation of this method of the form 
+ <code>out.append(csq, start, end)</code> when 
+ <code>csq</code> is not <code>null</code>, behaves in
   exactly the same way as the invocation 
  @code
-
-      out.print(csq.subSequence(start, end).toString()) 
+     out.print(csq.subSequence(start, end).toString()) 
+ 
 @endcode
  @param csq The character sequence from which a subsequence will be
            appended.  If 
-  <tt> csq </tt>  is  <tt> null </tt> , then characters          will be appended as if 
-  <tt> csq </tt>  contained the four          characters 
-  <tt> "null" </tt> .
+ <code>csq</code>  is <code>null</code> , then characters          will be appended as if 
+ <code>csq</code>  contained the four          characters <code>"null"</code>
+  .
  @param start The index of the first character in the subsequence
  @param end The index of the character following the last character in the
            subsequence
  @return This output stream
  @throw IndexOutOfBoundsException
- If <tt>start</tt> or <tt>end</tt> are negative, <tt>start</tt>
-           is greater than <tt>end</tt>, or <tt>end</tt> is greater than
-           <tt>csq.length()</tt>
+ If <code>start</code> or <code>end</code> are negative, <code>start</code>
+           is greater than <code>end</code>, or <code>end</code> is greater than
+           <code>csq.length()</code>
  @since 1.5
  */
 - (JavaIoPrintStream *)appendWithJavaLangCharSequence:(id<JavaLangCharSequence>)csq
@@ -284,9 +361,8 @@
  <code>InterruptedIOException</code>, then the <code>PrintStream</code>
   converts the exception back into an interrupt by doing: 
  @code
-
-      Thread.currentThread().interrupt(); 
-  
+     Thread.currentThread().interrupt(); 
+ 
 @endcode
   or the equivalent.
  @return <code>true</code> if and only if this stream has encountered an
@@ -315,7 +391,7 @@
   format string and arguments.
  @param l The 
  locale  to apply during          formatting.  If 
-  <tt> l </tt>  is  <tt> null </tt>  then no localization          is applied.
+ <code>l</code>  is <code>null</code>  then no localization          is applied.
  @param format A format string as described in 
   <a href="../util/Formatter.html#syntax">
   Format string syntax </a>
@@ -324,7 +400,11 @@
            extra arguments are ignored.  The number of arguments is
            variable and may be zero.  The maximum number of arguments is
            limited by the maximum dimension of a Java array as defined by
-            <cite> The Java &trade;  Virtual Machine Specification </cite> .          The behaviour on a           <tt> null </tt>  argument depends on the  <a href="../util/Formatter.html#syntax"> conversion </a> .
+            <cite> The Java Virtual Machine Specification
+  </cite> .          The behaviour on a          <code>null</code>
+   argument depends on the 
+  <a href="../util/Formatter.html#syntax">
+  conversion </a> .
  @throw java.util.IllegalFormatException
  If a format string contains an illegal syntax, a format
            specifier that is incompatible with the given arguments,
@@ -334,7 +414,7 @@
  Details</a> section of the
            formatter class specification.
  @throw NullPointerException
- If the <tt>format</tt> is <tt>null</tt>
+ If the <code>format</code> is <code>null</code>
  @return This output stream
  @since 1.5
  */
@@ -345,9 +425,11 @@
 /*!
  @brief Writes a formatted string to this output stream using the specified
   format string and arguments.
- <p> The locale always used is the one returned by <code>Locale.getDefault()</code>
- , regardless of any
-  previous invocations of other formatting methods on this object.
+ <p> The locale always used is the one returned by <code>java.util.Locale.getDefault(Locale.Category)</code>
+  with 
+ <code>FORMAT</code> category specified,
+  regardless of any previous invocations of other formatting methods on
+  this object.
  @param format A format string as described in 
   <a href="../util/Formatter.html#syntax">
   Format string syntax </a>
@@ -356,7 +438,11 @@
            extra arguments are ignored.  The number of arguments is
            variable and may be zero.  The maximum number of arguments is
            limited by the maximum dimension of a Java array as defined by
-            <cite> The Java &trade;  Virtual Machine Specification </cite> .          The behaviour on a           <tt> null </tt>  argument depends on the  <a href="../util/Formatter.html#syntax"> conversion </a> .
+            <cite> The Java Virtual Machine Specification
+  </cite> .          The behaviour on a          <code>null</code>
+   argument depends on the 
+  <a href="../util/Formatter.html#syntax">
+  conversion </a> .
  @throw java.util.IllegalFormatException
  If a format string contains an illegal syntax, a format
            specifier that is incompatible with the given arguments,
@@ -366,7 +452,7 @@
  Details</a> section of the
            formatter class specification.
  @throw NullPointerException
- If the <tt>format</tt> is <tt>null</tt>
+ If the <code>format</code> is <code>null</code>
  @return This output stream
  @since 1.5
  */
@@ -374,29 +460,31 @@
                         withNSObjectArray:(IOSObjectArray *)args;
 
 /*!
- @brief Prints a boolean value.The string produced by <code><code>java.lang.String.valueOf(boolean)</code>
- </code> is translated into bytes
+ @brief Prints a boolean value.The string produced by <code>java.lang.String.valueOf(boolean)</code>
+  is translated into bytes
   according to the platform's default character encoding, and these bytes
   are written in exactly the manner of the 
- <code><code>write(int)</code></code> method.
- @param b The  <code> boolean </code>  to be printed
+ <code>write(int)</code> method.
+ @param b The <code>boolean</code>  to be printed
  */
 - (void)printWithBoolean:(jboolean)b;
 
 /*!
  @brief Prints a character.The character is translated into one or more bytes
-  according to the platform's default character encoding, and these bytes
-  are written in exactly the manner of the 
- <code><code>write(int)</code></code> method.
- @param c The  <code> char </code>  to be printed
+  according to the character encoding given to the constructor, or the
+  platform's default character encoding if none specified.
+ These bytes
+  are written in exactly the manner of the <code>write(int)</code> method.
+ @param c The <code>char</code>  to be printed
  */
 - (void)printWithChar:(jchar)c;
 
 /*!
  @brief Prints an array of characters.The characters are converted into bytes
-  according to the platform's default character encoding, and these bytes
-  are written in exactly the manner of the 
- <code><code>write(int)</code></code> method.
+  according to the character encoding given to the constructor, or the
+  platform's default character encoding if none specified.
+ These bytes
+  are written in exactly the manner of the <code>write(int)</code> method.
  @param s The array of chars to be printed
  @throw NullPointerExceptionIf <code>s</code> is <code>null</code>
  */
@@ -404,55 +492,55 @@
 
 /*!
  @brief Prints a double-precision floating-point number.The string produced by 
- <code><code>java.lang.String.valueOf(double)</code></code> is translated into
+ <code>java.lang.String.valueOf(double)</code> is translated into
   bytes according to the platform's default character encoding, and these
-  bytes are written in exactly the manner of the <code><code>write(int)</code>
- </code> method.
- @param d The  <code> double </code>  to be printed
+  bytes are written in exactly the manner of the <code>write(int)</code>
+  method.
+ @param d The <code>double</code>  to be printed
  - seealso: java.lang.Double#toString(double)
  */
 - (void)printWithDouble:(jdouble)d;
 
 /*!
- @brief Prints a floating-point number.The string produced by <code><code>java.lang.String.valueOf(float)</code>
- </code> is translated into bytes
+ @brief Prints a floating-point number.The string produced by <code>java.lang.String.valueOf(float)</code>
+  is translated into bytes
   according to the platform's default character encoding, and these bytes
   are written in exactly the manner of the 
- <code><code>write(int)</code></code> method.
- @param f The  <code> float </code>  to be printed
+ <code>write(int)</code> method.
+ @param f The <code>float</code>  to be printed
  - seealso: java.lang.Float#toString(float)
  */
 - (void)printWithFloat:(jfloat)f;
 
 /*!
- @brief Prints an integer.The string produced by <code><code>java.lang.String.valueOf(int)</code>
- </code> is translated into bytes
+ @brief Prints an integer.The string produced by <code>java.lang.String.valueOf(int)</code>
+  is translated into bytes
   according to the platform's default character encoding, and these bytes
   are written in exactly the manner of the 
- <code><code>write(int)</code></code> method.
- @param i The  <code> int </code>  to be printed
+ <code>write(int)</code> method.
+ @param i The <code>int</code>  to be printed
  - seealso: java.lang.Integer#toString(int)
  */
 - (void)printWithInt:(jint)i;
 
 /*!
- @brief Prints a long integer.The string produced by <code><code>java.lang.String.valueOf(long)</code>
- </code> is translated into bytes
+ @brief Prints a long integer.The string produced by <code>java.lang.String.valueOf(long)</code>
+  is translated into bytes
   according to the platform's default character encoding, and these bytes
   are written in exactly the manner of the 
- <code><code>write(int)</code></code> method.
- @param l The  <code> long </code>  to be printed
+ <code>write(int)</code> method.
+ @param l The <code>long</code>  to be printed
  - seealso: java.lang.Long#toString(long)
  */
 - (void)printWithLong:(jlong)l;
 
 /*!
- @brief Prints an object.The string produced by the <code><code>java.lang.String.valueOf(Object)</code>
- </code> method is translated into bytes
+ @brief Prints an object.The string produced by the <code>java.lang.String.valueOf(Object)</code>
+  method is translated into bytes
   according to the platform's default character encoding, and these bytes
   are written in exactly the manner of the 
- <code><code>write(int)</code></code> method.
- @param obj The  <code> Object </code>  to be printed
+ <code>write(int)</code> method.
+ @param obj The <code>Object</code>  to be printed
  - seealso: java.lang.Object#toString()
  */
 - (void)printWithId:(id)obj;
@@ -461,25 +549,27 @@
  @brief Prints a string.If the argument is <code>null</code> then the string 
  <code>"null"</code> is printed.
  Otherwise, the string's characters are
-  converted into bytes according to the platform's default character
-  encoding, and these bytes are written in exactly the manner of the 
- <code><code>write(int)</code></code> method.
- @param s The  <code> String </code>  to be printed
+  converted into bytes according to the character encoding given to the
+  constructor, or the platform's default character encoding if none
+  specified. These bytes are written in exactly the manner of the 
+ <code>write(int)</code> method.
+ @param s The <code>String</code>  to be printed
  */
 - (void)printWithNSString:(NSString *)s;
 
 /*!
  @brief A convenience method to write a formatted string to this output stream
   using the specified format string and arguments.
- <p> An invocation of this method of the form <tt>out.printf(l, format,
-  args)</tt> behaves in exactly the same way as the invocation 
+ <p> An invocation of this method of the form 
+ <code>out.printf(l, format, args)</code> behaves
+  in exactly the same way as the invocation 
  @code
-
-      out.format(l, format, args) 
+     out.format(l, format, args) 
+ 
 @endcode
  @param l The 
  locale  to apply during          formatting.  If 
-  <tt> l </tt>  is  <tt> null </tt>  then no localization          is applied.
+ <code>l</code>  is <code>null</code>  then no localization          is applied.
  @param format A format string as described in 
   <a href="../util/Formatter.html#syntax">
   Format string syntax </a>
@@ -488,7 +578,11 @@
            extra arguments are ignored.  The number of arguments is
            variable and may be zero.  The maximum number of arguments is
            limited by the maximum dimension of a Java array as defined by
-            <cite> The Java &trade;  Virtual Machine Specification </cite> .          The behaviour on a           <tt> null </tt>  argument depends on the  <a href="../util/Formatter.html#syntax"> conversion </a> .
+            <cite> The Java Virtual Machine Specification
+  </cite> .          The behaviour on a          <code>null</code>
+   argument depends on the 
+  <a href="../util/Formatter.html#syntax">
+  conversion </a> .
  @throw java.util.IllegalFormatException
  If a format string contains an illegal syntax, a format
            specifier that is incompatible with the given arguments,
@@ -498,7 +592,7 @@
  Details</a> section of the
            formatter class specification.
  @throw NullPointerException
- If the <tt>format</tt> is <tt>null</tt>
+ If the <code>format</code> is <code>null</code>
  @return This output stream
  @since 1.5
  */
@@ -509,11 +603,12 @@
 /*!
  @brief A convenience method to write a formatted string to this output stream
   using the specified format string and arguments.
- <p> An invocation of this method of the form <tt>out.printf(format,
-  args)</tt> behaves in exactly the same way as the invocation 
+ <p> An invocation of this method of the form 
+ <code>out.printf(format, args)</code> behaves
+  in exactly the same way as the invocation 
  @code
-
-      out.format(format, args) 
+     out.format(format, args) 
+ 
 @endcode
  @param format A format string as described in 
   <a href="../util/Formatter.html#syntax">
@@ -523,7 +618,11 @@
            extra arguments are ignored.  The number of arguments is
            variable and may be zero.  The maximum number of arguments is
            limited by the maximum dimension of a Java array as defined by
-            <cite> The Java &trade;  Virtual Machine Specification </cite> .          The behaviour on a           <tt> null </tt>  argument depends on the  <a href="../util/Formatter.html#syntax"> conversion </a> .
+            <cite> The Java Virtual Machine Specification
+  </cite> .          The behaviour on a          <code>null</code>
+   argument depends on the 
+  <a href="../util/Formatter.html#syntax">
+  conversion </a> .
  @throw java.util.IllegalFormatException
  If a format string contains an illegal syntax, a format
            specifier that is incompatible with the given arguments,
@@ -533,7 +632,7 @@
  Details</a> section of the
            formatter class specification.
  @throw NullPointerException
- If the <tt>format</tt> is <tt>null</tt>
+ If the <code>format</code> is <code>null</code>
  @return This output stream
  @since 1.5
  */
@@ -550,57 +649,57 @@
 
 /*!
  @brief Prints a boolean and then terminate the line.This method behaves as
-  though it invokes <code><code>print(boolean)</code></code> and then 
- <code><code>println()</code></code>.
- @param x The  <code> boolean </code>  to be printed
+  though it invokes <code>print(boolean)</code> and then 
+ <code>println()</code>.
+ @param x The <code>boolean</code>  to be printed
  */
 - (void)printlnWithBoolean:(jboolean)x;
 
 /*!
  @brief Prints a character and then terminate the line.This method behaves as
-  though it invokes <code><code>print(char)</code></code> and then 
- <code><code>println()</code></code>.
- @param x The  <code> char </code>  to be printed.
+  though it invokes <code>print(char)</code> and then 
+ <code>println()</code>.
+ @param x The <code>char</code>  to be printed.
  */
 - (void)printlnWithChar:(jchar)x;
 
 /*!
  @brief Prints an array of characters and then terminate the line.This method
-  behaves as though it invokes <code><code>print(char[])</code></code> and
-  then <code><code>println()</code></code>.
+  behaves as though it invokes <code>print(char[])</code> and
+  then <code>println()</code>.
  @param x an array of chars to print.
  */
 - (void)printlnWithCharArray:(IOSCharArray *)x;
 
 /*!
  @brief Prints a double and then terminate the line.This method behaves as
-  though it invokes <code><code>print(double)</code></code> and then 
- <code><code>println()</code></code>.
- @param x The  <code> double </code>  to be printed.
+  though it invokes <code>print(double)</code> and then 
+ <code>println()</code>.
+ @param x The <code>double</code>  to be printed.
  */
 - (void)printlnWithDouble:(jdouble)x;
 
 /*!
  @brief Prints a float and then terminate the line.This method behaves as
-  though it invokes <code><code>print(float)</code></code> and then 
- <code><code>println()</code></code>.
- @param x The  <code> float </code>  to be printed.
+  though it invokes <code>print(float)</code> and then 
+ <code>println()</code>.
+ @param x The <code>float</code>  to be printed.
  */
 - (void)printlnWithFloat:(jfloat)x;
 
 /*!
  @brief Prints an integer and then terminate the line.This method behaves as
-  though it invokes <code><code>print(int)</code></code> and then 
- <code><code>println()</code></code>.
- @param x The  <code> int </code>  to be printed.
+  though it invokes <code>print(int)</code> and then 
+ <code>println()</code>.
+ @param x The <code>int</code>  to be printed.
  */
 - (void)printlnWithInt:(jint)x;
 
 /*!
  @brief Prints a long and then terminate the line.This method behaves as
-  though it invokes <code><code>print(long)</code></code> and then 
- <code><code>println()</code></code>.
- @param x a The  <code> long </code>  to be printed.
+  though it invokes <code>print(long)</code> and then 
+ <code>println()</code>.
+ @param x a The <code>long</code>  to be printed.
  */
 - (void)printlnWithLong:(jlong)x;
 
@@ -608,24 +707,41 @@
  @brief Prints an Object and then terminate the line.This method calls
   at first String.valueOf(x) to get the printed object's string value,
   then behaves as
-  though it invokes <code><code>print(String)</code></code> and then 
- <code><code>println()</code></code>.
- @param x The  <code> Object </code>  to be printed.
+  though it invokes <code>print(String)</code> and then 
+ <code>println()</code>.
+ @param x The <code>Object</code>  to be printed.
  */
 - (void)printlnWithId:(id)x;
 
 /*!
  @brief Prints a String and then terminate the line.This method behaves as
-  though it invokes <code><code>print(String)</code></code> and then 
- <code><code>println()</code></code>.
- @param x The  <code> String </code>  to be printed.
+  though it invokes <code>print(String)</code> and then 
+ <code>println()</code>.
+ @param x The <code>String</code>  to be printed.
  */
 - (void)printlnWithNSString:(NSString *)x;
 
 /*!
+ @brief Writes all bytes from the specified byte array to this stream.If
+  automatic flushing is enabled then the <code>flush</code> method will be
+  invoked on the underlying output stream.
+ <p> Note that the bytes will be written as given; to write characters
+  that will be translated according to the platform's default character
+  encoding, use the <code>print(char[])</code> or <code>println(char[])</code>
+  methods.
+ @param buf A byte array
+ @throw IOExceptionIf an I/O error occurs.
+ - seealso: #writeBytes(byte[])
+ - seealso: #write(byte[],int,int)
+ @since 14
+ */
+- (void)writeWithByteArray:(IOSByteArray *)buf;
+
+/*!
  @brief Writes <code>len</code> bytes from the specified byte array starting at
   offset <code>off</code> to this stream.If automatic flushing is
-  enabled then the <code>flush</code> method will be invoked.
+  enabled then the <code>flush</code> method will be invoked on the underlying
+  output stream.
  <p> Note that the bytes will be written as given; to write characters
   that will be translated according to the platform's default character
   encoding, use the <code>print(char)</code> or <code>println(char)</code>
@@ -641,7 +757,7 @@
 /*!
  @brief Writes the specified byte to this stream.If the byte is a newline and
   automatic flushing is enabled then the <code>flush</code> method will be
-  invoked.
+  invoked on the underlying output stream.
  <p> Note that the byte is written as given; to write a character that
   will be translated according to the platform's default character
   encoding, use the <code>print(char)</code> or <code>println(char)</code>
@@ -652,12 +768,25 @@
  */
 - (void)writeWithInt:(jint)b;
 
+/*!
+ @brief Writes all bytes from the specified byte array to this stream.
+ If automatic flushing is enabled then the <code>flush</code> method
+  will be invoked. 
+ <p> Note that the bytes will be written as given; to write characters
+  that will be translated according to the platform's default character
+  encoding, use the <code>print(char[])</code> or <code>println(char[])</code>
+  methods.
+ @param buf A byte array
+ @since 14
+ */
+- (void)writeBytesWithByteArray:(IOSByteArray *)buf;
+
 #pragma mark Protected
 
 /*!
  @brief Clears the internal error state of this stream.
  <p> This method will cause subsequent invocations of <code>checkError()</code>
-  to return <tt>false</tt> until another write
+  to return <code>false</code> until another write
   operation fails and invokes <code>setError()</code>.
  @since 1.6
  */
@@ -666,9 +795,9 @@
 /*!
  @brief Sets the error state of the stream to <code>true</code>.
  <p> This method will cause subsequent invocations of <code>checkError()</code>
-  to return <tt>true</tt> until <code>clearError()</code>
-  is invoked.
- @since JDK1.1
+  to return <code>true</code> until 
+ <code>clearError()</code> is invoked.
+ @since 1.1
  */
 - (void)setError;
 
@@ -694,6 +823,12 @@ FOUNDATION_EXPORT JavaIoPrintStream *new_JavaIoPrintStream_initWithJavaIoOutputS
 
 FOUNDATION_EXPORT JavaIoPrintStream *create_JavaIoPrintStream_initWithJavaIoOutputStream_withBoolean_withNSString_(JavaIoOutputStream *outArg, jboolean autoFlush, NSString *encoding);
 
+FOUNDATION_EXPORT void JavaIoPrintStream_initWithJavaIoOutputStream_withBoolean_withJavaNioCharsetCharset_(JavaIoPrintStream *self, JavaIoOutputStream *outArg, jboolean autoFlush, JavaNioCharsetCharset *charset);
+
+FOUNDATION_EXPORT JavaIoPrintStream *new_JavaIoPrintStream_initWithJavaIoOutputStream_withBoolean_withJavaNioCharsetCharset_(JavaIoOutputStream *outArg, jboolean autoFlush, JavaNioCharsetCharset *charset) NS_RETURNS_RETAINED;
+
+FOUNDATION_EXPORT JavaIoPrintStream *create_JavaIoPrintStream_initWithJavaIoOutputStream_withBoolean_withJavaNioCharsetCharset_(JavaIoOutputStream *outArg, jboolean autoFlush, JavaNioCharsetCharset *charset);
+
 FOUNDATION_EXPORT void JavaIoPrintStream_initWithNSString_(JavaIoPrintStream *self, NSString *fileName);
 
 FOUNDATION_EXPORT JavaIoPrintStream *new_JavaIoPrintStream_initWithNSString_(NSString *fileName) NS_RETURNS_RETAINED;
@@ -705,6 +840,12 @@ FOUNDATION_EXPORT void JavaIoPrintStream_initWithNSString_withNSString_(JavaIoPr
 FOUNDATION_EXPORT JavaIoPrintStream *new_JavaIoPrintStream_initWithNSString_withNSString_(NSString *fileName, NSString *csn) NS_RETURNS_RETAINED;
 
 FOUNDATION_EXPORT JavaIoPrintStream *create_JavaIoPrintStream_initWithNSString_withNSString_(NSString *fileName, NSString *csn);
+
+FOUNDATION_EXPORT void JavaIoPrintStream_initWithNSString_withJavaNioCharsetCharset_(JavaIoPrintStream *self, NSString *fileName, JavaNioCharsetCharset *charset);
+
+FOUNDATION_EXPORT JavaIoPrintStream *new_JavaIoPrintStream_initWithNSString_withJavaNioCharsetCharset_(NSString *fileName, JavaNioCharsetCharset *charset) NS_RETURNS_RETAINED;
+
+FOUNDATION_EXPORT JavaIoPrintStream *create_JavaIoPrintStream_initWithNSString_withJavaNioCharsetCharset_(NSString *fileName, JavaNioCharsetCharset *charset);
 
 FOUNDATION_EXPORT void JavaIoPrintStream_initWithJavaIoFile_(JavaIoPrintStream *self, JavaIoFile *file);
 
@@ -718,6 +859,12 @@ FOUNDATION_EXPORT JavaIoPrintStream *new_JavaIoPrintStream_initWithJavaIoFile_wi
 
 FOUNDATION_EXPORT JavaIoPrintStream *create_JavaIoPrintStream_initWithJavaIoFile_withNSString_(JavaIoFile *file, NSString *csn);
 
+FOUNDATION_EXPORT void JavaIoPrintStream_initWithJavaIoFile_withJavaNioCharsetCharset_(JavaIoPrintStream *self, JavaIoFile *file, JavaNioCharsetCharset *charset);
+
+FOUNDATION_EXPORT JavaIoPrintStream *new_JavaIoPrintStream_initWithJavaIoFile_withJavaNioCharsetCharset_(JavaIoFile *file, JavaNioCharsetCharset *charset) NS_RETURNS_RETAINED;
+
+FOUNDATION_EXPORT JavaIoPrintStream *create_JavaIoPrintStream_initWithJavaIoFile_withJavaNioCharsetCharset_(JavaIoFile *file, JavaNioCharsetCharset *charset);
+
 J2OBJC_TYPE_LITERAL_HEADER(JavaIoPrintStream)
 
 #endif
@@ -726,6 +873,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaIoPrintStream)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaIoPrintStream")

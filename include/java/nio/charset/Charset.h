@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaNioCharsetCharset
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -30,6 +27,8 @@
 #include "java/lang/Comparable.h"
 
 @class IOSObjectArray;
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @class JavaNioByteBuffer;
 @class JavaNioCharBuffer;
 @class JavaNioCharsetCharsetDecoder;
@@ -53,27 +52,27 @@
   class. 
  <p> All of the methods defined in this class are safe for use by multiple
   concurrent threads. 
- <a name="names"></a><a name="charenc"></a>
+ <a id="names"></a><a id="charenc"></a>
   <h2>Charset names</h2>
   
  <p> Charsets are named by strings composed of the following characters: 
  <ul>
-    <li> The uppercase letters <tt>'A'</tt> through <tt>'Z'</tt>
-         (<tt>'&#92;u0041'</tt>&nbsp;through&nbsp;<tt>'&#92;u005a'</tt>),
-    <li> The lowercase letters <tt>'a'</tt> through <tt>'z'</tt>
-         (<tt>'&#92;u0061'</tt>&nbsp;through&nbsp;<tt>'&#92;u007a'</tt>),
-    <li> The digits <tt>'0'</tt> through <tt>'9'</tt>
-         (<tt>'&#92;u0030'</tt>&nbsp;through&nbsp;<tt>'&#92;u0039'</tt>),
-    <li> The dash character <tt>'-'</tt>
-         (<tt>'&#92;u002d'</tt>,&nbsp;<small>HYPHEN-MINUS</small>),
-    <li> The plus character <tt>'+'</tt>
-         (<tt>'&#92;u002b'</tt>,&nbsp;<small>PLUS SIGN</small>),
-    <li> The period character <tt>'.'</tt>
-         (<tt>'&#92;u002e'</tt>,&nbsp;<small>FULL STOP</small>),
-    <li> The colon character <tt>':'</tt>
-         (<tt>'&#92;u003a'</tt>,&nbsp;<small>COLON</small>), and
-    <li> The underscore character <tt>'_'</tt>
-         (<tt>'&#92;u005f'</tt>,&nbsp;<small>LOW&nbsp;LINE</small>).
+    <li> The uppercase letters <code>'A'</code> through <code>'Z'</code>
+         (<code>'&#92;u0041'</code>&nbsp;through&nbsp;<code>'&#92;u005a'</code>),
+    <li> The lowercase letters <code>'a'</code> through <code>'z'</code>
+         (<code>'&#92;u0061'</code>&nbsp;through&nbsp;<code>'&#92;u007a'</code>),
+    <li> The digits <code>'0'</code> through <code>'9'</code>
+         (<code>'&#92;u0030'</code>&nbsp;through&nbsp;<code>'&#92;u0039'</code>),
+    <li> The dash character <code>'-'</code>
+         (<code>'&#92;u002d'</code>,&nbsp;<small>HYPHEN-MINUS</small>),
+    <li> The plus character <code>'+'</code>
+         (<code>'&#92;u002b'</code>,&nbsp;<small>PLUS SIGN</small>),
+    <li> The period character <code>'.'</code>
+         (<code>'&#92;u002e'</code>,&nbsp;<small>FULL STOP</small>),
+    <li> The colon character <code>':'</code>
+         (<code>'&#92;u003a'</code>,&nbsp;<small>COLON</small>), and
+    <li> The underscore character <code>'_'</code>
+         (<code>'&#92;u005f'</code>,&nbsp;<small>LOW&nbsp;LINE</small>).
   
  </ul>
   A charset name must begin with either a letter or a digit.  The empty string
@@ -88,13 +87,13 @@
   of this class.  Canonical names are, by convention, usually in upper case.
   The aliases of a charset are returned by the <code>aliases</code>
   method. 
- <p><a name="hn">Some charsets have an <i>historical name</i> that is defined for
+ <p><a id="hn">Some charsets have an <i>historical name</i> that is defined for
   compatibility with previous versions of the Java platform.</a>  A charset's
   historical name is either its canonical name or one of its aliases.  The
-  historical name is returned by the <tt>getEncoding()</tt> methods of the 
+  historical name is returned by the <code>getEncoding()</code> methods of the 
  <code>InputStreamReader</code> and <code>OutputStreamWriter</code>
   classes. 
- <p><a name="iana"> </a>If a charset listed in the <a href="http://www.iana.org/assignments/character-sets">
+ <p><a id="iana"> </a>If a charset listed in the <a href="http://www.iana.org/assignments/character-sets">
  <i>IANA Charset
   Registry</i></a> is supported by an implementation of the Java platform then
   its canonical name must be the name listed in the registry. Many charsets
@@ -103,7 +102,7 @@
   than one registry name then its canonical name must be the MIME-preferred
   name and the other names in the registry must be valid aliases.  If a
   supported charset is not listed in the IANA registry then its canonical name
-  must begin with one of the strings <tt>"X-"</tt> or <tt>"x-"</tt>.
+  must begin with one of the strings <code>"X-"</code> or <code>"x-"</code>.
   
  <p> The IANA charset registry does change over time, and so the canonical
   name and the aliases of a particular charset may also change over time.  To
@@ -112,55 +111,60 @@
   previous canonical name be made into an alias. 
  <h2>Standard charsets</h2>
   
- <p><a name="standard">Every implementation of the Java platform is required to support the
+ <p><a id="standard">Every implementation of the Java platform is required to support the
   following standard charsets.</a>  Consult the release documentation for your
   implementation to see if any other charsets are supported.  The behavior
   of such optional charsets may differ between implementations. 
- <blockquote><table width="80%" summary="Description of standard charsets">
-  <tr><th align="left">Charset</th><th align="left">Description</th></tr>
-  <tr><td valign=top><tt>US-ASCII</tt></td>
-      <td>Seven-bit ASCII, a.k.a. <tt>ISO646-US</tt>,
+ <blockquote><table class="striped" style="width:80%">
+  <caption style="display:none">Description of standard charsets</caption>
+  <thead>
+  <tr><th scope="col" style="text-align:left">Charset</th><th scope="col" style="text-align:left">Description</th></tr>
+  </thead>
+  <tbody>
+  <tr><th scope="row" style="vertical-align:top"><code>US-ASCII</code></th>
+      <td>Seven-bit ASCII, a.k.a. <code>ISO646-US</code>,
           a.k.a. the Basic Latin block of the Unicode character set</td></tr>
-  <tr><td valign=top><tt>ISO-8859-1&nbsp;&nbsp;</tt></td>
-      <td>ISO Latin Alphabet No. 1, a.k.a. <tt>ISO-LATIN-1</tt></td></tr>
-  <tr><td valign=top><tt>UTF-8</tt></td>
+  <tr><th scope="row" style="vertical-align:top"><code>ISO-8859-1&nbsp;&nbsp;</code></th>
+      <td>ISO Latin Alphabet No. 1, a.k.a. <code>ISO-LATIN-1</code></td></tr>
+  <tr><th scope="row" style="vertical-align:top"><code>UTF-8</code></th>
       <td>Eight-bit UCS Transformation Format</td></tr>
-  <tr><td valign=top><tt>UTF-16BE</tt></td>
+  <tr><th scope="row" style="vertical-align:top"><code>UTF-16BE</code></th>
       <td>Sixteen-bit UCS Transformation Format,
           big-endian byte&nbsp;order</td></tr>
-  <tr><td valign=top><tt>UTF-16LE</tt></td>
+  <tr><th scope="row" style="vertical-align:top"><code>UTF-16LE</code></th>
       <td>Sixteen-bit UCS Transformation Format,
           little-endian byte&nbsp;order</td></tr>
-  <tr><td valign=top><tt>UTF-16</tt></td>
+  <tr><th scope="row" style="vertical-align:top"><code>UTF-16</code></th>
       <td>Sixteen-bit UCS Transformation Format,
           byte&nbsp;order identified by an optional byte-order mark</td></tr>
+  </tbody>
   </table></blockquote>
   
- <p> The <tt>UTF-8</tt> charset is specified by <a href="http://www.ietf.org/rfc/rfc2279.txt">
+ <p> The <code>UTF-8</code> charset is specified by <a href="http://www.ietf.org/rfc/rfc2279.txt">
  <i>RFC&nbsp;2279</i></a>; the
   transformation format upon which it is based is specified in
   Amendment&nbsp;2 of ISO&nbsp;10646-1 and is also described in the <a href="http://www.unicode.org/unicode/standard/standard.html">
  <i>Unicode
   Standard</i></a>.
   
- <p> The <tt>UTF-16</tt> charsets are specified by <a href="http://www.ietf.org/rfc/rfc2781.txt">
+ <p> The <code>UTF-16</code> charsets are specified by <a href="http://www.ietf.org/rfc/rfc2781.txt">
  <i>RFC&nbsp;2781</i></a>; the
   transformation formats upon which they are based are specified in
   Amendment&nbsp;1 of ISO&nbsp;10646-1 and are also described in the <a href="http://www.unicode.org/unicode/standard/standard.html">
  <i>Unicode
   Standard</i></a>.
   
- <p> The <tt>UTF-16</tt> charsets use sixteen-bit quantities and are
+ <p> The <code>UTF-16</code> charsets use sixteen-bit quantities and are
   therefore sensitive to byte order.  In these encodings the byte order of a
   stream may be indicated by an initial <i>byte-order mark</i> represented by
-  the Unicode character <tt>'&#92;uFEFF'</tt>.  Byte-order marks are handled
+  the Unicode character <code>'&#92;uFEFF'</code>.  Byte-order marks are handled
   as follows: 
  <ul>
-    <li><p> When decoding, the <tt>UTF-16BE</tt> and <tt>UTF-16LE</tt>
+    <li><p> When decoding, the <code>UTF-16BE</code> and <code>UTF-16LE</code>
     charsets interpret the initial byte-order marks as a <small>ZERO-WIDTH
     NON-BREAKING SPACE</small>; when encoding, they do not write
     byte-order marks. </p></li>
-    <li><p> When decoding, the <tt>UTF-16</tt> charset interprets the
+    <li><p> When decoding, the <code>UTF-16</code> charset interprets the
     byte-order mark at the beginning of the input stream to indicate the
     byte-order of the stream but defaults to big-endian if there is no
     byte-order mark; when encoding, it uses big-endian byte order and writes
@@ -204,9 +208,9 @@
   character-encoding scheme then the corresponding charset is usually
   named for the coded character set; otherwise a charset is usually named
   for the encoding scheme and, possibly, the locale of the coded
-  character sets that it supports.  Hence <tt>US-ASCII</tt> is both the
+  character sets that it supports.  Hence <code>US-ASCII</code> is both the
   name of a coded character set and of the charset that encodes it, while 
- <tt>EUC-JP</tt> is the name of the charset that encodes the
+ <code>EUC-JP</code> is the name of the charset that encodes the
   JIS&nbsp;X&nbsp;0201, JIS&nbsp;X&nbsp;0208, and JIS&nbsp;X&nbsp;0212
   coded character sets for the Japanese language. 
  <p> The native character encoding of the Java programming language is
@@ -264,8 +268,8 @@
   input byte sequence.  Such charsets do not support encoding because
   there is no way to determine which encoding should be used on output.
   Implementations of such charsets should override this method to return 
- <tt>false</tt>. </p>
- @return <tt>true</tt> if, and only if, this charset supports encoding
+ <code>false</code>. </p>
+ @return <code>true</code> if, and only if, this charset supports encoding
  */
 - (jboolean)canEncode;
 
@@ -292,19 +296,19 @@
   case. 
  <p> Every charset contains itself. 
  <p> This method computes an approximation of the containment relation:
-  If it returns <tt>true</tt> then the given charset is known to be
-  contained by this charset; if it returns <tt>false</tt>, however, then
+  If it returns <code>true</code> then the given charset is known to be
+  contained by this charset; if it returns <code>false</code>, however, then
   it is not necessarily the case that the given charset is not contained
   in this charset.
  @param cs The given charset
- @return <tt>true</tt> if the given charset is contained in this charset
+ @return <code>true</code> if the given charset is contained in this charset
  */
 - (jboolean)containsWithJavaNioCharsetCharset:(JavaNioCharsetCharset *)cs;
 
 /*!
  @brief Convenience method that decodes bytes in this charset into Unicode
   characters.
- <p> An invocation of this method upon a charset <tt>cs</tt> returns the
+ <p> An invocation of this method upon a charset <code>cs</code> returns the
   same result as the expression 
  @code
 
@@ -354,7 +358,7 @@
 /*!
  @brief Convenience method that encodes Unicode characters into bytes in this
   charset.
- <p> An invocation of this method upon a charset <tt>cs</tt> returns the
+ <p> An invocation of this method upon a charset <code>cs</code> returns the
   same result as the expression 
  @code
 
@@ -376,7 +380,7 @@
 
 /*!
  @brief Convenience method that encodes a string into bytes in this charset.
- <p> An invocation of this method upon a charset <tt>cs</tt> returns the
+ <p> An invocation of this method upon a charset <code>cs</code> returns the
   same result as the expression 
  @code
 
@@ -391,7 +395,7 @@
  @brief Tells whether or not this object is equal to another.
  <p> Two charsets are equal if, and only if, they have the same canonical
   names.  A charset is never equal to any other type of object.  </p>
- @return <tt>true</tt> if, and only if, this charset is equal to the
+ @return <code>true</code> if, and only if, this charset is equal to the
            given object
  */
 - (jboolean)isEqual:(id)ob;
@@ -404,7 +408,7 @@
  @throw IllegalCharsetNameException
  If the given charset name is illegal
  @throw IllegalArgumentException
- If the given <tt>charsetName</tt> is null
+ If the given <code>charsetName</code> is null
  @throw UnsupportedCharsetException
  If no support for the named charset is available
            in this instance of the Java virtual machine
@@ -427,7 +431,7 @@
  @brief Tells whether or not this charset is registered in the <a href="http://www.iana.org/assignments/character-sets">
  IANA Charset
   Registry</a>.
- @return <tt>true</tt> if, and only if, this charset is known by its
+ @return <code>true</code> if, and only if, this charset is known by its
            implementor to be registered with the IANA
  */
 - (jboolean)isRegistered;
@@ -436,12 +440,12 @@
  @brief Tells whether the named charset is supported.
  @param charsetName The name of the requested charset; may be either
            a canonical name or an alias
- @return <tt>true</tt> if, and only if, support for the named charset
+ @return <code>true</code> if, and only if, support for the named charset
            is available in the current Java virtual machine
  @throw IllegalCharsetNameException
  If the given charset name is illegal
  @throw IllegalArgumentException
- If the given <tt>charsetName</tt> is null
+ If the given <code>charsetName</code> is null
  */
 + (jboolean)isSupportedWithNSString:(NSString *)charsetName;
 
@@ -518,6 +522,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaNioCharsetCharset)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaNioCharsetCharset")

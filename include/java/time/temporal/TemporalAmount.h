@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaTimeTemporalTemporalAmount
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -25,6 +22,7 @@
 #if !defined (JavaTimeTemporalTemporalAmount_) && (INCLUDE_ALL_JavaTimeTemporalTemporalAmount || defined(INCLUDE_JavaTimeTemporalTemporalAmount))
 #define JavaTimeTemporalTemporalAmount_
 
+@class JavaLangLong;
 @protocol JavaTimeTemporalTemporal;
 @protocol JavaTimeTemporalTemporalUnit;
 @protocol JavaUtilList;
@@ -141,6 +139,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaTimeTemporalTemporalAmount)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaTimeTemporalTemporalAmount")

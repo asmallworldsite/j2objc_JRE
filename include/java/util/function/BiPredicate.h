@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaUtilFunctionBiPredicate
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -24,6 +21,8 @@
 
 #if !defined (JavaUtilFunctionBiPredicate_) && (INCLUDE_ALL_JavaUtilFunctionBiPredicate || defined(INCLUDE_JavaUtilFunctionBiPredicate))
 #define JavaUtilFunctionBiPredicate_
+
+@class JavaLangBoolean;
 
 /*!
  @brief Represents a predicate (boolean-valued function) of two arguments.This is
@@ -100,6 +99,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilFunctionBiPredicate)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaUtilFunctionBiPredicate")

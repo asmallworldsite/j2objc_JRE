@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaNioFileAtomicMoveNotSupportedException
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -29,13 +26,14 @@
 #define INCLUDE_JavaNioFileFileSystemException 1
 #include "java/nio/file/FileSystemException.h"
 
+@class JavaLangLong;
+
 /*!
  @brief Checked exception thrown when a file cannot be moved as an atomic file system
   operation.
  @since 1.7
  */
 @interface JavaNioFileAtomicMoveNotSupportedException : JavaNioFileFileSystemException
-@property (readonly, class) jlong serialVersionUID NS_SWIFT_NAME(serialVersionUID);
 
 #pragma mark Public
 
@@ -45,7 +43,8 @@
  <code>null</code>  if not known
  @param target a string identifying the target file or 
  <code>null</code>  if not known
- @param reason a reason message with additional information
+ @param reason a reason message with additional information or 
+ <code>null</code>
  */
 - (instancetype __nonnull)initWithNSString:(NSString *)source
                               withNSString:(NSString *)target
@@ -77,6 +76,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaNioFileAtomicMoveNotSupportedException)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaNioFileAtomicMoveNotSupportedException")

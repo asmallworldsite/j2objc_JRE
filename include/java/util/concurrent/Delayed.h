@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaUtilConcurrentDelayed
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -29,6 +26,7 @@
 #define INCLUDE_JavaLangComparable 1
 #include "java/lang/Comparable.h"
 
+@class JavaLangLong;
 @class JavaUtilConcurrentTimeUnit;
 
 /*!
@@ -63,6 +61,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentDelayed)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaUtilConcurrentDelayed")

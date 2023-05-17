@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaTextAttributedString
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -27,6 +24,7 @@
 
 @class IOSIntArray;
 @class IOSObjectArray;
+@class JavaLangInteger;
 @class JavaTextAttributedCharacterIterator_Attribute;
 @protocol JavaTextAttributedCharacterIterator;
 @protocol JavaUtilMap;
@@ -49,7 +47,6 @@
 @interface JavaTextAttributedString : NSObject {
  @public
   NSString *text_;
-  jint runArraySize_;
   jint runCount_;
   IOSIntArray *runStarts_;
   IOSObjectArray *runAttributes_;
@@ -149,7 +146,7 @@
  @param beginIndex Index of the first character of the range.
  @param endIndex Index of the character following the last character of the range.
  @throw NullPointerExceptionif <code>attribute</code> is null.
- @throw IllegalArgumentExceptionif beginIndex is less then 0, endIndex is
+ @throw IllegalArgumentExceptionif beginIndex is less than 0, endIndex is
   greater than the length of the string, or beginIndex and endIndex together don't
   define a non-empty subrange of the string.
  */
@@ -164,7 +161,7 @@
  @param beginIndex Index of the first character of the range.
  @param endIndex Index of the character following the last  character of the range.
  @throw NullPointerExceptionif <code>attributes</code> is null.
- @throw IllegalArgumentExceptionif beginIndex is less then
+ @throw IllegalArgumentExceptionif beginIndex is less than
   0, endIndex is greater than the length of the string, or
   beginIndex and endIndex together don't define a non-empty
   subrange of the string and the attributes parameter is not an
@@ -204,7 +201,7 @@
  @param beginIndex the index of the first character
  @param endIndex the index of the character following the last character
  @return an iterator providing access to the text and its attributes
- @throw IllegalArgumentExceptionif beginIndex is less then 0,
+ @throw IllegalArgumentExceptionif beginIndex is less than 0,
   endIndex is greater than the length of the string, or beginIndex is
   greater than endIndex.
  */
@@ -284,6 +281,8 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaTextAttributedString)
 #define INCLUDE_JavaUtilMap_Entry 1
 #include "java/util/Map.h"
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @class JavaTextAttributedCharacterIterator_Attribute;
 
 @interface JavaTextAttributeEntry : NSObject < JavaUtilMap_Entry >
@@ -329,6 +328,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaTextAttributeEntry)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaTextAttributedString")

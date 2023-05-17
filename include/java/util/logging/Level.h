@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaUtilLoggingLevel
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -28,6 +25,9 @@
 #define RESTRICT_JavaIoSerializable 1
 #define INCLUDE_JavaIoSerializable 1
 #include "java/io/Serializable.h"
+
+@class JavaLangBoolean;
+@class JavaLangInteger;
 
 /*!
  @brief The Level class defines a set of standard logging levels that
@@ -61,15 +61,6 @@
  @since 1.4
  */
 @interface JavaUtilLoggingLevel : NSObject < JavaIoSerializable >
-@property (readonly, class, strong) JavaUtilLoggingLevel *OFF NS_SWIFT_NAME(OFF);
-@property (readonly, class, strong) JavaUtilLoggingLevel *SEVERE NS_SWIFT_NAME(SEVERE);
-@property (readonly, class, strong) JavaUtilLoggingLevel *WARNING NS_SWIFT_NAME(WARNING);
-@property (readonly, class, strong) JavaUtilLoggingLevel *INFO NS_SWIFT_NAME(INFO);
-@property (readonly, class, strong) JavaUtilLoggingLevel *CONFIG NS_SWIFT_NAME(CONFIG);
-@property (readonly, class, strong) JavaUtilLoggingLevel *FINE NS_SWIFT_NAME(FINE);
-@property (readonly, class, strong) JavaUtilLoggingLevel *FINER NS_SWIFT_NAME(FINER);
-@property (readonly, class, strong) JavaUtilLoggingLevel *FINEST NS_SWIFT_NAME(FINEST);
-@property (readonly, class, strong) JavaUtilLoggingLevel *ALL NS_SWIFT_NAME(ALL);
 
 #pragma mark Public
 
@@ -339,6 +330,7 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilLoggingLevel)
 #if !defined (JavaUtilLoggingLevel_KnownLevel_) && (INCLUDE_ALL_JavaUtilLoggingLevel || defined(INCLUDE_JavaUtilLoggingLevel_KnownLevel))
 #define JavaUtilLoggingLevel_KnownLevel_
 
+@class JavaLangInteger;
 @class JavaUtilLoggingLevel;
 
 @interface JavaUtilLoggingLevel_KnownLevel : NSObject {
@@ -396,6 +388,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilLoggingLevel_KnownLevel)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaUtilLoggingLevel")

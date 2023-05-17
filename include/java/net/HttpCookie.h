@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaNetHttpCookie
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -25,6 +22,9 @@
 #if !defined (JavaNetHttpCookie_) && (INCLUDE_ALL_JavaNetHttpCookie || defined(INCLUDE_JavaNetHttpCookie))
 #define JavaNetHttpCookie_
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
+@class JavaLangLong;
 @class JavaUtilTimeZone;
 @protocol JavaUtilList;
 @protocol JavaUtilMap;
@@ -47,8 +47,6 @@
  @since 1.6
  */
 @interface JavaNetHttpCookie : NSObject < NSCopying >
-@property (readonly, class, strong) id<JavaUtilMap> assignors NS_SWIFT_NAME(assignors);
-@property (readonly, class, strong) JavaUtilTimeZone *GMT NS_SWIFT_NAME(GMT);
 
 #pragma mark Public
 
@@ -476,6 +474,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaNetHttpCookie_CookieAttributeAssignor)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaNetHttpCookie")

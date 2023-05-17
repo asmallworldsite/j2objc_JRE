@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaUtilStreamCollector
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -77,7 +74,7 @@
   and <code>t2</code>, the results <code>r1</code> and <code>r2</code> in the computation
   below must be equivalent: 
  @code
-    A a1 = supplier.get();
+     A a1 = supplier.get();
       accumulator.accept(a1, t1);
       accumulator.accept(a1, t2);
       R r1 = finisher.apply(a1);  // result without splitting
@@ -134,7 +131,7 @@
   can be used to construct collectors.  For example, you could create a collector
   that accumulates widgets into a <code>TreeSet</code> with: 
  @code
-    Collector<Widget, ?, TreeSet<Widget>> intoSet =
+     Collector<Widget, ?, TreeSet<Widget>> intoSet =
           Collector.of(TreeSet::new, TreeSet::add,
                        (left, right) -> { left.addAll(right); return left; }); 
  
@@ -243,11 +240,17 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilStreamCollector)
 
 @class IOSObjectArray;
 
-typedef NS_ENUM(NSUInteger, JavaUtilStreamCollector_Characteristics_Enum) {
+typedef NS_ENUM(jint, JavaUtilStreamCollector_Characteristics_Enum) {
   JavaUtilStreamCollector_Characteristics_Enum_CONCURRENT = 0,
   JavaUtilStreamCollector_Characteristics_Enum_UNORDERED = 1,
   JavaUtilStreamCollector_Characteristics_Enum_IDENTITY_FINISH = 2,
 };
+#if J2OBJC_IMPORTED_BY_JAVA_IMPLEMENTATION
+#define JavaUtilStreamCollector_Characteristics_ORDINAL jint
+#else
+#define JavaUtilStreamCollector_Characteristics_ORDINAL JavaUtilStreamCollector_Characteristics_Enum
+#endif
+
 
 /*!
  @brief Characteristics indicating properties of a <code>Collector</code>, which can
@@ -255,9 +258,6 @@ typedef NS_ENUM(NSUInteger, JavaUtilStreamCollector_Characteristics_Enum) {
  */
 @interface JavaUtilStreamCollector_Characteristics : JavaLangEnum
 
-@property (readonly, class, nonnull) JavaUtilStreamCollector_Characteristics *CONCURRENT NS_SWIFT_NAME(CONCURRENT);
-@property (readonly, class, nonnull) JavaUtilStreamCollector_Characteristics *UNORDERED NS_SWIFT_NAME(UNORDERED);
-@property (readonly, class, nonnull) JavaUtilStreamCollector_Characteristics *IDENTITY_FINISH NS_SWIFT_NAME(IDENTITY_FINISH);
 #pragma mark Public
 
 + (JavaUtilStreamCollector_Characteristics *)valueOfWithNSString:(NSString *)name;
@@ -267,6 +267,8 @@ typedef NS_ENUM(NSUInteger, JavaUtilStreamCollector_Characteristics_Enum) {
 #pragma mark Package-Private
 
 - (JavaUtilStreamCollector_Characteristics_Enum)toNSEnum;
+
+- (JavaUtilStreamCollector_Characteristics_ORDINAL)ordinal;
 
 @end
 
@@ -308,7 +310,7 @@ FOUNDATION_EXPORT IOSObjectArray *JavaUtilStreamCollector_Characteristics_values
 
 FOUNDATION_EXPORT JavaUtilStreamCollector_Characteristics *JavaUtilStreamCollector_Characteristics_valueOfWithNSString_(NSString *name);
 
-FOUNDATION_EXPORT JavaUtilStreamCollector_Characteristics *JavaUtilStreamCollector_Characteristics_fromOrdinal(NSUInteger ordinal);
+FOUNDATION_EXPORT JavaUtilStreamCollector_Characteristics *JavaUtilStreamCollector_Characteristics_fromOrdinal(JavaUtilStreamCollector_Characteristics_ORDINAL ordinal);
 
 J2OBJC_TYPE_LITERAL_HEADER(JavaUtilStreamCollector_Characteristics)
 
@@ -318,6 +320,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilStreamCollector_Characteristics)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaUtilStreamCollector")

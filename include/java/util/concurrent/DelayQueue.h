@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaUtilConcurrentDelayQueue
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -34,6 +31,9 @@
 #include "java/util/concurrent/BlockingQueue.h"
 
 @class IOSObjectArray;
+@class JavaLangBoolean;
+@class JavaLangInteger;
+@class JavaLangLong;
 @class JavaUtilConcurrentTimeUnit;
 @protocol JavaUtilCollection;
 @protocol JavaUtilConcurrentDelayed;
@@ -53,11 +53,14 @@
   treated as normal elements. For example, the <code>size</code> method
   returns the count of both expired and unexpired elements.
   This queue does not permit null elements. 
- <p>This class and its iterator implement all of the 
- <em>optional</em> methods of the <code>Collection</code> and <code>Iterator</code>
-  interfaces.  The Iterator provided in method <code>iterator()</code>
-  is <em>not</em> guaranteed to traverse the elements of
-  the DelayQueue in any particular order.
+ <p>This class and its iterator implement all of the <em>optional</em>
+  methods of the <code>Collection</code> and <code>Iterator</code> interfaces.
+  The Iterator provided in method <code>iterator()</code> is <em>not</em>
+  guaranteed to traverse the elements of the DelayQueue in any
+  particular order. 
+ <p>This class is a member of the 
+ <a href="{@@docRoot}/java.base/java/util/package-summary.html#CollectionsFramework">
+  Java Collections Framework</a>.
  @since 1.5
  @author Doug Lea
  */
@@ -286,6 +289,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentDelayQueue)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaUtilConcurrentDelayQueue")

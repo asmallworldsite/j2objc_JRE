@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaSecurityProtectionDomain
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -26,6 +23,7 @@
 #define JavaSecurityProtectionDomain_
 
 @class IOSObjectArray;
+@class JavaLangBoolean;
 @class JavaLangClassLoader;
 @class JavaSecurityCodeSource;
 @class JavaSecurityPermission;
@@ -84,6 +82,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaSecurityProtectionDomain)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaSecurityProtectionDomain")

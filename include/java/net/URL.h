@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaNetURL
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -31,6 +28,9 @@
 
 @class IOSObjectArray;
 @class JavaIoInputStream;
+@class JavaLangBoolean;
+@class JavaLangInteger;
+@class JavaLangLong;
 @class JavaNetURI;
 @class JavaNetURLConnection;
 @protocol JavaNetURLStreamHandlerFactory;
@@ -153,7 +153,6 @@
    */
   id hostAddress_;
 }
-@property (readonly, class) jlong serialVersionUID NS_SWIFT_NAME(serialVersionUID);
 
 #pragma mark Public
 
@@ -853,6 +852,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaNetParts)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaNetURL")

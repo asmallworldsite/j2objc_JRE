@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaTextDateFormat
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -31,6 +28,7 @@
 
 @class IOSObjectArray;
 @class JavaLangBoolean;
+@class JavaLangInteger;
 @class JavaLangStringBuffer;
 @class JavaTextFieldPosition;
 @class JavaTextNumberFormat;
@@ -84,7 +82,8 @@
  
 @endcode
   </blockquote>
-  <p>You can use a DateFormat to parse also. 
+  
+ <p>You can use a DateFormat to parse also. 
  <blockquote>
   @code
  myDate = df.parse(myString); 
@@ -120,7 +119,7 @@
   on the screen. 
  </ul>
   
- <h3><a name="synchronization">Synchronization</a></h3>
+ <h3><a id="synchronization">Synchronization</a></h3>
   
  <p>
   Date formats are not synchronized.
@@ -134,6 +133,7 @@
  - seealso: java.util.GregorianCalendar
  - seealso: java.util.TimeZone
  @author Mark Davis, Chen-Lieh Huang, Alan Liu
+ @since 1.1
  */
 @interface JavaTextDateFormat : JavaTextFormat {
  @public
@@ -153,30 +153,6 @@
    */
   JavaTextNumberFormat *numberFormat_;
 }
-@property (readonly, class) jint ERA_FIELD NS_SWIFT_NAME(ERA_FIELD);
-@property (readonly, class) jint YEAR_FIELD NS_SWIFT_NAME(YEAR_FIELD);
-@property (readonly, class) jint MONTH_FIELD NS_SWIFT_NAME(MONTH_FIELD);
-@property (readonly, class) jint DATE_FIELD NS_SWIFT_NAME(DATE_FIELD);
-@property (readonly, class) jint HOUR_OF_DAY1_FIELD NS_SWIFT_NAME(HOUR_OF_DAY1_FIELD);
-@property (readonly, class) jint HOUR_OF_DAY0_FIELD NS_SWIFT_NAME(HOUR_OF_DAY0_FIELD);
-@property (readonly, class) jint MINUTE_FIELD NS_SWIFT_NAME(MINUTE_FIELD);
-@property (readonly, class) jint SECOND_FIELD NS_SWIFT_NAME(SECOND_FIELD);
-@property (readonly, class) jint MILLISECOND_FIELD NS_SWIFT_NAME(MILLISECOND_FIELD);
-@property (readonly, class) jint DAY_OF_WEEK_FIELD NS_SWIFT_NAME(DAY_OF_WEEK_FIELD);
-@property (readonly, class) jint DAY_OF_YEAR_FIELD NS_SWIFT_NAME(DAY_OF_YEAR_FIELD);
-@property (readonly, class) jint DAY_OF_WEEK_IN_MONTH_FIELD NS_SWIFT_NAME(DAY_OF_WEEK_IN_MONTH_FIELD);
-@property (readonly, class) jint WEEK_OF_YEAR_FIELD NS_SWIFT_NAME(WEEK_OF_YEAR_FIELD);
-@property (readonly, class) jint WEEK_OF_MONTH_FIELD NS_SWIFT_NAME(WEEK_OF_MONTH_FIELD);
-@property (readonly, class) jint AM_PM_FIELD NS_SWIFT_NAME(AM_PM_FIELD);
-@property (readonly, class) jint HOUR1_FIELD NS_SWIFT_NAME(HOUR1_FIELD);
-@property (readonly, class) jint HOUR0_FIELD NS_SWIFT_NAME(HOUR0_FIELD);
-@property (readonly, class) jint TIMEZONE_FIELD NS_SWIFT_NAME(TIMEZONE_FIELD);
-@property (readonly, class) jint FULL NS_SWIFT_NAME(FULL);
-@property (readonly, class) jint LONG NS_SWIFT_NAME(LONG);
-@property (readonly, class) jint MEDIUM NS_SWIFT_NAME(MEDIUM);
-@property (readonly, class) jint SHORT NS_SWIFT_NAME(SHORT);
-@property (readonly, class) jint DEFAULT NS_SWIFT_NAME(DEFAULT);
-@property (class, strong) JavaLangBoolean *is24Hour NS_SWIFT_NAME(is24Hour);
 
 #pragma mark Public
 
@@ -191,55 +167,60 @@
 - (jboolean)isEqual:(id)obj;
 
 /*!
- @brief Formats a Date into a date/time string.
- @param date the time value to be formatted into a time string.
- @return the formatted time string.
+ @brief Formats a <code>Date</code> into a date-time string.
+ @param date the time value to be formatted into a date-time string.
+ @return the formatted date-time string.
  */
 - (NSString * __nonnull)formatWithJavaUtilDate:(JavaUtilDate *)date;
 
 /*!
- @brief Formats a Date into a date/time string.
- @param date a Date to be formatted into a date/time string.
- @param toAppendTo the string buffer for the returning date/time string.
- @param fieldPosition keeps track of the position of the field  within the returned string.
-   On input: an alignment field,
-   if desired. On output: the offsets of the alignment field. For
-   example, given a time text "1996.07.10 AD at 15:08:56 PDT",
-   if the given fieldPosition is DateFormat.YEAR_FIELD, the
-   begin index and end index of fieldPosition will be set to
-   0 and 4, respectively.  Notice that if the same time field appears
-   more than once in a pattern, the fieldPosition will be set for the first
-   occurrence of that time field. For instance, formatting a Date to
-   the time string "1 PM PDT (Pacific Daylight Time)" using the pattern
-   "h a z (zzzz)" and the alignment field DateFormat.TIMEZONE_FIELD,
-   the begin index and end index of fieldPosition will be set to  5 and 8, respectively, for the first occurrence of the timezone
-   pattern character 'z'.
- @return the string buffer passed in as toAppendTo, with formatted text appended.
+ @brief Formats a <code>Date</code> into a date-time string.The formatted
+  string is appended to the given <code>StringBuffer</code>.
+ @param date a Date to be formatted into a date-time string.
+ @param toAppendTo the string buffer for the returning date-time string.
+ @param fieldPosition keeps track on the position of the field within  the returned string. For example, given a date-time text
+   <code>"1996.07.10 AD at 15:08:56 PDT"</code>
+  , if the given <code>fieldPosition</code>  is <code>DateFormat.YEAR_FIELD</code>
+  , the begin index and end index of  <code>fieldPosition</code>
+   will be set to 0 and 4, respectively.  Notice that if the same date-time field appears more than once in a
+   pattern, the <code>fieldPosition</code>
+   will be set for the first occurrence  of that date-time field. For instance, formatting a 
+ <code>Date</code>  to the  date-time string <code>"1 PM PDT (Pacific Daylight Time)"</code>
+   using the  pattern <code>"h a z (zzzz)"</code>  and the alignment field
+   <code>DateFormat.TIMEZONE_FIELD</code> , the begin index and end index of
+   <code>fieldPosition</code>  will be set to 5 and 8, respectively, for the
+   first occurrence of the timezone pattern character <code>'z'</code>
+  .
+ @return the string buffer passed in as <code>toAppendTo</code>, with formatted
+  text appended.
  */
 - (JavaLangStringBuffer * __nonnull)formatWithJavaUtilDate:(JavaUtilDate *)date
                                   withJavaLangStringBuffer:(JavaLangStringBuffer *)toAppendTo
                                  withJavaTextFieldPosition:(JavaTextFieldPosition *)fieldPosition;
 
 /*!
- @brief Overrides Format.
- Formats a time object into a time string. Examples of time objects
-  are a time value expressed in milliseconds and a Date object.
- @param obj must be a Number or a Date.
- @param toAppendTo the string buffer for the returning time string.
- @return the string buffer passed in as toAppendTo, with formatted text appended.
- @param fieldPosition keeps track of the position of the field  within the returned string.
-   On input: an alignment field,
-   if desired. On output: the offsets of the alignment field. For
-   example, given a time text "1996.07.10 AD at 15:08:56 PDT",
-   if the given fieldPosition is DateFormat.YEAR_FIELD, the
-   begin index and end index of fieldPosition will be set to
-   0 and 4, respectively.  Notice that if the same time field appears
-   more than once in a pattern, the fieldPosition will be set for the first
-   occurrence of that time field. For instance, formatting a Date to
-   the time string "1 PM PDT (Pacific Daylight Time)" using the pattern
-   "h a z (zzzz)" and the alignment field DateFormat.TIMEZONE_FIELD,
-   the begin index and end index of fieldPosition will be set to  5 and 8, respectively, for the first occurrence of the timezone
-   pattern character 'z'.
+ @brief Formats the given <code>Object</code> into a date-time string.The formatted
+  string is appended to the given <code>StringBuffer</code>.
+ @param obj Must be a <code>Date</code>  or a <code>Number</code>  representing a
+   millisecond offset from the  <a href="../util/Calendar.html#Epoch"> Epoch </a> .
+ @param toAppendTo The string buffer for the returning date-time string.
+ @param fieldPosition keeps track on the position of the field within  the returned string. For example, given a date-time text
+   <code>"1996.07.10 AD at 15:08:56 PDT"</code>
+  , if the given <code>fieldPosition</code>  is <code>DateFormat.YEAR_FIELD</code>
+  , the begin index and end index of  <code>fieldPosition</code>
+   will be set to 0 and 4, respectively.  Notice that if the same date-time field appears more than once in a
+   pattern, the <code>fieldPosition</code>
+   will be set for the first occurrence  of that date-time field. For instance, formatting a 
+ <code>Date</code>  to the  date-time string <code>"1 PM PDT (Pacific Daylight Time)"</code>
+   using the  pattern <code>"h a z (zzzz)"</code>  and the alignment field
+   <code>DateFormat.TIMEZONE_FIELD</code> , the begin index and end index of
+   <code>fieldPosition</code>  will be set to 5 and 8, respectively, for the
+   first occurrence of the timezone pattern character <code>'z'</code>
+  .
+ @return the string buffer passed in as <code>toAppendTo</code>,
+          with formatted text appended.
+ @throw IllegalArgumentExceptionif the <code>Format</code> cannot format
+             the given <code>obj</code>.
  - seealso: java.text.Format
  */
 - (JavaLangStringBuffer * __nonnull)formatWithId:(id)obj
@@ -394,8 +375,7 @@
  @brief Gets the time zone.
  This method is equivalent to the following call. 
  <blockquote>@code
- getCalendar().getTimeZone()
-  
+ getCalendar().getTimeZone() 
  
 @endcode</blockquote>
  @return the time zone associated with the calendar of DateFormat.
@@ -411,8 +391,7 @@
  @brief Tell whether date/time parsing is to be lenient.
  This method is equivalent to the following call. 
  <blockquote>@code
- getCalendar().isLenient()
-  
+ getCalendar().isLenient() 
  
 @endcode</blockquote>
  @return <code>true</code> if the <code>calendar</code> is lenient;
@@ -479,15 +458,20 @@
               index information as described above.
  @return A <code>Date</code> parsed from the string. In case of
           error, returns null.
- @throw NullPointerExceptionif <code>pos</code> is null.
+ @throw NullPointerExceptionif <code>source</code> or <code>pos</code> is null.
  */
 - (id __nullable)parseObjectWithNSString:(NSString *)source
                withJavaTextParsePosition:(JavaTextParsePosition *)pos;
 
 /*!
- @brief Override the time formatting behavior for SHORT and MEDIUM time formats.
- <code>null</code>: use Locale default. <code>true</code>: force 24-hour format. 
- <code>false</code> force 12-hour format.
+ @brief Override the time formatting behavior for <code>SHORT</code> and <code>MEDIUM</code> time formats.
+ Accepts one of the following: 
+ <ul>
+    <li><code>null</code>: use Locale default/li>
+    <li><code>true</code>: force 24-hour format</li>
+    <li><code>false</code> force 12-hour format</li>
+  </ul>
+ @param is24Hour whether to use 24-hour format or not. <code>null</code>  uses locale default.
  */
 + (void)set24HourTimePrefWithJavaLangBoolean:(JavaLangBoolean *)is24Hour;
 
@@ -509,8 +493,7 @@
   inputs must match this object's format. 
  <p>This method is equivalent to the following call. 
  <blockquote>@code
- getCalendar().setLenient(lenient)
-  
+ getCalendar().setLenient(lenient) 
  
 @endcode</blockquote>
   
@@ -531,8 +514,7 @@
  @brief Sets the time zone for the calendar of this <code>DateFormat</code> object.
  This method is equivalent to the following call. 
  <blockquote>@code
- getCalendar().setTimeZone(zone)
-  
+ getCalendar().setTimeZone(zone) 
  
 @endcode</blockquote>
   
@@ -793,6 +775,8 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaTextDateFormat)
 #define INCLUDE_JavaTextFormat_Field 1
 #include "java/text/Format.h"
 
+@class JavaLangInteger;
+
 /*!
  @brief Defines constants that are used as attribute keys in the 
  <code>AttributedCharacterIterator</code> returned
@@ -805,24 +789,6 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaTextDateFormat)
  - seealso: java.util.Calendar
  */
 @interface JavaTextDateFormat_Field : JavaTextFormat_Field
-@property (readonly, class, strong) JavaTextDateFormat_Field *ERA NS_SWIFT_NAME(ERA);
-@property (readonly, class, strong) JavaTextDateFormat_Field *YEAR NS_SWIFT_NAME(YEAR);
-@property (readonly, class, strong) JavaTextDateFormat_Field *MONTH NS_SWIFT_NAME(MONTH);
-@property (readonly, class, strong) JavaTextDateFormat_Field *DAY_OF_MONTH NS_SWIFT_NAME(DAY_OF_MONTH);
-@property (readonly, class, strong) JavaTextDateFormat_Field *HOUR_OF_DAY1 NS_SWIFT_NAME(HOUR_OF_DAY1);
-@property (readonly, class, strong) JavaTextDateFormat_Field *HOUR_OF_DAY0 NS_SWIFT_NAME(HOUR_OF_DAY0);
-@property (readonly, class, strong) JavaTextDateFormat_Field *MINUTE NS_SWIFT_NAME(MINUTE);
-@property (readonly, class, strong) JavaTextDateFormat_Field *SECOND NS_SWIFT_NAME(SECOND);
-@property (readonly, class, strong) JavaTextDateFormat_Field *MILLISECOND NS_SWIFT_NAME(MILLISECOND);
-@property (readonly, class, strong) JavaTextDateFormat_Field *DAY_OF_WEEK NS_SWIFT_NAME(DAY_OF_WEEK);
-@property (readonly, class, strong) JavaTextDateFormat_Field *DAY_OF_YEAR NS_SWIFT_NAME(DAY_OF_YEAR);
-@property (readonly, class, strong) JavaTextDateFormat_Field *DAY_OF_WEEK_IN_MONTH NS_SWIFT_NAME(DAY_OF_WEEK_IN_MONTH);
-@property (readonly, class, strong) JavaTextDateFormat_Field *WEEK_OF_YEAR NS_SWIFT_NAME(WEEK_OF_YEAR);
-@property (readonly, class, strong) JavaTextDateFormat_Field *WEEK_OF_MONTH NS_SWIFT_NAME(WEEK_OF_MONTH);
-@property (readonly, class, strong) JavaTextDateFormat_Field *AM_PM NS_SWIFT_NAME(AM_PM);
-@property (readonly, class, strong) JavaTextDateFormat_Field *HOUR1 NS_SWIFT_NAME(HOUR1);
-@property (readonly, class, strong) JavaTextDateFormat_Field *HOUR0 NS_SWIFT_NAME(HOUR0);
-@property (readonly, class, strong) JavaTextDateFormat_Field *TIME_ZONE NS_SWIFT_NAME(TIME_ZONE);
 
 #pragma mark Public
 
@@ -1047,6 +1013,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaTextDateFormat_Field)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaTextDateFormat")

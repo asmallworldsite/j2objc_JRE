@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaUtilConcurrentAtomicAtomicIntegerFieldUpdater
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -26,6 +23,8 @@
 #define JavaUtilConcurrentAtomicAtomicIntegerFieldUpdater_
 
 @class IOSClass;
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @protocol JavaUtilFunctionIntBinaryOperator;
 @protocol JavaUtilFunctionIntUnaryOperator;
 
@@ -40,7 +39,10 @@
   Because this class cannot ensure that all uses of the field
   are appropriate for purposes of atomic access, it can
   guarantee atomicity only with respect to other invocations of 
- <code>compareAndSet</code> and <code>set</code> on the same updater.
+ <code>compareAndSet</code> and <code>set</code> on the same updater. 
+ <p>Object arguments for parameters of type <code>T</code> that are not
+  instances of the class passed to <code>newUpdater</code> will result in
+  a <code>ClassCastException</code> being thrown.
  @since 1.5
  @author Doug Lea
  */
@@ -49,14 +51,14 @@
 #pragma mark Public
 
 /*!
- @brief Atomically updates the field of the given object managed by this
-  updater with the results of applying the given function to the
-  current and given values, returning the updated value.The
-  function should be side-effect-free, since it may be re-applied
-  when attempted updates fail due to contention among threads.
- The
-  function is applied with the current value as its first argument,
-  and the given update as the second argument.
+ @brief Atomically updates (with memory effects as specified by <code>VarHandle.compareAndSet</code>
+ ) the field of the given object managed
+  by this updater with the results of applying the given function
+  to the current and given values, returning the updated value.
+ The function should be side-effect-free, since it may be
+  re-applied when attempted updates fail due to contention among
+  threads.  The function is applied with the current value as its
+  first argument, and the given update as the second argument.
  @param obj An object whose field to get and set
  @param x the update value
  @param accumulatorFunction a side-effect-free function of two arguments
@@ -87,8 +89,6 @@ withJavaUtilFunctionIntBinaryOperator:(id<JavaUtilFunctionIntBinaryOperator>)acc
  @param expect the expected value
  @param update the new value
  @return <code>true</code> if successful
- @throw ClassCastExceptionif <code>obj</code> is not an instance
-  of the class possessing the field established in the constructor
  */
 - (jboolean)compareAndSetWithId:(id)obj
                         withInt:(jint)expect
@@ -103,22 +103,22 @@ withJavaUtilFunctionIntBinaryOperator:(id<JavaUtilFunctionIntBinaryOperator>)acc
 - (jint)decrementAndGetWithId:(id)obj;
 
 /*!
- @brief Gets the current value held in the field of the given object managed
-  by this updater.
+ @brief Returns the current value held in the field of the given object
+  managed by this updater.
  @param obj An object whose field to get
  @return the current value
  */
 - (jint)getWithId:(id)obj;
 
 /*!
- @brief Atomically updates the field of the given object managed by this
-  updater with the results of applying the given function to the
-  current and given values, returning the previous value.The
-  function should be side-effect-free, since it may be re-applied
-  when attempted updates fail due to contention among threads.
- The
-  function is applied with the current value as its first argument,
-  and the given update as the second argument.
+ @brief Atomically updates (with memory effects as specified by <code>VarHandle.compareAndSet</code>
+ ) the field of the given object managed
+  by this updater with the results of applying the given function
+  to the current and given values, returning the previous value.
+ The function should be side-effect-free, since it may be
+  re-applied when attempted updates fail due to contention among
+  threads.  The function is applied with the current value as its
+  first argument, and the given update as the second argument.
  @param obj An object whose field to get and set
  @param x the update value
  @param accumulatorFunction a side-effect-free function of two arguments
@@ -166,10 +166,12 @@ withJavaUtilFunctionIntBinaryOperator:(id<JavaUtilFunctionIntBinaryOperator>)acc
                 withInt:(jint)newValue;
 
 /*!
- @brief Atomically updates the field of the given object managed by this updater
-  with the results of applying the given function, returning the previous
-  value.The function should be side-effect-free, since it may be
-  re-applied when attempted updates fail due to contention among threads.
+ @brief Atomically updates (with memory effects as specified by <code>VarHandle.compareAndSet</code>
+ ) the field of the given object managed
+  by this updater with the results of applying the given
+  function, returning the previous value.The function should be
+  side-effect-free, since it may be re-applied when attempted
+  updates fail due to contention among threads.
  @param obj An object whose field to get and set
  @param updateFunction a side-effect-free function
  @return the previous value
@@ -224,10 +226,12 @@ withJavaUtilFunctionIntUnaryOperator:(id<JavaUtilFunctionIntUnaryOperator>)updat
           withInt:(jint)newValue;
 
 /*!
- @brief Atomically updates the field of the given object managed by this updater
-  with the results of applying the given function, returning the updated
-  value.The function should be side-effect-free, since it may be
-  re-applied when attempted updates fail due to contention among threads.
+ @brief Atomically updates (with memory effects as specified by <code>VarHandle.compareAndSet</code>
+ ) the field of the given object managed
+  by this updater with the results of applying the given
+  function, returning the updated value.The function should be
+  side-effect-free, since it may be re-applied when attempted
+  updates fail due to contention among threads.
  @param obj An object whose field to get and set
  @param updateFunction a side-effect-free function
  @return the updated value
@@ -249,8 +253,6 @@ withJavaUtilFunctionIntUnaryOperator:(id<JavaUtilFunctionIntUnaryOperator>)updat
  @param expect the expected value
  @param update the new value
  @return <code>true</code> if successful
- @throw ClassCastExceptionif <code>obj</code> is not an instance
-  of the class possessing the field established in the constructor
  */
 - (jboolean)weakCompareAndSetWithId:(id)obj
                             withInt:(jint)expect
@@ -279,6 +281,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentAtomicAtomicIntegerFieldUpdater)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaUtilConcurrentAtomicAtomicIntegerFieldUpdater")

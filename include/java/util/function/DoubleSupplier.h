@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaUtilFunctionDoubleSupplier
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -24,6 +21,8 @@
 
 #if !defined (JavaUtilFunctionDoubleSupplier_) && (INCLUDE_ALL_JavaUtilFunctionDoubleSupplier || defined(INCLUDE_JavaUtilFunctionDoubleSupplier))
 #define JavaUtilFunctionDoubleSupplier_
+
+@class JavaLangDouble;
 
 /*!
  @brief Represents a supplier of <code>double</code>-valued results.This is the 
@@ -55,6 +54,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilFunctionDoubleSupplier)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaUtilFunctionDoubleSupplier")

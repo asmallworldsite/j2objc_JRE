@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaNioFileFileSystems
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -184,6 +181,7 @@
 
 /*!
  @brief Constructs a new file system that is identified by a <code>URI</code>
+  
  <p> This method iterates over the <code>installed</code>
   providers to locate the provider that is identified by the URI 
  <code>scheme</code> of the given URI.
@@ -228,6 +226,7 @@
 
 /*!
  @brief Constructs a new file system that is identified by a <code>URI</code>
+  
  <p> This method first attempts to locate an installed provider in exactly
   the same manner as the <code>newFileSystem(URI,Map)</code>
   method.
@@ -285,6 +284,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaNioFileFileSystems)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaNioFileFileSystems")

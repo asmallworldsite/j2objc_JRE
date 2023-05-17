@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaUtilEnumeration
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -24,6 +21,8 @@
 
 #if !defined (JavaUtilEnumeration_) && (INCLUDE_ALL_JavaUtilEnumeration || defined(INCLUDE_JavaUtilEnumeration))
 #define JavaUtilEnumeration_
+
+@class JavaLangBoolean;
 
 /*!
  @brief An object that implements the Enumeration interface generates a
@@ -88,6 +87,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilEnumeration)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaUtilEnumeration")

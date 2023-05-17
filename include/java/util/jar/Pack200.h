@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaUtilJarPack200
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -40,7 +37,7 @@
  <p>
   Here is an example using  packer and unpacker: 
  @code
-   import java.util.jar.Pack200;
+    import java.util.jar.Pack200;
      import java.util.jar.Pack200.*;
      ...
      // Create the Packer object
@@ -290,29 +287,6 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilJarPack200)
 
 @end
 
-@interface JavaUtilJarPack200_Packer : NSObject
-@property (readonly, copy, class) NSString *SEGMENT_LIMIT NS_SWIFT_NAME(SEGMENT_LIMIT);
-@property (readonly, copy, class) NSString *KEEP_FILE_ORDER NS_SWIFT_NAME(KEEP_FILE_ORDER);
-@property (readonly, copy, class) NSString *EFFORT NS_SWIFT_NAME(EFFORT);
-@property (readonly, copy, class) NSString *DEFLATE_HINT NS_SWIFT_NAME(DEFLATE_HINT);
-@property (readonly, copy, class) NSString *MODIFICATION_TIME NS_SWIFT_NAME(MODIFICATION_TIME);
-@property (readonly, copy, class) NSString *PASS_FILE_PFX NS_SWIFT_NAME(PASS_FILE_PFX);
-@property (readonly, copy, class) NSString *UNKNOWN_ATTRIBUTE NS_SWIFT_NAME(UNKNOWN_ATTRIBUTE);
-@property (readonly, copy, class) NSString *CLASS_ATTRIBUTE_PFX NS_SWIFT_NAME(CLASS_ATTRIBUTE_PFX);
-@property (readonly, copy, class) NSString *FIELD_ATTRIBUTE_PFX NS_SWIFT_NAME(FIELD_ATTRIBUTE_PFX);
-@property (readonly, copy, class) NSString *METHOD_ATTRIBUTE_PFX NS_SWIFT_NAME(METHOD_ATTRIBUTE_PFX);
-@property (readonly, copy, class) NSString *CODE_ATTRIBUTE_PFX NS_SWIFT_NAME(CODE_ATTRIBUTE_PFX);
-@property (readonly, copy, class) NSString *PROGRESS NS_SWIFT_NAME(PROGRESS);
-@property (readonly, copy, class) NSString *KEEP NS_SWIFT_NAME(KEEP);
-@property (readonly, copy, class) NSString *PASS NS_SWIFT_NAME(PASS);
-@property (readonly, copy, class) NSString *STRIP NS_SWIFT_NAME(STRIP);
-@property (readonly, copy, class) NSString *ERROR NS_SWIFT_NAME(ERROR);
-@property (readonly, copy, class) NSString *TRUE_ NS_SWIFT_NAME(TRUE_);
-@property (readonly, copy, class) NSString *FALSE_ NS_SWIFT_NAME(FALSE_);
-@property (readonly, copy, class) NSString *LATEST NS_SWIFT_NAME(LATEST);
-
-@end
-
 J2OBJC_EMPTY_STATIC_INIT(JavaUtilJarPack200_Packer)
 
 /*!
@@ -451,7 +425,7 @@ J2OBJC_STATIC_FIELD_OBJ_FINAL(JavaUtilJarPack200_Packer, MODIFICATION_TIME, NSSt
  <p>
   Examples: 
  @code
-    Map p = packer.properties();
+     Map p = packer.properties();
       p.put(PASS_FILE_PFX+0, "mutants/Rogue.class");
       p.put(PASS_FILE_PFX+1, "mutants/Wolverine.class");
       p.put(PASS_FILE_PFX+2, "mutants/Storm.class");
@@ -481,7 +455,7 @@ J2OBJC_STATIC_FIELD_OBJ_FINAL(JavaUtilJarPack200_Packer, PASS_FILE_PFX, NSString
  <p>
   Examples: 
  @code
-    Map p = pack200.getProperties();
+     Map p = pack200.getProperties();
       p.put(UNKNOWN_ATTRIBUTE, ERROR);
       p.put(UNKNOWN_ATTRIBUTE, STRIP);
       p.put(UNKNOWN_ATTRIBUTE, PASS); 
@@ -752,15 +726,6 @@ withJavaUtilJarJarOutputStream:(JavaUtilJarJarOutputStream *)outArg;
 
 @end
 
-@interface JavaUtilJarPack200_Unpacker : NSObject
-@property (readonly, copy, class) NSString *KEEP NS_SWIFT_NAME(KEEP);
-@property (readonly, copy, class) NSString *TRUE_ NS_SWIFT_NAME(TRUE_);
-@property (readonly, copy, class) NSString *FALSE_ NS_SWIFT_NAME(FALSE_);
-@property (readonly, copy, class) NSString *DEFLATE_HINT NS_SWIFT_NAME(DEFLATE_HINT);
-@property (readonly, copy, class) NSString *PROGRESS NS_SWIFT_NAME(PROGRESS);
-
-@end
-
 J2OBJC_EMPTY_STATIC_INIT(JavaUtilJarPack200_Unpacker)
 
 /*!
@@ -827,6 +792,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilJarPack200_Unpacker)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaUtilJarPack200")

@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaxXmlValidationSchemaFactoryLoader
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -29,9 +26,9 @@
 
 /*!
  @brief <p>This class was removed from JAXP 1.3 before it was finalized but
-  was mistakenly included in Java 5.
- It only exists now for compatibility
-  reasons. Applications should avoid using it.</p>
+  was mistakenly included in Java 5.It only exists now for compatibility
+  reasons.
+ Applications should avoid using it.</p>
  */
 @interface JavaxXmlValidationSchemaFactoryLoader : NSObject
 
@@ -57,6 +54,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaxXmlValidationSchemaFactoryLoader)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaxXmlValidationSchemaFactoryLoader")

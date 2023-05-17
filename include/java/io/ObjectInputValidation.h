@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaIoObjectInputValidation
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -26,17 +23,19 @@
 #define JavaIoObjectInputValidation_
 
 /*!
- @brief A callback interface for post-deserialization checks on objects.Allows, for
-  example, the validation of a whole graph of objects after all of them have
-  been loaded.
- - seealso: ObjectInputStream#registerValidation(ObjectInputValidation, int)
+ @brief Callback interface to allow validation of objects within a graph.
+ Allows an object to be called when a complete graph of objects has
+  been deserialized.
+ @author unascribed
+ - seealso: ObjectInputStream
+ - seealso: ObjectInputStream#registerValidation(java.io.ObjectInputValidation, int)
+ @since 1.1
  */
 @protocol JavaIoObjectInputValidation < JavaObject >
 
 /*!
- @brief Validates this object.
- @throw InvalidObjectException
- if this object fails to validate itself.
+ @brief Validates the object.
+ @throw InvalidObjectExceptionIf the object cannot validate itself.
  */
 - (void)validateObject;
 
@@ -52,6 +51,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaIoObjectInputValidation)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaIoObjectInputValidation")

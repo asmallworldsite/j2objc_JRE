@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaUtilLoggingFilter
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -25,6 +22,7 @@
 #if !defined (JavaUtilLoggingFilter_) && (INCLUDE_ALL_JavaUtilLoggingFilter || defined(INCLUDE_JavaUtilLoggingFilter))
 #define JavaUtilLoggingFilter_
 
+@class JavaLangBoolean;
 @class JavaUtilLoggingLogRecord;
 
 /*!
@@ -58,6 +56,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilLoggingFilter)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaUtilLoggingFilter")

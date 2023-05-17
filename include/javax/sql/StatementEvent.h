@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaxSqlStatementEvent
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -62,7 +59,7 @@
 /*!
  @brief Constructs a <code>StatementEvent</code> with the specified <code>PooledConnection</code>,
   <code>PreparedStatement</code> and <code>SQLException</code>
- <p>
+  <p>
  @param con The  <code> PooledConnection </code>  that the closed or invalid  <code> PreparedStatement </code>  is associated with.
  @param statement The  <code> PreparedStatement </code>  that is being closed or is invalid
  @param exception The  <code> SQLException  </code> the driver is about to throw to                                               the application
@@ -120,6 +117,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaxSqlStatementEvent)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaxSqlStatementEvent")

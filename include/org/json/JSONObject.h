@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_OrgJsonJSONObject
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -26,6 +23,10 @@
 #define OrgJsonJSONObject_
 
 @class IOSObjectArray;
+@class JavaLangBoolean;
+@class JavaLangDouble;
+@class JavaLangInteger;
+@class JavaLangLong;
 @class OrgJsonJSONArray;
 @class OrgJsonJSONStringer;
 @class OrgJsonJSONTokener;
@@ -81,11 +82,10 @@
  <p>Instances of this class are not thread safe. Although this class is
   nonfinal, it was not designed for inheritance and should not be subclassed.
   In particular, self-use by overrideable methods is not specified. See 
- <i>Effective Java</i> Item 17, "Design and Document or inheritance or else
-  prohibit it" for further information.
+ <i>Effective Java, 3rd edition</i> Item 19, "Design and Document for
+  inheritance or else prohibit it" for further information.
  */
 @interface OrgJsonJSONObject : NSObject
-@property (readonly, class, nonnull, strong) id NULL_ NS_SWIFT_NAME(NULL_);
 
 #pragma mark Public
 
@@ -158,8 +158,8 @@
  @throw JSONExceptionif <code>name</code> is <code>null</code> or if the mapping for
           <code>name</code> is non-null and is not a <code>JSONArray</code>.
  */
-- (OrgJsonJSONObject *)appendWithNSString:(NSString *)name
-                                   withId:(id)value;
+- (OrgJsonJSONObject * __nonnull)appendWithNSString:(NSString * __nonnull)name
+                                             withId:(id __nullable)value;
 
 /*!
  @brief Returns the value mapped by <code>name</code>, or throws if no such mapping exists.
@@ -253,8 +253,9 @@
   the corresponding mapping from this object and set iterator behaviour
   is undefined if this object is modified after it is returned.
   See <code>keys()</code>.
+ @return set of keys in this object
  */
-- (id<JavaUtilSet>)keySet;
+- (id<JavaUtilSet> __nonnull)keySet;
 
 /*!
  @brief Returns the number of name/value mappings in this object.
@@ -548,6 +549,4 @@ J2OBJC_TYPE_LITERAL_HEADER(OrgJsonJSONObject)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_OrgJsonJSONObject")

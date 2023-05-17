@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_AndroidIcuTextNormalizer
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -29,6 +26,8 @@
 @class AndroidIcuTextNormalizer_QuickCheckResult;
 @class AndroidIcuTextUCharacterIterator;
 @class IOSCharArray;
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @class JavaLangStringBuffer;
 @protocol JavaLangCharSequence;
 @protocol JavaTextCharacterIterator;
@@ -135,30 +134,6 @@
   It is for this reason that Normalizer does not implement the CharacterIterator interface.
  */
 @interface AndroidIcuTextNormalizer : NSObject < NSCopying >
-@property (readonly, class) jint UNICODE_3_2 NS_SWIFT_NAME(UNICODE_3_2);
-@property (readonly, class) jint DONE NS_SWIFT_NAME(DONE);
-@property (readonly, class, strong) AndroidIcuTextNormalizer_Mode *NONE NS_SWIFT_NAME(NONE);
-@property (readonly, class, strong) AndroidIcuTextNormalizer_Mode *NFD NS_SWIFT_NAME(NFD);
-@property (readonly, class, strong) AndroidIcuTextNormalizer_Mode *NFKD NS_SWIFT_NAME(NFKD);
-@property (readonly, class, strong) AndroidIcuTextNormalizer_Mode *NFC NS_SWIFT_NAME(NFC);
-@property (readonly, class, strong) AndroidIcuTextNormalizer_Mode *DEFAULT NS_SWIFT_NAME(DEFAULT);
-@property (readonly, class, strong) AndroidIcuTextNormalizer_Mode *NFKC NS_SWIFT_NAME(NFKC);
-@property (readonly, class, strong) AndroidIcuTextNormalizer_Mode *FCD NS_SWIFT_NAME(FCD);
-@property (readonly, class, strong) AndroidIcuTextNormalizer_Mode *NO_OP NS_SWIFT_NAME(NO_OP);
-@property (readonly, class, strong) AndroidIcuTextNormalizer_Mode *COMPOSE NS_SWIFT_NAME(COMPOSE);
-@property (readonly, class, strong) AndroidIcuTextNormalizer_Mode *COMPOSE_COMPAT NS_SWIFT_NAME(COMPOSE_COMPAT);
-@property (readonly, class, strong) AndroidIcuTextNormalizer_Mode *DECOMP NS_SWIFT_NAME(DECOMP);
-@property (readonly, class, strong) AndroidIcuTextNormalizer_Mode *DECOMP_COMPAT NS_SWIFT_NAME(DECOMP_COMPAT);
-@property (readonly, class) jint IGNORE_HANGUL NS_SWIFT_NAME(IGNORE_HANGUL);
-@property (readonly, class, strong) AndroidIcuTextNormalizer_QuickCheckResult *NO_ NS_SWIFT_NAME(NO_);
-@property (readonly, class, strong) AndroidIcuTextNormalizer_QuickCheckResult *YES_ NS_SWIFT_NAME(YES_);
-@property (readonly, class, strong) AndroidIcuTextNormalizer_QuickCheckResult *MAYBE NS_SWIFT_NAME(MAYBE);
-@property (readonly, class) jint FOLD_CASE_DEFAULT NS_SWIFT_NAME(FOLD_CASE_DEFAULT);
-@property (readonly, class) jint INPUT_IS_FCD NS_SWIFT_NAME(INPUT_IS_FCD);
-@property (readonly, class) jint COMPARE_IGNORE_CASE NS_SWIFT_NAME(COMPARE_IGNORE_CASE);
-@property (readonly, class) jint COMPARE_CODE_POINT_ORDER NS_SWIFT_NAME(COMPARE_CODE_POINT_ORDER);
-@property (readonly, class) jint FOLD_CASE_EXCLUDE_SPECIAL_I NS_SWIFT_NAME(FOLD_CASE_EXCLUDE_SPECIAL_I);
-@property (readonly, class) jint COMPARE_NORM_OPTIONS_SHIFT NS_SWIFT_NAME(COMPARE_NORM_OPTIONS_SHIFT);
 
 #pragma mark Public
 
@@ -174,7 +149,7 @@
  */
 - (instancetype __nonnull)initWithJavaTextCharacterIterator:(id<JavaTextCharacterIterator>)iter
                           withAndroidIcuTextNormalizer_Mode:(AndroidIcuTextNormalizer_Mode *)mode
-                                                    withInt:(jint)opt __attribute__((deprecated));
+                                                    withInt:(jint)opt;
 
 /*!
  @brief Creates a new <tt>Normalizer</tt> object for iterating over the
@@ -191,7 +166,7 @@
  */
 - (instancetype __nonnull)initWithNSString:(NSString *)str
          withAndroidIcuTextNormalizer_Mode:(AndroidIcuTextNormalizer_Mode *)mode
-                                   withInt:(jint)opt __attribute__((deprecated));
+                                   withInt:(jint)opt;
 
 /*!
  @brief Creates a new <tt>Normalizer</tt> object for iterating over the
@@ -203,7 +178,7 @@
  */
 - (instancetype __nonnull)initWithAndroidIcuTextUCharacterIterator:(AndroidIcuTextUCharacterIterator *)iter
                                  withAndroidIcuTextNormalizer_Mode:(AndroidIcuTextNormalizer_Mode *)mode
-                                                           withInt:(jint)options __attribute__((deprecated));
+                                                           withInt:(jint)options;
 
 /*!
  @brief Clones this <tt>Normalizer</tt> object.All properties of this
@@ -214,7 +189,7 @@
  <tt>CharacterIterator</tt> is not duplicated unless the
   iterator's <tt>clone</tt> method does so.
  */
-- (id)java_clone __attribute__((deprecated));
+- (id)java_clone;
 
 /*!
  @brief Compare two strings for canonical equivalence.
@@ -359,7 +334,7 @@
 + (jint)composeWithCharArray:(IOSCharArray *)source
                withCharArray:(IOSCharArray *)target
                  withBoolean:(jboolean)compat
-                     withInt:(jint)options __attribute__((deprecated));
+                     withInt:(jint)options;
 
 /*!
  @brief Compose a string.
@@ -385,7 +360,7 @@
                      withInt:(jint)destStart
                      withInt:(jint)destLimit
                  withBoolean:(jboolean)compat
-                     withInt:(jint)options __attribute__((deprecated));
+                     withInt:(jint)options;
 
 /*!
  @brief Compose a string.
@@ -396,7 +371,7 @@
  @return String    The composed string
  */
 + (NSString *)composeWithNSString:(NSString *)str
-                      withBoolean:(jboolean)compat __attribute__((deprecated));
+                      withBoolean:(jboolean)compat;
 
 /*!
  @brief Compose a string.
@@ -409,7 +384,7 @@
  */
 + (NSString *)composeWithNSString:(NSString *)str
                       withBoolean:(jboolean)compat
-                          withInt:(jint)options __attribute__((deprecated));
+                          withInt:(jint)options;
 
 /*!
  @brief Concatenate normalized strings, making sure that the result is normalized
@@ -435,7 +410,7 @@
 + (NSString *)concatenateWithCharArray:(IOSCharArray *)left
                          withCharArray:(IOSCharArray *)right
      withAndroidIcuTextNormalizer_Mode:(AndroidIcuTextNormalizer_Mode *)mode
-                               withInt:(jint)options __attribute__((deprecated));
+                               withInt:(jint)options;
 
 /*!
  @brief Concatenate normalized strings, making sure that the result is normalized
@@ -483,7 +458,7 @@
                          withInt:(jint)destStart
                          withInt:(jint)destLimit
 withAndroidIcuTextNormalizer_Mode:(AndroidIcuTextNormalizer_Mode *)mode
-                         withInt:(jint)options __attribute__((deprecated));
+                         withInt:(jint)options;
 
 /*!
  @brief Concatenate normalized strings, making sure that the result is normalized
@@ -513,13 +488,13 @@ withAndroidIcuTextNormalizer_Mode:(AndroidIcuTextNormalizer_Mode *)mode
 + (NSString *)concatenateWithNSString:(NSString *)left
                          withNSString:(NSString *)right
     withAndroidIcuTextNormalizer_Mode:(AndroidIcuTextNormalizer_Mode *)mode
-                              withInt:(jint)options __attribute__((deprecated));
+                              withInt:(jint)options;
 
 /*!
  @brief Return the current character in the normalized text.
  @return The codepoint as an int
  */
-- (jint)current __attribute__((deprecated));
+- (jint)current;
 
 /*!
  @brief Decompose a string.
@@ -537,7 +512,7 @@ withAndroidIcuTextNormalizer_Mode:(AndroidIcuTextNormalizer_Mode *)mode
 + (jint)decomposeWithCharArray:(IOSCharArray *)source
                  withCharArray:(IOSCharArray *)target
                    withBoolean:(jboolean)compat
-                       withInt:(jint)options __attribute__((deprecated));
+                       withInt:(jint)options;
 
 /*!
  @brief Decompose a string.
@@ -563,7 +538,7 @@ withAndroidIcuTextNormalizer_Mode:(AndroidIcuTextNormalizer_Mode *)mode
                        withInt:(jint)destStart
                        withInt:(jint)destLimit
                    withBoolean:(jboolean)compat
-                       withInt:(jint)options __attribute__((deprecated));
+                       withInt:(jint)options;
 
 /*!
  @brief Decompose a string.
@@ -574,7 +549,7 @@ withAndroidIcuTextNormalizer_Mode:(AndroidIcuTextNormalizer_Mode *)mode
  @return String   The decomposed string
  */
 + (NSString *)decomposeWithNSString:(NSString *)str
-                        withBoolean:(jboolean)compat __attribute__((deprecated));
+                        withBoolean:(jboolean)compat;
 
 /*!
  @brief Decompose a string.
@@ -587,7 +562,7 @@ withAndroidIcuTextNormalizer_Mode:(AndroidIcuTextNormalizer_Mode *)mode
  */
 + (NSString *)decomposeWithNSString:(NSString *)str
                         withBoolean:(jboolean)compat
-                            withInt:(jint)options __attribute__((deprecated));
+                            withInt:(jint)options;
 
 /*!
  @brief Retrieve the index of the end of the input text.This is the end index
@@ -595,14 +570,14 @@ withAndroidIcuTextNormalizer_Mode:(AndroidIcuTextNormalizer_Mode *)mode
   over which this <tt>Normalizer</tt> is iterating
  @return The current iteration position
  */
-- (jint)endIndex __attribute__((deprecated));
+- (jint)endIndex;
 
 /*!
  @brief Return the first character in the normalized text.This resets
   the <tt>Normalizer's</tt> position to the beginning of the text.
  @return The codepoint as an int
  */
-- (jint)first __attribute__((deprecated));
+- (jint)first;
 
 /*!
  @brief Retrieve the index of the start of the input text.This is the begin
@@ -611,7 +586,7 @@ withAndroidIcuTextNormalizer_Mode:(AndroidIcuTextNormalizer_Mode *)mode
  @return The codepoint as an int
  - seealso: #startIndex
  */
-- (jint)getBeginIndex __attribute__((deprecated));
+- (jint)getBeginIndex;
 
 /*!
  @brief Retrieve the index of the end of the input text.This is the end index
@@ -620,14 +595,14 @@ withAndroidIcuTextNormalizer_Mode:(AndroidIcuTextNormalizer_Mode *)mode
  @return The codepoint as an int
  - seealso: #endIndex
  */
-- (jint)getEndIndex __attribute__((deprecated));
+- (jint)getEndIndex;
 
 /*!
  @brief Gets the FC_NFKC closure value.
  @param c The code point whose closure value is to be retrieved
  @return String representation of the closure value; "" if there is none
  */
-+ (NSString *)getFC_NFKC_ClosureWithInt:(jint)c __attribute__((deprecated));
++ (NSString *)getFC_NFKC_ClosureWithInt:(jint)c;
 
 /*!
  @brief Gets the FC_NFKC closure value.
@@ -636,7 +611,7 @@ withAndroidIcuTextNormalizer_Mode:(AndroidIcuTextNormalizer_Mode *)mode
  @return the length of the closure value; 0 if there is none
  */
 + (jint)getFC_NFKC_ClosureWithInt:(jint)c
-                    withCharArray:(IOSCharArray *)dest __attribute__((deprecated));
+                    withCharArray:(IOSCharArray *)dest;
 
 /*!
  @brief Retrieve the current iteration position in the input text that is
@@ -652,32 +627,32 @@ withAndroidIcuTextNormalizer_Mode:(AndroidIcuTextNormalizer_Mode *)mode
  <tt>setIndex</tt> and <code>getIndex</code>.
  @return The current iteration position
  */
-- (jint)getIndex __attribute__((deprecated));
+- (jint)getIndex;
 
 /*!
  @brief Gets the length of underlying text storage
  @return the length
  */
-- (jint)getLength __attribute__((deprecated));
+- (jint)getLength;
 
 /*!
  @brief Return the basic operation performed by this <tt>Normalizer</tt>
  - seealso: #setMode
  */
-- (AndroidIcuTextNormalizer_Mode *)getMode __attribute__((deprecated));
+- (AndroidIcuTextNormalizer_Mode *)getMode;
 
 /*!
  @brief Determine whether an option is turned on or off.
  <p>
  - seealso: #setOption
  */
-- (jint)getOptionWithInt:(jint)option __attribute__((deprecated));
+- (jint)getOptionWithInt:(jint)option;
 
 /*!
  @brief Returns the text under iteration as a string
  @return a copy of the text under iteration.
  */
-- (NSString *)getText __attribute__((deprecated));
+- (NSString *)getText;
 
 /*!
  @brief Gets the underlying text storage
@@ -686,7 +661,7 @@ withAndroidIcuTextNormalizer_Mode:(AndroidIcuTextNormalizer_Mode *)mode
  @throw IndexOutOfBoundsExceptionIf the index passed for the array is invalid.
  - seealso: #getLength
  */
-- (jint)getTextWithCharArray:(IOSCharArray *)fillIn __attribute__((deprecated));
+- (jint)getTextWithCharArray:(IOSCharArray *)fillIn;
 
 /*!
  @brief Test if a string is in a given normalization form.
@@ -708,7 +683,7 @@ withAndroidIcuTextNormalizer_Mode:(AndroidIcuTextNormalizer_Mode *)mode
                               withInt:(jint)start
                               withInt:(jint)limit
     withAndroidIcuTextNormalizer_Mode:(AndroidIcuTextNormalizer_Mode *)mode
-                              withInt:(jint)options __attribute__((deprecated));
+                              withInt:(jint)options;
 
 /*!
  @brief Convenience Method
@@ -719,7 +694,7 @@ withAndroidIcuTextNormalizer_Mode:(AndroidIcuTextNormalizer_Mode *)mode
  */
 + (jboolean)isNormalizedWithInt:(jint)char32
 withAndroidIcuTextNormalizer_Mode:(AndroidIcuTextNormalizer_Mode *)mode
-                        withInt:(jint)options __attribute__((deprecated));
+                        withInt:(jint)options;
 
 /*!
  @brief Test if a string is in a given normalization form.
@@ -736,7 +711,7 @@ withAndroidIcuTextNormalizer_Mode:(AndroidIcuTextNormalizer_Mode *)mode
  */
 + (jboolean)isNormalizedWithNSString:(NSString *)str
    withAndroidIcuTextNormalizer_Mode:(AndroidIcuTextNormalizer_Mode *)mode
-                             withInt:(jint)options __attribute__((deprecated));
+                             withInt:(jint)options;
 
 /*!
  @brief Return the last character in the normalized text.This resets
@@ -744,7 +719,7 @@ withAndroidIcuTextNormalizer_Mode:(AndroidIcuTextNormalizer_Mode *)mode
   the input text corresponding to that normalized character.
  @return The codepoint as an int
  */
-- (jint)last __attribute__((deprecated));
+- (jint)last;
 
 /*!
  @brief Return the next character in the normalized text and advance
@@ -752,7 +727,7 @@ withAndroidIcuTextNormalizer_Mode:(AndroidIcuTextNormalizer_Mode *)mode
   of the text has already been reached, <code>DONE</code> is returned.
  @return The codepoint as an int
  */
-- (jint)next __attribute__((deprecated));
+- (jint)next;
 
 /*!
  @brief Normalize a string.
@@ -771,7 +746,7 @@ withAndroidIcuTextNormalizer_Mode:(AndroidIcuTextNormalizer_Mode *)mode
 + (jint)normalizeWithCharArray:(IOSCharArray *)source
                  withCharArray:(IOSCharArray *)target
 withAndroidIcuTextNormalizer_Mode:(AndroidIcuTextNormalizer_Mode *)mode
-                       withInt:(jint)options __attribute__((deprecated));
+                       withInt:(jint)options;
 
 /*!
  @brief Normalize a string.
@@ -798,7 +773,7 @@ withAndroidIcuTextNormalizer_Mode:(AndroidIcuTextNormalizer_Mode *)mode
                        withInt:(jint)destStart
                        withInt:(jint)destLimit
 withAndroidIcuTextNormalizer_Mode:(AndroidIcuTextNormalizer_Mode *)mode
-                       withInt:(jint)options __attribute__((deprecated));
+                       withInt:(jint)options;
 
 /*!
  @brief Convenience method to normalize a codepoint according to the given mode
@@ -807,7 +782,7 @@ withAndroidIcuTextNormalizer_Mode:(AndroidIcuTextNormalizer_Mode *)mode
  @return String   The normalized string
  */
 + (NSString *)normalizeWithInt:(jint)char32
-withAndroidIcuTextNormalizer_Mode:(AndroidIcuTextNormalizer_Mode *)mode __attribute__((deprecated));
+withAndroidIcuTextNormalizer_Mode:(AndroidIcuTextNormalizer_Mode *)mode;
 
 /*!
  @brief Normalize a codepoint according to the given mode
@@ -819,7 +794,7 @@ withAndroidIcuTextNormalizer_Mode:(AndroidIcuTextNormalizer_Mode *)mode __attrib
  */
 + (NSString *)normalizeWithInt:(jint)char32
 withAndroidIcuTextNormalizer_Mode:(AndroidIcuTextNormalizer_Mode *)mode
-                       withInt:(jint)options __attribute__((deprecated));
+                       withInt:(jint)options;
 
 /*!
  @brief Normalize a string.
@@ -831,7 +806,7 @@ withAndroidIcuTextNormalizer_Mode:(AndroidIcuTextNormalizer_Mode *)mode
  @return the normalized string
  */
 + (NSString *)normalizeWithNSString:(NSString *)src
-  withAndroidIcuTextNormalizer_Mode:(AndroidIcuTextNormalizer_Mode *)mode __attribute__((deprecated));
+  withAndroidIcuTextNormalizer_Mode:(AndroidIcuTextNormalizer_Mode *)mode;
 
 /*!
  @brief Normalizes a <tt>String</tt> using the given normalization operation.
@@ -849,7 +824,7 @@ withAndroidIcuTextNormalizer_Mode:(AndroidIcuTextNormalizer_Mode *)mode
  */
 + (NSString *)normalizeWithNSString:(NSString *)str
   withAndroidIcuTextNormalizer_Mode:(AndroidIcuTextNormalizer_Mode *)mode
-                            withInt:(jint)options __attribute__((deprecated));
+                            withInt:(jint)options;
 
 /*!
  @brief Return the previous character in the normalized text and decrement
@@ -857,7 +832,7 @@ withAndroidIcuTextNormalizer_Mode:(AndroidIcuTextNormalizer_Mode *)mode
   of the text has already been reached, <code>DONE</code> is returned.
  @return The codepoint as an int
  */
-- (jint)previous __attribute__((deprecated));
+- (jint)previous;
 
 /*!
  @brief Performing quick check on a string, to quickly determine if the string is
@@ -882,7 +857,7 @@ withAndroidIcuTextNormalizer_Mode:(AndroidIcuTextNormalizer_Mode *)mode
                                                                withInt:(jint)start
                                                                withInt:(jint)limit
                                      withAndroidIcuTextNormalizer_Mode:(AndroidIcuTextNormalizer_Mode *)mode
-                                                               withInt:(jint)options __attribute__((deprecated));
+                                                               withInt:(jint)options;
 
 /*!
  @brief Convenience method.
@@ -894,7 +869,7 @@ withAndroidIcuTextNormalizer_Mode:(AndroidIcuTextNormalizer_Mode *)mode
  */
 + (AndroidIcuTextNormalizer_QuickCheckResult *)quickCheckWithCharArray:(IOSCharArray *)source
                                      withAndroidIcuTextNormalizer_Mode:(AndroidIcuTextNormalizer_Mode *)mode
-                                                               withInt:(jint)options __attribute__((deprecated));
+                                                               withInt:(jint)options;
 
 /*!
  @brief Convenience method.
@@ -904,7 +879,7 @@ withAndroidIcuTextNormalizer_Mode:(AndroidIcuTextNormalizer_Mode *)mode
                       (Normalizer.YES, Normalizer.NO or Normalizer.MAYBE)
  */
 + (AndroidIcuTextNormalizer_QuickCheckResult *)quickCheckWithNSString:(NSString *)source
-                                    withAndroidIcuTextNormalizer_Mode:(AndroidIcuTextNormalizer_Mode *)mode __attribute__((deprecated));
+                                    withAndroidIcuTextNormalizer_Mode:(AndroidIcuTextNormalizer_Mode *)mode;
 
 /*!
  @brief Performing quick check on a string, to quickly determine if the string is
@@ -924,13 +899,13 @@ withAndroidIcuTextNormalizer_Mode:(AndroidIcuTextNormalizer_Mode *)mode
  */
 + (AndroidIcuTextNormalizer_QuickCheckResult *)quickCheckWithNSString:(NSString *)source
                                     withAndroidIcuTextNormalizer_Mode:(AndroidIcuTextNormalizer_Mode *)mode
-                                                              withInt:(jint)options __attribute__((deprecated));
+                                                              withInt:(jint)options;
 
 /*!
  @brief Reset the index to the beginning of the text.
  This is equivalent to setIndexOnly(startIndex)).
  */
-- (void)reset __attribute__((deprecated));
+- (void)reset;
 
 /*!
  @brief Set the iteration position in the input text that is being normalized
@@ -949,7 +924,7 @@ withAndroidIcuTextNormalizer_Mode:(AndroidIcuTextNormalizer_Mode *)mode
  @throw IllegalArgumentExceptionif the given index is less than
            <code>getBeginIndex</code> or greater than <code>getEndIndex</code>.
  */
-- (jint)setIndexWithInt:(jint)index __attribute__((deprecated));
+- (jint)setIndexWithInt:(jint)index;
 
 /*!
  @brief Set the iteration position in the input text that is being normalized,
@@ -958,7 +933,7 @@ withAndroidIcuTextNormalizer_Mode:(AndroidIcuTextNormalizer_Mode *)mode
   specified here.
  @param index the desired index in the input text.
  */
-- (void)setIndexOnlyWithInt:(jint)index __attribute__((deprecated));
+- (void)setIndexOnlyWithInt:(jint)index;
 
 /*!
  @brief Set the normalization mode for this object.
@@ -983,7 +958,7 @@ withAndroidIcuTextNormalizer_Mode:(AndroidIcuTextNormalizer_Mode *)mode
     </ul>
  - seealso: #getMode
  */
-- (void)setModeWithAndroidIcuTextNormalizer_Mode:(AndroidIcuTextNormalizer_Mode *)newMode __attribute__((deprecated));
+- (void)setModeWithAndroidIcuTextNormalizer_Mode:(AndroidIcuTextNormalizer_Mode *)newMode;
 
 /*!
  @brief Set options that affect this <tt>Normalizer</tt>'s operation.
@@ -1000,42 +975,42 @@ withAndroidIcuTextNormalizer_Mode:(AndroidIcuTextNormalizer_Mode *)mode
  - seealso: #getOption
  */
 - (void)setOptionWithInt:(jint)option
-             withBoolean:(jboolean)value __attribute__((deprecated));
+             withBoolean:(jboolean)value;
 
 /*!
  @brief Set the input text over which this <tt>Normalizer</tt> will iterate.
  The iteration position is set to the beginning of the input text.
  @param newText The new string to be normalized.
  */
-- (void)setTextWithCharArray:(IOSCharArray *)newText __attribute__((deprecated));
+- (void)setTextWithCharArray:(IOSCharArray *)newText;
 
 /*!
  @brief Set the input text over which this <tt>Normalizer</tt> will iterate.
  The iteration position is set to the beginning of the input text.
  @param newText The new string to be normalized.
  */
-- (void)setTextWithJavaTextCharacterIterator:(id<JavaTextCharacterIterator>)newText __attribute__((deprecated));
+- (void)setTextWithJavaTextCharacterIterator:(id<JavaTextCharacterIterator>)newText;
 
 /*!
  @brief Set the input text over which this <tt>Normalizer</tt> will iterate.
  The iteration position is set to the beginning of the input text.
  @param newText The new string to be normalized.
  */
-- (void)setTextWithNSString:(NSString *)newText __attribute__((deprecated));
+- (void)setTextWithNSString:(NSString *)newText;
 
 /*!
  @brief Set the input text over which this <tt>Normalizer</tt> will iterate.
  The iteration position is set to the beginning of the input text.
  @param newText The new string to be normalized.
  */
-- (void)setTextWithJavaLangStringBuffer:(JavaLangStringBuffer *)newText __attribute__((deprecated));
+- (void)setTextWithJavaLangStringBuffer:(JavaLangStringBuffer *)newText;
 
 /*!
  @brief Set the input text over which this <tt>Normalizer</tt> will iterate.
  The iteration position is set to the beginning of the string.
  @param newText The new string to be normalized.
  */
-- (void)setTextWithAndroidIcuTextUCharacterIterator:(AndroidIcuTextUCharacterIterator *)newText __attribute__((deprecated));
+- (void)setTextWithAndroidIcuTextUCharacterIterator:(AndroidIcuTextUCharacterIterator *)newText;
 
 /*!
  @brief Retrieve the index of the start of the input text.This is the begin
@@ -1043,7 +1018,7 @@ withAndroidIcuTextNormalizer_Mode:(AndroidIcuTextNormalizer_Mode *)mode
  <tt>String</tt> over which this <tt>Normalizer</tt> is iterating
  @return The current iteration position
  */
-- (jint)startIndex __attribute__((deprecated));
+- (jint)startIndex;
 
 #pragma mark Package-Private
 
@@ -1425,6 +1400,7 @@ J2OBJC_TYPE_LITERAL_HEADER(AndroidIcuTextNormalizer)
 #define AndroidIcuTextNormalizer_Mode_
 
 @class AndroidIcuTextNormalizer2;
+@class JavaLangInteger;
 
 /*!
  @brief Constants for normalization modes.
@@ -1433,7 +1409,6 @@ J2OBJC_TYPE_LITERAL_HEADER(AndroidIcuTextNormalizer)
   Only the Mode constants provided by the Normalizer class should be used,
   and any fields or methods should not be called or overridden by users.
  */
-__attribute__((deprecated))
 @interface AndroidIcuTextNormalizer_Mode : NSObject
 
 #pragma mark Protected
@@ -1441,11 +1416,11 @@ __attribute__((deprecated))
 /*!
  @brief Sole constructor
  */
-- (instancetype __nonnull)init __attribute__((deprecated));
+- (instancetype __nonnull)init;
 
 /*!
  */
-- (AndroidIcuTextNormalizer2 *)getNormalizer2WithInt:(jint)options __attribute__((deprecated));
+- (AndroidIcuTextNormalizer2 *)getNormalizer2WithInt:(jint)options;
 
 @end
 
@@ -1482,6 +1457,4 @@ J2OBJC_TYPE_LITERAL_HEADER(AndroidIcuTextNormalizer_QuickCheckResult)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_AndroidIcuTextNormalizer")

@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaLangNoClassDefFoundError
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -38,8 +35,7 @@
   The searched-for class definition existed when the currently
   executing class was compiled, but the definition can no longer be
   found.
- @author unascribed
- @since JDK1.0
+ @since 1.0
  */
 @interface JavaLangNoClassDefFoundError : JavaLangLinkageError
 
@@ -81,6 +77,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaLangNoClassDefFoundError)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaLangNoClassDefFoundError")

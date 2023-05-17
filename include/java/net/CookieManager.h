@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaNetCookieManager
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -43,7 +40,7 @@
  <p> The HTTP cookie management in java.net package looks like: 
  <blockquote>
   @code
-                 use
+                  use
   CookieHandler <------- HttpURLConnection
         ^
         | impl
@@ -189,6 +186,7 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaNetCookieManager)
 #define INCLUDE_JavaUtilComparator 1
 #include "java/util/Comparator.h"
 
+@class JavaLangInteger;
 @class JavaNetHttpCookie;
 @protocol JavaUtilFunctionFunction;
 @protocol JavaUtilFunctionToDoubleFunction;
@@ -224,6 +222,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaNetCookieManager_CookiePathComparator)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaNetCookieManager")

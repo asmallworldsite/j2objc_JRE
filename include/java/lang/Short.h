@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaLangShort
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -30,6 +27,12 @@
 #include "java/lang/Comparable.h"
 
 @class IOSClass;
+@class JavaLangBoolean;
+@class JavaLangByte;
+@class JavaLangDouble;
+@class JavaLangFloat;
+@class JavaLangInteger;
+@class JavaLangLong;
 
 /*!
  @brief The <code>Short</code> class wraps a value of primitive type <code>short</code>
@@ -39,17 +42,20 @@
   a <code>short</code> to a <code>String</code> and a <code>String</code> to a 
  <code>short</code>, as well as other constants and methods useful when
   dealing with a <code>short</code>.
+  
+ <!-- Android-removed: paragraph on ValueBased
+ <p>This is a <a href="{@@docRoot}/java.base/java/lang/doc-files/ValueBased.html">value-based</a>
+ class; programmers should treat instances that are
+ {@@linkplain #equals(Object) equal} as interchangeable and should not
+ use instances for synchronization, or unpredictable behavior may
+ occur. For example, in a future release, synchronization may fail.
+ -->
  @author Nakul Saraiya
  @author Joseph D. Darcy
  - seealso: java.lang.Number
- @since JDK1.1
+ @since 1.1
  */
 @interface JavaLangShort : NSNumber < JavaLangComparable >
-@property (readonly, class) jshort MIN_VALUE NS_SWIFT_NAME(MIN_VALUE);
-@property (readonly, class) jshort MAX_VALUE NS_SWIFT_NAME(MAX_VALUE);
-@property (readonly, class, strong) IOSClass *TYPE NS_SWIFT_NAME(TYPE);
-@property (readonly, class) jint SIZE NS_SWIFT_NAME(SIZE);
-@property (readonly, class) jint BYTES NS_SWIFT_NAME(BYTES);
 
 #pragma mark Public
 
@@ -71,7 +77,6 @@
             <code>Short</code>
  @throw NumberFormatExceptionIf the <code>String</code>
            does not contain a parsable <code>short</code>.
- - seealso: java.lang.Short#parseShort(java.lang.String, int)
  */
 - (instancetype __nonnull)initWithNSString:(NSString *)s;
 
@@ -114,6 +119,20 @@
 - (jint)compareToWithId:(JavaLangShort *)anotherShort;
 
 /*!
+ @brief Compares two <code>short</code> values numerically treating the values
+  as unsigned.
+ @param x the first <code>short</code>  to compare
+ @param y the second <code>short</code>  to compare
+ @return the value <code>0</code> if <code>x == y</code>; a value less
+          than <code>0</code> if <code>x < y</code> as unsigned values; and
+          a value greater than <code>0</code> if <code>x > y</code> as
+          unsigned values
+ @since 9
+ */
++ (jint)compareUnsignedWithShort:(jshort)x
+                       withShort:(jshort)y;
+
+/*!
  @brief Decodes a <code>String</code> into a <code>Short</code>.
  Accepts decimal, hexadecimal, and octal numbers given by
   the following grammar: 
@@ -134,7 +153,7 @@
   
  <i>DecimalNumeral</i>, <i>HexDigits</i>, and <i>OctalDigits</i>
   are as defined in section 3.10.1 of 
- <cite>The Java&trade; Language Specification</cite>,
+ <cite>The Java Language Specification</cite>,
   except that underscores are not accepted between digits. 
  <p>The sequence of characters following an optional
   sign and/or radix specifier ("<code>0x</code>", "<code>0X</code>",
@@ -482,6 +501,8 @@ FOUNDATION_EXPORT jint JavaLangShort_hashCodeWithShort_(jshort value);
 
 FOUNDATION_EXPORT jint JavaLangShort_compareWithShort_withShort_(jshort x, jshort y);
 
+FOUNDATION_EXPORT jint JavaLangShort_compareUnsignedWithShort_withShort_(jshort x, jshort y);
+
 FOUNDATION_EXPORT jshort JavaLangShort_reverseBytesWithShort_(jshort i);
 
 FOUNDATION_EXPORT jint JavaLangShort_toUnsignedIntWithShort_(jshort x);
@@ -498,6 +519,4 @@ BOXED_INC_AND_DEC(Short, shortValue, JavaLangShort)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaLangShort")

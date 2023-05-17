@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaSecurityCertCertStore
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -54,24 +51,16 @@
   implementation of <code>CertStore</code> provides access to certificates
   and CRLs stored in one or more directories using the LDAP protocol and the
   schema as defined in the RFC service attribute. 
- <p> Android provides the following <code>CertStore</code> types: 
- <table>
-    <thead>
-      <tr>
-        <th>Algorithm</th>
-        <th>Supported API Levels</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>Collection</td>
-        <td>1+</td>
-      </tr>
-    </tbody>
-  </table>
-  This type is described in the <a href="{@@docRoot}/../technotes/guides/security/StandardNames.html#CertStore">
+ <p> Every implementation of the Java platform is required to support the
+  following standard <code>CertStore</code> type: 
+ <ul>
+  <li><code>Collection</code></li>
+  </ul>
+  This type is described in the <a href="{@@docRoot}/../specs/security/standard-names.html#certstore-types">
   CertStore section</a> of the
-  Java Cryptography Architecture Standard Algorithm Name Documentation. 
+  Java Security Standard Algorithm Names Specification.
+  Consult the release documentation for your implementation to see if any
+  other types are supported. 
  <p>
   <b>Concurrent Access</b>
   <p>
@@ -187,17 +176,18 @@
   Note that the specified <code>CertStoreParameters</code> object is
   cloned.
  @param type the name of the requested <code>CertStore</code>  type.
-   See the CertStore section in the  <a href="{@@docRoot}/../technotes/guides/security/StandardNames.html#CertStore">
-   Java Cryptography Architecture Standard Algorithm Name Documentation
+   See the CertStore section in the  <a href="{@@docRoot}/../specs/security/standard-names.html#certstore-types">
+   Java Security Standard Algorithm Names Specification
   </a>  for information about standard types.
  @param params the initialization parameters (may be <code>null</code> ).
  @return a <code>CertStore</code> object that implements the specified
-           <code>CertStore</code> type.
- @throw NoSuchAlgorithmExceptionif no Provider supports a
-           CertStoreSpi implementation for the specified type.
+           <code>CertStore</code> type
  @throw InvalidAlgorithmParameterExceptionif the specified
-           initialization parameters are inappropriate for this          
- <code>CertStore</code>.
+          initialization parameters are inappropriate for this         
+ <code>CertStore</code>
+ @throw NoSuchAlgorithmExceptionif no <code>Provider</code> supports a
+          <code>CertStoreSpi</code> implementation for the specified type
+ @throw NullPointerExceptionif <code>type</code> is <code>null</code>
  - seealso: java.security.Provider
  */
 + (JavaSecurityCertCertStore *)getInstanceWithNSString:(NSString *)type
@@ -216,21 +206,22 @@
   Note that the specified <code>CertStoreParameters</code> object is
   cloned.
  @param type the requested <code>CertStore</code>  type.
-   See the CertStore section in the  <a href="{@@docRoot}/../technotes/guides/security/StandardNames.html#CertStore">
-   Java Cryptography Architecture Standard Algorithm Name Documentation
+   See the CertStore section in the  <a href="{@@docRoot}/../specs/security/standard-names.html#certstore-types">
+   Java Security Standard Algorithm Names Specification
   </a>  for information about standard types.
  @param params the initialization parameters (may be <code>null</code> ).
  @param provider the provider.
  @return a <code>CertStore</code> object that implements the
-           specified type.
- @throw NoSuchAlgorithmExceptionif a CertStoreSpi
-           implementation for the specified type is not available
-           from the specified Provider object.
- @throw InvalidAlgorithmParameterExceptionif the specified
-           initialization parameters are inappropriate for this          
- <code>CertStore</code>
+           specified type
  @throw IllegalArgumentExceptionif the <code>provider</code> is
-           null.
+          null
+ @throw InvalidAlgorithmParameterExceptionif the specified
+          initialization parameters are inappropriate for this         
+ <code>CertStore</code>
+ @throw NoSuchAlgorithmExceptionif a <code>CertStoreSpi</code>
+          implementation for the specified type is not available
+          from the specified Provider object
+ @throw NullPointerExceptionif <code>type</code> is <code>null</code>
  - seealso: java.security.Provider
  */
 + (JavaSecurityCertCertStore *)getInstanceWithNSString:(NSString *)type
@@ -252,23 +243,24 @@
   Note that the specified <code>CertStoreParameters</code> object is
   cloned.
  @param type the requested <code>CertStore</code>  type.
-   See the CertStore section in the  <a href="{@@docRoot}/../technotes/guides/security/StandardNames.html#CertStore">
-   Java Cryptography Architecture Standard Algorithm Name Documentation
+   See the CertStore section in the  <a href="{@@docRoot}/../specs/security/standard-names.html#certstore-types">
+   Java Security Standard Algorithm Names Specification
   </a>  for information about standard types.
  @param params the initialization parameters (may be <code>null</code> ).
  @param provider the name of the provider.
  @return a <code>CertStore</code> object that implements the
-           specified type.
- @throw NoSuchAlgorithmExceptionif a CertStoreSpi
-           implementation for the specified type is not
-           available from the specified provider.
- @throw InvalidAlgorithmParameterExceptionif the specified
-           initialization parameters are inappropriate for this          
- <code>CertStore</code>.
- @throw NoSuchProviderExceptionif the specified provider is not
-           registered in the security provider list.
+           specified type
  @throw IllegalArgumentExceptionif the <code>provider</code> is
-           null or empty.
+          <code>null</code> or empty
+ @throw InvalidAlgorithmParameterExceptionif the specified
+          initialization parameters are inappropriate for this         
+ <code>CertStore</code>
+ @throw NoSuchAlgorithmExceptionif a <code>CertStoreSpi</code>
+          implementation for the specified type is not
+          available from the specified provider
+ @throw NoSuchProviderExceptionif the specified provider is not
+          registered in the security provider list
+ @throw NullPointerExceptionif <code>type</code> is <code>null</code>
  - seealso: java.security.Provider
  */
 + (JavaSecurityCertCertStore *)getInstanceWithNSString:(NSString *)type
@@ -332,6 +324,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaSecurityCertCertStore)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaSecurityCertCertStore")

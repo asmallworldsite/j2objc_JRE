@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_AndroidIcuTextTimeZoneFormat
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -43,6 +40,9 @@
 @class AndroidIcuUtilOutput;
 @class AndroidIcuUtilTimeZone;
 @class AndroidIcuUtilULocale;
+@class JavaLangBoolean;
+@class JavaLangInteger;
+@class JavaLangLong;
 @class JavaLangStringBuffer;
 @class JavaTextFieldPosition;
 @class JavaTextParsePosition;
@@ -483,8 +483,9 @@ J2OBJC_TYPE_LITERAL_HEADER(AndroidIcuTextTimeZoneFormat)
 #include "java/lang/Enum.h"
 
 @class IOSObjectArray;
+@class JavaLangInteger;
 
-typedef NS_ENUM(NSUInteger, AndroidIcuTextTimeZoneFormat_Style_Enum) {
+typedef NS_ENUM(jint, AndroidIcuTextTimeZoneFormat_Style_Enum) {
   AndroidIcuTextTimeZoneFormat_Style_Enum_GENERIC_LOCATION = 0,
   AndroidIcuTextTimeZoneFormat_Style_Enum_GENERIC_LONG = 1,
   AndroidIcuTextTimeZoneFormat_Style_Enum_GENERIC_SHORT = 2,
@@ -506,6 +507,12 @@ typedef NS_ENUM(NSUInteger, AndroidIcuTextTimeZoneFormat_Style_Enum) {
   AndroidIcuTextTimeZoneFormat_Style_Enum_ZONE_ID_SHORT = 18,
   AndroidIcuTextTimeZoneFormat_Style_Enum_EXEMPLAR_LOCATION = 19,
 };
+#if J2OBJC_IMPORTED_BY_JAVA_IMPLEMENTATION
+#define AndroidIcuTextTimeZoneFormat_Style_ORDINAL jint
+#else
+#define AndroidIcuTextTimeZoneFormat_Style_ORDINAL AndroidIcuTextTimeZoneFormat_Style_Enum
+#endif
+
 
 /*!
  @brief Time zone display format style enum used by format/parse APIs in <code>TimeZoneFormat</code>.
@@ -518,26 +525,6 @@ typedef NS_ENUM(NSUInteger, AndroidIcuTextTimeZoneFormat_Style_Enum) {
   jint flag_;
 }
 
-@property (readonly, class, nonnull) AndroidIcuTextTimeZoneFormat_Style *GENERIC_LOCATION NS_SWIFT_NAME(GENERIC_LOCATION);
-@property (readonly, class, nonnull) AndroidIcuTextTimeZoneFormat_Style *GENERIC_LONG NS_SWIFT_NAME(GENERIC_LONG);
-@property (readonly, class, nonnull) AndroidIcuTextTimeZoneFormat_Style *GENERIC_SHORT NS_SWIFT_NAME(GENERIC_SHORT);
-@property (readonly, class, nonnull) AndroidIcuTextTimeZoneFormat_Style *SPECIFIC_LONG NS_SWIFT_NAME(SPECIFIC_LONG);
-@property (readonly, class, nonnull) AndroidIcuTextTimeZoneFormat_Style *SPECIFIC_SHORT NS_SWIFT_NAME(SPECIFIC_SHORT);
-@property (readonly, class, nonnull) AndroidIcuTextTimeZoneFormat_Style *LOCALIZED_GMT NS_SWIFT_NAME(LOCALIZED_GMT);
-@property (readonly, class, nonnull) AndroidIcuTextTimeZoneFormat_Style *LOCALIZED_GMT_SHORT NS_SWIFT_NAME(LOCALIZED_GMT_SHORT);
-@property (readonly, class, nonnull) AndroidIcuTextTimeZoneFormat_Style *ISO_BASIC_SHORT NS_SWIFT_NAME(ISO_BASIC_SHORT);
-@property (readonly, class, nonnull) AndroidIcuTextTimeZoneFormat_Style *ISO_BASIC_LOCAL_SHORT NS_SWIFT_NAME(ISO_BASIC_LOCAL_SHORT);
-@property (readonly, class, nonnull) AndroidIcuTextTimeZoneFormat_Style *ISO_BASIC_FIXED NS_SWIFT_NAME(ISO_BASIC_FIXED);
-@property (readonly, class, nonnull) AndroidIcuTextTimeZoneFormat_Style *ISO_BASIC_LOCAL_FIXED NS_SWIFT_NAME(ISO_BASIC_LOCAL_FIXED);
-@property (readonly, class, nonnull) AndroidIcuTextTimeZoneFormat_Style *ISO_BASIC_FULL NS_SWIFT_NAME(ISO_BASIC_FULL);
-@property (readonly, class, nonnull) AndroidIcuTextTimeZoneFormat_Style *ISO_BASIC_LOCAL_FULL NS_SWIFT_NAME(ISO_BASIC_LOCAL_FULL);
-@property (readonly, class, nonnull) AndroidIcuTextTimeZoneFormat_Style *ISO_EXTENDED_FIXED NS_SWIFT_NAME(ISO_EXTENDED_FIXED);
-@property (readonly, class, nonnull) AndroidIcuTextTimeZoneFormat_Style *ISO_EXTENDED_LOCAL_FIXED NS_SWIFT_NAME(ISO_EXTENDED_LOCAL_FIXED);
-@property (readonly, class, nonnull) AndroidIcuTextTimeZoneFormat_Style *ISO_EXTENDED_FULL NS_SWIFT_NAME(ISO_EXTENDED_FULL);
-@property (readonly, class, nonnull) AndroidIcuTextTimeZoneFormat_Style *ISO_EXTENDED_LOCAL_FULL NS_SWIFT_NAME(ISO_EXTENDED_LOCAL_FULL);
-@property (readonly, class, nonnull) AndroidIcuTextTimeZoneFormat_Style *ZONE_ID NS_SWIFT_NAME(ZONE_ID);
-@property (readonly, class, nonnull) AndroidIcuTextTimeZoneFormat_Style *ZONE_ID_SHORT NS_SWIFT_NAME(ZONE_ID_SHORT);
-@property (readonly, class, nonnull) AndroidIcuTextTimeZoneFormat_Style *EXEMPLAR_LOCATION NS_SWIFT_NAME(EXEMPLAR_LOCATION);
 #pragma mark Public
 
 + (AndroidIcuTextTimeZoneFormat_Style *)valueOfWithNSString:(NSString *)name;
@@ -547,6 +534,8 @@ typedef NS_ENUM(NSUInteger, AndroidIcuTextTimeZoneFormat_Style_Enum) {
 #pragma mark Package-Private
 
 - (AndroidIcuTextTimeZoneFormat_Style_Enum)toNSEnum;
+
+- (AndroidIcuTextTimeZoneFormat_Style_ORDINAL)ordinal;
 
 @end
 
@@ -706,7 +695,7 @@ FOUNDATION_EXPORT IOSObjectArray *AndroidIcuTextTimeZoneFormat_Style_values(void
 
 FOUNDATION_EXPORT AndroidIcuTextTimeZoneFormat_Style *AndroidIcuTextTimeZoneFormat_Style_valueOfWithNSString_(NSString *name);
 
-FOUNDATION_EXPORT AndroidIcuTextTimeZoneFormat_Style *AndroidIcuTextTimeZoneFormat_Style_fromOrdinal(NSUInteger ordinal);
+FOUNDATION_EXPORT AndroidIcuTextTimeZoneFormat_Style *AndroidIcuTextTimeZoneFormat_Style_fromOrdinal(AndroidIcuTextTimeZoneFormat_Style_ORDINAL ordinal);
 
 J2OBJC_TYPE_LITERAL_HEADER(AndroidIcuTextTimeZoneFormat_Style)
 
@@ -721,7 +710,7 @@ J2OBJC_TYPE_LITERAL_HEADER(AndroidIcuTextTimeZoneFormat_Style)
 
 @class IOSObjectArray;
 
-typedef NS_ENUM(NSUInteger, AndroidIcuTextTimeZoneFormat_GMTOffsetPatternType_Enum) {
+typedef NS_ENUM(jint, AndroidIcuTextTimeZoneFormat_GMTOffsetPatternType_Enum) {
   AndroidIcuTextTimeZoneFormat_GMTOffsetPatternType_Enum_POSITIVE_HM = 0,
   AndroidIcuTextTimeZoneFormat_GMTOffsetPatternType_Enum_POSITIVE_HMS = 1,
   AndroidIcuTextTimeZoneFormat_GMTOffsetPatternType_Enum_NEGATIVE_HM = 2,
@@ -729,6 +718,12 @@ typedef NS_ENUM(NSUInteger, AndroidIcuTextTimeZoneFormat_GMTOffsetPatternType_En
   AndroidIcuTextTimeZoneFormat_GMTOffsetPatternType_Enum_POSITIVE_H = 4,
   AndroidIcuTextTimeZoneFormat_GMTOffsetPatternType_Enum_NEGATIVE_H = 5,
 };
+#if J2OBJC_IMPORTED_BY_JAVA_IMPLEMENTATION
+#define AndroidIcuTextTimeZoneFormat_GMTOffsetPatternType_ORDINAL jint
+#else
+#define AndroidIcuTextTimeZoneFormat_GMTOffsetPatternType_ORDINAL AndroidIcuTextTimeZoneFormat_GMTOffsetPatternType_Enum
+#endif
+
 
 /*!
  @brief Offset pattern type enum.
@@ -737,12 +732,6 @@ typedef NS_ENUM(NSUInteger, AndroidIcuTextTimeZoneFormat_GMTOffsetPatternType_En
  */
 @interface AndroidIcuTextTimeZoneFormat_GMTOffsetPatternType : JavaLangEnum
 
-@property (readonly, class, nonnull) AndroidIcuTextTimeZoneFormat_GMTOffsetPatternType *POSITIVE_HM NS_SWIFT_NAME(POSITIVE_HM);
-@property (readonly, class, nonnull) AndroidIcuTextTimeZoneFormat_GMTOffsetPatternType *POSITIVE_HMS NS_SWIFT_NAME(POSITIVE_HMS);
-@property (readonly, class, nonnull) AndroidIcuTextTimeZoneFormat_GMTOffsetPatternType *NEGATIVE_HM NS_SWIFT_NAME(NEGATIVE_HM);
-@property (readonly, class, nonnull) AndroidIcuTextTimeZoneFormat_GMTOffsetPatternType *NEGATIVE_HMS NS_SWIFT_NAME(NEGATIVE_HMS);
-@property (readonly, class, nonnull) AndroidIcuTextTimeZoneFormat_GMTOffsetPatternType *POSITIVE_H NS_SWIFT_NAME(POSITIVE_H);
-@property (readonly, class, nonnull) AndroidIcuTextTimeZoneFormat_GMTOffsetPatternType *NEGATIVE_H NS_SWIFT_NAME(NEGATIVE_H);
 #pragma mark Public
 
 + (AndroidIcuTextTimeZoneFormat_GMTOffsetPatternType *)valueOfWithNSString:(NSString *)name;
@@ -752,6 +741,8 @@ typedef NS_ENUM(NSUInteger, AndroidIcuTextTimeZoneFormat_GMTOffsetPatternType_En
 #pragma mark Package-Private
 
 - (AndroidIcuTextTimeZoneFormat_GMTOffsetPatternType_Enum)toNSEnum;
+
+- (AndroidIcuTextTimeZoneFormat_GMTOffsetPatternType_ORDINAL)ordinal;
 
 @end
 
@@ -800,7 +791,7 @@ FOUNDATION_EXPORT IOSObjectArray *AndroidIcuTextTimeZoneFormat_GMTOffsetPatternT
 
 FOUNDATION_EXPORT AndroidIcuTextTimeZoneFormat_GMTOffsetPatternType *AndroidIcuTextTimeZoneFormat_GMTOffsetPatternType_valueOfWithNSString_(NSString *name);
 
-FOUNDATION_EXPORT AndroidIcuTextTimeZoneFormat_GMTOffsetPatternType *AndroidIcuTextTimeZoneFormat_GMTOffsetPatternType_fromOrdinal(NSUInteger ordinal);
+FOUNDATION_EXPORT AndroidIcuTextTimeZoneFormat_GMTOffsetPatternType *AndroidIcuTextTimeZoneFormat_GMTOffsetPatternType_fromOrdinal(AndroidIcuTextTimeZoneFormat_GMTOffsetPatternType_ORDINAL ordinal);
 
 J2OBJC_TYPE_LITERAL_HEADER(AndroidIcuTextTimeZoneFormat_GMTOffsetPatternType)
 
@@ -815,11 +806,17 @@ J2OBJC_TYPE_LITERAL_HEADER(AndroidIcuTextTimeZoneFormat_GMTOffsetPatternType)
 
 @class IOSObjectArray;
 
-typedef NS_ENUM(NSUInteger, AndroidIcuTextTimeZoneFormat_TimeType_Enum) {
+typedef NS_ENUM(jint, AndroidIcuTextTimeZoneFormat_TimeType_Enum) {
   AndroidIcuTextTimeZoneFormat_TimeType_Enum_UNKNOWN = 0,
   AndroidIcuTextTimeZoneFormat_TimeType_Enum_STANDARD = 1,
   AndroidIcuTextTimeZoneFormat_TimeType_Enum_DAYLIGHT = 2,
 };
+#if J2OBJC_IMPORTED_BY_JAVA_IMPLEMENTATION
+#define AndroidIcuTextTimeZoneFormat_TimeType_ORDINAL jint
+#else
+#define AndroidIcuTextTimeZoneFormat_TimeType_ORDINAL AndroidIcuTextTimeZoneFormat_TimeType_Enum
+#endif
+
 
 /*!
  @brief Time type enum used for receiving time type (standard time, daylight time or unknown)
@@ -827,9 +824,6 @@ typedef NS_ENUM(NSUInteger, AndroidIcuTextTimeZoneFormat_TimeType_Enum) {
  */
 @interface AndroidIcuTextTimeZoneFormat_TimeType : JavaLangEnum
 
-@property (readonly, class, nonnull) AndroidIcuTextTimeZoneFormat_TimeType *UNKNOWN NS_SWIFT_NAME(UNKNOWN);
-@property (readonly, class, nonnull) AndroidIcuTextTimeZoneFormat_TimeType *STANDARD NS_SWIFT_NAME(STANDARD);
-@property (readonly, class, nonnull) AndroidIcuTextTimeZoneFormat_TimeType *DAYLIGHT NS_SWIFT_NAME(DAYLIGHT);
 #pragma mark Public
 
 + (AndroidIcuTextTimeZoneFormat_TimeType *)valueOfWithNSString:(NSString *)name;
@@ -839,6 +833,8 @@ typedef NS_ENUM(NSUInteger, AndroidIcuTextTimeZoneFormat_TimeType_Enum) {
 #pragma mark Package-Private
 
 - (AndroidIcuTextTimeZoneFormat_TimeType_Enum)toNSEnum;
+
+- (AndroidIcuTextTimeZoneFormat_TimeType_ORDINAL)ordinal;
 
 @end
 
@@ -869,7 +865,7 @@ FOUNDATION_EXPORT IOSObjectArray *AndroidIcuTextTimeZoneFormat_TimeType_values(v
 
 FOUNDATION_EXPORT AndroidIcuTextTimeZoneFormat_TimeType *AndroidIcuTextTimeZoneFormat_TimeType_valueOfWithNSString_(NSString *name);
 
-FOUNDATION_EXPORT AndroidIcuTextTimeZoneFormat_TimeType *AndroidIcuTextTimeZoneFormat_TimeType_fromOrdinal(NSUInteger ordinal);
+FOUNDATION_EXPORT AndroidIcuTextTimeZoneFormat_TimeType *AndroidIcuTextTimeZoneFormat_TimeType_fromOrdinal(AndroidIcuTextTimeZoneFormat_TimeType_ORDINAL ordinal);
 
 J2OBJC_TYPE_LITERAL_HEADER(AndroidIcuTextTimeZoneFormat_TimeType)
 
@@ -884,18 +880,22 @@ J2OBJC_TYPE_LITERAL_HEADER(AndroidIcuTextTimeZoneFormat_TimeType)
 
 @class IOSObjectArray;
 
-typedef NS_ENUM(NSUInteger, AndroidIcuTextTimeZoneFormat_ParseOption_Enum) {
+typedef NS_ENUM(jint, AndroidIcuTextTimeZoneFormat_ParseOption_Enum) {
   AndroidIcuTextTimeZoneFormat_ParseOption_Enum_ALL_STYLES = 0,
   AndroidIcuTextTimeZoneFormat_ParseOption_Enum_TZ_DATABASE_ABBREVIATIONS = 1,
 };
+#if J2OBJC_IMPORTED_BY_JAVA_IMPLEMENTATION
+#define AndroidIcuTextTimeZoneFormat_ParseOption_ORDINAL jint
+#else
+#define AndroidIcuTextTimeZoneFormat_ParseOption_ORDINAL AndroidIcuTextTimeZoneFormat_ParseOption_Enum
+#endif
+
 
 /*!
  @brief Parse option enum, used for specifying optional parse behavior.
  */
 @interface AndroidIcuTextTimeZoneFormat_ParseOption : JavaLangEnum
 
-@property (readonly, class, nonnull) AndroidIcuTextTimeZoneFormat_ParseOption *ALL_STYLES NS_SWIFT_NAME(ALL_STYLES);
-@property (readonly, class, nonnull) AndroidIcuTextTimeZoneFormat_ParseOption *TZ_DATABASE_ABBREVIATIONS NS_SWIFT_NAME(TZ_DATABASE_ABBREVIATIONS);
 #pragma mark Public
 
 + (AndroidIcuTextTimeZoneFormat_ParseOption *)valueOfWithNSString:(NSString *)name;
@@ -905,6 +905,8 @@ typedef NS_ENUM(NSUInteger, AndroidIcuTextTimeZoneFormat_ParseOption_Enum) {
 #pragma mark Package-Private
 
 - (AndroidIcuTextTimeZoneFormat_ParseOption_Enum)toNSEnum;
+
+- (AndroidIcuTextTimeZoneFormat_ParseOption_ORDINAL)ordinal;
 
 @end
 
@@ -934,7 +936,7 @@ FOUNDATION_EXPORT IOSObjectArray *AndroidIcuTextTimeZoneFormat_ParseOption_value
 
 FOUNDATION_EXPORT AndroidIcuTextTimeZoneFormat_ParseOption *AndroidIcuTextTimeZoneFormat_ParseOption_valueOfWithNSString_(NSString *name);
 
-FOUNDATION_EXPORT AndroidIcuTextTimeZoneFormat_ParseOption *AndroidIcuTextTimeZoneFormat_ParseOption_fromOrdinal(NSUInteger ordinal);
+FOUNDATION_EXPORT AndroidIcuTextTimeZoneFormat_ParseOption *AndroidIcuTextTimeZoneFormat_ParseOption_fromOrdinal(AndroidIcuTextTimeZoneFormat_ParseOption_ORDINAL ordinal);
 
 J2OBJC_TYPE_LITERAL_HEADER(AndroidIcuTextTimeZoneFormat_ParseOption)
 
@@ -944,6 +946,4 @@ J2OBJC_TYPE_LITERAL_HEADER(AndroidIcuTextTimeZoneFormat_ParseOption)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_AndroidIcuTextTimeZoneFormat")

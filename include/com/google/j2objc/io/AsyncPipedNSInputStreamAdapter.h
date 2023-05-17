@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_ComGoogleJ2objcIoAsyncPipedNSInputStreamAdapter
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -25,6 +22,7 @@
 #if !defined (ComGoogleJ2objcIoAsyncPipedNSInputStreamAdapter_) && (INCLUDE_ALL_ComGoogleJ2objcIoAsyncPipedNSInputStreamAdapter || defined(INCLUDE_ComGoogleJ2objcIoAsyncPipedNSInputStreamAdapter))
 #define ComGoogleJ2objcIoAsyncPipedNSInputStreamAdapter_
 
+@class JavaLangInteger;
 @protocol ComGoogleJ2objcIoAsyncPipedNSInputStreamAdapter_Delegate;
 
 /*!
@@ -120,6 +118,8 @@ J2OBJC_TYPE_LITERAL_HEADER(ComGoogleJ2objcIoAsyncPipedNSInputStreamAdapter_Deleg
 #include "java/io/OutputStream.h"
 
 @class IOSByteArray;
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @protocol ComGoogleJ2objcIoAsyncPipedNSInputStreamAdapter_Delegate;
 
 /*!
@@ -180,6 +180,4 @@ J2OBJC_TYPE_LITERAL_HEADER(ComGoogleJ2objcIoAsyncPipedNSInputStreamAdapter_Outpu
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_ComGoogleJ2objcIoAsyncPipedNSInputStreamAdapter")

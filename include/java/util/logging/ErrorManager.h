@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaUtilLoggingErrorManager
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -26,6 +23,7 @@
 #define JavaUtilLoggingErrorManager_
 
 @class JavaLangException;
+@class JavaLangInteger;
 
 /*!
  @brief ErrorManager objects can be attached to Handlers to process
@@ -37,12 +35,6 @@
   should call its associated ErrorManager.
  */
 @interface JavaUtilLoggingErrorManager : NSObject
-@property (readonly, class) jint GENERIC_FAILURE NS_SWIFT_NAME(GENERIC_FAILURE);
-@property (readonly, class) jint WRITE_FAILURE NS_SWIFT_NAME(WRITE_FAILURE);
-@property (readonly, class) jint FLUSH_FAILURE NS_SWIFT_NAME(FLUSH_FAILURE);
-@property (readonly, class) jint CLOSE_FAILURE NS_SWIFT_NAME(CLOSE_FAILURE);
-@property (readonly, class) jint OPEN_FAILURE NS_SWIFT_NAME(OPEN_FAILURE);
-@property (readonly, class) jint FORMAT_FAILURE NS_SWIFT_NAME(FORMAT_FAILURE);
 
 #pragma mark Public
 
@@ -123,6 +115,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilLoggingErrorManager)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaUtilLoggingErrorManager")

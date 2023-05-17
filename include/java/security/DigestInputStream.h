@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaSecurityDigestInputStream
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -31,6 +28,8 @@
 
 @class IOSByteArray;
 @class JavaIoInputStream;
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @class JavaSecurityMessageDigest;
 
 /*!
@@ -50,10 +49,11 @@
  <code>MessageDigest</code>),
   so that in order to compute intermediate digests, a caller should
   retain a handle onto the digest object, and clone it for each
-  digest to be computed, leaving the orginal digest untouched.
+  digest to be computed, leaving the original digest untouched.
  - seealso: MessageDigest
  - seealso: DigestOutputStream
  @author Benjamin Renaud
+ @since 1.2
  */
 @interface JavaSecurityDigestInputStream : JavaIoFilterInputStream {
  @public
@@ -170,6 +170,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaSecurityDigestInputStream)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaSecurityDigestInputStream")

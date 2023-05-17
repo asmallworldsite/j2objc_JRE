@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaIoDataInputStream
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -35,6 +32,14 @@
 
 @class IOSByteArray;
 @class JavaIoInputStream;
+@class JavaLangBoolean;
+@class JavaLangByte;
+@class JavaLangCharacter;
+@class JavaLangDouble;
+@class JavaLangFloat;
+@class JavaLangInteger;
+@class JavaLangLong;
+@class JavaLangShort;
 
 /*!
  @brief A data input stream lets an application read primitive Java data
@@ -47,7 +52,7 @@
   methods in this class.
  @author Arthur van Hoff
  - seealso: java.io.DataOutputStream
- @since JDK1.0
+ @since 1.0
  */
 @interface JavaIoDataInputStream : JavaIoFilterInputStream < JavaIoDataInput >
 
@@ -242,11 +247,12 @@
   for this operation are read from the contained
   input stream.
  @param b the buffer into which the data is read.
+ @throw NullPointerExceptionif <code>b</code> is <code>null</code>.
  @throw EOFExceptionif this input stream reaches the end before
-              reading all the bytes.
+           reading all the bytes.
  @throw IOExceptionthe stream has been closed and the contained
-              input stream does not support reading after close, or
-              another I/O error occurs.
+           input stream does not support reading after close, or
+           another I/O error occurs.
  - seealso: java.io.FilterInputStream#in
  */
 - (void)readFullyWithByteArray:(IOSByteArray *)b;
@@ -259,10 +265,14 @@
   for this operation are read from the contained
   input stream.
  @param b the buffer into which the data is read.
- @param off the start offset of the data.
+ @param off the start offset in the data array <code>b</code> .
  @param len the number of bytes to read.
+ @throw NullPointerExceptionif <code>b</code> is <code>null</code>.
+ @throw IndexOutOfBoundsExceptionif <code>off</code> is negative,
+              <code>len</code> is negative, or <code>len</code> is greater than
+              <code>b.length - off</code>.
  @throw EOFExceptionif this input stream reaches the end before
-                reading all the bytes.
+              reading all the bytes.
  @throw IOExceptionthe stream has been closed and the contained
               input stream does not support reading after close, or
               another I/O error occurs.
@@ -302,7 +312,7 @@
  - seealso: java.io.BufferedReader#readLine()
  - seealso: java.io.FilterInputStream#in
  */
-- (NSString *)readLine __attribute__((deprecated));
+- (NSString *)readLine;
 
 /*!
  @brief See the general contract of the <code>readLong</code>
@@ -451,6 +461,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaIoDataInputStream)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaIoDataInputStream")

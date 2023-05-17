@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaLangAnnotationRepeatable
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -30,13 +27,14 @@
 #include "java/lang/annotation/Annotation.h"
 
 @class IOSClass;
+@class JavaLangBoolean;
+@class JavaLangInteger;
 
 /*!
- @brief The annotation type <code>java.lang.annotation.Repeatable</code> is
-  used to indicate that the annotation type whose declaration it
-  (meta-)annotates is <em>repeatable</em>.The value of 
- <code>@@Repeatable</code> indicates the <em>containing annotation
-  type</em> for the repeatable annotation type.
+ @brief The annotation type <code>java.lang.annotation.Repeatable</code> is used to indicate that the
+  annotation type whose declaration it (meta-)annotates is <em>repeatable</em>.The value of 
+ <code>@@Repeatable</code> indicates the <em>containing annotation type</em> for the repeatable
+  annotation type.
  @since 1.8
  */
 @protocol JavaLangAnnotationRepeatable < JavaLangAnnotationAnnotation >
@@ -68,6 +66,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaLangAnnotationRepeatable)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaLangAnnotationRepeatable")

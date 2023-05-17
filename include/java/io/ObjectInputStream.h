@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaIoObjectInputStream
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -42,6 +39,14 @@
 @class IOSObjectArray;
 @class JavaIoObjectInputStream_GetField;
 @class JavaIoObjectStreamClass;
+@class JavaLangBoolean;
+@class JavaLangByte;
+@class JavaLangCharacter;
+@class JavaLangDouble;
+@class JavaLangFloat;
+@class JavaLangInteger;
+@class JavaLangLong;
+@class JavaLangShort;
 @protocol JavaIoObjectInputValidation;
 
 /*!
@@ -354,7 +359,7 @@
  @throw IOExceptionif there are I/O errors while reading from the
            underlying <code>InputStream</code>
  */
-- (NSString *)readLine __attribute__((deprecated));
+- (NSString *)readLine;
 
 /*!
  @brief Reads a 64 bit long.
@@ -738,6 +743,14 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaIoObjectInputStream)
 #define JavaIoObjectInputStream_GetField_
 
 @class JavaIoObjectStreamClass;
+@class JavaLangBoolean;
+@class JavaLangByte;
+@class JavaLangCharacter;
+@class JavaLangDouble;
+@class JavaLangFloat;
+@class JavaLangInteger;
+@class JavaLangLong;
+@class JavaLangShort;
 
 /*!
  @brief Provide access to the persistent fields read from the input stream.
@@ -906,6 +919,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaIoObjectInputStream_GetField)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaIoObjectInputStream")

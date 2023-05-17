@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaTimeTemporalTemporalField
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -25,6 +22,8 @@
 #if !defined (JavaTimeTemporalTemporalField_) && (INCLUDE_ALL_JavaTimeTemporalTemporalField || defined(INCLUDE_JavaTimeTemporalTemporalField))
 #define JavaTimeTemporalTemporalField_
 
+@class JavaLangBoolean;
+@class JavaLangLong;
 @class JavaTimeFormatResolverStyle;
 @class JavaTimeTemporalValueRange;
 @class JavaUtilLocale;
@@ -303,6 +302,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaTimeTemporalTemporalField)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaTimeTemporalTemporalField")

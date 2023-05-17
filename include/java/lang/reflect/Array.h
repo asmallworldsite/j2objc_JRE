@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaLangReflectArray
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -27,6 +24,14 @@
 
 @class IOSClass;
 @class IOSIntArray;
+@class JavaLangBoolean;
+@class JavaLangByte;
+@class JavaLangCharacter;
+@class JavaLangDouble;
+@class JavaLangFloat;
+@class JavaLangInteger;
+@class JavaLangLong;
+@class JavaLangShort;
 
 /*!
  @brief The <code>Array</code> class provides static methods to dynamically create and
@@ -517,6 +522,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaLangReflectArray)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaLangReflectArray")

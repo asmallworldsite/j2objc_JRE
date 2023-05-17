@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaSecurityPrincipal
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -25,6 +22,8 @@
 #if !defined (JavaSecurityPrincipal_) && (INCLUDE_ALL_JavaSecurityPrincipal || defined(INCLUDE_JavaSecurityPrincipal))
 #define JavaSecurityPrincipal_
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @class JavaxSecurityAuthSubject;
 
 /*!
@@ -33,6 +32,7 @@
   corporation, and a login id.
  - seealso: java.security.cert.X509Certificate
  @author Li Gong
+ @since 1.1
  */
 @protocol JavaSecurityPrincipal < JavaObject >
 
@@ -66,11 +66,6 @@
 
 /*!
  @brief Returns true if the specified subject is implied by this principal.
- <p>The default implementation of this method returns true if 
- <code>subject</code> is non-null and contains at least one principal that
-  is equal to this principal. 
- <p>Subclasses may override this with a different implementation, if
-  necessary.
  @param subject the <code>Subject</code>
  @return true if <code>subject</code> is non-null and is
                implied by this principal, or false otherwise.
@@ -92,6 +87,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaSecurityPrincipal)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaSecurityPrincipal")

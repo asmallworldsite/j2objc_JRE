@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaUtilConcurrentRecursiveAction
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -29,6 +26,8 @@
 #define INCLUDE_JavaUtilConcurrentForkJoinTask 1
 #include "java/util/concurrent/ForkJoinTask.h"
 
+@class JavaLangBoolean;
+@class JavaLangLong;
 @class JavaLangVoid;
 @class JavaUtilConcurrentTimeUnit;
 
@@ -206,6 +205,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentRecursiveAction)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaUtilConcurrentRecursiveAction")

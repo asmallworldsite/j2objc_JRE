@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaUtilConcurrentTransferQueue
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -29,6 +26,9 @@
 #define INCLUDE_JavaUtilConcurrentBlockingQueue 1
 #include "java/util/concurrent/BlockingQueue.h"
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
+@class JavaLangLong;
 @class JavaUtilConcurrentTimeUnit;
 
 /*!
@@ -50,7 +50,10 @@
   initially block waiting for available space, and/or subsequently
   block waiting for reception by a consumer.  Note that in a queue
   with zero capacity, such as <code>SynchronousQueue</code>, <code>put</code>
-  and <code>transfer</code> are effectively synonymous.
+  and <code>transfer</code> are effectively synonymous. 
+ <p>This interface is a member of the 
+ <a href="{@@docRoot}/java.base/java/util/package-summary.html#CollectionsFramework">
+  Java Collections Framework</a>.
  @since 1.7
  @author Doug Lea
  */
@@ -154,6 +157,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentTransferQueue)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaUtilConcurrentTransferQueue")

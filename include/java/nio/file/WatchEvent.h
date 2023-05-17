@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaNioFileWatchEvent
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -25,6 +22,7 @@
 #if !defined (JavaNioFileWatchEvent_) && (INCLUDE_ALL_JavaNioFileWatchEvent || defined(INCLUDE_JavaNioFileWatchEvent))
 #define JavaNioFileWatchEvent_
 
+@class JavaLangInteger;
 @protocol JavaNioFileWatchEvent_Kind;
 
 /*!
@@ -137,6 +135,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaNioFileWatchEvent_Modifier)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaNioFileWatchEvent")

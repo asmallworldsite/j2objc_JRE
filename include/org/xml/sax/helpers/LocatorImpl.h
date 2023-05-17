@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_OrgXmlSaxHelpersLocatorImpl
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -28,6 +25,8 @@
 #define RESTRICT_OrgXmlSaxLocator 1
 #define INCLUDE_OrgXmlSaxLocator 1
 #include "org/xml/sax/Locator.h"
+
+@class JavaLangInteger;
 
 /*!
  @brief Provide an optional convenience implementation of Locator.
@@ -175,6 +174,4 @@ J2OBJC_TYPE_LITERAL_HEADER(OrgXmlSaxHelpersLocatorImpl)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_OrgXmlSaxHelpersLocatorImpl")

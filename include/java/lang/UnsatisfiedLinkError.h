@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaLangUnsatisfiedLinkError
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -34,9 +31,8 @@
 /*!
  @brief Thrown if the Java Virtual Machine cannot find an appropriate
   native-language definition of a method declared <code>native</code>.
- @author unascribed
  - seealso: java.lang.Runtime
- @since JDK1.0
+ @since 1.0
  */
 @interface JavaLangUnsatisfiedLinkError : JavaLangLinkageError
 
@@ -83,6 +79,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaLangUnsatisfiedLinkError)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaLangUnsatisfiedLinkError")

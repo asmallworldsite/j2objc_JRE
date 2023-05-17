@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaSqlParameterMetaData
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -28,6 +25,9 @@
 #define RESTRICT_JavaSqlWrapper 1
 #define INCLUDE_JavaSqlWrapper 1
 #include "java/sql/Wrapper.h"
+
+@class JavaLangBoolean;
+@class JavaLangInteger;
 
 /*!
  @brief An object that can be used to get information about the types
@@ -149,17 +149,6 @@
 
 @end
 
-@interface JavaSqlParameterMetaData : NSObject
-@property (readonly, class) jint parameterNoNulls NS_SWIFT_NAME(parameterNoNulls);
-@property (readonly, class) jint parameterNullable NS_SWIFT_NAME(parameterNullable);
-@property (readonly, class) jint parameterNullableUnknown NS_SWIFT_NAME(parameterNullableUnknown);
-@property (readonly, class) jint parameterModeUnknown NS_SWIFT_NAME(parameterModeUnknown);
-@property (readonly, class) jint parameterModeIn NS_SWIFT_NAME(parameterModeIn);
-@property (readonly, class) jint parameterModeInOut NS_SWIFT_NAME(parameterModeInOut);
-@property (readonly, class) jint parameterModeOut NS_SWIFT_NAME(parameterModeOut);
-
-@end
-
 J2OBJC_EMPTY_STATIC_INIT(JavaSqlParameterMetaData)
 
 /*!
@@ -222,6 +211,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaSqlParameterMetaData)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaSqlParameterMetaData")

@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaNioChannelsSeekableByteChannel
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -29,6 +26,8 @@
 #define INCLUDE_JavaNioChannelsByteChannel 1
 #include "java/nio/channels/ByteChannel.h"
 
+@class JavaLangInteger;
+@class JavaLangLong;
 @class JavaNioByteBuffer;
 
 /*!
@@ -157,6 +156,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaNioChannelsSeekableByteChannel)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaNioChannelsSeekableByteChannel")

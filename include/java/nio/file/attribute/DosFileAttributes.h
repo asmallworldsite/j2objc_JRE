@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaNioFileAttributeDosFileAttributes
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -28,6 +25,8 @@
 #define RESTRICT_JavaNioFileAttributeBasicFileAttributes 1
 #define INCLUDE_JavaNioFileAttributeBasicFileAttributes 1
 #include "java/nio/file/attribute/BasicFileAttributes.h"
+
+@class JavaLangBoolean;
 
 /*!
  @brief File attributes associated with a file in a file system that supports
@@ -88,6 +87,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaNioFileAttributeDosFileAttributes)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaNioFileAttributeDosFileAttributes")

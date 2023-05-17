@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaLangNoSuchFieldException
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -33,8 +30,7 @@
 
 /*!
  @brief Signals that the class doesn't have a field of a specified name.
- @author unascribed
- @since JDK1.1
+ @since 1.1
  */
 @interface JavaLangNoSuchFieldException : JavaLangReflectiveOperationException
 
@@ -82,6 +78,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaLangNoSuchFieldException)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaLangNoSuchFieldException")

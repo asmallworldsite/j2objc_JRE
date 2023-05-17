@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaTextParseException
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -29,6 +26,8 @@
 #define INCLUDE_JavaLangException 1
 #include "java/lang/Exception.h"
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @class JavaLangThrowable;
 
 /*!
@@ -38,6 +37,7 @@
  - seealso: java.text.Format
  - seealso: java.text.FieldPosition
  @author Mark Davis
+ @since 1.1
  */
 @interface JavaTextParseException : JavaLangException
 
@@ -93,6 +93,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaTextParseException)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaTextParseException")

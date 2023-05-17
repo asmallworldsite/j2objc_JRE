@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaTimeChronoChronology
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -29,6 +26,9 @@
 #define INCLUDE_JavaLangComparable 1
 #include "java/lang/Comparable.h"
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
+@class JavaLangLong;
 @class JavaTimeClock;
 @class JavaTimeFormatResolverStyle;
 @class JavaTimeFormatTextStyle;
@@ -36,6 +36,7 @@
 @class JavaTimeTemporalChronoField;
 @class JavaTimeTemporalValueRange;
 @class JavaTimeZoneId;
+@class JavaTimeZoneOffset;
 @class JavaUtilLocale;
 @protocol JavaTimeChronoChronoLocalDate;
 @protocol JavaTimeChronoChronoLocalDateTime;
@@ -49,15 +50,13 @@
 
 /*!
  @brief A calendar system, used to organize and identify dates.
- <p>
-  The main date and time API is built on the ISO calendar system.
-  The chronology operates behind the scenes to represent the general concept of a calendar system.
-  For example, the Japanese, Minguo, Thai Buddhist and others. 
- <p>
-  Most other calendar systems also operate on the shared concepts of year, month and day,
-  linked to the cycles of the Earth around the Sun, and the Moon around the Earth.
-  These shared concepts are defined by <code>ChronoField</code> and are available
-  for use by any <code>Chronology</code> implementation: 
+ <p>The main date and time API is built on the ISO calendar system. The chronology operates behind
+  the scenes to represent the general concept of a calendar system. For example, the Japanese,
+  Minguo, Thai Buddhist and others. 
+ <p>Most other calendar systems also operate on the shared concepts of year, month and day, linked
+  to the cycles of the Earth around the Sun, and the Moon around the Earth. These shared concepts
+  are defined by <code>ChronoField</code> and are available for use by any <code>Chronology</code>
+  implementation: 
  @code
 
     LocalDate isoDate = ...
@@ -68,51 +67,42 @@
 @endcode
   As shown, although the date objects are in different calendar systems, represented by different 
  <code>Chronology</code> instances, both can be queried using the same constant on <code>ChronoField</code>.
-  For a full discussion of the implications of this, see <code>ChronoLocalDate</code>.
-  In general, the advice is to use the known ISO-based <code>LocalDate</code>, rather than 
- <code>ChronoLocalDate</code>.
-  <p>
-  While a <code>Chronology</code> object typically uses <code>ChronoField</code> and is based on
-  an era, year-of-era, month-of-year, day-of-month model of a date, this is not required.
-  A <code>Chronology</code> instance may represent a totally different kind of calendar system,
-  such as the Mayan. 
- <p>
-  In practical terms, the <code>Chronology</code> instance also acts as a factory.
-  The <code>of(String)</code> method allows an instance to be looked up by identifier,
-  while the <code>ofLocale(Locale)</code> method allows lookup by locale. 
- <p>
-  The <code>Chronology</code> instance provides a set of methods to create <code>ChronoLocalDate</code> instances.
-  The date classes are used to manipulate specific dates. 
+  For a full discussion of the implications of this, see <code>ChronoLocalDate</code>. In general, the
+  advice is to use the known ISO-based <code>LocalDate</code>, rather than <code>ChronoLocalDate</code>.
+  
+ <p>While a <code>Chronology</code> object typically uses <code>ChronoField</code> and is based on an era,
+  year-of-era, month-of-year, day-of-month model of a date, this is not required. A <code>Chronology</code>
+  instance may represent a totally different kind of calendar system, such as the
+  Mayan. 
+ <p>In practical terms, the <code>Chronology</code> instance also acts as a factory. The <code>of(String)</code>
+  method allows an instance to be looked up by identifier, while the <code>ofLocale(Locale)</code>
+  method allows lookup by locale. 
+ <p>The <code>Chronology</code> instance provides a set of methods to create <code>ChronoLocalDate</code>
+  instances. The date classes are used to manipulate specific dates. 
  <ul>
-  <li> <code>dateNow()</code>
-  <li> <code>dateNow(clock)</code>
-  <li> <code>dateNow(zone)</code>
-  <li> <code>date(yearProleptic, month, day)</code>
-  <li> <code>date(era, yearOfEra, month, day)</code>
-  <li> <code>dateYearDay(yearProleptic, dayOfYear)</code>
-  <li> <code>dateYearDay(era, yearOfEra, dayOfYear)</code>
-  <li> <code>date(TemporalAccessor)</code>
+    <li><code>dateNow()</code>
+    <li><code>dateNow(clock)</code>
+    <li><code>dateNow(zone)</code>
+    <li><code>date(yearProleptic, month, day)</code>
+    <li><code>date(era, yearOfEra, month, day)</code>
+    <li><code>dateYearDay(yearProleptic, dayOfYear)</code>
+    <li><code>dateYearDay(era, yearOfEra, dayOfYear)</code>
+    <li><code>date(TemporalAccessor)</code>
   </ul>
   
  <h3 id="addcalendars">Adding New Calendars</h3>
-  The set of available chronologies can be extended by applications.
-  Adding a new calendar system requires the writing of an implementation of 
- <code>Chronology</code>, <code>ChronoLocalDate</code> and <code>Era</code>.
-  The majority of the logic specific to the calendar system will be in the 
- <code>ChronoLocalDate</code> implementation.
-  The <code>Chronology</code> implementation acts as a factory. 
- <p>
-  To permit the discovery of additional chronologies, the <code>ServiceLoader</code>
+  The set of available chronologies can be extended by applications. Adding a new calendar system
+  requires the writing of an implementation of <code>Chronology</code>, <code>ChronoLocalDate</code> and 
+ <code>Era</code>. The majority of the logic specific to the calendar system will be in the <code>ChronoLocalDate</code>
+  implementation. The <code>Chronology</code> implementation acts as a factory. 
+ <p>To permit the discovery of additional chronologies, the <code>ServiceLoader</code>
   is used. A file must be added to the <code>META-INF/services</code> directory with the
-  name 'java.time.chrono.Chronology' listing the implementation classes.
-  See the ServiceLoader for more details on service loading.
-  For lookup by id or calendarType, the system provided calendars are found
-  first followed by application provided calendars. 
- <p>
-  Each chronology must define a chronology ID that is unique within the system.
-  If the chronology represents a calendar system defined by the
-  CLDR specification then the calendar type is the concatenation of the
-  CLDR type and, if applicable, the CLDR variant,
+  name 'java.time.chrono.Chronology' listing the implementation classes. See the ServiceLoader for
+  more details on service loading. For lookup by id or calendarType, the system provided calendars
+  are found first followed by application provided calendars. 
+ <p>Each chronology must define a chronology ID that is unique within the system. If the
+  chronology represents a calendar system defined by the CLDR specification then the calendar type
+  is the concatenation of the CLDR type and, if applicable, the CLDR variant.
  @since 1.8
  */
 @protocol JavaTimeChronoChronology < JavaLangComparable, JavaObject >
@@ -129,13 +119,11 @@
 
 /*!
  @brief Gets the calendar type of the calendar system.
- <p>
-  The calendar type is an identifier defined by the CLDR and 
- <em>Unicode Locale Data Markup Language (LDML)</em> specifications
-  to uniquely identification a calendar.
-  The <code>getCalendarType</code> is the concatenation of the CLDR calendar type
-  and the variant, if applicable, is appended separated by "-".
-  The calendar type is used to lookup the <code>Chronology</code> using <code>of(String)</code>.
+ <p>The calendar type is an identifier defined by the CLDR and <em>Unicode Locale Data Markup
+  Language (LDML)</em> specifications to uniquely identify a calendar. The <code>getCalendarType</code>
+  is the concatenation of the CLDR calendar type and the variant, if applicable,
+  is appended separated by "-". The calendar type is used to lookup the <code>Chronology</code> using 
+ <code>of(String)</code>.
  @return the calendar system type, null if the calendar is not defined by CLDR/LDML
  - seealso: #getId()
  */
@@ -325,13 +313,18 @@
 
 /*!
  @brief Checks if the specified year is a leap year.
- <p>
-  A leap-year is a year of a longer length than normal.
-  The exact meaning is determined by the chronology according to the following constraints. 
+ <p>A leap-year is a year of a longer length than normal. The exact meaning is determined by the
+  chronology according to the following constraints. 
  <ul>
-  <li>a leap-year must imply a year-length longer than a non leap-year. 
- <li>a chronology that does not support the concept of a year must return false. 
+    <li>a leap-year must imply a year-length longer than a non leap-year.
+    <li>a chronology that does not support the concept of a year must return false.
+    <li>the correct result must be returned for all years within the valid range of years for the
+        chronology. 
  </ul>
+  
+ <p>Outside the range of valid years an implementation is free to return either a best guess or
+  false. An implementation must not throw an exception, even if the year is outside the range of
+  valid years.
  @param prolepticYear the proleptic-year to check, not validated for range
  @return true if the year is a leap year
  */
@@ -452,6 +445,54 @@
                                         withInt:(jint)days;
 
 /*!
+ @brief Gets the number of seconds from the epoch of 1970-01-01T00:00:00Z.
+ <p>The number of seconds is calculated using the proleptic-year, month, day-of-month, hour,
+  minute, second, and zoneOffset.
+ @param prolepticYear the chronology proleptic-year
+ @param month the chronology month-of-year
+ @param dayOfMonth the chronology day-of-month
+ @param hour the hour-of-day, from 0 to 23
+ @param minute the minute-of-hour, from 0 to 59
+ @param second the second-of-minute, from 0 to 59
+ @param zoneOffset the zone offset, not null
+ @return the number of seconds relative to 1970-01-01T00:00:00Z, may be negative
+ @throw DateTimeExceptionif any of the values are out of range
+ @since 9
+ */
+- (jlong)epochSecondWithInt:(jint)prolepticYear
+                    withInt:(jint)month
+                    withInt:(jint)dayOfMonth
+                    withInt:(jint)hour
+                    withInt:(jint)minute
+                    withInt:(jint)second
+     withJavaTimeZoneOffset:(JavaTimeZoneOffset *)zoneOffset;
+
+/*!
+ @brief Gets the number of seconds from the epoch of 1970-01-01T00:00:00Z.
+ <p>The number of seconds is calculated using the era, year-of-era, month, day-of-month, hour,
+  minute, second, and zoneOffset.
+ @param era the era of the correct type for the chronology, not null
+ @param yearOfEra the chronology year-of-era
+ @param month the chronology month-of-year
+ @param dayOfMonth the chronology day-of-month
+ @param hour the hour-of-day, from 0 to 23
+ @param minute the minute-of-hour, from 0 to 59
+ @param second the second-of-minute, from 0 to 59
+ @param zoneOffset the zone offset, not null
+ @return the number of seconds relative to 1970-01-01T00:00:00Z, may be negative
+ @throw DateTimeExceptionif any of the values are out of range
+ @since 9
+ */
+- (jlong)epochSecondWithJavaTimeChronoEra:(id<JavaTimeChronoEra>)era
+                                  withInt:(jint)yearOfEra
+                                  withInt:(jint)month
+                                  withInt:(jint)dayOfMonth
+                                  withInt:(jint)hour
+                                  withInt:(jint)minute
+                                  withInt:(jint)second
+                   withJavaTimeZoneOffset:(JavaTimeZoneOffset *)zoneOffset;
+
+/*!
  @brief Compares this chronology to another chronology.
  <p>
   The comparison order first by the chronology ID string, then by any
@@ -493,57 +534,46 @@
 
 /*!
  @brief Obtains an instance of <code>Chronology</code> from a temporal object.
- <p>
-  This obtains a chronology based on the specified temporal.
-  A <code>TemporalAccessor</code> represents an arbitrary set of date and time information,
-  which this factory converts to an instance of <code>Chronology</code>.
-  <p>
-  The conversion will obtain the chronology using <code>TemporalQueries.chronology()</code>.
-  If the specified temporal object does not have a chronology, <code>IsoChronology</code> is returned. 
- <p>
-  This method matches the signature of the functional interface <code>TemporalQuery</code>
-  allowing it to be used as a query via method reference, <code>Chronology::from</code>.
+ <p>This obtains a chronology based on the specified temporal. A <code>TemporalAccessor</code>
+  represents an arbitrary set of date and time information, which this factory converts to an
+  instance of <code>Chronology</code>.
+  
+ <p>The conversion will obtain the chronology using <code>TemporalQueries.chronology()</code>. If the
+  specified temporal object does not have a chronology, <code>IsoChronology</code> is returned. 
+ <p>This method matches the signature of the functional interface <code>TemporalQuery</code> allowing
+  it to be used as a query via method reference, <code>Chronology::from</code>.
  @param temporal the temporal to convert, not null
  @return the chronology, not null
- @throw DateTimeExceptionif unable to convert to an <code>Chronology</code>
+ @throw DateTimeExceptionif unable to convert to a <code>Chronology</code>
  */
 + (id<JavaTimeChronoChronology>)fromWithJavaTimeTemporalTemporalAccessor:(id<JavaTimeTemporalTemporalAccessor>)temporal;
 
 /*!
  @brief Obtains an instance of <code>Chronology</code> from a locale.
- <p>
-  This returns a <code>Chronology</code> based on the specified locale,
-  typically returning <code>IsoChronology</code>. Other calendar systems
-  are only returned if they are explicitly selected within the locale. 
- <p>
-  The <code>Locale</code> class provide access to a range of information useful
-  for localizing an application. This includes the language and region,
-  such as "en-GB" for English as used in Great Britain. 
- <p>
-  The <code>Locale</code> class also supports an extension mechanism that
-  can be used to identify a calendar system. The mechanism is a form
-  of key-value pairs, where the calendar system has the key "ca".
-  For example, the locale "en-JP-u-ca-japanese" represents the English
-  language as used in Japan with the Japanese calendar system. 
- <p>
-  This method finds the desired calendar system by in a manner equivalent
-  to passing "ca" to <code>Locale.getUnicodeLocaleType(String)</code>.
-  If the "ca" key is not present, then <code>IsoChronology</code> is returned. 
- <p>
-  Note that the behavior of this method differs from the older 
- <code>java.util.Calendar.getInstance(Locale)</code> method.
-  If that method receives a locale of "th_TH" it will return <code>BuddhistCalendar</code>.
-  By contrast, this method will return <code>IsoChronology</code>.
-  Passing the locale "th-TH-u-ca-buddhist" into either method will
-  result in the Thai Buddhist calendar system and is therefore the
-  recommended approach going forward for Thai calendar system localization. 
- <p>
-  A similar, but simpler, situation occurs for the Japanese calendar system.
-  The locale "jp_JP_JP" has previously been used to access the calendar.
-  However, unlike the Thai locale, "ja_JP_JP" is automatically converted by 
- <code>Locale</code> to the modern and recommended form of "ja-JP-u-ca-japanese".
-  Thus, there is no difference in behavior between this method and 
- <code>Calendar#getInstance(Locale)</code>.
+ <p>This returns a <code>Chronology</code> based on the specified locale, typically returning <code>IsoChronology</code>
+ . Other calendar systems are only returned if they are explicitly selected within
+  the locale. 
+ <p>The <code>Locale</code> class provide access to a range of information useful for localizing an
+  application. This includes the language and region, such as "en-GB" for English as used in
+  Great Britain. 
+ <p>The <code>Locale</code> class also supports an extension mechanism that can be used to identify a
+  calendar system. The mechanism is a form of key-value pairs, where the calendar system has the
+  key "ca". For example, the locale "en-JP-u-ca-japanese" represents the English language as used
+  in Japan with the Japanese calendar system. 
+ <p>This method finds the desired calendar system in a manner equivalent to passing "ca" to 
+ <code>Locale.getUnicodeLocaleType(String)</code>. If the "ca" key is not present, then <code>IsoChronology</code>
+  is returned. 
+ <p>Note that the behavior of this method differs from the older <code>java.util.Calendar.getInstance(Locale)</code>
+  method. If that method receives a locale of "th_TH" it
+  will return <code>BuddhistCalendar</code>. By contrast, this method will return <code>IsoChronology</code>
+ . Passing the locale "th-TH-u-ca-buddhist" into either method will result in the
+  Thai Buddhist calendar system and is therefore the recommended approach going forward for Thai
+  calendar system localization. 
+ <p>A similar, but simpler, situation occurs for the Japanese calendar system. The locale
+  "jp_JP_JP" has previously been used to access the calendar. However, unlike the Thai locale,
+  "ja_JP_JP" is automatically converted by <code>Locale</code> to the modern and recommended form of
+  "ja-JP-u-ca-japanese". Thus, there is no difference in behavior between this method and <code>Calendar#getInstance(Locale)</code>
+ .
  @param locale the locale to use to obtain the calendar system, not null
  @return the calendar system associated with the locale, not null
  @throw DateTimeExceptionif the locale-specified calendar cannot be found
@@ -614,6 +644,10 @@ FOUNDATION_EXPORT NSString *JavaTimeChronoChronology_getDisplayNameWithJavaTimeF
 
 FOUNDATION_EXPORT id<JavaTimeChronoChronoPeriod> JavaTimeChronoChronology_periodWithInt_withInt_withInt_(id<JavaTimeChronoChronology> self, jint years, jint months, jint days);
 
+FOUNDATION_EXPORT jlong JavaTimeChronoChronology_epochSecondWithInt_withInt_withInt_withInt_withInt_withInt_withJavaTimeZoneOffset_(id<JavaTimeChronoChronology> self, jint prolepticYear, jint month, jint dayOfMonth, jint hour, jint minute, jint second, JavaTimeZoneOffset *zoneOffset);
+
+FOUNDATION_EXPORT jlong JavaTimeChronoChronology_epochSecondWithJavaTimeChronoEra_withInt_withInt_withInt_withInt_withInt_withInt_withJavaTimeZoneOffset_(id<JavaTimeChronoChronology> self, id<JavaTimeChronoEra> era, jint yearOfEra, jint month, jint dayOfMonth, jint hour, jint minute, jint second, JavaTimeZoneOffset *zoneOffset);
+
 J2OBJC_TYPE_LITERAL_HEADER(JavaTimeChronoChronology)
 
 #endif
@@ -622,6 +656,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaTimeChronoChronology)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaTimeChronoChronology")

@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaNetAuthenticator
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -25,6 +22,7 @@
 #if !defined (JavaNetAuthenticator_) && (INCLUDE_ALL_JavaNetAuthenticator || defined(INCLUDE_JavaNetAuthenticator))
 #define JavaNetAuthenticator_
 
+@class JavaLangInteger;
 @class JavaNetAuthenticator_RequestorType;
 @class JavaNetInetAddress;
 @class JavaNetPasswordAuthentication;
@@ -278,10 +276,16 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaNetAuthenticator)
 
 @class IOSObjectArray;
 
-typedef NS_ENUM(NSUInteger, JavaNetAuthenticator_RequestorType_Enum) {
+typedef NS_ENUM(jint, JavaNetAuthenticator_RequestorType_Enum) {
   JavaNetAuthenticator_RequestorType_Enum_PROXY = 0,
   JavaNetAuthenticator_RequestorType_Enum_SERVER = 1,
 };
+#if J2OBJC_IMPORTED_BY_JAVA_IMPLEMENTATION
+#define JavaNetAuthenticator_RequestorType_ORDINAL jint
+#else
+#define JavaNetAuthenticator_RequestorType_ORDINAL JavaNetAuthenticator_RequestorType_Enum
+#endif
+
 
 /*!
  @brief The type of the entity requesting authentication.
@@ -289,8 +293,6 @@ typedef NS_ENUM(NSUInteger, JavaNetAuthenticator_RequestorType_Enum) {
  */
 @interface JavaNetAuthenticator_RequestorType : JavaLangEnum
 
-@property (readonly, class, nonnull) JavaNetAuthenticator_RequestorType *PROXY NS_SWIFT_NAME(PROXY);
-@property (readonly, class, nonnull) JavaNetAuthenticator_RequestorType *SERVER NS_SWIFT_NAME(SERVER);
 #pragma mark Public
 
 + (JavaNetAuthenticator_RequestorType *)valueOfWithNSString:(NSString *)name;
@@ -300,6 +302,8 @@ typedef NS_ENUM(NSUInteger, JavaNetAuthenticator_RequestorType_Enum) {
 #pragma mark Package-Private
 
 - (JavaNetAuthenticator_RequestorType_Enum)toNSEnum;
+
+- (JavaNetAuthenticator_RequestorType_ORDINAL)ordinal;
 
 @end
 
@@ -324,7 +328,7 @@ FOUNDATION_EXPORT IOSObjectArray *JavaNetAuthenticator_RequestorType_values(void
 
 FOUNDATION_EXPORT JavaNetAuthenticator_RequestorType *JavaNetAuthenticator_RequestorType_valueOfWithNSString_(NSString *name);
 
-FOUNDATION_EXPORT JavaNetAuthenticator_RequestorType *JavaNetAuthenticator_RequestorType_fromOrdinal(NSUInteger ordinal);
+FOUNDATION_EXPORT JavaNetAuthenticator_RequestorType *JavaNetAuthenticator_RequestorType_fromOrdinal(JavaNetAuthenticator_RequestorType_ORDINAL ordinal);
 
 J2OBJC_TYPE_LITERAL_HEADER(JavaNetAuthenticator_RequestorType)
 
@@ -334,6 +338,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaNetAuthenticator_RequestorType)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaNetAuthenticator")

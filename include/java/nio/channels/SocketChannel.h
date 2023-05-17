@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaNioChannelsSocketChannel
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -46,6 +43,9 @@
 #include "java/nio/channels/NetworkChannel.h"
 
 @class IOSObjectArray;
+@class JavaLangBoolean;
+@class JavaLangInteger;
+@class JavaLangLong;
 @class JavaNetSocket;
 @class JavaNetSocketAddress;
 @class JavaNioByteBuffer;
@@ -242,7 +242,7 @@
 - (jboolean)finishConnect;
 
 /*!
- @brief <p>
+ @brief  <p>
   If there is a security manager set, its <code>checkConnect</code> method is
   called with the local address and <code>-1</code> as its arguments to see
   if the operation is allowed.
@@ -457,6 +457,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaNioChannelsSocketChannel)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaNioChannelsSocketChannel")

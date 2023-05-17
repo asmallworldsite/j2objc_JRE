@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_OrgXmlSaxHelpersAttributesImpl
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -30,6 +27,7 @@
 #include "org/xml/sax/Attributes.h"
 
 @class IOSObjectArray;
+@class JavaLangInteger;
 
 /*!
  @brief Default implementation of the Attributes interface.
@@ -342,6 +340,4 @@ J2OBJC_TYPE_LITERAL_HEADER(OrgXmlSaxHelpersAttributesImpl)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_OrgXmlSaxHelpersAttributesImpl")

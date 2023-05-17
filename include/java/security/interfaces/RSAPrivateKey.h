@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaSecurityInterfacesRSAPrivateKey
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -33,11 +30,13 @@
 #define INCLUDE_JavaSecurityInterfacesRSAKey 1
 #include "java/security/interfaces/RSAKey.h"
 
+@class JavaLangLong;
 @class JavaMathBigInteger;
 
 /*!
  @brief The interface to an RSA private key.
  @author Jan Luehe
+ @since 1.2
  - seealso: RSAPrivateCrtKey
  */
 @protocol JavaSecurityInterfacesRSAPrivateKey < JavaSecurityPrivateKey, JavaSecurityInterfacesRSAKey, JavaObject >
@@ -47,11 +46,6 @@
  @return the private exponent
  */
 - (JavaMathBigInteger *)getPrivateExponent;
-
-@end
-
-@interface JavaSecurityInterfacesRSAPrivateKey : NSObject
-@property (readonly, class) jlong serialVersionUID NS_SWIFT_NAME(serialVersionUID);
 
 @end
 
@@ -74,6 +68,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaSecurityInterfacesRSAPrivateKey)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaSecurityInterfacesRSAPrivateKey")

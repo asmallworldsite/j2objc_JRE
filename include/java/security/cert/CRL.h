@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaSecurityCertCRL
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -25,6 +22,7 @@
 #if !defined (JavaSecurityCertCRL_) && (INCLUDE_ALL_JavaSecurityCertCRL || defined(INCLUDE_JavaSecurityCertCRL))
 #define JavaSecurityCertCRL_
 
+@class JavaLangBoolean;
 @class JavaSecurityCertCertificate;
 
 /*!
@@ -68,10 +66,10 @@
 
 /*!
  @brief Creates a CRL of the specified type.
- @param type the standard name of the CRL type.  See Appendix A in the 
-  <a href="../../../../technotes/guides/security/crypto/CryptoSpec.html#AppA">
-   Java Cryptography Architecture API Specification 
-  &amp;  Reference  </a>  for information about standard CRL types.
+ @param type the standard name of the CRL type.  See the 
+  <a href="{@@docRoot}/../specs/security/standard-names.html">
+   Java Security Standard Algorithm Names
+  </a>  document  for information about standard CRL types.
  */
 - (instancetype __nonnull)initWithNSString:(NSString *)type;
 
@@ -93,6 +91,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaSecurityCertCRL)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaSecurityCertCRL")

@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaSqlSQLException
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -33,6 +30,8 @@
 #define INCLUDE_JavaLangIterable 1
 #include "java/lang/Iterable.h"
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @class JavaLangThrowable;
 @protocol JavaUtilFunctionConsumer;
 @protocol JavaUtilIterator;
@@ -288,6 +287,7 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaSqlSQLException)
 #if !defined (JavaSqlSQLException_NextExceptionUpdater_) && (INCLUDE_ALL_JavaSqlSQLException || defined(INCLUDE_JavaSqlSQLException_NextExceptionUpdater))
 #define JavaSqlSQLException_NextExceptionUpdater_
 
+@class JavaLangBoolean;
 @class JavaSqlSQLException;
 
 @interface JavaSqlSQLException_NextExceptionUpdater : NSObject
@@ -320,6 +320,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaSqlSQLException_NextExceptionUpdater)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaSqlSQLException")

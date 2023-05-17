@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaUtilFunctionLongToDoubleFunction
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -24,6 +21,9 @@
 
 #if !defined (JavaUtilFunctionLongToDoubleFunction_) && (INCLUDE_ALL_JavaUtilFunctionLongToDoubleFunction || defined(INCLUDE_JavaUtilFunctionLongToDoubleFunction))
 #define JavaUtilFunctionLongToDoubleFunction_
+
+@class JavaLangDouble;
+@class JavaLangLong;
 
 /*!
  @brief Represents a function that accepts a long-valued argument and produces a
@@ -55,6 +55,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilFunctionLongToDoubleFunction)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaUtilFunctionLongToDoubleFunction")

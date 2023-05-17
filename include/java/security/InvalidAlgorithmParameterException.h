@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaSecurityInvalidAlgorithmParameterException
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -60,7 +57,7 @@
 - (instancetype __nonnull)initWithNSString:(NSString *)msg;
 
 /*!
- @brief Creates a <code>InvalidAlgorithmParameterException</code> with the
+ @brief Creates an <code>InvalidAlgorithmParameterException</code> with the
   specified detail message and cause.
  @param message the detail message (which is saved for later retrieval         by the 
  <code>getMessage()</code>  method).
@@ -72,7 +69,7 @@
                      withJavaLangThrowable:(JavaLangThrowable *)cause;
 
 /*!
- @brief Creates a <code>InvalidAlgorithmParameterException</code> with the
+ @brief Creates an <code>InvalidAlgorithmParameterException</code> with the
   specified cause and a detail message of 
  <code>(cause==null ?
  null : cause.toString())</code>
@@ -120,6 +117,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaSecurityInvalidAlgorithmParameterException)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaSecurityInvalidAlgorithmParameterException")

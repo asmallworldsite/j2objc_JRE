@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_OrgW3cDomDOMErrorHandler
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -25,6 +22,7 @@
 #if !defined (OrgW3cDomDOMErrorHandler_) && (INCLUDE_ALL_OrgW3cDomDOMErrorHandler || defined(INCLUDE_OrgW3cDomDOMErrorHandler))
 #define OrgW3cDomDOMErrorHandler_
 
+@class JavaLangBoolean;
 @protocol OrgW3cDomDOMError;
 
 /*!
@@ -71,6 +69,4 @@ J2OBJC_TYPE_LITERAL_HEADER(OrgW3cDomDOMErrorHandler)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_OrgW3cDomDOMErrorHandler")

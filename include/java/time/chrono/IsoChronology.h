@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaTimeChronoIsoChronology
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -33,6 +30,9 @@
 #define INCLUDE_JavaIoSerializable 1
 #include "java/io/Serializable.h"
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
+@class JavaLangLong;
 @class JavaTimeChronoIsoEra;
 @class JavaTimeClock;
 @class JavaTimeFormatResolverStyle;
@@ -43,6 +43,7 @@
 @class JavaTimeTemporalChronoField;
 @class JavaTimeTemporalValueRange;
 @class JavaTimeZoneId;
+@class JavaTimeZoneOffset;
 @class JavaTimeZonedDateTime;
 @protocol JavaTimeChronoEra;
 @protocol JavaTimeTemporalTemporalAccessor;
@@ -74,7 +75,6 @@
  @since 1.8
  */
 @interface JavaTimeChronoIsoChronology : JavaTimeChronoAbstractChronology < JavaIoSerializable >
-@property (readonly, class, strong) JavaTimeChronoIsoChronology *INSTANCE NS_SWIFT_NAME(INSTANCE);
 
 #pragma mark Public
 
@@ -190,6 +190,30 @@
  */
 - (JavaTimeLocalDate *)dateYearDayWithInt:(jint)prolepticYear
                                   withInt:(jint)dayOfYear;
+
+/*!
+ @brief Gets the number of seconds from the epoch of 1970-01-01T00:00:00Z.
+ <p>The number of seconds is calculated using the year, month, day-of-month, hour, minute,
+  second, and zoneOffset.
+ @param prolepticYear the year, from MIN_YEAR to MAX_YEAR
+ @param month the month-of-year, from 1 to 12
+ @param dayOfMonth the day-of-month, from 1 to 31
+ @param hour the hour-of-day, from 0 to 23
+ @param minute the minute-of-hour, from 0 to 59
+ @param second the second-of-minute, from 0 to 59
+ @param zoneOffset the zone offset, not null
+ @return the number of seconds relative to 1970-01-01T00:00:00Z, may be negative
+ @throw DateTimeExceptionif the value of any argument is out of range, or if the day-of-month
+      is invalid for the month-of-year
+ @since 9
+ */
+- (jlong)epochSecondWithInt:(jint)prolepticYear
+                    withInt:(jint)month
+                    withInt:(jint)dayOfMonth
+                    withInt:(jint)hour
+                    withInt:(jint)minute
+                    withInt:(jint)second
+     withJavaTimeZoneOffset:(JavaTimeZoneOffset *)zoneOffset;
 
 - (JavaTimeChronoIsoEra *)eraOfWithInt:(jint)eraValue;
 
@@ -416,6 +440,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaTimeChronoIsoChronology)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaTimeChronoIsoChronology")

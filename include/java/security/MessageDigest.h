@@ -16,9 +16,6 @@
 #define INCLUDE_JavaSecurityMessageDigest 1
 #endif
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -33,6 +30,9 @@
 #include "java/security/MessageDigestSpi.h"
 
 @class IOSByteArray;
+@class JavaLangBoolean;
+@class JavaLangByte;
+@class JavaLangInteger;
 @class JavaNioByteBuffer;
 @class JavaSecurityProvider;
 
@@ -54,7 +54,7 @@
   Client applications can test cloneability by attempting cloning
   and catching the CloneNotSupportedException: 
  @code
- MessageDigest md = MessageDigest.getInstance("SHA");
+ MessageDigest md = MessageDigest.getInstance("SHA-256");
   try {
       md.update(toChapter1);
       MessageDigest tc1 = md.clone();
@@ -111,10 +111,11 @@
       </tr>
     </tbody>
   </table>
-  These algorithms are described in the <a href="{@@docRoot}/../technotes/guides/security/StandardNames.html#MessageDigest">
+  These algorithms are described in the <a href="{@@docRoot}/../specs/security/standard-names.html#messagedigest-algorithms">
   MessageDigest section</a> of the
   Java Cryptography Architecture Standard Algorithm Name Documentation.
  @author Benjamin Renaud
+ @since 1.1
  - seealso: DigestInputStream
  - seealso: DigestOutputStream
  */
@@ -164,9 +165,9 @@
 /*!
  @brief Returns a string that identifies the algorithm, independent of
   implementation details.The name should be a standard
-  Java Security name (such as "SHA", "MD5", and so on).
- See the MessageDigest section in the <a href="{@@docRoot}/../technotes/guides/security/StandardNames.html#MessageDigest">
-  Java Cryptography Architecture Standard Algorithm Name Documentation</a>
+  Java Security name (such as "SHA-256").
+ See the MessageDigest section in the <a href="{@@docRoot}/../specs/security/standard-names.html#messagedigest-algorithms">
+  Java Security Standard Algorithm Names Specification</a>
   for information about standard algorithm names.
  @return the name of the algorithm
  */
@@ -192,13 +193,15 @@
  <p> Note that the list of registered providers may be retrieved via the 
  <code>Security.getProviders()</code> method.
  @param algorithm the name of the algorithm requested.  See the MessageDigest section in the 
-  <a href="{@@docRoot}/../technotes/guides/security/StandardNames.html#MessageDigest">
-   Java Cryptography Architecture Standard Algorithm Name Documentation
+  <a href="{@@docRoot}/../specs/security/standard-names.html#messagedigest-algorithms">
+   Java Security Standard Algorithm Names Specification
   </a>  for information about standard algorithm names.
- @return a Message Digest object that implements the specified algorithm.
- @throw NoSuchAlgorithmExceptionif no Provider supports a
-           MessageDigestSpi implementation for the
-           specified algorithm.
+ @return a <code>MessageDigest</code> object that implements the
+          specified algorithm
+ @throw NoSuchAlgorithmExceptionif no <code>Provider</code> supports a
+          <code>MessageDigestSpi</code> implementation for the
+          specified algorithm
+ @throw NullPointerExceptionif <code>algorithm</code> is <code>null</code>
  - seealso: Provider
  */
 + (JavaSecurityMessageDigest * __nonnull)getInstanceWithNSString:(NSString *)algorithm;
@@ -211,15 +214,18 @@
   object is returned.  Note that the specified Provider object
   does not have to be registered in the provider list.
  @param algorithm the name of the algorithm requested.  See the MessageDigest section in the 
-  <a href="{@@docRoot}/../technotes/guides/security/StandardNames.html#MessageDigest">
-   Java Cryptography Architecture Standard Algorithm Name Documentation
+  <a href="{@@docRoot}/../specs/security/standard-names.html#messagedigest-algorithms">
+   Java Security Standard Algorithm Names Specification
   </a>  for information about standard algorithm names.
  @param provider the provider.
- @return a MessageDigest object that implements the specified algorithm.
- @throw NoSuchAlgorithmExceptionif a MessageDigestSpi
-           implementation for the specified algorithm is not available
-           from the specified Provider object.
- @throw IllegalArgumentExceptionif the specified provider is null.
+ @return a <code>MessageDigest</code> object that implements the
+          specified algorithm
+ @throw IllegalArgumentExceptionif the specified provider is
+          <code>null</code>
+ @throw NoSuchAlgorithmExceptionif a <code>MessageDigestSpi</code>
+          implementation for the specified algorithm is not available
+          from the specified <code>Provider</code> object
+ @throw NullPointerExceptionif <code>algorithm</code> is <code>null</code>
  - seealso: Provider
  @since 1.4
  */
@@ -236,18 +242,20 @@
  <p> Note that the list of registered providers may be retrieved via the 
  <code>Security.getProviders()</code> method.
  @param algorithm the name of the algorithm requested.  See the MessageDigest section in the 
-  <a href="{@@docRoot}/../technotes/guides/security/StandardNames.html#MessageDigest">
-   Java Cryptography Architecture Standard Algorithm Name Documentation
+  <a href="{@@docRoot}/../specs/security/standard-names.html#messagedigest-algorithms">
+   Java Security Standard Algorithm Names Specification
   </a>  for information about standard algorithm names.
  @param provider the name of the provider.
- @return a MessageDigest object that implements the specified algorithm.
- @throw NoSuchAlgorithmExceptionif a MessageDigestSpi
-           implementation for the specified algorithm is not
-           available from the specified provider.
+ @return a <code>MessageDigest</code> object that implements the
+          specified algorithm
+ @throw IllegalArgumentExceptionif the provider name is <code>null</code>
+          or empty
+ @throw NoSuchAlgorithmExceptionif a <code>MessageDigestSpi</code>
+          implementation for the specified algorithm is not
+          available from the specified provider
  @throw NoSuchProviderExceptionif the specified provider is not
-           registered in the security provider list.
- @throw IllegalArgumentExceptionif the provider name is null
-           or empty.
+          registered in the security provider list
+ @throw NullPointerExceptionif <code>algorithm</code> is <code>null</code>
  - seealso: Provider
  */
 + (JavaSecurityMessageDigest * __nonnull)getInstanceWithNSString:(NSString *)algorithm
@@ -260,7 +268,8 @@
 - (JavaSecurityProvider * __nonnull)getProvider;
 
 /*!
- @brief Compares two digests for equality.Does a simple byte compare.
+ @brief Compares two digests for equality.Two digests are equal if they have
+  the same length and all bytes at corresponding positions are equal.
  @param digesta one of the digests to compare.
  @param digestb the other digest to compare.
  @return true if the digests are equal, false otherwise.
@@ -318,8 +327,8 @@
 /*!
  @brief Creates a message digest with the specified algorithm name.
  @param algorithm the standard name of the digest algorithm.  See the MessageDigest section in the 
-  <a href="{@@docRoot}/../technotes/guides/security/StandardNames.html#MessageDigest">
-   Java Cryptography Architecture Standard Algorithm Name Documentation
+  <a href="{@@docRoot}/../specs/security/standard-names.html#messagedigest-algorithms">
+   Java Security Standard Algorithm Names Specification
   </a>  for information about standard algorithm names.
  */
 - (instancetype __nonnull)initWithNSString:(NSString *)algorithm;
@@ -350,6 +359,8 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaSecurityMessageDigest)
 #define JavaSecurityMessageDigest_Delegate_
 
 @class IOSByteArray;
+@class JavaLangByte;
+@class JavaLangInteger;
 @class JavaNioByteBuffer;
 @class JavaSecurityMessageDigestSpi;
 
@@ -410,6 +421,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaSecurityMessageDigest_Delegate)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaSecurityMessageDigest")

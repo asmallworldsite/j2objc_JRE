@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_OrgW3cDomDOMImplementationList
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -25,6 +22,7 @@
 #if !defined (OrgW3cDomDOMImplementationList_) && (INCLUDE_ALL_OrgW3cDomDOMImplementationList || defined(INCLUDE_OrgW3cDomDOMImplementationList))
 #define OrgW3cDomDOMImplementationList_
 
+@class JavaLangInteger;
 @protocol OrgW3cDomDOMImplementation;
 
 /*!
@@ -68,6 +66,4 @@ J2OBJC_TYPE_LITERAL_HEADER(OrgW3cDomDOMImplementationList)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_OrgW3cDomDOMImplementationList")

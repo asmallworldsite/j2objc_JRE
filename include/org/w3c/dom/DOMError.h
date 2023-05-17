@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_OrgW3cDomDOMError
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -25,6 +22,7 @@
 #if !defined (OrgW3cDomDOMError_) && (INCLUDE_ALL_OrgW3cDomDOMError || defined(INCLUDE_OrgW3cDomDOMError))
 #define OrgW3cDomDOMError_
 
+@class JavaLangShort;
 @protocol OrgW3cDomDOMLocator;
 
 /*!
@@ -77,13 +75,6 @@
 
 @end
 
-@interface OrgW3cDomDOMError : NSObject
-@property (readonly, class) jshort SEVERITY_WARNING NS_SWIFT_NAME(SEVERITY_WARNING);
-@property (readonly, class) jshort SEVERITY_ERROR NS_SWIFT_NAME(SEVERITY_ERROR);
-@property (readonly, class) jshort SEVERITY_FATAL_ERROR NS_SWIFT_NAME(SEVERITY_FATAL_ERROR);
-
-@end
-
 J2OBJC_EMPTY_STATIC_INIT(OrgW3cDomDOMError)
 
 /*!
@@ -127,6 +118,4 @@ J2OBJC_TYPE_LITERAL_HEADER(OrgW3cDomDOMError)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_OrgW3cDomDOMError")

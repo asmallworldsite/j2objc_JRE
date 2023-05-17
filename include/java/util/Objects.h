@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaUtilObjects
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -26,6 +23,8 @@
 #define JavaUtilObjects_
 
 @class IOSObjectArray;
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @protocol JavaUtilComparator;
 @protocol JavaUtilFunctionSupplier;
 
@@ -312,6 +311,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilObjects)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaUtilObjects")

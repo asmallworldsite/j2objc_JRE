@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaSecurityDigestException
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -34,6 +31,7 @@
 /*!
  @brief This is the generic Message Digest exception.
  @author Benjamin Renaud
+ @since 1.1
  */
 @interface JavaSecurityDigestException : JavaSecurityGeneralSecurityException
 
@@ -116,6 +114,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaSecurityDigestException)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaSecurityDigestException")

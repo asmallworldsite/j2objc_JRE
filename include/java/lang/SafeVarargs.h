@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaLangSafeVarargs
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -30,6 +27,8 @@
 #include "java/lang/annotation/Annotation.h"
 
 @class IOSClass;
+@class JavaLangBoolean;
+@class JavaLangInteger;
 
 /*!
  @brief A programmer assertion that the body of the annotated method or
@@ -47,7 +46,7 @@
  <ul>
   <li>  the declaration is a fixed arity method or constructor 
  <li> the declaration is a variable arity method that is neither 
- <code>static</code> nor <code>final</code>.
+ <code>static</code> nor <code>final</code> nor <code>private</code>.
   
  </ul>
   
@@ -105,6 +104,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaLangSafeVarargs)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaLangSafeVarargs")

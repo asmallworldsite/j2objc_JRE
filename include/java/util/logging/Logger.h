@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaUtilLoggingLogger
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -27,6 +24,7 @@
 
 @class IOSClass;
 @class IOSObjectArray;
+@class JavaLangBoolean;
 @class JavaLangThrowable;
 @class JavaUtilLoggingHandler;
 @class JavaUtilLoggingLevel;
@@ -216,9 +214,6 @@
  @since 1.4
  */
 @interface JavaUtilLoggingLogger : NSObject
-@property (readonly, copy, class) NSString *SYSTEM_LOGGER_RB_NAME NS_SWIFT_NAME(SYSTEM_LOGGER_RB_NAME);
-@property (readonly, copy, class) NSString *GLOBAL_LOGGER_NAME NS_SWIFT_NAME(GLOBAL_LOGGER_NAME);
-@property (readonly, nonatomic, getter=getGlobal, class, strong) JavaUtilLoggingLogger *global NS_SWIFT_NAME(global);
 
 #pragma mark Public
 
@@ -977,7 +972,7 @@
                          withNSString:(NSString *)sourceClass
                          withNSString:(NSString *)sourceMethod
                          withNSString:(NSString *)bundleName
-                         withNSString:(NSString *)msg __attribute__((deprecated));
+                         withNSString:(NSString *)msg;
 
 /*!
  @brief Log a message, specifying source class, method, and resource bundle name,
@@ -1003,7 +998,7 @@
                          withNSString:(NSString *)sourceMethod
                          withNSString:(NSString *)bundleName
                          withNSString:(NSString *)msg
-                               withId:(id)param1 __attribute__((deprecated));
+                               withId:(id)param1;
 
 /*!
  @brief Log a message, specifying source class, method, and resource bundle name,
@@ -1029,7 +1024,7 @@
                          withNSString:(NSString *)sourceMethod
                          withNSString:(NSString *)bundleName
                          withNSString:(NSString *)msg
-                    withNSObjectArray:(IOSObjectArray *)params __attribute__((deprecated));
+                    withNSObjectArray:(IOSObjectArray *)params;
 
 /*!
  @brief Log a message, specifying source class, method, and resource bundle name,
@@ -1060,7 +1055,7 @@
                          withNSString:(NSString *)sourceMethod
                          withNSString:(NSString *)bundleName
                          withNSString:(NSString *)msg
-                withJavaLangThrowable:(JavaLangThrowable *)thrown __attribute__((deprecated));
+                withJavaLangThrowable:(JavaLangThrowable *)thrown;
 
 /*!
  @brief Remove a log Handler.
@@ -1327,6 +1322,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilLoggingLogger)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaUtilLoggingLogger")

@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaIoWriteAbortedException
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -39,23 +36,13 @@
  The
   exception that terminated the write can be found in the detail
   field. The stream is reset to it's initial state and all references
-  to objects already deserialized are discarded. 
- <p>As of release 1.4, this exception has been retrofitted to conform to
-  the general purpose exception-chaining mechanism.  The "exception causing
-  the abort" that is provided at construction time and
-  accessed via the public <code>detail</code> field is now known as the 
- <i>cause</i>, and may be accessed via the <code>Throwable.getCause()</code>
-  method, as well as the aforementioned "legacy field."
- @author unascribed
- @since JDK1.1
+  to objects already deserialized are discarded.
+ @since 1.1
  */
 @interface JavaIoWriteAbortedException : JavaIoObjectStreamException {
  @public
   /*!
    @brief Exception that was caught while writing the ObjectStream.
-   <p>This field predates the general-purpose exception chaining facility.
-  The <code>Throwable.getCause()</code> method is now the preferred means of
-  obtaining this information.
    */
   JavaLangException *detail_;
 }
@@ -111,6 +98,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaIoWriteAbortedException)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaIoWriteAbortedException")

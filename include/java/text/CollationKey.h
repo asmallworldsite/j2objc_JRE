@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaTextCollationKey
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -30,6 +27,7 @@
 #include "java/lang/Comparable.h"
 
 @class IOSByteArray;
+@class JavaLangInteger;
 
 /*!
  @brief A <code>CollationKey</code> represents a <code>String</code> under the
@@ -84,6 +82,7 @@
  - seealso: Collator
  - seealso: RuleBasedCollator
  @author Helena Shih
+ @since 1.1
  */
 @interface JavaTextCollationKey : NSObject < JavaLangComparable >
 
@@ -146,6 +145,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaTextCollationKey)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaTextCollationKey")

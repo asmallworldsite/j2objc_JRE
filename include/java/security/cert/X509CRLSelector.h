@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaSecurityCertX509CRLSelector
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -30,6 +27,8 @@
 #include "java/security/cert/CRLSelector.h"
 
 @class IOSByteArray;
+@class JavaLangBoolean;
+@class JavaLangLong;
 @class JavaMathBigInteger;
 @class JavaSecurityCertCRL;
 @class JavaSecurityCertX509Certificate;
@@ -53,7 +52,7 @@
  <code>CertStore.getCRLs</code> or some similar
   method. 
  <p>
-  Please refer to <a href="http://www.ietf.org/rfc/rfc3280.txt">RFC 3280:
+  Please refer to <a href="http://tools.ietf.org/html/rfc5280">RFC 5280:
   Internet X.509 Public Key Infrastructure Certificate and CRL Profile</a>
   for definitions of the X.509 CRL fields and extensions mentioned below. 
  <p>
@@ -413,6 +412,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaSecurityCertX509CRLSelector)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaSecurityCertX509CRLSelector")

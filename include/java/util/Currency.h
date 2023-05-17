@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaUtilCurrency
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -29,6 +26,7 @@
 #define INCLUDE_JavaIoSerializable 1
 #include "java/io/Serializable.h"
 
+@class JavaLangInteger;
 @class JavaUtilLocale;
 @protocol JavaUtilSet;
 
@@ -196,6 +194,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilCurrency)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaUtilCurrency")

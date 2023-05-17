@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaIoSerializationHandleMap
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -24,6 +21,9 @@
 
 #if !defined (JavaIoSerializationHandleMap_) && (INCLUDE_ALL_JavaIoSerializationHandleMap || defined(INCLUDE_JavaIoSerializationHandleMap))
 #define JavaIoSerializationHandleMap_
+
+@class JavaLangBoolean;
+@class JavaLangInteger;
 
 /*!
  @brief A specialization of IdentityHashMap<Object, int> for use when serializing objects.
@@ -67,6 +67,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaIoSerializationHandleMap)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaIoSerializationHandleMap")

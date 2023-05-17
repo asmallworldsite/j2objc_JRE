@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaUtilConcurrentRecursiveTask
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -28,6 +25,8 @@
 #define RESTRICT_JavaUtilConcurrentForkJoinTask 1
 #define INCLUDE_JavaUtilConcurrentForkJoinTask 1
 #include "java/util/concurrent/ForkJoinTask.h"
+
+@class JavaLangBoolean;
 
 /*!
  @brief A recursive result-bearing <code>ForkJoinTask</code>.
@@ -101,6 +100,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentRecursiveTask)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaUtilConcurrentRecursiveTask")

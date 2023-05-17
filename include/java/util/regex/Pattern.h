@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaUtilRegexPattern
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -30,6 +27,9 @@
 #include "java/io/Serializable.h"
 
 @class IOSObjectArray;
+@class JavaLangBoolean;
+@class JavaLangInteger;
+@class JavaLangLong;
 @class JavaUtilRegexMatcher;
 @protocol JavaLangCharSequence;
 @protocol JavaUtilFunctionPredicate;
@@ -64,272 +64,309 @@
  <p> Instances of this class are immutable and are safe for use by multiple
   concurrent threads.  Instances of the <code>Matcher</code> class are not safe for
   such use. 
- <h3><a name="sum">Summary of regular-expression constructs</a></h3>
+ <h2><a id="sum">Summary of regular-expression constructs</a></h2>
   
- <table border="0" cellpadding="1" cellspacing="0" summary="Regular expression constructs, and what they match">
-  
- <tr align="left">
-  <th align="left" id="construct">Construct</th>
-  <th align="left" id="matches">Matches</th>
+ <table class="borderless">
+  <caption style="display:none">Regular expression constructs, and what they match</caption>
+  <thead style="text-align:left">
+  <tr>
+  <th id="construct">Construct</th>
+  <th id="matches">Matches</th>
   </tr>
+  </thead>
+  <tbody style="text-align:left">
   
- <tr><th>&nbsp;</th></tr>
-  <tr align="left"><th colspan="2" id="characters">Characters</th></tr>
+ <tr><th colspan="2" style="padding-top:20px" id="characters">Characters</th></tr>
   
- <tr><td valign="top" headers="construct characters"><i>x</i></td>
-      <td headers="matches">The character <i>x</i></td></tr>
-  <tr><td valign="top" headers="construct characters"><tt>\\</tt></td>
-      <td headers="matches">The backslash character</td></tr>
-  <tr><td valign="top" headers="construct characters"><tt>\0</tt><i>n</i></td>
-      <td headers="matches">The character with octal value <tt>0</tt><i>n</i>
-          (0&nbsp;<tt>&lt;=</tt>&nbsp;<i>n</i>&nbsp;<tt>&lt;=</tt>&nbsp;7)</td></tr>
-  <tr><td valign="top" headers="construct characters"><tt>\0</tt><i>nn</i></td>
-      <td headers="matches">The character with octal value <tt>0</tt><i>nn</i>
-          (0&nbsp;<tt>&lt;=</tt>&nbsp;<i>n</i>&nbsp;<tt>&lt;=</tt>&nbsp;7)</td></tr>
-  <tr><td valign="top" headers="construct characters"><tt>\0</tt><i>mnn</i></td>
-      <td headers="matches">The character with octal value <tt>0</tt><i>mnn</i>
-          (0&nbsp;<tt>&lt;=</tt>&nbsp;<i>m</i>&nbsp;<tt>&lt;=</tt>&nbsp;3,
-          0&nbsp;<tt>&lt;=</tt>&nbsp;<i>n</i>&nbsp;<tt>&lt;=</tt>&nbsp;7)</td></tr>
-  <tr><td valign="top" headers="construct characters"><tt>\x</tt><i>hh</i></td>
-      <td headers="matches">The character with hexadecimal&nbsp;value&nbsp;<tt>0x</tt><i>hh</i></td></tr>
-  <tr><td valign="top" headers="construct characters"><tt>&#92;u</tt><i>hhhh</i></td>
-      <td headers="matches">The character with hexadecimal&nbsp;value&nbsp;<tt>0x</tt><i>hhhh</i></td></tr>
-  <tr><td valign="top" headers="construct characters"><tt>&#92;x</tt><i>{h...h}</i></td>
-      <td headers="matches">The character with hexadecimal&nbsp;value&nbsp;<tt>0x</tt><i>h...h</i>
+ <tr><th style="vertical-align:top; font-weight: normal" id="x"><i>x</i></th>
+      <td headers="matches characters x">The character <i>x</i></td></tr>
+  <tr><th style="vertical-align:top; font-weight: normal" id="backslash"><code>\\</code></th>
+      <td headers="matches characters backslash">The backslash character</td></tr>
+  <tr><th style="vertical-align:top; font-weight: normal" id="octal_n"><code>\0</code><i>n</i></th>
+      <td headers="matches characters octal_n">The character with octal value <code>0</code><i>n</i>
+          (0&nbsp;<code><=</code>&nbsp;<i>n</i>&nbsp;<code><=</code>&nbsp;7)</td></tr>
+  <tr><th style="vertical-align:top; font-weight: normal" id="octal_nn"><code>\0</code><i>nn</i></th>
+      <td headers="matches characters octal_nn">The character with octal value <code>0</code><i>nn</i>
+          (0&nbsp;<code><=</code>&nbsp;<i>n</i>&nbsp;<code><=</code>&nbsp;7)</td></tr>
+  <tr><th style="vertical-align:top; font-weight: normal" id="octal_nnn"><code>\0</code><i>mnn</i></th>
+      <td headers="matches characters octal_nnn">The character with octal value <code>0</code><i>mnn</i>
+          (0&nbsp;<code><=</code>&nbsp;<i>m</i>&nbsp;<code><=</code>&nbsp;3,
+          0&nbsp;<code><=</code>&nbsp;<i>n</i>&nbsp;<code><=</code>&nbsp;7)</td></tr>
+  <tr><th style="vertical-align:top; font-weight: normal" id="hex_hh"><code>\x</code><i>hh</i></th>
+      <td headers="matches characters hex_hh">The character with hexadecimal value <code>0x</code><i>hh</i></td></tr>
+  <tr><th style="vertical-align:top; font-weight: normal" id="hex_hhhh"><code>&#92;u</code><i>hhhh</i></th>
+      <td headers="matches characters hex_hhhh">The character with hexadecimal&nbsp;value&nbsp;<code>0x</code><i>hhhh</i></td></tr>
+  <tr><th style="vertical-align:top; font-weight: normal" id="hex_h_h"><code>&#92;x</code><i>{h...h}</i></th>
+      <td headers="matches characters hex_h_h">The character with hexadecimal value <code>0x</code><i>h...h</i>
           (<code>Character.MIN_CODE_POINT</code>
-          &nbsp;&lt;=&nbsp;<tt>0x</tt><i>h...h</i>&nbsp;&lt;=&nbsp;
+          &nbsp;&lt;=&nbsp;<code>0x</code><i>h...h</i>&nbsp;&lt;=&nbsp;
            <code>Character.MAX_CODE_POINT</code>)</td></tr>
-  <tr><td valign="top" headers="matches"><tt>\t</tt></td>
-      <td headers="matches">The tab character (<tt>'&#92;u0009'</tt>)</td></tr>
-  <tr><td valign="top" headers="construct characters"><tt>\n</tt></td>
-      <td headers="matches">The newline (line feed) character (<tt>'&#92;u000A'</tt>)</td></tr>
-  <tr><td valign="top" headers="construct characters"><tt>\r</tt></td>
-      <td headers="matches">The carriage-return character (<tt>'&#92;u000D'</tt>)</td></tr>
-  <tr><td valign="top" headers="construct characters"><tt>\f</tt></td>
-      <td headers="matches">The form-feed character (<tt>'&#92;u000C'</tt>)</td></tr>
-  <tr><td valign="top" headers="construct characters"><tt>\a</tt></td>
-      <td headers="matches">The alert (bell) character (<tt>'&#92;u0007'</tt>)</td></tr>
-  <tr><td valign="top" headers="construct characters"><tt>\e</tt></td>
-      <td headers="matches">The escape character (<tt>'&#92;u001B'</tt>)</td></tr>
-  <tr><td valign="top" headers="construct characters"><tt>\c</tt><i>x</i></td>
-      <td headers="matches">The control character corresponding to <i>x</i></td></tr>
+  <tr><th style="vertical-align:top; font-weight: normal" id="unicode_name"><code>&#92;N{</code><i>name</i><code>}</code></th>
+      <td headers="matches characters unicode_name">The character with Unicode character name <i>'name'</i></td></tr>
+  <tr><th style="vertical-align:top; font-weight:normal" id="tab"><code>\t</code></th>
+      <td headers="matches characters tab">The tab character (<code>'&#92;u0009'</code>)</td></tr>
+  <tr><th style="vertical-align:top; font-weight:normal" id="newline"><code>\n</code></th>
+      <td headers="matches characters newline">The newline (line feed) character (<code>'&#92;u000A'</code>)</td></tr>
+  <tr><th style="vertical-align:top; font-weight:normal" id="return"><code>\r</code></th>
+      <td headers="matches characters return">The carriage-return character (<code>'&#92;u000D'</code>)</td></tr>
+  <tr><th style="vertical-align:top; font-weight:normal" id="form_feed"><code>\f</code></th>
+      <td headers="matches characters form_feed">The form-feed character (<code>'&#92;u000C'</code>)</td></tr>
+  <tr><th style="vertical-align:top; font-weight:normal" id="bell"><code>\a</code></th>
+      <td headers="matches characters bell">The alert (bell) character (<code>'&#92;u0007'</code>)</td></tr>
+  <tr><th style="vertical-align:top; font-weight:normal" id="escape"><code>\e</code></th>
+      <td headers="matches characters escape">The escape character (<code>'&#92;u001B'</code>)</td></tr>
+  <tr><th style="vertical-align:top; font-weight:normal" id="ctrl_x"><code>\c</code><i>x</i></th>
+      <td headers="matches characters ctrl_x">The control character corresponding to <i>x</i></td></tr>
+   <tr><th colspan="2" style="padding-top:20px" id="classes">Character classes</th></tr>
   
- <tr><th>&nbsp;</th></tr>
-  <tr align="left"><th colspan="2" id="classes">Character classes</th></tr>
-  
- <tr><td valign="top" headers="construct classes"><code>[abc]</code></td>
-      <td headers="matches"><code>a</code>, <code>b</code>, or <code>c</code> (simple class)</td></tr>
-  <tr><td valign="top" headers="construct classes"><code>[^abc]</code></td>
-      <td headers="matches">Any character except <code>a</code>, <code>b</code>, or <code>c</code> (negation)</td></tr>
-  <tr><td valign="top" headers="construct classes"><code>[a-zA-Z]</code></td>
-      <td headers="matches"><code>a</code> through <code>z</code>
+ <tr><th style="vertical-align:top; font-weight:normal" id="simple"><code>[abc]</code></th>
+      <td headers="matches classes simple"><code>a</code>, <code>b</code>, or <code>c</code> (simple class)</td></tr>
+  <tr><th style="vertical-align:top; font-weight:normal" id="negation"><code>[^abc]</code></th>
+      <td headers="matches classes negation">Any character except <code>a</code>, <code>b</code>, or <code>c</code> (negation)</td></tr>
+  <tr><th style="vertical-align:top; font-weight:normal" id="range"><code>[a-zA-Z]</code></th>
+      <td headers="matches classes range"><code>a</code> through <code>z</code>
           or <code>A</code> through <code>Z</code>, inclusive (range)</td></tr>
-  <tr><td valign="top" headers="construct classes"><code>[a-d[m-p]]</code></td>
-      <td headers="matches"><code>a</code> through <code>d</code>,
+  <tr><th style="vertical-align:top; font-weight:normal" id="union"><code>[a-d[m-p]]</code></th>
+      <td headers="matches classes union"><code>a</code> through <code>d</code>,
        or <code>m</code> through <code>p</code>: <code>[a-dm-p]</code> (union)</td></tr>
-  <tr><td valign="top" headers="construct classes"><code>[a-z&&[def]]</code></td>
-      <td headers="matches"><code>d</code>, <code>e</code>, or <code>f</code> (intersection)</tr>
-  <tr><td valign="top" headers="construct classes"><code>[a-z&&[^bc]]</code></td>
-      <td headers="matches"><code>a</code> through <code>z</code>,
+  <tr><th style="vertical-align:top; font-weight:normal" id="intersection"><code>[a-z&&[def]]</code></th>
+      <td headers="matches classes intersection"><code>d</code>, <code>e</code>, or <code>f</code> (intersection)</tr>
+  <tr><th style="vertical-align:top; font-weight:normal" id="subtraction1"><code>[a-z&&[^bc]]</code></th>
+      <td headers="matches classes subtraction1"><code>a</code> through <code>z</code>,
           except for <code>b</code> and <code>c</code>: <code>[ad-z]</code> (subtraction)</td></tr>
-  <tr><td valign="top" headers="construct classes"><code>[a-z&&[^m-p]]</code></td>
-      <td headers="matches"><code>a</code> through <code>z</code>,
+  <tr><th style="vertical-align:top; font-weight:normal" id="subtraction2"><code>[a-z&&[^m-p]]</code></th>
+      <td headers="matches classes subtraction2"><code>a</code> through <code>z</code>,
            and not <code>m</code> through <code>p</code>: <code>[a-lq-z]</code>(subtraction)</td></tr>
-  <tr><th>&nbsp;</th></tr>
   
- <tr align="left"><th colspan="2" id="predef">Predefined character classes</th></tr>
+ <tr><th colspan="2" style="padding-top:20px" id="predef">Predefined character classes</th></tr>
   
- <tr><td valign="top" headers="construct predef"><tt>.</tt></td>
-      <td headers="matches">Any character (may or may not match <a href="#lt">line terminators</a>)</td></tr>
-  <tr><td valign="top" headers="construct predef"><tt>\d</tt></td>
-      <td headers="matches">A digit: <tt>[0-9]</tt></td></tr>
-  <tr><td valign="top" headers="construct predef"><tt>\D</tt></td>
-      <td headers="matches">A non-digit: <tt>[^0-9]</tt></td></tr>
-  <tr><td valign="top" headers="construct predef"><tt>\h</tt></td>
-      <td headers="matches">A horizontal whitespace character:
-      <tt>[ \t\xA0&#92;u1680&#92;u180e&#92;u2000-&#92;u200a&#92;u202f&#92;u205f&#92;u3000]</tt></td></tr>
-  <tr><td valign="top" headers="construct predef"><tt>\H</tt></td>
-      <td headers="matches">A non-horizontal whitespace character: <tt>[^\h]</tt></td></tr>
-  <tr><td valign="top" headers="construct predef"><tt>\s</tt></td>
-      <td headers="matches">A whitespace character: <tt>[ \t\n\x0B\f\r]</tt></td></tr>
-  <tr><td valign="top" headers="construct predef"><tt>\S</tt></td>
-      <td headers="matches">A non-whitespace character: <tt>[^\s]</tt></td></tr>
-  <tr><td valign="top" headers="construct predef"><tt>\v</tt></td>
-      <td headers="matches">A vertical whitespace character: <tt>[\n\x0B\f\r\x85&#92;u2028&#92;u2029]</tt>
+ <tr><th style="vertical-align:top; font-weight:normal" id="any"><code>.</code></th>
+      <td headers="matches predef any">Any character (may or may not match <a href="#lt">line terminators</a>)</td></tr>
+  <tr><th style="vertical-align:top; font-weight:normal" id="digit"><code>\d</code></th>
+      <td headers="matches predef digit">A digit: <code>\p{IsDigit}</code></td></tr>
+  <tr><th style="vertical-align:top; font-weight:normal" id="non_digit"><code>\D</code></th>
+      <td headers="matches predef non_digit">A non-digit: <code>[^\d]</code></td></tr>
+  <tr><th style="vertical-align:top; font-weight:normal" id="horiz_white"><code>\h</code></th>
+      <td headers="matches predef horiz_white">A horizontal whitespace character:
+      <code>[ \t\xA0&#92;u1680&#92;u180e&#92;u2000-&#92;u200a&#92;u202f&#92;u205f&#92;u3000]</code></td></tr>
+  <tr><th style="vertical-align:top; font-weight:normal" id="non_horiz_white"><code>\H</code></th>
+      <td headers="matches predef non_horiz_white">A non-horizontal whitespace character: <code>[^\h]</code></td></tr>
+  <tr><th style="vertical-align:top; font-weight:normal" id="white"><code>\s</code></th>
+      <td headers="matches predef white">A whitespace character: <code>\p{IsWhite_Space}</code></td></tr>
+  <tr><th style="vertical-align:top; font-weight:normal" id="non_white"><code>\S</code></th>
+      <td headers="matches predef non_white">A non-whitespace character: <code>[^\s]</code></td></tr>
+  <tr><th style="vertical-align:top; font-weight:normal" id="vert_white"><code>\v</code></th>
+      <td headers="matches predef vert_white">A vertical whitespace character: <code>[\n\x0B\f\r\x85&#92;u2028&#92;u2029]</code>
       </td></tr>
-  <tr><td valign="top" headers="construct predef"><tt>\V</tt></td>
-      <td headers="matches">A non-vertical whitespace character: <tt>[^\v]</tt></td></tr>
-  <tr><td valign="top" headers="construct predef"><tt>\w</tt></td>
-      <td headers="matches">A word character: <tt>[a-zA-Z_0-9]</tt></td></tr>
-  <tr><td valign="top" headers="construct predef"><tt>\W</tt></td>
-      <td headers="matches">A non-word character: <tt>[^\w]</tt></td></tr>
-  <tr><th>&nbsp;</th></tr>
-  <tr align="left"><th colspan="2" id="posix"><b>POSIX character classes (US-ASCII only)</b></th></tr>
+  <tr><th style="vertical-align:top; font-weight:normal" id="non_vert_white"><code>\V</code></th>
+      <td headers="matches predef non_vert_white">A non-vertical whitespace character: <code>[^\v]</code></td></tr>
+  <tr><th style="vertical-align:top; font-weight:normal" id="word"><code>\w</code></th>
+      <td headers="matches predef word">A word character: <code>[\p{alpha}\p{gc=Mark}\p{digit}\p{gc=Connector_Punctuation}\p{Join_Control}]</code></td></tr>
+  <tr><th style="vertical-align:top; font-weight:normal" id="non_word"><code>\W</code></th>
+      <td headers="matches predef non_word">A non-word character: <code>[^\w]</code></td></tr>
   
- <tr><td valign="top" headers="construct posix"><code>\p{Lower}</code></td>
-      <td headers="matches">A lower-case alphabetic character: <code>[a-z]</code></td></tr>
-  <tr><td valign="top" headers="construct posix"><code>\p{Upper}</code></td>
-      <td headers="matches">An upper-case alphabetic character:<code>[A-Z]</code></td></tr>
-  <tr><td valign="top" headers="construct posix"><code>\p{ASCII}</code></td>
-      <td headers="matches">All ASCII:<code>[\x00-\x7F]</code></td></tr>
-  <tr><td valign="top" headers="construct posix"><code>\p{Alpha}</code></td>
-      <td headers="matches">An alphabetic character:<code>[\p{Lower}\p{Upper}]</code></td></tr>
-  <tr><td valign="top" headers="construct posix"><code>\p{Digit}</code></td>
-      <td headers="matches">A decimal digit: <code>[0-9]</code></td></tr>
-  <tr><td valign="top" headers="construct posix"><code>\p{Alnum}</code></td>
-      <td headers="matches">An alphanumeric character:<code>[\p{Alpha}\p{Digit}]</code></td></tr>
-  <tr><td valign="top" headers="construct posix"><code>\p{Punct}</code></td>
-      <td headers="matches">Punctuation: One of <code>!"#$%&'()*+,-./:;<=>?@@[\]^_`{|}~</code></td></tr>
-      <!-- {@@code [\!"#\$%&'\(\)\*\+,\-\./:;\<=\>\?@@\[\\\]\^_`\{\|\}~]}
-          {@@code [\X21-\X2F\X31-\X40\X5B-\X60\X7B-\X7E]} -->
-  <tr><td valign="top" headers="construct posix"><code>\p{Graph}</code></td>
-      <td headers="matches">A visible character: <code>[\p{Alnum}\p{Punct}]</code></td></tr>
-  <tr><td valign="top" headers="construct posix"><code>\p{Print}</code></td>
-      <td headers="matches">A printable character: <code>[\p{Graph}\x20]</code></td></tr>
-  <tr><td valign="top" headers="construct posix"><code>\p{Blank}</code></td>
-      <td headers="matches">A space or a tab: <code>[ \t]</code></td></tr>
-  <tr><td valign="top" headers="construct posix"><code>\p{Cntrl}</code></td>
-      <td headers="matches">A control character: <code>[\x00-\x1F\x7F]</code></td></tr>
-  <tr><td valign="top" headers="construct posix"><code>\p{XDigit}</code></td>
-      <td headers="matches">A hexadecimal digit: <code>[0-9a-fA-F]</code></td></tr>
-  <tr><td valign="top" headers="construct posix"><code>\p{Space}</code></td>
-      <td headers="matches">A whitespace character: <code>[ \t\n\x0B\f\r]</code></td></tr>
+ <tr><th colspan="2" style="padding-top:20px" id="posix"><b>POSIX character classes (Unicode-aware)</b></th></tr>
   
- <tr><th>&nbsp;</th></tr>
-  <tr align="left"><th colspan="2">java.lang.Character classes (simple <a href="#jcc">java character type</a>)</th></tr>
+ <tr><th style="vertical-align:top; font-weight:normal" id="Lower"><code>\p{Lower}</code></th>
+      <td headers="matches posix Lower">A lower-case alphabetic character: <code>\p{IsLowercase}</code></td></tr>
+  <tr><th style="vertical-align:top; font-weight:normal" id="Upper"><code>\p{Upper}</code></th>
+      <td headers="matches posix Upper">An upper-case alphabetic character:<code>\p{IsUppercase}</code></td></tr>
+  <tr><th style="vertical-align:top; font-weight:normal" id="ASCII"><code>\p{ASCII}</code></th>
+      <td headers="matches posix ASCII">All ASCII:<code>[\x00-\x7F]</code></td></tr>
+  <tr><th style="vertical-align:top; font-weight:normal" id="Alpha"><code>\p{Alpha}</code></th>
+      <td headers="matches posix Alpha">An alphabetic character:<code>[\p{IsAlphabetic}]</code></td></tr>
+  <tr><th style="vertical-align:top; font-weight:normal" id="Digit"><code>\p{IsDigit}</code></th>
+      <td headers="matches posix Digit">A decimal digit: <code>\p{gc=Decimal_Number}</code></td></tr>
+  <tr><th style="vertical-align:top; font-weight:normal" id="Alnum"><code>\p{Alnum}</code></th>
+      <td headers="matches posix Alnum">An alphanumeric character:<code>[\p{Alpha}\p{Digit}]</code></td></tr>
+  <tr><th style="vertical-align:top; font-weight:normal" id="Punct"><code>\p{Punct}</code></th>
+      <td headers="matches posix Punct">Punctuation: <code>\p{IsPunctuation}</code></td></tr>
+  <tr><th style="vertical-align:top; font-weight:normal" id="Graph"><code>\p{Graph}</code></th>
+      <td headers="matches posix Graph">A visible character:
+      <code>[^p{space}\p{gc=Control}\p{gc=Surrogate}\p{gc=Unassigned}]</code></td></tr>
+  <tr><th style="vertical-align:top; font-weight:normal" id="Print"><code>\p{Print}</code></th>
+      <td headers="matches posix Print">A printable character: <code>[\p{Graph}\p{Blank}&&[^\p{Cntrl}]]</code></td></tr>
+  <tr><th style="vertical-align:top; font-weight:normal" id="Blank"><code>\p{Blank}</code></th>
+      <td headers="matches posix Blank">A space or a tab: <code>[\p{gc=Space_Separator}\N{CHARACTER TABULATION}]</code></td></tr>
+  <tr><th style="vertical-align:top; font-weight:normal" id="Cntrl"><code>\p{Cntrl}</code></th>
+      <td headers="matches posix Cntrl">A control character: <code>\p{gc=Control}</code></td></tr>
+  <tr><th style="vertical-align:top; font-weight:normal" id="XDigit"><code>\p{XDigit}</code></th>
+      <td headers="matches posix XDigit">A hexadecimal digit: <code>[\p{gc=Decimal_Number}\p{IsHex_Digit}]</code></td></tr>
+  <tr><th style="vertical-align:top; font-weight:normal" id="Space"><code>\p{Space}</code></th>
+      <td headers="matches posix Space">A whitespace character: <code>\p{IsWhite_Space}</code></td></tr>
+  <tr><th style="vertical-align:top; font-weight:normal" id="PosixCompatible">POSIX-Compatible expression</th>
+      <td headers="matches posix PosixCompatible">See <a href="http://www.unicode.org/reports/tr18/#Compatibility_Properties">Unicode documentation</a></td></tr>
   
- <tr><td valign="top"><tt>\p{javaLowerCase}</tt></td>
-      <td>Equivalent to java.lang.Character.isLowerCase()</td></tr>
-  <tr><td valign="top"><tt>\p{javaUpperCase}</tt></td>
-      <td>Equivalent to java.lang.Character.isUpperCase()</td></tr>
-  <tr><td valign="top"><tt>\p{javaWhitespace}</tt></td>
-      <td>Equivalent to java.lang.Character.isWhitespace()</td></tr>
-  <tr><td valign="top"><tt>\p{javaMirrored}</tt></td>
-      <td>Equivalent to java.lang.Character.isMirrored()</td></tr>
+ <tr><th colspan="2" style="padding-top:20px" id="java">java.lang.Character classes (simple <a href="#jcc">java character type</a>)</th></tr>
   
- <tr><th>&nbsp;</th></tr>
-  <tr align="left"><th colspan="2" id="unicode">Classes for Unicode scripts, blocks, categories and binary properties</th></tr>
-  <tr><td valign="top" headers="construct unicode"><code>\p{IsLatin}</code></td>
-      <td headers="matches">A Latin&nbsp;script character (<a href="#usc">script</a>)</td></tr>
-  <tr><td valign="top" headers="construct unicode"><code>\p{InGreek}</code></td>
-      <td headers="matches">A character in the Greek&nbsp;block (<a href="#ubc">block</a>)</td></tr>
-  <tr><td valign="top" headers="construct unicode"><code>\p{Lu}</code></td>
-      <td headers="matches">An uppercase letter (<a href="#ucc">category</a>)</td></tr>
-  <tr><td valign="top" headers="construct unicode"><code>\p{IsAlphabetic}</code></td>
-      <td headers="matches">An alphabetic character (<a href="#ubpc">binary property</a>)</td></tr>
-  <tr><td valign="top" headers="construct unicode"><code>\p{Sc}</code></td>
-      <td headers="matches">A currency symbol</td></tr>
-  <tr><td valign="top" headers="construct unicode"><code>\P{InGreek}</code></td>
-      <td headers="matches">Any character except one in the Greek block (negation)</td></tr>
-  <tr><td valign="top" headers="construct unicode"><code>[\p{L}&&[^\p{Lu}]]</code></td>
-      <td headers="matches">Any letter except an uppercase letter (subtraction)</td></tr>
+ <tr><th style="vertical-align:top; font-weight:normal" id="javaLowerCase"><code>\p{javaLowerCase}</code></th>
+      <td headers="matches java javaLowerCase">Equivalent to java.lang.Character.isLowerCase()</td></tr>
+  <tr><th style="vertical-align:top; font-weight:normal" id="javaUpperCase"><code>\p{javaUpperCase}</code></th>
+      <td headers="matches java javaUpperCase">Equivalent to java.lang.Character.isUpperCase()</td></tr>
+  <tr><th style="vertical-align:top; font-weight:normal" id="javaWhitespace"><code>\p{javaWhitespace}</code></th>
+      <td headers="matches java javaWhitespace">Equivalent to java.lang.Character.isWhitespace()</td></tr>
+  <tr><th style="vertical-align:top; font-weight:normal" id="javaMirrored"><code>\p{javaMirrored}</code></th>
+      <td headers="matches java javaMirrored">Equivalent to java.lang.Character.isMirrored()</td></tr>
   
- <tr><th>&nbsp;</th></tr>
-  <tr align="left"><th colspan="2" id="bounds">Boundary matchers</th></tr>
+ <tr><th colspan="2" style="padding-top:20px" id="unicode">Classes for Unicode scripts, blocks, categories and binary properties</th></tr>
   
- <tr><td valign="top" headers="construct bounds"><tt>^</tt></td>
-      <td headers="matches">The beginning of a line</td></tr>
-  <tr><td valign="top" headers="construct bounds"><tt>$</tt></td>
-      <td headers="matches">The end of a line</td></tr>
-  <tr><td valign="top" headers="construct bounds"><tt>\b</tt></td>
-      <td headers="matches">A word boundary</td></tr>
-  <tr><td valign="top" headers="construct bounds"><tt>\B</tt></td>
-      <td headers="matches">A non-word boundary</td></tr>
-  <tr><td valign="top" headers="construct bounds"><tt>\A</tt></td>
-      <td headers="matches">The beginning of the input</td></tr>
-  <tr><td valign="top" headers="construct bounds"><tt>\G</tt></td>
-      <td headers="matches">The end of the previous match</td></tr>
-  <tr><td valign="top" headers="construct bounds"><tt>\Z</tt></td>
-      <td headers="matches">The end of the input but for the final
+ <tr><th style="vertical-align:top; font-weight:normal" id="IsLatin"><code>\p{IsLatin}</code></th>
+      <td headers="matches unicode IsLatin">A Latin&nbsp;script character (<a href="#usc">script</a>)</td></tr>
+  <tr><th style="vertical-align:top; font-weight:normal" id="InGreek"><code>\p{InGreek}</code></th>
+      <td headers="matches unicode InGreek">A character in the Greek&nbsp;block (<a href="#ubc">block</a>)</td></tr>
+  <tr><th style="vertical-align:top; font-weight:normal" id="Lu"><code>\p{Lu}</code></th>
+      <td headers="matches unicode Lu">An uppercase letter (<a href="#ucc">category</a>)</td></tr>
+  <tr><th style="vertical-align:top; font-weight:normal" id="IsAlphabetic"><code>\p{IsAlphabetic}</code></th>
+      <td headers="matches unicode IsAlphabetic">An alphabetic character (<a href="#ubpc">binary property</a>)</td></tr>
+  <tr><th style="vertical-align:top; font-weight:normal" id="Sc"><code>\p{Sc}</code></th>
+      <td headers="matches unicode Sc">A currency symbol</td></tr>
+  <tr><th style="vertical-align:top; font-weight:normal" id="not_InGreek"><code>\P{InGreek}</code></th>
+      <td headers="matches unicode not_InGreek">Any character except one in the Greek block (negation)</td></tr>
+  <tr><th style="vertical-align:top; font-weight:normal" id="not_uppercase"><code>[\p{L}&&[^\p{Lu}]]</code></th>
+      <td headers="matches unicode not_uppercase">Any letter except an uppercase letter (subtraction)</td></tr>
+  
+ <tr><th colspan="2" style="padding-top:20px" id="bounds">Boundary matchers</th></tr>
+  
+ <tr><th style="vertical-align:top; font-weight:normal" id="begin_line"><code>^</code></th>
+      <td headers="matches bounds begin_line">The beginning of a line</td></tr>
+  <tr><th style="vertical-align:top; font-weight:normal" id="end_line"><code>$</code></th>
+      <td headers="matches bounds end_line">The end of a line</td></tr>
+  <tr><th style="vertical-align:top; font-weight:normal" id="word_boundary"><code>\b</code></th>
+      <td headers="matches bounds word_boundary">A word boundary</td></tr>
+  <tr><th style="vertical-align:top; font-weight:normal" id="non_word_boundary"><code>\B</code></th>
+      <td headers="matches bounds non_word_boundary">A non-word boundary</td></tr>
+  <tr><th style="vertical-align:top; font-weight:normal" id="begin_input"><code>\A</code></th>
+      <td headers="matches bounds begin_input">The beginning of the input</td></tr>
+  <tr><th style="vertical-align:top; font-weight:normal" id="end_prev_match"><code>\G</code></th>
+      <td headers="matches bounds end_prev_match">The end of the previous match</td></tr>
+  <tr><th style="vertical-align:top; font-weight:normal" id="end_input_except_term"><code>\Z</code></th>
+      <td headers="matches bounds end_input_except_term">The end of the input but for the final
           <a href="#lt">terminator</a>, if&nbsp;any</td></tr>
-  <tr><td valign="top" headers="construct bounds"><tt>\z</tt></td>
-      <td headers="matches">The end of the input</td></tr>
+  <tr><th style="vertical-align:top; font-weight:normal" id="end_input"><code>\z</code></th>
+      <td headers="matches bounds end_input">The end of the input</td></tr>
   
- <tr><th>&nbsp;</th></tr>
-  <tr align="left"><th colspan="2" id="lineending">Linebreak matcher</th></tr>
-  <tr><td valign="top" headers="construct lineending"><tt>\R</tt></td>
-      <td headers="matches">Any Unicode linebreak sequence, is equivalent to
-      <tt>&#92;u000D&#92;u000A|[&#92;u000A&#92;u000B&#92;u000C&#92;u000D&#92;u0085&#92;u2028&#92;u2029]
-      </tt></td></tr>
+ <tr><th colspan="2" style="padding-top:20px" id="linebreak">Linebreak matcher</th></tr>
   
- <tr><th>&nbsp;</th></tr>
-  <tr align="left"><th colspan="2" id="greedy">Greedy quantifiers</th></tr>
+ <tr><th style="vertical-align:top; font-weight:normal" id="any_unicode_linebreak"><code>\R</code></th>
+      <td headers="matches linebreak any_unicode_linebreak">Any Unicode linebreak sequence, is equivalent to
+      <code>&#92;u000D&#92;u000A|[&#92;u000A&#92;u000B&#92;u000C&#92;u000D&#92;u0085&#92;u2028&#92;u2029]
+      </code></td></tr>
   
- <tr><td valign="top" headers="construct greedy"><i>X</i><tt>?</tt></td>
-      <td headers="matches"><i>X</i>, once or not at all</td></tr>
-  <tr><td valign="top" headers="construct greedy"><i>X</i><tt>
- *</tt></td>     <td headers="matches"><i>X</i>, zero or more times</td></tr>
-  <tr><td valign="top" headers="construct greedy"><i>X</i><tt>+</tt></td>
-      <td headers="matches"><i>X</i>, one or more times</td></tr>
-  <tr><td valign="top" headers="construct greedy"><i>X</i><tt>{</tt><i>n</i><tt>}</tt></td>
-      <td headers="matches"><i>X</i>, exactly <i>n</i> times</td></tr>
-  <tr><td valign="top" headers="construct greedy"><i>X</i><tt>{</tt><i>n</i><tt>,}</tt></td>
-      <td headers="matches"><i>X</i>, at least <i>n</i> times</td></tr>
-  <tr><td valign="top" headers="construct greedy"><i>X</i><tt>{</tt><i>n</i><tt>,</tt><i>m</i><tt>}</tt></td>
-      <td headers="matches"><i>X</i>, at least <i>n</i> but not more than <i>m</i> times</td></tr>
+ <tr><th colspan="2" style="padding-top:20px" id="grapheme">Unicode Extended Grapheme matcher</th></tr>
   
- <tr><th>&nbsp;</th></tr>
-  <tr align="left"><th colspan="2" id="reluc">Reluctant quantifiers</th></tr>
+ <tr><th style="vertical-align:top; font-weight:normal" id="grapheme_any"><code>\X</code></th>
+      <td headers="matches grapheme grapheme_any">Any Unicode extended grapheme cluster</td></tr>
   
- <tr><td valign="top" headers="construct reluc"><i>X</i><tt>??</tt></td>
-      <td headers="matches"><i>X</i>, once or not at all</td></tr>
-  <tr><td valign="top" headers="construct reluc"><i>X</i><tt>*?</tt></td>
-      <td headers="matches"><i>X</i>, zero or more times</td></tr>
-  <tr><td valign="top" headers="construct reluc"><i>X</i><tt>+?</tt></td>
-      <td headers="matches"><i>X</i>, one or more times</td></tr>
-  <tr><td valign="top" headers="construct reluc"><i>X</i><tt>{</tt><i>n</i><tt>}?</tt></td>
-      <td headers="matches"><i>X</i>, exactly <i>n</i> times</td></tr>
-  <tr><td valign="top" headers="construct reluc"><i>X</i><tt>{</tt><i>n</i><tt>,}?</tt></td>
-      <td headers="matches"><i>X</i>, at least <i>n</i> times</td></tr>
-  <tr><td valign="top" headers="construct reluc"><i>X</i><tt>{</tt><i>n</i><tt>,</tt><i>m</i><tt>}?</tt></td>
-      <td headers="matches"><i>X</i>, at least <i>n</i> but not more than <i>m</i> times</td></tr>
+ <tr><th colspan="2" style="padding-top:20px" id="greedy">Greedy quantifiers</th></tr>
   
- <tr><th>&nbsp;</th></tr>
-  <tr align="left"><th colspan="2" id="poss">Possessive quantifiers</th></tr>
+ <tr><th style="vertical-align:top; font-weight:normal" id="greedy_once_or_not"><i>X</i><code>?</code></th>
+      <td headers="matches greedy greedy_once_or_not"><i>X</i>, once or not at all</td></tr>
+  <tr><th style="vertical-align:top; font-weight:normal" id="greedy_zero_or_more"><i>X</i><code>*</code></th>
+      <td headers="matches greedy greedy_zero_or_more"><i>X</i>, zero or more times</td></tr>
+  <tr><th style="vertical-align:top; font-weight:normal" id="greedy_one_or_more"><i>X</i><code>+</code></th>
+      <td headers="matches greedy greedy_one_or_more"><i>X</i>, one or more times</td></tr>
+  <tr><th style="vertical-align:top; font-weight:normal" id="greedy_exactly"><i>X</i><code>{</code><i>n</i><code>}</code></th>
+      <td headers="matches greedy greedy_exactly"><i>X</i>, exactly <i>n</i> times</td></tr>
+  <tr><th style="vertical-align:top; font-weight:normal" id="greedy_at_least"><i>X</i><code>{</code><i>n</i><code>,</code>}</th>
+      <td headers="matches greedy greedy_at_least"><i>X</i>, at least <i>n</i> times</td></tr>
+  <tr><th style="vertical-align:top; font-weight:normal" id="greedy_at_least_up_to"><i>X</i><code>{</code><i>n</i><code>,</code><i>m</i><code>}</code></th>
+      <td headers="matches greedy greedy_at_least_up_to"><i>X</i>, at least <i>n</i> but not more than <i>m</i> times</td></tr>
   
- <tr><td valign="top" headers="construct poss"><i>X</i><tt>?+</tt></td>
-      <td headers="matches"><i>X</i>, once or not at all</td></tr>
-  <tr><td valign="top" headers="construct poss"><i>X</i><tt>
- *+</tt></td>     <td headers="matches"><i>X</i>, zero or more times</td></tr> <tr><td valign="top" headers="construct poss"><i>X</i><tt>++</tt></td>     <td headers="matches"><i>X</i>, one or more times</td></tr> <tr><td valign="top" headers="construct poss"><i>X</i><tt>{</tt><i>n</i><tt>}+</tt></td>     <td headers="matches"><i>X</i>, exactly <i>n</i> times</td></tr> <tr><td valign="top" headers="construct poss"><i>X</i><tt>{</tt><i>n</i><tt>,}+</tt></td>     <td headers="matches"><i>X</i>, at least <i>n</i> times</td></tr> <tr><td valign="top" headers="construct poss"><i>X</i><tt>{</tt><i>n</i><tt>,</tt><i>m</i><tt>}+</tt></td>     <td headers="matches"><i>X</i>, at least <i>n</i> but not more than <i>m</i> times</td></tr> <tr><th>&nbsp;</th></tr> <tr align="left"><th colspan="2" id="logical">Logical operators</th></tr> <tr><td valign="top" headers="construct logical"><i>XY</i></td>     <td headers="matches"><i>X</i> followed by <i>Y</i></td></tr> <tr><td valign="top" headers="construct logical"><i>X</i><tt>|</tt><i>Y</i></td>     <td headers="matches">Either <i>X</i> or <i>Y</i></td></tr> <tr><td valign="top" headers="construct logical"><tt>(</tt><i>X</i><tt>)</tt></td>     <td headers="matches">X, as a <a href="#cg">capturing group</a></td></tr> <tr><th>&nbsp;</th></tr> <tr align="left"><th colspan="2" id="backref">Back references</th></tr> <tr><td valign="bottom" headers="construct backref"><tt>\</tt><i>n</i></td>     <td valign="bottom" headers="matches">Whatever the <i>n</i><sup>th</sup>     <a href="#cg">capturing group</a> matched</td></tr> <tr><td valign="bottom" headers="construct backref"><tt>\</tt><i>k</i>&lt;<i>name</i>&gt;</td>     <td valign="bottom" headers="matches">Whatever the     <a href="#groupname">named-capturing group</a> "name" matched. Only available for API 26 or above</td></tr> <tr><th>&nbsp;</th></tr> <tr align="left"><th colspan="2" id="quot">Quotation</th></tr> <tr><td valign="top" headers="construct quot"><tt>\</tt></td>     <td headers="matches">Nothing, but quotes the following character</td></tr> <tr><td valign="top" headers="construct quot"><tt>\Q</tt></td>     <td headers="matches">Nothing, but quotes all characters until <tt>\E</tt></td></tr> <tr><td valign="top" headers="construct quot"><tt>\E</tt></td>     <td headers="matches">Nothing, but ends quoting started by <tt>\Q</tt></td></tr>     <!-- Metachars: !$()*+.<>?[\]^{|} -->
+ <tr><th colspan="2" style="padding-top:20px" id="reluc">Reluctant quantifiers</th></tr>
   
- <tr><th>&nbsp;</th></tr>
-  <tr align="left"><th colspan="2" id="special">Special constructs (named-capturing and non-capturing)</th></tr>
+ <tr><th style="vertical-align:top; font-weight:normal" id="reluc_once_or_not"><i>X</i><code>??</code></th>
+      <td headers="matches reluc reluc_once_or_not"><i>X</i>, once or not at all</td></tr>
+  <tr><th style="vertical-align:top; font-weight:normal" id="reluc_zero_or_more"><i>X</i><code>*?</code></th>
+      <td headers="matches reluc reluc_zero_or_more"><i>X</i>, zero or more times</td></tr>
+  <tr><th style="vertical-align:top; font-weight:normal" id="reluc_one_or_more"><i>X</i><code>+?</code></th>
+      <td headers="matches reluc reluc_one_or_more"><i>X</i>, one or more times</td></tr>
+  <tr><th style="vertical-align:top; font-weight:normal" id="reluc_exactly"><i>X</i><code>{</code><i>n</i><code>}?</code></th>
+      <td headers="matches reluc reluc_exactly"><i>X</i>, exactly <i>n</i> times</td></tr>
+  <tr><th style="vertical-align:top; font-weight:normal" id="reluc_at_least"><i>X</i><code>{</code><i>n</i><code>,}?</code></th>
+      <td headers="matches reluc reluc_at_least"><i>X</i>, at least <i>n</i> times</td></tr>
+  <tr><th style="vertical-align:top; font-weight:normal" id="reluc_at_least_up_to"><i>X</i><code>{</code><i>n</i><code>,</code><i>m</i><code>}?</code></th>
+      <td headers="matches reluc reluc_at_least_up_to"><i>X</i>, at least <i>n</i> but not more than <i>m</i> times</td></tr>
   
- <tr><td valign="top" headers="construct special"><tt>(?&lt;<a href="#groupname">name</a>&gt;</tt><i>X</i><tt>)</tt></td>
-      <td headers="matches"><i>X</i>, as a named-capturing group. Only available for API 26 or above.</td></tr>
-  <tr><td valign="top" headers="construct special"><tt>(?:</tt><i>X</i><tt>)</tt></td>
-      <td headers="matches"><i>X</i>, as a non-capturing group</td></tr>
-  <tr><td valign="top" headers="construct special"><tt>(?idmsuxU-idmsuxU)&nbsp;</tt></td>
-      <td headers="matches">Nothing, but turns match flags <a href="#CASE_INSENSITIVE">i</a>
+ <tr><th colspan="2" style="padding-top:20px" id="poss">Possessive quantifiers</th></tr>
+  
+ <tr><th style="vertical-align:top; font-weight:normal" id="poss_once_or_not"><i>X</i><code>?+</code></th>
+      <td headers="matches poss poss_once_or_not"><i>X</i>, once or not at all</td></tr>
+  <tr><th style="vertical-align:top; font-weight:normal" id="poss_zero_or_more"><i>X</i><code>*+</code></th>
+      <td headers="matches poss poss_zero_or_more"><i>X</i>, zero or more times</td></tr>
+  <tr><th style="vertical-align:top; font-weight:normal" id="poss_one_or_more"><i>X</i><code>++</code></th>
+      <td headers="matches poss poss_one_or_more"><i>X</i>, one or more times</td></tr>
+  <tr><th style="vertical-align:top; font-weight:normal" id="poss_exactly"><i>X</i><code>{</code><i>n</i><code>}+</code></th>
+      <td headers="matches poss poss_exactly"><i>X</i>, exactly <i>n</i> times</td></tr>
+  <tr><th style="vertical-align:top; font-weight:normal" id="poss_at_least"><i>X</i><code>{</code><i>n</i><code>,}+</code></th>
+      <td headers="matches poss poss_at_least"><i>X</i>, at least <i>n</i> times</td></tr>
+  <tr><th style="vertical-align:top; font-weight:normal" id="poss_at_least_up_to"><i>X</i><code>{</code><i>n</i><code>,</code><i>m</i><code>}+</code></th>
+      <td headers="matches poss poss_at_least_up_to"><i>X</i>, at least <i>n</i> but not more than <i>m</i> times</td></tr>
+  
+ <tr><th colspan="2" style="padding-top:20px" id="logical">Logical operators</th></tr>
+  
+ <tr><th style="vertical-align:top; font-weight:normal" id="concat"><i>XY</i></th>
+      <td headers="matches logical concat"><i>X</i> followed by <i>Y</i></td></tr>
+  <tr><th style="vertical-align:top; font-weight:normal" id="alternate"><i>X</i><code>|</code><i>Y</i></th>
+      <td headers="matches logical alternate">Either <i>X</i> or <i>Y</i></td></tr>
+  <tr><th style="vertical-align:top; font-weight:normal" id="group"><code>(</code><i>X</i><code>)</code></th>
+      <td headers="matches logical group">X, as a <a href="#cg">capturing group</a></td></tr>
+  
+ <tr><th colspan="2" style="padding-top:20px" id="backref">Back references</th></tr>
+  
+ <tr><th style="vertical-align:top; font-weight:normal" id="back_nth"><code>\</code><i>n</i></th>
+      <td headers="matches backref back_nth">Whatever the <i>n</i><sup>th</sup>
+      <a href="#cg">capturing group</a> matched</td></tr>
+  <tr><th style="vertical-align:top; font-weight:normal" id="back_named"><code>\</code><i>k</i>&lt;<i>name</i>&gt;</th>
+      <td headers="matches backref back_named">Whatever the
+      <a href="#groupname">named-capturing group</a> "name" matched. Only available for API 26 or above</td></tr>
+  
+ <tr><th colspan="2" style="padding-top:20px" id="quote">Quotation</th></tr>
+  
+ <tr><th style="vertical-align:top; font-weight:normal" id="quote_follow"><code>\</code></th>
+      <td headers="matches quote quote_follow">Nothing, but quotes the following character</td></tr>
+  <tr><th style="vertical-align:top; font-weight:normal" id="quote_begin"><code>\Q</code></th>
+      <td headers="matches quote quote_begin">Nothing, but quotes all characters until <code>\E</code></td></tr>
+  <tr><th style="vertical-align:top; font-weight:normal" id="quote_end"><code>\E</code></th>
+      <td headers="matches quote quote_end">Nothing, but ends quoting started by <code>\Q</code></td></tr>
+      <!-- Metachars: !$()*+.<>?[\]^{|} -->
+  
+ <tr><th colspan="2" style="padding-top:20px" id="special">Special constructs (named-capturing and non-capturing)</th></tr>
+  
+ <tr><th style="vertical-align:top; font-weight:normal" id="named_group"><code>(?&lt;<a href="#groupname">name</a>&gt;</code><i>X</i><code>)</code></th>
+      <td headers="matches special named_group"><i>X</i>, as a named-capturing group. Only available for API 26 or above.</td></tr>
+  <tr><th style="vertical-align:top; font-weight:normal" id="non_capture_group"><code>(?:</code><i>X</i><code>)</code></th>
+      <td headers="matches special non_capture_group"><i>X</i>, as a non-capturing group</td></tr>
+  <tr><th style="vertical-align:top; font-weight:normal" id="flags"><code>(?idmsux-idmsux)&nbsp;</code></th>
   <a href="#UNIX_LINES">d</a> <a href="#MULTILINE">m</a> <a href="#DOTALL">s</a>
   <a href="#UNICODE_CASE">u</a> <a href="#COMMENTS">x</a> <a href="#UNICODE_CHARACTER_CLASS">U</a>
   on - off</td></tr>
-  <tr><td valign="top" headers="construct special"><tt>(?idmsux-idmsux:</tt><i>X</i><tt>)</tt>&nbsp;&nbsp;</td>
-      <td headers="matches"><i>X</i>, as a <a href="#cg">non-capturing group</a> with the
+  <tr><th style="vertical-align:top; font-weight:normal" id="non_capture_group_flags"><code>(?idmsuxU-idmsuxU:</code><i>X</i><code>)</code>&nbsp;&nbsp;</th>
+      <td headers="matches special non_capture_group_flags"><i>X</i>, as a <a href="#cg">non-capturing group</a> with the
           given flags <a href="#CASE_INSENSITIVE">i</a> <a href="#UNIX_LINES">d</a>
   <a href="#MULTILINE">m</a> <a href="#DOTALL">s</a> <a href="#UNICODE_CASE">u</a>
-  <a href="#COMMENTS">x</a> on - off</td></tr>
-  <tr><td valign="top" headers="construct special"><tt>(?=</tt><i>X</i><tt>)</tt></td>
-      <td headers="matches"><i>X</i>, via zero-width positive lookahead</td></tr>
-  <tr><td valign="top" headers="construct special"><tt>(?!</tt><i>X</i><tt>)</tt></td>
-      <td headers="matches"><i>X</i>, via zero-width negative lookahead</td></tr>
-  <tr><td valign="top" headers="construct special"><tt>(?&lt;=</tt><i>X</i><tt>)</tt></td>
-      <td headers="matches"><i>X</i>, via zero-width positive lookbehind</td></tr>
-  <tr><td valign="top" headers="construct special"><tt>(?&lt;!</tt><i>X</i><tt>)</tt></td>
-      <td headers="matches"><i>X</i>, via zero-width negative lookbehind</td></tr>
-  <tr><td valign="top" headers="construct special"><tt>(?&gt;</tt><i>X</i><tt>)</tt></td>
-      <td headers="matches"><i>X</i>, as an independent, non-capturing group</td></tr>
+  <a href="#COMMENTS">x</a> <a href="#UNICODE_CHARACTER_CLASS">U</a> on - off</td></tr>
+  <tr><th style="vertical-align:top; font-weight:normal" id="pos_lookahead"><code>(?=</code><i>X</i><code>)</code></th>
+      <td headers="matches special pos_lookahead"><i>X</i>, via zero-width positive lookahead</td></tr>
+  <tr><th style="vertical-align:top; font-weight:normal" id="neg_lookahead"><code>(?!</code><i>X</i><code>)</code></th>
+      <td headers="matches special neg_lookahead"><i>X</i>, via zero-width negative lookahead</td></tr>
+  <tr><th style="vertical-align:top; font-weight:normal" id="pos_lookbehind"><code>(?<=</code><i>X</i><code>)</code></th>
+      <td headers="matches special pos_lookbehind"><i>X</i>, via zero-width positive lookbehind</td></tr>
+  <tr><th style="vertical-align:top; font-weight:normal" id="neg_lookbehind"><code>(?<!</code><i>X</i><code>)</code></th>
+      <td headers="matches special neg_lookbehind"><i>X</i>, via zero-width negative lookbehind</td></tr>
+  <tr><th style="vertical-align:top; font-weight:normal" id="indep_non_capture_group"><code>(?></code><i>X</i><code>)</code></th>
+      <td headers="matches special indep_non_capture_group"><i>X</i>, as an independent, non-capturing group</td></tr>
   
- </table>
+ </tbody>
+  </table>
   
  <hr>
   
- <h3><a name="bs">Backslashes, escapes, and quoting</a></h3>
+ <h2><a id="bs">Backslashes, escapes, and quoting</a></h2>
   
- <p> The backslash character (<tt>'\'</tt>) serves to introduce escaped
+ <p> The backslash character (<code>'\'</code>) serves to introduce escaped
   constructs, as defined in the table above, as well as to quote characters
   that otherwise would be interpreted as unescaped constructs.  Thus the
-  expression <tt>\\</tt> matches a single backslash and <tt>\{</tt> matches a
+  expression <code>\\</code> matches a single backslash and <code>\{</code> matches a
   left brace. 
  <p> It is an error to use a backslash prior to any alphabetic character that
   does not denote an escaped construct; these are reserved for future
@@ -338,167 +375,178 @@
   part of an unescaped construct. 
  <p> Backslashes within string literals in Java source code are interpreted
   as required by 
- <cite>The Java&trade; Language Specification</cite>
+ <cite>The Java Language Specification</cite>
   as either Unicode escapes (section 3.3) or other character escapes (section 3.10.6)
   It is therefore necessary to double backslashes in string
   literals that represent regular expressions to protect them from
   interpretation by the Java bytecode compiler.  The string literal 
- <tt>"&#92;b"</tt>, for example, matches a single backspace character when
-  interpreted as a regular expression, while <tt>"&#92;&#92;b"</tt> matches a
-  word boundary.  The string literal <tt>"&#92;(hello&#92;)"</tt> is illegal
+ <code>"&#92;b"</code>, for example, matches a single backspace character when
+  interpreted as a regular expression, while <code>"\\b"</code> matches a
+  word boundary.  The string literal <code>"\(hello\)"</code> is illegal
   and leads to a compile-time error; in order to match the string 
- <tt>(hello)</tt> the string literal <tt>"&#92;&#92;(hello&#92;&#92;)"</tt>
+ <code>(hello)</code> the string literal <code>"\\(hello\\)"</code>
   must be used. 
- <h3><a name="cc">Character Classes</a></h3>
+ <h2><a id="cc">Character Classes</a></h2>
      <p> Character classes may appear within other character classes, and
      may be composed by the union operator (implicit) and the intersection
-     operator (<tt>&amp;&amp;</tt>).
+     operator (<code>&&</code>).
      The union operator denotes a class that contains every character that is
      in at least one of its operand classes.  The intersection operator
      denotes a class that contains every character that is in both of its
      operand classes.    
  <p> The precedence of character-class operators is as follows, from
      highest to lowest:    
- <blockquote><table border="0" cellpadding="1" cellspacing="0" summary="Precedence of character class operators.">
-       <tr><th>1&nbsp;&nbsp;&nbsp;&nbsp;</th>
+ <table class="striped" style="margin-left: 2em;">
+       <caption style="display:none">Precedence of character class operators.</caption>
+       <thead>
+       <tr><th scope="col">Precedence<th scope="col">Name<th scope="col">Example
+       </thead>
+       <tbody>
+       <tr><th scope="row">1</th>
          <td>Literal escape&nbsp;&nbsp;&nbsp;&nbsp;</td>
-         <td><tt>\x</tt></td></tr>
-      <tr><th>2&nbsp;&nbsp;&nbsp;&nbsp;</th>
+         <td><code>\x</code></td></tr>
+      <tr><th scope="row">2</th>
          <td>Grouping</td>
-         <td><tt>[...]</tt></td></tr>
-      <tr><th>3&nbsp;&nbsp;&nbsp;&nbsp;</th>
+         <td><code>[...]</code></td></tr>
+      <tr><th scope="row">3</th>
          <td>Range</td>
-         <td><tt>a-z</tt></td></tr>
-       <tr><th>4&nbsp;&nbsp;&nbsp;&nbsp;</th>
+         <td><code>a-z</code></td></tr>
+       <tr><th scope="row">4</th>
          <td>Union</td>
-         <td><tt>[a-e][i-u]</tt></td></tr>
-       <tr><th>5&nbsp;&nbsp;&nbsp;&nbsp;</th>
+         <td><code>[a-e][i-u]</code></td></tr>
+       <tr><th scope="row">5</th>
          <td>Intersection</td>
          <td><code>[a-z&&[aeiou]]</code></td></tr>
-     </table></blockquote>
+       </tbody>
+     </table>
      <p> Note that a different set of metacharacters are in effect inside
      a character class than outside a character class. For instance, the
-     regular expression <tt>.</tt> loses its special meaning inside a
-     character class, while the expression <tt>-</tt> becomes a range
+     regular expression <code>.</code> loses its special meaning inside a
+     character class, while the expression <code>-</code> becomes a range
      forming metacharacter. 
- <h3><a name="lt">Line terminators</a></h3>
+ <h2><a id="lt">Line terminators</a></h2>
   
  <p> A <i>line terminator</i> is a one- or two-character sequence that marks
   the end of a line of the input character sequence.  The following are
   recognized as line terminators: 
  <ul>
-    <li> A newline (line feed) character&nbsp;(<tt>'\n'</tt>),
+    <li> A newline (line feed) character (<code>'\n'</code>),
     <li> A carriage-return character followed immediately by a newline
-    character&nbsp;(<tt>"\r\n"</tt>),
-    <li> A standalone carriage-return character&nbsp;(<tt>'\r'</tt>),
-    <li> A next-line character&nbsp;(<tt>'&#92;u0085'</tt>),
-    <li> A line-separator character&nbsp;(<tt>'&#92;u2028'</tt>), or
-    <li> A paragraph-separator character&nbsp;(<tt>'&#92;u2029</tt>).
+    character (<code>"\r\n"</code>),
+    <li> A standalone carriage-return character (<code>'\r'</code>),
+    <li> A next-line character (<code>'&#92;u0085'</code>),
+    <li> A line-separator character (<code>'&#92;u2028'</code>), or
+    <li> A paragraph-separator character (<code>'&#92;u2029'</code>).
   
  </ul>
   <p>If <code>UNIX_LINES</code> mode is activated, then the only line terminators
   recognized are newline characters. 
- <p> The regular expression <tt>.</tt> matches any character except a line
+ <p> The regular expression <code>.</code> matches any character except a line
   terminator unless the <code>DOTALL</code> flag is specified. 
- <p> By default, the regular expressions <tt>^</tt> and <tt>$</tt> ignore
+ <p> By default, the regular expressions <code>^</code> and <code>$</code> ignore
   line terminators and only match at the beginning and the end, respectively,
   of the entire input sequence. If <code>MULTILINE</code> mode is activated then 
- <tt>^</tt> matches at the beginning of input and after any line terminator
-  except at the end of input. When in <code>MULTILINE</code> mode <tt>$</tt>
+ <code>^</code> matches at the beginning of input and after any line terminator
+  except at the end of input. When in <code>MULTILINE</code> mode <code>$</code>
   matches just before a line terminator or the end of the input sequence. 
- <h3><a name="cg">Groups and capturing</a></h3>
+ <h2><a id="cg">Groups and capturing</a></h2>
   
- <h4><a name="gnumber">Group number</a></h4>
+ <h3><a id="gnumber">Group number</a></h3>
   <p> Capturing groups are numbered by counting their opening parentheses from
-  left to right.  In the expression <tt>((A)(B(C)))</tt>, for example, there
+  left to right.  In the expression <code>((A)(B(C)))</code>, for example, there
   are four such groups: </p>
   
- <blockquote><table cellpadding=1 cellspacing=0 summary="Capturing group numberings">
-  <tr><th>1&nbsp;&nbsp;&nbsp;&nbsp;</th>
-      <td><tt>((A)(B(C)))</tt></td></tr>
-  <tr><th>2&nbsp;&nbsp;&nbsp;&nbsp;</th>
-      <td><tt>(A)</tt></td></tr>
-  <tr><th>3&nbsp;&nbsp;&nbsp;&nbsp;</th>
-      <td><tt>(B(C))</tt></td></tr>
-  <tr><th>4&nbsp;&nbsp;&nbsp;&nbsp;</th>
-      <td><tt>(C)</tt></td></tr>
-  </table></blockquote>
+ <ol style="margin-left:2em;">
+    <li> <code>((A)(B(C)))</code>
+    <li> <code>(A)</code>
+    <li> <code>(B(C))</code>
+    <li> <code>(C)</code>
+  </ol>
   
  <p> Group zero always stands for the entire expression. 
  <p> Capturing groups are so named because, during a match, each subsequence
   of the input sequence that matches such a group is saved.  The captured
   subsequence may be used later in the expression, via a back reference, and
   may also be retrieved from the matcher once the match operation is complete. 
- <h4><a name="groupname">Group name</a></h4>
+ <h3><a id="groupname">Group name</a></h3>
   <p>The constructs and APIs are available since API level 26. A capturing group
-  can also be assigned a "name", a <tt>named-capturing group</tt>,
+  can also be assigned a "name", a <code>named-capturing group</code>,
   and then be back-referenced later by the "name". Group names are composed of
-  the following characters. The first character must be a <tt>letter</tt>.
+  the following characters. The first character must be a <code>letter</code>.
   
  <ul>
-    <li> The uppercase letters <tt>'A'</tt> through <tt>'Z'</tt>
-         (<tt>'&#92;u0041'</tt>&nbsp;through&nbsp;<tt>'&#92;u005a'</tt>),
-    <li> The lowercase letters <tt>'a'</tt> through <tt>'z'</tt>
-         (<tt>'&#92;u0061'</tt>&nbsp;through&nbsp;<tt>'&#92;u007a'</tt>),
-    <li> The digits <tt>'0'</tt> through <tt>'9'</tt>
-         (<tt>'&#92;u0030'</tt>&nbsp;through&nbsp;<tt>'&#92;u0039'</tt>),
+    <li> The uppercase letters <code>'A'</code> through <code>'Z'</code>
+         (<code>'&#92;u0041'</code>&nbsp;through&nbsp;<code>'&#92;u005a'</code>),
+    <li> The lowercase letters <code>'a'</code> through <code>'z'</code>
+         (<code>'&#92;u0061'</code>&nbsp;through&nbsp;<code>'&#92;u007a'</code>),
+    <li> The digits <code>'0'</code> through <code>'9'</code>
+         (<code>'&#92;u0030'</code>&nbsp;through&nbsp;<code>'&#92;u0039'</code>),
   </ul>
   
- <p> A <tt>named-capturing group</tt> is still numbered as described in 
+ <p> A <code>named-capturing group</code> is still numbered as described in 
  <a href="#gnumber">Group number</a>.
   
  <p> The captured input associated with a group is always the subsequence
   that the group most recently matched.  If a group is evaluated a second time
   because of quantification then its previously-captured value, if any, will
   be retained if the second evaluation fails.  Matching the string 
- <tt>"aba"</tt> against the expression <tt>(a(b)?)+</tt>, for example, leaves
-  group two set to <tt>"b"</tt>.  All captured input is discarded at the
+ <code>"aba"</code> against the expression <code>(a(b)?)+</code>, for example, leaves
+  group two set to <code>"b"</code>.  All captured input is discarded at the
   beginning of each match. 
- <p> Groups beginning with <tt>(?</tt> are either pure, <i>non-capturing</i> groups
+ <p> Groups beginning with <code>(?</code> are either pure, <i>non-capturing</i> groups
   that do not capture text and do not count towards the group total, or 
  <i>named-capturing</i> group. 
- <h3> Unicode support </h3>
+ <h2> Unicode support </h2>
   
  <p> This class is in conformance with Level 1 of <a href="http://www.unicode.org/reports/tr18/">
  <i>Unicode Technical
-  Standard #18: Unicode Regular Expression</i></a>, plus RL2.1
-  Canonical Equivalents. 
+  Standard #18: Unicode Regular Expressions</i></a>, plus RL2.1
+  Canonical Equivalents and RL2.2 Extended Grapheme Clusters. 
  <p>
-  <b>Unicode escape sequences</b> such as <tt>&#92;u2014</tt> in Java source code
+  <b>Unicode escape sequences</b> such as <code>&#92;u2014</code> in Java source code
   are processed as described in section 3.3 of 
- <cite>The Java&trade; Language Specification</cite>.
+ <cite>The Java Language Specification</cite>.
   Such escape sequences are also implemented directly by the regular-expression
   parser so that Unicode escapes can be used in expressions that are read from
-  files or from the keyboard.  Thus the strings <tt>"&#92;u2014"</tt> and 
- <tt>"\\u2014"</tt>, while not equal, compile into the same pattern, which
-  matches the character with hexadecimal value <tt>0x2014</tt>.
+  files or from the keyboard.  Thus the strings <code>"&#92;u2014"</code> and 
+ <code>"\\u2014"</code>, while not equal, compile into the same pattern, which
+  matches the character with hexadecimal value <code>0x2014</code>.
   <p>
-  A Unicode character can also be represented in a regular-expression by
-  using its <b>Hex notation</b>(hexadecimal code point value) directly as described in construct 
- <tt>&#92;x{...}</tt>, for example a supplementary character U+2011F
-  can be specified as <tt>&#92;x{2011F}</tt>, instead of two consecutive
-  Unicode escape sequences of the surrogate pair 
- <tt>&#92;uD840</tt><tt>&#92;uDD1F</tt>.
+  A Unicode character can also be represented by using its <b>Hex notation</b>
+  (hexadecimal code point value) directly as described in construct 
+ <code>&#92;x{...}</code>, for example a supplementary character U+2011F can be
+  specified as <code>&#92;x{2011F}</code>, instead of two consecutive Unicode escape
+  sequences of the surrogate pair <code>&#92;uD840</code><code>&#92;uDD1F</code>.
+  <p>
+  <b>Unicode character names</b> are supported by the named character construct 
+ <code>\N{</code>...<code>}</code>, for example, <code>\N{WHITE SMILING FACE}</code>
+  specifies character <code>&#92;u263A</code>. The character names supported
+  by this class are the valid Unicode character names matched by 
+ <code>java.lang.Character.codePointOf(String) Character.codePointOf(name)</code>.
+  <p>
+  <a href="http://www.unicode.org/reports/tr18/#Default_Grapheme_Clusters">
+  <b>Unicode extended grapheme clusters</b></a> are supported by the grapheme
+  cluster matcher <code>\X</code>.
   <p>
   Unicode scripts, blocks, categories and binary properties are written with
-  the <tt>\p</tt> and <tt>\P</tt> constructs as in Perl. 
- <tt>\p{</tt><i>prop</i><tt>}</tt> matches if
-  the input has the property <i>prop</i>, while <tt>\P{</tt><i>prop</i><tt>}</tt>
+  the <code>\p</code> and <code>\P</code> constructs as in Perl. 
+ <code>\p{</code><i>prop</i><code>}</code> matches if
+  the input has the property <i>prop</i>, while <code>\P{</code><i>prop</i><code>}</code>
   does not match if the input has that property. 
  <p>
   Scripts, blocks, categories and binary properties can be used both inside
   and outside of a character class. 
  <p>
-  <b><a name="usc">Scripts</a></b> are specified either with the prefix <code>Is</code>, as in 
+  <b><a id="usc">Scripts</a></b> are specified either with the prefix <code>Is</code>, as in 
  <code>IsHiragana</code>, or by using  the <code>script</code> keyword (or its short
-  form <code>sc</code>)as in <code>script=Hiragana</code> or <code>sc=Hiragana</code>.
+  form <code>sc</code>) as in <code>script=Hiragana</code> or <code>sc=Hiragana</code>.
   <p>
   The script names supported by <code>Pattern</code> are the valid script names
   accepted and defined by 
  <code>UnicodeScript.forName</code>.
   
  <p>
-  <b><a name="ubc">Blocks</a></b> are specified with the prefix <code>In</code>, as in 
+  <b><a id="ubc">Blocks</a></b> are specified with the prefix <code>In</code>, as in 
  <code>InMongolian</code>, or by using the keyword <code>block</code> (or its short
   form <code>blk</code>) as in <code>block=Mongolian</code> or <code>blk=Mongolian</code>.
   <p>
@@ -507,20 +555,20 @@
  <code>UnicodeBlock.forName</code>.
   <p>
   
- <b><a name="ucc">Categories</a></b> may be specified with the optional prefix <code>Is</code>:
+ <b><a id="ucc">Categories</a></b> may be specified with the optional prefix <code>Is</code>:
   Both <code>\p{L}</code> and <code>\p{IsL}</code> denote the category of Unicode
   letters. Same as scripts and blocks, categories can also be specified
   by using the keyword <code>general_category</code> (or its short form 
  <code>gc</code>) as in <code>general_category=Lu</code> or <code>gc=Lu</code>.
   <p>
   The supported categories are those of 
- <a href="http://www.unicode.org/unicode/standard/standard.html">
+ <a href="http://www.unicode.org/standard/standard.html">
   <i>The Unicode Standard</i></a> in the version specified by the 
  <code>Character</code> class. The category names are those
   defined in the Standard, both normative and informative. 
  <p>
   
- <b><a name="ubpc">Binary properties</a></b> are specified with the prefix <code>Is</code>, as in 
+ <b><a id="ubpc">Binary properties</a></b> are specified with the prefix <code>Is</code>, as in 
  <code>IsAlphabetic</code>. The supported binary properties by <code>Pattern</code>
   are 
  <ul>
@@ -540,91 +588,49 @@
     <li> Assigned 
  </ul>
   <p>
-  The following <b>Predefined Character classes</b> and <b>POSIX character classes</b>
+  The <b>Predefined Character classes</b> and <b>POSIX character classes</b>
   are in conformance with the recommendation of <i>Annex C: Compatibility Properties</i>
-  of <a href="http://www.unicode.org/reports/tr18/"><i>Unicode Regular Expression 
- </i></a>.
+  of <a href="http://www.unicode.org/reports/tr18/"><i>Unicode Technical Standard #18:
+  Unicode Regular Expressions</i></a>.
   
- <table border="0" cellpadding="1" cellspacing="0" summary="predefined and posix character classes in Unicode mode">
-  <tr align="left">
-  <th align="left" id="predef_classes">Classes</th>
-  <th align="left" id="predef_matches">Matches</th>
- </tr>
-  <tr><td><tt>\p{Lower}</tt></td>
-      <td>A lowercase character:<tt>\p{IsLowercase}</tt></td></tr>
-  <tr><td><tt>\p{Upper}</tt></td>
-      <td>An uppercase character:<tt>\p{IsUppercase}</tt></td></tr>
-  <tr><td><tt>\p{ASCII}</tt></td>
-      <td>All ASCII:<tt>[\x00-\x7F]</tt></td></tr>
-  <tr><td><tt>\p{Alpha}</tt></td>
-      <td>An alphabetic character:<tt>\p{IsAlphabetic}</tt></td></tr>
-  <tr><td><tt>\p{Digit}</tt></td>
-      <td>A decimal digit character:<tt>p{IsDigit}</tt></td></tr>
-  <tr><td><tt>\p{Alnum}</tt></td>
-      <td>An alphanumeric character:<tt>[\p{IsAlphabetic}\p{IsDigit}]</tt></td></tr>
-  <tr><td><tt>\p{Punct}</tt></td>
-      <td>A punctuation character:<tt>p{IsPunctuation}</tt></td></tr>
-  <tr><td><tt>\p{Graph}</tt></td>
-      <td>A visible character: <tt>[^\p{IsWhite_Space}\p{gc=Cc}\p{gc=Cs}\p{gc=Cn}]</tt></td></tr>
-  <tr><td><tt>\p{Print}</tt></td>
-      <td>A printable character: <code>[\p{Graph}\p{Blank}&&[^\p{Cntrl}]]</code></td></tr>
-  <tr><td><tt>\p{Blank}</tt></td>
-      <td>A space or a tab: <code>[\p{IsWhite_Space}&&[^\p{gc=Zl}\p{gc=Zp}\x0a\x0b\x0c\x0d\x85]]</code></td></tr>
-  <tr><td><tt>\p{Cntrl}</tt></td>
-      <td>A control character: <tt>\p{gc=Cc}</tt></td></tr>
-  <tr><td><tt>\p{XDigit}</tt></td>
-      <td>A hexadecimal digit: <tt>[\p{gc=Nd}\p{IsHex_Digit}]</tt></td></tr>
-  <tr><td><tt>\p{Space}</tt></td>
-      <td>A whitespace character:<tt>\p{IsWhite_Space}</tt></td></tr>
-  <tr><td><tt>\d</tt></td>
-      <td>A digit: <tt>\p{IsDigit}</tt></td></tr>
-  <tr><td><tt>\D</tt></td>
-      <td>A non-digit: <tt>[^\d]</tt></td></tr>
-  <tr><td><tt>\s</tt></td>
-      <td>A whitespace character: <tt>\p{IsWhite_Space}</tt></td></tr>
-  <tr><td><tt>\S</tt></td>
-      <td>A non-whitespace character: <tt>[^\s]</tt></td></tr>
-  <tr><td><tt>\w</tt></td>
-      <td>A word character: <tt>[\p{Alpha}\p{gc=Mn}\p{gc=Me}\p{gc=Mc}\p{Digit}\p{gc=Pc}\p{IsJoin_Control}]</tt></td></tr>
-  <tr><td><tt>\W</tt></td>
-      <td>A non-word character: <tt>[^\w]</tt></td></tr>
-  </table>
-  <p>
-  <a name="jcc">
+ <p>
+  <a id="jcc">
   Categories that behave like the java.lang.Character
   boolean is<i>methodname</i> methods (except for the deprecated ones) are
-  available through the same <tt>\p{</tt><i>prop</i><tt>}</tt> syntax where
-  the specified property has the name <tt>java<i>methodname</i></tt></a>.
+  available through the same <code>\p{</code><i>prop</i><code>}</code> syntax where
+  the specified property has the name <code>java<i>methodname</i></code></a>.
   
- <h3> Comparison to Perl 5 </h3>
+ <h3> Behavior starting from API level 10 (Android 2.3) </h3>
+  
+ <p> Starting from Android 2.3 Gingerbread, ICU4C becomes the backend of the regular expression
+  implementation. Android could behave differently compared with other regex implementation, e.g.
+  literal right brace ('}') has to be escaped on Android.</p>
+  
+ <p> Some other behavior differences can be found in the 
+ <a href="https://unicode-org.github.io/icu/userguide/strings/regexp.html#differences-with-java-regular-expressions">
+  ICU documentation</a>. </p>
+  
+ <h2> Comparison to Perl 5 </h2>
   
  <p>The <code>Pattern</code> engine performs traditional NFA-based matching
   with ordered alternation as occurs in Perl 5. 
  <p> Perl constructs not supported by this class: </p>
   
  <ul>
-     <li><p> Predefined character classes (Unicode character)
-     <p><tt>\X&nbsp;&nbsp;&nbsp;&nbsp;</tt>Match Unicode
-     <a href="http://www.unicode.org/reports/tr18/#Default_Grapheme_Clusters">
-     <i>extended grapheme cluster</i></a>
-     </p></li>
-     <li><p> The backreference constructs, <tt>\g{</tt><i>n</i><tt>}</tt> for
+     <li><p> The backreference constructs, <code>\g{</code><i>n</i><code>}</code> for
      the <i>n</i><sup>th</sup><a href="#cg">capturing group</a> and
-     <tt>\g{</tt><i>name</i><tt>}</tt> for
+     <code>\g{</code><i>name</i><code>}</code> for
      <a href="#groupname">named-capturing group</a>.
      </p></li>
-     <li><p> The named character construct, <tt>\N{</tt><i>name</i><tt>}</tt>
-     for a Unicode character by its name.    
- </p></li>
      <li><p> The conditional constructs
-     <tt>(?(</tt><i>condition</i><tt>)</tt><i>X</i><tt>)</tt> and
-     <tt>(?(</tt><i>condition</i><tt>)</tt><i>X</i><tt>|</tt><i>Y</i><tt>)</tt>,
+     <code>(?(</code><i>condition</i><code>)</code><i>X</i><code>)</code> and
+     <code>(?(</code><i>condition</i><code>)</code><i>X</i><code>|</code><i>Y</i><code>)</code>,
      </p></li>
-     <li><p> The embedded code constructs <tt>(?{</tt><i>code</i><tt>})</tt>
-     and <tt>(??{</tt><i>code</i><tt>})</tt>,</p></li>
-     <li><p> The embedded comment syntax <tt>(?#comment)</tt>, and </p></li>
-     <li><p> The preprocessing operations <tt>\l</tt> <tt>&#92;u</tt>,
-     <tt>\L</tt>, and <tt>\U</tt>.  </p></li>
+     <li><p> The embedded code constructs <code>(?{</code><i>code</i><code>})</code>
+     and <code>(??{</code><i>code</i><code>})</code>,</p></li>
+     <li><p> The embedded comment syntax <code>(?#comment)</code>, and </p></li>
+     <li><p> The preprocessing operations <code>\l</code> <code>&#92;u</code>,
+     <code>\L</code>, and <code>\U</code>.  </p></li>
   
  </ul>
   
@@ -639,18 +645,16 @@
  <p> Notable differences from Perl: </p>
   
  <ul>
-     <li><p> In Perl, <tt>\1</tt> through <tt>\9</tt> are always interpreted
-     as back references; a backslash-escaped number greater than <tt>9</tt> is
+     <li><p> In Perl, <code>\1</code> through <code>\9</code> are always interpreted
+     as back references; a backslash-escaped number greater than <code>9</code> is
      treated as a back reference if at least that many subexpressions exist,
      otherwise it is interpreted, if possible, as an octal escape.  In this
      class octal escapes must always begin with a zero. In this class,    
- <tt>\1</tt> through <tt>\9</tt> are always interpreted as back
-     references, and a larger number is accepted as a back reference if at
-     least that many subexpressions exist at that point in the regular
-     expression, otherwise the parser will drop digits until the number is
-     smaller or equal to the existing number of groups or it is one digit.    
+ <code>compile(String)</code> throws <code>PatternSyntaxException</code> for any
+     non-existent back references. Please use <code>\Q</code> and <code>\E</code> to
+     quote any digit literals followed by back references.    
  </p></li>
-     <li><p> Perl uses the <tt>g</tt> flag to request a match that resumes
+     <li><p> Perl uses the <code>g</code> flag to request a match that resumes
      where the last match left off.  This functionality is provided implicitly
      by the <code>Matcher</code> class: Repeated invocations of the <code>find</code>
   method will resume where the last match left off,
@@ -665,7 +669,7 @@
   
  <p> For a more precise description of the behavior of regular expression
   constructs, please see <a href="http://www.oreilly.com/catalog/regex3/">
-  <i>Mastering Regular Expressions, 3nd Edition</i>, Jeffrey E. F. Friedl,
+  <i>Mastering Regular Expressions, 3rd Edition</i>, Jeffrey E. F. Friedl,
   O'Reilly and Associates, 2006.</a>
   </p>
  - seealso: java.lang.String#split(String, int)
@@ -679,22 +683,25 @@
  @public
   jlong address_;
 }
-@property (readonly, class) jint UNIX_LINES NS_SWIFT_NAME(UNIX_LINES);
-@property (readonly, class) jint CASE_INSENSITIVE NS_SWIFT_NAME(CASE_INSENSITIVE);
-@property (readonly, class) jint COMMENTS NS_SWIFT_NAME(COMMENTS);
-@property (readonly, class) jint MULTILINE NS_SWIFT_NAME(MULTILINE);
-@property (readonly, class) jint LITERAL NS_SWIFT_NAME(LITERAL);
-@property (readonly, class) jint DOTALL NS_SWIFT_NAME(DOTALL);
-@property (readonly, class) jint UNICODE_CASE NS_SWIFT_NAME(UNICODE_CASE);
-@property (readonly, class) jint CANON_EQ NS_SWIFT_NAME(CANON_EQ);
-@property (readonly, class) jint UNICODE_CHARACTER_CLASS NS_SWIFT_NAME(UNICODE_CHARACTER_CLASS);
 
 #pragma mark Public
 
 /*!
- @brief Creates a predicate which can be used to match a string.
- @return The predicate which can be used for matching on a string
+ @brief Creates a predicate that tests if this pattern matches a given input string.
+ @return The predicate which can be used for matching an input string
+           against this pattern.
+ @since 11
+ - seealso: Matcher#matches
+ */
+- (id<JavaUtilFunctionPredicate>)asMatchPredicate;
+
+/*!
+ @brief Creates a predicate that tests if this pattern is found in a given input
+  string.
+ @return The predicate which can be used for finding a match on a
+           subsequence of a string
  @since 1.8
+ - seealso: Matcher#find
  */
 - (id<JavaUtilFunctionPredicate> __nonnull)asPredicate;
 
@@ -714,12 +721,11 @@
  @param flags Match flags, a bit mask that may include
            <code>CASE_INSENSITIVE</code>
   , <code>MULTILINE</code> , <code>DOTALL</code> ,          <code>UNICODE_CASE</code>
-  , <code>CANON_EQ</code> , <code>UNIX_LINES</code> ,          <code>LITERAL</code>
-  , <code>UNICODE_CHARACTER_CLASS</code>          and <code>COMMENTS</code>
+  , <code>UNIX_LINES</code> , <code>LITERAL</code> ,          and <code>COMMENTS</code>
  @return the given regular expression compiled into a pattern with the given flags
  @throw IllegalArgumentException
  If bit values other than those corresponding to the defined
-           match flags are set in <tt>flags</tt>
+           match flags are set in <code>flags</code>
  @throw PatternSyntaxException
  If the expression's syntax is invalid
  */
@@ -805,16 +811,23 @@
   sequence and a limit argument of zero.  Trailing empty strings are
   therefore not included in the resulting array. </p>
   
- <p> The input <tt>"boo:and:foo"</tt>, for example, yields the following
+ <p> The input <code>"boo:and:foo"</code>, for example, yields the following
   results with these expressions: 
- <blockquote><table cellpadding=1 cellspacing=0 summary="Split examples showing regex and result">
-  <tr><th align="left"><i>Regex&nbsp;&nbsp;&nbsp;&nbsp;</i></th>
-      <th align="left"><i>Result</i></th></tr>
-  <tr><td align=center>:</td>
-      <td><tt>{ "boo", "and", "foo" }</tt></td></tr>
-  <tr><td align=center>o</td>
-      <td><tt>{ "b", "", ":and:f" }</tt></td></tr>
-  </table></blockquote>
+ <table class="plain" style="margin-left:2em">
+  <caption style="display:none">Split examples showing regex and result</caption>
+  <thead>
+  <tr>
+   <th scope="col">Regex</th>
+   <th scope="col">Result</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr><th scope="row" style="text-weight:normal">:</th>
+      <td><code>{ "boo", "and", "foo" }</code></td></tr>
+  <tr><th scope="row" style="text-weight:normal">o</th>
+      <td><code>{ "b", "", ":and:f" }</code></td></tr>
+  </tbody>
+  </table>
  @param input The character sequence to be split
  @return The array of strings computed by splitting the input
            around matches of this pattern
@@ -835,41 +848,58 @@
   of the resulting array. A zero-width match at the beginning however
   can only produce such an empty leading substring for apps running on or
   targeting API versions <= 28. 
- <p> The <tt>limit</tt> parameter controls the number of times the
+ <p> The <code>limit</code> parameter controls the number of times the
   pattern is applied and therefore affects the length of the resulting
-  array.  If the limit <i>n</i> is greater than zero then the pattern
-  will be applied at most <i>n</i>&nbsp;-&nbsp;1 times, the array's
-  length will be no greater than <i>n</i>, and the array's last entry
-  will contain all input beyond the last matched delimiter.  If <i>n</i>
-  is non-positive then the pattern will be applied as many times as
-  possible and the array can have any length.  If <i>n</i> is zero then
-  the pattern will be applied as many times as possible, the array can
-  have any length, and trailing empty strings will be discarded. 
- <p> The input <tt>"boo:and:foo"</tt>, for example, yields the following
+  array. 
+ <ul>
+     <li><p>
+     If the <i>limit</i> is positive then the pattern will be applied
+     at most <i>limit</i>&nbsp;-&nbsp;1 times, the array's length will be
+     no greater than <i>limit</i>, and the array's last entry will contain
+     all input beyond the last matched delimiter.</p></li>
+     
+ <li><p>
+     If the <i>limit</i> is zero then the pattern will be applied as
+     many times as possible, the array can have any length, and trailing
+     empty strings will be discarded.</p></li>
+     
+ <li><p>
+     If the <i>limit</i> is negative then the pattern will be applied
+     as many times as possible and the array can have any length.</p></li>
+  </ul>
+  
+ <p> The input <code>"boo:and:foo"</code>, for example, yields the following
   results with these parameters: 
- <blockquote><table cellpadding=1 cellspacing=0 summary="Split examples showing regex, limit, and result">
-  <tr><th align="left"><i>Regex&nbsp;&nbsp;&nbsp;&nbsp;</i></th>
-      <th align="left"><i>Limit&nbsp;&nbsp;&nbsp;&nbsp;</i></th>
-      <th align="left"><i>Result&nbsp;&nbsp;&nbsp;&nbsp;</i></th></tr>
-  <tr><td align=center>:</td>
-      <td align=center>2</td>
-      <td><tt>{ "boo", "and:foo" }</tt></td></tr>
-  <tr><td align=center>:</td>
-      <td align=center>5</td>
-      <td><tt>{ "boo", "and", "foo" }</tt></td></tr>
-  <tr><td align=center>:</td>
-      <td align=center>-2</td>
-      <td><tt>{ "boo", "and", "foo" }</tt></td></tr>
-  <tr><td align=center>o</td>
-      <td align=center>5</td>
-      <td><tt>{ "b", "", ":and:f", "", "" }</tt></td></tr>
-  <tr><td align=center>o</td>
-      <td align=center>-2</td>
-      <td><tt>{ "b", "", ":and:f", "", "" }</tt></td></tr>
-  <tr><td align=center>o</td>
-      <td align=center>0</td>
-      <td><tt>{ "b", "", ":and:f" }</tt></td></tr>
-  </table></blockquote>
+ <table class="plain" style="margin-left:2em;">
+  <caption style="display:none">Split example showing regex, limit, and result</caption>
+  <thead>
+  <tr>
+      <th scope="col">Regex</th>
+      <th scope="col">Limit</th>
+      <th scope="col">Result</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr><th scope="row" rowspan="3" style="font-weight:normal">:</th>
+      <th scope="row" style="font-weight:normal; text-align:right; padding-right:1em">2</th>
+      <td><code>{ "boo", "and:foo" }</code></td></tr>
+  <tr><!-- : -->
+      <th scope="row" style="font-weight:normal; text-align:right; padding-right:1em">5</th>
+      <td><code>{ "boo", "and", "foo" }</code></td></tr>
+  <tr><!-- : -->
+      <th scope="row" style="font-weight:normal; text-align:right; padding-right:1em">-2</th>
+      <td><code>{ "boo", "and", "foo" }</code></td></tr>
+  <tr><th scope="row" rowspan="3" style="font-weight:normal">o</th>
+      <th scope="row" style="font-weight:normal; text-align:right; padding-right:1em">5</th>
+      <td><code>{ "b", "", ":and:f", "", "" }</code></td></tr>
+  <tr><!-- o -->
+      <th scope="row" style="font-weight:normal; text-align:right; padding-right:1em">-2</th>
+      <td><code>{ "b", "", ":and:f", "", "" }</code></td></tr>
+  <tr><!-- o -->
+      <th scope="row" style="font-weight:normal; text-align:right; padding-right:1em">0</th>
+      <td><code>{ "b", "", ":and:f" }</code></td></tr>
+  </tbody>
+  </table>
  @param input The character sequence to be split
  @param limit The result threshold, as described above
  @return The array of strings computed by splitting the input
@@ -906,10 +936,10 @@
 - (id<JavaUtilStreamStream> __nonnull)splitAsStreamWithJavaLangCharSequence:(id<JavaLangCharSequence>)input;
 
 /*!
- @brief <p>Returns the string representation of this pattern.
- This
+ @brief <p>Returns the string representation of this pattern.This
   is the regular expression from which this pattern was
-  compiled.</p>
+  compiled.
+ </p>
  @return The string representation of this pattern
  @since 1.5
  */
@@ -934,11 +964,11 @@ J2OBJC_EMPTY_STATIC_INIT(JavaUtilRegexPattern)
 
 /*!
  @brief Enables Unix lines mode.
- <p> In this mode, only the <tt>'\n'</tt> line terminator is recognized
-  in the behavior of <tt>.</tt>, <tt>^</tt>, and <tt>$</tt>.
+ <p> In this mode, only the <code>'\n'</code> line terminator is recognized
+  in the behavior of <code>.</code>, <code>^</code>, and <code>$</code>.
   
  <p> Unix lines mode can also be enabled via the embedded flag
-  expression&nbsp;<tt>(?d)</tt>.
+  expression&nbsp;<code>(?d)</code>.
  */
 inline jint JavaUtilRegexPattern_get_UNIX_LINES(void);
 #define JavaUtilRegexPattern_UNIX_LINES 1
@@ -946,12 +976,9 @@ J2OBJC_STATIC_FIELD_CONSTANT(JavaUtilRegexPattern, UNIX_LINES, jint)
 
 /*!
  @brief Enables case-insensitive matching.
- <p> By default, case-insensitive matching assumes that only characters
-  in the US-ASCII charset are being matched.  Unicode-aware
-  case-insensitive matching can be enabled by specifying the <code>UNICODE_CASE</code>
-  flag in conjunction with this flag. 
+ <p> Case-insensitive matching is Unicode-aware on Android. 
  <p> Case-insensitive matching can also be enabled via the embedded flag
-  expression&nbsp;<tt>(?i)</tt>.
+  expression&nbsp;<code>(?i)</code>.
   
  <p> Specifying this flag may impose a slight performance penalty.  </p>
  */
@@ -962,9 +989,9 @@ J2OBJC_STATIC_FIELD_CONSTANT(JavaUtilRegexPattern, CASE_INSENSITIVE, jint)
 /*!
  @brief Permits whitespace and comments in pattern.
  <p> In this mode, whitespace is ignored, and embedded comments starting
-  with <tt>#</tt> are ignored until the end of a line. 
+  with <code>#</code> are ignored until the end of a line. 
  <p> Comments mode can also be enabled via the embedded flag
-  expression&nbsp;<tt>(?x)</tt>.
+  expression&nbsp;<code>(?x)</code>.
  */
 inline jint JavaUtilRegexPattern_get_COMMENTS(void);
 #define JavaUtilRegexPattern_COMMENTS 4
@@ -972,12 +999,12 @@ J2OBJC_STATIC_FIELD_CONSTANT(JavaUtilRegexPattern, COMMENTS, jint)
 
 /*!
  @brief Enables multiline mode.
- <p> In multiline mode the expressions <tt>^</tt> and <tt>$</tt> match
+ <p> In multiline mode the expressions <code>^</code> and <code>$</code> match
   just after or just before, respectively, a line terminator or the end of
   the input sequence.  By default these expressions only match at the
   beginning and the end of the entire input sequence. 
  <p> Multiline mode can also be enabled via the embedded flag
-  expression&nbsp;<tt>(?m)</tt>.  </p>
+  expression&nbsp;<code>(?m)</code>.  </p>
  */
 inline jint JavaUtilRegexPattern_get_MULTILINE(void);
 #define JavaUtilRegexPattern_MULTILINE 8
@@ -1001,11 +1028,11 @@ J2OBJC_STATIC_FIELD_CONSTANT(JavaUtilRegexPattern, LITERAL, jint)
 
 /*!
  @brief Enables dotall mode.
- <p> In dotall mode, the expression <tt>.</tt> matches any character,
+ <p> In dotall mode, the expression <code>.</code> matches any character,
   including a line terminator.  By default this expression does not match
   line terminators. 
  <p> Dotall mode can also be enabled via the embedded flag
-  expression&nbsp;<tt>(?s)</tt>.  (The <tt>s</tt> is a mnemonic for
+  expression&nbsp;<code>(?s)</code>.  (The <code>s</code> is a mnemonic for
   "single-line" mode, which is what this is called in Perl.)  </p>
  */
 inline jint JavaUtilRegexPattern_get_DOTALL(void);
@@ -1013,15 +1040,10 @@ inline jint JavaUtilRegexPattern_get_DOTALL(void);
 J2OBJC_STATIC_FIELD_CONSTANT(JavaUtilRegexPattern, DOTALL, jint)
 
 /*!
- @brief Enables Unicode-aware case folding.
- <p> When this flag is specified then case-insensitive matching, when
-  enabled by the <code>CASE_INSENSITIVE</code> flag, is done in a manner
-  consistent with the Unicode Standard.  By default, case-insensitive
-  matching assumes that only characters in the US-ASCII charset are being
-  matched. 
- <p> Unicode-aware case folding can also be enabled via the embedded flag
-  expression&nbsp;<tt>(?u)</tt>.
-  
+ @brief Enables Unicode-aware case folding.This flag is ignoredon Android.
+ When <code>CASE_INSENSITIVE</code> flag is provided, case-insensitive
+  matching is always done in a manner consistent with the Unicode Standard. 
+ <p> The embedded flag &nbsp;<code>(?u)</code> is ignored. 
  <p> Specifying this flag may impose a performance penalty.  </p>
  */
 inline jint JavaUtilRegexPattern_get_UNICODE_CASE(void);
@@ -1029,28 +1051,23 @@ inline jint JavaUtilRegexPattern_get_UNICODE_CASE(void);
 J2OBJC_STATIC_FIELD_CONSTANT(JavaUtilRegexPattern, UNICODE_CASE, jint)
 
 /*!
- @brief Enables canonical equivalence.
- <p> When this flag is specified then two characters will be considered
-  to match if, and only if, their full canonical decompositions match.
-  The expression <tt>"a&#92;u030A"</tt>, for example, will match the
-  string <tt>"&#92;u00E5"</tt> when this flag is specified.  By default,
-  matching does not take canonical equivalence into account. 
- <p> There is no embedded flag character for enabling canonical
-  equivalence. 
- <p> Specifying this flag may impose a performance penalty.  </p>
+ @brief This flag is not supported on Android.
  */
 inline jint JavaUtilRegexPattern_get_CANON_EQ(void);
 #define JavaUtilRegexPattern_CANON_EQ 128
 J2OBJC_STATIC_FIELD_CONSTANT(JavaUtilRegexPattern, CANON_EQ, jint)
 
 /*!
- @brief Enables the Unicode version of <i>Predefined character classes</i> and 
- <i>POSIX character classes</i> as defined by <a href="http://www.unicode.org/reports/tr18/"><i>Unicode Technical
-  Standard #18: Unicode Regular Expression</i></a>
-  <i>Annex C: Compatibility Properties</i>.
- <p>
-  This flag has no effect on Android, unicode character classes are always
+ @brief This flag is not supported on Android, and Unicode character classes are always
   used.
+ <p>
+  See the Unicode version of 
+ <i>Predefined character classes</i> and <i>POSIX character classes</i>
+  are in conformance with 
+ <a href="http://www.unicode.org/reports/tr18/"><i>Unicode Technical
+  Standard #18: Unicode Regular Expressions</i></a>
+  <i>Annex C: Compatibility Properties</i>.
+  <p>
  @since 1.7
  */
 inline jint JavaUtilRegexPattern_get_UNICODE_CHARACTER_CLASS(void);
@@ -1077,6 +1094,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilRegexPattern)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaUtilRegexPattern")

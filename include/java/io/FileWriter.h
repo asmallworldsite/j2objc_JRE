@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaIoFileWriter
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -32,35 +29,38 @@
 @class JavaIoFile;
 @class JavaIoFileDescriptor;
 @class JavaIoOutputStream;
+@class JavaLangBoolean;
 @class JavaNioCharsetCharset;
 @class JavaNioCharsetCharsetEncoder;
 
 /*!
- @brief Convenience class for writing character files.The constructors of this
-  class assume that the default character encoding and the default byte-buffer
-  size are acceptable.
- To specify these values yourself, construct an
-  OutputStreamWriter on a FileOutputStream. 
- <p>Whether or not a file is available or may be created depends upon the
+ @brief Writes text to character files using a default buffer size.Encoding from characters
+  to bytes uses either a specified charset
+  or the platform's 
+ default charset.
+ <p>
+  Whether or not a file is available or may be created depends upon the
   underlying platform.  Some platforms, in particular, allow a file to be
-  opened for writing by only one <tt>FileWriter</tt> (or other file-writing
+  opened for writing by only one <code>FileWriter</code> (or other file-writing
   object) at a time.  In such situations the constructors in this class
   will fail if the file involved is already open. 
- <p><code>FileWriter</code> is meant for writing streams of characters.
-  For writing streams of raw bytes, consider using a 
- <code>FileOutputStream</code>.
+ <p>
+  The <code>FileWriter</code> is meant for writing streams of characters. For writing
+  streams of raw bytes, consider using a <code>FileOutputStream</code>.
  - seealso: OutputStreamWriter
  - seealso: FileOutputStream
  @author Mark Reinhold
- @since JDK1.1
+ @since 1.1
  */
 @interface JavaIoFileWriter : JavaIoOutputStreamWriter
 
 #pragma mark Public
 
 /*!
- @brief Constructs a FileWriter object given a File object.
- @param file a File object to write to.
+ @brief Constructs a <code>FileWriter</code> given the <code>File</code> to write,
+  using the platform's 
+ default charset
+ @param file the <code>File</code>  to write.
  @throw IOExceptionif the file exists but is a directory rather than
                    a regular file, does not exist but cannot be created,
                    or cannot be opened for any other reason
@@ -68,12 +68,11 @@
 - (instancetype __nonnull)initWithJavaIoFile:(JavaIoFile *)file;
 
 /*!
- @brief Constructs a FileWriter object given a File object.If the second
-  argument is <code>true</code>, then bytes will be written to the end
-  of the file rather than the beginning.
- @param file a File object to write to
- @param append if  <code> true </code> , then bytes will be written
-                        to the end of the file rather than the beginning
+ @brief Constructs a <code>FileWriter</code> given the <code>File</code> to write and
+  a boolean indicating whether to append the data written, using the platform's 
+ default charset.
+ @param file the <code>File</code>  to write
+ @param append if <code>true</code> , then bytes will be written                       to the end of the file rather than the beginning
  @throw IOExceptionif the file exists but is a directory rather than
                    a regular file, does not exist but cannot be created,
                    or cannot be opened for any other reason
@@ -83,13 +82,45 @@
                                  withBoolean:(jboolean)append;
 
 /*!
- @brief Constructs a FileWriter object associated with a file descriptor.
- @param fd FileDescriptor object to write to.
+ @brief Constructs a <code>FileWriter</code> given the <code>File</code> to write and 
+ charset.
+ @param file the <code>File</code>  to write
+ @param charset the charset
+ @throw IOExceptionif the file exists but is a directory rather than
+                   a regular file, does not exist but cannot be created,
+                   or cannot be opened for any other reason
+ @since 11
+ */
+- (instancetype __nonnull)initWithJavaIoFile:(JavaIoFile *)file
+                   withJavaNioCharsetCharset:(JavaNioCharsetCharset *)charset;
+
+/*!
+ @brief Constructs a <code>FileWriter</code> given the <code>File</code> to write, 
+ charset and a boolean indicating
+  whether to append the data written.
+ @param file the <code>File</code>  to write
+ @param charset the charset
+ @param append a boolean. If <code>true</code> , the writer will write the data                   to the end of the file rather than the beginning.
+ @throw IOExceptionif the file exists but is a directory rather than
+                   a regular file, does not exist but cannot be created,
+                   or cannot be opened for any other reason
+ @since 11
+ */
+- (instancetype __nonnull)initWithJavaIoFile:(JavaIoFile *)file
+                   withJavaNioCharsetCharset:(JavaNioCharsetCharset *)charset
+                                 withBoolean:(jboolean)append;
+
+/*!
+ @brief Constructs a <code>FileWriter</code> given a file descriptor,
+  using the platform's 
+ default charset.
+ @param fd the <code>FileDescriptor</code>  to write.
  */
 - (instancetype __nonnull)initWithJavaIoFileDescriptor:(JavaIoFileDescriptor *)fd;
 
 /*!
- @brief Constructs a FileWriter object given a file name.
+ @brief Constructs a <code>FileWriter</code> given a file name, using the platform's 
+ default charset
  @param fileName String The system-dependent filename.
  @throw IOExceptionif the named file exists but is a directory rather
                    than a regular file, does not exist but cannot be
@@ -98,16 +129,45 @@
 - (instancetype __nonnull)initWithNSString:(NSString *)fileName;
 
 /*!
- @brief Constructs a FileWriter object given a file name with a boolean
-  indicating whether or not to append the data written.
+ @brief Constructs a <code>FileWriter</code> given a file name and a boolean indicating
+  whether to append the data written, using the platform's 
+ default charset.
  @param fileName String The system-dependent filename.
- @param append boolean if  <code> true </code> , then data will be written
-                    to the end of the file rather than the beginning.
+ @param append boolean if <code>true</code> , then data will be written                   to the end of the file rather than the beginning.
  @throw IOExceptionif the named file exists but is a directory rather
                    than a regular file, does not exist but cannot be
                    created, or cannot be opened for any other reason
  */
 - (instancetype __nonnull)initWithNSString:(NSString *)fileName
+                               withBoolean:(jboolean)append;
+
+/*!
+ @brief Constructs a <code>FileWriter</code> given a file name and 
+ charset.
+ @param fileName the name of the file to write
+ @param charset the charset
+ @throw IOExceptionif the named file exists but is a directory rather
+                   than a regular file, does not exist but cannot be
+                   created, or cannot be opened for any other reason
+ @since 11
+ */
+- (instancetype __nonnull)initWithNSString:(NSString *)fileName
+                 withJavaNioCharsetCharset:(JavaNioCharsetCharset *)charset;
+
+/*!
+ @brief Constructs a <code>FileWriter</code> given a file name, 
+ charset and a boolean indicating
+  whether to append the data written.
+ @param fileName the name of the file to write
+ @param charset the charset
+ @param append a boolean. If <code>true</code> , the writer will write the data                   to the end of the file rather than the beginning.
+ @throw IOExceptionif the named file exists but is a directory rather
+                   than a regular file, does not exist but cannot be
+                   created, or cannot be opened for any other reason
+ @since 11
+ */
+- (instancetype __nonnull)initWithNSString:(NSString *)fileName
+                 withJavaNioCharsetCharset:(JavaNioCharsetCharset *)charset
                                withBoolean:(jboolean)append;
 
 // Disallowed inherited constructors, do not use.
@@ -157,6 +217,30 @@ FOUNDATION_EXPORT JavaIoFileWriter *new_JavaIoFileWriter_initWithJavaIoFileDescr
 
 FOUNDATION_EXPORT JavaIoFileWriter *create_JavaIoFileWriter_initWithJavaIoFileDescriptor_(JavaIoFileDescriptor *fd);
 
+FOUNDATION_EXPORT void JavaIoFileWriter_initWithNSString_withJavaNioCharsetCharset_(JavaIoFileWriter *self, NSString *fileName, JavaNioCharsetCharset *charset);
+
+FOUNDATION_EXPORT JavaIoFileWriter *new_JavaIoFileWriter_initWithNSString_withJavaNioCharsetCharset_(NSString *fileName, JavaNioCharsetCharset *charset) NS_RETURNS_RETAINED;
+
+FOUNDATION_EXPORT JavaIoFileWriter *create_JavaIoFileWriter_initWithNSString_withJavaNioCharsetCharset_(NSString *fileName, JavaNioCharsetCharset *charset);
+
+FOUNDATION_EXPORT void JavaIoFileWriter_initWithNSString_withJavaNioCharsetCharset_withBoolean_(JavaIoFileWriter *self, NSString *fileName, JavaNioCharsetCharset *charset, jboolean append);
+
+FOUNDATION_EXPORT JavaIoFileWriter *new_JavaIoFileWriter_initWithNSString_withJavaNioCharsetCharset_withBoolean_(NSString *fileName, JavaNioCharsetCharset *charset, jboolean append) NS_RETURNS_RETAINED;
+
+FOUNDATION_EXPORT JavaIoFileWriter *create_JavaIoFileWriter_initWithNSString_withJavaNioCharsetCharset_withBoolean_(NSString *fileName, JavaNioCharsetCharset *charset, jboolean append);
+
+FOUNDATION_EXPORT void JavaIoFileWriter_initWithJavaIoFile_withJavaNioCharsetCharset_(JavaIoFileWriter *self, JavaIoFile *file, JavaNioCharsetCharset *charset);
+
+FOUNDATION_EXPORT JavaIoFileWriter *new_JavaIoFileWriter_initWithJavaIoFile_withJavaNioCharsetCharset_(JavaIoFile *file, JavaNioCharsetCharset *charset) NS_RETURNS_RETAINED;
+
+FOUNDATION_EXPORT JavaIoFileWriter *create_JavaIoFileWriter_initWithJavaIoFile_withJavaNioCharsetCharset_(JavaIoFile *file, JavaNioCharsetCharset *charset);
+
+FOUNDATION_EXPORT void JavaIoFileWriter_initWithJavaIoFile_withJavaNioCharsetCharset_withBoolean_(JavaIoFileWriter *self, JavaIoFile *file, JavaNioCharsetCharset *charset, jboolean append);
+
+FOUNDATION_EXPORT JavaIoFileWriter *new_JavaIoFileWriter_initWithJavaIoFile_withJavaNioCharsetCharset_withBoolean_(JavaIoFile *file, JavaNioCharsetCharset *charset, jboolean append) NS_RETURNS_RETAINED;
+
+FOUNDATION_EXPORT JavaIoFileWriter *create_JavaIoFileWriter_initWithJavaIoFile_withJavaNioCharsetCharset_withBoolean_(JavaIoFile *file, JavaNioCharsetCharset *charset, jboolean append);
+
 J2OBJC_TYPE_LITERAL_HEADER(JavaIoFileWriter)
 
 #endif
@@ -165,6 +249,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaIoFileWriter)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaIoFileWriter")

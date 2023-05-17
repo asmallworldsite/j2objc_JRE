@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_AndroidIcuLangUProperty
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -24,6 +21,8 @@
 
 #if !defined (AndroidIcuLangUProperty_) && (INCLUDE_ALL_AndroidIcuLangUProperty || defined(INCLUDE_AndroidIcuLangUProperty))
 #define AndroidIcuLangUProperty_
+
+@class JavaLangInteger;
 
 /*!
  @brief <p>Selection constants for Unicode properties.
@@ -42,123 +41,6 @@
  - seealso: android.icu.lang.UCharacter
  */
 @protocol AndroidIcuLangUProperty < JavaObject >
-
-@end
-
-@interface AndroidIcuLangUProperty : NSObject
-@property (readonly, class) jint UNDEFINED NS_SWIFT_NAME(UNDEFINED);
-@property (readonly, class) jint ALPHABETIC NS_SWIFT_NAME(ALPHABETIC);
-@property (readonly, class) jint BINARY_START NS_SWIFT_NAME(BINARY_START);
-@property (readonly, class) jint ASCII_HEX_DIGIT NS_SWIFT_NAME(ASCII_HEX_DIGIT);
-@property (readonly, class) jint BIDI_CONTROL NS_SWIFT_NAME(BIDI_CONTROL);
-@property (readonly, class) jint BIDI_MIRRORED NS_SWIFT_NAME(BIDI_MIRRORED);
-@property (readonly, class) jint DASH NS_SWIFT_NAME(DASH);
-@property (readonly, class) jint DEFAULT_IGNORABLE_CODE_POINT NS_SWIFT_NAME(DEFAULT_IGNORABLE_CODE_POINT);
-@property (readonly, class) jint DEPRECATED NS_SWIFT_NAME(DEPRECATED);
-@property (readonly, class) jint DIACRITIC NS_SWIFT_NAME(DIACRITIC);
-@property (readonly, class) jint EXTENDER NS_SWIFT_NAME(EXTENDER);
-@property (readonly, class) jint FULL_COMPOSITION_EXCLUSION NS_SWIFT_NAME(FULL_COMPOSITION_EXCLUSION);
-@property (readonly, class) jint GRAPHEME_BASE NS_SWIFT_NAME(GRAPHEME_BASE);
-@property (readonly, class) jint GRAPHEME_EXTEND NS_SWIFT_NAME(GRAPHEME_EXTEND);
-@property (readonly, class) jint GRAPHEME_LINK NS_SWIFT_NAME(GRAPHEME_LINK);
-@property (readonly, class) jint HEX_DIGIT NS_SWIFT_NAME(HEX_DIGIT);
-@property (readonly, class) jint HYPHEN NS_SWIFT_NAME(HYPHEN);
-@property (readonly, class) jint ID_CONTINUE NS_SWIFT_NAME(ID_CONTINUE);
-@property (readonly, class) jint ID_START NS_SWIFT_NAME(ID_START);
-@property (readonly, class) jint IDEOGRAPHIC NS_SWIFT_NAME(IDEOGRAPHIC);
-@property (readonly, class) jint IDS_BINARY_OPERATOR NS_SWIFT_NAME(IDS_BINARY_OPERATOR);
-@property (readonly, class) jint IDS_TRINARY_OPERATOR NS_SWIFT_NAME(IDS_TRINARY_OPERATOR);
-@property (readonly, class) jint JOIN_CONTROL NS_SWIFT_NAME(JOIN_CONTROL);
-@property (readonly, class) jint LOGICAL_ORDER_EXCEPTION NS_SWIFT_NAME(LOGICAL_ORDER_EXCEPTION);
-@property (readonly, class) jint LOWERCASE NS_SWIFT_NAME(LOWERCASE);
-@property (readonly, class) jint MATH NS_SWIFT_NAME(MATH);
-@property (readonly, class) jint NONCHARACTER_CODE_POINT NS_SWIFT_NAME(NONCHARACTER_CODE_POINT);
-@property (readonly, class) jint QUOTATION_MARK NS_SWIFT_NAME(QUOTATION_MARK);
-@property (readonly, class) jint RADICAL NS_SWIFT_NAME(RADICAL);
-@property (readonly, class) jint SOFT_DOTTED NS_SWIFT_NAME(SOFT_DOTTED);
-@property (readonly, class) jint TERMINAL_PUNCTUATION NS_SWIFT_NAME(TERMINAL_PUNCTUATION);
-@property (readonly, class) jint UNIFIED_IDEOGRAPH NS_SWIFT_NAME(UNIFIED_IDEOGRAPH);
-@property (readonly, class) jint UPPERCASE NS_SWIFT_NAME(UPPERCASE);
-@property (readonly, class) jint WHITE_SPACE NS_SWIFT_NAME(WHITE_SPACE);
-@property (readonly, class) jint XID_CONTINUE NS_SWIFT_NAME(XID_CONTINUE);
-@property (readonly, class) jint XID_START NS_SWIFT_NAME(XID_START);
-@property (readonly, class) jint CASE_SENSITIVE NS_SWIFT_NAME(CASE_SENSITIVE);
-@property (readonly, class) jint S_TERM NS_SWIFT_NAME(S_TERM);
-@property (readonly, class) jint VARIATION_SELECTOR NS_SWIFT_NAME(VARIATION_SELECTOR);
-@property (readonly, class) jint NFD_INERT NS_SWIFT_NAME(NFD_INERT);
-@property (readonly, class) jint NFKD_INERT NS_SWIFT_NAME(NFKD_INERT);
-@property (readonly, class) jint NFC_INERT NS_SWIFT_NAME(NFC_INERT);
-@property (readonly, class) jint NFKC_INERT NS_SWIFT_NAME(NFKC_INERT);
-@property (readonly, class) jint SEGMENT_STARTER NS_SWIFT_NAME(SEGMENT_STARTER);
-@property (readonly, class) jint PATTERN_SYNTAX NS_SWIFT_NAME(PATTERN_SYNTAX);
-@property (readonly, class) jint PATTERN_WHITE_SPACE NS_SWIFT_NAME(PATTERN_WHITE_SPACE);
-@property (readonly, class) jint POSIX_ALNUM NS_SWIFT_NAME(POSIX_ALNUM);
-@property (readonly, class) jint POSIX_BLANK NS_SWIFT_NAME(POSIX_BLANK);
-@property (readonly, class) jint POSIX_GRAPH NS_SWIFT_NAME(POSIX_GRAPH);
-@property (readonly, class) jint POSIX_PRINT NS_SWIFT_NAME(POSIX_PRINT);
-@property (readonly, class) jint POSIX_XDIGIT NS_SWIFT_NAME(POSIX_XDIGIT);
-@property (readonly, class) jint CASED NS_SWIFT_NAME(CASED);
-@property (readonly, class) jint CASE_IGNORABLE NS_SWIFT_NAME(CASE_IGNORABLE);
-@property (readonly, class) jint CHANGES_WHEN_LOWERCASED NS_SWIFT_NAME(CHANGES_WHEN_LOWERCASED);
-@property (readonly, class) jint CHANGES_WHEN_UPPERCASED NS_SWIFT_NAME(CHANGES_WHEN_UPPERCASED);
-@property (readonly, class) jint CHANGES_WHEN_TITLECASED NS_SWIFT_NAME(CHANGES_WHEN_TITLECASED);
-@property (readonly, class) jint CHANGES_WHEN_CASEFOLDED NS_SWIFT_NAME(CHANGES_WHEN_CASEFOLDED);
-@property (readonly, class) jint CHANGES_WHEN_CASEMAPPED NS_SWIFT_NAME(CHANGES_WHEN_CASEMAPPED);
-@property (readonly, class) jint CHANGES_WHEN_NFKC_CASEFOLDED NS_SWIFT_NAME(CHANGES_WHEN_NFKC_CASEFOLDED);
-@property (readonly, class) jint EMOJI NS_SWIFT_NAME(EMOJI);
-@property (readonly, class) jint EMOJI_PRESENTATION NS_SWIFT_NAME(EMOJI_PRESENTATION);
-@property (readonly, class) jint EMOJI_MODIFIER NS_SWIFT_NAME(EMOJI_MODIFIER);
-@property (readonly, class) jint EMOJI_MODIFIER_BASE NS_SWIFT_NAME(EMOJI_MODIFIER_BASE);
-@property (readonly, class) jint BINARY_LIMIT NS_SWIFT_NAME(BINARY_LIMIT);
-@property (readonly, class) jint BIDI_CLASS NS_SWIFT_NAME(BIDI_CLASS);
-@property (readonly, class) jint INT_START NS_SWIFT_NAME(INT_START);
-@property (readonly, class) jint BLOCK NS_SWIFT_NAME(BLOCK);
-@property (readonly, class) jint CANONICAL_COMBINING_CLASS NS_SWIFT_NAME(CANONICAL_COMBINING_CLASS);
-@property (readonly, class) jint DECOMPOSITION_TYPE NS_SWIFT_NAME(DECOMPOSITION_TYPE);
-@property (readonly, class) jint EAST_ASIAN_WIDTH NS_SWIFT_NAME(EAST_ASIAN_WIDTH);
-@property (readonly, class) jint GENERAL_CATEGORY NS_SWIFT_NAME(GENERAL_CATEGORY);
-@property (readonly, class) jint JOINING_GROUP NS_SWIFT_NAME(JOINING_GROUP);
-@property (readonly, class) jint JOINING_TYPE NS_SWIFT_NAME(JOINING_TYPE);
-@property (readonly, class) jint LINE_BREAK NS_SWIFT_NAME(LINE_BREAK);
-@property (readonly, class) jint NUMERIC_TYPE NS_SWIFT_NAME(NUMERIC_TYPE);
-@property (readonly, class) jint SCRIPT NS_SWIFT_NAME(SCRIPT);
-@property (readonly, class) jint HANGUL_SYLLABLE_TYPE NS_SWIFT_NAME(HANGUL_SYLLABLE_TYPE);
-@property (readonly, class) jint NFD_QUICK_CHECK NS_SWIFT_NAME(NFD_QUICK_CHECK);
-@property (readonly, class) jint NFKD_QUICK_CHECK NS_SWIFT_NAME(NFKD_QUICK_CHECK);
-@property (readonly, class) jint NFC_QUICK_CHECK NS_SWIFT_NAME(NFC_QUICK_CHECK);
-@property (readonly, class) jint NFKC_QUICK_CHECK NS_SWIFT_NAME(NFKC_QUICK_CHECK);
-@property (readonly, class) jint LEAD_CANONICAL_COMBINING_CLASS NS_SWIFT_NAME(LEAD_CANONICAL_COMBINING_CLASS);
-@property (readonly, class) jint TRAIL_CANONICAL_COMBINING_CLASS NS_SWIFT_NAME(TRAIL_CANONICAL_COMBINING_CLASS);
-@property (readonly, class) jint GRAPHEME_CLUSTER_BREAK NS_SWIFT_NAME(GRAPHEME_CLUSTER_BREAK);
-@property (readonly, class) jint SENTENCE_BREAK NS_SWIFT_NAME(SENTENCE_BREAK);
-@property (readonly, class) jint WORD_BREAK NS_SWIFT_NAME(WORD_BREAK);
-@property (readonly, class) jint BIDI_PAIRED_BRACKET_TYPE NS_SWIFT_NAME(BIDI_PAIRED_BRACKET_TYPE);
-@property (readonly, class) jint INT_LIMIT NS_SWIFT_NAME(INT_LIMIT);
-@property (readonly, class) jint GENERAL_CATEGORY_MASK NS_SWIFT_NAME(GENERAL_CATEGORY_MASK);
-@property (readonly, class) jint MASK_START NS_SWIFT_NAME(MASK_START);
-@property (readonly, class) jint MASK_LIMIT NS_SWIFT_NAME(MASK_LIMIT);
-@property (readonly, class) jint NUMERIC_VALUE NS_SWIFT_NAME(NUMERIC_VALUE);
-@property (readonly, class) jint DOUBLE_START NS_SWIFT_NAME(DOUBLE_START);
-@property (readonly, class) jint DOUBLE_LIMIT NS_SWIFT_NAME(DOUBLE_LIMIT);
-@property (readonly, class) jint AGE NS_SWIFT_NAME(AGE);
-@property (readonly, class) jint STRING_START NS_SWIFT_NAME(STRING_START);
-@property (readonly, class) jint BIDI_MIRRORING_GLYPH NS_SWIFT_NAME(BIDI_MIRRORING_GLYPH);
-@property (readonly, class) jint CASE_FOLDING NS_SWIFT_NAME(CASE_FOLDING);
-@property (readonly, class) jint ISO_COMMENT NS_SWIFT_NAME(ISO_COMMENT);
-@property (readonly, class) jint LOWERCASE_MAPPING NS_SWIFT_NAME(LOWERCASE_MAPPING);
-@property (readonly, class) jint NAME NS_SWIFT_NAME(NAME);
-@property (readonly, class) jint SIMPLE_CASE_FOLDING NS_SWIFT_NAME(SIMPLE_CASE_FOLDING);
-@property (readonly, class) jint SIMPLE_LOWERCASE_MAPPING NS_SWIFT_NAME(SIMPLE_LOWERCASE_MAPPING);
-@property (readonly, class) jint SIMPLE_TITLECASE_MAPPING NS_SWIFT_NAME(SIMPLE_TITLECASE_MAPPING);
-@property (readonly, class) jint SIMPLE_UPPERCASE_MAPPING NS_SWIFT_NAME(SIMPLE_UPPERCASE_MAPPING);
-@property (readonly, class) jint TITLECASE_MAPPING NS_SWIFT_NAME(TITLECASE_MAPPING);
-@property (readonly, class) jint UNICODE_1_NAME NS_SWIFT_NAME(UNICODE_1_NAME);
-@property (readonly, class) jint UPPERCASE_MAPPING NS_SWIFT_NAME(UPPERCASE_MAPPING);
-@property (readonly, class) jint BIDI_PAIRED_BRACKET NS_SWIFT_NAME(BIDI_PAIRED_BRACKET);
-@property (readonly, class) jint STRING_LIMIT NS_SWIFT_NAME(STRING_LIMIT);
-@property (readonly, class) jint SCRIPT_EXTENSIONS NS_SWIFT_NAME(SCRIPT_EXTENSIONS);
-@property (readonly, class) jint OTHER_PROPERTY_START NS_SWIFT_NAME(OTHER_PROPERTY_START);
-@property (readonly, class) jint OTHER_PROPERTY_LIMIT NS_SWIFT_NAME(OTHER_PROPERTY_LIMIT);
 
 @end
 
@@ -1160,6 +1042,8 @@ J2OBJC_TYPE_LITERAL_HEADER(AndroidIcuLangUProperty)
 #if !defined (AndroidIcuLangUProperty_NameChoice_) && (INCLUDE_ALL_AndroidIcuLangUProperty || defined(INCLUDE_AndroidIcuLangUProperty_NameChoice))
 #define AndroidIcuLangUProperty_NameChoice_
 
+@class JavaLangInteger;
+
 /*!
  @brief Selector constants for UCharacter.getPropertyName() and
   UCharacter.getPropertyValueName().These selectors are used to
@@ -1172,13 +1056,6 @@ J2OBJC_TYPE_LITERAL_HEADER(AndroidIcuLangUProperty)
  - seealso: UCharacter#getPropertyValueName
  */
 @protocol AndroidIcuLangUProperty_NameChoice < JavaObject >
-
-@end
-
-@interface AndroidIcuLangUProperty_NameChoice : NSObject
-@property (readonly, class) jint SHORT NS_SWIFT_NAME(SHORT);
-@property (readonly, class) jint LONG NS_SWIFT_NAME(LONG);
-@property (readonly, class) jint COUNT NS_SWIFT_NAME(COUNT);
 
 @end
 
@@ -1217,6 +1094,4 @@ J2OBJC_TYPE_LITERAL_HEADER(AndroidIcuLangUProperty_NameChoice)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_AndroidIcuLangUProperty")

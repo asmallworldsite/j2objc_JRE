@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_AndroidIcuTextDateTimePatternGenerator
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -32,6 +29,9 @@
 @class AndroidIcuImplUResource_Key;
 @class AndroidIcuTextDateTimePatternGenerator_PatternInfo;
 @class AndroidIcuUtilULocale;
+@class JavaLangBoolean;
+@class JavaLangCharacter;
+@class JavaLangInteger;
 @class JavaUtilLocale;
 @protocol JavaUtilCollection;
 @protocol JavaUtilMap;
@@ -50,29 +50,6 @@
   generators can be built directly from other data as well.
  */
 @interface AndroidIcuTextDateTimePatternGenerator : NSObject < AndroidIcuUtilFreezable, NSCopying >
-@property (readonly, class, strong) id<JavaUtilMap> LOCALE_TO_ALLOWED_HOUR NS_SWIFT_NAME(LOCALE_TO_ALLOWED_HOUR);
-@property (readonly, class) jint ERA NS_SWIFT_NAME(ERA);
-@property (readonly, class) jint YEAR NS_SWIFT_NAME(YEAR);
-@property (readonly, class) jint QUARTER NS_SWIFT_NAME(QUARTER);
-@property (readonly, class) jint MONTH NS_SWIFT_NAME(MONTH);
-@property (readonly, class) jint WEEK_OF_YEAR NS_SWIFT_NAME(WEEK_OF_YEAR);
-@property (readonly, class) jint WEEK_OF_MONTH NS_SWIFT_NAME(WEEK_OF_MONTH);
-@property (readonly, class) jint WEEKDAY NS_SWIFT_NAME(WEEKDAY);
-@property (readonly, class) jint DAY NS_SWIFT_NAME(DAY);
-@property (readonly, class) jint DAY_OF_YEAR NS_SWIFT_NAME(DAY_OF_YEAR);
-@property (readonly, class) jint DAY_OF_WEEK_IN_MONTH NS_SWIFT_NAME(DAY_OF_WEEK_IN_MONTH);
-@property (readonly, class) jint DAYPERIOD NS_SWIFT_NAME(DAYPERIOD);
-@property (readonly, class) jint HOUR NS_SWIFT_NAME(HOUR);
-@property (readonly, class) jint MINUTE NS_SWIFT_NAME(MINUTE);
-@property (readonly, class) jint SECOND NS_SWIFT_NAME(SECOND);
-@property (readonly, class) jint FRACTIONAL_SECOND NS_SWIFT_NAME(FRACTIONAL_SECOND);
-@property (readonly, class) jint ZONE NS_SWIFT_NAME(ZONE);
-@property (readonly, class) jint TYPE_LIMIT NS_SWIFT_NAME(TYPE_LIMIT);
-@property (readonly, class) jint MATCH_NO_OPTIONS NS_SWIFT_NAME(MATCH_NO_OPTIONS);
-@property (readonly, class) jint MATCH_HOUR_FIELD_LENGTH NS_SWIFT_NAME(MATCH_HOUR_FIELD_LENGTH);
-@property (readonly, class) jint MATCH_MINUTE_FIELD_LENGTH NS_SWIFT_NAME(MATCH_MINUTE_FIELD_LENGTH);
-@property (readonly, class) jint MATCH_SECOND_FIELD_LENGTH NS_SWIFT_NAME(MATCH_SECOND_FIELD_LENGTH);
-@property (readonly, class) jint MATCH_ALL_FIELDS_LENGTH NS_SWIFT_NAME(MATCH_ALL_FIELDS_LENGTH);
 
 #pragma mark Public
 
@@ -110,7 +87,7 @@
 - (AndroidIcuTextDateTimePatternGenerator *)addPatternWithSkeletonWithNSString:(NSString *)pattern
                                                                   withNSString:(NSString *)skeletonToUse
                                                                    withBoolean:(jboolean)override
-                        withAndroidIcuTextDateTimePatternGenerator_PatternInfo:(AndroidIcuTextDateTimePatternGenerator_PatternInfo *)returnInfo __attribute__((deprecated));
+                        withAndroidIcuTextDateTimePatternGenerator_PatternInfo:(AndroidIcuTextDateTimePatternGenerator_PatternInfo *)returnInfo;
 
 /*!
  @brief Returns a copy of this <code>DateTimePatternGenerator</code> object.
@@ -128,11 +105,11 @@
 
 /*!
  */
-+ (jint)getAppendFormatNumberWithAndroidIcuImplUResource_Key:(AndroidIcuImplUResource_Key *)key __attribute__((deprecated));
++ (jint)getAppendFormatNumberWithAndroidIcuImplUResource_Key:(AndroidIcuImplUResource_Key *)key;
 
 /*!
  */
-+ (jint)getAppendFormatNumberWithNSString:(NSString *)string __attribute__((deprecated));
++ (jint)getAppendFormatNumberWithNSString:(NSString *)string;
 
 /*!
  @brief Getter corresponding to setAppendItemFormats.Values below 0 or at or
@@ -193,7 +170,7 @@
  @param pattern Input pattern, such as "ccc, d LLL"
  @return skeleton, such as "MMMEd"
  */
-- (NSString *)getCanonicalSkeletonAllowingDuplicatesWithNSString:(NSString *)pattern __attribute__((deprecated));
+- (NSString *)getCanonicalSkeletonAllowingDuplicatesWithNSString:(NSString *)pattern;
 
 /*!
  @brief Getter corresponding to setDateTimeFormat.
@@ -209,7 +186,7 @@
 
 /*!
  */
-- (jchar)getDefaultHourFormatChar __attribute__((deprecated));
+- (jchar)getDefaultHourFormatChar;
 
 /*!
  @brief Create empty generator, to be constructed with addPattern(...) etc.
@@ -221,7 +198,7 @@
  @param pattern The pattern that is passed.
  @return field value
  */
-- (NSString *)getFieldsWithNSString:(NSString *)pattern __attribute__((deprecated));
+- (NSString *)getFieldsWithNSString:(NSString *)pattern;
 
 /*!
  @brief Construct a frozen instance of DateTimePatternGenerator for a
@@ -231,7 +208,7 @@
  @param uLocale The locale to pass.
  @return A frozen DateTimePatternGenerator.
  */
-+ (AndroidIcuTextDateTimePatternGenerator *)getFrozenInstanceWithAndroidIcuUtilULocale:(AndroidIcuUtilULocale *)uLocale __attribute__((deprecated));
++ (AndroidIcuTextDateTimePatternGenerator *)getFrozenInstanceWithAndroidIcuUtilULocale:(AndroidIcuUtilULocale *)uLocale;
 
 /*!
  @brief Construct a flexible generator according to data for the default <code>FORMAT</code> locale.
@@ -259,7 +236,7 @@
               collection is allocated.
  @return the collection with added elements.
  */
-- (id<JavaUtilCollection>)getRedundantsWithJavaUtilCollection:(id<JavaUtilCollection>)output __attribute__((deprecated));
+- (id<JavaUtilCollection>)getRedundantsWithJavaUtilCollection:(id<JavaUtilCollection>)output;
 
 /*!
  @brief Utility to return a unique skeleton from a given pattern.For example,
@@ -274,7 +251,7 @@
  @param pattern Input pattern, such as "dd/MMM"
  @return skeleton, such as "MMMdd"
  */
-- (NSString *)getSkeletonAllowingDuplicatesWithNSString:(NSString *)pattern __attribute__((deprecated));
+- (NSString *)getSkeletonAllowingDuplicatesWithNSString:(NSString *)pattern;
 
 /*!
  @brief Return a list of all the skeletons (in canonical form) from this class,
@@ -299,7 +276,7 @@
  @param skeleton The skeleton to determine if it contains a single field.
  @return true or not
  */
-+ (jboolean)isSingleFieldWithNSString:(NSString *)skeleton __attribute__((deprecated));
++ (jboolean)isSingleFieldWithNSString:(NSString *)skeleton;
 
 /*!
  @brief Adjusts the field types (width and subtype) of a pattern to match what is
@@ -396,7 +373,7 @@
 
 /*!
  */
-- (void)setDefaultHourFormatCharWithChar:(jchar)defaultHourFormatChar __attribute__((deprecated));
+- (void)setDefaultHourFormatCharWithChar:(jchar)defaultHourFormatChar;
 
 /*!
  @brief Used by CLDR tooling; not in ICU4C.
@@ -413,7 +390,7 @@
   so corresponding fields will sort in the same way for both TreeMaps.
  */
 - (jboolean)skeletonsAreSimilarWithNSString:(NSString *)id_
-                               withNSString:(NSString *)skeleton __attribute__((deprecated));
+                               withNSString:(NSString *)skeleton;
 
 #pragma mark Protected
 
@@ -605,6 +582,8 @@ J2OBJC_TYPE_LITERAL_HEADER(AndroidIcuTextDateTimePatternGenerator)
 #if !defined (AndroidIcuTextDateTimePatternGenerator_PatternInfo_) && (INCLUDE_ALL_AndroidIcuTextDateTimePatternGenerator || defined(INCLUDE_AndroidIcuTextDateTimePatternGenerator_PatternInfo))
 #define AndroidIcuTextDateTimePatternGenerator_PatternInfo_
 
+@class JavaLangInteger;
+
 /*!
  @brief PatternInfo supplies output parameters for addPattern(...).It is used because
   Java doesn't have real output parameters.
@@ -620,9 +599,6 @@ J2OBJC_TYPE_LITERAL_HEADER(AndroidIcuTextDateTimePatternGenerator)
    */
   NSString *conflictingPattern_;
 }
-@property (readonly, class) jint OK NS_SWIFT_NAME(OK);
-@property (readonly, class) jint BASE_CONFLICT NS_SWIFT_NAME(BASE_CONFLICT);
-@property (readonly, class) jint CONFLICT NS_SWIFT_NAME(CONFLICT);
 
 #pragma mark Public
 
@@ -668,6 +644,9 @@ J2OBJC_TYPE_LITERAL_HEADER(AndroidIcuTextDateTimePatternGenerator_PatternInfo)
 #if !defined (AndroidIcuTextDateTimePatternGenerator_VariableField_) && (INCLUDE_ALL_AndroidIcuTextDateTimePatternGenerator || defined(INCLUDE_AndroidIcuTextDateTimePatternGenerator_VariableField))
 #define AndroidIcuTextDateTimePatternGenerator_VariableField_
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
+
 /*!
  @brief Utility class for FormatParser.Immutable class that is only used to mark
   the difference between a variable field and a literal string.
@@ -676,7 +655,6 @@ J2OBJC_TYPE_LITERAL_HEADER(AndroidIcuTextDateTimePatternGenerator_PatternInfo)
   date format fields. For example, "VVVV" is valid while "V4" is not, nor
   is "44".
  */
-__attribute__((deprecated))
 @interface AndroidIcuTextDateTimePatternGenerator_VariableField : NSObject
 
 #pragma mark Public
@@ -685,7 +663,7 @@ __attribute__((deprecated))
  @brief Create a variable field: equivalent to VariableField(string,false);
  @param string The string for the variable field.
  */
-- (instancetype __nonnull)initWithNSString:(NSString *)string __attribute__((deprecated));
+- (instancetype __nonnull)initWithNSString:(NSString *)string;
 
 /*!
  @brief Create a variable field
@@ -694,11 +672,11 @@ __attribute__((deprecated))
  @throw IllegalArgumentExceptionif the variable field is not valid.
  */
 - (instancetype __nonnull)initWithNSString:(NSString *)string
-                               withBoolean:(jboolean)strict __attribute__((deprecated));
+                               withBoolean:(jboolean)strict;
 
 /*!
  */
-+ (NSString *)getCanonicalCodeWithInt:(jint)type __attribute__((deprecated));
++ (NSString *)getCanonicalCodeWithInt:(jint)type;
 
 /*!
  @brief Get the main type of this variable.These types are ERA, QUARTER,
@@ -706,18 +684,18 @@ __attribute__((deprecated))
   (am/pm), HOUR, MINUTE, SECOND,FRACTIONAL_SECOND, ZONE.
  @return main type.
  */
-- (jint)getType __attribute__((deprecated));
+- (jint)getType;
 
 /*!
  @brief Check if the type of this variable field is numeric.
  @return true if the type of this variable field is numeric.
  */
-- (jboolean)isNumeric __attribute__((deprecated));
+- (jboolean)isNumeric;
 
 /*!
  @brief Get the string represented by this variable.
  */
-- (NSString *)description __attribute__((deprecated));
+- (NSString *)description;
 
 // Disallowed inherited constructors, do not use.
 
@@ -748,6 +726,8 @@ J2OBJC_TYPE_LITERAL_HEADER(AndroidIcuTextDateTimePatternGenerator_VariableField)
 #if !defined (AndroidIcuTextDateTimePatternGenerator_FormatParser_) && (INCLUDE_ALL_AndroidIcuTextDateTimePatternGenerator || defined(INCLUDE_AndroidIcuTextDateTimePatternGenerator_FormatParser))
 #define AndroidIcuTextDateTimePatternGenerator_FormatParser_
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @protocol JavaUtilList;
 
 /*!
@@ -775,7 +755,6 @@ J2OBJC_TYPE_LITERAL_HEADER(AndroidIcuTextDateTimePatternGenerator_VariableField)
   
 @endcode
  */
-__attribute__((deprecated))
 @interface AndroidIcuTextDateTimePatternGenerator_FormatParser : NSObject
 
 #pragma mark Public
@@ -783,7 +762,7 @@ __attribute__((deprecated))
 /*!
  @brief Construct an empty date format parser, to which strings and variables can be added with set(...).
  */
-- (instancetype __nonnull)init __attribute__((deprecated));
+- (instancetype __nonnull)init;
 
 /*!
  @brief Returns modifiable list which is a mixture of Strings and VariableFields, in the order found during parsing.The strings represent literals, and have all quoting removed.
@@ -798,13 +777,13 @@ __attribute__((deprecated))
   The list is modifiable, so you can add any strings or variables to it, or remove any items.
  @return modifiable list of items.
  */
-- (id<JavaUtilList>)getItems __attribute__((deprecated));
+- (id<JavaUtilList>)getItems;
 
 /*!
  @brief Returns true if it has a mixture of date and time variable fields: that is, at least one date variable and at least one time variable.
  @return true or false
  */
-- (jboolean)hasDateAndTimeFields __attribute__((deprecated));
+- (jboolean)hasDateAndTimeFields;
 
 /*!
  @brief Each literal string is quoted as needed.That is, the ' quote marks will only be added if needed.
@@ -812,14 +791,14 @@ __attribute__((deprecated))
  @param string The string to check.
  @return string with quoted literals
  */
-- (id)quoteLiteralWithNSString:(NSString *)string __attribute__((deprecated));
+- (id)quoteLiteralWithNSString:(NSString *)string;
 
 /*!
  @brief Parses the string into a list of items.
  @param string The string to parse.
  @return this, for chaining
  */
-- (AndroidIcuTextDateTimePatternGenerator_FormatParser *)setWithNSString:(NSString *)string __attribute__((deprecated));
+- (AndroidIcuTextDateTimePatternGenerator_FormatParser *)setWithNSString:(NSString *)string;
 
 /*!
  @brief Parses the string into a list of items, taking into account all of the quoting that may be going on.
@@ -828,14 +807,14 @@ __attribute__((deprecated))
  @return this, for chaining
  */
 - (AndroidIcuTextDateTimePatternGenerator_FormatParser *)setWithNSString:(NSString *)string
-                                                             withBoolean:(jboolean)strict __attribute__((deprecated));
+                                                             withBoolean:(jboolean)strict;
 
 /*!
  @brief Provide display form of formatted input.Each literal string is quoted if necessary..
  That is, if the input was "hh':'mm", the result would be "hh:mm", since the ":" doesn't need quoting. See quoteLiteral().
  @return printable output string
  */
-- (NSString *)description __attribute__((deprecated));
+- (NSString *)description;
 
 /*!
  @brief Provide display form of a segment of the parsed input.Each literal string is minimally quoted.
@@ -845,7 +824,7 @@ __attribute__((deprecated))
  @return printable output string
  */
 - (NSString *)toStringWithInt:(jint)start
-                      withInt:(jint)limit __attribute__((deprecated));
+                      withInt:(jint)limit;
 
 @end
 
@@ -865,6 +844,4 @@ J2OBJC_TYPE_LITERAL_HEADER(AndroidIcuTextDateTimePatternGenerator_FormatParser)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_AndroidIcuTextDateTimePatternGenerator")

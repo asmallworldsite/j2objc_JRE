@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaLangThreadGroup
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -31,6 +28,8 @@
 
 @class IOSObjectArray;
 @class JavaIoPrintStream;
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @class JavaLangThread;
 @class JavaLangThrowable;
 
@@ -45,7 +44,7 @@
   group, but not to access information about its thread group's
   parent thread group or any other thread groups.
  @author unascribed
- @since JDK1.0
+ @since 1.0
  */
 @interface JavaLangThreadGroup : NSObject < JavaLangThread_UncaughtExceptionHandler > {
  @public
@@ -53,15 +52,12 @@
   jint maxPriority_;
   jboolean destroyed_;
   jboolean daemon_;
-  jboolean vmAllowSuspension_;
   jint nUnstartedThreads_;
   jint nthreads_;
   IOSObjectArray *threads_;
   jint ngroups_;
   IOSObjectArray *groups_;
 }
-@property (readonly, class, strong) JavaLangThreadGroup *systemThreadGroup NS_SWIFT_NAME(systemThreadGroup);
-@property (readonly, class, strong) JavaLangThreadGroup *mainThreadGroup NS_SWIFT_NAME(mainThreadGroup);
 
 #pragma mark Public
 
@@ -75,7 +71,7 @@
  @throw SecurityExceptionif the current thread cannot create a
                 thread in the specified thread group.
  - seealso: java.lang.ThreadGroup#checkAccess()
- @since JDK1.0
+ @since 1.0
  */
 - (instancetype __nonnull)initWithNSString:(NSString *)name;
 
@@ -93,7 +89,7 @@
                 thread in the specified thread group.
  - seealso: java.lang.SecurityException
  - seealso: java.lang.ThreadGroup#checkAccess()
- @since JDK1.0
+ @since 1.0
  */
 - (instancetype __nonnull)initWithJavaLangThreadGroup:(JavaLangThreadGroup *)parent
                                          withNSString:(NSString *)name;
@@ -110,7 +106,7 @@
  @return an estimate of the number of active threads in this thread
            group and in any other thread group that has this thread
            group as an ancestor
- @since JDK1.0
+ @since 1.0
  */
 - (jint)activeCount;
 
@@ -124,9 +120,17 @@
   debugging and monitoring purposes.
  @return the number of active thread groups with this thread group as
            an ancestor
- @since JDK1.0
+ @since 1.0
  */
 - (jint)activeGroupCount;
+
+/*!
+ @brief Used by VM to control lowmem implicit suspension.
+ @param b boolean to allow or disallow suspension
+ @return true on success
+ @since 1.1
+ */
+- (jboolean)allowThreadSuspensionWithBoolean:(jboolean)b;
 
 /*!
  @brief Determines if the currently running thread has permission to
@@ -138,7 +142,7 @@
  @throw SecurityExceptionif the current thread is not allowed to
                 access this thread group.
  - seealso: java.lang.SecurityManager#checkAccess(java.lang.ThreadGroup)
- @since JDK1.0
+ @since 1.0
  */
 - (void)checkAccess;
 
@@ -154,7 +158,7 @@
  @throw SecurityExceptionif the current thread cannot modify this
                 thread group.
  - seealso: java.lang.ThreadGroup#checkAccess()
- @since JDK1.0
+ @since 1.0
  */
 - (void)destroy;
 
@@ -171,7 +175,7 @@
  @throw SecurityException
  if checkAccess determines that
            the current thread cannot access this thread group
- @since JDK1.0
+ @since 1.0
  */
 - (jint)enumerateWithJavaLangThreadArray:(IOSObjectArray *)list;
 
@@ -199,7 +203,7 @@
  @throw SecurityException
  if checkAccess determines that
            the current thread cannot access this thread group
- @since JDK1.0
+ @since 1.0
  */
 - (jint)enumerateWithJavaLangThreadArray:(IOSObjectArray *)list
                              withBoolean:(jboolean)recurse;
@@ -217,7 +221,7 @@
  @throw SecurityException
  if checkAccess determines that
            the current thread cannot access this thread group
- @since JDK1.0
+ @since 1.0
  */
 - (jint)enumerateWithJavaLangThreadGroupArray:(IOSObjectArray *)list;
 
@@ -245,7 +249,7 @@
  @throw SecurityException
  if checkAccess determines that
            the current thread cannot access this thread group
- @since JDK1.0
+ @since 1.0
  */
 - (jint)enumerateWithJavaLangThreadGroupArray:(IOSObjectArray *)list
                                   withBoolean:(jboolean)recurse;
@@ -257,14 +261,14 @@
  @return the maximum priority that a thread in this thread group
            can have.
  - seealso: #setMaxPriority
- @since JDK1.0
+ @since 1.0
  */
 - (jint)getMaxPriority;
 
 /*!
  @brief Returns the name of this thread group.
  @return the name of this thread group.
- @since JDK1.0
+ @since 1.0
  */
 - (NSString *)getName;
 
@@ -281,7 +285,7 @@
  - seealso: java.lang.ThreadGroup#checkAccess()
  - seealso: java.lang.SecurityException
  - seealso: java.lang.RuntimePermission
- @since JDK1.0
+ @since 1.0
  */
 - (JavaLangThreadGroup *)getParent;
 
@@ -309,21 +313,21 @@
   thread is stopped or its last thread group is destroyed.
  @return <code>true</code> if this thread group is a daemon thread group;
            <code>false</code> otherwise.
- @since JDK1.0
+ @since 1.0
  */
 - (jboolean)isDaemon;
 
 /*!
  @brief Tests if this thread group has been destroyed.
  @return true if this object is destroyed
- @since JDK1.1
+ @since 1.1
  */
 - (jboolean)isDestroyed;
 
 /*!
  @brief Prints information about this thread group to the standard
   output.This method is useful only for debugging.
- @since JDK1.0
+ @since 1.0
  */
 - (void)list;
 
@@ -334,7 +338,7 @@
  @return <code>true</code> if this thread group is the thread group
            argument or one of its ancestor thread groups;          
  <code>false</code> otherwise.
- @since JDK1.0
+ @since 1.0
  */
 - (jboolean)parentOfWithJavaLangThreadGroup:(JavaLangThreadGroup *)g;
 
@@ -352,9 +356,9 @@
  - seealso: java.lang.SecurityException
  - seealso: java.lang.Thread#resume()
  - seealso: java.lang.ThreadGroup#checkAccess()
- @since JDK1.0
+ @since 1.0
  */
-- (void)resume __attribute__((deprecated));
+- (void)resume;
 
 /*!
  @brief Changes the daemon status of this thread group.
@@ -364,13 +368,13 @@
  <p>
   A daemon thread group is automatically destroyed when its last
   thread is stopped or its last thread group is destroyed.
- @param daemon if  <code> true </code> , marks this thread group as
-                        a daemon thread group; otherwise, marks this                       thread group as normal.
+ @param daemon if <code>true</code> , marks this thread group as                       a daemon thread group; otherwise, marks this
+                        thread group as normal.
  @throw SecurityExceptionif the current thread cannot modify
                 this thread group.
  - seealso: java.lang.SecurityException
  - seealso: java.lang.ThreadGroup#checkAccess()
- @since JDK1.0
+ @since 1.0
  */
 - (void)setDaemonWithBoolean:(jboolean)daemon;
 
@@ -398,7 +402,7 @@
  - seealso: #getMaxPriority
  - seealso: java.lang.SecurityException
  - seealso: java.lang.ThreadGroup#checkAccess()
- @since JDK1.0
+ @since 1.0
  */
 - (void)setMaxPriorityWithInt:(jint)pri;
 
@@ -416,9 +420,9 @@
  - seealso: java.lang.SecurityException
  - seealso: java.lang.Thread#stop()
  - seealso: java.lang.ThreadGroup#checkAccess()
- @since JDK1.0
+ @since 1.0
  */
-- (void)stop __attribute__((deprecated));
+- (void)stop;
 
 /*!
  @brief Suspends all threads in this thread group.
@@ -434,14 +438,14 @@
  - seealso: java.lang.Thread#suspend()
  - seealso: java.lang.SecurityException
  - seealso: java.lang.ThreadGroup#checkAccess()
- @since JDK1.0
+ @since 1.0
  */
-- (void)suspend __attribute__((deprecated));
+- (void)suspend;
 
 /*!
  @brief Returns a string representation of this Thread group.
  @return a string representation of this thread group.
- @since JDK1.0
+ @since 1.0
  */
 - (NSString *)description;
 
@@ -478,7 +482,7 @@
   uncaught exceptions.
  @param t the thread that is about to exit.
  @param e the uncaught exception.
- @since JDK1.0
+ @since 1.0
  */
 - (void)uncaughtExceptionWithJavaLangThread:(JavaLangThread *)t
                       withJavaLangThrowable:(JavaLangThrowable *)e;
@@ -567,6 +571,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaLangThreadGroup)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaLangThreadGroup")

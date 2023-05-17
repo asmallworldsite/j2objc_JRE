@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaNetSocket
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -32,6 +29,8 @@
 @class JavaIoFileDescriptor;
 @class JavaIoInputStream;
 @class JavaIoOutputStream;
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @class JavaNetInetAddress;
 @class JavaNetProxy;
 @class JavaNetSocketAddress;
@@ -135,7 +134,7 @@
  */
 - (instancetype __nonnull)initWithJavaNetInetAddress:(JavaNetInetAddress *)host
                                              withInt:(jint)port
-                                         withBoolean:(jboolean)stream __attribute__((deprecated));
+                                         withBoolean:(jboolean)stream;
 
 /*!
  @brief Creates a socket and connects it to the specified remote address on
@@ -280,7 +279,7 @@
  */
 - (instancetype __nonnull)initWithNSString:(NSString *)host
                                    withInt:(jint)port
-                               withBoolean:(jboolean)stream __attribute__((deprecated));
+                               withBoolean:(jboolean)stream;
 
 /*!
  @brief Creates a socket and connects it to the specified remote host on
@@ -1171,6 +1170,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaNetSocket)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaNetSocket")

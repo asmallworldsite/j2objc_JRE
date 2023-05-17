@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaNioFileClosedWatchServiceException
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -29,14 +26,15 @@
 #define INCLUDE_JavaLangIllegalStateException 1
 #include "java/lang/IllegalStateException.h"
 
+@class JavaLangLong;
 @class JavaLangThrowable;
 
 /*!
  @brief Unchecked exception thrown when an attempt is made to invoke an operation on
   a watch service that is closed.
+ @since 1.7
  */
 @interface JavaNioFileClosedWatchServiceException : JavaLangIllegalStateException
-@property (readonly, class) jlong serialVersionUID NS_SWIFT_NAME(serialVersionUID);
 
 #pragma mark Public
 
@@ -76,6 +74,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaNioFileClosedWatchServiceException)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaNioFileClosedWatchServiceException")

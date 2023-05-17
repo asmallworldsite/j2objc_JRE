@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaSecurityInvalidKeyException
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -35,6 +32,7 @@
  @brief This is the exception for invalid Keys (invalid encoding, wrong
   length, uninitialized, etc).
  @author Benjamin Renaud
+ @since 1.1
  */
 @interface JavaSecurityInvalidKeyException : JavaSecurityKeyException
 
@@ -56,7 +54,7 @@
 - (instancetype __nonnull)initWithNSString:(NSString *)msg;
 
 /*!
- @brief Creates a <code>InvalidKeyException</code> with the specified
+ @brief Creates an <code>InvalidKeyException</code> with the specified
   detail message and cause.
  @param message the detail message (which is saved for later retrieval         by the 
  <code>getMessage()</code>  method).
@@ -68,7 +66,7 @@
                      withJavaLangThrowable:(JavaLangThrowable *)cause;
 
 /*!
- @brief Creates a <code>InvalidKeyException</code> with the specified cause
+ @brief Creates an <code>InvalidKeyException</code> with the specified cause
   and a detail message of <code>(cause==null ?
  null : cause.toString())</code>
   (which typically contains the class and detail message of 
@@ -115,6 +113,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaSecurityInvalidKeyException)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaSecurityInvalidKeyException")

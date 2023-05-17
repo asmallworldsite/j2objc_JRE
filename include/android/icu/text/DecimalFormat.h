@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_AndroidIcuTextDecimalFormat
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -40,6 +37,12 @@
 @class AndroidIcuUtilCurrency;
 @class AndroidIcuUtilCurrencyAmount;
 @class AndroidIcuUtilCurrency_CurrencyUsage;
+@class JavaLangBoolean;
+@class JavaLangByte;
+@class JavaLangCharacter;
+@class JavaLangDouble;
+@class JavaLangInteger;
+@class JavaLangLong;
 @class JavaLangStringBuffer;
 @class JavaMathBigDecimal;
 @class JavaMathBigInteger;
@@ -582,38 +585,6 @@
  @public
   jboolean parseRequireDecimalPoint_;
 }
-@property (readonly, class, strong) AndroidIcuTextUnicodeSet *minusSigns NS_SWIFT_NAME(minusSigns);
-@property (readonly, class, strong) AndroidIcuTextUnicodeSet *plusSigns NS_SWIFT_NAME(plusSigns);
-@property (readonly, class) jboolean skipExtendedSeparatorParsing NS_SWIFT_NAME(skipExtendedSeparatorParsing);
-@property (readonly, class) jint currentSerialVersion NS_SWIFT_NAME(currentSerialVersion);
-@property (readonly, class) jint PAD_BEFORE_PREFIX NS_SWIFT_NAME(PAD_BEFORE_PREFIX);
-@property (readonly, class) jint PAD_AFTER_PREFIX NS_SWIFT_NAME(PAD_AFTER_PREFIX);
-@property (readonly, class) jint PAD_BEFORE_SUFFIX NS_SWIFT_NAME(PAD_BEFORE_SUFFIX);
-@property (readonly, class) jint PAD_AFTER_SUFFIX NS_SWIFT_NAME(PAD_AFTER_SUFFIX);
-@property (readonly, class) jchar PATTERN_ZERO_DIGIT NS_SWIFT_NAME(PATTERN_ZERO_DIGIT);
-@property (readonly, class) jchar PATTERN_ONE_DIGIT NS_SWIFT_NAME(PATTERN_ONE_DIGIT);
-@property (readonly, class) jchar PATTERN_TWO_DIGIT NS_SWIFT_NAME(PATTERN_TWO_DIGIT);
-@property (readonly, class) jchar PATTERN_THREE_DIGIT NS_SWIFT_NAME(PATTERN_THREE_DIGIT);
-@property (readonly, class) jchar PATTERN_FOUR_DIGIT NS_SWIFT_NAME(PATTERN_FOUR_DIGIT);
-@property (readonly, class) jchar PATTERN_FIVE_DIGIT NS_SWIFT_NAME(PATTERN_FIVE_DIGIT);
-@property (readonly, class) jchar PATTERN_SIX_DIGIT NS_SWIFT_NAME(PATTERN_SIX_DIGIT);
-@property (readonly, class) jchar PATTERN_SEVEN_DIGIT NS_SWIFT_NAME(PATTERN_SEVEN_DIGIT);
-@property (readonly, class) jchar PATTERN_EIGHT_DIGIT NS_SWIFT_NAME(PATTERN_EIGHT_DIGIT);
-@property (readonly, class) jchar PATTERN_NINE_DIGIT NS_SWIFT_NAME(PATTERN_NINE_DIGIT);
-@property (readonly, class) jchar PATTERN_GROUPING_SEPARATOR NS_SWIFT_NAME(PATTERN_GROUPING_SEPARATOR);
-@property (readonly, class) jchar PATTERN_DECIMAL_SEPARATOR NS_SWIFT_NAME(PATTERN_DECIMAL_SEPARATOR);
-@property (readonly, class) jchar PATTERN_DIGIT NS_SWIFT_NAME(PATTERN_DIGIT);
-@property (readonly, class) jchar PATTERN_SIGNIFICANT_DIGIT NS_SWIFT_NAME(PATTERN_SIGNIFICANT_DIGIT);
-@property (readonly, class) jchar PATTERN_EXPONENT NS_SWIFT_NAME(PATTERN_EXPONENT);
-@property (readonly, class) jchar PATTERN_PLUS_SIGN NS_SWIFT_NAME(PATTERN_PLUS_SIGN);
-@property (readonly, class) jchar PATTERN_MINUS_SIGN NS_SWIFT_NAME(PATTERN_MINUS_SIGN);
-@property (readonly, class) jchar PATTERN_PAD_ESCAPE NS_SWIFT_NAME(PATTERN_PAD_ESCAPE);
-@property (readonly, class) jint DOUBLE_INTEGER_DIGITS NS_SWIFT_NAME(DOUBLE_INTEGER_DIGITS);
-@property (readonly, class) jint MAX_INTEGER_DIGITS NS_SWIFT_NAME(MAX_INTEGER_DIGITS);
-@property (readonly, class) jint DOUBLE_FRACTION_DIGITS NS_SWIFT_NAME(DOUBLE_FRACTION_DIGITS);
-@property (readonly, class) jint MAX_SCIENTIFIC_INTEGER_DIGITS NS_SWIFT_NAME(MAX_SCIENTIFIC_INTEGER_DIGITS);
-@property (readonly, class, strong) AndroidIcuTextDecimalFormat_Unit *NULL_UNIT NS_SWIFT_NAME(NULL_UNIT);
-@property (readonly, class) jdouble roundingIncrementEpsilon NS_SWIFT_NAME(roundingIncrementEpsilon);
 
 #pragma mark Public
 
@@ -1425,7 +1396,7 @@
   method as needed.
  Unlike getCurrency(), this method should never return null.
  */
-- (AndroidIcuUtilCurrency *)getEffectiveCurrency __attribute__((deprecated));
+- (AndroidIcuUtilCurrency *)getEffectiveCurrency;
 
 #pragma mark Package-Private
 
@@ -1446,7 +1417,7 @@
  @return The number rounded to the correct number of significant digits
   with negative sign stripped off.
  */
-- (jdouble)adjustNumberAsInFormattingWithDouble:(jdouble)number __attribute__((deprecated));
+- (jdouble)adjustNumberAsInFormattingWithDouble:(jdouble)number;
 
 - (id<JavaTextAttributedCharacterIterator>)formatToCharacterIteratorWithId:(id)obj
                                       withAndroidIcuTextDecimalFormat_Unit:(AndroidIcuTextDecimalFormat_Unit *)unit;
@@ -1465,7 +1436,7 @@
  @param number The number to format.
  @return True if number is negative.
  */
-- (jboolean)isNumberNegativeWithDouble:(jdouble)number __attribute__((deprecated));
+- (jboolean)isNumberNegativeWithDouble:(jdouble)number;
 
 /*!
  @brief Matches a single character at text[pos] and return the index of the next character
@@ -1487,7 +1458,7 @@
                   withInt:(jint)pos
              withNSString:(NSString *)str;
 
-- (AndroidIcuTextDigitList *)toDigitListWithDouble:(jdouble)number __attribute__((deprecated));
+- (AndroidIcuTextDigitList *)toDigitListWithDouble:(jdouble)number;
 
 @end
 
@@ -1713,6 +1684,7 @@ J2OBJC_TYPE_LITERAL_HEADER(AndroidIcuTextDecimalFormat)
 #if !defined (AndroidIcuTextDecimalFormat_Unit_) && (INCLUDE_ALL_AndroidIcuTextDecimalFormat || defined(INCLUDE_AndroidIcuTextDecimalFormat_Unit))
 #define AndroidIcuTextDecimalFormat_Unit_
 
+@class JavaLangBoolean;
 @class JavaLangStringBuffer;
 
 /*!
@@ -1757,6 +1729,4 @@ J2OBJC_TYPE_LITERAL_HEADER(AndroidIcuTextDecimalFormat_Unit)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_AndroidIcuTextDecimalFormat")

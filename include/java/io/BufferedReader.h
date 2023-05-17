@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaIoBufferedReader
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -30,6 +27,9 @@
 #include "java/io/Reader.h"
 
 @class IOSCharArray;
+@class JavaLangBoolean;
+@class JavaLangInteger;
+@class JavaLangLong;
 @protocol JavaUtilStreamStream;
 
 /*!
@@ -58,7 +58,7 @@
  - seealso: InputStreamReader
  - seealso: java.nio.file.Files#newBufferedReader
  @author Mark Reinhold
- @since JDK1.1
+ @since 1.1
  */
 @interface JavaIoBufferedReader : JavaIoReader
 
@@ -176,6 +176,7 @@
  @return The number of characters read, or -1 if the end of the
               stream has been reached
  @throw IOExceptionIf an I/O error occurs
+ @throw IndexOutOfBoundsException
  */
 - (jint)readWithCharArray:(IOSCharArray *)cbuf
                   withInt:(jint)off
@@ -183,11 +184,12 @@
 
 /*!
  @brief Reads a line of text.A line is considered to be terminated by any one
-  of a line feed ('\n'), a carriage return ('\r'), or a carriage return
-  followed immediately by a linefeed.
+  of a line feed ('\n'), a carriage return ('\r'), a carriage return
+  followed immediately by a line feed, or by reaching the end-of-file
+  (EOF).
  @return A String containing the contents of the line, not including
               any line-termination characters, or null if the end of the
-              stream has been reached
+              stream has been reached without reading any characters
  @throw IOExceptionIf an I/O error occurs
  - seealso: java.nio.file.Files#readAllLines
  */
@@ -221,12 +223,13 @@
 
 /*!
  @brief Reads a line of text.A line is considered to be terminated by any one
-  of a line feed ('\n'), a carriage return ('\r'), or a carriage return
-  followed immediately by a linefeed.
+  of a line feed ('\n'), a carriage return ('\r'), a carriage return
+  followed immediately by a line feed, or by reaching the end-of-file
+  (EOF).
  @param ignoreLF If true, the next '\n' will be skipped
  @return A String containing the contents of the line, not including
               any line-termination characters, or null if the end of the
-              stream has been reached
+              stream has been reached without reading any characters
  - seealso: java.io.LineNumberReader#readLine()
  @throw IOExceptionIf an I/O error occurs
  */
@@ -262,6 +265,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaIoBufferedReader)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaIoBufferedReader")

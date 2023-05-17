@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaxSecurityAuthX500X500Principal
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -35,6 +32,8 @@
 
 @class IOSByteArray;
 @class JavaIoInputStream;
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @class JavaxSecurityAuthSubject;
 @class SunSecurityX509X500Name;
 @protocol JavaUtilMap;
@@ -66,9 +65,6 @@
  @since 1.4
  */
 @interface JavaxSecurityAuthX500X500Principal : NSObject < JavaSecurityPrincipal, JavaIoSerializable >
-@property (readonly, copy, class) NSString *RFC1779 NS_SWIFT_NAME(RFC1779);
-@property (readonly, copy, class) NSString *RFC2253 NS_SWIFT_NAME(RFC2253);
-@property (readonly, copy, class) NSString *CANONICAL NS_SWIFT_NAME(CANONICAL);
 
 #pragma mark Public
 
@@ -405,6 +401,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaxSecurityAuthX500X500Principal)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaxSecurityAuthX500X500Principal")

@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_AndroidIcuTextPluralRules
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -40,6 +37,9 @@
 @class IOSBooleanArray;
 @class IOSObjectArray;
 @class JavaLangBoolean;
+@class JavaLangDouble;
+@class JavaLangInteger;
+@class JavaLangLong;
 @class JavaUtilLocale;
 @class JavaUtilRegexPattern;
 @protocol JavaUtilCollection;
@@ -187,24 +187,6 @@
  </p>
  */
 @interface AndroidIcuTextPluralRules : NSObject < JavaIoSerializable >
-@property (readonly, class, strong) AndroidIcuTextUnicodeSet *ALLOWED_ID NS_SWIFT_NAME(ALLOWED_ID);
-@property (readonly, copy, class) NSString *CATEGORY_SEPARATOR NS_SWIFT_NAME(CATEGORY_SEPARATOR);
-@property (readonly, copy, class) NSString *KEYWORD_RULE_SEPARATOR NS_SWIFT_NAME(KEYWORD_RULE_SEPARATOR);
-@property (readonly, copy, class) NSString *KEYWORD_ZERO NS_SWIFT_NAME(KEYWORD_ZERO);
-@property (readonly, copy, class) NSString *KEYWORD_ONE NS_SWIFT_NAME(KEYWORD_ONE);
-@property (readonly, copy, class) NSString *KEYWORD_TWO NS_SWIFT_NAME(KEYWORD_TWO);
-@property (readonly, copy, class) NSString *KEYWORD_FEW NS_SWIFT_NAME(KEYWORD_FEW);
-@property (readonly, copy, class) NSString *KEYWORD_MANY NS_SWIFT_NAME(KEYWORD_MANY);
-@property (readonly, copy, class) NSString *KEYWORD_OTHER NS_SWIFT_NAME(KEYWORD_OTHER);
-@property (readonly, class) jdouble NO_UNIQUE_VALUE NS_SWIFT_NAME(NO_UNIQUE_VALUE);
-@property (readonly, class, strong) AndroidIcuTextPluralRules *DEFAULT NS_SWIFT_NAME(DEFAULT);
-@property (readonly, class, strong) JavaUtilRegexPattern *AT_SEPARATED NS_SWIFT_NAME(AT_SEPARATED);
-@property (readonly, class, strong) JavaUtilRegexPattern *OR_SEPARATED NS_SWIFT_NAME(OR_SEPARATED);
-@property (readonly, class, strong) JavaUtilRegexPattern *AND_SEPARATED NS_SWIFT_NAME(AND_SEPARATED);
-@property (readonly, class, strong) JavaUtilRegexPattern *COMMA_SEPARATED NS_SWIFT_NAME(COMMA_SEPARATED);
-@property (readonly, class, strong) JavaUtilRegexPattern *DOTDOT_SEPARATED NS_SWIFT_NAME(DOTDOT_SEPARATED);
-@property (readonly, class, strong) JavaUtilRegexPattern *TILDE_SEPARATED NS_SWIFT_NAME(TILDE_SEPARATED);
-@property (readonly, class, strong) JavaUtilRegexPattern *SEMI_SEPARATED NS_SWIFT_NAME(SEMI_SEPARATED);
 
 #pragma mark Public
 
@@ -213,16 +195,16 @@
 - (jboolean)addSampleWithNSString:(NSString *)keyword
                      withNSNumber:(NSNumber *)sample
                           withInt:(jint)maxCount
-                  withJavaUtilSet:(id<JavaUtilSet>)result __attribute__((deprecated));
+                  withJavaUtilSet:(id<JavaUtilSet>)result;
 
 /*!
  */
-- (jint)compareToWithAndroidIcuTextPluralRules:(AndroidIcuTextPluralRules *)other __attribute__((deprecated));
+- (jint)compareToWithAndroidIcuTextPluralRules:(AndroidIcuTextPluralRules *)other;
 
 /*!
  */
 - (jboolean)computeLimitedWithNSString:(NSString *)keyword
-withAndroidIcuTextPluralRules_SampleType:(AndroidIcuTextPluralRules_SampleType *)sampleType __attribute__((deprecated));
+withAndroidIcuTextPluralRules_SampleType:(AndroidIcuTextPluralRules_SampleType *)sampleType;
 
 /*!
  @brief Creates a PluralRules from a description if it is parsable,
@@ -331,7 +313,7 @@ withAndroidIcuTextPluralRules_SampleType:(AndroidIcuTextPluralRules_SampleType *
   is immutable. It will be empty if the keyword is not defined.
  */
 - (id<JavaUtilCollection>)getAllKeywordValuesWithNSString:(NSString *)keyword
-                 withAndroidIcuTextPluralRules_SampleType:(AndroidIcuTextPluralRules_SampleType *)type __attribute__((deprecated));
+                 withAndroidIcuTextPluralRules_SampleType:(AndroidIcuTextPluralRules_SampleType *)type;
 
 /*!
  @brief Returns the set of locales for which PluralRules are known.
@@ -350,7 +332,7 @@ withAndroidIcuTextPluralRules_SampleType:(AndroidIcuTextPluralRules_SampleType *
  @return a list of values matching the keyword.
  */
 - (AndroidIcuTextPluralRules_FixedDecimalSamples *)getDecimalSamplesWithNSString:(NSString *)keyword
-                                        withAndroidIcuTextPluralRules_SampleType:(AndroidIcuTextPluralRules_SampleType *)sampleType __attribute__((deprecated));
+                                        withAndroidIcuTextPluralRules_SampleType:(AndroidIcuTextPluralRules_SampleType *)sampleType;
 
 /*!
  @brief Returns the 'functionally equivalent' locale with respect to
@@ -403,11 +385,11 @@ withAndroidIcuTextPluralRules_SampleType:(AndroidIcuTextPluralRules_SampleType *
                                                                   withInt:(jint)offset
                                                           withJavaUtilSet:(id<JavaUtilSet>)explicits
                                                  withAndroidIcuUtilOutput:(AndroidIcuUtilOutput *)uniqueValue
-                                 withAndroidIcuTextPluralRules_SampleType:(AndroidIcuTextPluralRules_SampleType *)sampleType __attribute__((deprecated));
+                                 withAndroidIcuTextPluralRules_SampleType:(AndroidIcuTextPluralRules_SampleType *)sampleType;
 
 /*!
  */
-- (NSString *)getRulesWithNSString:(NSString *)keyword __attribute__((deprecated));
+- (NSString *)getRulesWithNSString:(NSString *)keyword;
 
 /*!
  @brief Returns a list of integer values for which select() would return that keyword,
@@ -431,7 +413,7 @@ withAndroidIcuTextPluralRules_SampleType:(AndroidIcuTextPluralRules_SampleType *
  @return a list of values matching the keyword.
  */
 - (id<JavaUtilCollection>)getSamplesWithNSString:(NSString *)keyword
-        withAndroidIcuTextPluralRules_SampleType:(AndroidIcuTextPluralRules_SampleType *)sampleType __attribute__((deprecated));
+        withAndroidIcuTextPluralRules_SampleType:(AndroidIcuTextPluralRules_SampleType *)sampleType;
 
 /*!
  @brief Returns the unique value that this keyword matches, or <code>NO_UNIQUE_VALUE</code>
@@ -443,16 +425,16 @@ withAndroidIcuTextPluralRules_SampleType:(AndroidIcuTextPluralRules_SampleType *
 
 /*!
  */
-- (NSUInteger)hash __attribute__((deprecated));
+- (NSUInteger)hash;
 
 /*!
  */
-- (JavaLangBoolean *)isLimitedWithNSString:(NSString *)keyword __attribute__((deprecated));
+- (JavaLangBoolean *)isLimitedWithNSString:(NSString *)keyword;
 
 /*!
  */
 - (jboolean)isLimitedWithNSString:(NSString *)keyword
-withAndroidIcuTextPluralRules_SampleType:(AndroidIcuTextPluralRules_SampleType *)sampleType __attribute__((deprecated));
+withAndroidIcuTextPluralRules_SampleType:(AndroidIcuTextPluralRules_SampleType *)sampleType;
 
 /*!
  @brief Given a number information, and keyword, return whether the keyword would match the number.
@@ -460,7 +442,7 @@ withAndroidIcuTextPluralRules_SampleType:(AndroidIcuTextPluralRules_SampleType *
  @param keyword The keyword to filter on
  */
 - (jboolean)matchesWithAndroidIcuTextPluralRules_FixedDecimal:(AndroidIcuTextPluralRules_FixedDecimal *)sample
-                                                 withNSString:(NSString *)keyword __attribute__((deprecated));
+                                                 withNSString:(NSString *)keyword;
 
 /*!
  @brief Parses a plural rules description and returns a PluralRules.
@@ -486,7 +468,7 @@ withAndroidIcuTextPluralRules_SampleType:(AndroidIcuTextPluralRules_SampleType *
  */
 - (NSString *)selectWithDouble:(jdouble)number
                        withInt:(jint)countVisibleFractionDigits
-                      withLong:(jlong)fractionaldigits __attribute__((deprecated));
+                      withLong:(jlong)fractionaldigits;
 
 /*!
  @brief Given a number information, returns the keyword of the first rule that applies to
@@ -494,7 +476,7 @@ withAndroidIcuTextPluralRules_SampleType:(AndroidIcuTextPluralRules_SampleType *
  @param number The number information for which the rule has to be determined.
  @return The keyword of the selected rule.
  */
-- (NSString *)selectWithAndroidIcuTextPluralRules_FixedDecimal:(AndroidIcuTextPluralRules_FixedDecimal *)number __attribute__((deprecated));
+- (NSString *)selectWithAndroidIcuTextPluralRules_FixedDecimal:(AndroidIcuTextPluralRules_FixedDecimal *)number;
 
 /*!
  */
@@ -659,11 +641,11 @@ J2OBJC_TYPE_LITERAL_HEADER(AndroidIcuTextPluralRules)
 @class AndroidIcuUtilULocale;
 @class IOSBooleanArray;
 @class IOSObjectArray;
+@class JavaLangBoolean;
 
 /*!
  @brief Provides a factory for returning plural rules
  */
-__attribute__((deprecated))
 @interface AndroidIcuTextPluralRules_Factory : NSObject
 
 #pragma mark Public
@@ -673,7 +655,7 @@ __attribute__((deprecated))
  @param locale the locale
  @return plural rules.
  */
-- (AndroidIcuTextPluralRules *)forLocaleWithAndroidIcuUtilULocale:(AndroidIcuUtilULocale *)locale __attribute__((deprecated));
+- (AndroidIcuTextPluralRules *)forLocaleWithAndroidIcuUtilULocale:(AndroidIcuUtilULocale *)locale;
 
 /*!
  @brief Provides access to the predefined <code>PluralRules</code> for a given locale and the plural type.
@@ -688,17 +670,17 @@ __attribute__((deprecated))
           The final fallback always returns the default rules.
  */
 - (AndroidIcuTextPluralRules *)forLocaleWithAndroidIcuUtilULocale:(AndroidIcuUtilULocale *)locale
-                         withAndroidIcuTextPluralRules_PluralType:(AndroidIcuTextPluralRules_PluralType *)type __attribute__((deprecated));
+                         withAndroidIcuTextPluralRules_PluralType:(AndroidIcuTextPluralRules_PluralType *)type;
 
 /*!
  @brief Returns the locales for which there is plurals data.
  */
-- (IOSObjectArray *)getAvailableULocales __attribute__((deprecated));
+- (IOSObjectArray *)getAvailableULocales;
 
 /*!
  @brief Returns the default factory.
  */
-+ (AndroidIcuImplPluralRulesLoader *)getDefaultFactory __attribute__((deprecated));
++ (AndroidIcuImplPluralRulesLoader *)getDefaultFactory;
 
 /*!
  @brief Returns the 'functionally equivalent' locale with respect to plural rules.Calling PluralRules.forLocale with
@@ -713,19 +695,19 @@ __attribute__((deprecated))
  @return the functionally-equivalent locale
  */
 - (AndroidIcuUtilULocale *)getFunctionalEquivalentWithAndroidIcuUtilULocale:(AndroidIcuUtilULocale *)locale
-                                                           withBooleanArray:(IOSBooleanArray *)isAvailable __attribute__((deprecated));
+                                                           withBooleanArray:(IOSBooleanArray *)isAvailable;
 
 /*!
  @brief Returns whether or not there are overrides.
  */
-- (jboolean)hasOverrideWithAndroidIcuUtilULocale:(AndroidIcuUtilULocale *)locale __attribute__((deprecated));
+- (jboolean)hasOverrideWithAndroidIcuUtilULocale:(AndroidIcuUtilULocale *)locale;
 
 #pragma mark Protected
 
 /*!
  @brief Sole constructor
  */
-- (instancetype __nonnull)init __attribute__((deprecated));
+- (instancetype __nonnull)init;
 
 @end
 
@@ -748,18 +730,22 @@ J2OBJC_TYPE_LITERAL_HEADER(AndroidIcuTextPluralRules_Factory)
 
 @class IOSObjectArray;
 
-typedef NS_ENUM(NSUInteger, AndroidIcuTextPluralRules_PluralType_Enum) {
+typedef NS_ENUM(jint, AndroidIcuTextPluralRules_PluralType_Enum) {
   AndroidIcuTextPluralRules_PluralType_Enum_CARDINAL = 0,
   AndroidIcuTextPluralRules_PluralType_Enum_ORDINAL = 1,
 };
+#if J2OBJC_IMPORTED_BY_JAVA_IMPLEMENTATION
+#define AndroidIcuTextPluralRules_PluralType_ORDINAL jint
+#else
+#define AndroidIcuTextPluralRules_PluralType_ORDINAL AndroidIcuTextPluralRules_PluralType_Enum
+#endif
+
 
 /*!
  @brief Type of plurals and PluralRules.
  */
 @interface AndroidIcuTextPluralRules_PluralType : JavaLangEnum
 
-@property (readonly, class, nonnull) AndroidIcuTextPluralRules_PluralType *CARDINAL NS_SWIFT_NAME(CARDINAL);
-@property (readonly, class, nonnull) AndroidIcuTextPluralRules_PluralType *ORDINAL NS_SWIFT_NAME(ORDINAL);
 #pragma mark Public
 
 + (AndroidIcuTextPluralRules_PluralType *)valueOfWithNSString:(NSString *)name;
@@ -769,6 +755,8 @@ typedef NS_ENUM(NSUInteger, AndroidIcuTextPluralRules_PluralType_Enum) {
 #pragma mark Package-Private
 
 - (AndroidIcuTextPluralRules_PluralType_Enum)toNSEnum;
+
+- (AndroidIcuTextPluralRules_PluralType_ORDINAL)ordinal;
 
 @end
 
@@ -793,7 +781,7 @@ FOUNDATION_EXPORT IOSObjectArray *AndroidIcuTextPluralRules_PluralType_values(vo
 
 FOUNDATION_EXPORT AndroidIcuTextPluralRules_PluralType *AndroidIcuTextPluralRules_PluralType_valueOfWithNSString_(NSString *name);
 
-FOUNDATION_EXPORT AndroidIcuTextPluralRules_PluralType *AndroidIcuTextPluralRules_PluralType_fromOrdinal(NSUInteger ordinal);
+FOUNDATION_EXPORT AndroidIcuTextPluralRules_PluralType *AndroidIcuTextPluralRules_PluralType_fromOrdinal(AndroidIcuTextPluralRules_PluralType_ORDINAL ordinal);
 
 J2OBJC_TYPE_LITERAL_HEADER(AndroidIcuTextPluralRules_PluralType)
 
@@ -808,7 +796,7 @@ J2OBJC_TYPE_LITERAL_HEADER(AndroidIcuTextPluralRules_PluralType)
 
 @class IOSObjectArray;
 
-typedef NS_ENUM(NSUInteger, AndroidIcuTextPluralRules_Operand_Enum) {
+typedef NS_ENUM(jint, AndroidIcuTextPluralRules_Operand_Enum) {
   AndroidIcuTextPluralRules_Operand_Enum_n = 0,
   AndroidIcuTextPluralRules_Operand_Enum_i = 1,
   AndroidIcuTextPluralRules_Operand_Enum_f = 2,
@@ -817,16 +805,15 @@ typedef NS_ENUM(NSUInteger, AndroidIcuTextPluralRules_Operand_Enum) {
   AndroidIcuTextPluralRules_Operand_Enum_w = 5,
   AndroidIcuTextPluralRules_Operand_Enum_j = 6,
 };
+#if J2OBJC_IMPORTED_BY_JAVA_IMPLEMENTATION
+#define AndroidIcuTextPluralRules_Operand_ORDINAL jint
+#else
+#define AndroidIcuTextPluralRules_Operand_ORDINAL AndroidIcuTextPluralRules_Operand_Enum
+#endif
+
 
 @interface AndroidIcuTextPluralRules_Operand : JavaLangEnum
 
-@property (readonly, class, nonnull) AndroidIcuTextPluralRules_Operand *n NS_SWIFT_NAME(n);
-@property (readonly, class, nonnull) AndroidIcuTextPluralRules_Operand *i NS_SWIFT_NAME(i);
-@property (readonly, class, nonnull) AndroidIcuTextPluralRules_Operand *f NS_SWIFT_NAME(f);
-@property (readonly, class, nonnull) AndroidIcuTextPluralRules_Operand *t NS_SWIFT_NAME(t);
-@property (readonly, class, nonnull) AndroidIcuTextPluralRules_Operand *v NS_SWIFT_NAME(v);
-@property (readonly, class, nonnull) AndroidIcuTextPluralRules_Operand *w NS_SWIFT_NAME(w);
-@property (readonly, class, nonnull) AndroidIcuTextPluralRules_Operand *j NS_SWIFT_NAME(j);
 #pragma mark Public
 
 + (AndroidIcuTextPluralRules_Operand *)valueOfWithNSString:(NSString *)name;
@@ -836,6 +823,8 @@ typedef NS_ENUM(NSUInteger, AndroidIcuTextPluralRules_Operand_Enum) {
 #pragma mark Package-Private
 
 - (AndroidIcuTextPluralRules_Operand_Enum)toNSEnum;
+
+- (AndroidIcuTextPluralRules_Operand_ORDINAL)ordinal;
 
 @end
 
@@ -869,7 +858,7 @@ FOUNDATION_EXPORT IOSObjectArray *AndroidIcuTextPluralRules_Operand_values(void)
 
 FOUNDATION_EXPORT AndroidIcuTextPluralRules_Operand *AndroidIcuTextPluralRules_Operand_valueOfWithNSString_(NSString *name);
 
-FOUNDATION_EXPORT AndroidIcuTextPluralRules_Operand *AndroidIcuTextPluralRules_Operand_fromOrdinal(NSUInteger ordinal);
+FOUNDATION_EXPORT AndroidIcuTextPluralRules_Operand *AndroidIcuTextPluralRules_Operand_fromOrdinal(AndroidIcuTextPluralRules_Operand_ORDINAL ordinal);
 
 J2OBJC_TYPE_LITERAL_HEADER(AndroidIcuTextPluralRules_Operand)
 
@@ -883,10 +872,14 @@ J2OBJC_TYPE_LITERAL_HEADER(AndroidIcuTextPluralRules_Operand)
 #include "java/lang/Comparable.h"
 
 @class AndroidIcuTextPluralRules_Operand;
+@class JavaLangBoolean;
+@class JavaLangDouble;
+@class JavaLangFloat;
+@class JavaLangInteger;
+@class JavaLangLong;
 
 /*!
  */
-__attribute__((deprecated))
 @interface AndroidIcuTextPluralRules_FixedDecimal : NSNumber < JavaLangComparable > {
  @public
   /*!
@@ -914,18 +907,17 @@ __attribute__((deprecated))
    */
   jboolean isNegative_;
 }
-@property (readonly, class) jlong MAX NS_SWIFT_NAME(MAX);
 
 #pragma mark Public
 
 /*!
  */
-- (instancetype __nonnull)initWithDouble:(jdouble)n __attribute__((deprecated));
+- (instancetype __nonnull)initWithDouble:(jdouble)n;
 
 /*!
  */
 - (instancetype __nonnull)initWithDouble:(jdouble)n
-                                 withInt:(jint)v __attribute__((deprecated));
+                                 withInt:(jint)v;
 
 /*!
  @param n is the original number
@@ -934,20 +926,20 @@ __attribute__((deprecated))
  */
 - (instancetype __nonnull)initWithDouble:(jdouble)n
                                  withInt:(jint)v
-                                withLong:(jlong)f __attribute__((deprecated));
+                                withLong:(jlong)f;
 
 /*!
  */
-- (instancetype __nonnull)initWithLong:(jlong)n __attribute__((deprecated));
+- (instancetype __nonnull)initWithLongLong:(jlong)n;
 
 /*!
  */
-- (instancetype __nonnull)initWithNSString:(NSString *)n __attribute__((deprecated));
+- (instancetype __nonnull)initWithNSString:(NSString *)n;
 
 /*!
  @brief We're not going to care about NaN.
  */
-- (jint)compareToWithId:(AndroidIcuTextPluralRules_FixedDecimal *)other __attribute__((deprecated));
+- (jint)compareToWithId:(AndroidIcuTextPluralRules_FixedDecimal *)other;
 
 /*!
  @brief Return a guess as to the number of decimals that would be displayed.This is only a guess; callers should
@@ -955,87 +947,87 @@ __attribute__((deprecated))
  Currently, it is up to 6 decimals (without trailing zeros).
   Returns 0 for infinities and nans.
  */
-+ (jint)decimalsWithDouble:(jdouble)n __attribute__((deprecated));
++ (jint)decimalsWithDouble:(jdouble)n;
 
 /*!
  */
-- (jdouble)doubleValue __attribute__((deprecated));
+- (jdouble)doubleValue;
 
 /*!
  */
-- (jboolean)isEqual:(id)arg0 __attribute__((deprecated));
+- (jboolean)isEqual:(id)arg0;
 
 /*!
  */
-- (jfloat)floatValue __attribute__((deprecated));
+- (jfloat)floatValue;
 
 /*!
  */
-- (jdouble)getWithAndroidIcuTextPluralRules_Operand:(AndroidIcuTextPluralRules_Operand *)operand __attribute__((deprecated));
+- (jdouble)getWithAndroidIcuTextPluralRules_Operand:(AndroidIcuTextPluralRules_Operand *)operand;
 
 /*!
  */
-- (jint)getBaseFactor __attribute__((deprecated));
+- (jint)getBaseFactor;
 
 /*!
  */
-- (jlong)getDecimalDigits __attribute__((deprecated));
+- (jlong)getDecimalDigits;
 
 /*!
  */
-- (jlong)getDecimalDigitsWithoutTrailingZeros __attribute__((deprecated));
+- (jlong)getDecimalDigitsWithoutTrailingZeros;
 
 /*!
  */
-- (jlong)getIntegerValue __attribute__((deprecated));
+- (jlong)getIntegerValue;
 
 /*!
  */
-+ (AndroidIcuTextPluralRules_Operand *)getOperandWithNSString:(NSString *)t __attribute__((deprecated));
++ (AndroidIcuTextPluralRules_Operand *)getOperandWithNSString:(NSString *)t;
 
 /*!
  */
-- (jlong)getShiftedValue __attribute__((deprecated));
+- (jlong)getShiftedValue;
 
 /*!
  */
-- (jdouble)getSource __attribute__((deprecated));
+- (jdouble)getSource;
 
 /*!
  */
-- (jint)getVisibleDecimalDigitCount __attribute__((deprecated));
+- (jint)getVisibleDecimalDigitCount;
 
 /*!
  */
-- (jint)getVisibleDecimalDigitCountWithoutTrailingZeros __attribute__((deprecated));
+- (jint)getVisibleDecimalDigitCountWithoutTrailingZeros;
 
 /*!
  */
-- (NSUInteger)hash __attribute__((deprecated));
+- (NSUInteger)hash;
 
 /*!
  */
-- (jboolean)hasIntegerValue __attribute__((deprecated));
+- (jboolean)hasIntegerValue;
 
 /*!
  */
-- (jint)intValue __attribute__((deprecated));
+- (jint)intValue;
 
 /*!
  */
-- (jboolean)isHasIntegerValue __attribute__((deprecated));
+- (jboolean)isHasIntegerValue;
 
 /*!
  */
-- (jboolean)isNegative __attribute__((deprecated));
+- (jboolean)isNegative;
 
 /*!
  */
-- (jlong)longLongValue __attribute__((deprecated));
+- (jlong)longLongValue;
 
 /*!
  */
-- (NSString *)description __attribute__((deprecated));
+- (NSString *)description;
 
 // Disallowed inherited constructors, do not use.
 
@@ -1067,11 +1059,11 @@ FOUNDATION_EXPORT AndroidIcuTextPluralRules_FixedDecimal *new_AndroidIcuTextPlur
 
 FOUNDATION_EXPORT AndroidIcuTextPluralRules_FixedDecimal *create_AndroidIcuTextPluralRules_FixedDecimal_initWithDouble_(jdouble n);
 
-FOUNDATION_EXPORT void AndroidIcuTextPluralRules_FixedDecimal_initWithLong_(AndroidIcuTextPluralRules_FixedDecimal *self, jlong n);
+FOUNDATION_EXPORT void AndroidIcuTextPluralRules_FixedDecimal_initWithLongLong_(AndroidIcuTextPluralRules_FixedDecimal *self, jlong n);
 
-FOUNDATION_EXPORT AndroidIcuTextPluralRules_FixedDecimal *new_AndroidIcuTextPluralRules_FixedDecimal_initWithLong_(jlong n) NS_RETURNS_RETAINED;
+FOUNDATION_EXPORT AndroidIcuTextPluralRules_FixedDecimal *new_AndroidIcuTextPluralRules_FixedDecimal_initWithLongLong_(jlong n) NS_RETURNS_RETAINED;
 
-FOUNDATION_EXPORT AndroidIcuTextPluralRules_FixedDecimal *create_AndroidIcuTextPluralRules_FixedDecimal_initWithLong_(jlong n);
+FOUNDATION_EXPORT AndroidIcuTextPluralRules_FixedDecimal *create_AndroidIcuTextPluralRules_FixedDecimal_initWithLongLong_(jlong n);
 
 FOUNDATION_EXPORT jint AndroidIcuTextPluralRules_FixedDecimal_decimalsWithDouble_(jdouble n);
 
@@ -1096,19 +1088,22 @@ J2OBJC_TYPE_LITERAL_HEADER(AndroidIcuTextPluralRules_FixedDecimal)
 
 @class IOSObjectArray;
 
-typedef NS_ENUM(NSUInteger, AndroidIcuTextPluralRules_SampleType_Enum) {
+typedef NS_ENUM(jint, AndroidIcuTextPluralRules_SampleType_Enum) {
   AndroidIcuTextPluralRules_SampleType_Enum_INTEGER = 0,
   AndroidIcuTextPluralRules_SampleType_Enum_DECIMAL = 1,
 };
+#if J2OBJC_IMPORTED_BY_JAVA_IMPLEMENTATION
+#define AndroidIcuTextPluralRules_SampleType_ORDINAL jint
+#else
+#define AndroidIcuTextPluralRules_SampleType_ORDINAL AndroidIcuTextPluralRules_SampleType_Enum
+#endif
+
 
 /*!
  @brief Selection parameter for either integer-only or decimal-only.
  */
-__attribute__((deprecated))
 @interface AndroidIcuTextPluralRules_SampleType : JavaLangEnum
 
-@property (readonly, class, nonnull) AndroidIcuTextPluralRules_SampleType *INTEGER NS_SWIFT_NAME(INTEGER);
-@property (readonly, class, nonnull) AndroidIcuTextPluralRules_SampleType *DECIMAL NS_SWIFT_NAME(DECIMAL);
 #pragma mark Public
 
 + (AndroidIcuTextPluralRules_SampleType *)valueOfWithNSString:(NSString *)name;
@@ -1118,6 +1113,8 @@ __attribute__((deprecated))
 #pragma mark Package-Private
 
 - (AndroidIcuTextPluralRules_SampleType_Enum)toNSEnum;
+
+- (AndroidIcuTextPluralRules_SampleType_ORDINAL)ordinal;
 
 @end
 
@@ -1140,7 +1137,7 @@ FOUNDATION_EXPORT IOSObjectArray *AndroidIcuTextPluralRules_SampleType_values(vo
 
 FOUNDATION_EXPORT AndroidIcuTextPluralRules_SampleType *AndroidIcuTextPluralRules_SampleType_valueOfWithNSString_(NSString *name);
 
-FOUNDATION_EXPORT AndroidIcuTextPluralRules_SampleType *AndroidIcuTextPluralRules_SampleType_fromOrdinal(NSUInteger ordinal);
+FOUNDATION_EXPORT AndroidIcuTextPluralRules_SampleType *AndroidIcuTextPluralRules_SampleType_fromOrdinal(AndroidIcuTextPluralRules_SampleType_ORDINAL ordinal);
 
 J2OBJC_TYPE_LITERAL_HEADER(AndroidIcuTextPluralRules_SampleType)
 
@@ -1154,7 +1151,6 @@ J2OBJC_TYPE_LITERAL_HEADER(AndroidIcuTextPluralRules_SampleType)
 /*!
  @brief A range of NumberInfo that includes all values with the same visibleFractionDigitCount.
  */
-__attribute__((deprecated))
 @interface AndroidIcuTextPluralRules_FixedDecimalRange : NSObject {
  @public
   /*!
@@ -1170,11 +1166,11 @@ __attribute__((deprecated))
 /*!
  */
 - (instancetype __nonnull)initWithAndroidIcuTextPluralRules_FixedDecimal:(AndroidIcuTextPluralRules_FixedDecimal *)start
-                              withAndroidIcuTextPluralRules_FixedDecimal:(AndroidIcuTextPluralRules_FixedDecimal *)end __attribute__((deprecated));
+                              withAndroidIcuTextPluralRules_FixedDecimal:(AndroidIcuTextPluralRules_FixedDecimal *)end;
 
 /*!
  */
-- (NSString *)description __attribute__((deprecated));
+- (NSString *)description;
 
 // Disallowed inherited constructors, do not use.
 
@@ -1201,12 +1197,12 @@ J2OBJC_TYPE_LITERAL_HEADER(AndroidIcuTextPluralRules_FixedDecimalRange)
 #define AndroidIcuTextPluralRules_FixedDecimalSamples_
 
 @class AndroidIcuTextPluralRules_SampleType;
+@class JavaLangBoolean;
 @protocol JavaUtilSet;
 
 /*!
  @brief A list of NumberInfo that includes all values with the same visibleFractionDigitCount.
  */
-__attribute__((deprecated))
 @interface AndroidIcuTextPluralRules_FixedDecimalSamples : NSObject {
  @public
   /*!
@@ -1224,19 +1220,19 @@ __attribute__((deprecated))
 
 /*!
  */
-- (id<JavaUtilSet>)addSamplesWithJavaUtilSet:(id<JavaUtilSet>)result __attribute__((deprecated));
+- (id<JavaUtilSet>)addSamplesWithJavaUtilSet:(id<JavaUtilSet>)result;
 
 /*!
  */
-- (id<JavaUtilSet>)getSamples __attribute__((deprecated));
+- (id<JavaUtilSet>)getSamples;
 
 /*!
  */
-- (void)getStartEndSamplesWithJavaUtilSet:(id<JavaUtilSet>)target __attribute__((deprecated));
+- (void)getStartEndSamplesWithJavaUtilSet:(id<JavaUtilSet>)target;
 
 /*!
  */
-- (NSString *)description __attribute__((deprecated));
+- (NSString *)description;
 
 #pragma mark Package-Private
 
@@ -1266,8 +1262,6 @@ J2OBJC_TYPE_LITERAL_HEADER(AndroidIcuTextPluralRules_FixedDecimalSamples)
 @class IOSObjectArray;
 
 @interface AndroidIcuTextPluralRules_SimpleTokenizer : NSObject
-@property (readonly, class, strong) AndroidIcuTextUnicodeSet *BREAK_AND_IGNORE NS_SWIFT_NAME(BREAK_AND_IGNORE);
-@property (readonly, class, strong) AndroidIcuTextUnicodeSet *BREAK_AND_KEEP NS_SWIFT_NAME(BREAK_AND_KEEP);
 
 #pragma mark Package-Private
 
@@ -1310,24 +1304,25 @@ J2OBJC_TYPE_LITERAL_HEADER(AndroidIcuTextPluralRules_SimpleTokenizer)
 
 @class IOSObjectArray;
 
-typedef NS_ENUM(NSUInteger, AndroidIcuTextPluralRules_KeywordStatus_Enum) {
+typedef NS_ENUM(jint, AndroidIcuTextPluralRules_KeywordStatus_Enum) {
   AndroidIcuTextPluralRules_KeywordStatus_Enum_INVALID = 0,
   AndroidIcuTextPluralRules_KeywordStatus_Enum_SUPPRESSED = 1,
   AndroidIcuTextPluralRules_KeywordStatus_Enum_UNIQUE = 2,
   AndroidIcuTextPluralRules_KeywordStatus_Enum_BOUNDED = 3,
   AndroidIcuTextPluralRules_KeywordStatus_Enum_UNBOUNDED = 4,
 };
+#if J2OBJC_IMPORTED_BY_JAVA_IMPLEMENTATION
+#define AndroidIcuTextPluralRules_KeywordStatus_ORDINAL jint
+#else
+#define AndroidIcuTextPluralRules_KeywordStatus_ORDINAL AndroidIcuTextPluralRules_KeywordStatus_Enum
+#endif
+
 
 /*!
  @brief Status of the keyword for the rules, given a set of explicit values.
  */
 @interface AndroidIcuTextPluralRules_KeywordStatus : JavaLangEnum
 
-@property (readonly, class, nonnull) AndroidIcuTextPluralRules_KeywordStatus *INVALID NS_SWIFT_NAME(INVALID);
-@property (readonly, class, nonnull) AndroidIcuTextPluralRules_KeywordStatus *SUPPRESSED NS_SWIFT_NAME(SUPPRESSED);
-@property (readonly, class, nonnull) AndroidIcuTextPluralRules_KeywordStatus *UNIQUE NS_SWIFT_NAME(UNIQUE);
-@property (readonly, class, nonnull) AndroidIcuTextPluralRules_KeywordStatus *BOUNDED NS_SWIFT_NAME(BOUNDED);
-@property (readonly, class, nonnull) AndroidIcuTextPluralRules_KeywordStatus *UNBOUNDED NS_SWIFT_NAME(UNBOUNDED);
 #pragma mark Public
 
 + (AndroidIcuTextPluralRules_KeywordStatus *)valueOfWithNSString:(NSString *)name;
@@ -1337,6 +1332,8 @@ typedef NS_ENUM(NSUInteger, AndroidIcuTextPluralRules_KeywordStatus_Enum) {
 #pragma mark Package-Private
 
 - (AndroidIcuTextPluralRules_KeywordStatus_Enum)toNSEnum;
+
+- (AndroidIcuTextPluralRules_KeywordStatus_ORDINAL)ordinal;
 
 @end
 
@@ -1379,7 +1376,7 @@ FOUNDATION_EXPORT IOSObjectArray *AndroidIcuTextPluralRules_KeywordStatus_values
 
 FOUNDATION_EXPORT AndroidIcuTextPluralRules_KeywordStatus *AndroidIcuTextPluralRules_KeywordStatus_valueOfWithNSString_(NSString *name);
 
-FOUNDATION_EXPORT AndroidIcuTextPluralRules_KeywordStatus *AndroidIcuTextPluralRules_KeywordStatus_fromOrdinal(NSUInteger ordinal);
+FOUNDATION_EXPORT AndroidIcuTextPluralRules_KeywordStatus *AndroidIcuTextPluralRules_KeywordStatus_fromOrdinal(AndroidIcuTextPluralRules_KeywordStatus_ORDINAL ordinal);
 
 J2OBJC_TYPE_LITERAL_HEADER(AndroidIcuTextPluralRules_KeywordStatus)
 
@@ -1389,6 +1386,4 @@ J2OBJC_TYPE_LITERAL_HEADER(AndroidIcuTextPluralRules_KeywordStatus)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_AndroidIcuTextPluralRules")

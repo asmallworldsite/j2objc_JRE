@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaSecurityCertPKIXRevocationChecker
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -81,12 +78,15 @@
   thread-safe. Multiple threads that need to access a single object
   concurrently should synchronize amongst themselves and provide the
   necessary locking. Multiple threads each manipulating separate objects
-  need not synchronize. 
- <p>See RFC 2560: X.509 Internet Public Key Infrastructure Online Certificate Status Protocol -
-  OCSP, RFC 5280: Internet X.509 Public Key Infrastructure Certificate and Certificate Revocation
-  List (CRL) Profile (Android note: this paragraph was originally in a malformed "see" tag below,
-  moved here for correct construction of the docs).
+  need not synchronize.
  @since 1.8
+  // Android-changed: Changed invalid `@@`see to "See".
+  See <a href="http://www.ietf.org/rfc/rfc2560.txt"><i>RFC&nbsp;2560: X.509
+  Internet Public Key Infrastructure Online Certificate Status Protocol -
+  OCSP</i></a>, <br><a href="http://www.ietf.org/rfc/rfc5280.txt">
+ <i>RFC&nbsp;5280: Internet X.509
+  Public Key Infrastructure Certificate and Certificate Revocation List (CRL)
+  Profile</i></a>
  */
 @interface JavaSecurityCertPKIXRevocationChecker : JavaSecurityCertPKIXCertPathChecker
 
@@ -222,12 +222,18 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaSecurityCertPKIXRevocationChecker)
 
 @class IOSObjectArray;
 
-typedef NS_ENUM(NSUInteger, JavaSecurityCertPKIXRevocationChecker_Option_Enum) {
+typedef NS_ENUM(jint, JavaSecurityCertPKIXRevocationChecker_Option_Enum) {
   JavaSecurityCertPKIXRevocationChecker_Option_Enum_ONLY_END_ENTITY = 0,
   JavaSecurityCertPKIXRevocationChecker_Option_Enum_PREFER_CRLS = 1,
   JavaSecurityCertPKIXRevocationChecker_Option_Enum_NO_FALLBACK = 2,
   JavaSecurityCertPKIXRevocationChecker_Option_Enum_SOFT_FAIL = 3,
 };
+#if J2OBJC_IMPORTED_BY_JAVA_IMPLEMENTATION
+#define JavaSecurityCertPKIXRevocationChecker_Option_ORDINAL jint
+#else
+#define JavaSecurityCertPKIXRevocationChecker_Option_ORDINAL JavaSecurityCertPKIXRevocationChecker_Option_Enum
+#endif
+
 
 /*!
  @brief Various revocation options that can be specified for the revocation
@@ -235,10 +241,6 @@ typedef NS_ENUM(NSUInteger, JavaSecurityCertPKIXRevocationChecker_Option_Enum) {
  */
 @interface JavaSecurityCertPKIXRevocationChecker_Option : JavaLangEnum
 
-@property (readonly, class, nonnull) JavaSecurityCertPKIXRevocationChecker_Option *ONLY_END_ENTITY NS_SWIFT_NAME(ONLY_END_ENTITY);
-@property (readonly, class, nonnull) JavaSecurityCertPKIXRevocationChecker_Option *PREFER_CRLS NS_SWIFT_NAME(PREFER_CRLS);
-@property (readonly, class, nonnull) JavaSecurityCertPKIXRevocationChecker_Option *NO_FALLBACK NS_SWIFT_NAME(NO_FALLBACK);
-@property (readonly, class, nonnull) JavaSecurityCertPKIXRevocationChecker_Option *SOFT_FAIL NS_SWIFT_NAME(SOFT_FAIL);
 #pragma mark Public
 
 + (JavaSecurityCertPKIXRevocationChecker_Option *)valueOfWithNSString:(NSString *)name;
@@ -248,6 +250,8 @@ typedef NS_ENUM(NSUInteger, JavaSecurityCertPKIXRevocationChecker_Option_Enum) {
 #pragma mark Package-Private
 
 - (JavaSecurityCertPKIXRevocationChecker_Option_Enum)toNSEnum;
+
+- (JavaSecurityCertPKIXRevocationChecker_Option_ORDINAL)ordinal;
 
 @end
 
@@ -301,7 +305,7 @@ FOUNDATION_EXPORT IOSObjectArray *JavaSecurityCertPKIXRevocationChecker_Option_v
 
 FOUNDATION_EXPORT JavaSecurityCertPKIXRevocationChecker_Option *JavaSecurityCertPKIXRevocationChecker_Option_valueOfWithNSString_(NSString *name);
 
-FOUNDATION_EXPORT JavaSecurityCertPKIXRevocationChecker_Option *JavaSecurityCertPKIXRevocationChecker_Option_fromOrdinal(NSUInteger ordinal);
+FOUNDATION_EXPORT JavaSecurityCertPKIXRevocationChecker_Option *JavaSecurityCertPKIXRevocationChecker_Option_fromOrdinal(JavaSecurityCertPKIXRevocationChecker_Option_ORDINAL ordinal);
 
 J2OBJC_TYPE_LITERAL_HEADER(JavaSecurityCertPKIXRevocationChecker_Option)
 
@@ -311,6 +315,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaSecurityCertPKIXRevocationChecker_Option)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaSecurityCertPKIXRevocationChecker")

@@ -19,9 +19,6 @@
 #define INCLUDE_JavaUtilConcurrentLocksReentrantReadWriteLock_Sync 1
 #endif
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -39,6 +36,9 @@
 #define INCLUDE_JavaIoSerializable 1
 #include "java/io/Serializable.h"
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
+@class JavaLangLong;
 @class JavaLangThread;
 @class JavaUtilConcurrentLocksReentrantReadWriteLock_ReadLock;
 @class JavaUtilConcurrentLocksReentrantReadWriteLock_Sync;
@@ -474,6 +474,8 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentLocksReentrantReadWriteLock)
 #define INCLUDE_JavaUtilConcurrentLocksAbstractQueuedSynchronizer 1
 #include "java/util/concurrent/locks/AbstractQueuedSynchronizer.h"
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @class JavaLangThread;
 @class JavaUtilConcurrentLocksAbstractQueuedSynchronizer_ConditionObject;
 
@@ -482,10 +484,6 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentLocksReentrantReadWriteLock)
  Subclassed into fair and nonfair versions.
  */
 @interface JavaUtilConcurrentLocksReentrantReadWriteLock_Sync : JavaUtilConcurrentLocksAbstractQueuedSynchronizer
-@property (readonly, class) jint SHARED_SHIFT NS_SWIFT_NAME(SHARED_SHIFT);
-@property (readonly, class) jint SHARED_UNIT NS_SWIFT_NAME(SHARED_UNIT);
-@property (readonly, class) jint MAX_COUNT NS_SWIFT_NAME(MAX_COUNT);
-@property (readonly, class) jint EXCLUSIVE_MASK NS_SWIFT_NAME(EXCLUSIVE_MASK);
 
 #pragma mark Protected
 
@@ -594,6 +592,9 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentLocksReentrantReadWriteLock_Sync)
 #if !defined (JavaUtilConcurrentLocksReentrantReadWriteLock_Sync_HoldCounter_) && (INCLUDE_ALL_JavaUtilConcurrentLocksReentrantReadWriteLock || defined(INCLUDE_JavaUtilConcurrentLocksReentrantReadWriteLock_Sync_HoldCounter))
 #define JavaUtilConcurrentLocksReentrantReadWriteLock_Sync_HoldCounter_
 
+@class JavaLangInteger;
+@class JavaLangLong;
+
 /*!
  @brief A counter for per-thread read hold counts.
  Maintained as a ThreadLocal; cached in cachedHoldCounter.
@@ -647,7 +648,7 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentLocksReentrantReadWriteLock_Sync_Ho
 
 - (instancetype __nonnull)init;
 
-- (JavaUtilConcurrentLocksReentrantReadWriteLock_Sync_HoldCounter *)childValueWithId:(JavaUtilConcurrentLocksReentrantReadWriteLock_Sync_HoldCounter *)arg0;
+- (JavaUtilConcurrentLocksReentrantReadWriteLock_Sync_HoldCounter *)childValueWithId:(id)arg0;
 
 @end
 
@@ -665,6 +666,8 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentLocksReentrantReadWriteLock_Sync_Th
 
 #if !defined (JavaUtilConcurrentLocksReentrantReadWriteLock_NonfairSync_) && (INCLUDE_ALL_JavaUtilConcurrentLocksReentrantReadWriteLock || defined(INCLUDE_JavaUtilConcurrentLocksReentrantReadWriteLock_NonfairSync))
 #define JavaUtilConcurrentLocksReentrantReadWriteLock_NonfairSync_
+
+@class JavaLangBoolean;
 
 /*!
  @brief Nonfair version of Sync
@@ -695,6 +698,8 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentLocksReentrantReadWriteLock_Nonfair
 
 #if !defined (JavaUtilConcurrentLocksReentrantReadWriteLock_FairSync_) && (INCLUDE_ALL_JavaUtilConcurrentLocksReentrantReadWriteLock || defined(INCLUDE_JavaUtilConcurrentLocksReentrantReadWriteLock_FairSync))
 #define JavaUtilConcurrentLocksReentrantReadWriteLock_FairSync_
+
+@class JavaLangBoolean;
 
 /*!
  @brief Fair version of Sync
@@ -734,6 +739,8 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentLocksReentrantReadWriteLock_FairSyn
 #define INCLUDE_JavaIoSerializable 1
 #include "java/io/Serializable.h"
 
+@class JavaLangBoolean;
+@class JavaLangLong;
 @class JavaUtilConcurrentLocksReentrantReadWriteLock;
 @class JavaUtilConcurrentTimeUnit;
 @protocol JavaUtilConcurrentLocksCondition;
@@ -932,6 +939,9 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentLocksReentrantReadWriteLock_ReadLoc
 #define INCLUDE_JavaIoSerializable 1
 #include "java/io/Serializable.h"
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
+@class JavaLangLong;
 @class JavaUtilConcurrentLocksReentrantReadWriteLock;
 @class JavaUtilConcurrentTimeUnit;
 @protocol JavaUtilConcurrentLocksCondition;
@@ -1206,6 +1216,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentLocksReentrantReadWriteLock_WriteLo
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaUtilConcurrentLocksReentrantReadWriteLock")

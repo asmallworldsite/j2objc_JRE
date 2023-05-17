@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_AndroidIcuMathBigDecimal
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -35,6 +32,13 @@
 
 @class AndroidIcuMathMathContext;
 @class IOSCharArray;
+@class JavaLangBoolean;
+@class JavaLangByte;
+@class JavaLangDouble;
+@class JavaLangFloat;
+@class JavaLangInteger;
+@class JavaLangLong;
+@class JavaLangShort;
 @class JavaMathBigDecimal;
 @class JavaMathBigInteger;
 
@@ -150,17 +154,6 @@
  @author Mike Cowlishaw
  */
 @interface AndroidIcuMathBigDecimal : NSNumber < JavaIoSerializable, JavaLangComparable >
-@property (readonly, class, strong) AndroidIcuMathBigDecimal *ZERO NS_SWIFT_NAME(ZERO);
-@property (readonly, class, strong) AndroidIcuMathBigDecimal *ONE NS_SWIFT_NAME(ONE);
-@property (readonly, class, strong) AndroidIcuMathBigDecimal *TEN NS_SWIFT_NAME(TEN);
-@property (readonly, class) jint ROUND_CEILING NS_SWIFT_NAME(ROUND_CEILING);
-@property (readonly, class) jint ROUND_DOWN NS_SWIFT_NAME(ROUND_DOWN);
-@property (readonly, class) jint ROUND_FLOOR NS_SWIFT_NAME(ROUND_FLOOR);
-@property (readonly, class) jint ROUND_HALF_DOWN NS_SWIFT_NAME(ROUND_HALF_DOWN);
-@property (readonly, class) jint ROUND_HALF_EVEN NS_SWIFT_NAME(ROUND_HALF_EVEN);
-@property (readonly, class) jint ROUND_HALF_UP NS_SWIFT_NAME(ROUND_HALF_UP);
-@property (readonly, class) jint ROUND_UNNECESSARY NS_SWIFT_NAME(ROUND_UNNECESSARY);
-@property (readonly, class) jint ROUND_UP NS_SWIFT_NAME(ROUND_UP);
 
 #pragma mark Public
 
@@ -273,7 +266,7 @@
   sign (hyphen) if the parameter is negative. A leading zero will be present only if the parameter is zero.
  @param num The  <code> long </code>  to be converted.
  */
-- (instancetype __nonnull)initWithLong:(jlong)num;
+- (instancetype __nonnull)initWithLongLong:(jlong)num;
 
 /*!
  @brief Constructs a <code>BigDecimal</code> object from a <code>String</code>.
@@ -1277,11 +1270,11 @@ FOUNDATION_EXPORT AndroidIcuMathBigDecimal *new_AndroidIcuMathBigDecimal_initWit
 
 FOUNDATION_EXPORT AndroidIcuMathBigDecimal *create_AndroidIcuMathBigDecimal_initWithInt_(jint num);
 
-FOUNDATION_EXPORT void AndroidIcuMathBigDecimal_initWithLong_(AndroidIcuMathBigDecimal *self, jlong num);
+FOUNDATION_EXPORT void AndroidIcuMathBigDecimal_initWithLongLong_(AndroidIcuMathBigDecimal *self, jlong num);
 
-FOUNDATION_EXPORT AndroidIcuMathBigDecimal *new_AndroidIcuMathBigDecimal_initWithLong_(jlong num) NS_RETURNS_RETAINED;
+FOUNDATION_EXPORT AndroidIcuMathBigDecimal *new_AndroidIcuMathBigDecimal_initWithLongLong_(jlong num) NS_RETURNS_RETAINED;
 
-FOUNDATION_EXPORT AndroidIcuMathBigDecimal *create_AndroidIcuMathBigDecimal_initWithLong_(jlong num);
+FOUNDATION_EXPORT AndroidIcuMathBigDecimal *create_AndroidIcuMathBigDecimal_initWithLongLong_(jlong num);
 
 FOUNDATION_EXPORT void AndroidIcuMathBigDecimal_initWithNSString_(AndroidIcuMathBigDecimal *self, NSString *string);
 
@@ -1303,6 +1296,4 @@ J2OBJC_TYPE_LITERAL_HEADER(AndroidIcuMathBigDecimal)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_AndroidIcuMathBigDecimal")

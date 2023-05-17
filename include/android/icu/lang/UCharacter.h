@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_AndroidIcuLangUCharacter
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -37,6 +34,11 @@
 @class AndroidIcuUtilULocale;
 @class AndroidIcuUtilVersionInfo;
 @class IOSCharArray;
+@class JavaLangBoolean;
+@class JavaLangByte;
+@class JavaLangCharacter;
+@class JavaLangDouble;
+@class JavaLangInteger;
 @class JavaUtilLocale;
 @protocol AndroidIcuUtilRangeValueIterator;
 @protocol AndroidIcuUtilValueIterator;
@@ -147,26 +149,6 @@
  - seealso: android.icu.lang.UCharacterEnums
  */
 @interface AndroidIcuLangUCharacter : NSObject < AndroidIcuLangUCharacterEnums_ECharacterCategory, AndroidIcuLangUCharacterEnums_ECharacterDirection >
-@property (readonly, class) jint MIN_VALUE NS_SWIFT_NAME(MIN_VALUE);
-@property (readonly, class) jint MAX_VALUE NS_SWIFT_NAME(MAX_VALUE);
-@property (readonly, class) jint SUPPLEMENTARY_MIN_VALUE NS_SWIFT_NAME(SUPPLEMENTARY_MIN_VALUE);
-@property (readonly, class) jint REPLACEMENT_CHAR NS_SWIFT_NAME(REPLACEMENT_CHAR);
-@property (readonly, class) jdouble NO_NUMERIC_VALUE NS_SWIFT_NAME(NO_NUMERIC_VALUE);
-@property (readonly, class) jint MIN_RADIX NS_SWIFT_NAME(MIN_RADIX);
-@property (readonly, class) jint MAX_RADIX NS_SWIFT_NAME(MAX_RADIX);
-@property (readonly, class) jint TITLECASE_NO_LOWERCASE NS_SWIFT_NAME(TITLECASE_NO_LOWERCASE);
-@property (readonly, class) jint TITLECASE_NO_BREAK_ADJUSTMENT NS_SWIFT_NAME(TITLECASE_NO_BREAK_ADJUSTMENT);
-@property (readonly, class) jint FOLD_CASE_DEFAULT NS_SWIFT_NAME(FOLD_CASE_DEFAULT);
-@property (readonly, class) jint FOLD_CASE_EXCLUDE_SPECIAL_I NS_SWIFT_NAME(FOLD_CASE_EXCLUDE_SPECIAL_I);
-@property (readonly, class) jchar MIN_HIGH_SURROGATE NS_SWIFT_NAME(MIN_HIGH_SURROGATE);
-@property (readonly, class) jchar MAX_HIGH_SURROGATE NS_SWIFT_NAME(MAX_HIGH_SURROGATE);
-@property (readonly, class) jchar MIN_LOW_SURROGATE NS_SWIFT_NAME(MIN_LOW_SURROGATE);
-@property (readonly, class) jchar MAX_LOW_SURROGATE NS_SWIFT_NAME(MAX_LOW_SURROGATE);
-@property (readonly, class) jchar MIN_SURROGATE NS_SWIFT_NAME(MIN_SURROGATE);
-@property (readonly, class) jchar MAX_SURROGATE NS_SWIFT_NAME(MAX_SURROGATE);
-@property (readonly, class) jint MIN_SUPPLEMENTARY_CODE_POINT NS_SWIFT_NAME(MIN_SUPPLEMENTARY_CODE_POINT);
-@property (readonly, class) jint MAX_CODE_POINT NS_SWIFT_NAME(MAX_CODE_POINT);
-@property (readonly, class) jint MIN_CODE_POINT NS_SWIFT_NAME(MIN_CODE_POINT);
 
 #pragma mark Public
 
@@ -465,7 +447,7 @@
  @return -1
  - seealso: #getName1_0(int)
  */
-+ (jint)getCharFromName1_0WithNSString:(NSString *)name __attribute__((deprecated));
++ (jint)getCharFromName1_0WithNSString:(NSString *)name;
 
 /*!
  @brief <strong>[icu]</strong> <p>Find a Unicode character by its corrected name alias and return
@@ -681,7 +663,7 @@
  <code>0 <= ch <= 0x10ffff</code> .
  @return null
  */
-+ (NSString *)getISOCommentWithInt:(jint)ch __attribute__((deprecated));
++ (NSString *)getISOCommentWithInt:(jint)ch;
 
 /*!
  @brief <strong>[icu]</strong> Maps the specified code point to a "mirror-image" code point.
@@ -725,7 +707,7 @@
  @param ch the code point for which to get the name
  @return null
  */
-+ (NSString *)getName1_0WithInt:(jint)ch __attribute__((deprecated));
++ (NSString *)getName1_0WithInt:(jint)ch;
 
 /*!
  @brief <strong>[icu]</strong> Returns an empty iterator.
@@ -733,7 +715,7 @@
  @return an empty iterator
  - seealso: #getName1_0(int)
  */
-+ (id<AndroidIcuUtilValueIterator>)getName1_0Iterator __attribute__((deprecated));
++ (id<AndroidIcuUtilValueIterator>)getName1_0Iterator;
 
 /*!
  @brief <strong>[icu]</strong> Returns the corrected name from NameAliases.txt if there is one.
@@ -862,7 +844,7 @@
  @return returns UProperty.UNDEFINED if the value is not valid, otherwise the value.
  */
 + (jint)getPropertyValueEnumNoThrowWithInt:(jint)property
-                  withJavaLangCharSequence:(id<JavaLangCharSequence>)valueAlias __attribute__((deprecated));
+                  withJavaLangCharSequence:(id<JavaLangCharSequence>)valueAlias;
 
 /*!
  @brief <strong>[icu]</strong> Return the Unicode name for a given property value, as given in
@@ -913,7 +895,7 @@
  */
 + (NSString *)getStringPropertyValueWithInt:(jint)propertyEnum
                                     withInt:(jint)codepoint
-                                    withInt:(jint)nameChoice __attribute__((deprecated));
+                                    withInt:(jint)nameChoice;
 
 /*!
  @brief Returns a value indicating a code point's Unicode category.
@@ -1098,7 +1080,7 @@
  @param cp the code point
  @return true if the code point can start a java identifier.
  */
-+ (jboolean)isJavaLetterWithInt:(jint)cp __attribute__((deprecated));
++ (jboolean)isJavaLetterWithInt:(jint)cp;
 
 /*!
  @brief Compatibility override of Java deprecated method.This
@@ -1108,7 +1090,7 @@
  @param cp the code point
  @return true if the code point can continue a java identifier.
  */
-+ (jboolean)isJavaLetterOrDigitWithInt:(jint)cp __attribute__((deprecated));
++ (jboolean)isJavaLetterOrDigitWithInt:(jint)cp;
 
 /*!
  @brief <strong>[icu]</strong> A code point is illegal if and only if 
@@ -1201,7 +1183,7 @@
  @return true if the code point is a space character as
   defined by java.lang.Character.isSpace.
  */
-+ (jboolean)isSpaceWithInt:(jint)ch __attribute__((deprecated));
++ (jboolean)isSpaceWithInt:(jint)ch;
 
 /*!
  @brief Determines if the specified code point is a Unicode specified space
@@ -1652,7 +1634,7 @@
  @return the modified string, or the original if no modifications were necessary.
  */
 + (NSString *)toTitleFirstWithAndroidIcuUtilULocale:(AndroidIcuUtilULocale *)locale
-                                       withNSString:(NSString *)str __attribute__((deprecated));
+                                       withNSString:(NSString *)str;
 
 /*!
  @brief Converts the character argument to uppercase.
@@ -2106,6 +2088,8 @@ J2OBJC_TYPE_LITERAL_HEADER(AndroidIcuLangUCharacter)
 #define INCLUDE_JavaLangCharacter_Subset 1
 #include "java/lang/Character.h"
 
+@class JavaLangInteger;
+
 /*!
  @brief <strong>[icu enhancement]</strong> ICU's replacement for <code>java.lang.Character.UnicodeBlock</code>.
  &nbsp;Methods, fields, and other functionality specific to ICU are labeled '<strong>[icu]</strong>'.
@@ -2116,560 +2100,6 @@ J2OBJC_TYPE_LITERAL_HEADER(AndroidIcuLangUCharacter)
  <strong>[icu] Note:</strong> All fields named XXX_ID are specific to ICU.
  */
 @interface AndroidIcuLangUCharacter_UnicodeBlock : JavaLangCharacter_Subset
-@property (readonly, class) jint INVALID_CODE_ID NS_SWIFT_NAME(INVALID_CODE_ID);
-@property (readonly, class) jint BASIC_LATIN_ID NS_SWIFT_NAME(BASIC_LATIN_ID);
-@property (readonly, class) jint LATIN_1_SUPPLEMENT_ID NS_SWIFT_NAME(LATIN_1_SUPPLEMENT_ID);
-@property (readonly, class) jint LATIN_EXTENDED_A_ID NS_SWIFT_NAME(LATIN_EXTENDED_A_ID);
-@property (readonly, class) jint LATIN_EXTENDED_B_ID NS_SWIFT_NAME(LATIN_EXTENDED_B_ID);
-@property (readonly, class) jint IPA_EXTENSIONS_ID NS_SWIFT_NAME(IPA_EXTENSIONS_ID);
-@property (readonly, class) jint SPACING_MODIFIER_LETTERS_ID NS_SWIFT_NAME(SPACING_MODIFIER_LETTERS_ID);
-@property (readonly, class) jint COMBINING_DIACRITICAL_MARKS_ID NS_SWIFT_NAME(COMBINING_DIACRITICAL_MARKS_ID);
-@property (readonly, class) jint GREEK_ID NS_SWIFT_NAME(GREEK_ID);
-@property (readonly, class) jint CYRILLIC_ID NS_SWIFT_NAME(CYRILLIC_ID);
-@property (readonly, class) jint ARMENIAN_ID NS_SWIFT_NAME(ARMENIAN_ID);
-@property (readonly, class) jint HEBREW_ID NS_SWIFT_NAME(HEBREW_ID);
-@property (readonly, class) jint ARABIC_ID NS_SWIFT_NAME(ARABIC_ID);
-@property (readonly, class) jint SYRIAC_ID NS_SWIFT_NAME(SYRIAC_ID);
-@property (readonly, class) jint THAANA_ID NS_SWIFT_NAME(THAANA_ID);
-@property (readonly, class) jint DEVANAGARI_ID NS_SWIFT_NAME(DEVANAGARI_ID);
-@property (readonly, class) jint BENGALI_ID NS_SWIFT_NAME(BENGALI_ID);
-@property (readonly, class) jint GURMUKHI_ID NS_SWIFT_NAME(GURMUKHI_ID);
-@property (readonly, class) jint GUJARATI_ID NS_SWIFT_NAME(GUJARATI_ID);
-@property (readonly, class) jint ORIYA_ID NS_SWIFT_NAME(ORIYA_ID);
-@property (readonly, class) jint TAMIL_ID NS_SWIFT_NAME(TAMIL_ID);
-@property (readonly, class) jint TELUGU_ID NS_SWIFT_NAME(TELUGU_ID);
-@property (readonly, class) jint KANNADA_ID NS_SWIFT_NAME(KANNADA_ID);
-@property (readonly, class) jint MALAYALAM_ID NS_SWIFT_NAME(MALAYALAM_ID);
-@property (readonly, class) jint SINHALA_ID NS_SWIFT_NAME(SINHALA_ID);
-@property (readonly, class) jint THAI_ID NS_SWIFT_NAME(THAI_ID);
-@property (readonly, class) jint LAO_ID NS_SWIFT_NAME(LAO_ID);
-@property (readonly, class) jint TIBETAN_ID NS_SWIFT_NAME(TIBETAN_ID);
-@property (readonly, class) jint MYANMAR_ID NS_SWIFT_NAME(MYANMAR_ID);
-@property (readonly, class) jint GEORGIAN_ID NS_SWIFT_NAME(GEORGIAN_ID);
-@property (readonly, class) jint HANGUL_JAMO_ID NS_SWIFT_NAME(HANGUL_JAMO_ID);
-@property (readonly, class) jint ETHIOPIC_ID NS_SWIFT_NAME(ETHIOPIC_ID);
-@property (readonly, class) jint CHEROKEE_ID NS_SWIFT_NAME(CHEROKEE_ID);
-@property (readonly, class) jint UNIFIED_CANADIAN_ABORIGINAL_SYLLABICS_ID NS_SWIFT_NAME(UNIFIED_CANADIAN_ABORIGINAL_SYLLABICS_ID);
-@property (readonly, class) jint OGHAM_ID NS_SWIFT_NAME(OGHAM_ID);
-@property (readonly, class) jint RUNIC_ID NS_SWIFT_NAME(RUNIC_ID);
-@property (readonly, class) jint KHMER_ID NS_SWIFT_NAME(KHMER_ID);
-@property (readonly, class) jint MONGOLIAN_ID NS_SWIFT_NAME(MONGOLIAN_ID);
-@property (readonly, class) jint LATIN_EXTENDED_ADDITIONAL_ID NS_SWIFT_NAME(LATIN_EXTENDED_ADDITIONAL_ID);
-@property (readonly, class) jint GREEK_EXTENDED_ID NS_SWIFT_NAME(GREEK_EXTENDED_ID);
-@property (readonly, class) jint GENERAL_PUNCTUATION_ID NS_SWIFT_NAME(GENERAL_PUNCTUATION_ID);
-@property (readonly, class) jint SUPERSCRIPTS_AND_SUBSCRIPTS_ID NS_SWIFT_NAME(SUPERSCRIPTS_AND_SUBSCRIPTS_ID);
-@property (readonly, class) jint CURRENCY_SYMBOLS_ID NS_SWIFT_NAME(CURRENCY_SYMBOLS_ID);
-@property (readonly, class) jint COMBINING_MARKS_FOR_SYMBOLS_ID NS_SWIFT_NAME(COMBINING_MARKS_FOR_SYMBOLS_ID);
-@property (readonly, class) jint LETTERLIKE_SYMBOLS_ID NS_SWIFT_NAME(LETTERLIKE_SYMBOLS_ID);
-@property (readonly, class) jint NUMBER_FORMS_ID NS_SWIFT_NAME(NUMBER_FORMS_ID);
-@property (readonly, class) jint ARROWS_ID NS_SWIFT_NAME(ARROWS_ID);
-@property (readonly, class) jint MATHEMATICAL_OPERATORS_ID NS_SWIFT_NAME(MATHEMATICAL_OPERATORS_ID);
-@property (readonly, class) jint MISCELLANEOUS_TECHNICAL_ID NS_SWIFT_NAME(MISCELLANEOUS_TECHNICAL_ID);
-@property (readonly, class) jint CONTROL_PICTURES_ID NS_SWIFT_NAME(CONTROL_PICTURES_ID);
-@property (readonly, class) jint OPTICAL_CHARACTER_RECOGNITION_ID NS_SWIFT_NAME(OPTICAL_CHARACTER_RECOGNITION_ID);
-@property (readonly, class) jint ENCLOSED_ALPHANUMERICS_ID NS_SWIFT_NAME(ENCLOSED_ALPHANUMERICS_ID);
-@property (readonly, class) jint BOX_DRAWING_ID NS_SWIFT_NAME(BOX_DRAWING_ID);
-@property (readonly, class) jint BLOCK_ELEMENTS_ID NS_SWIFT_NAME(BLOCK_ELEMENTS_ID);
-@property (readonly, class) jint GEOMETRIC_SHAPES_ID NS_SWIFT_NAME(GEOMETRIC_SHAPES_ID);
-@property (readonly, class) jint MISCELLANEOUS_SYMBOLS_ID NS_SWIFT_NAME(MISCELLANEOUS_SYMBOLS_ID);
-@property (readonly, class) jint DINGBATS_ID NS_SWIFT_NAME(DINGBATS_ID);
-@property (readonly, class) jint BRAILLE_PATTERNS_ID NS_SWIFT_NAME(BRAILLE_PATTERNS_ID);
-@property (readonly, class) jint CJK_RADICALS_SUPPLEMENT_ID NS_SWIFT_NAME(CJK_RADICALS_SUPPLEMENT_ID);
-@property (readonly, class) jint KANGXI_RADICALS_ID NS_SWIFT_NAME(KANGXI_RADICALS_ID);
-@property (readonly, class) jint IDEOGRAPHIC_DESCRIPTION_CHARACTERS_ID NS_SWIFT_NAME(IDEOGRAPHIC_DESCRIPTION_CHARACTERS_ID);
-@property (readonly, class) jint CJK_SYMBOLS_AND_PUNCTUATION_ID NS_SWIFT_NAME(CJK_SYMBOLS_AND_PUNCTUATION_ID);
-@property (readonly, class) jint HIRAGANA_ID NS_SWIFT_NAME(HIRAGANA_ID);
-@property (readonly, class) jint KATAKANA_ID NS_SWIFT_NAME(KATAKANA_ID);
-@property (readonly, class) jint BOPOMOFO_ID NS_SWIFT_NAME(BOPOMOFO_ID);
-@property (readonly, class) jint HANGUL_COMPATIBILITY_JAMO_ID NS_SWIFT_NAME(HANGUL_COMPATIBILITY_JAMO_ID);
-@property (readonly, class) jint KANBUN_ID NS_SWIFT_NAME(KANBUN_ID);
-@property (readonly, class) jint BOPOMOFO_EXTENDED_ID NS_SWIFT_NAME(BOPOMOFO_EXTENDED_ID);
-@property (readonly, class) jint ENCLOSED_CJK_LETTERS_AND_MONTHS_ID NS_SWIFT_NAME(ENCLOSED_CJK_LETTERS_AND_MONTHS_ID);
-@property (readonly, class) jint CJK_COMPATIBILITY_ID NS_SWIFT_NAME(CJK_COMPATIBILITY_ID);
-@property (readonly, class) jint CJK_UNIFIED_IDEOGRAPHS_EXTENSION_A_ID NS_SWIFT_NAME(CJK_UNIFIED_IDEOGRAPHS_EXTENSION_A_ID);
-@property (readonly, class) jint CJK_UNIFIED_IDEOGRAPHS_ID NS_SWIFT_NAME(CJK_UNIFIED_IDEOGRAPHS_ID);
-@property (readonly, class) jint YI_SYLLABLES_ID NS_SWIFT_NAME(YI_SYLLABLES_ID);
-@property (readonly, class) jint YI_RADICALS_ID NS_SWIFT_NAME(YI_RADICALS_ID);
-@property (readonly, class) jint HANGUL_SYLLABLES_ID NS_SWIFT_NAME(HANGUL_SYLLABLES_ID);
-@property (readonly, class) jint HIGH_SURROGATES_ID NS_SWIFT_NAME(HIGH_SURROGATES_ID);
-@property (readonly, class) jint HIGH_PRIVATE_USE_SURROGATES_ID NS_SWIFT_NAME(HIGH_PRIVATE_USE_SURROGATES_ID);
-@property (readonly, class) jint LOW_SURROGATES_ID NS_SWIFT_NAME(LOW_SURROGATES_ID);
-@property (readonly, class) jint PRIVATE_USE_AREA_ID NS_SWIFT_NAME(PRIVATE_USE_AREA_ID);
-@property (readonly, class) jint PRIVATE_USE_ID NS_SWIFT_NAME(PRIVATE_USE_ID);
-@property (readonly, class) jint CJK_COMPATIBILITY_IDEOGRAPHS_ID NS_SWIFT_NAME(CJK_COMPATIBILITY_IDEOGRAPHS_ID);
-@property (readonly, class) jint ALPHABETIC_PRESENTATION_FORMS_ID NS_SWIFT_NAME(ALPHABETIC_PRESENTATION_FORMS_ID);
-@property (readonly, class) jint ARABIC_PRESENTATION_FORMS_A_ID NS_SWIFT_NAME(ARABIC_PRESENTATION_FORMS_A_ID);
-@property (readonly, class) jint COMBINING_HALF_MARKS_ID NS_SWIFT_NAME(COMBINING_HALF_MARKS_ID);
-@property (readonly, class) jint CJK_COMPATIBILITY_FORMS_ID NS_SWIFT_NAME(CJK_COMPATIBILITY_FORMS_ID);
-@property (readonly, class) jint SMALL_FORM_VARIANTS_ID NS_SWIFT_NAME(SMALL_FORM_VARIANTS_ID);
-@property (readonly, class) jint ARABIC_PRESENTATION_FORMS_B_ID NS_SWIFT_NAME(ARABIC_PRESENTATION_FORMS_B_ID);
-@property (readonly, class) jint SPECIALS_ID NS_SWIFT_NAME(SPECIALS_ID);
-@property (readonly, class) jint HALFWIDTH_AND_FULLWIDTH_FORMS_ID NS_SWIFT_NAME(HALFWIDTH_AND_FULLWIDTH_FORMS_ID);
-@property (readonly, class) jint OLD_ITALIC_ID NS_SWIFT_NAME(OLD_ITALIC_ID);
-@property (readonly, class) jint GOTHIC_ID NS_SWIFT_NAME(GOTHIC_ID);
-@property (readonly, class) jint DESERET_ID NS_SWIFT_NAME(DESERET_ID);
-@property (readonly, class) jint BYZANTINE_MUSICAL_SYMBOLS_ID NS_SWIFT_NAME(BYZANTINE_MUSICAL_SYMBOLS_ID);
-@property (readonly, class) jint MUSICAL_SYMBOLS_ID NS_SWIFT_NAME(MUSICAL_SYMBOLS_ID);
-@property (readonly, class) jint MATHEMATICAL_ALPHANUMERIC_SYMBOLS_ID NS_SWIFT_NAME(MATHEMATICAL_ALPHANUMERIC_SYMBOLS_ID);
-@property (readonly, class) jint CJK_UNIFIED_IDEOGRAPHS_EXTENSION_B_ID NS_SWIFT_NAME(CJK_UNIFIED_IDEOGRAPHS_EXTENSION_B_ID);
-@property (readonly, class) jint CJK_COMPATIBILITY_IDEOGRAPHS_SUPPLEMENT_ID NS_SWIFT_NAME(CJK_COMPATIBILITY_IDEOGRAPHS_SUPPLEMENT_ID);
-@property (readonly, class) jint TAGS_ID NS_SWIFT_NAME(TAGS_ID);
-@property (readonly, class) jint CYRILLIC_SUPPLEMENTARY_ID NS_SWIFT_NAME(CYRILLIC_SUPPLEMENTARY_ID);
-@property (readonly, class) jint CYRILLIC_SUPPLEMENT_ID NS_SWIFT_NAME(CYRILLIC_SUPPLEMENT_ID);
-@property (readonly, class) jint TAGALOG_ID NS_SWIFT_NAME(TAGALOG_ID);
-@property (readonly, class) jint HANUNOO_ID NS_SWIFT_NAME(HANUNOO_ID);
-@property (readonly, class) jint BUHID_ID NS_SWIFT_NAME(BUHID_ID);
-@property (readonly, class) jint TAGBANWA_ID NS_SWIFT_NAME(TAGBANWA_ID);
-@property (readonly, class) jint MISCELLANEOUS_MATHEMATICAL_SYMBOLS_A_ID NS_SWIFT_NAME(MISCELLANEOUS_MATHEMATICAL_SYMBOLS_A_ID);
-@property (readonly, class) jint SUPPLEMENTAL_ARROWS_A_ID NS_SWIFT_NAME(SUPPLEMENTAL_ARROWS_A_ID);
-@property (readonly, class) jint SUPPLEMENTAL_ARROWS_B_ID NS_SWIFT_NAME(SUPPLEMENTAL_ARROWS_B_ID);
-@property (readonly, class) jint MISCELLANEOUS_MATHEMATICAL_SYMBOLS_B_ID NS_SWIFT_NAME(MISCELLANEOUS_MATHEMATICAL_SYMBOLS_B_ID);
-@property (readonly, class) jint SUPPLEMENTAL_MATHEMATICAL_OPERATORS_ID NS_SWIFT_NAME(SUPPLEMENTAL_MATHEMATICAL_OPERATORS_ID);
-@property (readonly, class) jint KATAKANA_PHONETIC_EXTENSIONS_ID NS_SWIFT_NAME(KATAKANA_PHONETIC_EXTENSIONS_ID);
-@property (readonly, class) jint VARIATION_SELECTORS_ID NS_SWIFT_NAME(VARIATION_SELECTORS_ID);
-@property (readonly, class) jint SUPPLEMENTARY_PRIVATE_USE_AREA_A_ID NS_SWIFT_NAME(SUPPLEMENTARY_PRIVATE_USE_AREA_A_ID);
-@property (readonly, class) jint SUPPLEMENTARY_PRIVATE_USE_AREA_B_ID NS_SWIFT_NAME(SUPPLEMENTARY_PRIVATE_USE_AREA_B_ID);
-@property (readonly, class) jint LIMBU_ID NS_SWIFT_NAME(LIMBU_ID);
-@property (readonly, class) jint TAI_LE_ID NS_SWIFT_NAME(TAI_LE_ID);
-@property (readonly, class) jint KHMER_SYMBOLS_ID NS_SWIFT_NAME(KHMER_SYMBOLS_ID);
-@property (readonly, class) jint PHONETIC_EXTENSIONS_ID NS_SWIFT_NAME(PHONETIC_EXTENSIONS_ID);
-@property (readonly, class) jint MISCELLANEOUS_SYMBOLS_AND_ARROWS_ID NS_SWIFT_NAME(MISCELLANEOUS_SYMBOLS_AND_ARROWS_ID);
-@property (readonly, class) jint YIJING_HEXAGRAM_SYMBOLS_ID NS_SWIFT_NAME(YIJING_HEXAGRAM_SYMBOLS_ID);
-@property (readonly, class) jint LINEAR_B_SYLLABARY_ID NS_SWIFT_NAME(LINEAR_B_SYLLABARY_ID);
-@property (readonly, class) jint LINEAR_B_IDEOGRAMS_ID NS_SWIFT_NAME(LINEAR_B_IDEOGRAMS_ID);
-@property (readonly, class) jint AEGEAN_NUMBERS_ID NS_SWIFT_NAME(AEGEAN_NUMBERS_ID);
-@property (readonly, class) jint UGARITIC_ID NS_SWIFT_NAME(UGARITIC_ID);
-@property (readonly, class) jint SHAVIAN_ID NS_SWIFT_NAME(SHAVIAN_ID);
-@property (readonly, class) jint OSMANYA_ID NS_SWIFT_NAME(OSMANYA_ID);
-@property (readonly, class) jint CYPRIOT_SYLLABARY_ID NS_SWIFT_NAME(CYPRIOT_SYLLABARY_ID);
-@property (readonly, class) jint TAI_XUAN_JING_SYMBOLS_ID NS_SWIFT_NAME(TAI_XUAN_JING_SYMBOLS_ID);
-@property (readonly, class) jint VARIATION_SELECTORS_SUPPLEMENT_ID NS_SWIFT_NAME(VARIATION_SELECTORS_SUPPLEMENT_ID);
-@property (readonly, class) jint ANCIENT_GREEK_MUSICAL_NOTATION_ID NS_SWIFT_NAME(ANCIENT_GREEK_MUSICAL_NOTATION_ID);
-@property (readonly, class) jint ANCIENT_GREEK_NUMBERS_ID NS_SWIFT_NAME(ANCIENT_GREEK_NUMBERS_ID);
-@property (readonly, class) jint ARABIC_SUPPLEMENT_ID NS_SWIFT_NAME(ARABIC_SUPPLEMENT_ID);
-@property (readonly, class) jint BUGINESE_ID NS_SWIFT_NAME(BUGINESE_ID);
-@property (readonly, class) jint CJK_STROKES_ID NS_SWIFT_NAME(CJK_STROKES_ID);
-@property (readonly, class) jint COMBINING_DIACRITICAL_MARKS_SUPPLEMENT_ID NS_SWIFT_NAME(COMBINING_DIACRITICAL_MARKS_SUPPLEMENT_ID);
-@property (readonly, class) jint COPTIC_ID NS_SWIFT_NAME(COPTIC_ID);
-@property (readonly, class) jint ETHIOPIC_EXTENDED_ID NS_SWIFT_NAME(ETHIOPIC_EXTENDED_ID);
-@property (readonly, class) jint ETHIOPIC_SUPPLEMENT_ID NS_SWIFT_NAME(ETHIOPIC_SUPPLEMENT_ID);
-@property (readonly, class) jint GEORGIAN_SUPPLEMENT_ID NS_SWIFT_NAME(GEORGIAN_SUPPLEMENT_ID);
-@property (readonly, class) jint GLAGOLITIC_ID NS_SWIFT_NAME(GLAGOLITIC_ID);
-@property (readonly, class) jint KHAROSHTHI_ID NS_SWIFT_NAME(KHAROSHTHI_ID);
-@property (readonly, class) jint MODIFIER_TONE_LETTERS_ID NS_SWIFT_NAME(MODIFIER_TONE_LETTERS_ID);
-@property (readonly, class) jint NEW_TAI_LUE_ID NS_SWIFT_NAME(NEW_TAI_LUE_ID);
-@property (readonly, class) jint OLD_PERSIAN_ID NS_SWIFT_NAME(OLD_PERSIAN_ID);
-@property (readonly, class) jint PHONETIC_EXTENSIONS_SUPPLEMENT_ID NS_SWIFT_NAME(PHONETIC_EXTENSIONS_SUPPLEMENT_ID);
-@property (readonly, class) jint SUPPLEMENTAL_PUNCTUATION_ID NS_SWIFT_NAME(SUPPLEMENTAL_PUNCTUATION_ID);
-@property (readonly, class) jint SYLOTI_NAGRI_ID NS_SWIFT_NAME(SYLOTI_NAGRI_ID);
-@property (readonly, class) jint TIFINAGH_ID NS_SWIFT_NAME(TIFINAGH_ID);
-@property (readonly, class) jint VERTICAL_FORMS_ID NS_SWIFT_NAME(VERTICAL_FORMS_ID);
-@property (readonly, class) jint NKO_ID NS_SWIFT_NAME(NKO_ID);
-@property (readonly, class) jint BALINESE_ID NS_SWIFT_NAME(BALINESE_ID);
-@property (readonly, class) jint LATIN_EXTENDED_C_ID NS_SWIFT_NAME(LATIN_EXTENDED_C_ID);
-@property (readonly, class) jint LATIN_EXTENDED_D_ID NS_SWIFT_NAME(LATIN_EXTENDED_D_ID);
-@property (readonly, class) jint PHAGS_PA_ID NS_SWIFT_NAME(PHAGS_PA_ID);
-@property (readonly, class) jint PHOENICIAN_ID NS_SWIFT_NAME(PHOENICIAN_ID);
-@property (readonly, class) jint CUNEIFORM_ID NS_SWIFT_NAME(CUNEIFORM_ID);
-@property (readonly, class) jint CUNEIFORM_NUMBERS_AND_PUNCTUATION_ID NS_SWIFT_NAME(CUNEIFORM_NUMBERS_AND_PUNCTUATION_ID);
-@property (readonly, class) jint COUNTING_ROD_NUMERALS_ID NS_SWIFT_NAME(COUNTING_ROD_NUMERALS_ID);
-@property (readonly, class) jint SUNDANESE_ID NS_SWIFT_NAME(SUNDANESE_ID);
-@property (readonly, class) jint LEPCHA_ID NS_SWIFT_NAME(LEPCHA_ID);
-@property (readonly, class) jint OL_CHIKI_ID NS_SWIFT_NAME(OL_CHIKI_ID);
-@property (readonly, class) jint CYRILLIC_EXTENDED_A_ID NS_SWIFT_NAME(CYRILLIC_EXTENDED_A_ID);
-@property (readonly, class) jint VAI_ID NS_SWIFT_NAME(VAI_ID);
-@property (readonly, class) jint CYRILLIC_EXTENDED_B_ID NS_SWIFT_NAME(CYRILLIC_EXTENDED_B_ID);
-@property (readonly, class) jint SAURASHTRA_ID NS_SWIFT_NAME(SAURASHTRA_ID);
-@property (readonly, class) jint KAYAH_LI_ID NS_SWIFT_NAME(KAYAH_LI_ID);
-@property (readonly, class) jint REJANG_ID NS_SWIFT_NAME(REJANG_ID);
-@property (readonly, class) jint CHAM_ID NS_SWIFT_NAME(CHAM_ID);
-@property (readonly, class) jint ANCIENT_SYMBOLS_ID NS_SWIFT_NAME(ANCIENT_SYMBOLS_ID);
-@property (readonly, class) jint PHAISTOS_DISC_ID NS_SWIFT_NAME(PHAISTOS_DISC_ID);
-@property (readonly, class) jint LYCIAN_ID NS_SWIFT_NAME(LYCIAN_ID);
-@property (readonly, class) jint CARIAN_ID NS_SWIFT_NAME(CARIAN_ID);
-@property (readonly, class) jint LYDIAN_ID NS_SWIFT_NAME(LYDIAN_ID);
-@property (readonly, class) jint MAHJONG_TILES_ID NS_SWIFT_NAME(MAHJONG_TILES_ID);
-@property (readonly, class) jint DOMINO_TILES_ID NS_SWIFT_NAME(DOMINO_TILES_ID);
-@property (readonly, class) jint SAMARITAN_ID NS_SWIFT_NAME(SAMARITAN_ID);
-@property (readonly, class) jint UNIFIED_CANADIAN_ABORIGINAL_SYLLABICS_EXTENDED_ID NS_SWIFT_NAME(UNIFIED_CANADIAN_ABORIGINAL_SYLLABICS_EXTENDED_ID);
-@property (readonly, class) jint TAI_THAM_ID NS_SWIFT_NAME(TAI_THAM_ID);
-@property (readonly, class) jint VEDIC_EXTENSIONS_ID NS_SWIFT_NAME(VEDIC_EXTENSIONS_ID);
-@property (readonly, class) jint LISU_ID NS_SWIFT_NAME(LISU_ID);
-@property (readonly, class) jint BAMUM_ID NS_SWIFT_NAME(BAMUM_ID);
-@property (readonly, class) jint COMMON_INDIC_NUMBER_FORMS_ID NS_SWIFT_NAME(COMMON_INDIC_NUMBER_FORMS_ID);
-@property (readonly, class) jint DEVANAGARI_EXTENDED_ID NS_SWIFT_NAME(DEVANAGARI_EXTENDED_ID);
-@property (readonly, class) jint HANGUL_JAMO_EXTENDED_A_ID NS_SWIFT_NAME(HANGUL_JAMO_EXTENDED_A_ID);
-@property (readonly, class) jint JAVANESE_ID NS_SWIFT_NAME(JAVANESE_ID);
-@property (readonly, class) jint MYANMAR_EXTENDED_A_ID NS_SWIFT_NAME(MYANMAR_EXTENDED_A_ID);
-@property (readonly, class) jint TAI_VIET_ID NS_SWIFT_NAME(TAI_VIET_ID);
-@property (readonly, class) jint MEETEI_MAYEK_ID NS_SWIFT_NAME(MEETEI_MAYEK_ID);
-@property (readonly, class) jint HANGUL_JAMO_EXTENDED_B_ID NS_SWIFT_NAME(HANGUL_JAMO_EXTENDED_B_ID);
-@property (readonly, class) jint IMPERIAL_ARAMAIC_ID NS_SWIFT_NAME(IMPERIAL_ARAMAIC_ID);
-@property (readonly, class) jint OLD_SOUTH_ARABIAN_ID NS_SWIFT_NAME(OLD_SOUTH_ARABIAN_ID);
-@property (readonly, class) jint AVESTAN_ID NS_SWIFT_NAME(AVESTAN_ID);
-@property (readonly, class) jint INSCRIPTIONAL_PARTHIAN_ID NS_SWIFT_NAME(INSCRIPTIONAL_PARTHIAN_ID);
-@property (readonly, class) jint INSCRIPTIONAL_PAHLAVI_ID NS_SWIFT_NAME(INSCRIPTIONAL_PAHLAVI_ID);
-@property (readonly, class) jint OLD_TURKIC_ID NS_SWIFT_NAME(OLD_TURKIC_ID);
-@property (readonly, class) jint RUMI_NUMERAL_SYMBOLS_ID NS_SWIFT_NAME(RUMI_NUMERAL_SYMBOLS_ID);
-@property (readonly, class) jint KAITHI_ID NS_SWIFT_NAME(KAITHI_ID);
-@property (readonly, class) jint EGYPTIAN_HIEROGLYPHS_ID NS_SWIFT_NAME(EGYPTIAN_HIEROGLYPHS_ID);
-@property (readonly, class) jint ENCLOSED_ALPHANUMERIC_SUPPLEMENT_ID NS_SWIFT_NAME(ENCLOSED_ALPHANUMERIC_SUPPLEMENT_ID);
-@property (readonly, class) jint ENCLOSED_IDEOGRAPHIC_SUPPLEMENT_ID NS_SWIFT_NAME(ENCLOSED_IDEOGRAPHIC_SUPPLEMENT_ID);
-@property (readonly, class) jint CJK_UNIFIED_IDEOGRAPHS_EXTENSION_C_ID NS_SWIFT_NAME(CJK_UNIFIED_IDEOGRAPHS_EXTENSION_C_ID);
-@property (readonly, class) jint MANDAIC_ID NS_SWIFT_NAME(MANDAIC_ID);
-@property (readonly, class) jint BATAK_ID NS_SWIFT_NAME(BATAK_ID);
-@property (readonly, class) jint ETHIOPIC_EXTENDED_A_ID NS_SWIFT_NAME(ETHIOPIC_EXTENDED_A_ID);
-@property (readonly, class) jint BRAHMI_ID NS_SWIFT_NAME(BRAHMI_ID);
-@property (readonly, class) jint BAMUM_SUPPLEMENT_ID NS_SWIFT_NAME(BAMUM_SUPPLEMENT_ID);
-@property (readonly, class) jint KANA_SUPPLEMENT_ID NS_SWIFT_NAME(KANA_SUPPLEMENT_ID);
-@property (readonly, class) jint PLAYING_CARDS_ID NS_SWIFT_NAME(PLAYING_CARDS_ID);
-@property (readonly, class) jint MISCELLANEOUS_SYMBOLS_AND_PICTOGRAPHS_ID NS_SWIFT_NAME(MISCELLANEOUS_SYMBOLS_AND_PICTOGRAPHS_ID);
-@property (readonly, class) jint EMOTICONS_ID NS_SWIFT_NAME(EMOTICONS_ID);
-@property (readonly, class) jint TRANSPORT_AND_MAP_SYMBOLS_ID NS_SWIFT_NAME(TRANSPORT_AND_MAP_SYMBOLS_ID);
-@property (readonly, class) jint ALCHEMICAL_SYMBOLS_ID NS_SWIFT_NAME(ALCHEMICAL_SYMBOLS_ID);
-@property (readonly, class) jint CJK_UNIFIED_IDEOGRAPHS_EXTENSION_D_ID NS_SWIFT_NAME(CJK_UNIFIED_IDEOGRAPHS_EXTENSION_D_ID);
-@property (readonly, class) jint ARABIC_EXTENDED_A_ID NS_SWIFT_NAME(ARABIC_EXTENDED_A_ID);
-@property (readonly, class) jint ARABIC_MATHEMATICAL_ALPHABETIC_SYMBOLS_ID NS_SWIFT_NAME(ARABIC_MATHEMATICAL_ALPHABETIC_SYMBOLS_ID);
-@property (readonly, class) jint CHAKMA_ID NS_SWIFT_NAME(CHAKMA_ID);
-@property (readonly, class) jint MEETEI_MAYEK_EXTENSIONS_ID NS_SWIFT_NAME(MEETEI_MAYEK_EXTENSIONS_ID);
-@property (readonly, class) jint MEROITIC_CURSIVE_ID NS_SWIFT_NAME(MEROITIC_CURSIVE_ID);
-@property (readonly, class) jint MEROITIC_HIEROGLYPHS_ID NS_SWIFT_NAME(MEROITIC_HIEROGLYPHS_ID);
-@property (readonly, class) jint MIAO_ID NS_SWIFT_NAME(MIAO_ID);
-@property (readonly, class) jint SHARADA_ID NS_SWIFT_NAME(SHARADA_ID);
-@property (readonly, class) jint SORA_SOMPENG_ID NS_SWIFT_NAME(SORA_SOMPENG_ID);
-@property (readonly, class) jint SUNDANESE_SUPPLEMENT_ID NS_SWIFT_NAME(SUNDANESE_SUPPLEMENT_ID);
-@property (readonly, class) jint TAKRI_ID NS_SWIFT_NAME(TAKRI_ID);
-@property (readonly, class) jint BASSA_VAH_ID NS_SWIFT_NAME(BASSA_VAH_ID);
-@property (readonly, class) jint CAUCASIAN_ALBANIAN_ID NS_SWIFT_NAME(CAUCASIAN_ALBANIAN_ID);
-@property (readonly, class) jint COPTIC_EPACT_NUMBERS_ID NS_SWIFT_NAME(COPTIC_EPACT_NUMBERS_ID);
-@property (readonly, class) jint COMBINING_DIACRITICAL_MARKS_EXTENDED_ID NS_SWIFT_NAME(COMBINING_DIACRITICAL_MARKS_EXTENDED_ID);
-@property (readonly, class) jint DUPLOYAN_ID NS_SWIFT_NAME(DUPLOYAN_ID);
-@property (readonly, class) jint ELBASAN_ID NS_SWIFT_NAME(ELBASAN_ID);
-@property (readonly, class) jint GEOMETRIC_SHAPES_EXTENDED_ID NS_SWIFT_NAME(GEOMETRIC_SHAPES_EXTENDED_ID);
-@property (readonly, class) jint GRANTHA_ID NS_SWIFT_NAME(GRANTHA_ID);
-@property (readonly, class) jint KHOJKI_ID NS_SWIFT_NAME(KHOJKI_ID);
-@property (readonly, class) jint KHUDAWADI_ID NS_SWIFT_NAME(KHUDAWADI_ID);
-@property (readonly, class) jint LATIN_EXTENDED_E_ID NS_SWIFT_NAME(LATIN_EXTENDED_E_ID);
-@property (readonly, class) jint LINEAR_A_ID NS_SWIFT_NAME(LINEAR_A_ID);
-@property (readonly, class) jint MAHAJANI_ID NS_SWIFT_NAME(MAHAJANI_ID);
-@property (readonly, class) jint MANICHAEAN_ID NS_SWIFT_NAME(MANICHAEAN_ID);
-@property (readonly, class) jint MENDE_KIKAKUI_ID NS_SWIFT_NAME(MENDE_KIKAKUI_ID);
-@property (readonly, class) jint MODI_ID NS_SWIFT_NAME(MODI_ID);
-@property (readonly, class) jint MRO_ID NS_SWIFT_NAME(MRO_ID);
-@property (readonly, class) jint MYANMAR_EXTENDED_B_ID NS_SWIFT_NAME(MYANMAR_EXTENDED_B_ID);
-@property (readonly, class) jint NABATAEAN_ID NS_SWIFT_NAME(NABATAEAN_ID);
-@property (readonly, class) jint OLD_NORTH_ARABIAN_ID NS_SWIFT_NAME(OLD_NORTH_ARABIAN_ID);
-@property (readonly, class) jint OLD_PERMIC_ID NS_SWIFT_NAME(OLD_PERMIC_ID);
-@property (readonly, class) jint ORNAMENTAL_DINGBATS_ID NS_SWIFT_NAME(ORNAMENTAL_DINGBATS_ID);
-@property (readonly, class) jint PAHAWH_HMONG_ID NS_SWIFT_NAME(PAHAWH_HMONG_ID);
-@property (readonly, class) jint PALMYRENE_ID NS_SWIFT_NAME(PALMYRENE_ID);
-@property (readonly, class) jint PAU_CIN_HAU_ID NS_SWIFT_NAME(PAU_CIN_HAU_ID);
-@property (readonly, class) jint PSALTER_PAHLAVI_ID NS_SWIFT_NAME(PSALTER_PAHLAVI_ID);
-@property (readonly, class) jint SHORTHAND_FORMAT_CONTROLS_ID NS_SWIFT_NAME(SHORTHAND_FORMAT_CONTROLS_ID);
-@property (readonly, class) jint SIDDHAM_ID NS_SWIFT_NAME(SIDDHAM_ID);
-@property (readonly, class) jint SINHALA_ARCHAIC_NUMBERS_ID NS_SWIFT_NAME(SINHALA_ARCHAIC_NUMBERS_ID);
-@property (readonly, class) jint SUPPLEMENTAL_ARROWS_C_ID NS_SWIFT_NAME(SUPPLEMENTAL_ARROWS_C_ID);
-@property (readonly, class) jint TIRHUTA_ID NS_SWIFT_NAME(TIRHUTA_ID);
-@property (readonly, class) jint WARANG_CITI_ID NS_SWIFT_NAME(WARANG_CITI_ID);
-@property (readonly, class) jint AHOM_ID NS_SWIFT_NAME(AHOM_ID);
-@property (readonly, class) jint ANATOLIAN_HIEROGLYPHS_ID NS_SWIFT_NAME(ANATOLIAN_HIEROGLYPHS_ID);
-@property (readonly, class) jint CHEROKEE_SUPPLEMENT_ID NS_SWIFT_NAME(CHEROKEE_SUPPLEMENT_ID);
-@property (readonly, class) jint CJK_UNIFIED_IDEOGRAPHS_EXTENSION_E_ID NS_SWIFT_NAME(CJK_UNIFIED_IDEOGRAPHS_EXTENSION_E_ID);
-@property (readonly, class) jint EARLY_DYNASTIC_CUNEIFORM_ID NS_SWIFT_NAME(EARLY_DYNASTIC_CUNEIFORM_ID);
-@property (readonly, class) jint HATRAN_ID NS_SWIFT_NAME(HATRAN_ID);
-@property (readonly, class) jint MULTANI_ID NS_SWIFT_NAME(MULTANI_ID);
-@property (readonly, class) jint OLD_HUNGARIAN_ID NS_SWIFT_NAME(OLD_HUNGARIAN_ID);
-@property (readonly, class) jint SUPPLEMENTAL_SYMBOLS_AND_PICTOGRAPHS_ID NS_SWIFT_NAME(SUPPLEMENTAL_SYMBOLS_AND_PICTOGRAPHS_ID);
-@property (readonly, class) jint SUTTON_SIGNWRITING_ID NS_SWIFT_NAME(SUTTON_SIGNWRITING_ID);
-@property (readonly, class) jint ADLAM_ID NS_SWIFT_NAME(ADLAM_ID);
-@property (readonly, class) jint BHAIKSUKI_ID NS_SWIFT_NAME(BHAIKSUKI_ID);
-@property (readonly, class) jint CYRILLIC_EXTENDED_C_ID NS_SWIFT_NAME(CYRILLIC_EXTENDED_C_ID);
-@property (readonly, class) jint GLAGOLITIC_SUPPLEMENT_ID NS_SWIFT_NAME(GLAGOLITIC_SUPPLEMENT_ID);
-@property (readonly, class) jint IDEOGRAPHIC_SYMBOLS_AND_PUNCTUATION_ID NS_SWIFT_NAME(IDEOGRAPHIC_SYMBOLS_AND_PUNCTUATION_ID);
-@property (readonly, class) jint MARCHEN_ID NS_SWIFT_NAME(MARCHEN_ID);
-@property (readonly, class) jint MONGOLIAN_SUPPLEMENT_ID NS_SWIFT_NAME(MONGOLIAN_SUPPLEMENT_ID);
-@property (readonly, class) jint NEWA_ID NS_SWIFT_NAME(NEWA_ID);
-@property (readonly, class) jint OSAGE_ID NS_SWIFT_NAME(OSAGE_ID);
-@property (readonly, class) jint TANGUT_ID NS_SWIFT_NAME(TANGUT_ID);
-@property (readonly, class) jint TANGUT_COMPONENTS_ID NS_SWIFT_NAME(TANGUT_COMPONENTS_ID);
-@property (readonly, class) jint COUNT NS_SWIFT_NAME(COUNT);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *NO_BLOCK NS_SWIFT_NAME(NO_BLOCK);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *BASIC_LATIN NS_SWIFT_NAME(BASIC_LATIN);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *LATIN_1_SUPPLEMENT NS_SWIFT_NAME(LATIN_1_SUPPLEMENT);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *LATIN_EXTENDED_A NS_SWIFT_NAME(LATIN_EXTENDED_A);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *LATIN_EXTENDED_B NS_SWIFT_NAME(LATIN_EXTENDED_B);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *IPA_EXTENSIONS NS_SWIFT_NAME(IPA_EXTENSIONS);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *SPACING_MODIFIER_LETTERS NS_SWIFT_NAME(SPACING_MODIFIER_LETTERS);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *COMBINING_DIACRITICAL_MARKS NS_SWIFT_NAME(COMBINING_DIACRITICAL_MARKS);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *GREEK NS_SWIFT_NAME(GREEK);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *CYRILLIC NS_SWIFT_NAME(CYRILLIC);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *ARMENIAN NS_SWIFT_NAME(ARMENIAN);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *HEBREW NS_SWIFT_NAME(HEBREW);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *ARABIC NS_SWIFT_NAME(ARABIC);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *SYRIAC NS_SWIFT_NAME(SYRIAC);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *THAANA NS_SWIFT_NAME(THAANA);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *DEVANAGARI NS_SWIFT_NAME(DEVANAGARI);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *BENGALI NS_SWIFT_NAME(BENGALI);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *GURMUKHI NS_SWIFT_NAME(GURMUKHI);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *GUJARATI NS_SWIFT_NAME(GUJARATI);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *ORIYA NS_SWIFT_NAME(ORIYA);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *TAMIL NS_SWIFT_NAME(TAMIL);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *TELUGU NS_SWIFT_NAME(TELUGU);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *KANNADA NS_SWIFT_NAME(KANNADA);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *MALAYALAM NS_SWIFT_NAME(MALAYALAM);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *SINHALA NS_SWIFT_NAME(SINHALA);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *THAI NS_SWIFT_NAME(THAI);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *LAO NS_SWIFT_NAME(LAO);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *TIBETAN NS_SWIFT_NAME(TIBETAN);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *MYANMAR NS_SWIFT_NAME(MYANMAR);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *GEORGIAN NS_SWIFT_NAME(GEORGIAN);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *HANGUL_JAMO NS_SWIFT_NAME(HANGUL_JAMO);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *ETHIOPIC NS_SWIFT_NAME(ETHIOPIC);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *CHEROKEE NS_SWIFT_NAME(CHEROKEE);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *UNIFIED_CANADIAN_ABORIGINAL_SYLLABICS NS_SWIFT_NAME(UNIFIED_CANADIAN_ABORIGINAL_SYLLABICS);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *OGHAM NS_SWIFT_NAME(OGHAM);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *RUNIC NS_SWIFT_NAME(RUNIC);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *KHMER NS_SWIFT_NAME(KHMER);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *MONGOLIAN NS_SWIFT_NAME(MONGOLIAN);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *LATIN_EXTENDED_ADDITIONAL NS_SWIFT_NAME(LATIN_EXTENDED_ADDITIONAL);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *GREEK_EXTENDED NS_SWIFT_NAME(GREEK_EXTENDED);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *GENERAL_PUNCTUATION NS_SWIFT_NAME(GENERAL_PUNCTUATION);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *SUPERSCRIPTS_AND_SUBSCRIPTS NS_SWIFT_NAME(SUPERSCRIPTS_AND_SUBSCRIPTS);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *CURRENCY_SYMBOLS NS_SWIFT_NAME(CURRENCY_SYMBOLS);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *COMBINING_MARKS_FOR_SYMBOLS NS_SWIFT_NAME(COMBINING_MARKS_FOR_SYMBOLS);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *LETTERLIKE_SYMBOLS NS_SWIFT_NAME(LETTERLIKE_SYMBOLS);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *NUMBER_FORMS NS_SWIFT_NAME(NUMBER_FORMS);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *ARROWS NS_SWIFT_NAME(ARROWS);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *MATHEMATICAL_OPERATORS NS_SWIFT_NAME(MATHEMATICAL_OPERATORS);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *MISCELLANEOUS_TECHNICAL NS_SWIFT_NAME(MISCELLANEOUS_TECHNICAL);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *CONTROL_PICTURES NS_SWIFT_NAME(CONTROL_PICTURES);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *OPTICAL_CHARACTER_RECOGNITION NS_SWIFT_NAME(OPTICAL_CHARACTER_RECOGNITION);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *ENCLOSED_ALPHANUMERICS NS_SWIFT_NAME(ENCLOSED_ALPHANUMERICS);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *BOX_DRAWING NS_SWIFT_NAME(BOX_DRAWING);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *BLOCK_ELEMENTS NS_SWIFT_NAME(BLOCK_ELEMENTS);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *GEOMETRIC_SHAPES NS_SWIFT_NAME(GEOMETRIC_SHAPES);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *MISCELLANEOUS_SYMBOLS NS_SWIFT_NAME(MISCELLANEOUS_SYMBOLS);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *DINGBATS NS_SWIFT_NAME(DINGBATS);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *BRAILLE_PATTERNS NS_SWIFT_NAME(BRAILLE_PATTERNS);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *CJK_RADICALS_SUPPLEMENT NS_SWIFT_NAME(CJK_RADICALS_SUPPLEMENT);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *KANGXI_RADICALS NS_SWIFT_NAME(KANGXI_RADICALS);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *IDEOGRAPHIC_DESCRIPTION_CHARACTERS NS_SWIFT_NAME(IDEOGRAPHIC_DESCRIPTION_CHARACTERS);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *CJK_SYMBOLS_AND_PUNCTUATION NS_SWIFT_NAME(CJK_SYMBOLS_AND_PUNCTUATION);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *HIRAGANA NS_SWIFT_NAME(HIRAGANA);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *KATAKANA NS_SWIFT_NAME(KATAKANA);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *BOPOMOFO NS_SWIFT_NAME(BOPOMOFO);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *HANGUL_COMPATIBILITY_JAMO NS_SWIFT_NAME(HANGUL_COMPATIBILITY_JAMO);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *KANBUN NS_SWIFT_NAME(KANBUN);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *BOPOMOFO_EXTENDED NS_SWIFT_NAME(BOPOMOFO_EXTENDED);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *ENCLOSED_CJK_LETTERS_AND_MONTHS NS_SWIFT_NAME(ENCLOSED_CJK_LETTERS_AND_MONTHS);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *CJK_COMPATIBILITY NS_SWIFT_NAME(CJK_COMPATIBILITY);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *CJK_UNIFIED_IDEOGRAPHS_EXTENSION_A NS_SWIFT_NAME(CJK_UNIFIED_IDEOGRAPHS_EXTENSION_A);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *CJK_UNIFIED_IDEOGRAPHS NS_SWIFT_NAME(CJK_UNIFIED_IDEOGRAPHS);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *YI_SYLLABLES NS_SWIFT_NAME(YI_SYLLABLES);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *YI_RADICALS NS_SWIFT_NAME(YI_RADICALS);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *HANGUL_SYLLABLES NS_SWIFT_NAME(HANGUL_SYLLABLES);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *HIGH_SURROGATES NS_SWIFT_NAME(HIGH_SURROGATES);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *HIGH_PRIVATE_USE_SURROGATES NS_SWIFT_NAME(HIGH_PRIVATE_USE_SURROGATES);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *LOW_SURROGATES NS_SWIFT_NAME(LOW_SURROGATES);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *PRIVATE_USE_AREA NS_SWIFT_NAME(PRIVATE_USE_AREA);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *PRIVATE_USE NS_SWIFT_NAME(PRIVATE_USE);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *CJK_COMPATIBILITY_IDEOGRAPHS NS_SWIFT_NAME(CJK_COMPATIBILITY_IDEOGRAPHS);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *ALPHABETIC_PRESENTATION_FORMS NS_SWIFT_NAME(ALPHABETIC_PRESENTATION_FORMS);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *ARABIC_PRESENTATION_FORMS_A NS_SWIFT_NAME(ARABIC_PRESENTATION_FORMS_A);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *COMBINING_HALF_MARKS NS_SWIFT_NAME(COMBINING_HALF_MARKS);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *CJK_COMPATIBILITY_FORMS NS_SWIFT_NAME(CJK_COMPATIBILITY_FORMS);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *SMALL_FORM_VARIANTS NS_SWIFT_NAME(SMALL_FORM_VARIANTS);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *ARABIC_PRESENTATION_FORMS_B NS_SWIFT_NAME(ARABIC_PRESENTATION_FORMS_B);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *SPECIALS NS_SWIFT_NAME(SPECIALS);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *HALFWIDTH_AND_FULLWIDTH_FORMS NS_SWIFT_NAME(HALFWIDTH_AND_FULLWIDTH_FORMS);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *OLD_ITALIC NS_SWIFT_NAME(OLD_ITALIC);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *GOTHIC NS_SWIFT_NAME(GOTHIC);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *DESERET NS_SWIFT_NAME(DESERET);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *BYZANTINE_MUSICAL_SYMBOLS NS_SWIFT_NAME(BYZANTINE_MUSICAL_SYMBOLS);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *MUSICAL_SYMBOLS NS_SWIFT_NAME(MUSICAL_SYMBOLS);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *MATHEMATICAL_ALPHANUMERIC_SYMBOLS NS_SWIFT_NAME(MATHEMATICAL_ALPHANUMERIC_SYMBOLS);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *CJK_UNIFIED_IDEOGRAPHS_EXTENSION_B NS_SWIFT_NAME(CJK_UNIFIED_IDEOGRAPHS_EXTENSION_B);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *CJK_COMPATIBILITY_IDEOGRAPHS_SUPPLEMENT NS_SWIFT_NAME(CJK_COMPATIBILITY_IDEOGRAPHS_SUPPLEMENT);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *TAGS NS_SWIFT_NAME(TAGS);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *CYRILLIC_SUPPLEMENTARY NS_SWIFT_NAME(CYRILLIC_SUPPLEMENTARY);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *CYRILLIC_SUPPLEMENT NS_SWIFT_NAME(CYRILLIC_SUPPLEMENT);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *TAGALOG NS_SWIFT_NAME(TAGALOG);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *HANUNOO NS_SWIFT_NAME(HANUNOO);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *BUHID NS_SWIFT_NAME(BUHID);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *TAGBANWA NS_SWIFT_NAME(TAGBANWA);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *MISCELLANEOUS_MATHEMATICAL_SYMBOLS_A NS_SWIFT_NAME(MISCELLANEOUS_MATHEMATICAL_SYMBOLS_A);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *SUPPLEMENTAL_ARROWS_A NS_SWIFT_NAME(SUPPLEMENTAL_ARROWS_A);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *SUPPLEMENTAL_ARROWS_B NS_SWIFT_NAME(SUPPLEMENTAL_ARROWS_B);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *MISCELLANEOUS_MATHEMATICAL_SYMBOLS_B NS_SWIFT_NAME(MISCELLANEOUS_MATHEMATICAL_SYMBOLS_B);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *SUPPLEMENTAL_MATHEMATICAL_OPERATORS NS_SWIFT_NAME(SUPPLEMENTAL_MATHEMATICAL_OPERATORS);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *KATAKANA_PHONETIC_EXTENSIONS NS_SWIFT_NAME(KATAKANA_PHONETIC_EXTENSIONS);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *VARIATION_SELECTORS NS_SWIFT_NAME(VARIATION_SELECTORS);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *SUPPLEMENTARY_PRIVATE_USE_AREA_A NS_SWIFT_NAME(SUPPLEMENTARY_PRIVATE_USE_AREA_A);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *SUPPLEMENTARY_PRIVATE_USE_AREA_B NS_SWIFT_NAME(SUPPLEMENTARY_PRIVATE_USE_AREA_B);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *LIMBU NS_SWIFT_NAME(LIMBU);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *TAI_LE NS_SWIFT_NAME(TAI_LE);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *KHMER_SYMBOLS NS_SWIFT_NAME(KHMER_SYMBOLS);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *PHONETIC_EXTENSIONS NS_SWIFT_NAME(PHONETIC_EXTENSIONS);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *MISCELLANEOUS_SYMBOLS_AND_ARROWS NS_SWIFT_NAME(MISCELLANEOUS_SYMBOLS_AND_ARROWS);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *YIJING_HEXAGRAM_SYMBOLS NS_SWIFT_NAME(YIJING_HEXAGRAM_SYMBOLS);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *LINEAR_B_SYLLABARY NS_SWIFT_NAME(LINEAR_B_SYLLABARY);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *LINEAR_B_IDEOGRAMS NS_SWIFT_NAME(LINEAR_B_IDEOGRAMS);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *AEGEAN_NUMBERS NS_SWIFT_NAME(AEGEAN_NUMBERS);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *UGARITIC NS_SWIFT_NAME(UGARITIC);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *SHAVIAN NS_SWIFT_NAME(SHAVIAN);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *OSMANYA NS_SWIFT_NAME(OSMANYA);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *CYPRIOT_SYLLABARY NS_SWIFT_NAME(CYPRIOT_SYLLABARY);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *TAI_XUAN_JING_SYMBOLS NS_SWIFT_NAME(TAI_XUAN_JING_SYMBOLS);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *VARIATION_SELECTORS_SUPPLEMENT NS_SWIFT_NAME(VARIATION_SELECTORS_SUPPLEMENT);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *ANCIENT_GREEK_MUSICAL_NOTATION NS_SWIFT_NAME(ANCIENT_GREEK_MUSICAL_NOTATION);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *ANCIENT_GREEK_NUMBERS NS_SWIFT_NAME(ANCIENT_GREEK_NUMBERS);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *ARABIC_SUPPLEMENT NS_SWIFT_NAME(ARABIC_SUPPLEMENT);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *BUGINESE NS_SWIFT_NAME(BUGINESE);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *CJK_STROKES NS_SWIFT_NAME(CJK_STROKES);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *COMBINING_DIACRITICAL_MARKS_SUPPLEMENT NS_SWIFT_NAME(COMBINING_DIACRITICAL_MARKS_SUPPLEMENT);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *COPTIC NS_SWIFT_NAME(COPTIC);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *ETHIOPIC_EXTENDED NS_SWIFT_NAME(ETHIOPIC_EXTENDED);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *ETHIOPIC_SUPPLEMENT NS_SWIFT_NAME(ETHIOPIC_SUPPLEMENT);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *GEORGIAN_SUPPLEMENT NS_SWIFT_NAME(GEORGIAN_SUPPLEMENT);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *GLAGOLITIC NS_SWIFT_NAME(GLAGOLITIC);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *KHAROSHTHI NS_SWIFT_NAME(KHAROSHTHI);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *MODIFIER_TONE_LETTERS NS_SWIFT_NAME(MODIFIER_TONE_LETTERS);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *NEW_TAI_LUE NS_SWIFT_NAME(NEW_TAI_LUE);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *OLD_PERSIAN NS_SWIFT_NAME(OLD_PERSIAN);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *PHONETIC_EXTENSIONS_SUPPLEMENT NS_SWIFT_NAME(PHONETIC_EXTENSIONS_SUPPLEMENT);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *SUPPLEMENTAL_PUNCTUATION NS_SWIFT_NAME(SUPPLEMENTAL_PUNCTUATION);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *SYLOTI_NAGRI NS_SWIFT_NAME(SYLOTI_NAGRI);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *TIFINAGH NS_SWIFT_NAME(TIFINAGH);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *VERTICAL_FORMS NS_SWIFT_NAME(VERTICAL_FORMS);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *NKO NS_SWIFT_NAME(NKO);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *BALINESE NS_SWIFT_NAME(BALINESE);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *LATIN_EXTENDED_C NS_SWIFT_NAME(LATIN_EXTENDED_C);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *LATIN_EXTENDED_D NS_SWIFT_NAME(LATIN_EXTENDED_D);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *PHAGS_PA NS_SWIFT_NAME(PHAGS_PA);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *PHOENICIAN NS_SWIFT_NAME(PHOENICIAN);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *CUNEIFORM NS_SWIFT_NAME(CUNEIFORM);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *CUNEIFORM_NUMBERS_AND_PUNCTUATION NS_SWIFT_NAME(CUNEIFORM_NUMBERS_AND_PUNCTUATION);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *COUNTING_ROD_NUMERALS NS_SWIFT_NAME(COUNTING_ROD_NUMERALS);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *SUNDANESE NS_SWIFT_NAME(SUNDANESE);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *LEPCHA NS_SWIFT_NAME(LEPCHA);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *OL_CHIKI NS_SWIFT_NAME(OL_CHIKI);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *CYRILLIC_EXTENDED_A NS_SWIFT_NAME(CYRILLIC_EXTENDED_A);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *VAI NS_SWIFT_NAME(VAI);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *CYRILLIC_EXTENDED_B NS_SWIFT_NAME(CYRILLIC_EXTENDED_B);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *SAURASHTRA NS_SWIFT_NAME(SAURASHTRA);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *KAYAH_LI NS_SWIFT_NAME(KAYAH_LI);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *REJANG NS_SWIFT_NAME(REJANG);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *CHAM NS_SWIFT_NAME(CHAM);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *ANCIENT_SYMBOLS NS_SWIFT_NAME(ANCIENT_SYMBOLS);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *PHAISTOS_DISC NS_SWIFT_NAME(PHAISTOS_DISC);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *LYCIAN NS_SWIFT_NAME(LYCIAN);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *CARIAN NS_SWIFT_NAME(CARIAN);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *LYDIAN NS_SWIFT_NAME(LYDIAN);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *MAHJONG_TILES NS_SWIFT_NAME(MAHJONG_TILES);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *DOMINO_TILES NS_SWIFT_NAME(DOMINO_TILES);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *SAMARITAN NS_SWIFT_NAME(SAMARITAN);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *UNIFIED_CANADIAN_ABORIGINAL_SYLLABICS_EXTENDED NS_SWIFT_NAME(UNIFIED_CANADIAN_ABORIGINAL_SYLLABICS_EXTENDED);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *TAI_THAM NS_SWIFT_NAME(TAI_THAM);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *VEDIC_EXTENSIONS NS_SWIFT_NAME(VEDIC_EXTENSIONS);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *LISU NS_SWIFT_NAME(LISU);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *BAMUM NS_SWIFT_NAME(BAMUM);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *COMMON_INDIC_NUMBER_FORMS NS_SWIFT_NAME(COMMON_INDIC_NUMBER_FORMS);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *DEVANAGARI_EXTENDED NS_SWIFT_NAME(DEVANAGARI_EXTENDED);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *HANGUL_JAMO_EXTENDED_A NS_SWIFT_NAME(HANGUL_JAMO_EXTENDED_A);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *JAVANESE NS_SWIFT_NAME(JAVANESE);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *MYANMAR_EXTENDED_A NS_SWIFT_NAME(MYANMAR_EXTENDED_A);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *TAI_VIET NS_SWIFT_NAME(TAI_VIET);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *MEETEI_MAYEK NS_SWIFT_NAME(MEETEI_MAYEK);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *HANGUL_JAMO_EXTENDED_B NS_SWIFT_NAME(HANGUL_JAMO_EXTENDED_B);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *IMPERIAL_ARAMAIC NS_SWIFT_NAME(IMPERIAL_ARAMAIC);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *OLD_SOUTH_ARABIAN NS_SWIFT_NAME(OLD_SOUTH_ARABIAN);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *AVESTAN NS_SWIFT_NAME(AVESTAN);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *INSCRIPTIONAL_PARTHIAN NS_SWIFT_NAME(INSCRIPTIONAL_PARTHIAN);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *INSCRIPTIONAL_PAHLAVI NS_SWIFT_NAME(INSCRIPTIONAL_PAHLAVI);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *OLD_TURKIC NS_SWIFT_NAME(OLD_TURKIC);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *RUMI_NUMERAL_SYMBOLS NS_SWIFT_NAME(RUMI_NUMERAL_SYMBOLS);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *KAITHI NS_SWIFT_NAME(KAITHI);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *EGYPTIAN_HIEROGLYPHS NS_SWIFT_NAME(EGYPTIAN_HIEROGLYPHS);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *ENCLOSED_ALPHANUMERIC_SUPPLEMENT NS_SWIFT_NAME(ENCLOSED_ALPHANUMERIC_SUPPLEMENT);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *ENCLOSED_IDEOGRAPHIC_SUPPLEMENT NS_SWIFT_NAME(ENCLOSED_IDEOGRAPHIC_SUPPLEMENT);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *CJK_UNIFIED_IDEOGRAPHS_EXTENSION_C NS_SWIFT_NAME(CJK_UNIFIED_IDEOGRAPHS_EXTENSION_C);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *MANDAIC NS_SWIFT_NAME(MANDAIC);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *BATAK NS_SWIFT_NAME(BATAK);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *ETHIOPIC_EXTENDED_A NS_SWIFT_NAME(ETHIOPIC_EXTENDED_A);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *BRAHMI NS_SWIFT_NAME(BRAHMI);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *BAMUM_SUPPLEMENT NS_SWIFT_NAME(BAMUM_SUPPLEMENT);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *KANA_SUPPLEMENT NS_SWIFT_NAME(KANA_SUPPLEMENT);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *PLAYING_CARDS NS_SWIFT_NAME(PLAYING_CARDS);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *MISCELLANEOUS_SYMBOLS_AND_PICTOGRAPHS NS_SWIFT_NAME(MISCELLANEOUS_SYMBOLS_AND_PICTOGRAPHS);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *EMOTICONS NS_SWIFT_NAME(EMOTICONS);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *TRANSPORT_AND_MAP_SYMBOLS NS_SWIFT_NAME(TRANSPORT_AND_MAP_SYMBOLS);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *ALCHEMICAL_SYMBOLS NS_SWIFT_NAME(ALCHEMICAL_SYMBOLS);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *CJK_UNIFIED_IDEOGRAPHS_EXTENSION_D NS_SWIFT_NAME(CJK_UNIFIED_IDEOGRAPHS_EXTENSION_D);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *ARABIC_EXTENDED_A NS_SWIFT_NAME(ARABIC_EXTENDED_A);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *ARABIC_MATHEMATICAL_ALPHABETIC_SYMBOLS NS_SWIFT_NAME(ARABIC_MATHEMATICAL_ALPHABETIC_SYMBOLS);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *CHAKMA NS_SWIFT_NAME(CHAKMA);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *MEETEI_MAYEK_EXTENSIONS NS_SWIFT_NAME(MEETEI_MAYEK_EXTENSIONS);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *MEROITIC_CURSIVE NS_SWIFT_NAME(MEROITIC_CURSIVE);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *MEROITIC_HIEROGLYPHS NS_SWIFT_NAME(MEROITIC_HIEROGLYPHS);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *MIAO NS_SWIFT_NAME(MIAO);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *SHARADA NS_SWIFT_NAME(SHARADA);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *SORA_SOMPENG NS_SWIFT_NAME(SORA_SOMPENG);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *SUNDANESE_SUPPLEMENT NS_SWIFT_NAME(SUNDANESE_SUPPLEMENT);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *TAKRI NS_SWIFT_NAME(TAKRI);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *BASSA_VAH NS_SWIFT_NAME(BASSA_VAH);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *CAUCASIAN_ALBANIAN NS_SWIFT_NAME(CAUCASIAN_ALBANIAN);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *COPTIC_EPACT_NUMBERS NS_SWIFT_NAME(COPTIC_EPACT_NUMBERS);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *COMBINING_DIACRITICAL_MARKS_EXTENDED NS_SWIFT_NAME(COMBINING_DIACRITICAL_MARKS_EXTENDED);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *DUPLOYAN NS_SWIFT_NAME(DUPLOYAN);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *ELBASAN NS_SWIFT_NAME(ELBASAN);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *GEOMETRIC_SHAPES_EXTENDED NS_SWIFT_NAME(GEOMETRIC_SHAPES_EXTENDED);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *GRANTHA NS_SWIFT_NAME(GRANTHA);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *KHOJKI NS_SWIFT_NAME(KHOJKI);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *KHUDAWADI NS_SWIFT_NAME(KHUDAWADI);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *LATIN_EXTENDED_E NS_SWIFT_NAME(LATIN_EXTENDED_E);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *LINEAR_A NS_SWIFT_NAME(LINEAR_A);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *MAHAJANI NS_SWIFT_NAME(MAHAJANI);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *MANICHAEAN NS_SWIFT_NAME(MANICHAEAN);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *MENDE_KIKAKUI NS_SWIFT_NAME(MENDE_KIKAKUI);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *MODI NS_SWIFT_NAME(MODI);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *MRO NS_SWIFT_NAME(MRO);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *MYANMAR_EXTENDED_B NS_SWIFT_NAME(MYANMAR_EXTENDED_B);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *NABATAEAN NS_SWIFT_NAME(NABATAEAN);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *OLD_NORTH_ARABIAN NS_SWIFT_NAME(OLD_NORTH_ARABIAN);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *OLD_PERMIC NS_SWIFT_NAME(OLD_PERMIC);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *ORNAMENTAL_DINGBATS NS_SWIFT_NAME(ORNAMENTAL_DINGBATS);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *PAHAWH_HMONG NS_SWIFT_NAME(PAHAWH_HMONG);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *PALMYRENE NS_SWIFT_NAME(PALMYRENE);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *PAU_CIN_HAU NS_SWIFT_NAME(PAU_CIN_HAU);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *PSALTER_PAHLAVI NS_SWIFT_NAME(PSALTER_PAHLAVI);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *SHORTHAND_FORMAT_CONTROLS NS_SWIFT_NAME(SHORTHAND_FORMAT_CONTROLS);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *SIDDHAM NS_SWIFT_NAME(SIDDHAM);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *SINHALA_ARCHAIC_NUMBERS NS_SWIFT_NAME(SINHALA_ARCHAIC_NUMBERS);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *SUPPLEMENTAL_ARROWS_C NS_SWIFT_NAME(SUPPLEMENTAL_ARROWS_C);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *TIRHUTA NS_SWIFT_NAME(TIRHUTA);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *WARANG_CITI NS_SWIFT_NAME(WARANG_CITI);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *AHOM NS_SWIFT_NAME(AHOM);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *ANATOLIAN_HIEROGLYPHS NS_SWIFT_NAME(ANATOLIAN_HIEROGLYPHS);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *CHEROKEE_SUPPLEMENT NS_SWIFT_NAME(CHEROKEE_SUPPLEMENT);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *CJK_UNIFIED_IDEOGRAPHS_EXTENSION_E NS_SWIFT_NAME(CJK_UNIFIED_IDEOGRAPHS_EXTENSION_E);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *EARLY_DYNASTIC_CUNEIFORM NS_SWIFT_NAME(EARLY_DYNASTIC_CUNEIFORM);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *HATRAN NS_SWIFT_NAME(HATRAN);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *MULTANI NS_SWIFT_NAME(MULTANI);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *OLD_HUNGARIAN NS_SWIFT_NAME(OLD_HUNGARIAN);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *SUPPLEMENTAL_SYMBOLS_AND_PICTOGRAPHS NS_SWIFT_NAME(SUPPLEMENTAL_SYMBOLS_AND_PICTOGRAPHS);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *SUTTON_SIGNWRITING NS_SWIFT_NAME(SUTTON_SIGNWRITING);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *ADLAM NS_SWIFT_NAME(ADLAM);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *BHAIKSUKI NS_SWIFT_NAME(BHAIKSUKI);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *CYRILLIC_EXTENDED_C NS_SWIFT_NAME(CYRILLIC_EXTENDED_C);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *GLAGOLITIC_SUPPLEMENT NS_SWIFT_NAME(GLAGOLITIC_SUPPLEMENT);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *IDEOGRAPHIC_SYMBOLS_AND_PUNCTUATION NS_SWIFT_NAME(IDEOGRAPHIC_SYMBOLS_AND_PUNCTUATION);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *MARCHEN NS_SWIFT_NAME(MARCHEN);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *MONGOLIAN_SUPPLEMENT NS_SWIFT_NAME(MONGOLIAN_SUPPLEMENT);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *NEWA NS_SWIFT_NAME(NEWA);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *OSAGE NS_SWIFT_NAME(OSAGE);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *TANGUT NS_SWIFT_NAME(TANGUT);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *TANGUT_COMPONENTS NS_SWIFT_NAME(TANGUT_COMPONENTS);
-@property (readonly, class, strong) AndroidIcuLangUCharacter_UnicodeBlock *INVALID_CODE NS_SWIFT_NAME(INVALID_CODE);
 
 #pragma mark Public
 
@@ -6363,23 +5793,14 @@ J2OBJC_TYPE_LITERAL_HEADER(AndroidIcuLangUCharacter_UnicodeBlock)
 #if !defined (AndroidIcuLangUCharacter_EastAsianWidth_) && (INCLUDE_ALL_AndroidIcuLangUCharacter || defined(INCLUDE_AndroidIcuLangUCharacter_EastAsianWidth))
 #define AndroidIcuLangUCharacter_EastAsianWidth_
 
+@class JavaLangInteger;
+
 /*!
  @brief East Asian Width constants.
  - seealso: UProperty#EAST_ASIAN_WIDTH
  - seealso: UCharacter#getIntPropertyValue
  */
 @protocol AndroidIcuLangUCharacter_EastAsianWidth < JavaObject >
-
-@end
-
-@interface AndroidIcuLangUCharacter_EastAsianWidth : NSObject
-@property (readonly, class) jint NEUTRAL NS_SWIFT_NAME(NEUTRAL);
-@property (readonly, class) jint AMBIGUOUS NS_SWIFT_NAME(AMBIGUOUS);
-@property (readonly, class) jint HALFWIDTH NS_SWIFT_NAME(HALFWIDTH);
-@property (readonly, class) jint FULLWIDTH NS_SWIFT_NAME(FULLWIDTH);
-@property (readonly, class) jint NARROW NS_SWIFT_NAME(NARROW);
-@property (readonly, class) jint WIDE NS_SWIFT_NAME(WIDE);
-@property (readonly, class) jint COUNT NS_SWIFT_NAME(COUNT);
 
 @end
 
@@ -6436,34 +5857,13 @@ J2OBJC_TYPE_LITERAL_HEADER(AndroidIcuLangUCharacter_EastAsianWidth)
 #if !defined (AndroidIcuLangUCharacter_DecompositionType_) && (INCLUDE_ALL_AndroidIcuLangUCharacter || defined(INCLUDE_AndroidIcuLangUCharacter_DecompositionType))
 #define AndroidIcuLangUCharacter_DecompositionType_
 
+@class JavaLangInteger;
+
 /*!
  @brief Decomposition Type constants.
  - seealso: UProperty#DECOMPOSITION_TYPE
  */
 @protocol AndroidIcuLangUCharacter_DecompositionType < JavaObject >
-
-@end
-
-@interface AndroidIcuLangUCharacter_DecompositionType : NSObject
-@property (readonly, class) jint NONE NS_SWIFT_NAME(NONE);
-@property (readonly, class) jint CANONICAL NS_SWIFT_NAME(CANONICAL);
-@property (readonly, class) jint COMPAT NS_SWIFT_NAME(COMPAT);
-@property (readonly, class) jint CIRCLE NS_SWIFT_NAME(CIRCLE);
-@property (readonly, class) jint FINAL NS_SWIFT_NAME(FINAL);
-@property (readonly, class) jint FONT NS_SWIFT_NAME(FONT);
-@property (readonly, class) jint FRACTION NS_SWIFT_NAME(FRACTION);
-@property (readonly, class) jint INITIAL NS_SWIFT_NAME(INITIAL);
-@property (readonly, class) jint ISOLATED NS_SWIFT_NAME(ISOLATED);
-@property (readonly, class) jint MEDIAL NS_SWIFT_NAME(MEDIAL);
-@property (readonly, class) jint NARROW NS_SWIFT_NAME(NARROW);
-@property (readonly, class) jint NOBREAK NS_SWIFT_NAME(NOBREAK);
-@property (readonly, class) jint SMALL NS_SWIFT_NAME(SMALL);
-@property (readonly, class) jint SQUARE NS_SWIFT_NAME(SQUARE);
-@property (readonly, class) jint SUB NS_SWIFT_NAME(SUB);
-@property (readonly, class) jint SUPER NS_SWIFT_NAME(SUPER);
-@property (readonly, class) jint VERTICAL NS_SWIFT_NAME(VERTICAL);
-@property (readonly, class) jint WIDE NS_SWIFT_NAME(WIDE);
-@property (readonly, class) jint COUNT NS_SWIFT_NAME(COUNT);
 
 @end
 
@@ -6592,22 +5992,13 @@ J2OBJC_TYPE_LITERAL_HEADER(AndroidIcuLangUCharacter_DecompositionType)
 #if !defined (AndroidIcuLangUCharacter_JoiningType_) && (INCLUDE_ALL_AndroidIcuLangUCharacter || defined(INCLUDE_AndroidIcuLangUCharacter_JoiningType))
 #define AndroidIcuLangUCharacter_JoiningType_
 
+@class JavaLangInteger;
+
 /*!
  @brief Joining Type constants.
  - seealso: UProperty#JOINING_TYPE
  */
 @protocol AndroidIcuLangUCharacter_JoiningType < JavaObject >
-
-@end
-
-@interface AndroidIcuLangUCharacter_JoiningType : NSObject
-@property (readonly, class) jint NON_JOINING NS_SWIFT_NAME(NON_JOINING);
-@property (readonly, class) jint JOIN_CAUSING NS_SWIFT_NAME(JOIN_CAUSING);
-@property (readonly, class) jint DUAL_JOINING NS_SWIFT_NAME(DUAL_JOINING);
-@property (readonly, class) jint LEFT_JOINING NS_SWIFT_NAME(LEFT_JOINING);
-@property (readonly, class) jint RIGHT_JOINING NS_SWIFT_NAME(RIGHT_JOINING);
-@property (readonly, class) jint TRANSPARENT NS_SWIFT_NAME(TRANSPARENT);
-@property (readonly, class) jint COUNT NS_SWIFT_NAME(COUNT);
 
 @end
 
@@ -6664,106 +6055,13 @@ J2OBJC_TYPE_LITERAL_HEADER(AndroidIcuLangUCharacter_JoiningType)
 #if !defined (AndroidIcuLangUCharacter_JoiningGroup_) && (INCLUDE_ALL_AndroidIcuLangUCharacter || defined(INCLUDE_AndroidIcuLangUCharacter_JoiningGroup))
 #define AndroidIcuLangUCharacter_JoiningGroup_
 
+@class JavaLangInteger;
+
 /*!
  @brief Joining Group constants.
  - seealso: UProperty#JOINING_GROUP
  */
 @protocol AndroidIcuLangUCharacter_JoiningGroup < JavaObject >
-
-@end
-
-@interface AndroidIcuLangUCharacter_JoiningGroup : NSObject
-@property (readonly, class) jint NO_JOINING_GROUP NS_SWIFT_NAME(NO_JOINING_GROUP);
-@property (readonly, class) jint AIN NS_SWIFT_NAME(AIN);
-@property (readonly, class) jint ALAPH NS_SWIFT_NAME(ALAPH);
-@property (readonly, class) jint ALEF NS_SWIFT_NAME(ALEF);
-@property (readonly, class) jint BEH NS_SWIFT_NAME(BEH);
-@property (readonly, class) jint BETH NS_SWIFT_NAME(BETH);
-@property (readonly, class) jint DAL NS_SWIFT_NAME(DAL);
-@property (readonly, class) jint DALATH_RISH NS_SWIFT_NAME(DALATH_RISH);
-@property (readonly, class) jint E NS_SWIFT_NAME(E);
-@property (readonly, class) jint FEH NS_SWIFT_NAME(FEH);
-@property (readonly, class) jint FINAL_SEMKATH NS_SWIFT_NAME(FINAL_SEMKATH);
-@property (readonly, class) jint GAF NS_SWIFT_NAME(GAF);
-@property (readonly, class) jint GAMAL NS_SWIFT_NAME(GAMAL);
-@property (readonly, class) jint HAH NS_SWIFT_NAME(HAH);
-@property (readonly, class) jint TEH_MARBUTA_GOAL NS_SWIFT_NAME(TEH_MARBUTA_GOAL);
-@property (readonly, class) jint HAMZA_ON_HEH_GOAL NS_SWIFT_NAME(HAMZA_ON_HEH_GOAL);
-@property (readonly, class) jint HE NS_SWIFT_NAME(HE);
-@property (readonly, class) jint HEH NS_SWIFT_NAME(HEH);
-@property (readonly, class) jint HEH_GOAL NS_SWIFT_NAME(HEH_GOAL);
-@property (readonly, class) jint HETH NS_SWIFT_NAME(HETH);
-@property (readonly, class) jint KAF NS_SWIFT_NAME(KAF);
-@property (readonly, class) jint KAPH NS_SWIFT_NAME(KAPH);
-@property (readonly, class) jint KNOTTED_HEH NS_SWIFT_NAME(KNOTTED_HEH);
-@property (readonly, class) jint LAM NS_SWIFT_NAME(LAM);
-@property (readonly, class) jint LAMADH NS_SWIFT_NAME(LAMADH);
-@property (readonly, class) jint MEEM NS_SWIFT_NAME(MEEM);
-@property (readonly, class) jint MIM NS_SWIFT_NAME(MIM);
-@property (readonly, class) jint NOON NS_SWIFT_NAME(NOON);
-@property (readonly, class) jint NUN NS_SWIFT_NAME(NUN);
-@property (readonly, class) jint PE NS_SWIFT_NAME(PE);
-@property (readonly, class) jint QAF NS_SWIFT_NAME(QAF);
-@property (readonly, class) jint QAPH NS_SWIFT_NAME(QAPH);
-@property (readonly, class) jint REH NS_SWIFT_NAME(REH);
-@property (readonly, class) jint REVERSED_PE NS_SWIFT_NAME(REVERSED_PE);
-@property (readonly, class) jint SAD NS_SWIFT_NAME(SAD);
-@property (readonly, class) jint SADHE NS_SWIFT_NAME(SADHE);
-@property (readonly, class) jint SEEN NS_SWIFT_NAME(SEEN);
-@property (readonly, class) jint SEMKATH NS_SWIFT_NAME(SEMKATH);
-@property (readonly, class) jint SHIN NS_SWIFT_NAME(SHIN);
-@property (readonly, class) jint SWASH_KAF NS_SWIFT_NAME(SWASH_KAF);
-@property (readonly, class) jint SYRIAC_WAW NS_SWIFT_NAME(SYRIAC_WAW);
-@property (readonly, class) jint TAH NS_SWIFT_NAME(TAH);
-@property (readonly, class) jint TAW NS_SWIFT_NAME(TAW);
-@property (readonly, class) jint TEH_MARBUTA NS_SWIFT_NAME(TEH_MARBUTA);
-@property (readonly, class) jint TETH NS_SWIFT_NAME(TETH);
-@property (readonly, class) jint WAW NS_SWIFT_NAME(WAW);
-@property (readonly, class) jint YEH NS_SWIFT_NAME(YEH);
-@property (readonly, class) jint YEH_BARREE NS_SWIFT_NAME(YEH_BARREE);
-@property (readonly, class) jint YEH_WITH_TAIL NS_SWIFT_NAME(YEH_WITH_TAIL);
-@property (readonly, class) jint YUDH NS_SWIFT_NAME(YUDH);
-@property (readonly, class) jint YUDH_HE NS_SWIFT_NAME(YUDH_HE);
-@property (readonly, class) jint ZAIN NS_SWIFT_NAME(ZAIN);
-@property (readonly, class) jint FE NS_SWIFT_NAME(FE);
-@property (readonly, class) jint KHAPH NS_SWIFT_NAME(KHAPH);
-@property (readonly, class) jint ZHAIN NS_SWIFT_NAME(ZHAIN);
-@property (readonly, class) jint BURUSHASKI_YEH_BARREE NS_SWIFT_NAME(BURUSHASKI_YEH_BARREE);
-@property (readonly, class) jint FARSI_YEH NS_SWIFT_NAME(FARSI_YEH);
-@property (readonly, class) jint NYA NS_SWIFT_NAME(NYA);
-@property (readonly, class) jint ROHINGYA_YEH NS_SWIFT_NAME(ROHINGYA_YEH);
-@property (readonly, class) jint MANICHAEAN_ALEPH NS_SWIFT_NAME(MANICHAEAN_ALEPH);
-@property (readonly, class) jint MANICHAEAN_AYIN NS_SWIFT_NAME(MANICHAEAN_AYIN);
-@property (readonly, class) jint MANICHAEAN_BETH NS_SWIFT_NAME(MANICHAEAN_BETH);
-@property (readonly, class) jint MANICHAEAN_DALETH NS_SWIFT_NAME(MANICHAEAN_DALETH);
-@property (readonly, class) jint MANICHAEAN_DHAMEDH NS_SWIFT_NAME(MANICHAEAN_DHAMEDH);
-@property (readonly, class) jint MANICHAEAN_FIVE NS_SWIFT_NAME(MANICHAEAN_FIVE);
-@property (readonly, class) jint MANICHAEAN_GIMEL NS_SWIFT_NAME(MANICHAEAN_GIMEL);
-@property (readonly, class) jint MANICHAEAN_HETH NS_SWIFT_NAME(MANICHAEAN_HETH);
-@property (readonly, class) jint MANICHAEAN_HUNDRED NS_SWIFT_NAME(MANICHAEAN_HUNDRED);
-@property (readonly, class) jint MANICHAEAN_KAPH NS_SWIFT_NAME(MANICHAEAN_KAPH);
-@property (readonly, class) jint MANICHAEAN_LAMEDH NS_SWIFT_NAME(MANICHAEAN_LAMEDH);
-@property (readonly, class) jint MANICHAEAN_MEM NS_SWIFT_NAME(MANICHAEAN_MEM);
-@property (readonly, class) jint MANICHAEAN_NUN NS_SWIFT_NAME(MANICHAEAN_NUN);
-@property (readonly, class) jint MANICHAEAN_ONE NS_SWIFT_NAME(MANICHAEAN_ONE);
-@property (readonly, class) jint MANICHAEAN_PE NS_SWIFT_NAME(MANICHAEAN_PE);
-@property (readonly, class) jint MANICHAEAN_QOPH NS_SWIFT_NAME(MANICHAEAN_QOPH);
-@property (readonly, class) jint MANICHAEAN_RESH NS_SWIFT_NAME(MANICHAEAN_RESH);
-@property (readonly, class) jint MANICHAEAN_SADHE NS_SWIFT_NAME(MANICHAEAN_SADHE);
-@property (readonly, class) jint MANICHAEAN_SAMEKH NS_SWIFT_NAME(MANICHAEAN_SAMEKH);
-@property (readonly, class) jint MANICHAEAN_TAW NS_SWIFT_NAME(MANICHAEAN_TAW);
-@property (readonly, class) jint MANICHAEAN_TEN NS_SWIFT_NAME(MANICHAEAN_TEN);
-@property (readonly, class) jint MANICHAEAN_TETH NS_SWIFT_NAME(MANICHAEAN_TETH);
-@property (readonly, class) jint MANICHAEAN_THAMEDH NS_SWIFT_NAME(MANICHAEAN_THAMEDH);
-@property (readonly, class) jint MANICHAEAN_TWENTY NS_SWIFT_NAME(MANICHAEAN_TWENTY);
-@property (readonly, class) jint MANICHAEAN_WAW NS_SWIFT_NAME(MANICHAEAN_WAW);
-@property (readonly, class) jint MANICHAEAN_YODH NS_SWIFT_NAME(MANICHAEAN_YODH);
-@property (readonly, class) jint MANICHAEAN_ZAYIN NS_SWIFT_NAME(MANICHAEAN_ZAYIN);
-@property (readonly, class) jint STRAIGHT_WAW NS_SWIFT_NAME(STRAIGHT_WAW);
-@property (readonly, class) jint AFRICAN_FEH NS_SWIFT_NAME(AFRICAN_FEH);
-@property (readonly, class) jint AFRICAN_NOON NS_SWIFT_NAME(AFRICAN_NOON);
-@property (readonly, class) jint AFRICAN_QAF NS_SWIFT_NAME(AFRICAN_QAF);
-@property (readonly, class) jint COUNT NS_SWIFT_NAME(COUNT);
 
 @end
 
@@ -7324,34 +6622,13 @@ J2OBJC_TYPE_LITERAL_HEADER(AndroidIcuLangUCharacter_JoiningGroup)
 #if !defined (AndroidIcuLangUCharacter_GraphemeClusterBreak_) && (INCLUDE_ALL_AndroidIcuLangUCharacter || defined(INCLUDE_AndroidIcuLangUCharacter_GraphemeClusterBreak))
 #define AndroidIcuLangUCharacter_GraphemeClusterBreak_
 
+@class JavaLangInteger;
+
 /*!
  @brief Grapheme Cluster Break constants.
  - seealso: UProperty#GRAPHEME_CLUSTER_BREAK
  */
 @protocol AndroidIcuLangUCharacter_GraphemeClusterBreak < JavaObject >
-
-@end
-
-@interface AndroidIcuLangUCharacter_GraphemeClusterBreak : NSObject
-@property (readonly, class) jint OTHER NS_SWIFT_NAME(OTHER);
-@property (readonly, class) jint CONTROL NS_SWIFT_NAME(CONTROL);
-@property (readonly, class) jint CR NS_SWIFT_NAME(CR);
-@property (readonly, class) jint EXTEND NS_SWIFT_NAME(EXTEND);
-@property (readonly, class) jint L NS_SWIFT_NAME(L);
-@property (readonly, class) jint LF NS_SWIFT_NAME(LF);
-@property (readonly, class) jint LV NS_SWIFT_NAME(LV);
-@property (readonly, class) jint LVT NS_SWIFT_NAME(LVT);
-@property (readonly, class) jint T NS_SWIFT_NAME(T);
-@property (readonly, class) jint V NS_SWIFT_NAME(V);
-@property (readonly, class) jint SPACING_MARK NS_SWIFT_NAME(SPACING_MARK);
-@property (readonly, class) jint PREPEND NS_SWIFT_NAME(PREPEND);
-@property (readonly, class) jint REGIONAL_INDICATOR NS_SWIFT_NAME(REGIONAL_INDICATOR);
-@property (readonly, class) jint E_BASE NS_SWIFT_NAME(E_BASE);
-@property (readonly, class) jint E_BASE_GAZ NS_SWIFT_NAME(E_BASE_GAZ);
-@property (readonly, class) jint E_MODIFIER NS_SWIFT_NAME(E_MODIFIER);
-@property (readonly, class) jint GLUE_AFTER_ZWJ NS_SWIFT_NAME(GLUE_AFTER_ZWJ);
-@property (readonly, class) jint ZWJ NS_SWIFT_NAME(ZWJ);
-@property (readonly, class) jint COUNT NS_SWIFT_NAME(COUNT);
 
 @end
 
@@ -7480,38 +6757,13 @@ J2OBJC_TYPE_LITERAL_HEADER(AndroidIcuLangUCharacter_GraphemeClusterBreak)
 #if !defined (AndroidIcuLangUCharacter_WordBreak_) && (INCLUDE_ALL_AndroidIcuLangUCharacter || defined(INCLUDE_AndroidIcuLangUCharacter_WordBreak))
 #define AndroidIcuLangUCharacter_WordBreak_
 
+@class JavaLangInteger;
+
 /*!
  @brief Word Break constants.
  - seealso: UProperty#WORD_BREAK
  */
 @protocol AndroidIcuLangUCharacter_WordBreak < JavaObject >
-
-@end
-
-@interface AndroidIcuLangUCharacter_WordBreak : NSObject
-@property (readonly, class) jint OTHER NS_SWIFT_NAME(OTHER);
-@property (readonly, class) jint ALETTER NS_SWIFT_NAME(ALETTER);
-@property (readonly, class) jint FORMAT NS_SWIFT_NAME(FORMAT);
-@property (readonly, class) jint KATAKANA NS_SWIFT_NAME(KATAKANA);
-@property (readonly, class) jint MIDLETTER NS_SWIFT_NAME(MIDLETTER);
-@property (readonly, class) jint MIDNUM NS_SWIFT_NAME(MIDNUM);
-@property (readonly, class) jint NUMERIC NS_SWIFT_NAME(NUMERIC);
-@property (readonly, class) jint EXTENDNUMLET NS_SWIFT_NAME(EXTENDNUMLET);
-@property (readonly, class) jint CR NS_SWIFT_NAME(CR);
-@property (readonly, class) jint EXTEND NS_SWIFT_NAME(EXTEND);
-@property (readonly, class) jint LF NS_SWIFT_NAME(LF);
-@property (readonly, class) jint MIDNUMLET NS_SWIFT_NAME(MIDNUMLET);
-@property (readonly, class) jint NEWLINE NS_SWIFT_NAME(NEWLINE);
-@property (readonly, class) jint REGIONAL_INDICATOR NS_SWIFT_NAME(REGIONAL_INDICATOR);
-@property (readonly, class) jint HEBREW_LETTER NS_SWIFT_NAME(HEBREW_LETTER);
-@property (readonly, class) jint SINGLE_QUOTE NS_SWIFT_NAME(SINGLE_QUOTE);
-@property (readonly, class) jint DOUBLE_QUOTE NS_SWIFT_NAME(DOUBLE_QUOTE);
-@property (readonly, class) jint E_BASE NS_SWIFT_NAME(E_BASE);
-@property (readonly, class) jint E_BASE_GAZ NS_SWIFT_NAME(E_BASE_GAZ);
-@property (readonly, class) jint E_MODIFIER NS_SWIFT_NAME(E_MODIFIER);
-@property (readonly, class) jint GLUE_AFTER_ZWJ NS_SWIFT_NAME(GLUE_AFTER_ZWJ);
-@property (readonly, class) jint ZWJ NS_SWIFT_NAME(ZWJ);
-@property (readonly, class) jint COUNT NS_SWIFT_NAME(COUNT);
 
 @end
 
@@ -7664,31 +6916,13 @@ J2OBJC_TYPE_LITERAL_HEADER(AndroidIcuLangUCharacter_WordBreak)
 #if !defined (AndroidIcuLangUCharacter_SentenceBreak_) && (INCLUDE_ALL_AndroidIcuLangUCharacter || defined(INCLUDE_AndroidIcuLangUCharacter_SentenceBreak))
 #define AndroidIcuLangUCharacter_SentenceBreak_
 
+@class JavaLangInteger;
+
 /*!
  @brief Sentence Break constants.
  - seealso: UProperty#SENTENCE_BREAK
  */
 @protocol AndroidIcuLangUCharacter_SentenceBreak < JavaObject >
-
-@end
-
-@interface AndroidIcuLangUCharacter_SentenceBreak : NSObject
-@property (readonly, class) jint OTHER NS_SWIFT_NAME(OTHER);
-@property (readonly, class) jint ATERM NS_SWIFT_NAME(ATERM);
-@property (readonly, class) jint CLOSE NS_SWIFT_NAME(CLOSE);
-@property (readonly, class) jint FORMAT NS_SWIFT_NAME(FORMAT);
-@property (readonly, class) jint LOWER NS_SWIFT_NAME(LOWER);
-@property (readonly, class) jint NUMERIC NS_SWIFT_NAME(NUMERIC);
-@property (readonly, class) jint OLETTER NS_SWIFT_NAME(OLETTER);
-@property (readonly, class) jint SEP NS_SWIFT_NAME(SEP);
-@property (readonly, class) jint SP NS_SWIFT_NAME(SP);
-@property (readonly, class) jint STERM NS_SWIFT_NAME(STERM);
-@property (readonly, class) jint UPPER NS_SWIFT_NAME(UPPER);
-@property (readonly, class) jint CR NS_SWIFT_NAME(CR);
-@property (readonly, class) jint EXTEND NS_SWIFT_NAME(EXTEND);
-@property (readonly, class) jint LF NS_SWIFT_NAME(LF);
-@property (readonly, class) jint SCONTINUE NS_SWIFT_NAME(SCONTINUE);
-@property (readonly, class) jint COUNT NS_SWIFT_NAME(COUNT);
 
 @end
 
@@ -7799,60 +7033,13 @@ J2OBJC_TYPE_LITERAL_HEADER(AndroidIcuLangUCharacter_SentenceBreak)
 #if !defined (AndroidIcuLangUCharacter_LineBreak_) && (INCLUDE_ALL_AndroidIcuLangUCharacter || defined(INCLUDE_AndroidIcuLangUCharacter_LineBreak))
 #define AndroidIcuLangUCharacter_LineBreak_
 
+@class JavaLangInteger;
+
 /*!
  @brief Line Break constants.
  - seealso: UProperty#LINE_BREAK
  */
 @protocol AndroidIcuLangUCharacter_LineBreak < JavaObject >
-
-@end
-
-@interface AndroidIcuLangUCharacter_LineBreak : NSObject
-@property (readonly, class) jint UNKNOWN NS_SWIFT_NAME(UNKNOWN);
-@property (readonly, class) jint AMBIGUOUS NS_SWIFT_NAME(AMBIGUOUS);
-@property (readonly, class) jint ALPHABETIC NS_SWIFT_NAME(ALPHABETIC);
-@property (readonly, class) jint BREAK_BOTH NS_SWIFT_NAME(BREAK_BOTH);
-@property (readonly, class) jint BREAK_AFTER NS_SWIFT_NAME(BREAK_AFTER);
-@property (readonly, class) jint BREAK_BEFORE NS_SWIFT_NAME(BREAK_BEFORE);
-@property (readonly, class) jint MANDATORY_BREAK NS_SWIFT_NAME(MANDATORY_BREAK);
-@property (readonly, class) jint CONTINGENT_BREAK NS_SWIFT_NAME(CONTINGENT_BREAK);
-@property (readonly, class) jint CLOSE_PUNCTUATION NS_SWIFT_NAME(CLOSE_PUNCTUATION);
-@property (readonly, class) jint COMBINING_MARK NS_SWIFT_NAME(COMBINING_MARK);
-@property (readonly, class) jint CARRIAGE_RETURN NS_SWIFT_NAME(CARRIAGE_RETURN);
-@property (readonly, class) jint EXCLAMATION NS_SWIFT_NAME(EXCLAMATION);
-@property (readonly, class) jint GLUE NS_SWIFT_NAME(GLUE);
-@property (readonly, class) jint HYPHEN NS_SWIFT_NAME(HYPHEN);
-@property (readonly, class) jint IDEOGRAPHIC NS_SWIFT_NAME(IDEOGRAPHIC);
-@property (readonly, class) jint INSEPERABLE NS_SWIFT_NAME(INSEPERABLE);
-@property (readonly, class) jint INSEPARABLE NS_SWIFT_NAME(INSEPARABLE);
-@property (readonly, class) jint INFIX_NUMERIC NS_SWIFT_NAME(INFIX_NUMERIC);
-@property (readonly, class) jint LINE_FEED NS_SWIFT_NAME(LINE_FEED);
-@property (readonly, class) jint NONSTARTER NS_SWIFT_NAME(NONSTARTER);
-@property (readonly, class) jint NUMERIC NS_SWIFT_NAME(NUMERIC);
-@property (readonly, class) jint OPEN_PUNCTUATION NS_SWIFT_NAME(OPEN_PUNCTUATION);
-@property (readonly, class) jint POSTFIX_NUMERIC NS_SWIFT_NAME(POSTFIX_NUMERIC);
-@property (readonly, class) jint PREFIX_NUMERIC NS_SWIFT_NAME(PREFIX_NUMERIC);
-@property (readonly, class) jint QUOTATION NS_SWIFT_NAME(QUOTATION);
-@property (readonly, class) jint COMPLEX_CONTEXT NS_SWIFT_NAME(COMPLEX_CONTEXT);
-@property (readonly, class) jint SURROGATE NS_SWIFT_NAME(SURROGATE);
-@property (readonly, class) jint SPACE NS_SWIFT_NAME(SPACE);
-@property (readonly, class) jint BREAK_SYMBOLS NS_SWIFT_NAME(BREAK_SYMBOLS);
-@property (readonly, class) jint ZWSPACE NS_SWIFT_NAME(ZWSPACE);
-@property (readonly, class) jint NEXT_LINE NS_SWIFT_NAME(NEXT_LINE);
-@property (readonly, class) jint WORD_JOINER NS_SWIFT_NAME(WORD_JOINER);
-@property (readonly, class) jint H2 NS_SWIFT_NAME(H2);
-@property (readonly, class) jint H3 NS_SWIFT_NAME(H3);
-@property (readonly, class) jint JL NS_SWIFT_NAME(JL);
-@property (readonly, class) jint JT NS_SWIFT_NAME(JT);
-@property (readonly, class) jint JV NS_SWIFT_NAME(JV);
-@property (readonly, class) jint CLOSE_PARENTHESIS NS_SWIFT_NAME(CLOSE_PARENTHESIS);
-@property (readonly, class) jint CONDITIONAL_JAPANESE_STARTER NS_SWIFT_NAME(CONDITIONAL_JAPANESE_STARTER);
-@property (readonly, class) jint HEBREW_LETTER NS_SWIFT_NAME(HEBREW_LETTER);
-@property (readonly, class) jint REGIONAL_INDICATOR NS_SWIFT_NAME(REGIONAL_INDICATOR);
-@property (readonly, class) jint E_BASE NS_SWIFT_NAME(E_BASE);
-@property (readonly, class) jint E_MODIFIER NS_SWIFT_NAME(E_MODIFIER);
-@property (readonly, class) jint ZWJ NS_SWIFT_NAME(ZWJ);
-@property (readonly, class) jint COUNT NS_SWIFT_NAME(COUNT);
 
 @end
 
@@ -8139,20 +7326,13 @@ J2OBJC_TYPE_LITERAL_HEADER(AndroidIcuLangUCharacter_LineBreak)
 #if !defined (AndroidIcuLangUCharacter_NumericType_) && (INCLUDE_ALL_AndroidIcuLangUCharacter || defined(INCLUDE_AndroidIcuLangUCharacter_NumericType))
 #define AndroidIcuLangUCharacter_NumericType_
 
+@class JavaLangInteger;
+
 /*!
  @brief Numeric Type constants.
  - seealso: UProperty#NUMERIC_TYPE
  */
 @protocol AndroidIcuLangUCharacter_NumericType < JavaObject >
-
-@end
-
-@interface AndroidIcuLangUCharacter_NumericType : NSObject
-@property (readonly, class) jint NONE NS_SWIFT_NAME(NONE);
-@property (readonly, class) jint DECIMAL NS_SWIFT_NAME(DECIMAL);
-@property (readonly, class) jint DIGIT NS_SWIFT_NAME(DIGIT);
-@property (readonly, class) jint NUMERIC NS_SWIFT_NAME(NUMERIC);
-@property (readonly, class) jint COUNT NS_SWIFT_NAME(COUNT);
 
 @end
 
@@ -8197,22 +7377,13 @@ J2OBJC_TYPE_LITERAL_HEADER(AndroidIcuLangUCharacter_NumericType)
 #if !defined (AndroidIcuLangUCharacter_HangulSyllableType_) && (INCLUDE_ALL_AndroidIcuLangUCharacter || defined(INCLUDE_AndroidIcuLangUCharacter_HangulSyllableType))
 #define AndroidIcuLangUCharacter_HangulSyllableType_
 
+@class JavaLangInteger;
+
 /*!
  @brief Hangul Syllable Type constants.
  - seealso: UProperty#HANGUL_SYLLABLE_TYPE
  */
 @protocol AndroidIcuLangUCharacter_HangulSyllableType < JavaObject >
-
-@end
-
-@interface AndroidIcuLangUCharacter_HangulSyllableType : NSObject
-@property (readonly, class) jint NOT_APPLICABLE NS_SWIFT_NAME(NOT_APPLICABLE);
-@property (readonly, class) jint LEADING_JAMO NS_SWIFT_NAME(LEADING_JAMO);
-@property (readonly, class) jint VOWEL_JAMO NS_SWIFT_NAME(VOWEL_JAMO);
-@property (readonly, class) jint TRAILING_JAMO NS_SWIFT_NAME(TRAILING_JAMO);
-@property (readonly, class) jint LV_SYLLABLE NS_SWIFT_NAME(LV_SYLLABLE);
-@property (readonly, class) jint LVT_SYLLABLE NS_SWIFT_NAME(LVT_SYLLABLE);
-@property (readonly, class) jint COUNT NS_SWIFT_NAME(COUNT);
 
 @end
 
@@ -8269,19 +7440,13 @@ J2OBJC_TYPE_LITERAL_HEADER(AndroidIcuLangUCharacter_HangulSyllableType)
 #if !defined (AndroidIcuLangUCharacter_BidiPairedBracketType_) && (INCLUDE_ALL_AndroidIcuLangUCharacter || defined(INCLUDE_AndroidIcuLangUCharacter_BidiPairedBracketType))
 #define AndroidIcuLangUCharacter_BidiPairedBracketType_
 
+@class JavaLangInteger;
+
 /*!
  @brief Bidi Paired Bracket Type constants.
  - seealso: UProperty#BIDI_PAIRED_BRACKET_TYPE
  */
 @protocol AndroidIcuLangUCharacter_BidiPairedBracketType < JavaObject >
-
-@end
-
-@interface AndroidIcuLangUCharacter_BidiPairedBracketType : NSObject
-@property (readonly, class) jint NONE NS_SWIFT_NAME(NONE);
-@property (readonly, class) jint OPEN NS_SWIFT_NAME(OPEN);
-@property (readonly, class) jint CLOSE NS_SWIFT_NAME(CLOSE);
-@property (readonly, class) jint COUNT NS_SWIFT_NAME(COUNT);
 
 @end
 
@@ -8324,6 +7489,4 @@ J2OBJC_TYPE_LITERAL_HEADER(AndroidIcuLangUCharacter_BidiPairedBracketType)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_AndroidIcuLangUCharacter")

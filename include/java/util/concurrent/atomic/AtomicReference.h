@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaUtilConcurrentAtomicAtomicReference
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -29,13 +26,14 @@
 #define INCLUDE_JavaIoSerializable 1
 #include "java/io/Serializable.h"
 
+@class JavaLangBoolean;
 @protocol JavaUtilFunctionBinaryOperator;
 @protocol JavaUtilFunctionUnaryOperator;
 
 /*!
- @brief An object reference that may be updated atomically.See the <code>java.util.concurrent.atomic</code>
-  package specification for description
-  of the properties of atomic variables.
+ @brief An object reference that may be updated atomically.See the <code>VarHandle</code>
+  specification for descriptions of the properties of
+  atomic accesses.
  @since 1.5
  @author Doug Lea
  */
@@ -55,14 +53,15 @@
 - (instancetype __nonnull)initWithId:(id)initialValue;
 
 /*!
- @brief Atomically updates the current value with the results of
+ @brief Atomically updates (with memory effects as specified by <code>VarHandle.compareAndSet</code>
+ ) the current value with the results of
   applying the given function to the current and given values,
   returning the updated value.The function should be
   side-effect-free, since it may be re-applied when attempted
   updates fail due to contention among threads.
- The function
-  is applied with the current value as its first argument,
-  and the given update as the second argument.
+ The function is
+  applied with the current value as its first argument, and the
+  given update as the second argument.
  @param x the update value
  @param accumulatorFunction a side-effect-free function of two arguments
  @return the updated value
@@ -72,10 +71,11 @@
 withJavaUtilFunctionBinaryOperator:(id<JavaUtilFunctionBinaryOperator>)accumulatorFunction;
 
 /*!
- @brief Atomically sets the value to the given updated value
-  if the current value <code>==</code> the expected value.
- @param expect the expected value
- @param update the new value
+ @brief Atomically sets the value to <code>newValue</code>
+  if the current value <code>== expectedValue</code>,
+  with memory effects as specified by <code>VarHandle.compareAndSet</code>.
+ @param expectedValue the expected value
+ @param newValue the new value
  @return <code>true</code> if successful. False return indicates that
   the actual value was not equal to the expected value.
  */
@@ -83,20 +83,22 @@ withJavaUtilFunctionBinaryOperator:(id<JavaUtilFunctionBinaryOperator>)accumulat
                          withId:(id)update;
 
 /*!
- @brief Gets the current value.
+ @brief Returns the current value,
+  with memory effects as specified by <code>VarHandle.getVolatile</code>.
  @return the current value
  */
 - (id)get;
 
 /*!
- @brief Atomically updates the current value with the results of
+ @brief Atomically updates (with memory effects as specified by <code>VarHandle.compareAndSet</code>
+ ) the current value with the results of
   applying the given function to the current and given values,
   returning the previous value.The function should be
   side-effect-free, since it may be re-applied when attempted
   updates fail due to contention among threads.
- The function
-  is applied with the current value as its first argument,
-  and the given update as the second argument.
+ The function is
+  applied with the current value as its first argument, and the
+  given update as the second argument.
  @param x the update value
  @param accumulatorFunction a side-effect-free function of two arguments
  @return the previous value
@@ -106,14 +108,16 @@ withJavaUtilFunctionBinaryOperator:(id<JavaUtilFunctionBinaryOperator>)accumulat
 withJavaUtilFunctionBinaryOperator:(id<JavaUtilFunctionBinaryOperator>)accumulatorFunction;
 
 /*!
- @brief Atomically sets to the given value and returns the old value.
+ @brief Atomically sets the value to <code>newValue</code> and returns the old value,
+  with memory effects as specified by <code>VarHandle.getAndSet</code>.
  @param newValue the new value
  @return the previous value
  */
 - (id)getAndSetWithId:(id)newValue;
 
 /*!
- @brief Atomically updates the current value with the results of
+ @brief Atomically updates (with memory effects as specified by <code>VarHandle.compareAndSet</code>
+ ) the current value with the results of
   applying the given function, returning the previous value.The
   function should be side-effect-free, since it may be re-applied
   when attempted updates fail due to contention among threads.
@@ -124,14 +128,16 @@ withJavaUtilFunctionBinaryOperator:(id<JavaUtilFunctionBinaryOperator>)accumulat
 - (id)getAndUpdateWithJavaUtilFunctionUnaryOperator:(id<JavaUtilFunctionUnaryOperator>)updateFunction;
 
 /*!
- @brief Eventually sets to the given value.
+ @brief Sets the value to <code>newValue</code>,
+  with memory effects as specified by <code>VarHandle.setRelease</code>.
  @param newValue the new value
  @since 1.6
  */
 - (void)lazySetWithId:(id)newValue;
 
 /*!
- @brief Sets to the given value.
+ @brief Sets the value to <code>newValue</code>,
+  with memory effects as specified by <code>VarHandle.setVolatile</code>.
  @param newValue the new value
  */
 - (void)setWithId:(id)newValue;
@@ -143,7 +149,8 @@ withJavaUtilFunctionBinaryOperator:(id<JavaUtilFunctionBinaryOperator>)accumulat
 - (NSString *)description;
 
 /*!
- @brief Atomically updates the current value with the results of
+ @brief Atomically updates (with memory effects as specified by <code>VarHandle.compareAndSet</code>
+ ) the current value with the results of
   applying the given function, returning the updated value.The
   function should be side-effect-free, since it may be re-applied
   when attempted updates fail due to contention among threads.
@@ -154,14 +161,13 @@ withJavaUtilFunctionBinaryOperator:(id<JavaUtilFunctionBinaryOperator>)accumulat
 - (id)updateAndGetWithJavaUtilFunctionUnaryOperator:(id<JavaUtilFunctionUnaryOperator>)updateFunction;
 
 /*!
- @brief Atomically sets the value to the given updated value
-  if the current value <code>==</code> the expected value.
- <p><a href="package-summary.html#weakCompareAndSet">May fail
-  spuriously and does not provide ordering guarantees</a>, so is
-  only rarely an appropriate alternative to <code>compareAndSet</code>.
- @param expect the expected value
- @param update the new value
+ @brief Possibly atomically sets the value to <code>newValue</code>
+  if the current value <code>== expectedValue</code>,
+  with memory effects as specified by <code>VarHandle.weakCompareAndSetPlain</code>.
+ @param expectedValue the expected value
+ @param newValue the new value
  @return <code>true</code> if successful
+ - seealso: #weakCompareAndSetPlain
  */
 - (jboolean)weakCompareAndSetWithId:(id)expect
                              withId:(id)update;
@@ -190,6 +196,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentAtomicAtomicReference)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaUtilConcurrentAtomicAtomicReference")

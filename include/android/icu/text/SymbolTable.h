@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_AndroidIcuTextSymbolTable
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -26,6 +23,8 @@
 #define AndroidIcuTextSymbolTable_
 
 @class IOSCharArray;
+@class JavaLangCharacter;
+@class JavaLangInteger;
 @class JavaTextParsePosition;
 @protocol AndroidIcuTextUnicodeMatcher;
 
@@ -95,11 +94,6 @@
 
 @end
 
-@interface AndroidIcuTextSymbolTable : NSObject
-@property (readonly, class) jchar SYMBOL_REF NS_SWIFT_NAME(SYMBOL_REF);
-
-@end
-
 J2OBJC_EMPTY_STATIC_INIT(AndroidIcuTextSymbolTable)
 
 /*!
@@ -117,6 +111,4 @@ J2OBJC_TYPE_LITERAL_HEADER(AndroidIcuTextSymbolTable)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_AndroidIcuTextSymbolTable")

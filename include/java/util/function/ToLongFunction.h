@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaUtilFunctionToLongFunction
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -24,6 +21,8 @@
 
 #if !defined (JavaUtilFunctionToLongFunction_) && (INCLUDE_ALL_JavaUtilFunctionToLongFunction || defined(INCLUDE_JavaUtilFunctionToLongFunction))
 #define JavaUtilFunctionToLongFunction_
+
+@class JavaLangLong;
 
 /*!
  @brief Represents a function that produces a long-valued result.This is the 
@@ -54,6 +53,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilFunctionToLongFunction)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaUtilFunctionToLongFunction")

@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_OrgXmlpullV1XmlSerializer
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -29,6 +26,7 @@
 @class JavaIoOutputStream;
 @class JavaIoWriter;
 @class JavaLangBoolean;
+@class JavaLangInteger;
 
 /*!
  @brief Define an interface to serialization of XML Infoset.
@@ -283,6 +281,4 @@ J2OBJC_TYPE_LITERAL_HEADER(OrgXmlpullV1XmlSerializer)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_OrgXmlpullV1XmlSerializer")

@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaxSecurityCertX509Certificate
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -31,6 +28,7 @@
 
 @class IOSByteArray;
 @class JavaIoInputStream;
+@class JavaLangInteger;
 @class JavaMathBigInteger;
 @class JavaUtilDate;
 @protocol JavaSecurityPrincipal;
@@ -378,6 +376,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaxSecurityCertX509Certificate)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaxSecurityCertX509Certificate")

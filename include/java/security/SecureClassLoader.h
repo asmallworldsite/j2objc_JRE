@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaSecuritySecureClassLoader
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -31,6 +28,7 @@
 
 @class IOSByteArray;
 @class IOSClass;
+@class JavaLangInteger;
 @class JavaNioByteBuffer;
 @class JavaSecurityCodeSource;
 @class JavaSecurityPermissionCollection;
@@ -172,6 +170,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaSecuritySecureClassLoader)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaSecuritySecureClassLoader")

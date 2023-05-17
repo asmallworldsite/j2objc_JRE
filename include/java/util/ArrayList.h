@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaUtilArrayList
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -42,6 +39,8 @@
 #include "java/io/Serializable.h"
 
 @class IOSObjectArray;
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @protocol JavaUtilCollection;
 @protocol JavaUtilComparator;
 @protocol JavaUtilFunctionConsumer;
@@ -530,6 +529,9 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilArrayList)
 #define INCLUDE_JavaUtilSpliterator 1
 #include "java/util/Spliterator.h"
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
+@class JavaLangLong;
 @class JavaUtilArrayList;
 @protocol JavaUtilComparator;
 @protocol JavaUtilFunctionConsumer;
@@ -583,6 +585,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilArrayList_ArrayListSpliterator)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaUtilArrayList")

@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_AndroidIcuTextBreakIterator
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -29,6 +26,8 @@
 @class AndroidIcuUtilULocale_Type;
 @class IOSIntArray;
 @class IOSObjectArray;
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @class JavaUtilLocale;
 @protocol JavaLangCharSequence;
 @protocol JavaTextCharacterIterator;
@@ -223,22 +222,6 @@
  - seealso: CharacterIterator
  */
 @interface AndroidIcuTextBreakIterator : NSObject < NSCopying >
-@property (readonly, class) jint DONE NS_SWIFT_NAME(DONE);
-@property (readonly, class) jint WORD_NONE NS_SWIFT_NAME(WORD_NONE);
-@property (readonly, class) jint WORD_NONE_LIMIT NS_SWIFT_NAME(WORD_NONE_LIMIT);
-@property (readonly, class) jint WORD_NUMBER NS_SWIFT_NAME(WORD_NUMBER);
-@property (readonly, class) jint WORD_NUMBER_LIMIT NS_SWIFT_NAME(WORD_NUMBER_LIMIT);
-@property (readonly, class) jint WORD_LETTER NS_SWIFT_NAME(WORD_LETTER);
-@property (readonly, class) jint WORD_LETTER_LIMIT NS_SWIFT_NAME(WORD_LETTER_LIMIT);
-@property (readonly, class) jint WORD_KANA NS_SWIFT_NAME(WORD_KANA);
-@property (readonly, class) jint WORD_KANA_LIMIT NS_SWIFT_NAME(WORD_KANA_LIMIT);
-@property (readonly, class) jint WORD_IDEO NS_SWIFT_NAME(WORD_IDEO);
-@property (readonly, class) jint WORD_IDEO_LIMIT NS_SWIFT_NAME(WORD_IDEO_LIMIT);
-@property (readonly, class) jint KIND_CHARACTER NS_SWIFT_NAME(KIND_CHARACTER);
-@property (readonly, class) jint KIND_WORD NS_SWIFT_NAME(KIND_WORD);
-@property (readonly, class) jint KIND_LINE NS_SWIFT_NAME(KIND_LINE);
-@property (readonly, class) jint KIND_SENTENCE NS_SWIFT_NAME(KIND_SENTENCE);
-@property (readonly, class) jint KIND_TITLE NS_SWIFT_NAME(KIND_TITLE);
 
 #pragma mark Public
 
@@ -300,7 +283,7 @@
  Avoids writing a switch statement with getXYZInstance(where) calls.
  */
 + (AndroidIcuTextBreakIterator *)getBreakInstanceWithAndroidIcuUtilULocale:(AndroidIcuUtilULocale *)where
-                                                                   withInt:(jint)kind __attribute__((deprecated));
+                                                                   withInt:(jint)kind;
 
 /*!
  @brief Returns a new instance of BreakIterator that locates logical-character
@@ -854,6 +837,8 @@ J2OBJC_TYPE_LITERAL_HEADER(AndroidIcuTextBreakIterator)
 @class AndroidIcuTextBreakIterator;
 @class AndroidIcuUtilULocale;
 @class IOSObjectArray;
+@class JavaLangBoolean;
+@class JavaLangInteger;
 
 @interface AndroidIcuTextBreakIterator_BreakIteratorServiceShim : NSObject
 
@@ -890,6 +875,4 @@ J2OBJC_TYPE_LITERAL_HEADER(AndroidIcuTextBreakIterator_BreakIteratorServiceShim)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_AndroidIcuTextBreakIterator")

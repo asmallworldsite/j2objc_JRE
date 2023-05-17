@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaSecuritySignatureSpi
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -26,6 +23,9 @@
 #define JavaSecuritySignatureSpi_
 
 @class IOSByteArray;
+@class JavaLangBoolean;
+@class JavaLangByte;
+@class JavaLangInteger;
 @class JavaNioByteBuffer;
 @class JavaSecurityAlgorithmParameters;
 @class JavaSecuritySecureRandom;
@@ -83,7 +83,7 @@
   invalid parameter for this engine, or another exception occurs while
   trying to get this parameter.
  */
-- (id)engineGetParameterWithNSString:(NSString *)param __attribute__((deprecated));
+- (id)engineGetParameterWithNSString:(NSString *)param;
 
 /*!
  @brief <p>This method is overridden by providers to return the
@@ -163,7 +163,7 @@
   and cannot be set again, a security exception occurs, and so on.
  */
 - (void)engineSetParameterWithNSString:(NSString *)param
-                                withId:(id)value __attribute__((deprecated));
+                                withId:(id)value;
 
 /*!
  @brief Returns the signature bytes of all the data
@@ -289,6 +289,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaSecuritySignatureSpi)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaSecuritySignatureSpi")

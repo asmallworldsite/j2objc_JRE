@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaUtilNavigableMap
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -29,6 +26,7 @@
 #define INCLUDE_JavaUtilSortedMap 1
 #include "java/util/SortedMap.h"
 
+@class JavaLangBoolean;
 @protocol JavaUtilMap_Entry;
 @protocol JavaUtilNavigableSet;
 
@@ -363,7 +361,8 @@
                                         withBoolean:(jboolean)inclusive;
 
 /*!
- @brief <p>Equivalent to <code>subMap(fromKey, true, toKey, false)</code>.
+ @brief  
+ <p>Equivalent to <code>subMap(fromKey, true, toKey, false)</code>.
  @throw ClassCastException
  @throw NullPointerException
  @throw IllegalArgumentException
@@ -372,7 +371,8 @@
                                          withId:(id)toKey;
 
 /*!
- @brief <p>Equivalent to <code>headMap(toKey, false)</code>.
+ @brief  
+ <p>Equivalent to <code>headMap(toKey, false)</code>.
  @throw ClassCastException
  @throw NullPointerException
  @throw IllegalArgumentException
@@ -380,7 +380,8 @@
 - (id<JavaUtilSortedMap> __nonnull)headMapWithId:(id)toKey;
 
 /*!
- @brief <p>Equivalent to <code>tailMap(fromKey, true)</code>.
+ @brief  
+ <p>Equivalent to <code>tailMap(fromKey, true)</code>.
  @throw ClassCastException
  @throw NullPointerException
  @throw IllegalArgumentException
@@ -399,6 +400,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilNavigableMap)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaUtilNavigableMap")

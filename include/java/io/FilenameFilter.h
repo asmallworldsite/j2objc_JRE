@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaIoFilenameFilter
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -26,6 +23,7 @@
 #define JavaIoFilenameFilter_
 
 @class JavaIoFile;
+@class JavaLangBoolean;
 
 /*!
  @brief Instances of classes that implement this interface are used to
@@ -37,7 +35,7 @@
  @author Jonathan Payne
  - seealso: java.io.File
  - seealso: java.io.File#list(java.io.FilenameFilter)
- @since JDK1.0
+ @since 1.0
  */
 @protocol JavaIoFilenameFilter < JavaObject >
 
@@ -63,6 +61,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaIoFilenameFilter)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaIoFilenameFilter")

@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaxXmlTransformErrorListener
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -30,10 +27,10 @@
 /*!
  @brief <p>To provide customized error handling, implement this interface and
   use the <code>setErrorListener</code> method to register an instance of the
-  implementation with the <code>javax.xml.transform.Transformer</code>.
- The 
- <code>Transformer</code> then reports all errors and warnings through this
-  interface.</p>
+  implementation with the <code>javax.xml.transform.Transformer</code>.The
+  <code>Transformer</code> then reports all errors and warnings through this
+  interface.
+ </p>
   
  <p>If an application does <em>not</em> register its own custom 
  <code>ErrorListener</code>, the default <code>ErrorListener</code>
@@ -113,6 +110,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaxXmlTransformErrorListener)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaxXmlTransformErrorListener")

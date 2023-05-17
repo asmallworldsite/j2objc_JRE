@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaLangAppendable
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -25,17 +22,19 @@
 #if !defined (JavaLangAppendable_) && (INCLUDE_ALL_JavaLangAppendable || defined(INCLUDE_JavaLangAppendable))
 #define JavaLangAppendable_
 
+@class JavaLangCharacter;
+@class JavaLangInteger;
 @protocol JavaLangCharSequence;
 
 /*!
- @brief An object to which <tt>char</tt> sequences and values can be appended.The
-  <tt>Appendable</tt> interface must be implemented by any class whose
+ @brief An object to which <code>char</code> sequences and values can be appended.The
+  <code>Appendable</code> interface must be implemented by any class whose
   instances are intended to receive formatted output from a <code>java.util.Formatter</code>
  .
  <p> The characters to be appended should be valid Unicode characters as
   described in <a href="Character.html#unicode">Unicode Character
   Representation</a>.  Note that supplementary characters may be composed of
-  multiple 16-bit <tt>char</tt> values. 
+  multiple 16-bit <code>char</code> values. 
  <p> Appendables are not necessarily safe for multithreaded access.  Thread
   safety is the responsibility of classes that extend and implement this
   interface. 
@@ -47,15 +46,15 @@
 @protocol JavaLangAppendable < JavaObject >
 
 /*!
- @brief Appends the specified character sequence to this <tt>Appendable</tt>.
+ @brief Appends the specified character sequence to this <code>Appendable</code>.
  <p> Depending on which class implements the character sequence 
- <tt>csq</tt>, the entire sequence may not be appended.  For
-  instance, if <tt>csq</tt> is a <code>java.nio.CharBuffer</code> then
+ <code>csq</code>, the entire sequence may not be appended.  For
+  instance, if <code>csq</code> is a <code>java.nio.CharBuffer</code> then
   the subsequence to append is defined by the buffer's position and limit.
  @param csq The character sequence to append.  If 
-  <tt> csq </tt>  is           <tt>
-  null </tt> , then the four characters  <tt> "null" </tt>  are          appended to this Appendable.
- @return A reference to this <tt>Appendable</tt>
+ <code>csq</code>  is          <code>null</code>
+  , then the four characters <code>"null"</code>  are          appended to this Appendable.
+ @return A reference to this <code>Appendable</code>
  @throw IOException
  If an I/O error occurs
  */
@@ -63,9 +62,9 @@
 
 /*!
  @brief Appends a subsequence of the specified character sequence to this 
- <tt>Appendable</tt>.
- <p> An invocation of this method of the form <tt>out.append(csq, start,
-  end)</tt> when <tt>csq</tt> is not <tt>null</tt>, behaves in
+ <code>Appendable</code>.
+ <p> An invocation of this method of the form <code>out.append(csq, start, end)</code>
+  when <code>csq</code> is not <code>null</code>, behaves in
   exactly the same way as the invocation 
  @code
 
@@ -73,17 +72,17 @@
 @endcode
  @param csq The character sequence from which a subsequence will be
            appended.  If 
-  <tt> csq </tt>  is  <tt> null </tt> , then characters          will be appended as if 
-  <tt> csq </tt>  contained the four          characters 
-  <tt> "null" </tt> .
+ <code>csq</code>  is <code>null</code> , then characters          will be appended as if 
+ <code>csq</code>  contained the four          characters <code>"null"</code>
+  .
  @param start The index of the first character in the subsequence
  @param end The index of the character following the last character in the
            subsequence
- @return A reference to this <tt>Appendable</tt>
+ @return A reference to this <code>Appendable</code>
  @throw IndexOutOfBoundsException
- If <tt>start</tt> or <tt>end</tt> are negative, <tt>start</tt>
-           is greater than <tt>end</tt>, or <tt>end</tt> is greater than
-           <tt>csq.length()</tt>
+ If <code>start</code> or <code>end</code> are negative, <code>start</code>
+           is greater than <code>end</code>, or <code>end</code> is greater than
+           <code>csq.length()</code>
  @throw IOException
  If an I/O error occurs
  */
@@ -92,9 +91,9 @@
                                                            withInt:(jint)end;
 
 /*!
- @brief Appends the specified character to this <tt>Appendable</tt>.
+ @brief Appends the specified character to this <code>Appendable</code>.
  @param c The character to append
- @return A reference to this <tt>Appendable</tt>
+ @return A reference to this <code>Appendable</code>
  @throw IOException
  If an I/O error occurs
  */
@@ -112,6 +111,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaLangAppendable)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaLangAppendable")

@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaIoPipedReader
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -31,12 +28,14 @@
 
 @class IOSCharArray;
 @class JavaIoPipedWriter;
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @class JavaLangThread;
 
 /*!
  @brief Piped character-input streams.
  @author Mark Reinhold
- @since JDK1.1
+ @since 1.1
  */
 @interface JavaIoPipedReader : JavaIoReader {
  @public
@@ -177,6 +176,7 @@
                    <a href=PipedInputStream.html#BROKEN> <code>broken</code></a>,
                    <code>unconnected</code>, closed,
                    or an I/O error occurs.
+ @throw IndexOutOfBoundsException
  */
 - (jint)readWithCharArray:(IOSCharArray *)cbuf
                   withInt:(jint)off
@@ -257,6 +257,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaIoPipedReader)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaIoPipedReader")

@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaTextFieldPosition
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -25,6 +22,8 @@
 #if !defined (JavaTextFieldPosition_) && (INCLUDE_ALL_JavaTextFieldPosition || defined(INCLUDE_JavaTextFieldPosition))
 #define JavaTextFieldPosition_
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @class JavaTextFormat_Field;
 @protocol JavaTextFormat_FieldDelegate;
 
@@ -56,6 +55,7 @@
   formatted string use the <code>Format</code> method 
  <code>formatToCharacterIterator</code>.
  @author Mark Davis
+ @since 1.1
  - seealso: java.text.Format
  */
 @interface JavaTextFieldPosition : NSObject {
@@ -223,6 +223,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaTextFieldPosition)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaTextFieldPosition")

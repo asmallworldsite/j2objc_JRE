@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_AndroidIcuUtilValueIterator
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -26,6 +23,8 @@
 #define AndroidIcuUtilValueIterator_
 
 @class AndroidIcuUtilValueIterator_Element;
+@class JavaLangBoolean;
+@class JavaLangInteger;
 
 /*!
  @brief <p>Interface for enabling iteration over sets of &lt;int, Object&gt;, where
@@ -99,9 +98,10 @@ J2OBJC_TYPE_LITERAL_HEADER(AndroidIcuUtilValueIterator)
 #if !defined (AndroidIcuUtilValueIterator_Element_) && (INCLUDE_ALL_AndroidIcuUtilValueIterator || defined(INCLUDE_AndroidIcuUtilValueIterator_Element))
 #define AndroidIcuUtilValueIterator_Element_
 
+@class JavaLangInteger;
+
 /*!
- @brief <p>The return result container of each iteration.
- Stores the next
+ @brief <p>The return result container of each iteration.Stores the next
   integer index and its associated value Object.
  */
 @interface AndroidIcuUtilValueIterator_Element : NSObject {
@@ -143,6 +143,4 @@ J2OBJC_TYPE_LITERAL_HEADER(AndroidIcuUtilValueIterator_Element)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_AndroidIcuUtilValueIterator")

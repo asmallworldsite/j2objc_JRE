@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaxXmlValidationTypeInfoProvider
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -25,6 +22,8 @@
 #if !defined (JavaxXmlValidationTypeInfoProvider_) && (INCLUDE_ALL_JavaxXmlValidationTypeInfoProvider || defined(INCLUDE_JavaxXmlValidationTypeInfoProvider))
 #define JavaxXmlValidationTypeInfoProvider_
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @protocol OrgW3cDomTypeInfo;
 
 /*!
@@ -179,6 +178,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaxXmlValidationTypeInfoProvider)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaxXmlValidationTypeInfoProvider")

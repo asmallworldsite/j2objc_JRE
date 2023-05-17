@@ -16,9 +16,6 @@
 #define INCLUDE_JavaxNetSocketFactory 1
 #endif
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -28,6 +25,7 @@
 #if !defined (JavaxNetSocketFactory_) && (INCLUDE_ALL_JavaxNetSocketFactory || defined(INCLUDE_JavaxNetSocketFactory))
 #define JavaxNetSocketFactory_
 
+@class JavaLangInteger;
 @class JavaNetInetAddress;
 @class JavaNetSocket;
 
@@ -219,6 +217,7 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaxNetSocketFactory)
 #if !defined (JavaxNetDefaultSocketFactory_) && (INCLUDE_ALL_JavaxNetSocketFactory || defined(INCLUDE_JavaxNetDefaultSocketFactory))
 #define JavaxNetDefaultSocketFactory_
 
+@class JavaLangInteger;
 @class JavaNetInetAddress;
 @class JavaNetSocket;
 
@@ -270,6 +269,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaxNetDefaultSocketFactory)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaxNetSocketFactory")

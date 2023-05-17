@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaUtilFunctionToIntBiFunction
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -24,6 +21,8 @@
 
 #if !defined (JavaUtilFunctionToIntBiFunction_) && (INCLUDE_ALL_JavaUtilFunctionToIntBiFunction || defined(INCLUDE_JavaUtilFunctionToIntBiFunction))
 #define JavaUtilFunctionToIntBiFunction_
+
+@class JavaLangInteger;
 
 /*!
  @brief Represents a function that accepts two arguments and produces an int-valued
@@ -57,6 +56,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilFunctionToIntBiFunction)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaUtilFunctionToIntBiFunction")

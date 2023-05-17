@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaUtilFunctionIntToDoubleFunction
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -24,6 +21,9 @@
 
 #if !defined (JavaUtilFunctionIntToDoubleFunction_) && (INCLUDE_ALL_JavaUtilFunctionIntToDoubleFunction || defined(INCLUDE_JavaUtilFunctionIntToDoubleFunction))
 #define JavaUtilFunctionIntToDoubleFunction_
+
+@class JavaLangDouble;
+@class JavaLangInteger;
 
 /*!
  @brief Represents a function that accepts an int-valued argument and produces a
@@ -55,6 +55,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilFunctionIntToDoubleFunction)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaUtilFunctionIntToDoubleFunction")

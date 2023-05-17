@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaLangIterable
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -30,12 +27,8 @@
 @protocol JavaUtilSpliterator;
 
 /*!
- @brief Implementing this interface allows an object to be the target of
-  the "for-each loop" statement.See
-  <strong>
-  <a href="{@@docRoot}openjdk-redirect.html?
- v=8&path=/technotes/guides/language/foreach.html">For-each Loop</a>
-  </strong>
+ @brief Implementing this interface allows an object to be the target of the enhanced 
+ <code>for</code> statement (sometimes called the "for-each loop" statement).
  @since 1.5
  */
 @protocol JavaLangIterable < NSFastEnumeration, JavaObject >
@@ -49,11 +42,14 @@
 /*!
  @brief Performs the given action for each element of the <code>Iterable</code>
   until all elements have been processed or the action throws an
-  exception.Unless otherwise specified by the implementing class,
-  actions are performed in the order of iteration (if an iteration order
-  is specified).
+  exception.Actions are performed in the order of iteration, if that
+  order is specified.
  Exceptions thrown by the action are relayed to the
-  caller.
+  caller. 
+ <p>
+  The behavior of this method is unspecified if the action performs
+  side-effects that modify the underlying source of elements, unless an
+  overriding class has specified a concurrent modification policy.
  @param action The action to be performed for each element
  @throw NullPointerExceptionif the specified action is null
  @since 1.8
@@ -85,6 +81,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaLangIterable)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaLangIterable")

@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaSqlRowId
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -26,6 +23,8 @@
 #define JavaSqlRowId_
 
 @class IOSByteArray;
+@class JavaLangBoolean;
+@class JavaLangInteger;
 
 /*!
  @brief The representation (mapping) in the Java programming language of an SQL ROWID
@@ -126,6 +125,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaSqlRowId)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaSqlRowId")

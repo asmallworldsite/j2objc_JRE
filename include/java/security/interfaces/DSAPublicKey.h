@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaSecurityInterfacesDSAPublicKey
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -33,6 +30,7 @@
 #define INCLUDE_JavaSecurityPublicKey 1
 #include "java/security/PublicKey.h"
 
+@class JavaLangLong;
 @class JavaMathBigInteger;
 
 /*!
@@ -43,6 +41,7 @@
  - seealso: DSAKey
  - seealso: DSAPrivateKey
  @author Benjamin Renaud
+ @since 1.1
  */
 @protocol JavaSecurityInterfacesDSAPublicKey < JavaSecurityInterfacesDSAKey, JavaSecurityPublicKey, JavaObject >
 
@@ -51,11 +50,6 @@
  @return the value of the public key, <code>y</code>.
  */
 - (JavaMathBigInteger *)getY;
-
-@end
-
-@interface JavaSecurityInterfacesDSAPublicKey : NSObject
-@property (readonly, class) jlong serialVersionUID NS_SWIFT_NAME(serialVersionUID);
 
 @end
 
@@ -78,6 +72,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaSecurityInterfacesDSAPublicKey)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaSecurityInterfacesDSAPublicKey")

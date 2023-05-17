@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaNioFileAttributeBasicFileAttributes
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -25,6 +22,8 @@
 #if !defined (JavaNioFileAttributeBasicFileAttributes_) && (INCLUDE_ALL_JavaNioFileAttributeBasicFileAttributes || defined(INCLUDE_JavaNioFileAttributeBasicFileAttributes))
 #define JavaNioFileAttributeBasicFileAttributes_
 
+@class JavaLangBoolean;
+@class JavaLangLong;
 @class JavaNioFileAttributeFileTime;
 
 /*!
@@ -151,6 +150,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaNioFileAttributeBasicFileAttributes)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaNioFileAttributeBasicFileAttributes")

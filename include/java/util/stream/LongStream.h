@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaUtilStreamLongStream
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -30,6 +27,8 @@
 #include "java/util/stream/BaseStream.h"
 
 @class IOSLongArray;
+@class JavaLangBoolean;
+@class JavaLangLong;
 @class JavaUtilLongSummaryStatistics;
 @class JavaUtilOptionalDouble;
 @class JavaUtilOptionalLong;
@@ -60,7 +59,7 @@
  <code>Stream</code> and <code>LongStream</code>, computing the sum of the weights of the
   red widgets: 
  @code
-    long sum = widgets.stream()
+     long sum = widgets.stream()
                         .filter(w -> w.getColor() == RED)
                         .mapToLong(w -> w.getWeight())
                         .sum(); 
@@ -256,7 +255,7 @@
   accumulation function, and returns the reduced value.This is equivalent
   to: 
  @code
-    long result = identity;
+     long result = identity;
       for (long element : this stream)
           result = accumulator.applyAsLong(result, element)
       return result; 
@@ -290,7 +289,7 @@ withJavaUtilFunctionLongBinaryOperator:(id<JavaUtilFunctionLongBinaryOperator>)o
   function, and returns an <code>OptionalLong</code> describing the reduced value,
   if any.This is equivalent to: 
  @code
-    boolean foundAny = false;
+     boolean foundAny = false;
       long result = null;
       for (long element : this stream) {
           if (!
@@ -326,7 +325,7 @@ withJavaUtilFunctionLongBinaryOperator:(id<JavaUtilFunctionLongBinaryOperator>)o
  This
   produces a result equivalent to: 
  @code
-    R result = supplier.get();
+     R result = supplier.get();
       for (long element : this stream)
           accumulator.accept(result, element);
       return result; 
@@ -358,7 +357,7 @@ withJavaUtilFunctionLongBinaryOperator:(id<JavaUtilFunctionLongBinaryOperator>)o
   of a <a href="package-summary.html#Reduction">reduction</a>
   and is equivalent to: 
  @code
-    return reduce(0, Long::sum); 
+     return reduce(0, Long::sum); 
  
 @endcode
   
@@ -374,7 +373,7 @@ withJavaUtilFunctionLongBinaryOperator:(id<JavaUtilFunctionLongBinaryOperator>)o
   case of a <a href="package-summary.html#Reduction">reduction</a>
   and is equivalent to: 
  @code
-    return reduce(Long::min); 
+     return reduce(Long::min); 
  
 @endcode
   
@@ -390,7 +389,7 @@ withJavaUtilFunctionLongBinaryOperator:(id<JavaUtilFunctionLongBinaryOperator>)o
   case of a <a href="package-summary.html#Reduction">reduction</a>
   and is equivalent to: 
  @code
-    return reduce(Long::max); 
+     return reduce(Long::max); 
  
 @endcode
   
@@ -406,7 +405,7 @@ withJavaUtilFunctionLongBinaryOperator:(id<JavaUtilFunctionLongBinaryOperator>)o
  <a href="package-summary.html#Reduction">reduction</a> and is
   equivalent to: 
  @code
-    return map(e -> 1L).sum(); 
+     return map(e -> 1L).sum(); 
  
 @endcode
   
@@ -671,6 +670,7 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilStreamLongStream)
 #define INCLUDE_JavaUtilFunctionLongConsumer 1
 #include "java/util/function/LongConsumer.h"
 
+@class JavaLangLong;
 @protocol JavaUtilStreamLongStream;
 
 /*!
@@ -727,6 +727,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilStreamLongStream_Builder)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaUtilStreamLongStream")

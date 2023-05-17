@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaxNetSslSSLEngineResult
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -25,6 +22,7 @@
 #if !defined (JavaxNetSslSSLEngineResult_) && (INCLUDE_ALL_JavaxNetSslSSLEngineResult || defined(INCLUDE_JavaxNetSslSSLEngineResult))
 #define JavaxNetSslSSLEngineResult_
 
+@class JavaLangInteger;
 @class JavaxNetSslSSLEngineResult_HandshakeStatus;
 @class JavaxNetSslSSLEngineResult_Status;
 
@@ -122,12 +120,18 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaxNetSslSSLEngineResult)
 
 @class IOSObjectArray;
 
-typedef NS_ENUM(NSUInteger, JavaxNetSslSSLEngineResult_Status_Enum) {
+typedef NS_ENUM(jint, JavaxNetSslSSLEngineResult_Status_Enum) {
   JavaxNetSslSSLEngineResult_Status_Enum_BUFFER_UNDERFLOW = 0,
   JavaxNetSslSSLEngineResult_Status_Enum_BUFFER_OVERFLOW = 1,
   JavaxNetSslSSLEngineResult_Status_Enum_OK = 2,
   JavaxNetSslSSLEngineResult_Status_Enum_CLOSED = 3,
 };
+#if J2OBJC_IMPORTED_BY_JAVA_IMPLEMENTATION
+#define JavaxNetSslSSLEngineResult_Status_ORDINAL jint
+#else
+#define JavaxNetSslSSLEngineResult_Status_ORDINAL JavaxNetSslSSLEngineResult_Status_Enum
+#endif
+
 
 /*!
  @brief An <code>SSLEngineResult</code> enum describing the overall result
@@ -141,10 +145,6 @@ typedef NS_ENUM(NSUInteger, JavaxNetSslSSLEngineResult_Status_Enum) {
  */
 @interface JavaxNetSslSSLEngineResult_Status : JavaLangEnum
 
-@property (readonly, class, nonnull) JavaxNetSslSSLEngineResult_Status *BUFFER_UNDERFLOW NS_SWIFT_NAME(BUFFER_UNDERFLOW);
-@property (readonly, class, nonnull) JavaxNetSslSSLEngineResult_Status *BUFFER_OVERFLOW NS_SWIFT_NAME(BUFFER_OVERFLOW);
-@property (readonly, class, nonnull) JavaxNetSslSSLEngineResult_Status *OK NS_SWIFT_NAME(OK);
-@property (readonly, class, nonnull) JavaxNetSslSSLEngineResult_Status *CLOSED NS_SWIFT_NAME(CLOSED);
 #pragma mark Public
 
 + (JavaxNetSslSSLEngineResult_Status *)valueOfWithNSString:(NSString *)name;
@@ -154,6 +154,8 @@ typedef NS_ENUM(NSUInteger, JavaxNetSslSSLEngineResult_Status_Enum) {
 #pragma mark Package-Private
 
 - (JavaxNetSslSSLEngineResult_Status_Enum)toNSEnum;
+
+- (JavaxNetSslSSLEngineResult_Status_ORDINAL)ordinal;
 
 @end
 
@@ -203,7 +205,7 @@ FOUNDATION_EXPORT IOSObjectArray *JavaxNetSslSSLEngineResult_Status_values(void)
 
 FOUNDATION_EXPORT JavaxNetSslSSLEngineResult_Status *JavaxNetSslSSLEngineResult_Status_valueOfWithNSString_(NSString *name);
 
-FOUNDATION_EXPORT JavaxNetSslSSLEngineResult_Status *JavaxNetSslSSLEngineResult_Status_fromOrdinal(NSUInteger ordinal);
+FOUNDATION_EXPORT JavaxNetSslSSLEngineResult_Status *JavaxNetSslSSLEngineResult_Status_fromOrdinal(JavaxNetSslSSLEngineResult_Status_ORDINAL ordinal);
 
 J2OBJC_TYPE_LITERAL_HEADER(JavaxNetSslSSLEngineResult_Status)
 
@@ -218,13 +220,19 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaxNetSslSSLEngineResult_Status)
 
 @class IOSObjectArray;
 
-typedef NS_ENUM(NSUInteger, JavaxNetSslSSLEngineResult_HandshakeStatus_Enum) {
+typedef NS_ENUM(jint, JavaxNetSslSSLEngineResult_HandshakeStatus_Enum) {
   JavaxNetSslSSLEngineResult_HandshakeStatus_Enum_NOT_HANDSHAKING = 0,
   JavaxNetSslSSLEngineResult_HandshakeStatus_Enum_FINISHED = 1,
   JavaxNetSslSSLEngineResult_HandshakeStatus_Enum_NEED_TASK = 2,
   JavaxNetSslSSLEngineResult_HandshakeStatus_Enum_NEED_WRAP = 3,
   JavaxNetSslSSLEngineResult_HandshakeStatus_Enum_NEED_UNWRAP = 4,
 };
+#if J2OBJC_IMPORTED_BY_JAVA_IMPLEMENTATION
+#define JavaxNetSslSSLEngineResult_HandshakeStatus_ORDINAL jint
+#else
+#define JavaxNetSslSSLEngineResult_HandshakeStatus_ORDINAL JavaxNetSslSSLEngineResult_HandshakeStatus_Enum
+#endif
+
 
 /*!
  @brief An <code>SSLEngineResult</code> enum describing the current
@@ -234,11 +242,6 @@ typedef NS_ENUM(NSUInteger, JavaxNetSslSSLEngineResult_HandshakeStatus_Enum) {
  */
 @interface JavaxNetSslSSLEngineResult_HandshakeStatus : JavaLangEnum
 
-@property (readonly, class, nonnull) JavaxNetSslSSLEngineResult_HandshakeStatus *NOT_HANDSHAKING NS_SWIFT_NAME(NOT_HANDSHAKING);
-@property (readonly, class, nonnull) JavaxNetSslSSLEngineResult_HandshakeStatus *FINISHED NS_SWIFT_NAME(FINISHED);
-@property (readonly, class, nonnull) JavaxNetSslSSLEngineResult_HandshakeStatus *NEED_TASK NS_SWIFT_NAME(NEED_TASK);
-@property (readonly, class, nonnull) JavaxNetSslSSLEngineResult_HandshakeStatus *NEED_WRAP NS_SWIFT_NAME(NEED_WRAP);
-@property (readonly, class, nonnull) JavaxNetSslSSLEngineResult_HandshakeStatus *NEED_UNWRAP NS_SWIFT_NAME(NEED_UNWRAP);
 #pragma mark Public
 
 + (JavaxNetSslSSLEngineResult_HandshakeStatus *)valueOfWithNSString:(NSString *)name;
@@ -248,6 +251,8 @@ typedef NS_ENUM(NSUInteger, JavaxNetSslSSLEngineResult_HandshakeStatus_Enum) {
 #pragma mark Package-Private
 
 - (JavaxNetSslSSLEngineResult_HandshakeStatus_Enum)toNSEnum;
+
+- (JavaxNetSslSSLEngineResult_HandshakeStatus_ORDINAL)ordinal;
 
 @end
 
@@ -304,7 +309,7 @@ FOUNDATION_EXPORT IOSObjectArray *JavaxNetSslSSLEngineResult_HandshakeStatus_val
 
 FOUNDATION_EXPORT JavaxNetSslSSLEngineResult_HandshakeStatus *JavaxNetSslSSLEngineResult_HandshakeStatus_valueOfWithNSString_(NSString *name);
 
-FOUNDATION_EXPORT JavaxNetSslSSLEngineResult_HandshakeStatus *JavaxNetSslSSLEngineResult_HandshakeStatus_fromOrdinal(NSUInteger ordinal);
+FOUNDATION_EXPORT JavaxNetSslSSLEngineResult_HandshakeStatus *JavaxNetSslSSLEngineResult_HandshakeStatus_fromOrdinal(JavaxNetSslSSLEngineResult_HandshakeStatus_ORDINAL ordinal);
 
 J2OBJC_TYPE_LITERAL_HEADER(JavaxNetSslSSLEngineResult_HandshakeStatus)
 
@@ -314,6 +319,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaxNetSslSSLEngineResult_HandshakeStatus)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaxNetSslSSLEngineResult")

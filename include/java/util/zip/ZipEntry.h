@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaUtilZipZipEntry
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -30,6 +27,9 @@
 #include "java/util/zip/ZipConstants.h"
 
 @class IOSByteArray;
+@class JavaLangBoolean;
+@class JavaLangInteger;
+@class JavaLangLong;
 @class JavaNioFileAttributeFileTime;
 
 /*!
@@ -52,10 +52,6 @@
   NSString *comment_;
   jlong dataOffset_;
 }
-@property (readonly, class) jint STORED NS_SWIFT_NAME(STORED);
-@property (readonly, class) jint DEFLATED NS_SWIFT_NAME(DEFLATED);
-@property (readonly, class) jlong DOSTIME_BEFORE_1980 NS_SWIFT_NAME(DOSTIME_BEFORE_1980);
-@property (readonly, class) jlong UPPER_DOSTIME_BOUND NS_SWIFT_NAME(UPPER_DOSTIME_BOUND);
 
 #pragma mark Public
 
@@ -431,6 +427,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilZipZipEntry)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaUtilZipZipEntry")

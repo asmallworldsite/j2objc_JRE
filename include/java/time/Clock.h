@@ -25,9 +25,6 @@
 #define INCLUDE_JavaTimeClock 1
 #endif
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -37,6 +34,9 @@
 #if !defined (JavaTimeClock_) && (INCLUDE_ALL_JavaTimeClock || defined(INCLUDE_JavaTimeClock))
 #define JavaTimeClock_
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
+@class JavaLangLong;
 @class JavaTimeDuration;
 @class JavaTimeInstant;
 @class JavaTimeZoneId;
@@ -355,6 +355,9 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaTimeClock)
 #define INCLUDE_JavaIoSerializable 1
 #include "java/io/Serializable.h"
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
+@class JavaLangLong;
 @class JavaTimeClock;
 @class JavaTimeInstant;
 @class JavaTimeZoneId;
@@ -410,6 +413,9 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaTimeClock_SystemClock)
 #define INCLUDE_JavaIoSerializable 1
 #include "java/io/Serializable.h"
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
+@class JavaLangLong;
 @class JavaTimeClock;
 @class JavaTimeInstant;
 @class JavaTimeZoneId;
@@ -466,6 +472,9 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaTimeClock_FixedClock)
 #define INCLUDE_JavaIoSerializable 1
 #include "java/io/Serializable.h"
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
+@class JavaLangLong;
 @class JavaTimeClock;
 @class JavaTimeDuration;
 @class JavaTimeInstant;
@@ -522,6 +531,9 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaTimeClock_OffsetClock)
 #define INCLUDE_JavaIoSerializable 1
 #include "java/io/Serializable.h"
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
+@class JavaLangLong;
 @class JavaTimeClock;
 @class JavaTimeInstant;
 @class JavaTimeZoneId;
@@ -574,6 +586,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaTimeClock_TickClock)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaTimeClock")

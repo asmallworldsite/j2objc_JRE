@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaUtilConcurrentRunnableScheduledFuture
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -32,6 +29,8 @@
 #define RESTRICT_JavaUtilConcurrentScheduledFuture 1
 #define INCLUDE_JavaUtilConcurrentScheduledFuture 1
 #include "java/util/concurrent/ScheduledFuture.h"
+
+@class JavaLangBoolean;
 
 /*!
  @brief A <code>ScheduledFuture</code> that is <code>Runnable</code>.Successful
@@ -65,6 +64,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentRunnableScheduledFuture)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaUtilConcurrentRunnableScheduledFuture")

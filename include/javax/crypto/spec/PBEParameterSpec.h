@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaxCryptoSpecPBEParameterSpec
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -30,6 +27,7 @@
 #include "java/security/spec/AlgorithmParameterSpec.h"
 
 @class IOSByteArray;
+@class JavaLangInteger;
 
 /*!
  @brief This class specifies the set of parameters used with password-based
@@ -116,6 +114,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaxCryptoSpecPBEParameterSpec)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaxCryptoSpecPBEParameterSpec")

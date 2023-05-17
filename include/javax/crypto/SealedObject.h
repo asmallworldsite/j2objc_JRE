@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaxCryptoSealedObject
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -30,6 +27,7 @@
 #include "java/io/Serializable.h"
 
 @class IOSByteArray;
+@class JavaLangLong;
 @class JavaxCryptoCipher;
 @protocol JavaSecurityKey;
 
@@ -87,7 +85,6 @@
    */
   IOSByteArray *encodedParams_;
 }
-@property (readonly, class) jlong serialVersionUID NS_SWIFT_NAME(serialVersionUID);
 
 #pragma mark Public
 
@@ -276,6 +273,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaxCryptoextObjectInputStream)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaxCryptoSealedObject")

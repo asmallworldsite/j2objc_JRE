@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_OrgXmlSaxHelpersParserFactory
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -54,7 +51,6 @@
  @author David Megginson
  @version 2.0.1 (sax2r2)
  */
-__attribute__((deprecated))
 @interface OrgXmlSaxHelpersParserFactory : NSObject
 
 #pragma mark Public
@@ -118,6 +114,4 @@ J2OBJC_TYPE_LITERAL_HEADER(OrgXmlSaxHelpersParserFactory)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_OrgXmlSaxHelpersParserFactory")

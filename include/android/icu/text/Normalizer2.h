@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_AndroidIcuTextNormalizer2
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -28,6 +25,8 @@
 @class AndroidIcuTextNormalizer2_Mode;
 @class AndroidIcuTextNormalizer_QuickCheckResult;
 @class JavaIoInputStream;
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @class JavaLangStringBuilder;
 @protocol JavaLangAppendable;
 @protocol JavaLangCharSequence;
@@ -345,7 +344,7 @@
  (For invocation by subclass constructors,
   typically implicit.)
  */
-- (instancetype __nonnull)init __attribute__((deprecated));
+- (instancetype __nonnull)init;
 
 @end
 
@@ -378,12 +377,18 @@ J2OBJC_TYPE_LITERAL_HEADER(AndroidIcuTextNormalizer2)
 
 @class IOSObjectArray;
 
-typedef NS_ENUM(NSUInteger, AndroidIcuTextNormalizer2_Mode_Enum) {
+typedef NS_ENUM(jint, AndroidIcuTextNormalizer2_Mode_Enum) {
   AndroidIcuTextNormalizer2_Mode_Enum_COMPOSE = 0,
   AndroidIcuTextNormalizer2_Mode_Enum_DECOMPOSE = 1,
   AndroidIcuTextNormalizer2_Mode_Enum_FCD = 2,
   AndroidIcuTextNormalizer2_Mode_Enum_COMPOSE_CONTIGUOUS = 3,
 };
+#if J2OBJC_IMPORTED_BY_JAVA_IMPLEMENTATION
+#define AndroidIcuTextNormalizer2_Mode_ORDINAL jint
+#else
+#define AndroidIcuTextNormalizer2_Mode_ORDINAL AndroidIcuTextNormalizer2_Mode_Enum
+#endif
+
 
 /*!
  @brief Constants for normalization modes.
@@ -393,10 +398,6 @@ typedef NS_ENUM(NSUInteger, AndroidIcuTextNormalizer2_Mode_Enum) {
  */
 @interface AndroidIcuTextNormalizer2_Mode : JavaLangEnum
 
-@property (readonly, class, nonnull) AndroidIcuTextNormalizer2_Mode *COMPOSE NS_SWIFT_NAME(COMPOSE);
-@property (readonly, class, nonnull) AndroidIcuTextNormalizer2_Mode *DECOMPOSE NS_SWIFT_NAME(DECOMPOSE);
-@property (readonly, class, nonnull) AndroidIcuTextNormalizer2_Mode *FCD NS_SWIFT_NAME(FCD);
-@property (readonly, class, nonnull) AndroidIcuTextNormalizer2_Mode *COMPOSE_CONTIGUOUS NS_SWIFT_NAME(COMPOSE_CONTIGUOUS);
 #pragma mark Public
 
 + (AndroidIcuTextNormalizer2_Mode *)valueOfWithNSString:(NSString *)name;
@@ -406,6 +407,8 @@ typedef NS_ENUM(NSUInteger, AndroidIcuTextNormalizer2_Mode_Enum) {
 #pragma mark Package-Private
 
 - (AndroidIcuTextNormalizer2_Mode_Enum)toNSEnum;
+
+- (AndroidIcuTextNormalizer2_Mode_ORDINAL)ordinal;
 
 @end
 
@@ -463,7 +466,7 @@ FOUNDATION_EXPORT IOSObjectArray *AndroidIcuTextNormalizer2_Mode_values(void);
 
 FOUNDATION_EXPORT AndroidIcuTextNormalizer2_Mode *AndroidIcuTextNormalizer2_Mode_valueOfWithNSString_(NSString *name);
 
-FOUNDATION_EXPORT AndroidIcuTextNormalizer2_Mode *AndroidIcuTextNormalizer2_Mode_fromOrdinal(NSUInteger ordinal);
+FOUNDATION_EXPORT AndroidIcuTextNormalizer2_Mode *AndroidIcuTextNormalizer2_Mode_fromOrdinal(AndroidIcuTextNormalizer2_Mode_ORDINAL ordinal);
 
 J2OBJC_TYPE_LITERAL_HEADER(AndroidIcuTextNormalizer2_Mode)
 
@@ -473,6 +476,4 @@ J2OBJC_TYPE_LITERAL_HEADER(AndroidIcuTextNormalizer2_Mode)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_AndroidIcuTextNormalizer2")

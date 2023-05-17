@@ -16,9 +16,6 @@
 #define INCLUDE_AndroidIcuTextNumberFormat_NumberFormatFactory 1
 #endif
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -40,6 +37,10 @@
 @class AndroidIcuUtilCurrencyAmount;
 @class AndroidIcuUtilULocale;
 @class IOSObjectArray;
+@class JavaLangBoolean;
+@class JavaLangDouble;
+@class JavaLangInteger;
+@class JavaLangLong;
 @class JavaLangStringBuffer;
 @class JavaMathBigDecimal;
 @class JavaMathBigInteger;
@@ -184,19 +185,6 @@
  @author Alan Liu
  */
 @interface AndroidIcuTextNumberFormat : AndroidIcuTextUFormat
-@property (readonly, class) jint NUMBERSTYLE NS_SWIFT_NAME(NUMBERSTYLE);
-@property (readonly, class) jint CURRENCYSTYLE NS_SWIFT_NAME(CURRENCYSTYLE);
-@property (readonly, class) jint PERCENTSTYLE NS_SWIFT_NAME(PERCENTSTYLE);
-@property (readonly, class) jint SCIENTIFICSTYLE NS_SWIFT_NAME(SCIENTIFICSTYLE);
-@property (readonly, class) jint INTEGERSTYLE NS_SWIFT_NAME(INTEGERSTYLE);
-@property (readonly, class) jint ISOCURRENCYSTYLE NS_SWIFT_NAME(ISOCURRENCYSTYLE);
-@property (readonly, class) jint PLURALCURRENCYSTYLE NS_SWIFT_NAME(PLURALCURRENCYSTYLE);
-@property (readonly, class) jint ACCOUNTINGCURRENCYSTYLE NS_SWIFT_NAME(ACCOUNTINGCURRENCYSTYLE);
-@property (readonly, class) jint CASHCURRENCYSTYLE NS_SWIFT_NAME(CASHCURRENCYSTYLE);
-@property (readonly, class) jint STANDARDCURRENCYSTYLE NS_SWIFT_NAME(STANDARDCURRENCYSTYLE);
-@property (readonly, class) jint INTEGER_FIELD NS_SWIFT_NAME(INTEGER_FIELD);
-@property (readonly, class) jint FRACTION_FIELD NS_SWIFT_NAME(FRACTION_FIELD);
-@property (readonly, class) jint currentSerialVersion NS_SWIFT_NAME(currentSerialVersion);
 
 #pragma mark Public
 
@@ -784,7 +772,7 @@
   this method should never return null.
  @return a non-null Currency
  */
-- (AndroidIcuUtilCurrency *)getEffectiveCurrency __attribute__((deprecated));
+- (AndroidIcuUtilCurrency *)getEffectiveCurrency;
 
 /*!
  @brief Returns the pattern for the provided locale and choice.
@@ -793,7 +781,7 @@
  @return the pattern
  */
 + (NSString *)getPatternWithJavaUtilLocale:(JavaUtilLocale *)forLocale
-                                   withInt:(jint)choice __attribute__((deprecated));
+                                   withInt:(jint)choice;
 
 /*!
  @brief Returns the pattern for the provided locale and choice.
@@ -985,6 +973,8 @@ J2OBJC_TYPE_LITERAL_HEADER(AndroidIcuTextNumberFormat)
 
 @class AndroidIcuTextNumberFormat;
 @class AndroidIcuUtilULocale;
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @class JavaUtilLocale;
 @protocol JavaUtilSet;
 
@@ -1001,11 +991,6 @@ J2OBJC_TYPE_LITERAL_HEADER(AndroidIcuTextNumberFormat)
   loop will occur.
  */
 @interface AndroidIcuTextNumberFormat_NumberFormatFactory : NSObject
-@property (readonly, class) jint FORMAT_NUMBER NS_SWIFT_NAME(FORMAT_NUMBER);
-@property (readonly, class) jint FORMAT_CURRENCY NS_SWIFT_NAME(FORMAT_CURRENCY);
-@property (readonly, class) jint FORMAT_PERCENT NS_SWIFT_NAME(FORMAT_PERCENT);
-@property (readonly, class) jint FORMAT_SCIENTIFIC NS_SWIFT_NAME(FORMAT_SCIENTIFIC);
-@property (readonly, class) jint FORMAT_INTEGER NS_SWIFT_NAME(FORMAT_INTEGER);
 
 #pragma mark Public
 
@@ -1110,6 +1095,7 @@ J2OBJC_TYPE_LITERAL_HEADER(AndroidIcuTextNumberFormat_NumberFormatFactory)
 #define AndroidIcuTextNumberFormat_SimpleNumberFormatFactory_
 
 @class AndroidIcuUtilULocale;
+@class JavaLangBoolean;
 @class JavaUtilLocale;
 @protocol JavaUtilSet;
 
@@ -1185,6 +1171,8 @@ J2OBJC_TYPE_LITERAL_HEADER(AndroidIcuTextNumberFormat_SimpleNumberFormatFactory)
 @class AndroidIcuTextNumberFormat_NumberFormatFactory;
 @class AndroidIcuUtilULocale;
 @class IOSObjectArray;
+@class JavaLangBoolean;
+@class JavaLangInteger;
 
 @interface AndroidIcuTextNumberFormat_NumberFormatShim : NSObject
 
@@ -1220,6 +1208,8 @@ J2OBJC_TYPE_LITERAL_HEADER(AndroidIcuTextNumberFormat_NumberFormatShim)
 #define INCLUDE_JavaTextFormat_Field 1
 #include "java/text/Format.h"
 
+@class JavaLangLong;
+
 /*!
  @brief The instances of this inner class are used as attribute keys and values
   in AttributedCharacterIterator that
@@ -1230,18 +1220,6 @@ J2OBJC_TYPE_LITERAL_HEADER(AndroidIcuTextNumberFormat_NumberFormatShim)
  <p>
  */
 @interface AndroidIcuTextNumberFormat_Field : JavaTextFormat_Field
-@property (readonly, class) jlong serialVersionUID NS_SWIFT_NAME(serialVersionUID);
-@property (readonly, class, strong) AndroidIcuTextNumberFormat_Field *SIGN NS_SWIFT_NAME(SIGN);
-@property (readonly, class, strong) AndroidIcuTextNumberFormat_Field *INTEGER NS_SWIFT_NAME(INTEGER);
-@property (readonly, class, strong) AndroidIcuTextNumberFormat_Field *FRACTION NS_SWIFT_NAME(FRACTION);
-@property (readonly, class, strong) AndroidIcuTextNumberFormat_Field *EXPONENT NS_SWIFT_NAME(EXPONENT);
-@property (readonly, class, strong) AndroidIcuTextNumberFormat_Field *EXPONENT_SIGN NS_SWIFT_NAME(EXPONENT_SIGN);
-@property (readonly, class, strong) AndroidIcuTextNumberFormat_Field *EXPONENT_SYMBOL NS_SWIFT_NAME(EXPONENT_SYMBOL);
-@property (readonly, class, strong) AndroidIcuTextNumberFormat_Field *DECIMAL_SEPARATOR NS_SWIFT_NAME(DECIMAL_SEPARATOR);
-@property (readonly, class, strong) AndroidIcuTextNumberFormat_Field *GROUPING_SEPARATOR NS_SWIFT_NAME(GROUPING_SEPARATOR);
-@property (readonly, class, strong) AndroidIcuTextNumberFormat_Field *PERCENT NS_SWIFT_NAME(PERCENT);
-@property (readonly, class, strong) AndroidIcuTextNumberFormat_Field *PERMILLE NS_SWIFT_NAME(PERMILLE);
-@property (readonly, class, strong) AndroidIcuTextNumberFormat_Field *CURRENCY NS_SWIFT_NAME(CURRENCY);
 
 #pragma mark Protected
 
@@ -1356,6 +1334,4 @@ J2OBJC_TYPE_LITERAL_HEADER(AndroidIcuTextNumberFormat_Field)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_AndroidIcuTextNumberFormat")

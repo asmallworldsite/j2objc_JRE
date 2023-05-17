@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_OrgXmlSaxExtDefaultHandler2
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -42,6 +39,7 @@
 #include "org/xml/sax/ext/EntityResolver2.h"
 
 @class IOSCharArray;
+@class JavaLangInteger;
 @class OrgXmlSaxInputSource;
 
 /*!
@@ -196,6 +194,4 @@ J2OBJC_TYPE_LITERAL_HEADER(OrgXmlSaxExtDefaultHandler2)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_OrgXmlSaxExtDefaultHandler2")

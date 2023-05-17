@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaLangAnnotationAnnotationFormatError
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -29,6 +26,7 @@
 #define INCLUDE_JavaLangError 1
 #include "java/lang/Error.h"
 
+@class JavaLangBoolean;
 @class JavaLangThrowable;
 
 /*!
@@ -46,32 +44,29 @@
 #pragma mark Public
 
 /*!
- @brief Constructs a new <tt>AnnotationFormatError</tt> with the specified
-  detail message.
+ @brief Constructs a new <code>AnnotationFormatError</code> with the specified detail message.
  @param message the detail message.
  */
 - (instancetype __nonnull)initWithNSString:(NSString *)message;
 
 /*!
- @brief Constructs a new <tt>AnnotationFormatError</tt> with the specified
-  detail message and cause.Note that the detail message associated
-  with <code>cause</code> is <i>not</i> automatically incorporated in
-  this error's detail message.
+ @brief Constructs a new <code>AnnotationFormatError</code> with the specified detail message and cause.
+ Note that the detail message associated with <code>cause</code> is <i>not</i> automatically
+  incorporated in this error's detail message.
  @param message the detail message
- @param cause the cause (A  <tt> null </tt>  value is permitted, and
-       indicates that the cause is nonexistent or unknown.)
+ @param cause the cause (A <code>null</code>  value is permitted, and indicates that the cause is
+       nonexistent or unknown.)
  */
 - (instancetype __nonnull)initWithNSString:(NSString *)message
                      withJavaLangThrowable:(JavaLangThrowable *)cause;
 
 /*!
- @brief Constructs a new <tt>AnnotationFormatError</tt> with the specified
-  cause and a detail message of 
- <tt>(cause == null ?
- null : cause.toString())</tt> (which
-  typically contains the class and detail message of <tt>cause</tt>).
- @param cause the cause (A  <tt> null </tt>  value is permitted, and
-       indicates that the cause is nonexistent or unknown.)
+ @brief Constructs a new <code>AnnotationFormatError</code> with the specified cause and a detail message of 
+ <code>(cause == null ?
+ null : cause.toString())</code> (which typically contains the class and
+  detail message of <code>cause</code>).
+ @param cause the cause (A <code>null</code>  value is permitted, and indicates that the cause is
+       nonexistent or unknown.)
  */
 - (instancetype __nonnull)initWithJavaLangThrowable:(JavaLangThrowable *)cause;
 
@@ -114,6 +109,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaLangAnnotationAnnotationFormatError)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaLangAnnotationAnnotationFormatError")

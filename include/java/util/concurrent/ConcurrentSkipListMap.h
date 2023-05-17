@@ -43,9 +43,6 @@
 #define INCLUDE_JavaUtilConcurrentConcurrentSkipListMap_Index 1
 #endif
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -67,6 +64,8 @@
 #define INCLUDE_JavaIoSerializable 1
 #include "java/io/Serializable.h"
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @class JavaUtilAbstractMap_SimpleImmutableEntry;
 @class JavaUtilConcurrentConcurrentSkipListMap_EntrySpliterator;
 @class JavaUtilConcurrentConcurrentSkipListMap_KeySpliterator;
@@ -109,12 +108,7 @@
   method. (Note however that it is possible to change mappings in the
   associated map using <code>put</code>, <code>putIfAbsent</code>, or 
  <code>replace</code>, depending on exactly which effect you need.) 
- <p>Beware that, unlike in most collections, the <code>size</code>
-  method is <em>not</em> a constant-time operation. Because of the
-  asynchronous nature of these maps, determining the current number
-  of elements requires a traversal of the elements, and so may report
-  inaccurate results if this collection is modified during traversal.
-  Additionally, the bulk operations <code>putAll</code>, <code>equals</code>,
+ <p>Beware that bulk operations <code>putAll</code>, <code>equals</code>,
   <code>toArray</code>, <code>containsValue</code>, and <code>clear</code> are 
  <em>not</em> guaranteed to be performed atomically. For example, an
   iterator operating concurrently with a <code>putAll</code> operation
@@ -124,7 +118,10 @@
   interfaces. Like most other concurrent collections, this class does 
  <em>not</em> permit the use of <code>null</code> keys or values because some
   null return values cannot be reliably distinguished from the absence of
-  elements.
+  elements. 
+ <p>This class is a member of the 
+ <a href="{@@docRoot}/java.base/java/util/package-summary.html#CollectionsFramework">
+  Java Collections Framework</a>.
  @author Doug Lea
  @since 1.6
  */
@@ -138,7 +135,6 @@
    */
   id<JavaUtilComparator> comparator_;
 }
-@property (readonly, class, strong) id BASE_HEADER NS_SWIFT_NAME(BASE_HEADER);
 
 #pragma mark Public
 
@@ -417,8 +413,6 @@ withJavaUtilFunctionBiFunction:(id<JavaUtilFunctionBiFunction>)remappingFunction
 - (id)higherKeyWithId:(id)key;
 
 /*!
- @brief Returns <code>true</code> if this map contains no key-value mappings.
- @return <code>true</code> if this map contains no key-value mappings
  */
 - (jboolean)isEmpty;
 
@@ -428,9 +422,10 @@ withJavaUtilFunctionBiFunction:(id<JavaUtilFunctionBiFunction>)remappingFunction
   The set's spliterator additionally reports <code>Spliterator.CONCURRENT</code>,
   <code>Spliterator.NONNULL</code>, <code>Spliterator.SORTED</code> and 
  <code>Spliterator.ORDERED</code>, with an encounter order that is ascending
-  key order.  The spliterator's comparator (see 
- <code>java.util.Spliterator.getComparator()</code>) is <code>null</code> if
-  the map's comparator (see <code>comparator()</code>) is <code>null</code>.
+  key order. 
+ <p>The spliterator's comparator
+  is <code>null</code> if the map's comparator
+  is <code>null</code>.
   Otherwise, the spliterator's comparator is the same as or imposes the
   same total ordering as the map's comparator. 
  <p>The set is backed by the map, so changes to the map are
@@ -580,18 +575,6 @@ withJavaUtilFunctionBiFunction:(id<JavaUtilFunctionBiFunction>)remappingFunction
 - (void)replaceAllWithJavaUtilFunctionBiFunction:(id<JavaUtilFunctionBiFunction>)function;
 
 /*!
- @brief Returns the number of key-value mappings in this map.If this map
-  contains more than <code>Integer.MAX_VALUE</code> elements, it
-  returns <code>Integer.MAX_VALUE</code>.
- <p>Beware that, unlike in most collections, this method is 
- <em>NOT</em> a constant-time operation. Because of the
-  asynchronous nature of these maps, determining the current
-  number of elements requires traversing them all to count them.
-  Additionally, it is possible for the size to change during
-  execution of this method, in which case the returned result
-  will be inaccurate. Thus, this method is typically not very
-  useful in concurrent applications.
- @return the number of elements in this map
  */
 - (jint)size;
 
@@ -661,14 +644,6 @@ withJavaUtilFunctionBiFunction:(id<JavaUtilFunctionBiFunction>)remappingFunction
  @brief Main deletion method.Locates node, nulls value, appends a
   deletion marker, unlinks predecessor, removes associated index
   nodes, and possibly reduces head index level.
- Index nodes are cleared out simply by calling findPredecessor.
-  which unlinks indexes to deleted nodes found along path to key,
-  which will include the indexes to this node.  This is done
-  unconditionally. We can't check beforehand whether there are
-  index nodes because it might be the case that some or all
-  indexes hadn't been inserted yet for this node during initial
-  search for it, and we'd like to ensure lack of garbage
-  retention, so must call to be sure.
  @param key the key
  @param value if non-null, the value that must be  associated with key
  @return the node, or null if not found
@@ -679,7 +654,7 @@ withJavaUtilFunctionBiFunction:(id<JavaUtilFunctionBiFunction>)remappingFunction
 - (JavaUtilConcurrentConcurrentSkipListMap_EntrySpliterator *)entrySpliterator;
 
 /*!
- @brief Specialized variant of findNode to get first valid node.
+ @brief Gets first valid node, unlinking deleted nodes if encountered.
  @return first node or null if empty
  */
 - (JavaUtilConcurrentConcurrentSkipListMap_Node *)findFirst;
@@ -701,7 +676,7 @@ withJavaUtilFunctionBiFunction:(id<JavaUtilFunctionBiFunction>)remappingFunction
                                           withJavaUtilComparator:(id<JavaUtilComparator>)cmp;
 
 /*!
- @brief Returns SimpleImmutableEntry for results of findNear.
+ @brief Variant of findNear returning SimpleImmutableEntry
  @param key the key
  @param rel the relation -- OR'ed combination of EQ, LT, GT
  @return Entry fitting relation, or null if no such
@@ -774,15 +749,16 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentConcurrentSkipListMap)
 #if !defined (JavaUtilConcurrentConcurrentSkipListMap_Node_) && (INCLUDE_ALL_JavaUtilConcurrentConcurrentSkipListMap || defined(INCLUDE_JavaUtilConcurrentConcurrentSkipListMap_Node))
 #define JavaUtilConcurrentConcurrentSkipListMap_Node_
 
+@class JavaLangBoolean;
 @class JavaUtilAbstractMap_SimpleImmutableEntry;
 
 /*!
  @brief Nodes hold keys and values, and are singly linked in sorted
   order, possibly with some intervening marker nodes.The list is
-  headed by a dummy node accessible as head.node.
- The value field
-  is declared only as Object because it takes special non-V
-  values for marker and header nodes.
+  headed by a header node accessible as head.node.
+ Headers and
+  marker nodes have null keys. The val field (but currently not
+  the key field) is nulled out upon deletion.
  */
 @interface JavaUtilConcurrentConcurrentSkipListMap_Node : NSObject {
  @public
@@ -793,9 +769,6 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentConcurrentSkipListMap)
 
 #pragma mark Package-Private
 
-/*!
- @brief Creates a new regular node.
- */
 - (instancetype __nonnull)initWithId:(id)key
                               withId:(id)value
 withJavaUtilConcurrentConcurrentSkipListMap_Node:(JavaUtilConcurrentConcurrentSkipListMap_Node *)next;
@@ -860,16 +833,6 @@ withJavaUtilConcurrentConcurrentSkipListMap_Node:(JavaUtilConcurrentConcurrentSk
  */
 - (jboolean)isBaseHeader;
 
-/*!
- @brief Returns true if this node is a marker.This method isn't
-  actually called in any current code checking for markers
-  because callers will have already read value field and need
-  to use that read (not another done here) and so directly
-  test if value points to node.
- @return true if this node is a marker node
- */
-- (jboolean)isMarker;
-
 // Disallowed inherited constructors, do not use.
 
 - (instancetype __nonnull)init NS_UNAVAILABLE;
@@ -901,14 +864,11 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentConcurrentSkipListMap_Node)
 #if !defined (JavaUtilConcurrentConcurrentSkipListMap_Index_) && (INCLUDE_ALL_JavaUtilConcurrentConcurrentSkipListMap || defined(INCLUDE_JavaUtilConcurrentConcurrentSkipListMap_Index))
 #define JavaUtilConcurrentConcurrentSkipListMap_Index_
 
+@class JavaLangBoolean;
 @class JavaUtilConcurrentConcurrentSkipListMap_Node;
 
 /*!
- @brief Index nodes represent the levels of the skip list.Note that
-  even though both Nodes and Indexes have forward-pointing
-  fields, they have different types and are handled in different
-  ways, that can't nicely be captured by placing field in a
-  shared abstract class.
+ @brief Index nodes represent the levels of the skip list.
  */
 @interface JavaUtilConcurrentConcurrentSkipListMap_Index : NSObject {
  @public
@@ -919,9 +879,6 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentConcurrentSkipListMap_Node)
 
 #pragma mark Package-Private
 
-/*!
- @brief Creates index node with given values.
- */
 - (instancetype __nonnull)initWithJavaUtilConcurrentConcurrentSkipListMap_Node:(JavaUtilConcurrentConcurrentSkipListMap_Node *)node
                              withJavaUtilConcurrentConcurrentSkipListMap_Index:(JavaUtilConcurrentConcurrentSkipListMap_Index *)down
                              withJavaUtilConcurrentConcurrentSkipListMap_Index:(JavaUtilConcurrentConcurrentSkipListMap_Index *)right;
@@ -983,6 +940,7 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentConcurrentSkipListMap_Index)
 #if !defined (JavaUtilConcurrentConcurrentSkipListMap_HeadIndex_) && (INCLUDE_ALL_JavaUtilConcurrentConcurrentSkipListMap || defined(INCLUDE_JavaUtilConcurrentConcurrentSkipListMap_HeadIndex))
 #define JavaUtilConcurrentConcurrentSkipListMap_HeadIndex_
 
+@class JavaLangInteger;
 @class JavaUtilConcurrentConcurrentSkipListMap_Index;
 @class JavaUtilConcurrentConcurrentSkipListMap_Node;
 
@@ -1028,12 +986,13 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentConcurrentSkipListMap_HeadIndex)
 #define INCLUDE_JavaUtilIterator 1
 #include "java/util/Iterator.h"
 
+@class JavaLangBoolean;
 @class JavaUtilConcurrentConcurrentSkipListMap;
 @class JavaUtilConcurrentConcurrentSkipListMap_Node;
 @protocol JavaUtilFunctionConsumer;
 
 /*!
- @brief Base of iterator classes:
+ @brief Base of iterator classes
  */
 @interface JavaUtilConcurrentConcurrentSkipListMap_Iter : NSObject < JavaUtilIterator > {
  @public
@@ -1187,6 +1146,8 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentConcurrentSkipListMap_EntryIterator
 #include "java/util/NavigableSet.h"
 
 @class IOSObjectArray;
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @protocol JavaUtilComparator;
 @protocol JavaUtilConcurrentConcurrentNavigableMap;
 @protocol JavaUtilIterator;
@@ -1291,6 +1252,8 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentConcurrentSkipListMap_KeySet)
 #include "java/util/AbstractCollection.h"
 
 @class IOSObjectArray;
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @protocol JavaUtilConcurrentConcurrentNavigableMap;
 @protocol JavaUtilFunctionPredicate;
 @protocol JavaUtilIterator;
@@ -1353,6 +1316,8 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentConcurrentSkipListMap_Values)
 #include "java/util/AbstractSet.h"
 
 @class IOSObjectArray;
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @protocol JavaUtilConcurrentConcurrentNavigableMap;
 @protocol JavaUtilFunctionPredicate;
 @protocol JavaUtilIterator;
@@ -1426,6 +1391,8 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentConcurrentSkipListMap_EntrySet)
 #define INCLUDE_JavaIoSerializable 1
 #include "java/io/Serializable.h"
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @class JavaUtilConcurrentConcurrentSkipListMap;
 @class JavaUtilConcurrentConcurrentSkipListMap_Node;
 @protocol JavaUtilCollection;
@@ -1447,7 +1414,7 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentConcurrentSkipListMap_EntrySet)
   only using the <code>subMap</code>, <code>headMap</code>, and <code>tailMap</code>
   methods of their underlying maps.
  */
-@interface JavaUtilConcurrentConcurrentSkipListMap_SubMap : JavaUtilAbstractMap < JavaUtilConcurrentConcurrentNavigableMap, NSCopying, JavaIoSerializable > {
+@interface JavaUtilConcurrentConcurrentSkipListMap_SubMap : JavaUtilAbstractMap < JavaUtilConcurrentConcurrentNavigableMap, JavaIoSerializable > {
  @public
   /*!
    @brief Underlying map
@@ -1567,7 +1534,7 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentConcurrentSkipListMap_EntrySet)
       withJavaUtilComparator:(id<JavaUtilComparator>)cmp;
 
 /*!
- @brief Submap version of ConcurrentSkipListMap.getNearEntry.
+ @brief Submap version of ConcurrentSkipListMap.findNearEntry.
  */
 - (id<JavaUtilMap_Entry>)getNearEntryWithId:(id)key
                                     withInt:(jint)rel;
@@ -1660,6 +1627,9 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentConcurrentSkipListMap_SubMap)
 #define INCLUDE_JavaUtilSpliterator 1
 #include "java/util/Spliterator.h"
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
+@class JavaLangLong;
 @class JavaUtilConcurrentConcurrentSkipListMap_Node;
 @class JavaUtilConcurrentConcurrentSkipListMap_SubMap;
 @protocol JavaUtilComparator;
@@ -1726,6 +1696,7 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentConcurrentSkipListMap_SubMap_SubMap
 #if !defined (JavaUtilConcurrentConcurrentSkipListMap_SubMap_SubMapValueIterator_) && (INCLUDE_ALL_JavaUtilConcurrentConcurrentSkipListMap || defined(INCLUDE_JavaUtilConcurrentConcurrentSkipListMap_SubMap_SubMapValueIterator))
 #define JavaUtilConcurrentConcurrentSkipListMap_SubMap_SubMapValueIterator_
 
+@class JavaLangInteger;
 @class JavaUtilConcurrentConcurrentSkipListMap_SubMap;
 
 @interface JavaUtilConcurrentConcurrentSkipListMap_SubMap_SubMapValueIterator : JavaUtilConcurrentConcurrentSkipListMap_SubMap_SubMapIter
@@ -1757,6 +1728,7 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentConcurrentSkipListMap_SubMap_SubMap
 #if !defined (JavaUtilConcurrentConcurrentSkipListMap_SubMap_SubMapKeyIterator_) && (INCLUDE_ALL_JavaUtilConcurrentConcurrentSkipListMap || defined(INCLUDE_JavaUtilConcurrentConcurrentSkipListMap_SubMap_SubMapKeyIterator))
 #define JavaUtilConcurrentConcurrentSkipListMap_SubMap_SubMapKeyIterator_
 
+@class JavaLangInteger;
 @class JavaUtilConcurrentConcurrentSkipListMap_SubMap;
 @protocol JavaUtilComparator;
 
@@ -1791,6 +1763,7 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentConcurrentSkipListMap_SubMap_SubMap
 #if !defined (JavaUtilConcurrentConcurrentSkipListMap_SubMap_SubMapEntryIterator_) && (INCLUDE_ALL_JavaUtilConcurrentConcurrentSkipListMap || defined(INCLUDE_JavaUtilConcurrentConcurrentSkipListMap_SubMap_SubMapEntryIterator))
 #define JavaUtilConcurrentConcurrentSkipListMap_SubMap_SubMapEntryIterator_
 
+@class JavaLangInteger;
 @class JavaUtilConcurrentConcurrentSkipListMap_SubMap;
 @protocol JavaUtilMap_Entry;
 
@@ -1823,6 +1796,7 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentConcurrentSkipListMap_SubMap_SubMap
 #if !defined (JavaUtilConcurrentConcurrentSkipListMap_CSLMSpliterator_) && (INCLUDE_ALL_JavaUtilConcurrentConcurrentSkipListMap || defined(INCLUDE_JavaUtilConcurrentConcurrentSkipListMap_CSLMSpliterator))
 #define JavaUtilConcurrentConcurrentSkipListMap_CSLMSpliterator_
 
+@class JavaLangLong;
 @class JavaUtilConcurrentConcurrentSkipListMap_Index;
 @class JavaUtilConcurrentConcurrentSkipListMap_Node;
 @protocol JavaUtilComparator;
@@ -1838,10 +1812,7 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentConcurrentSkipListMap_SubMap_SubMap
   off, or the end of row is encountered. Control of the number of
   splits relies on some statistical estimation: The expected
   remaining number of elements of a skip list when advancing
-  either across or down decreases by about 25%. To make this
-  observation useful, we need to know initial size, which we
-  don't. But we can just use Integer.MAX_VALUE so that we
-  don't prematurely zero out while splitting.
+  either across or down decreases by about 25%.
  */
 @interface JavaUtilConcurrentConcurrentSkipListMap_CSLMSpliterator : NSObject {
  @public
@@ -1849,7 +1820,7 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentConcurrentSkipListMap_SubMap_SubMap
   id fence_;
   JavaUtilConcurrentConcurrentSkipListMap_Index *row_;
   JavaUtilConcurrentConcurrentSkipListMap_Node *current_;
-  jint est_;
+  jlong est_;
 }
 
 #pragma mark Public
@@ -1862,7 +1833,7 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentConcurrentSkipListMap_SubMap_SubMap
    withJavaUtilConcurrentConcurrentSkipListMap_Index:(JavaUtilConcurrentConcurrentSkipListMap_Index *)row
     withJavaUtilConcurrentConcurrentSkipListMap_Node:(JavaUtilConcurrentConcurrentSkipListMap_Node *)origin
                                               withId:(id)fence
-                                             withInt:(jint)est;
+                                            withLong:(jlong)est;
 
 // Disallowed inherited constructors, do not use.
 
@@ -1877,7 +1848,7 @@ J2OBJC_FIELD_SETTER(JavaUtilConcurrentConcurrentSkipListMap_CSLMSpliterator, fen
 J2OBJC_FIELD_SETTER(JavaUtilConcurrentConcurrentSkipListMap_CSLMSpliterator, row_, JavaUtilConcurrentConcurrentSkipListMap_Index *)
 J2OBJC_FIELD_SETTER(JavaUtilConcurrentConcurrentSkipListMap_CSLMSpliterator, current_, JavaUtilConcurrentConcurrentSkipListMap_Node *)
 
-FOUNDATION_EXPORT void JavaUtilConcurrentConcurrentSkipListMap_CSLMSpliterator_initWithJavaUtilComparator_withJavaUtilConcurrentConcurrentSkipListMap_Index_withJavaUtilConcurrentConcurrentSkipListMap_Node_withId_withInt_(JavaUtilConcurrentConcurrentSkipListMap_CSLMSpliterator *self, id<JavaUtilComparator> comparator, JavaUtilConcurrentConcurrentSkipListMap_Index *row, JavaUtilConcurrentConcurrentSkipListMap_Node *origin, id fence, jint est);
+FOUNDATION_EXPORT void JavaUtilConcurrentConcurrentSkipListMap_CSLMSpliterator_initWithJavaUtilComparator_withJavaUtilConcurrentConcurrentSkipListMap_Index_withJavaUtilConcurrentConcurrentSkipListMap_Node_withId_withLong_(JavaUtilConcurrentConcurrentSkipListMap_CSLMSpliterator *self, id<JavaUtilComparator> comparator, JavaUtilConcurrentConcurrentSkipListMap_Index *row, JavaUtilConcurrentConcurrentSkipListMap_Node *origin, id fence, jlong est);
 
 J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentConcurrentSkipListMap_CSLMSpliterator)
 
@@ -1890,6 +1861,9 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentConcurrentSkipListMap_CSLMSpliterat
 #define INCLUDE_JavaUtilSpliterator 1
 #include "java/util/Spliterator.h"
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
+@class JavaLangLong;
 @class JavaUtilConcurrentConcurrentSkipListMap_Index;
 @class JavaUtilConcurrentConcurrentSkipListMap_Node;
 @protocol JavaUtilComparator;
@@ -1915,17 +1889,17 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentConcurrentSkipListMap_CSLMSpliterat
    withJavaUtilConcurrentConcurrentSkipListMap_Index:(JavaUtilConcurrentConcurrentSkipListMap_Index *)row
     withJavaUtilConcurrentConcurrentSkipListMap_Node:(JavaUtilConcurrentConcurrentSkipListMap_Node *)origin
                                               withId:(id)fence
-                                             withInt:(jint)est;
+                                            withLong:(jlong)est;
 
 @end
 
 J2OBJC_EMPTY_STATIC_INIT(JavaUtilConcurrentConcurrentSkipListMap_KeySpliterator)
 
-FOUNDATION_EXPORT void JavaUtilConcurrentConcurrentSkipListMap_KeySpliterator_initWithJavaUtilComparator_withJavaUtilConcurrentConcurrentSkipListMap_Index_withJavaUtilConcurrentConcurrentSkipListMap_Node_withId_withInt_(JavaUtilConcurrentConcurrentSkipListMap_KeySpliterator *self, id<JavaUtilComparator> comparator, JavaUtilConcurrentConcurrentSkipListMap_Index *row, JavaUtilConcurrentConcurrentSkipListMap_Node *origin, id fence, jint est);
+FOUNDATION_EXPORT void JavaUtilConcurrentConcurrentSkipListMap_KeySpliterator_initWithJavaUtilComparator_withJavaUtilConcurrentConcurrentSkipListMap_Index_withJavaUtilConcurrentConcurrentSkipListMap_Node_withId_withLong_(JavaUtilConcurrentConcurrentSkipListMap_KeySpliterator *self, id<JavaUtilComparator> comparator, JavaUtilConcurrentConcurrentSkipListMap_Index *row, JavaUtilConcurrentConcurrentSkipListMap_Node *origin, id fence, jlong est);
 
-FOUNDATION_EXPORT JavaUtilConcurrentConcurrentSkipListMap_KeySpliterator *new_JavaUtilConcurrentConcurrentSkipListMap_KeySpliterator_initWithJavaUtilComparator_withJavaUtilConcurrentConcurrentSkipListMap_Index_withJavaUtilConcurrentConcurrentSkipListMap_Node_withId_withInt_(id<JavaUtilComparator> comparator, JavaUtilConcurrentConcurrentSkipListMap_Index *row, JavaUtilConcurrentConcurrentSkipListMap_Node *origin, id fence, jint est) NS_RETURNS_RETAINED;
+FOUNDATION_EXPORT JavaUtilConcurrentConcurrentSkipListMap_KeySpliterator *new_JavaUtilConcurrentConcurrentSkipListMap_KeySpliterator_initWithJavaUtilComparator_withJavaUtilConcurrentConcurrentSkipListMap_Index_withJavaUtilConcurrentConcurrentSkipListMap_Node_withId_withLong_(id<JavaUtilComparator> comparator, JavaUtilConcurrentConcurrentSkipListMap_Index *row, JavaUtilConcurrentConcurrentSkipListMap_Node *origin, id fence, jlong est) NS_RETURNS_RETAINED;
 
-FOUNDATION_EXPORT JavaUtilConcurrentConcurrentSkipListMap_KeySpliterator *create_JavaUtilConcurrentConcurrentSkipListMap_KeySpliterator_initWithJavaUtilComparator_withJavaUtilConcurrentConcurrentSkipListMap_Index_withJavaUtilConcurrentConcurrentSkipListMap_Node_withId_withInt_(id<JavaUtilComparator> comparator, JavaUtilConcurrentConcurrentSkipListMap_Index *row, JavaUtilConcurrentConcurrentSkipListMap_Node *origin, id fence, jint est);
+FOUNDATION_EXPORT JavaUtilConcurrentConcurrentSkipListMap_KeySpliterator *create_JavaUtilConcurrentConcurrentSkipListMap_KeySpliterator_initWithJavaUtilComparator_withJavaUtilConcurrentConcurrentSkipListMap_Index_withJavaUtilConcurrentConcurrentSkipListMap_Node_withId_withLong_(id<JavaUtilComparator> comparator, JavaUtilConcurrentConcurrentSkipListMap_Index *row, JavaUtilConcurrentConcurrentSkipListMap_Node *origin, id fence, jlong est);
 
 J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentConcurrentSkipListMap_KeySpliterator)
 
@@ -1938,6 +1912,9 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentConcurrentSkipListMap_KeySpliterato
 #define INCLUDE_JavaUtilSpliterator 1
 #include "java/util/Spliterator.h"
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
+@class JavaLangLong;
 @class JavaUtilConcurrentConcurrentSkipListMap_Index;
 @class JavaUtilConcurrentConcurrentSkipListMap_Node;
 @protocol JavaUtilComparator;
@@ -1961,17 +1938,17 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentConcurrentSkipListMap_KeySpliterato
    withJavaUtilConcurrentConcurrentSkipListMap_Index:(JavaUtilConcurrentConcurrentSkipListMap_Index *)row
     withJavaUtilConcurrentConcurrentSkipListMap_Node:(JavaUtilConcurrentConcurrentSkipListMap_Node *)origin
                                               withId:(id)fence
-                                             withInt:(jint)est;
+                                            withLong:(jlong)est;
 
 @end
 
 J2OBJC_EMPTY_STATIC_INIT(JavaUtilConcurrentConcurrentSkipListMap_ValueSpliterator)
 
-FOUNDATION_EXPORT void JavaUtilConcurrentConcurrentSkipListMap_ValueSpliterator_initWithJavaUtilComparator_withJavaUtilConcurrentConcurrentSkipListMap_Index_withJavaUtilConcurrentConcurrentSkipListMap_Node_withId_withInt_(JavaUtilConcurrentConcurrentSkipListMap_ValueSpliterator *self, id<JavaUtilComparator> comparator, JavaUtilConcurrentConcurrentSkipListMap_Index *row, JavaUtilConcurrentConcurrentSkipListMap_Node *origin, id fence, jint est);
+FOUNDATION_EXPORT void JavaUtilConcurrentConcurrentSkipListMap_ValueSpliterator_initWithJavaUtilComparator_withJavaUtilConcurrentConcurrentSkipListMap_Index_withJavaUtilConcurrentConcurrentSkipListMap_Node_withId_withLong_(JavaUtilConcurrentConcurrentSkipListMap_ValueSpliterator *self, id<JavaUtilComparator> comparator, JavaUtilConcurrentConcurrentSkipListMap_Index *row, JavaUtilConcurrentConcurrentSkipListMap_Node *origin, id fence, jlong est);
 
-FOUNDATION_EXPORT JavaUtilConcurrentConcurrentSkipListMap_ValueSpliterator *new_JavaUtilConcurrentConcurrentSkipListMap_ValueSpliterator_initWithJavaUtilComparator_withJavaUtilConcurrentConcurrentSkipListMap_Index_withJavaUtilConcurrentConcurrentSkipListMap_Node_withId_withInt_(id<JavaUtilComparator> comparator, JavaUtilConcurrentConcurrentSkipListMap_Index *row, JavaUtilConcurrentConcurrentSkipListMap_Node *origin, id fence, jint est) NS_RETURNS_RETAINED;
+FOUNDATION_EXPORT JavaUtilConcurrentConcurrentSkipListMap_ValueSpliterator *new_JavaUtilConcurrentConcurrentSkipListMap_ValueSpliterator_initWithJavaUtilComparator_withJavaUtilConcurrentConcurrentSkipListMap_Index_withJavaUtilConcurrentConcurrentSkipListMap_Node_withId_withLong_(id<JavaUtilComparator> comparator, JavaUtilConcurrentConcurrentSkipListMap_Index *row, JavaUtilConcurrentConcurrentSkipListMap_Node *origin, id fence, jlong est) NS_RETURNS_RETAINED;
 
-FOUNDATION_EXPORT JavaUtilConcurrentConcurrentSkipListMap_ValueSpliterator *create_JavaUtilConcurrentConcurrentSkipListMap_ValueSpliterator_initWithJavaUtilComparator_withJavaUtilConcurrentConcurrentSkipListMap_Index_withJavaUtilConcurrentConcurrentSkipListMap_Node_withId_withInt_(id<JavaUtilComparator> comparator, JavaUtilConcurrentConcurrentSkipListMap_Index *row, JavaUtilConcurrentConcurrentSkipListMap_Node *origin, id fence, jint est);
+FOUNDATION_EXPORT JavaUtilConcurrentConcurrentSkipListMap_ValueSpliterator *create_JavaUtilConcurrentConcurrentSkipListMap_ValueSpliterator_initWithJavaUtilComparator_withJavaUtilConcurrentConcurrentSkipListMap_Index_withJavaUtilConcurrentConcurrentSkipListMap_Node_withId_withLong_(id<JavaUtilComparator> comparator, JavaUtilConcurrentConcurrentSkipListMap_Index *row, JavaUtilConcurrentConcurrentSkipListMap_Node *origin, id fence, jlong est);
 
 J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentConcurrentSkipListMap_ValueSpliterator)
 
@@ -1984,6 +1961,9 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentConcurrentSkipListMap_ValueSplitera
 #define INCLUDE_JavaUtilSpliterator 1
 #include "java/util/Spliterator.h"
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
+@class JavaLangLong;
 @class JavaUtilConcurrentConcurrentSkipListMap_Index;
 @class JavaUtilConcurrentConcurrentSkipListMap_Node;
 @protocol JavaUtilComparator;
@@ -2009,17 +1989,17 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentConcurrentSkipListMap_ValueSplitera
    withJavaUtilConcurrentConcurrentSkipListMap_Index:(JavaUtilConcurrentConcurrentSkipListMap_Index *)row
     withJavaUtilConcurrentConcurrentSkipListMap_Node:(JavaUtilConcurrentConcurrentSkipListMap_Node *)origin
                                               withId:(id)fence
-                                             withInt:(jint)est;
+                                            withLong:(jlong)est;
 
 @end
 
 J2OBJC_EMPTY_STATIC_INIT(JavaUtilConcurrentConcurrentSkipListMap_EntrySpliterator)
 
-FOUNDATION_EXPORT void JavaUtilConcurrentConcurrentSkipListMap_EntrySpliterator_initWithJavaUtilComparator_withJavaUtilConcurrentConcurrentSkipListMap_Index_withJavaUtilConcurrentConcurrentSkipListMap_Node_withId_withInt_(JavaUtilConcurrentConcurrentSkipListMap_EntrySpliterator *self, id<JavaUtilComparator> comparator, JavaUtilConcurrentConcurrentSkipListMap_Index *row, JavaUtilConcurrentConcurrentSkipListMap_Node *origin, id fence, jint est);
+FOUNDATION_EXPORT void JavaUtilConcurrentConcurrentSkipListMap_EntrySpliterator_initWithJavaUtilComparator_withJavaUtilConcurrentConcurrentSkipListMap_Index_withJavaUtilConcurrentConcurrentSkipListMap_Node_withId_withLong_(JavaUtilConcurrentConcurrentSkipListMap_EntrySpliterator *self, id<JavaUtilComparator> comparator, JavaUtilConcurrentConcurrentSkipListMap_Index *row, JavaUtilConcurrentConcurrentSkipListMap_Node *origin, id fence, jlong est);
 
-FOUNDATION_EXPORT JavaUtilConcurrentConcurrentSkipListMap_EntrySpliterator *new_JavaUtilConcurrentConcurrentSkipListMap_EntrySpliterator_initWithJavaUtilComparator_withJavaUtilConcurrentConcurrentSkipListMap_Index_withJavaUtilConcurrentConcurrentSkipListMap_Node_withId_withInt_(id<JavaUtilComparator> comparator, JavaUtilConcurrentConcurrentSkipListMap_Index *row, JavaUtilConcurrentConcurrentSkipListMap_Node *origin, id fence, jint est) NS_RETURNS_RETAINED;
+FOUNDATION_EXPORT JavaUtilConcurrentConcurrentSkipListMap_EntrySpliterator *new_JavaUtilConcurrentConcurrentSkipListMap_EntrySpliterator_initWithJavaUtilComparator_withJavaUtilConcurrentConcurrentSkipListMap_Index_withJavaUtilConcurrentConcurrentSkipListMap_Node_withId_withLong_(id<JavaUtilComparator> comparator, JavaUtilConcurrentConcurrentSkipListMap_Index *row, JavaUtilConcurrentConcurrentSkipListMap_Node *origin, id fence, jlong est) NS_RETURNS_RETAINED;
 
-FOUNDATION_EXPORT JavaUtilConcurrentConcurrentSkipListMap_EntrySpliterator *create_JavaUtilConcurrentConcurrentSkipListMap_EntrySpliterator_initWithJavaUtilComparator_withJavaUtilConcurrentConcurrentSkipListMap_Index_withJavaUtilConcurrentConcurrentSkipListMap_Node_withId_withInt_(id<JavaUtilComparator> comparator, JavaUtilConcurrentConcurrentSkipListMap_Index *row, JavaUtilConcurrentConcurrentSkipListMap_Node *origin, id fence, jint est);
+FOUNDATION_EXPORT JavaUtilConcurrentConcurrentSkipListMap_EntrySpliterator *create_JavaUtilConcurrentConcurrentSkipListMap_EntrySpliterator_initWithJavaUtilComparator_withJavaUtilConcurrentConcurrentSkipListMap_Index_withJavaUtilConcurrentConcurrentSkipListMap_Node_withId_withLong_(id<JavaUtilComparator> comparator, JavaUtilConcurrentConcurrentSkipListMap_Index *row, JavaUtilConcurrentConcurrentSkipListMap_Node *origin, id fence, jlong est);
 
 J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentConcurrentSkipListMap_EntrySpliterator)
 
@@ -2029,6 +2009,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentConcurrentSkipListMap_EntrySplitera
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaUtilConcurrentConcurrentSkipListMap")

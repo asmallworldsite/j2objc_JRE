@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaNioChannelsFileLock
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -29,6 +26,8 @@
 #define INCLUDE_JavaLangAutoCloseable 1
 #include "java/lang/AutoCloseable.h"
 
+@class JavaLangBoolean;
+@class JavaLangLong;
 @class JavaNioChannelsAsynchronousFileChannel;
 @class JavaNioChannelsFileChannel;
 @protocol JavaNioChannelsChannel;
@@ -256,6 +255,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaNioChannelsFileLock)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaNioChannelsFileLock")

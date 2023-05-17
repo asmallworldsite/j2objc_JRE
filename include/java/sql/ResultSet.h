@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaSqlResultSet
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -36,6 +33,13 @@
 @class IOSByteArray;
 @class JavaIoInputStream;
 @class JavaIoReader;
+@class JavaLangBoolean;
+@class JavaLangByte;
+@class JavaLangDouble;
+@class JavaLangFloat;
+@class JavaLangInteger;
+@class JavaLangLong;
+@class JavaLangShort;
 @class JavaMathBigDecimal;
 @class JavaNetURL;
 @class JavaSqlDate;
@@ -359,7 +363,7 @@
   this method
  */
 - (JavaMathBigDecimal *)getBigDecimalWithInt:(jint)columnIndex
-                                     withInt:(jint)scale_ __attribute__((deprecated));
+                                     withInt:(jint)scale_;
 
 /*!
  @brief Retrieves the value of the designated column in the current row
@@ -467,7 +471,7 @@
  @throw SQLFeatureNotSupportedExceptionif the JDBC driver does not support
   this method
  */
-- (JavaIoInputStream *)getUnicodeStreamWithInt:(jint)columnIndex __attribute__((deprecated));
+- (JavaIoInputStream *)getUnicodeStreamWithInt:(jint)columnIndex;
 
 /*!
  @brief Retrieves the value of the designated column in the current row
@@ -618,7 +622,7 @@
   this method
  */
 - (JavaMathBigDecimal *)getBigDecimalWithNSString:(NSString *)columnLabel
-                                          withInt:(jint)scale_ __attribute__((deprecated));
+                                          withInt:(jint)scale_;
 
 /*!
  @brief Retrieves the value of the designated column in the current row
@@ -726,7 +730,7 @@
  @throw SQLFeatureNotSupportedExceptionif the JDBC driver does not support
   this method
  */
-- (JavaIoInputStream *)getUnicodeStreamWithNSString:(NSString *)columnLabel __attribute__((deprecated));
+- (JavaIoInputStream *)getUnicodeStreamWithNSString:(NSString *)columnLabel;
 
 /*!
  @brief Retrieves the value of the designated column in the current row
@@ -3812,20 +3816,6 @@
 
 @end
 
-@interface JavaSqlResultSet : NSObject
-@property (readonly, class) jint FETCH_FORWARD NS_SWIFT_NAME(FETCH_FORWARD);
-@property (readonly, class) jint FETCH_REVERSE NS_SWIFT_NAME(FETCH_REVERSE);
-@property (readonly, class) jint FETCH_UNKNOWN NS_SWIFT_NAME(FETCH_UNKNOWN);
-@property (readonly, class) jint TYPE_FORWARD_ONLY NS_SWIFT_NAME(TYPE_FORWARD_ONLY);
-@property (readonly, class) jint TYPE_SCROLL_INSENSITIVE NS_SWIFT_NAME(TYPE_SCROLL_INSENSITIVE);
-@property (readonly, class) jint TYPE_SCROLL_SENSITIVE NS_SWIFT_NAME(TYPE_SCROLL_SENSITIVE);
-@property (readonly, class) jint CONCUR_READ_ONLY NS_SWIFT_NAME(CONCUR_READ_ONLY);
-@property (readonly, class) jint CONCUR_UPDATABLE NS_SWIFT_NAME(CONCUR_UPDATABLE);
-@property (readonly, class) jint HOLD_CURSORS_OVER_COMMIT NS_SWIFT_NAME(HOLD_CURSORS_OVER_COMMIT);
-@property (readonly, class) jint CLOSE_CURSORS_AT_COMMIT NS_SWIFT_NAME(CLOSE_CURSORS_AT_COMMIT);
-
-@end
-
 J2OBJC_EMPTY_STATIC_INIT(JavaSqlResultSet)
 
 /*!
@@ -3933,6 +3923,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaSqlResultSet)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaSqlResultSet")

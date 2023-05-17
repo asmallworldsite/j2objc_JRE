@@ -16,9 +16,6 @@
 #define INCLUDE_JavaUtilVector_Itr 1
 #endif
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -45,6 +42,8 @@
 #include "java/io/Serializable.h"
 
 @class IOSObjectArray;
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @protocol JavaUtilCollection;
 @protocol JavaUtilComparator;
 @protocol JavaUtilEnumeration;
@@ -805,6 +804,8 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilVector)
 #define INCLUDE_JavaUtilIterator 1
 #include "java/util/Iterator.h"
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @protocol JavaUtilFunctionConsumer;
 
 /*!
@@ -847,6 +848,8 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilVector_Itr)
 #define INCLUDE_JavaUtilListIterator 1
 #include "java/util/ListIterator.h"
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @class JavaUtilVector;
 
 /*!
@@ -895,6 +898,9 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilVector_ListItr)
 #include "java/util/Spliterator.h"
 
 @class IOSObjectArray;
+@class JavaLangBoolean;
+@class JavaLangInteger;
+@class JavaLangLong;
 @class JavaUtilVector;
 @protocol JavaUtilComparator;
 @protocol JavaUtilFunctionConsumer;
@@ -949,6 +955,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilVector_VectorSpliterator)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaUtilVector")

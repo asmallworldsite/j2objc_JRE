@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaIoSerializable
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -27,10 +24,13 @@
 
 /*!
  @brief Serializability of a class is enabled by the class implementing the
-  java.io.Serializable interface.Classes that do not implement this
+  java.io.Serializable interface.
+ <p><strong>Warning: Deserialization of untrusted data is inherently dangerous
+  and should be avoided. Untrusted data should be carefully validated. 
+ </strong></p>
+  Classes that do not implement this
   interface will not have any of their state serialized or
-  deserialized.
- All subtypes of a serializable class are themselves
+  deserialized.  All subtypes of a serializable class are themselves
   serializable.  The serialization interface has no methods or fields
   and serves only to identify the semantics of being serializable. <p>
   To allow subtypes of non-serializable classes to be serialized, the
@@ -81,9 +81,9 @@
   correspondingly named fields in the current object.  This handles the case
   when the class has evolved to add new fields. The method does not need to
   concern itself with the state belonging to its superclasses or subclasses.
-  State is saved by writing the individual fields to the
-  ObjectOutputStream using the writeObject method or by using the
-  methods for primitive data types supported by DataOutput. 
+  State is restored by reading data from the ObjectInputStream for
+  the individual fields and making assignments to the appropriate fields
+  of the object. Reading primitive data types is supported by DataInput. 
  <p>The readObjectNoData method is responsible for initializing the state of
   the object for its particular class in the event that the serialization
   stream does not list the given class as a superclass of the object being
@@ -172,7 +172,7 @@
  - seealso: java.io.ObjectOutput
  - seealso: java.io.ObjectInput
  - seealso: java.io.Externalizable
- @since JDK1.1
+ @since 1.1
  */
 @protocol JavaIoSerializable < JavaObject >
 
@@ -188,6 +188,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaIoSerializable)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaIoSerializable")

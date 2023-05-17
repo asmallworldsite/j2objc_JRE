@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaSecuritySecureRandom
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -30,6 +27,8 @@
 #include "java/util/Random.h"
 
 @class IOSByteArray;
+@class JavaLangInteger;
+@class JavaLangLong;
 @class JavaSecurityProvider;
 @class JavaSecuritySecureRandomSpi;
 
@@ -93,7 +92,6 @@
  @author Josh Bloch
  */
 @interface JavaSecuritySecureRandom : JavaUtilRandom
-@property (readonly, class) jlong serialVersionUID NS_SWIFT_NAME(serialVersionUID);
 
 #pragma mark Public
 
@@ -109,7 +107,7 @@
   then an implementation-specific default is returned. 
  <p> Note that the list of registered providers may be retrieved via the 
  <code>Security.getProviders()</code> method. 
- <p> See the SecureRandom section in the <a href="{@@docRoot}/../technotes/guides/security/StandardNames.html#SecureRandom">
+ <p> See the SecureRandom section in the <a href="{@@docRoot}openjdk-redirect.html?v=8&path=/technotes/guides/security/StandardNames.html#SecureRandom">
   Java Cryptography Architecture Standard Algorithm Name Documentation</a>
   for information about standard RNG algorithm names. 
  <p> The returned SecureRandom object has not been seeded.  To seed the
@@ -134,7 +132,7 @@
   then an implementation-specific default is returned. 
  <p> Note that the list of registered providers may be retrieved via the 
  <code>Security.getProviders()</code> method. 
- <p> See the SecureRandom section in the <a href="{@@docRoot}/../technotes/guides/security/StandardNames.html#SecureRandom">
+ <p> See the SecureRandom section in the <a href="{@@docRoot}openjdk-redirect.html?v=8&path=/technotes/guides/security/StandardNames.html#SecureRandom">
   Java Cryptography Architecture Standard Algorithm Name Documentation</a>
   for information about standard RNG algorithm names.
  @param seed the seed.
@@ -176,7 +174,7 @@
   This self-seeding will not occur if <code>setSeed</code> was
   previously called.
  @param algorithm the name of the RNG algorithm.  See the SecureRandom section in the 
-  <a href="{@@docRoot}/../technotes/guides/security/StandardNames.html#SecureRandom">
+  <a href="{@@docRoot}openjdk-redirect.html?v=8&path=/technotes/guides/security/StandardNames.html#SecureRandom">
    Java Cryptography Architecture Standard Algorithm Name Documentation
   </a>  for information about standard RNG algorithm names.
  @return the new SecureRandom object.
@@ -202,7 +200,7 @@
   This self-seeding will not occur if <code>setSeed</code> was
   previously called.
  @param algorithm the name of the RNG algorithm.  See the SecureRandom section in the 
-  <a href="{@@docRoot}/../technotes/guides/security/StandardNames.html#SecureRandom">
+  <a href="{@@docRoot}openjdk-redirect.html?v=8&path=/technotes/guides/security/StandardNames.html#SecureRandom">
    Java Cryptography Architecture Standard Algorithm Name Documentation
   </a>  for information about standard RNG algorithm names.
  @param provider the provider.
@@ -233,7 +231,7 @@
   This self-seeding will not occur if <code>setSeed</code> was
   previously called.
  @param algorithm the name of the RNG algorithm.  See the SecureRandom section in the 
-  <a href="{@@docRoot}/../technotes/guides/security/StandardNames.html#SecureRandom">
+  <a href="{@@docRoot}openjdk-redirect.html?v=8&path=/technotes/guides/security/StandardNames.html#SecureRandom">
    Java Cryptography Architecture Standard Algorithm Name Documentation
   </a>  for information about standard RNG algorithm names.
  @param provider the name of the provider.
@@ -253,7 +251,7 @@
 
 /*!
  @brief Returns a <code>SecureRandom</code> object.
- In Android this is equivalent to get a SHA1PRNG from AndroidOpenSSL.
+ In Android this is equivalent to get a SHA1PRNG from OpenSSLProvider.
   Some situations require strong random values, such as when
   creating high-value/long-lived secrets like RSA public/private
   keys.  To help guide applications in selecting a suitable strong 
@@ -276,6 +274,11 @@
  @return the provider of this SecureRandom object.
  */
 - (JavaSecurityProvider *)getProvider;
+
+/*!
+ @brief Only for testing.
+ */
++ (jint)getSdkTargetForCryptoProviderWorkaround;
 
 /*!
  @brief Returns the given number of seed bytes, computed using the seed
@@ -301,6 +304,11 @@
  @param bytes the array to be filled in with random bytes.
  */
 - (void)nextBytesWithByteArray:(IOSByteArray *)bytes;
+
+/*!
+ @brief Only for testing.
+ */
++ (void)setSdkTargetForCryptoProviderWorkaroundWithInt:(jint)sdkTargetVersion;
 
 /*!
  @brief Reseeds this random object.The given seed supplements, rather than
@@ -364,6 +372,16 @@
 
 J2OBJC_EMPTY_STATIC_INIT(JavaSecuritySecureRandom)
 
+/*!
+ @brief Maximum SDK version for which the workaround for the Crypto provider is in place.
+ <p> We provide instances from the Crypto provider (although the provider is not installed) to
+  apps targeting M or earlier versions of the SDK. 
+ <p> Default is 23 (M). We have it as a field for testability and it shouldn't be changed.
+ */
+inline jint JavaSecuritySecureRandom_get_DEFAULT_SDK_TARGET_FOR_CRYPTO_PROVIDER_WORKAROUND(void);
+#define JavaSecuritySecureRandom_DEFAULT_SDK_TARGET_FOR_CRYPTO_PROVIDER_WORKAROUND 23
+J2OBJC_STATIC_FIELD_CONSTANT(JavaSecuritySecureRandom, DEFAULT_SDK_TARGET_FOR_CRYPTO_PROVIDER_WORKAROUND, jint)
+
 inline jlong JavaSecuritySecureRandom_get_serialVersionUID(void);
 #define JavaSecuritySecureRandom_serialVersionUID 4940670005562187LL
 J2OBJC_STATIC_FIELD_CONSTANT(JavaSecuritySecureRandom, serialVersionUID, jlong)
@@ -388,6 +406,10 @@ FOUNDATION_EXPORT JavaSecuritySecureRandom *create_JavaSecuritySecureRandom_init
 
 FOUNDATION_EXPORT JavaSecuritySecureRandom *JavaSecuritySecureRandom_getInstanceWithNSString_(NSString *algorithm);
 
+FOUNDATION_EXPORT void JavaSecuritySecureRandom_setSdkTargetForCryptoProviderWorkaroundWithInt_(jint sdkTargetVersion);
+
+FOUNDATION_EXPORT jint JavaSecuritySecureRandom_getSdkTargetForCryptoProviderWorkaround(void);
+
 FOUNDATION_EXPORT JavaSecuritySecureRandom *JavaSecuritySecureRandom_getInstanceWithNSString_withNSString_(NSString *algorithm, NSString *provider);
 
 FOUNDATION_EXPORT JavaSecuritySecureRandom *JavaSecuritySecureRandom_getInstanceWithNSString_withJavaSecurityProvider_(NSString *algorithm, JavaSecurityProvider *provider);
@@ -404,6 +426,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaSecuritySecureRandom)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaSecuritySecureRandom")

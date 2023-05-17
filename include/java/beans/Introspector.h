@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaBeansIntrospector
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -27,6 +24,7 @@
 
 @class IOSClass;
 @class IOSObjectArray;
+@class JavaLangInteger;
 @protocol JavaBeansBeanInfo;
 
 /*!
@@ -59,9 +57,6 @@
   </ol>
  */
 @interface JavaBeansIntrospector : NSObject
-@property (readonly, class) jint IGNORE_ALL_BEANINFO NS_SWIFT_NAME(IGNORE_ALL_BEANINFO);
-@property (readonly, class) jint IGNORE_IMMEDIATE_BEANINFO NS_SWIFT_NAME(IGNORE_IMMEDIATE_BEANINFO);
-@property (readonly, class) jint USE_ALL_BEANINFO NS_SWIFT_NAME(USE_ALL_BEANINFO);
 
 #pragma mark Public
 
@@ -212,6 +207,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaBeansIntrospector)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaBeansIntrospector")

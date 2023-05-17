@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaUtilConcurrentForkJoinWorkerThread
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -29,6 +26,8 @@
 #define INCLUDE_JavaLangThread 1
 #include "java/lang/Thread.h"
 
+@class JavaLangInteger;
+@class JavaLangLong;
 @class JavaLangThreadGroup;
 @class JavaLangThrowable;
 @class JavaUtilConcurrentForkJoinPool;
@@ -44,7 +43,8 @@
   and termination methods surrounding the main task processing loop.
   If you do create such a subclass, you will also need to supply a
   custom <code>ForkJoinPool.ForkJoinWorkerThreadFactory</code> to 
- use it in a <code>ForkJoinPool</code>.
+ use it
+  in a <code>ForkJoinPool</code>.
  @since 1.7
  @author Doug Lea
  */
@@ -116,11 +116,6 @@
  */
 - (void)afterTopLevelExec;
 
-/*!
- @brief Erases ThreadLocals by nulling out Thread maps.
- */
-- (void)eraseThreadLocals;
-
 // Disallowed inherited constructors, do not use.
 
 - (instancetype __nonnull)init NS_UNAVAILABLE;
@@ -149,7 +144,7 @@
 
 @end
 
-J2OBJC_STATIC_INIT(JavaUtilConcurrentForkJoinWorkerThread)
+J2OBJC_EMPTY_STATIC_INIT(JavaUtilConcurrentForkJoinWorkerThread)
 
 J2OBJC_FIELD_SETTER(JavaUtilConcurrentForkJoinWorkerThread, pool_, JavaUtilConcurrentForkJoinPool *)
 
@@ -167,6 +162,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentForkJoinWorkerThread)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaUtilConcurrentForkJoinWorkerThread")

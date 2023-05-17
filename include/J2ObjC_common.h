@@ -15,8 +15,6 @@
 #ifndef _J2OBJC_COMMON_H_
 #define _J2OBJC_COMMON_H_
 
-#pragma clang system_header
-
 #import <CoreFoundation/CoreFoundation.h>
 #import <Foundation/Foundation.h>
 
@@ -56,6 +54,73 @@
 #  define RETAIN_AND_AUTORELEASE(x) [[x retain] autorelease]
 # endif
 
+// Support for -Xretain-autorelease-returns and -Xarc-autorelease-returns
+#if __has_feature(objc_arc)
+
+// ARC takes precedence for return values. Under ARC the return value is passed
+// through objc_autoreleaseReturnValue() as needed automatically.
+#define X_AUTORELEASED_RETURN_VALUE(x) x
+#define X_RETAINED_AUTORELEASED_RETURN_VALUE(x) x
+#define ALWAYS_AUTORELEASED_RETURN_VALUE(x) x
+#define ALWAYS_RETAINED_AUTORELEASED_RETURN_VALUE(x) x
+
+#elif J2OBJC_RETAIN_AUTORELEASE_RETURNS && J2OBJC_ARC_AUTORELEASE_RETURNS
+// -Xretain-autorelease-returns on, -Xarc-autorelease-returns on
+
+// These functions are not declared publicly, but are always present in the runtime:
+// https://clang.llvm.org/docs/AutomaticReferenceCounting.html
+//
+// These are safe to call as normal functions. However, the fast-path they enable
+// requires them to be tail-called since the handoff between caller and
+// callee is based on the return address of the called function containing the
+// magic value that indicates the caller will use objc_retainAutoreleasedReturnValue().
+// Compiling with ARC always tail-calls these functions regardless of optimization
+// level.
+extern id objc_autoreleaseReturnValue(id);
+extern id objc_retainAutoreleaseReturnValue(id);  // Not objc_retainAutoreleasedReturnValue!
+
+// Macros for hand-written code.
+// For now call the ARC functions as normal functions. In practice this means that for optimization
+// levels less than -O2 we are not getting the fast-path variant of the callee/caller
+// handoff. At -O2 and above they will usually be tail-called and the handoff will
+// occur.
+#define X_AUTORELEASED_RETURN_VALUE(x) objc_autoreleaseReturnValue(x)
+#define X_RETAINED_AUTORELEASED_RETURN_VALUE(x) objc_retainAutoreleaseReturnValue(x)
+#define ALWAYS_AUTORELEASED_RETURN_VALUE(x) objc_autoreleaseReturnValue(x)
+#define ALWAYS_RETAINED_AUTORELEASED_RETURN_VALUE(x) objc_retainAutoreleaseReturnValue(x)
+
+#elif J2OBJC_RETAIN_AUTORELEASE_RETURNS
+// -Xretain-autorelease-returns on, -Xarc-autorelease-returns off
+
+// Function used by the transpiler to retain/autorelease a return value without ARC.
+// The transpiler needs a function instead of a macro because generated code
+// often has multiple commas within the generated return statement
+// (avoiding "too many arguments provided to function like macro").
+__attribute__((always_inline)) inline id JreRetainedAutoreleasedReturnValue(id value) {
+  return [[value retain] autorelease];
+}
+
+// Macros for hand-written code.
+#define X_AUTORELEASED_RETURN_VALUE(x) [x autorelease]
+#define X_RETAINED_AUTORELEASED_RETURN_VALUE(x) [[x retain] autorelease]
+#define ALWAYS_AUTORELEASED_RETURN_VALUE(x) [x autorelease]
+#define ALWAYS_RETAINED_AUTORELEASED_RETURN_VALUE(x) [[x retain] autorelease]
+
+#else
+// -Xretain-autorelease-returns off, -Xarc-autorelease-returns off
+
+// Return values not autoreleased with -Xretain-autorelease-returns off. These values
+// are only autoreleased when -Xretain-autorelease-returns is enabled.
+#define X_AUTORELEASED_RETURN_VALUE(x) x
+#define X_RETAINED_AUTORELEASED_RETURN_VALUE(x) x
+
+// Always returned autoreleased regardless of transpiler flags. These macros exist
+// to allow ARC-style returns of these values when -Xarc-autorelease-returns is on.
+#define ALWAYS_AUTORELEASED_RETURN_VALUE(x) [x autorelease]
+#define ALWAYS_RETAINED_AUTORELEASED_RETURN_VALUE(x) [[x retain] autorelease]
+
+#endif  // __has_feature(objc_arc)
+
 #if __has_feature(objc_arc_weak)
 # define WEAK_ __weak
 #else
@@ -64,13 +129,17 @@
 
 CF_EXTERN_C_BEGIN
 
-id JreThrowNullPointerException() __attribute__((noreturn));
+id JreThrowNullPointerException(void) __attribute__((noreturn));
 void JreThrowClassCastException(id p, Class cls) __attribute__((noreturn));
 void JreThrowClassCastExceptionWithIOSClass(id p, IOSClass *cls) __attribute__((noreturn));
 void JreThrowArithmeticExceptionWithNSString(NSString *msg) __attribute__((noreturn));
 
 id JreStrongAssign(__strong id *pIvar, id value);
 id JreStrongAssignAndConsume(__strong id *pIvar, NS_RELEASES_ARGUMENT id value);
+
+id JreStrictFieldStrongAssign(__strong id *pIvar, id value);
+id JreStrictFieldStrongLoad(__strong id *pIvar);
+void JreStrictFieldStrongRelease(__strong id *pIvar);
 
 id JreLoadVolatileId(volatile_id *pVar);
 id JreAssignVolatileId(volatile_id *pVar, id value);
@@ -86,6 +155,7 @@ id JreRetainedWithAssign(id parent, __strong id *pIvar, id value);
 id JreVolatileRetainedWithAssign(id parent, volatile_id *pIvar, id value);
 void JreRetainedWithRelease(id parent, id child);
 void JreVolatileRetainedWithRelease(id parent, volatile_id *pVar);
+void JreStrictFieldRetainedWithRelease(id parent, id *pVar);
 
 NSString *JreStrcat(const char *types, ...);
 
@@ -166,12 +236,12 @@ J2OBJC_VOLATILE_ACCESS_DEFN(Double, jdouble)
  * @define J2OBJC_STATIC_INIT
  * @param CLASS The class to declare the init function for.
  */
-#define J2OBJC_STATIC_INIT(CLASS) \
-  FOUNDATION_EXPORT _Atomic(jboolean) CLASS##__initialized; \
-  __attribute__((always_inline)) inline void CLASS##_initialize() { \
+#define J2OBJC_STATIC_INIT(CLASS)                                                           \
+  FOUNDATION_EXPORT _Atomic(jboolean) CLASS##__initialized;                                 \
+  __attribute__((always_inline)) inline void CLASS##_initialize(void) {                     \
     if (__builtin_expect(!__c11_atomic_load(&CLASS##__initialized, __ATOMIC_ACQUIRE), 0)) { \
-      [CLASS class]; \
-    } \
+      [CLASS class];                                                                        \
+    }                                                                                       \
   }
 
 /*!
@@ -181,7 +251,7 @@ J2OBJC_VOLATILE_ACCESS_DEFN(Double, jdouble)
  * @param CLASS The class to declare the init function for.
  */
 #define J2OBJC_EMPTY_STATIC_INIT(CLASS) \
-  __attribute__((always_inline)) inline void CLASS##_initialize() {}
+  __attribute__((always_inline)) inline void CLASS##_initialize(void) {}
 
 /*!
  * Declares the type literal accessor for a type. This macro should be added to
@@ -225,6 +295,15 @@ J2OBJC_VOLATILE_ACCESS_DEFN(Double, jdouble)
     return cls; \
   }
 
+#ifdef J2OBJC_STRICT_FIELD_ASSIGN
+
+#define J2OBJC_FIELD_SETTER(CLASS, FIELD, TYPE)                                                 \
+  __attribute__((unused)) static inline TYPE CLASS##_set_##FIELD(CLASS *instance, TYPE value) { \
+    return JreStrictFieldStrongAssign(&instance->FIELD, value);                                 \
+  }
+
+#else  // J2OBJC_STRICT_FIELD_ASSIGN
+
 #if __has_feature(objc_arc)
 #define J2OBJC_FIELD_SETTER(CLASS, FIELD, TYPE) \
   __attribute__((unused)) static inline TYPE CLASS##_set_##FIELD(CLASS *instance, TYPE value) { \
@@ -240,6 +319,8 @@ J2OBJC_VOLATILE_ACCESS_DEFN(Double, jdouble)
     return JreStrongAssignAndConsume(&instance->FIELD, value); \
   }
 #endif
+
+#endif  // J2OBJC_STRICT_FIELD_ASSIGN
 
 #define J2OBJC_VOLATILE_FIELD_SETTER(CLASS, FIELD, TYPE) \
   __attribute__((unused)) static inline TYPE CLASS##_set_##FIELD(CLASS *instance, TYPE value) { \

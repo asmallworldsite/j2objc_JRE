@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaSecuritySecurity
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -26,14 +23,14 @@
 #define JavaSecuritySecurity_
 
 @class IOSObjectArray;
+@class JavaLangInteger;
 @class JavaSecurityProvider;
 @protocol JavaUtilMap;
 @protocol JavaUtilSet;
 
 /*!
  @brief <p>This class centralizes all security properties and common security
-  methods.
- One of its primary uses is to manage providers. 
+  methods.One of its primary uses is to manage providers.
  <p>The default values of security properties are read from an
   implementation-specific location, which is typically the properties file 
  <code>lib/security/java.security</code> in the Java installation directory.
@@ -70,7 +67,7 @@
 /*!
  @brief Gets a specified property for an algorithm.The algorithm name
   should be a standard name.
- See the <a href="{@@docRoot}/../technotes/guides/security/StandardNames.html">
+ See the <a href="{@@docRoot}openjdk-redirect.html?v=8&path=/technotes/guides/security/StandardNames.html">
   Java Cryptography Architecture Standard Algorithm Name Documentation</a>
   for information about standard algorithm names.
   One possible use is by specialized algorithm parsers, which may map
@@ -81,7 +78,7 @@
  @return the value of the specified property.
  */
 + (NSString *)getAlgorithmPropertyWithNSString:(NSString *)algName
-                                  withNSString:(NSString *)propName __attribute__((deprecated));
+                                  withNSString:(NSString *)propName;
 
 /*!
  @brief Returns a Set of Strings containing the names of all available
@@ -91,7 +88,7 @@
   specified service or if serviceName is null.
  For a complete list
   of Java cryptographic services, please see the 
- <a href="../../../technotes/guides/security/crypto/CryptoSpec.html">Java
+ <a href="{@@docRoot}openjdk-redirect.html?v=8&path=/technotes/guides/security/crypto/CryptoSpec.html">Java
   Cryptography Architecture API Specification &amp; Reference</a>.
   Note: the returned set is immutable.
  @param serviceName the name of the Java cryptographic  service (e.g., Signature, MessageDigest, Cipher, Mac, KeyStore).
@@ -173,7 +170,7 @@
   constraint expressed by the specified attribute name/value pair. 
  </ul>
   
- <p> See the <a href="../../../technotes/guides/security/StandardNames.html">
+ <p> See the <a href="{@@docRoot}openjdk-redirect.html?v=8&path=/technotes/guides/security/StandardNames.html">
   Java Cryptography Architecture Standard Algorithm Name Documentation</a>
   for information about standard cryptographic service names, standard
   algorithm names and standard attribute names.
@@ -227,7 +224,7 @@
   the SHA1withDSA signature algorithm with a keysize of 1024 (or larger). 
  </ul>
   
- <p> See the <a href="{@@docRoot}/../technotes/guides/security/StandardNames.html">
+ <p> See the <a href="{@@docRoot}openjdk-redirect.html?v=8&path=/technotes/guides/security/StandardNames.html">
   Java Cryptography Architecture Standard Algorithm Name Documentation</a>
   for information about standard cryptographic service names, standard
   algorithm names and standard attribute names.
@@ -404,6 +401,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaSecuritySecurity)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaSecuritySecurity")

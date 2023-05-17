@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaIoDataOutput
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -26,6 +23,11 @@
 #define JavaIoDataOutput_
 
 @class IOSByteArray;
+@class JavaLangBoolean;
+@class JavaLangDouble;
+@class JavaLangFloat;
+@class JavaLangInteger;
+@class JavaLangLong;
 
 /*!
  @brief The <code>DataOutput</code> interface provides
@@ -45,7 +47,7 @@
  @author Frank Yellin
  - seealso: java.io.DataInput
  - seealso: java.io.DataOutputStream
- @since JDK1.0
+ @since 1.0
  */
 @protocol JavaIoDataOutput < JavaObject >
 
@@ -363,6 +365,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaIoDataOutput)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaIoDataOutput")

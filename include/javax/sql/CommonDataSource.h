@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaxSqlCommonDataSource
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -26,6 +23,7 @@
 #define JavaxSqlCommonDataSource_
 
 @class JavaIoPrintWriter;
+@class JavaLangInteger;
 @class JavaUtilLoggingLogger;
 
 /*!
@@ -78,11 +76,10 @@
 
 /*!
  @brief <p>Sets the maximum time in seconds that this data source will wait
-  while attempting to connect to a database.
- A value of zero
+  while attempting to connect to a database.A value of zero
   specifies that the timeout is the default system timeout
   if there is one; otherwise, it specifies that there is no timeout.
-  When a <code>DataSource</code> object is created, the login timeout is
+ When a <code>DataSource</code> object is created, the login timeout is
   initially zero.
  @param seconds the data source login time limit
  @throw SQLExceptionif a database access error occurs.
@@ -130,6 +127,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaxSqlCommonDataSource)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaxSqlCommonDataSource")

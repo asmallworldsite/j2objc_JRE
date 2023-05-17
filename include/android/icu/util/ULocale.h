@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_AndroidIcuUtilULocale
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -38,6 +35,9 @@
 @class AndroidIcuUtilULocale_Type;
 @class IOSBooleanArray;
 @class IOSObjectArray;
+@class JavaLangBoolean;
+@class JavaLangCharacter;
+@class JavaLangInteger;
 @class JavaUtilLocale;
 @protocol JavaUtilIterator;
 @protocol JavaUtilSet;
@@ -89,32 +89,6 @@
  @author Ram Viswanadha
  */
 @interface AndroidIcuUtilULocale : NSObject < JavaIoSerializable, JavaLangComparable >
-@property (readonly, class, strong) AndroidIcuUtilULocale *ENGLISH NS_SWIFT_NAME(ENGLISH);
-@property (readonly, class, strong) AndroidIcuUtilULocale *FRENCH NS_SWIFT_NAME(FRENCH);
-@property (readonly, class, strong) AndroidIcuUtilULocale *GERMAN NS_SWIFT_NAME(GERMAN);
-@property (readonly, class, strong) AndroidIcuUtilULocale *ITALIAN NS_SWIFT_NAME(ITALIAN);
-@property (readonly, class, strong) AndroidIcuUtilULocale *JAPANESE NS_SWIFT_NAME(JAPANESE);
-@property (readonly, class, strong) AndroidIcuUtilULocale *KOREAN NS_SWIFT_NAME(KOREAN);
-@property (readonly, class, strong) AndroidIcuUtilULocale *CHINESE NS_SWIFT_NAME(CHINESE);
-@property (readonly, class, strong) AndroidIcuUtilULocale *SIMPLIFIED_CHINESE NS_SWIFT_NAME(SIMPLIFIED_CHINESE);
-@property (readonly, class, strong) AndroidIcuUtilULocale *TRADITIONAL_CHINESE NS_SWIFT_NAME(TRADITIONAL_CHINESE);
-@property (readonly, class, strong) AndroidIcuUtilULocale *FRANCE NS_SWIFT_NAME(FRANCE);
-@property (readonly, class, strong) AndroidIcuUtilULocale *GERMANY NS_SWIFT_NAME(GERMANY);
-@property (readonly, class, strong) AndroidIcuUtilULocale *ITALY NS_SWIFT_NAME(ITALY);
-@property (readonly, class, strong) AndroidIcuUtilULocale *JAPAN NS_SWIFT_NAME(JAPAN);
-@property (readonly, class, strong) AndroidIcuUtilULocale *KOREA NS_SWIFT_NAME(KOREA);
-@property (readonly, class, strong) AndroidIcuUtilULocale *CHINA NS_SWIFT_NAME(CHINA);
-@property (readonly, class, strong) AndroidIcuUtilULocale *PRC NS_SWIFT_NAME(PRC);
-@property (readonly, class, strong) AndroidIcuUtilULocale *TAIWAN NS_SWIFT_NAME(TAIWAN);
-@property (readonly, class, strong) AndroidIcuUtilULocale *UK NS_SWIFT_NAME(UK);
-@property (readonly, class, strong) AndroidIcuUtilULocale *US NS_SWIFT_NAME(US);
-@property (readonly, class, strong) AndroidIcuUtilULocale *CANADA NS_SWIFT_NAME(CANADA);
-@property (readonly, class, strong) AndroidIcuUtilULocale *CANADA_FRENCH NS_SWIFT_NAME(CANADA_FRENCH);
-@property (readonly, class, strong) AndroidIcuUtilULocale *ROOT NS_SWIFT_NAME(ROOT);
-@property (class, strong) AndroidIcuUtilULocale_Type *ACTUAL_LOCALE NS_SWIFT_NAME(ACTUAL_LOCALE);
-@property (class, strong) AndroidIcuUtilULocale_Type *VALID_LOCALE NS_SWIFT_NAME(VALID_LOCALE);
-@property (readonly, class) jchar PRIVATE_USE_EXTENSION NS_SWIFT_NAME(PRIVATE_USE_EXTENSION);
-@property (readonly, class) jchar UNICODE_LOCALE_EXTENSION NS_SWIFT_NAME(UNICODE_LOCALE_EXTENSION);
 
 #pragma mark Public
 
@@ -763,7 +737,7 @@
  @return the localized script name.
  - seealso: Category#DISPLAY
  */
-- (NSString *)getDisplayScriptInContext __attribute__((deprecated));
+- (NSString *)getDisplayScriptInContext;
 
 /*!
  @brief <strong>[icu]</strong> Returns a locale's script localized for display in the provided locale.
@@ -773,7 +747,7 @@
  @return the localized script name.
  */
 + (NSString *)getDisplayScriptInContextWithNSString:(NSString *)localeID
-                                       withNSString:(NSString *)displayLocaleID __attribute__((deprecated));
+                                       withNSString:(NSString *)displayLocaleID;
 
 /*!
  @brief <strong>[icu]</strong> Returns a locale's script localized for display in the provided locale.
@@ -782,14 +756,14 @@
  @return the localized script name.
  */
 + (NSString *)getDisplayScriptInContextWithNSString:(NSString *)localeID
-                          withAndroidIcuUtilULocale:(AndroidIcuUtilULocale *)displayLocale __attribute__((deprecated));
+                          withAndroidIcuUtilULocale:(AndroidIcuUtilULocale *)displayLocale;
 
 /*!
  @brief <strong>[icu]</strong> Returns this locale's script localized for display in the provided locale.
  @param displayLocale the locale in which to display the name.
  @return the localized script name.
  */
-- (NSString *)getDisplayScriptInContextWithAndroidIcuUtilULocale:(AndroidIcuUtilULocale *)displayLocale __attribute__((deprecated));
+- (NSString *)getDisplayScriptInContextWithAndroidIcuUtilULocale:(AndroidIcuUtilULocale *)displayLocale;
 
 /*!
  @brief Returns this locale's variant localized for display in the default <code>DISPLAY</code> locale.
@@ -1007,7 +981,7 @@
  @return String with region to use ("" if none found).
  */
 + (NSString *)getRegionForSupplementalDataWithAndroidIcuUtilULocale:(AndroidIcuUtilULocale *)locale
-                                                        withBoolean:(jboolean)inferRegion __attribute__((deprecated));
+                                                        withBoolean:(jboolean)inferRegion;
 
 /*!
  @brief Returns the script code for this locale, which might be the empty string.
@@ -1134,7 +1108,7 @@
  @return The minimized ULocale instance.
  */
 + (AndroidIcuUtilULocale *)minimizeSubtagsWithAndroidIcuUtilULocale:(AndroidIcuUtilULocale *)loc
-                                 withAndroidIcuUtilULocale_Minimize:(AndroidIcuUtilULocale_Minimize *)fieldToFavor __attribute__((deprecated));
+                                 withAndroidIcuUtilULocale_Minimize:(AndroidIcuUtilULocale_Minimize *)fieldToFavor;
 
 /*!
  @brief Sets the default <code>ULocale</code> for the specified <code>Category</code>.
@@ -1746,10 +1720,16 @@ J2OBJC_TYPE_LITERAL_HEADER(AndroidIcuUtilULocale)
 
 @class IOSObjectArray;
 
-typedef NS_ENUM(NSUInteger, AndroidIcuUtilULocale_Category_Enum) {
+typedef NS_ENUM(jint, AndroidIcuUtilULocale_Category_Enum) {
   AndroidIcuUtilULocale_Category_Enum_DISPLAY = 0,
   AndroidIcuUtilULocale_Category_Enum_FORMAT = 1,
 };
+#if J2OBJC_IMPORTED_BY_JAVA_IMPLEMENTATION
+#define AndroidIcuUtilULocale_Category_ORDINAL jint
+#else
+#define AndroidIcuUtilULocale_Category_ORDINAL AndroidIcuUtilULocale_Category_Enum
+#endif
+
 
 /*!
  @brief Enum for locale categories.These locale categories are used to get/set the default locale for
@@ -1757,8 +1737,6 @@ typedef NS_ENUM(NSUInteger, AndroidIcuUtilULocale_Category_Enum) {
  */
 @interface AndroidIcuUtilULocale_Category : JavaLangEnum
 
-@property (readonly, class, nonnull) AndroidIcuUtilULocale_Category *DISPLAY NS_SWIFT_NAME(DISPLAY);
-@property (readonly, class, nonnull) AndroidIcuUtilULocale_Category *FORMAT NS_SWIFT_NAME(FORMAT);
 #pragma mark Public
 
 + (AndroidIcuUtilULocale_Category *)valueOfWithNSString:(NSString *)name;
@@ -1768,6 +1746,8 @@ typedef NS_ENUM(NSUInteger, AndroidIcuUtilULocale_Category_Enum) {
 #pragma mark Package-Private
 
 - (AndroidIcuUtilULocale_Category_Enum)toNSEnum;
+
+- (AndroidIcuUtilULocale_Category_ORDINAL)ordinal;
 
 @end
 
@@ -1792,7 +1772,7 @@ FOUNDATION_EXPORT IOSObjectArray *AndroidIcuUtilULocale_Category_values(void);
 
 FOUNDATION_EXPORT AndroidIcuUtilULocale_Category *AndroidIcuUtilULocale_Category_valueOfWithNSString_(NSString *name);
 
-FOUNDATION_EXPORT AndroidIcuUtilULocale_Category *AndroidIcuUtilULocale_Category_fromOrdinal(NSUInteger ordinal);
+FOUNDATION_EXPORT AndroidIcuUtilULocale_Category *AndroidIcuUtilULocale_Category_fromOrdinal(AndroidIcuUtilULocale_Category_ORDINAL ordinal);
 
 J2OBJC_TYPE_LITERAL_HEADER(AndroidIcuUtilULocale_Category)
 
@@ -1826,19 +1806,22 @@ J2OBJC_TYPE_LITERAL_HEADER(AndroidIcuUtilULocale_Type)
 
 @class IOSObjectArray;
 
-typedef NS_ENUM(NSUInteger, AndroidIcuUtilULocale_Minimize_Enum) {
+typedef NS_ENUM(jint, AndroidIcuUtilULocale_Minimize_Enum) {
   AndroidIcuUtilULocale_Minimize_Enum_FAVOR_SCRIPT = 0,
   AndroidIcuUtilULocale_Minimize_Enum_FAVOR_REGION = 1,
 };
+#if J2OBJC_IMPORTED_BY_JAVA_IMPLEMENTATION
+#define AndroidIcuUtilULocale_Minimize_ORDINAL jint
+#else
+#define AndroidIcuUtilULocale_Minimize_ORDINAL AndroidIcuUtilULocale_Minimize_Enum
+#endif
+
 
 /*!
  @brief Options for minimizeSubtags.
  */
-__attribute__((deprecated))
 @interface AndroidIcuUtilULocale_Minimize : JavaLangEnum
 
-@property (readonly, class, nonnull) AndroidIcuUtilULocale_Minimize *FAVOR_SCRIPT NS_SWIFT_NAME(FAVOR_SCRIPT);
-@property (readonly, class, nonnull) AndroidIcuUtilULocale_Minimize *FAVOR_REGION NS_SWIFT_NAME(FAVOR_REGION);
 #pragma mark Public
 
 + (AndroidIcuUtilULocale_Minimize *)valueOfWithNSString:(NSString *)name;
@@ -1848,6 +1831,8 @@ __attribute__((deprecated))
 #pragma mark Package-Private
 
 - (AndroidIcuUtilULocale_Minimize_Enum)toNSEnum;
+
+- (AndroidIcuUtilULocale_Minimize_ORDINAL)ordinal;
 
 @end
 
@@ -1872,7 +1857,7 @@ FOUNDATION_EXPORT IOSObjectArray *AndroidIcuUtilULocale_Minimize_values(void);
 
 FOUNDATION_EXPORT AndroidIcuUtilULocale_Minimize *AndroidIcuUtilULocale_Minimize_valueOfWithNSString_(NSString *name);
 
-FOUNDATION_EXPORT AndroidIcuUtilULocale_Minimize *AndroidIcuUtilULocale_Minimize_fromOrdinal(NSUInteger ordinal);
+FOUNDATION_EXPORT AndroidIcuUtilULocale_Minimize *AndroidIcuUtilULocale_Minimize_fromOrdinal(AndroidIcuUtilULocale_Minimize_ORDINAL ordinal);
 
 J2OBJC_TYPE_LITERAL_HEADER(AndroidIcuUtilULocale_Minimize)
 
@@ -1882,6 +1867,7 @@ J2OBJC_TYPE_LITERAL_HEADER(AndroidIcuUtilULocale_Minimize)
 #define AndroidIcuUtilULocale_Builder_
 
 @class AndroidIcuUtilULocale;
+@class JavaLangCharacter;
 
 /*!
  @brief <code>Builder</code> is used to build instances of <code>ULocale</code>
@@ -2125,6 +2111,4 @@ J2OBJC_TYPE_LITERAL_HEADER(AndroidIcuUtilULocale_Builder)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_AndroidIcuUtilULocale")

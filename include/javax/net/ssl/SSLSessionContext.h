@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaxNetSslSSLSessionContext
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -26,6 +23,7 @@
 #define JavaxNetSslSSLSessionContext_
 
 @class IOSByteArray;
+@class JavaLangInteger;
 @protocol JavaUtilEnumeration;
 @protocol JavaxNetSslSSLSession;
 
@@ -81,7 +79,7 @@
   cannot resume or rejoin the session.
   A check for sessions exceeding the timeout is made immediately whenever
   the timeout limit is changed for this <code>SSLSessionContext</code>.
- @param seconds the new session timeout limit in seconds; zero means           there is no limit.
+ @param seconds the new session timeout limit in seconds; zero means         there is no limit.
  @throw IllegalArgumentExceptionif the timeout specified is <code>< 0</code>.
  - seealso: #getSessionTimeout
  */
@@ -100,25 +98,23 @@
   whenever the timeout limit is changed for this 
  <code>SSLSessionContext</code>.
  @return the session timeout limit in seconds; zero means there is no
-  limit.
+          limit.
  - seealso: #setSessionTimeout
  */
 - (jint)getSessionTimeout;
 
 /*!
- @brief Sets the size of the cache used for storing 
- <code>SSLSession</code> objects grouped under this 
- <code>SSLSessionContext</code>.
- @param size the new session cache size limit; zero means there is no  limit.
+ @brief Sets the size of the cache used for storing <code>SSLSession</code>
+  objects grouped under this <code>SSLSessionContext</code>.
+ @param size the new session cache size limit; zero means there is no         limit.
  @throw IllegalArgumentExceptionif the specified size is <code>< 0</code>.
  - seealso: #getSessionCacheSize
  */
 - (void)setSessionCacheSizeWithInt:(jint)size;
 
 /*!
- @brief Returns the size of the cache used for storing 
- <code>SSLSession</code> objects grouped under this 
- <code>SSLSessionContext</code>.
+ @brief Returns the size of the cache used for storing <code>SSLSession</code>
+  objects grouped under this <code>SSLSessionContext</code>.
  @return size of the session cache; zero means there is no size limit.
  - seealso: #setSessionCacheSize
  */
@@ -136,6 +132,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaxNetSslSSLSessionContext)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaxNetSslSSLSessionContext")

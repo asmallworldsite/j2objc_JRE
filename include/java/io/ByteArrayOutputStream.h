@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaIoByteArrayOutputStream
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -30,6 +27,8 @@
 #include "java/io/OutputStream.h"
 
 @class IOSByteArray;
+@class JavaLangInteger;
+@class JavaNioCharsetCharset;
 
 /*!
  @brief This class implements an output stream in which the data is
@@ -38,11 +37,11 @@
  The data can be retrieved using <code>toByteArray()</code> and 
  <code>toString()</code>.
   <p>
-  Closing a <tt>ByteArrayOutputStream</tt> has no effect. The methods in
+  Closing a <code>ByteArrayOutputStream</code> has no effect. The methods in
   this class can be called after the stream has been closed without
-  generating an <tt>IOException</tt>.
+  generating an <code>IOException</code>.
  @author Arthur van Hoff
- @since JDK1.0
+ @since 1.0
  */
 @interface JavaIoByteArrayOutputStream : JavaIoOutputStream {
  @public
@@ -59,13 +58,13 @@
 #pragma mark Public
 
 /*!
- @brief Creates a new byte array output stream.The buffer capacity is
+ @brief Creates a new <code>ByteArrayOutputStream</code>.The buffer capacity is
   initially 32 bytes, though its size increases if necessary.
  */
 - (instancetype __nonnull)init;
 
 /*!
- @brief Creates a new byte array output stream, with a buffer capacity of
+ @brief Creates a new <code>ByteArrayOutputStream</code>, with a buffer capacity of
   the specified size, in bytes.
  @param size the initial size.
  @throw IllegalArgumentExceptionif size is negative.
@@ -73,15 +72,15 @@
 - (instancetype __nonnull)initWithInt:(jint)size;
 
 /*!
- @brief Closing a <tt>ByteArrayOutputStream</tt> has no effect.The methods in
+ @brief Closing a <code>ByteArrayOutputStream</code> has no effect.The methods in
   this class can be called after the stream has been closed without
-  generating an <tt>IOException</tt>.
+  generating an <code>IOException</code>.
  */
 - (void)close;
 
 /*!
- @brief Resets the <code>count</code> field of this byte array output
-  stream to zero, so that all currently accumulated output in the
+ @brief Resets the <code>count</code> field of this <code>ByteArrayOutputStream</code>
+  to zero, so that all currently accumulated output in the
   output stream is discarded.The output stream can be used again,
   reusing the already allocated buffer space.
  - seealso: java.io.ByteArrayInputStream#count
@@ -107,7 +106,7 @@
 
 /*!
  @brief Converts the buffer's contents into a string decoding bytes using the
-  platform's default character set.The length of the new <tt>String</tt>
+  platform's default character set.The length of the new <code>String</code>
   is a function of the character set, and hence may not be equal to the
   size of the buffer.
  <p> This method always replaces malformed-input and unmappable-character
@@ -116,9 +115,25 @@
   class should be used when more control over the decoding process is
   required.
  @return String decoded from the buffer's contents.
- @since JDK1.1
+ @since 1.1
  */
 - (NSString * __nonnull)description;
+
+/*!
+ @brief Converts the buffer's contents into a string by decoding the bytes using
+  the specified <code>charset</code>.The length of the new 
+ <code>String</code> is a function of the charset, and hence may not be equal
+  to the length of the byte array.
+ <p> This method always replaces malformed-input and unmappable-character
+  sequences with the charset's default replacement string. The <code>java.nio.charset.CharsetDecoder</code>
+  class should be used when more control
+  over the decoding process is required.
+ @param charset the charset              to be used to decode the 
+ <code>bytes</code>
+ @return String decoded from the buffer's contents.
+ @since 10
+ */
+- (NSString *)toStringWithJavaNioCharsetCharset:(JavaNioCharsetCharset *)charset;
 
 /*!
  @brief Creates a newly allocated string.Its size is the current size of
@@ -128,9 +143,8 @@
   constructed from the corresponding element <i>b</i> in the byte
   array such that: 
  <blockquote>@code
-
-      c == (char)(((hibyte &amp; 0xff) &lt;&lt; 8) | (b &amp; 0xff)) 
-  
+     c == (char)(((hibyte & 0xff) << 8) | (b & 0xff)) 
+ 
 @endcode</blockquote>
  @param hibyte the high byte of each resulting Unicode character.
  @return the current contents of the output stream, as a string.
@@ -138,48 +152,71 @@
  - seealso: java.io.ByteArrayOutputStream#toString(String)
  - seealso: java.io.ByteArrayOutputStream#toString()
  */
-- (NSString * __nonnull)toStringWithInt:(jint)hibyte __attribute__((deprecated));
+- (NSString * __nonnull)toStringWithInt:(jint)hibyte;
 
 /*!
  @brief Converts the buffer's contents into a string by decoding the bytes using
-  the named <code>charset</code>.The length of the new 
- <tt>String</tt> is a function of the charset, and hence may not be equal
-  to the length of the byte array.
- <p> This method always replaces malformed-input and unmappable-character
-  sequences with this charset's default replacement string. The <code>java.nio.charset.CharsetDecoder</code>
-  class should be used when more control
-  over the decoding process is required.
- @param charsetName the name of a supported              
+  the named <code>charset</code>.
+ <p> This method is equivalent to <code>#toString(charset)</code> that takes a 
+ <code>charset</code>.
+  
+ <p> An invocation of this method of the form 
+ @code
+       ByteArrayOutputStream b = ...
+       b.toString("UTF-8")      
+   
+@endcode
+  behaves in exactly the same way as the expression 
+ @code
+       ByteArrayOutputStream b = ...
+       b.toString(StandardCharsets.UTF_8)      
+   
+@endcode
+ @param charsetName the name of a supported          
  <code>charset</code>
  @return String decoded from the buffer's contents.
  @throw UnsupportedEncodingException
  If the named charset is not supported
- @since JDK1.1
+ @since 1.1
  */
 - (NSString * __nonnull)toStringWithNSString:(NSString *)charsetName;
 
 /*!
  @brief Writes <code>len</code> bytes from the specified byte array
-  starting at offset <code>off</code> to this byte array output stream.
+  starting at offset <code>off</code> to this <code>ByteArrayOutputStream</code>.
  @param b the data.
  @param off the start offset in the data.
  @param len the number of bytes to write.
+ @throw NullPointerExceptionif <code>b</code> is <code>null</code>.
+ @throw IndexOutOfBoundsExceptionif <code>off</code> is negative, 
+ <code>len</code> is negative, or <code>len</code> is greater than 
+ <code>b.length - off</code>
  */
 - (void)writeWithByteArray:(IOSByteArray *)b
                    withInt:(jint)off
                    withInt:(jint)len;
 
 /*!
- @brief Writes the specified byte to this byte array output stream.
+ @brief Writes the specified byte to this <code>ByteArrayOutputStream</code>.
  @param b the byte to be written.
  */
 - (void)writeWithInt:(jint)b;
 
 /*!
- @brief Writes the complete contents of this byte array output stream to
+ @brief Writes the complete contents of the specified byte array
+  to this <code>ByteArrayOutputStream</code>.
+ @param b the data.
+ @throw NullPointerExceptionif <code>b</code> is <code>null</code>.
+ @since 11
+ */
+- (void)writeBytesWithByteArray:(IOSByteArray *)b;
+
+/*!
+ @brief Writes the complete contents of this <code>ByteArrayOutputStream</code> to
   the specified output stream argument, as if by calling the output
   stream's write method using <code>out.write(buf, 0, count)</code>.
  @param outArg the output stream to which to write the data.
+ @throw NullPointerExceptionif <code>out</code> is <code>null</code>.
  @throw IOExceptionif an I/O error occurs.
  */
 - (void)writeToWithJavaIoOutputStream:(JavaIoOutputStream *)outArg;
@@ -210,6 +247,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaIoByteArrayOutputStream)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaIoByteArrayOutputStream")

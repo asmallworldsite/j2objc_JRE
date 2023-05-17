@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaTextCollator
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -30,6 +27,8 @@
 #include "java/util/Comparator.h"
 
 @class IOSObjectArray;
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @class JavaTextCollationKey;
 @class JavaUtilLocale;
 @protocol JavaUtilFunctionFunction;
@@ -75,7 +74,7 @@
   comparisons. Four strengths are provided: <code>PRIMARY</code>,
   <code>SECONDARY</code>, <code>TERTIARY</code>, and <code>IDENTICAL</code>.
   The exact assignment of strengths to language features is
-  locale dependant.  For example, in Czech, "e" and "f" are considered
+  locale dependent.  For example, in Czech, "e" and "f" are considered
   primary differences, while "e" and "&#283;" are secondary differences,
   "e" and "E" are tertiary differences and "e" and "e" are identical.
   The following shows how both case and accents could be ignored for
@@ -111,117 +110,178 @@
  - seealso: CollationElementIterator
  - seealso: Locale
  @author Helena Shih, Laura Werner, Richard Gillam
+ @since 1.1
  */
 @interface JavaTextCollator : NSObject < JavaUtilComparator, NSCopying >
-@property (readonly, class) jint NO_DECOMPOSITION NS_SWIFT_NAME(NO_DECOMPOSITION);
-@property (readonly, class) jint CANONICAL_DECOMPOSITION NS_SWIFT_NAME(CANONICAL_DECOMPOSITION);
-@property (readonly, class) jint FULL_DECOMPOSITION NS_SWIFT_NAME(FULL_DECOMPOSITION);
-@property (readonly, class) jint PRIMARY NS_SWIFT_NAME(PRIMARY);
-@property (readonly, class) jint SECONDARY NS_SWIFT_NAME(SECONDARY);
-@property (readonly, class) jint TERTIARY NS_SWIFT_NAME(TERTIARY);
-@property (readonly, class) jint IDENTICAL NS_SWIFT_NAME(IDENTICAL);
 
 #pragma mark Public
 
 - (instancetype __nonnull)init;
 
+/*!
+ @brief Returns a new collator with the same decomposition mode and
+  strength value as this collator.
+ @return a shallow copy of this collator.
+ - seealso: java.lang.Cloneable
+ */
 - (id)java_clone;
 
 /*!
- @brief Compares two objects to determine their relative order.The objects must
-  be strings.
- @param object1 the first string to compare.
- @param object2 the second string to compare.
- @return a negative value if <code>object1</code> is less than <code>object2</code>,
-          0 if they are equal, and a positive value if <code>object1</code> is
-          greater than <code>object2</code>.
- @throw ClassCastException
- if <code>object1</code> or <code>object2</code> is not a <code>String</code>.
+ @brief Compares its two arguments for order.Returns a negative integer,
+  zero, or a positive integer as the first argument is less than, equal
+  to, or greater than the second.
+ <p>
+  This implementation merely returns
+   <code> compare((String)o1, (String)o2) </code>.
+ @return a negative integer, zero, or a positive integer as the
+          first argument is less than, equal to, or greater than the
+          second.
+ @throw ClassCastExceptionthe arguments cannot be cast to Strings.
+ - seealso: java.util.Comparator
+ @since 1.2
  */
-- (jint)compareWithId:(id)object1
-               withId:(id)object2;
+- (jint)compareWithId:(id)o1
+               withId:(id)o2;
 
 /*!
- @brief Compares two strings to determine their relative order.
- @param string1 the first string to compare.
- @param string2 the second string to compare.
- @return a negative value if <code>string1</code> is less than <code>string2</code>,
-          0 if they are equal and a positive value if <code>string1</code> is
-          greater than <code>string2</code>.
+ @brief Compares the source string to the target string according to the
+  collation rules for this Collator.Returns an integer less than,
+  equal to or greater than zero depending on whether the source String is
+  less than, equal to or greater than the target string.
+ See the Collator
+  class description for an example of use. 
+ <p>
+  For a one time comparison, this method has the best performance. If a
+  given String will be involved in multiple comparisons, CollationKey.compareTo
+  has the best performance. See the Collator class description for an example
+  using CollationKeys.
+ @param source the source string.
+ @param target the target string.
+ @return Returns an integer value. Value is less than zero if source is less than
+  target, value is zero if source and target are equal, value is greater than zero
+  if source is greater than target.
+ - seealso: java.text.CollationKey
+ - seealso: java.text.Collator#getCollationKey
  */
-- (jint)compareWithNSString:(NSString *)string1
-               withNSString:(NSString *)string2;
+- (jint)compareWithNSString:(NSString *)source
+               withNSString:(NSString *)target;
 
 /*!
- @brief Compares two strings using the collation rules to determine if they are
-  equal.
- @param string1 the first string to compare.
- @param string2 the second string to compare.
- @return <code>true</code> if <code>string1</code> and <code>string2</code> are equal
-          using the collation rules, false otherwise.
+ @brief Convenience method for comparing the equality of two strings based on
+  this Collator's collation rules.
+ @param source the source string to be compared with.
+ @param target the target string to be compared with.
+ @return true if the strings are equal according to the collation
+  rules.  false, otherwise.
+ - seealso: java.text.Collator#compare
  */
-- (jboolean)equalsWithNSString:(NSString *)string1
-                  withNSString:(NSString *)string2;
+- (jboolean)equalsWithNSString:(NSString *)source
+                  withNSString:(NSString *)target;
 
 /*!
- @brief Returns an array of locales for which custom <code>Collator</code> instances
-  are available.
- <p>Note that Android does not support user-supplied locale service providers.
+ @brief Returns an array of all locales for which the 
+ <code>getInstance</code> methods of this class can return
+  localized instances.
+ @return An array of locales for which localized
+          <code>Collator</code> instances are available.
  */
 + (IOSObjectArray *)getAvailableLocales;
 
 /*!
- @brief Returns a <code>CollationKey</code> for the specified string for this collator
-  with the current decomposition rule and strength value.
- @param string the source string that is converted into a collation key.
- @return the collation key for <code>string</code>.
+ @brief Transforms the String into a series of bits that can be compared bitwise
+  to other CollationKeys.CollationKeys provide better performance than
+  Collator.compare when Strings are involved in multiple comparisons.
+ See the Collator class description for an example using CollationKeys.
+ @param source the string to be transformed into a collation key.
+ @return the CollationKey for the given String based on this Collator's collation
+  rules. If the source String is null, a null CollationKey is returned.
+ - seealso: java.text.CollationKey
+ - seealso: java.text.Collator#compare
  */
-- (JavaTextCollationKey *)getCollationKeyWithNSString:(NSString *)string;
+- (JavaTextCollationKey *)getCollationKeyWithNSString:(NSString *)source;
 
 /*!
- @brief Returns the decomposition rule for this collator.
- @return the decomposition rule, either <code>NO_DECOMPOSITION</code> or
-          <code>CANONICAL_DECOMPOSITION</code>. <code>FULL_DECOMPOSITION</code> is
-          not supported.
+ @brief Get the decomposition mode of this Collator.Decomposition mode
+  determines how Unicode composed characters are handled.
+ Adjusting
+  decomposition mode allows the user to select between faster and more
+  complete collation behavior. 
+ <p>The three values for decomposition mode are: 
+ <UL>
+  <LI>NO_DECOMPOSITION,
+  <LI>CANONICAL_DECOMPOSITION
+  <LI>FULL_DECOMPOSITION.
+  </UL>
+  See the documentation for these three constants for a description
+  of their meaning.
+ @return the decomposition mode
+ - seealso: java.text.Collator#setDecomposition
+ - seealso: java.text.Collator#NO_DECOMPOSITION
+ - seealso: java.text.Collator#CANONICAL_DECOMPOSITION
+ - seealso: java.text.Collator#FULL_DECOMPOSITION
  */
 - (jint)getDecomposition;
 
 /*!
- @brief Returns a <code>Collator</code> instance which is appropriate for the user's default 
- <code>Locale</code>.
- See "<a href="../util/Locale.html#default_locale">Be wary of the default locale</a>".
+ @brief Gets the Collator for the current default locale.
+ The default locale is determined by java.util.Locale.getDefault.
+ @return the Collator for the default locale.(for example, en_US)
+ - seealso: java.util.Locale#getDefault
  */
 + (JavaTextCollator *)getInstance;
 
 /*!
- @brief Returns a <code>Collator</code> instance which is appropriate for <code>locale</code>.
+ @brief Gets the Collator for the desired locale.
+ @param desiredLocale the desired locale.
+ @return the Collator for the desired locale.
+ - seealso: java.util.Locale
+ - seealso: java.util.ResourceBundle
  */
-+ (JavaTextCollator *)getInstanceWithJavaUtilLocale:(JavaUtilLocale *)locale;
++ (JavaTextCollator *)getInstanceWithJavaUtilLocale:(JavaUtilLocale *)desiredLocale;
 
 /*!
- @brief Returns the strength value for this collator.
- @return the strength value, either PRIMARY, SECONDARY, TERTIARY or
-          IDENTICAL.
+ @brief Returns this Collator's strength property.The strength property determines
+  the minimum level of difference considered significant during comparison.
+ See the Collator class description for an example of use.
+ @return this Collator's current strength property.
+ - seealso: java.text.Collator#setStrength
+ - seealso: java.text.Collator#PRIMARY
+ - seealso: java.text.Collator#SECONDARY
+ - seealso: java.text.Collator#TERTIARY
+ - seealso: java.text.Collator#IDENTICAL
  */
 - (jint)getStrength;
 
 /*!
- @brief Sets the decomposition rule for this collator.
- @param value the decomposition rule, either 
- <code>NO_DECOMPOSITION</code>  or             <code>CANONICAL_DECOMPOSITION</code>
-  . <code>FULL_DECOMPOSITION</code>             is not supported.
- @throw IllegalArgumentException
- if the provided decomposition rule is not valid. This includes
-             <code>FULL_DECOMPOSITION</code>.
+ @brief Generates the hash code for this Collator.
+ */
+- (NSUInteger)hash;
+
+/*!
+ @brief Set the decomposition mode of this Collator.See getDecomposition
+  for a description of decomposition mode.
+ @param decompositionMode the new decomposition mode.
+ - seealso: java.text.Collator#getDecomposition
+ - seealso: java.text.Collator#NO_DECOMPOSITION
+ - seealso: java.text.Collator#CANONICAL_DECOMPOSITION
+ - seealso: java.text.Collator#FULL_DECOMPOSITION
+ @throw IllegalArgumentExceptionIf the given value is not a valid decomposition
+  mode.
  */
 - (void)setDecompositionWithInt:(jint)value;
 
 /*!
- @brief Sets the strength value for this collator.
- @param value the strength value, either PRIMARY, SECONDARY, TERTIARY, or
-              IDENTICAL.
- @throw IllegalArgumentException
- if the provided strength value is not valid.
+ @brief Sets this Collator's strength property.The strength property determines
+  the minimum level of difference considered significant during comparison.
+ See the Collator class description for an example of use.
+ @param newStrength the new strength value.
+ - seealso: java.text.Collator#getStrength
+ - seealso: java.text.Collator#PRIMARY
+ - seealso: java.text.Collator#SECONDARY
+ - seealso: java.text.Collator#TERTIARY
+ - seealso: java.text.Collator#IDENTICAL
+ @throw IllegalArgumentExceptionIf the new strength value is not one of
+  PRIMARY, SECONDARY, TERTIARY or IDENTICAL.
  */
 - (void)setStrengthWithInt:(jint)value;
 
@@ -230,62 +290,120 @@
 J2OBJC_EMPTY_STATIC_INIT(JavaTextCollator)
 
 /*!
- @brief Constant used to specify the decomposition rule.
- */
-inline jint JavaTextCollator_get_NO_DECOMPOSITION(void);
-#define JavaTextCollator_NO_DECOMPOSITION 0
-J2OBJC_STATIC_FIELD_CONSTANT(JavaTextCollator, NO_DECOMPOSITION, jint)
-
-/*!
- @brief Constant used to specify the decomposition rule.
- */
-inline jint JavaTextCollator_get_CANONICAL_DECOMPOSITION(void);
-#define JavaTextCollator_CANONICAL_DECOMPOSITION 1
-J2OBJC_STATIC_FIELD_CONSTANT(JavaTextCollator, CANONICAL_DECOMPOSITION, jint)
-
-/*!
- @brief Constant used to specify the decomposition rule.This value for
-  decomposition is not supported.
- */
-inline jint JavaTextCollator_get_FULL_DECOMPOSITION(void);
-#define JavaTextCollator_FULL_DECOMPOSITION 2
-J2OBJC_STATIC_FIELD_CONSTANT(JavaTextCollator, FULL_DECOMPOSITION, jint)
-
-/*!
- @brief Constant used to specify the collation strength.
+ @brief Collator strength value.When set, only PRIMARY differences are
+  considered significant during comparison.
+ The assignment of strengths
+  to language features is locale dependent. A common example is for
+  different base letters ("a" vs "b") to be considered a PRIMARY difference.
+ - seealso: java.text.Collator#setStrength
+ - seealso: java.text.Collator#getStrength
  */
 inline jint JavaTextCollator_get_PRIMARY(void);
 #define JavaTextCollator_PRIMARY 0
 J2OBJC_STATIC_FIELD_CONSTANT(JavaTextCollator, PRIMARY, jint)
 
 /*!
- @brief Constant used to specify the collation strength.
+ @brief Collator strength value.When set, only SECONDARY and above differences are
+  considered significant during comparison.
+ The assignment of strengths
+  to language features is locale dependent. A common example is for different accented forms of the same base letter ("a" vs "ä") to be
+  considered a SECONDARY difference.
+ - seealso: java.text.Collator#setStrength
+ - seealso: java.text.Collator#getStrength
  */
 inline jint JavaTextCollator_get_SECONDARY(void);
 #define JavaTextCollator_SECONDARY 1
 J2OBJC_STATIC_FIELD_CONSTANT(JavaTextCollator, SECONDARY, jint)
 
 /*!
- @brief Constant used to specify the collation strength.
+ @brief Collator strength value.When set, only TERTIARY and above differences are
+  considered significant during comparison.
+ The assignment of strengths
+  to language features is locale dependent. A common example is for
+  case differences ("a" vs "A") to be considered a TERTIARY difference.
+ - seealso: java.text.Collator#setStrength
+ - seealso: java.text.Collator#getStrength
  */
 inline jint JavaTextCollator_get_TERTIARY(void);
 #define JavaTextCollator_TERTIARY 2
 J2OBJC_STATIC_FIELD_CONSTANT(JavaTextCollator, TERTIARY, jint)
 
 /*!
- @brief Constant used to specify the collation strength.
+ @brief Collator strength value.When set, all differences are
+  considered significant during comparison.
+ The assignment of strengths
+  to language features is locale dependent. A common example is for control
+  characters ("&#092;u0001" vs "&#092;u0002") to be considered equal at the
+  PRIMARY, SECONDARY, and TERTIARY levels but different at the IDENTICAL
+  level.  Additionally, differences between pre-composed accents such as
+  "&#092;u00C0" (A-grave) and combining accents such as "A&#092;u0300"
+  (A, combining-grave) will be considered significant at the IDENTICAL
+  level if decomposition is set to NO_DECOMPOSITION.
  */
 inline jint JavaTextCollator_get_IDENTICAL(void);
 #define JavaTextCollator_IDENTICAL 3
 J2OBJC_STATIC_FIELD_CONSTANT(JavaTextCollator, IDENTICAL, jint)
 
-FOUNDATION_EXPORT void JavaTextCollator_init(JavaTextCollator *self);
+/*!
+ @brief Decomposition mode value.With NO_DECOMPOSITION
+  set, accented characters will not be decomposed for collation.
+ This
+  is the default setting and provides the fastest collation but
+  will only produce correct results for languages that do not use accents.
+ - seealso: java.text.Collator#getDecomposition
+ - seealso: java.text.Collator#setDecomposition
+ */
+inline jint JavaTextCollator_get_NO_DECOMPOSITION(void);
+#define JavaTextCollator_NO_DECOMPOSITION 0
+J2OBJC_STATIC_FIELD_CONSTANT(JavaTextCollator, NO_DECOMPOSITION, jint)
 
-FOUNDATION_EXPORT IOSObjectArray *JavaTextCollator_getAvailableLocales(void);
+/*!
+ @brief Decomposition mode value.With CANONICAL_DECOMPOSITION
+  set, characters that are canonical variants according to Unicode
+  standard will be decomposed for collation.
+ This should be used to get
+  correct collation of accented characters. 
+ <p>
+  CANONICAL_DECOMPOSITION corresponds to Normalization Form D as
+  described in 
+ <a href="http://www.unicode.org/unicode/reports/tr15/tr15-23.html">Unicode
+  Technical Report #15</a>.
+ - seealso: java.text.Collator#getDecomposition
+ - seealso: java.text.Collator#setDecomposition
+ */
+inline jint JavaTextCollator_get_CANONICAL_DECOMPOSITION(void);
+#define JavaTextCollator_CANONICAL_DECOMPOSITION 1
+J2OBJC_STATIC_FIELD_CONSTANT(JavaTextCollator, CANONICAL_DECOMPOSITION, jint)
+
+/*!
+ @brief Decomposition mode value.With FULL_DECOMPOSITION
+  set, both Unicode canonical variants and Unicode compatibility variants
+  will be decomposed for collation.
+ This causes not only accented
+  characters to be collated, but also characters that have special formats
+  to be collated with their norminal form. For example, the half-width and
+  full-width ASCII and Katakana characters are then collated together.
+  FULL_DECOMPOSITION is the most complete and therefore the slowest
+  decomposition mode. 
+ <p>
+  FULL_DECOMPOSITION corresponds to Normalization Form KD as
+  described in 
+ <a href="http://www.unicode.org/unicode/reports/tr15/tr15-23.html">Unicode
+  Technical Report #15</a>.
+ - seealso: java.text.Collator#getDecomposition
+ - seealso: java.text.Collator#setDecomposition
+ */
+inline jint JavaTextCollator_get_FULL_DECOMPOSITION(void);
+#define JavaTextCollator_FULL_DECOMPOSITION 2
+J2OBJC_STATIC_FIELD_CONSTANT(JavaTextCollator, FULL_DECOMPOSITION, jint)
+
+FOUNDATION_EXPORT void JavaTextCollator_init(JavaTextCollator *self);
 
 FOUNDATION_EXPORT JavaTextCollator *JavaTextCollator_getInstance(void);
 
-FOUNDATION_EXPORT JavaTextCollator *JavaTextCollator_getInstanceWithJavaUtilLocale_(JavaUtilLocale *locale);
+FOUNDATION_EXPORT JavaTextCollator *JavaTextCollator_getInstanceWithJavaUtilLocale_(JavaUtilLocale *desiredLocale);
+
+FOUNDATION_EXPORT IOSObjectArray *JavaTextCollator_getAvailableLocales(void);
 
 J2OBJC_TYPE_LITERAL_HEADER(JavaTextCollator)
 
@@ -295,6 +413,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaTextCollator)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaTextCollator")

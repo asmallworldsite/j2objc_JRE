@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaUtilResourceBundle
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -26,6 +23,7 @@
 #define JavaUtilResourceBundle_
 
 @class IOSObjectArray;
+@class JavaLangBoolean;
 @class JavaLangClassLoader;
 @class JavaUtilLocale;
 @class JavaUtilResourceBundle_Control;
@@ -902,7 +900,9 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilResourceBundle)
 #if !defined (JavaUtilResourceBundle_Control_) && (INCLUDE_ALL_JavaUtilResourceBundle || defined(INCLUDE_JavaUtilResourceBundle_Control))
 #define JavaUtilResourceBundle_Control_
 
+@class JavaLangBoolean;
 @class JavaLangClassLoader;
+@class JavaLangLong;
 @class JavaUtilLocale;
 @class JavaUtilResourceBundle;
 @protocol JavaUtilList;
@@ -1045,11 +1045,6 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilResourceBundle)
  @since 1.6
  */
 @interface JavaUtilResourceBundle_Control : NSObject
-@property (readonly, class, strong) id<JavaUtilList> FORMAT_DEFAULT NS_SWIFT_NAME(FORMAT_DEFAULT);
-@property (readonly, class, strong) id<JavaUtilList> FORMAT_CLASS NS_SWIFT_NAME(FORMAT_CLASS);
-@property (readonly, class, strong) id<JavaUtilList> FORMAT_PROPERTIES NS_SWIFT_NAME(FORMAT_PROPERTIES);
-@property (readonly, class) jlong TTL_DONT_CACHE NS_SWIFT_NAME(TTL_DONT_CACHE);
-@property (readonly, class) jlong TTL_NO_EXPIRATION_CONTROL NS_SWIFT_NAME(TTL_NO_EXPIRATION_CONTROL);
 
 #pragma mark Public
 
@@ -1208,7 +1203,7 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilResourceBundle)
   "" <code>Locale</code>s are found, then the runtime resource
   lookup path (parent chain) is: 
  @code
-    Messages_ja -> Messages 
+     Messages_ja -> Messages 
  
 @endcode
  @param baseName the base name of the resource bundle, a fully
@@ -1672,6 +1667,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilResourceBundle_Control)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaUtilResourceBundle")

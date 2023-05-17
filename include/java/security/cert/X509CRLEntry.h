@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaSecurityCertX509CRLEntry
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -30,6 +27,8 @@
 #include "java/security/cert/X509Extension.h"
 
 @class IOSByteArray;
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @class JavaMathBigInteger;
 @class JavaSecurityCertCRLReason;
 @class JavaUtilDate;
@@ -62,6 +61,7 @@
  - seealso: X509CRL
  - seealso: X509Extension
  @author Hemma Prafullchandra
+ @since 1.2
  */
 @interface JavaSecurityCertX509CRLEntry : NSObject < JavaSecurityCertX509Extension >
 
@@ -159,6 +159,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaSecurityCertX509CRLEntry)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaSecurityCertX509CRLEntry")

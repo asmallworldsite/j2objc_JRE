@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaxNetSslExtendedSSLSession
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -53,7 +50,7 @@
  <p>
   The signature algorithm name must be a standard Java Security
   name (such as "SHA1withRSA", "SHA256withECDSA", and so on).
-  See Appendix A in the <a href="{@@docRoot}openjdk-redirect.html?v=8&path=/technotes/guides/security/crypto/CryptoSpec.html#AppA">
+  See Appendix A in the <a href="{@@docRoot}/../technotes/guides/security/crypto/CryptoSpec.html#AppA">
   Java Cryptography Architecture API Specification &amp; Reference </a>
   for information about standard algorithm names. 
  <p>
@@ -78,7 +75,7 @@
  <p>
   The signature algorithm name must be a standard Java Security
   name (such as "SHA1withRSA", "SHA256withECDSA", and so on).
-  See Appendix A in the <a href="{@@docRoot}openjdk-redirect.html?v=8&path=/technotes/guides/security/crypto/CryptoSpec.html#AppA">
+  See Appendix A in the <a href="{@@docRoot}/../technotes/guides/security/crypto/CryptoSpec.html#AppA">
   Java Cryptography Architecture API Specification &amp; Reference </a>
   for information about standard algorithm names.
  @return An array of supported signature algorithms, in descending
@@ -128,6 +125,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaxNetSslExtendedSSLSession)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaxNetSslExtendedSSLSession")

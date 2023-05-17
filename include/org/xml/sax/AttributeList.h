@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_OrgXmlSaxAttributeList
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -24,6 +21,8 @@
 
 #if !defined (OrgXmlSaxAttributeList_) && (INCLUDE_ALL_OrgXmlSaxAttributeList || defined(INCLUDE_OrgXmlSaxAttributeList))
 #define OrgXmlSaxAttributeList_
+
+@class JavaLangInteger;
 
 /*!
  @brief Interface for an element's attribute specifications.
@@ -86,7 +85,6 @@
  - seealso: org.xml.sax.DocumentHandler#startElementstartElement
  - seealso: org.xml.sax.helpers.AttributeListImplAttributeListImpl
  */
-__attribute__((deprecated))
 @protocol OrgXmlSaxAttributeList < JavaObject >
 
 /*!
@@ -189,6 +187,4 @@ J2OBJC_TYPE_LITERAL_HEADER(OrgXmlSaxAttributeList)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_OrgXmlSaxAttributeList")

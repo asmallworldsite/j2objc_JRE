@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaLangNegativeArraySizeException
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -29,12 +26,12 @@
 #define INCLUDE_JavaLangRuntimeException 1
 #include "java/lang/RuntimeException.h"
 
+@class JavaLangBoolean;
 @class JavaLangThrowable;
 
 /*!
  @brief Thrown if an application tries to create an array with negative size.
- @author unascribed
- @since JDK1.0
+ @since 1.0
  */
 @interface JavaLangNegativeArraySizeException : JavaLangRuntimeException
 
@@ -89,6 +86,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaLangNegativeArraySizeException)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaLangNegativeArraySizeException")

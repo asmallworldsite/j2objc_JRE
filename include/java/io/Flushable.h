@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaIoFlushable
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -26,7 +23,7 @@
 #define JavaIoFlushable_
 
 /*!
- @brief A <tt>Flushable</tt> is a destination of data that can be flushed.The
+ @brief A <code>Flushable</code> is a destination of data that can be flushed.The
   flush method is invoked to write any buffered output to the underlying
   stream.
  @since 1.5
@@ -52,6 +49,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaIoFlushable)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaIoFlushable")

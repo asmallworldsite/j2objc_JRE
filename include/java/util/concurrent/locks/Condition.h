@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaUtilConcurrentLocksCondition
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -25,6 +22,8 @@
 #if !defined (JavaUtilConcurrentLocksCondition_) && (INCLUDE_ALL_JavaUtilConcurrentLocksCondition || defined(INCLUDE_JavaUtilConcurrentLocksCondition))
 #define JavaUtilConcurrentLocksCondition_
 
+@class JavaLangBoolean;
+@class JavaLangLong;
 @class JavaUtilConcurrentTimeUnit;
 @class JavaUtilDate;
 
@@ -454,6 +453,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentLocksCondition)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaUtilConcurrentLocksCondition")

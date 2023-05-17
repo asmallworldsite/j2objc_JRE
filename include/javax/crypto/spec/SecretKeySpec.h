@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaxCryptoSpecSecretKeySpec
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -34,6 +31,8 @@
 #include "javax/crypto/SecretKey.h"
 
 @class IOSByteArray;
+@class JavaLangBoolean;
+@class JavaLangInteger;
 
 /*!
  @brief This class specifies a secret key in a provider-independent fashion.
@@ -177,6 +176,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaxCryptoSpecSecretKeySpec)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaxCryptoSpecSecretKeySpec")

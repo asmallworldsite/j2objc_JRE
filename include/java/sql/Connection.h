@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaSqlConnection
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -35,6 +32,8 @@
 
 @class IOSIntArray;
 @class IOSObjectArray;
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @class JavaSqlSQLWarning;
 @class JavaUtilProperties;
 @protocol JavaSqlArray;
@@ -52,9 +51,8 @@
 
 /*!
  @brief <P>A connection (session) with a specific
-  database.
- SQL statements are executed and results are returned
-  within the context of a connection. 
+  database.SQL statements are executed and results are returned
+  within the context of a connection.
  <P>
   A <code>Connection</code> object's database is able to provide information
   describing its tables, its supported SQL grammar, its stored
@@ -1214,15 +1212,6 @@
 
 @end
 
-@interface JavaSqlConnection : NSObject
-@property (readonly, class) jint TRANSACTION_NONE NS_SWIFT_NAME(TRANSACTION_NONE);
-@property (readonly, class) jint TRANSACTION_READ_UNCOMMITTED NS_SWIFT_NAME(TRANSACTION_READ_UNCOMMITTED);
-@property (readonly, class) jint TRANSACTION_READ_COMMITTED NS_SWIFT_NAME(TRANSACTION_READ_COMMITTED);
-@property (readonly, class) jint TRANSACTION_REPEATABLE_READ NS_SWIFT_NAME(TRANSACTION_REPEATABLE_READ);
-@property (readonly, class) jint TRANSACTION_SERIALIZABLE NS_SWIFT_NAME(TRANSACTION_SERIALIZABLE);
-
-@end
-
 J2OBJC_EMPTY_STATIC_INIT(JavaSqlConnection)
 
 /*!
@@ -1291,6 +1280,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaSqlConnection)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaSqlConnection")

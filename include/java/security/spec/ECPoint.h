@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaSecuritySpecECPoint
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -25,6 +22,8 @@
 #if !defined (JavaSecuritySpecECPoint_) && (INCLUDE_ALL_JavaSecuritySpecECPoint || defined(INCLUDE_JavaSecuritySpecECPoint))
 #define JavaSecuritySpecECPoint_
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @class JavaMathBigInteger;
 
 /*!
@@ -36,7 +35,6 @@
  @since 1.5
  */
 @interface JavaSecuritySpecECPoint : NSObject
-@property (readonly, class, strong) JavaSecuritySpecECPoint *POINT_INFINITY NS_SWIFT_NAME(POINT_INFINITY);
 
 #pragma mark Public
 
@@ -106,6 +104,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaSecuritySpecECPoint)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaSecuritySpecECPoint")

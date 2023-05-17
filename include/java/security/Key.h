@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaSecurityKey
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -30,6 +27,7 @@
 #include "java/io/Serializable.h"
 
 @class IOSByteArray;
+@class JavaLangLong;
 
 /*!
  @brief The Key interface is the top-level interface for all keys.It
@@ -65,7 +63,7 @@
   
 @endcode
   For more information, see 
- <a href="http://www.ietf.org/rfc/rfc3280.txt">RFC 3280:
+ <a href="http://tools.ietf.org/html/rfc5280">RFC 5280:
   Internet X.509 Public Key Infrastructure Certificate and CRL Profile</a>.
   
  <LI>A Format 
@@ -73,7 +71,7 @@
   by the <code>getFormat</code> method. 
  </UL>
   Keys are generally obtained through key generators, certificates,
-  or various Identity classes used to manage keys.
+  key stores or other classes used to manage keys.
   Keys may also be obtained from key specifications (transparent
   representations of the underlying key material) through the use of a key
   factory (see <code>KeyFactory</code>).
@@ -81,7 +79,7 @@
  <p> A Key should use KeyRep as its serialized representation.
   Note that a serialized Key may contain sensitive information
   which should not be exposed in untrusted environments.  See the 
- <a href="../../../platform/serialization/spec/security.html">
+ <a href="{@@docRoot}/../specs/serialization/security.html">
   Security Appendix</a>
   of the Serialization Specification for more information.
  - seealso: PublicKey
@@ -94,15 +92,17 @@
  - seealso: Identity
  - seealso: Signer
  @author Benjamin Renaud
+ @since 1.1
  */
 @protocol JavaSecurityKey < JavaIoSerializable, JavaObject >
 
 /*!
  @brief Returns the standard algorithm name for this key.For
   example, "DSA" would indicate that this key is a DSA key.
- See Appendix A in the <a href="../../../technotes/guides/security/crypto/CryptoSpec.html#AppA">
-  Java Cryptography Architecture API Specification &amp; Reference </a>
-  for information about standard algorithm names.
+ See the key related sections (KeyFactory, KeyGenerator,
+  KeyPairGenerator, and SecretKeyFactory) in the <a href="{@@docRoot}/../specs/security/standard-names.html">
+  Java Security Standard Algorithm Names Specification</a>
+  for information about standard key algorithm names.
  @return the name of the algorithm associated with this key.
  */
 - (NSString *)getAlgorithm;
@@ -135,11 +135,6 @@
 
 @end
 
-@interface JavaSecurityKey : NSObject
-@property (readonly, class) jlong serialVersionUID NS_SWIFT_NAME(serialVersionUID);
-
-@end
-
 J2OBJC_EMPTY_STATIC_INIT(JavaSecurityKey)
 
 /*!
@@ -159,6 +154,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaSecurityKey)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaSecurityKey")

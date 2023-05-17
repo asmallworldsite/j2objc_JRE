@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaUtilJarJarFile
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -31,6 +28,8 @@
 
 @class JavaIoFile;
 @class JavaIoInputStream;
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @class JavaNioCharsetCharset;
 @class JavaUtilJarJarEntry;
 @class JavaUtilJarManifest;
@@ -61,7 +60,6 @@
  @since 1.2
  */
 @interface JavaUtilJarJarFile : JavaUtilZipZipFile
-@property (readonly, copy, class) NSString *MANIFEST_NAME NS_SWIFT_NAME(MANIFEST_NAME);
 
 #pragma mark Public
 
@@ -259,6 +257,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilJarJarFile)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaUtilJarJarFile")

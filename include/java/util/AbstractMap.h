@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaUtilAbstractMap
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -29,6 +26,8 @@
 #define INCLUDE_JavaUtilMap 1
 #include "java/util/Map.h"
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @protocol JavaUtilCollection;
 @protocol JavaUtilFunctionBiConsumer;
 @protocol JavaUtilFunctionBiFunction;
@@ -242,6 +241,9 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilAbstractMap)
 #define INCLUDE_JavaIoSerializable 1
 #include "java/io/Serializable.h"
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
+
 /*!
  @brief An Entry maintaining a key and a value.The value may be
   changed using the <tt>setValue</tt> method.
@@ -377,6 +379,9 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilAbstractMap_SimpleEntry)
 #define INCLUDE_JavaIoSerializable 1
 #include "java/io/Serializable.h"
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
+
 /*!
  @brief An Entry maintaining an immutable key and value.This class
   does not support method <tt>setValue</tt>.
@@ -506,6 +511,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilAbstractMap_SimpleImmutableEntry)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaUtilAbstractMap")

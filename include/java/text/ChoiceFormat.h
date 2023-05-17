@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaTextChoiceFormat
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -31,6 +28,10 @@
 
 @class IOSDoubleArray;
 @class IOSObjectArray;
+@class JavaLangBoolean;
+@class JavaLangDouble;
+@class JavaLangInteger;
+@class JavaLangLong;
 @class JavaLangStringBuffer;
 @class JavaTextFieldPosition;
 @class JavaTextParsePosition;
@@ -146,7 +147,7 @@
 @endcode
   </blockquote>
   
- <h3><a name="synchronization">Synchronization</a></h3>
+ <h3><a id="synchronization">Synchronization</a></h3>
   
  <p>
   Choice formats are not synchronized.
@@ -156,11 +157,9 @@
  - seealso: DecimalFormat
  - seealso: MessageFormat
  @author Mark Davis
+ @since 1.1
  */
 @interface JavaTextChoiceFormat : JavaTextNumberFormat
-@property (readonly, class) jlong SIGN NS_SWIFT_NAME(SIGN);
-@property (readonly, class) jlong EXPONENT NS_SWIFT_NAME(EXPONENT);
-@property (readonly, class) jlong POSITIVEINFINITY NS_SWIFT_NAME(POSITIVEINFINITY);
 
 #pragma mark Public
 
@@ -168,6 +167,8 @@
  @brief Constructs with the limits and the corresponding formats.
  @param limits limits in ascending order
  @param formats corresponding format strings
+ @throw NullPointerExceptionif <code>limits</code> or <code>formats</code>
+             is <code>null</code>
  - seealso: #setChoices
  */
 - (instancetype __nonnull)initWithDoubleArray:(IOSDoubleArray *)limits
@@ -176,6 +177,8 @@
 /*!
  @brief Constructs with limits and corresponding formats based on the pattern.
  @param newPattern the new pattern string
+ @throw NullPointerExceptionif <code>newPattern</code> is
+             <code>null</code>
  - seealso: #applyPattern
  */
 - (instancetype __nonnull)initWithNSString:(NSString *)newPattern;
@@ -183,6 +186,8 @@
 /*!
  @brief Sets the pattern.
  @param newPattern See the class description.
+ @throw NullPointerExceptionif <code>newPattern</code>
+             is <code>null</code>
  */
 - (void)applyPatternWithNSString:(NSString *)newPattern;
 
@@ -192,7 +197,7 @@
 - (id)java_clone;
 
 /*!
- @brief Equality comparision between two
+ @brief Equality comparison between two
  */
 - (jboolean)isEqual:(id)obj;
 
@@ -201,6 +206,8 @@
  @param number number to be formatted and substituted.
  @param toAppendTo where text is appended.
  @param status ignore no useful status is returned.
+ @throw NullPointerExceptionif <code>toAppendTo</code>
+             is <code>null</code>
  */
 - (JavaLangStringBuffer *)formatWithDouble:(jdouble)number
                   withJavaLangStringBuffer:(JavaLangStringBuffer *)toAppendTo
@@ -273,6 +280,9 @@
    status.index is unchanged and status.errorIndex is set to the
    first index of the character that caused the parse to fail.
  @return A Number representing the value of the number parsed.
+ @throw NullPointerExceptionif <code>status</code> is <code>null</code>
+             or if <code>text</code> is <code>null</code> and the list of
+             choice strings is not empty.
  */
 - (NSNumber *)parseWithNSString:(NSString *)text
       withJavaTextParsePosition:(JavaTextParsePosition *)status;
@@ -295,6 +305,8 @@
    When formatting with object Y,
    if the object is a NumberFormat, then ((NumberFormat) Y).format(X)
    is called. Otherwise Y.toString() is called.
+ @throw NullPointerExceptionif <code>limits</code> or
+             <code>formats</code> is <code>null</code>
  */
 - (void)setChoicesWithDoubleArray:(IOSDoubleArray *)limits
                 withNSStringArray:(IOSObjectArray *)formats;
@@ -351,6 +363,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaTextChoiceFormat)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaTextChoiceFormat")

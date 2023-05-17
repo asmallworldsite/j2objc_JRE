@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaSecurityKeyPair
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -39,6 +36,7 @@
  - seealso: PublicKey
  - seealso: PrivateKey
  @author Benjamin Renaud
+ @since 1.1
  */
 @interface JavaSecurityKeyPair : NSObject < JavaIoSerializable >
 
@@ -89,6 +87,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaSecurityKeyPair)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaSecurityKeyPair")

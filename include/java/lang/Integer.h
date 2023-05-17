@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaLangInteger
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -32,6 +29,13 @@
 @class IOSCharArray;
 @class IOSClass;
 @class IOSIntArray;
+@class JavaLangBoolean;
+@class JavaLangByte;
+@class JavaLangDouble;
+@class JavaLangFloat;
+@class JavaLangLong;
+@class JavaLangShort;
+@protocol JavaLangCharSequence;
 
 /*!
  @brief The <code>Integer</code> class wraps a value of the primitive type 
@@ -42,6 +46,14 @@
  <code>int</code>, as well as other constants and methods useful when
   dealing with an <code>int</code>.
   
+ <!-- Android-removed: paragraph on ValueBased
+ <p>This is a <a href="{@@docRoot}/java.base/java/lang/doc-files/ValueBased.html">value-based</a>
+ class; programmers should treat instances that are
+ {@@linkplain #equals(Object) equal} as interchangeable and should not
+ use instances for synchronization, or unpredictable behavior may
+ occur. For example, in a future release, synchronization may fail.
+ -->
+  
  <p>Implementation note: The implementations of the "bit twiddling"
   methods (such as <code>highestOneBit</code> and 
  <code>numberOfTrailingZeros</code>) are
@@ -51,15 +63,9 @@
  @author Arthur van Hoff
  @author Josh Bloch
  @author Joseph D. Darcy
- @since JDK1.0
+ @since 1.0
  */
 @interface JavaLangInteger : NSNumber < JavaLangComparable >
-@property (readonly, class) jint MIN_VALUE NS_SWIFT_NAME(MIN_VALUE);
-@property (readonly, class) jint MAX_VALUE NS_SWIFT_NAME(MAX_VALUE);
-@property (readonly, class, strong) IOSClass *TYPE NS_SWIFT_NAME(TYPE);
-@property (readonly, class, strong) IOSIntArray *sizeTable NS_SWIFT_NAME(sizeTable);
-@property (readonly, class) jint SIZE NS_SWIFT_NAME(SIZE);
-@property (readonly, class) jint BYTES NS_SWIFT_NAME(BYTES);
 
 #pragma mark Public
 
@@ -77,11 +83,9 @@
  <code>String</code> parameter.The string is converted to an 
  <code>int</code> value in exactly the manner used by the 
  <code>parseInt</code> method for radix 10.
- @param s the <code>String</code>  to be converted to an                  
- <code>Integer</code> .
+ @param s the <code>String</code>  to be converted to an <code>Integer</code> .
  @throw NumberFormatExceptionif the <code>String</code> does not
-                contain a parsable integer.
- - seealso: java.lang.Integer#parseInt(java.lang.String, int)
+               contain a parsable integer.
  */
 - (instancetype __nonnull)initWithNSString:(NSString *)s;
 
@@ -169,7 +173,7 @@
   
  <i>DecimalNumeral</i>, <i>HexDigits</i>, and <i>OctalDigits</i>
   are as defined in section 3.10.1 of 
- <cite>The Java&trade; Language Specification</cite>,
+ <cite>The Java Language Specification</cite>,
   except that underscores are not accepted between digits. 
  <p>The sequence of characters following an optional
   sign and/or radix specifier ("<code>0x</code>", "<code>0X</code>",
@@ -346,11 +350,11 @@
 - (NSUInteger)hash;
 
 /*!
- @brief Returns a hash code for a <code>int</code> value; compatible with 
+ @brief Returns a hash code for an <code>int</code> value; compatible with 
  <code>Integer.hashCode()</code>.
  @param value the value to hash
  @since 1.8
- @return a hash code value for a <code>int</code> value.
+ @return a hash code value for an <code>int</code> value.
  */
 + (jint)hashCodeWithInt:(jint)value;
 
@@ -456,6 +460,35 @@
 + (jint)numberOfTrailingZerosWithInt:(jint)i;
 
 /*!
+ @brief Parses the <code>CharSequence</code> argument as a signed <code>int</code> in the
+  specified <code>radix</code>, beginning at the specified <code>beginIndex</code>
+  and extending to <code>endIndex - 1</code>.
+ <p>The method does not take steps to guard against the 
+ <code>CharSequence</code> being mutated while parsing.
+ @param s the <code>CharSequence</code>  containing the <code>int</code>                   representation to be parsed
+ @param beginIndex the beginning index, inclusive.
+ @param endIndex the ending index, exclusive.
+ @param radix the radix to be used while parsing <code>s</code> .
+ @return the signed <code>int</code> represented by the subsequence in
+              the specified radix.
+ @throw NullPointerExceptionif <code>s</code> is null.
+ @throw IndexOutOfBoundsExceptionif <code>beginIndex</code> is
+              negative, or if <code>beginIndex</code> is greater than
+              <code>endIndex</code> or if <code>endIndex</code> is greater than
+              <code>s.length()</code>.
+ @throw NumberFormatExceptionif the <code>CharSequence</code> does not
+              contain a parsable <code>int</code> in the specified
+              <code>radix</code>, or if <code>radix</code> is either smaller than
+              <code>java.lang.Character.MIN_RADIX</code> or larger than
+              <code>java.lang.Character.MAX_RADIX</code>.
+ @since 9
+ */
++ (jint)parseIntWithJavaLangCharSequence:(id<JavaLangCharSequence>)s
+                                 withInt:(jint)beginIndex
+                                 withInt:(jint)endIndex
+                                 withInt:(jint)radix;
+
+/*!
  @brief Parses the string argument as a signed decimal integer.The
   characters in the string must all be decimal digits, except
   that the first character may be an ASCII minus sign <code>'-'</code>
@@ -531,9 +564,39 @@
                      withInt:(jint)radix;
 
 /*!
+ @brief Parses the <code>CharSequence</code> argument as an unsigned <code>int</code> in
+  the specified <code>radix</code>, beginning at the specified 
+ <code>beginIndex</code> and extending to <code>endIndex - 1</code>.
+ <p>The method does not take steps to guard against the 
+ <code>CharSequence</code> being mutated while parsing.
+ @param s the <code>CharSequence</code>  containing the unsigned                  
+ <code>int</code>  representation to be parsed
+ @param beginIndex the beginning index, inclusive.
+ @param endIndex the ending index, exclusive.
+ @param radix the radix to be used while parsing <code>s</code> .
+ @return the unsigned <code>int</code> represented by the subsequence in
+              the specified radix.
+ @throw NullPointerExceptionif <code>s</code> is null.
+ @throw IndexOutOfBoundsExceptionif <code>beginIndex</code> is
+              negative, or if <code>beginIndex</code> is greater than
+              <code>endIndex</code> or if <code>endIndex</code> is greater than
+              <code>s.length()</code>.
+ @throw NumberFormatExceptionif the <code>CharSequence</code> does not
+              contain a parsable unsigned <code>int</code> in the specified
+              <code>radix</code>, or if <code>radix</code> is either smaller than
+              <code>java.lang.Character.MIN_RADIX</code> or larger than
+              <code>java.lang.Character.MAX_RADIX</code>.
+ @since 9
+ */
++ (jint)parseUnsignedIntWithJavaLangCharSequence:(id<JavaLangCharSequence>)s
+                                         withInt:(jint)beginIndex
+                                         withInt:(jint)endIndex
+                                         withInt:(jint)radix;
+
+/*!
  @brief Parses the string argument as an unsigned decimal integer.The
   characters in the string must all be decimal digits, except
-  that the first character may be an an ASCII plus sign <code>'+'</code>
+  that the first character may be an ASCII plus sign <code>'+'</code>
   (<code>'\u002B'</code>).
  The resulting integer value
   is returned, exactly as if the argument and the radix 10 were
@@ -720,7 +783,7 @@
            represented by the argument in binary (base&nbsp;2).
  - seealso: #parseUnsignedInt(String, int)
  - seealso: #toUnsignedString(int, int)
- @since JDK1.0.2
+ @since 1.0.2
  */
 + (NSString * __nonnull)toBinaryStringWithInt:(jint)i;
 
@@ -758,7 +821,7 @@
            represented by the argument in hexadecimal (base&nbsp;16).
  - seealso: #parseUnsignedInt(String, int)
  - seealso: #toUnsignedString(int, int)
- @since JDK1.0.2
+ @since 1.0.2
  */
 + (NSString * __nonnull)toHexStringWithInt:(jint)i;
 
@@ -789,7 +852,7 @@
            represented by the argument in octal (base&nbsp;8).
  - seealso: #parseUnsignedInt(String, int)
  - seealso: #toUnsignedString(int, int)
- @since JDK1.0.2
+ @since 1.0.2
  */
 + (NSString * __nonnull)toOctalStringWithInt:(jint)i;
 
@@ -988,6 +1051,11 @@
                 withInt:(jint)index
           withCharArray:(IOSCharArray *)buf;
 
+/*!
+ @brief Returns the string representation size for a given int value.
+ @param x int value
+ @return string size
+ */
 + (jint)stringSizeWithInt:(jint)x;
 
 // Disallowed inherited constructors, do not use.
@@ -1017,7 +1085,7 @@ J2OBJC_STATIC_FIELD_CONSTANT(JavaLangInteger, MAX_VALUE, jint)
 /*!
  @brief The <code>Class</code> instance representing the primitive type 
  <code>int</code>.
- @since JDK1.1
+ @since 1.1
  */
 inline IOSClass *JavaLangInteger_get_TYPE(void);
 /*! INTERNAL ONLY - Use accessor function from above. */
@@ -1039,7 +1107,7 @@ inline jint JavaLangInteger_get_SIZE(void);
 J2OBJC_STATIC_FIELD_CONSTANT(JavaLangInteger, SIZE, jint)
 
 /*!
- @brief The number of bytes used to represent a <code>int</code> value in two's
+ @brief The number of bytes used to represent an <code>int</code> value in two's
   complement binary form.
  @since 1.8
  */
@@ -1067,9 +1135,13 @@ FOUNDATION_EXPORT jint JavaLangInteger_stringSizeWithInt_(jint x);
 
 FOUNDATION_EXPORT jint JavaLangInteger_parseIntWithNSString_withInt_(NSString *s, jint radix);
 
+FOUNDATION_EXPORT jint JavaLangInteger_parseIntWithJavaLangCharSequence_withInt_withInt_withInt_(id<JavaLangCharSequence> s, jint beginIndex, jint endIndex, jint radix);
+
 FOUNDATION_EXPORT jint JavaLangInteger_parseIntWithNSString_(NSString *s);
 
 FOUNDATION_EXPORT jint JavaLangInteger_parseUnsignedIntWithNSString_withInt_(NSString *s, jint radix);
+
+FOUNDATION_EXPORT jint JavaLangInteger_parseUnsignedIntWithJavaLangCharSequence_withInt_withInt_withInt_(id<JavaLangCharSequence> s, jint beginIndex, jint endIndex, jint radix);
 
 FOUNDATION_EXPORT jint JavaLangInteger_parseUnsignedIntWithNSString_(NSString *s);
 
@@ -1151,6 +1223,4 @@ BOXED_SHIFT_ASSIGN_32(Int, intValue, jint, JavaLangInteger)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaLangInteger")

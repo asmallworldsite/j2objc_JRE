@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaUtilConcurrentConcurrentMap
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -29,13 +26,13 @@
 #define INCLUDE_JavaUtilMap 1
 #include "java/util/Map.h"
 
+@class JavaLangBoolean;
 @protocol JavaUtilFunctionBiConsumer;
 @protocol JavaUtilFunctionBiFunction;
 @protocol JavaUtilFunctionFunction;
 
 /*!
- @brief A <code>java.util.Map</code> providing thread safety and atomicity
-  guarantees.
+ @brief A <code>Map</code> providing thread safety and atomicity guarantees.
  <p>To maintain the specified guarantees, default implementations of
   methods including <code>putIfAbsent</code> inherited from <code>Map</code>
   must be overridden by implementations of this interface. Similarly,
@@ -48,7 +45,10 @@
  <code>ConcurrentMap</code> as a key or value 
  <a href="package-summary.html#MemoryVisibility"><i>happen-before</i></a>
   actions subsequent to the access or removal of that object from the 
- <code>ConcurrentMap</code> in another thread.
+ <code>ConcurrentMap</code> in another thread. 
+ <p>This interface is a member of the 
+ <a href="{@@docRoot}/java.base/java/util/package-summary.html#CollectionsFramework">
+  Java Collections Framework</a>.
  @since 1.5
  @author Doug Lea
  */
@@ -120,10 +120,10 @@
           is not supported by this map
  @throw ClassCastExceptionif the key or value is of an inappropriate
           type for this map
-  (<a href="../Collection.html#optional-restrictions">optional</a>)
+  (<a href="{@@docRoot}/java.base/java/util/Collection.html#optional-restrictions">optional</a>)
  @throw NullPointerExceptionif the specified key or value is null,
           and this map does not permit null keys or values
-  (<a href="../Collection.html#optional-restrictions">optional</a>)
+  (<a href="{@@docRoot}/java.base/java/util/Collection.html#optional-restrictions">optional</a>)
  */
 - (jboolean)removeWithId:(id)key
                   withId:(id)value;
@@ -265,6 +265,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentConcurrentMap)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaUtilConcurrentConcurrentMap")

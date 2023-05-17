@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaTextNormalizer
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -25,6 +22,7 @@
 #if !defined (JavaTextNormalizer_) && (INCLUDE_ALL_JavaTextNormalizer || defined(INCLUDE_JavaTextNormalizer))
 #define JavaTextNormalizer_
 
+@class JavaLangBoolean;
 @class JavaTextNormalizer_Form;
 @protocol JavaLangCharSequence;
 
@@ -142,12 +140,18 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaTextNormalizer)
 
 @class IOSObjectArray;
 
-typedef NS_ENUM(NSUInteger, JavaTextNormalizer_Form_Enum) {
+typedef NS_ENUM(jint, JavaTextNormalizer_Form_Enum) {
   JavaTextNormalizer_Form_Enum_NFD = 0,
   JavaTextNormalizer_Form_Enum_NFC = 1,
   JavaTextNormalizer_Form_Enum_NFKD = 2,
   JavaTextNormalizer_Form_Enum_NFKC = 3,
 };
+#if J2OBJC_IMPORTED_BY_JAVA_IMPLEMENTATION
+#define JavaTextNormalizer_Form_ORDINAL jint
+#else
+#define JavaTextNormalizer_Form_ORDINAL JavaTextNormalizer_Form_Enum
+#endif
+
 
 /*!
  @brief The normalization forms supported by the Normalizer.These are specified in 
@@ -156,10 +160,6 @@ typedef NS_ENUM(NSUInteger, JavaTextNormalizer_Form_Enum) {
  */
 @interface JavaTextNormalizer_Form : JavaLangEnum
 
-@property (readonly, class, nonnull) JavaTextNormalizer_Form *NFD NS_SWIFT_NAME(NFD);
-@property (readonly, class, nonnull) JavaTextNormalizer_Form *NFC NS_SWIFT_NAME(NFC);
-@property (readonly, class, nonnull) JavaTextNormalizer_Form *NFKD NS_SWIFT_NAME(NFKD);
-@property (readonly, class, nonnull) JavaTextNormalizer_Form *NFKC NS_SWIFT_NAME(NFKC);
 #pragma mark Public
 
 + (JavaTextNormalizer_Form *)valueOfWithNSString:(NSString *)name;
@@ -169,6 +169,8 @@ typedef NS_ENUM(NSUInteger, JavaTextNormalizer_Form_Enum) {
 #pragma mark Package-Private
 
 - (JavaTextNormalizer_Form_Enum)toNSEnum;
+
+- (JavaTextNormalizer_Form_ORDINAL)ordinal;
 
 @end
 
@@ -205,7 +207,7 @@ FOUNDATION_EXPORT IOSObjectArray *JavaTextNormalizer_Form_values(void);
 
 FOUNDATION_EXPORT JavaTextNormalizer_Form *JavaTextNormalizer_Form_valueOfWithNSString_(NSString *name);
 
-FOUNDATION_EXPORT JavaTextNormalizer_Form *JavaTextNormalizer_Form_fromOrdinal(NSUInteger ordinal);
+FOUNDATION_EXPORT JavaTextNormalizer_Form *JavaTextNormalizer_Form_fromOrdinal(JavaTextNormalizer_Form_ORDINAL ordinal);
 
 J2OBJC_TYPE_LITERAL_HEADER(JavaTextNormalizer_Form)
 
@@ -215,6 +217,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaTextNormalizer_Form)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaTextNormalizer")

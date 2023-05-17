@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_AndroidIcuUtilRangeValueIterator
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -26,6 +23,7 @@
 #define AndroidIcuUtilRangeValueIterator_
 
 @class AndroidIcuUtilRangeValueIterator_Element;
+@class JavaLangBoolean;
 
 /*!
  @brief <p>Interface for enabling iteration over sets of &lt;int index, int value&gt;,
@@ -93,6 +91,8 @@ J2OBJC_TYPE_LITERAL_HEADER(AndroidIcuUtilRangeValueIterator)
 #if !defined (AndroidIcuUtilRangeValueIterator_Element_) && (INCLUDE_ALL_AndroidIcuUtilRangeValueIterator || defined(INCLUDE_AndroidIcuUtilRangeValueIterator_Element))
 #define AndroidIcuUtilRangeValueIterator_Element_
 
+@class JavaLangInteger;
+
 /*!
  @brief Return result wrapper for android.icu.util.RangeValueIterator.
  Stores the start and limit of the continous result range and the
@@ -141,6 +141,4 @@ J2OBJC_TYPE_LITERAL_HEADER(AndroidIcuUtilRangeValueIterator_Element)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_AndroidIcuUtilRangeValueIterator")

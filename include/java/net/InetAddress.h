@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaNetInetAddress
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -31,6 +28,8 @@
 
 @class IOSByteArray;
 @class IOSObjectArray;
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @class JavaNetInetAddress_InetAddressHolder;
 @class JavaNetNetworkInterface;
 @protocol JavaNetInetAddressImpl;
@@ -157,8 +156,6 @@
  @public
   JavaNetInetAddress_InetAddressHolder *holder_;
 }
-@property (readonly, class, strong) id<JavaNetInetAddressImpl> impl NS_SWIFT_NAME(impl);
-@property (readonly, class) jint NETID_UNSET NS_SWIFT_NAME(NETID_UNSET);
 
 #pragma mark Public
 
@@ -493,7 +490,7 @@
  <code>InetAddress</code> class documentation. An empty string is not treated as numeric.
  @throw NullPointerExceptionif the <code>address</code> is <code>null</code>.
  */
-+ (jboolean)isNumericWithNSString:(NSString *)address __attribute__((deprecated));
++ (jboolean)isNumericWithNSString:(NSString *)address;
 
 /*!
  @brief Test whether that address is reachable.Best effort is made by the
@@ -566,7 +563,7 @@
  <code>Inet6Address.LOOPBACK</code> address.
  @throw IllegalArgumentExceptionif <code>numericAddress</code> is not a numeric address
  */
-+ (JavaNetInetAddress *)parseNumericAddressWithNSString:(NSString *)numericAddress __attribute__((deprecated));
++ (JavaNetInetAddress *)parseNumericAddressWithNSString:(NSString *)numericAddress;
 
 /*!
  @brief Converts this IP address to a <code>String</code>.The
@@ -650,6 +647,8 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaNetInetAddress)
 #if !defined (JavaNetInetAddress_InetAddressHolder_) && (INCLUDE_ALL_JavaNetInetAddress || defined(INCLUDE_JavaNetInetAddress_InetAddressHolder))
 #define JavaNetInetAddress_InetAddressHolder_
 
+@class JavaLangInteger;
+
 @interface JavaNetInetAddress_InetAddressHolder : NSObject {
  @public
   /*!
@@ -722,6 +721,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaNetInetAddress_InetAddressHolder)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaNetInetAddress")

@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_OrgXmlpullV1XmlPullParser
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -30,6 +27,8 @@
 @class IOSObjectArray;
 @class JavaIoInputStream;
 @class JavaIoReader;
+@class JavaLangBoolean;
+@class JavaLangInteger;
 
 /*!
  @brief XML Pull Parser is an interface that defines parsing functionality provided
@@ -806,23 +805,6 @@
 @end
 
 @interface OrgXmlpullV1XmlPullParser : NSObject
-@property (readonly, copy, class) NSString *NO_NAMESPACE NS_SWIFT_NAME(NO_NAMESPACE);
-@property (readonly, class) jint START_DOCUMENT NS_SWIFT_NAME(START_DOCUMENT);
-@property (readonly, class) jint END_DOCUMENT NS_SWIFT_NAME(END_DOCUMENT);
-@property (readonly, class) jint START_TAG NS_SWIFT_NAME(START_TAG);
-@property (readonly, class) jint END_TAG NS_SWIFT_NAME(END_TAG);
-@property (readonly, class) jint TEXT NS_SWIFT_NAME(TEXT);
-@property (readonly, class) jint CDSECT NS_SWIFT_NAME(CDSECT);
-@property (readonly, class) jint ENTITY_REF NS_SWIFT_NAME(ENTITY_REF);
-@property (readonly, class) jint IGNORABLE_WHITESPACE NS_SWIFT_NAME(IGNORABLE_WHITESPACE);
-@property (readonly, class) jint PROCESSING_INSTRUCTION NS_SWIFT_NAME(PROCESSING_INSTRUCTION);
-@property (readonly, class) jint COMMENT NS_SWIFT_NAME(COMMENT);
-@property (readonly, class) jint DOCDECL NS_SWIFT_NAME(DOCDECL);
-@property (readonly, class, strong) IOSObjectArray *TYPES NS_SWIFT_NAME(TYPES);
-@property (readonly, copy, class) NSString *FEATURE_PROCESS_NAMESPACES NS_SWIFT_NAME(FEATURE_PROCESS_NAMESPACES);
-@property (readonly, copy, class) NSString *FEATURE_REPORT_NAMESPACE_ATTRIBUTES NS_SWIFT_NAME(FEATURE_REPORT_NAMESPACE_ATTRIBUTES);
-@property (readonly, copy, class) NSString *FEATURE_PROCESS_DOCDECL NS_SWIFT_NAME(FEATURE_PROCESS_DOCDECL);
-@property (readonly, copy, class) NSString *FEATURE_VALIDATION NS_SWIFT_NAME(FEATURE_VALIDATION);
 
 @end
 
@@ -1098,6 +1080,4 @@ J2OBJC_TYPE_LITERAL_HEADER(OrgXmlpullV1XmlPullParser)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_OrgXmlpullV1XmlPullParser")

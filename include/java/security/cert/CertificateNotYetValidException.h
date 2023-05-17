@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaSecurityCertCertificateNotYetValidException
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -29,6 +26,7 @@
 #define INCLUDE_JavaSecurityCertCertificateException 1
 #include "java/security/cert/CertificateException.h"
 
+@class JavaLangLong;
 @class JavaLangThrowable;
 
 /*!
@@ -37,9 +35,9 @@
   is before the <code>notBefore</code> date/time in the Certificate
   validity period.
  @author Hemma Prafullchandra
+ @since 1.2
  */
 @interface JavaSecurityCertCertificateNotYetValidException : JavaSecurityCertCertificateException
-@property (readonly, class) jlong serialVersionUID NS_SWIFT_NAME(serialVersionUID);
 
 #pragma mark Public
 
@@ -93,6 +91,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaSecurityCertCertificateNotYetValidException)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaSecurityCertCertificateNotYetValidException")

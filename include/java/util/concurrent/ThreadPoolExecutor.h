@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaUtilConcurrentThreadPoolExecutor
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -29,6 +26,9 @@
 #define INCLUDE_JavaUtilConcurrentAbstractExecutorService 1
 #include "java/util/concurrent/AbstractExecutorService.h"
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
+@class JavaLangLong;
 @class JavaLangThread;
 @class JavaLangThrowable;
 @class JavaUtilConcurrentThreadPoolExecutor_Worker;
@@ -65,30 +65,27 @@
   
  <dt>Core and maximum pool sizes</dt>
   
- <dd style="font-family:'DejaVu Sans', Arial, Helvetica, sans-serif">
-  A <code>ThreadPoolExecutor</code> will automatically adjust the
+ <dd>A <code>ThreadPoolExecutor</code> will automatically adjust the
   pool size (see <code>getPoolSize</code>)
   according to the bounds set by
   corePoolSize (see <code>getCorePoolSize</code>) and
   maximumPoolSize (see <code>getMaximumPoolSize</code>).
   When a new task is submitted in method <code>execute(Runnable)</code>,
-  and fewer than corePoolSize threads are running, a new thread is
+  if fewer than corePoolSize threads are running, a new thread is
   created to handle the request, even if other worker threads are
-  idle.  If there are more than corePoolSize but less than
-  maximumPoolSize threads running, a new thread will be created only
-  if the queue is full.  By setting corePoolSize and maximumPoolSize
-  the same, you create a fixed-size thread pool. By setting
-  maximumPoolSize to an essentially unbounded value such as <code>Integer.MAX_VALUE</code>
- , you allow the pool to accommodate an arbitrary
-  number of concurrent tasks. Most typically, core and maximum pool
-  sizes are set only upon construction, but they may also be changed
-  dynamically using <code>setCorePoolSize</code> and <code>setMaximumPoolSize</code>
- . </dd>
+  idle.  Else if fewer than maximumPoolSize threads are running, a
+  new thread will be created to handle the request only if the queue
+  is full.  By setting corePoolSize and maximumPoolSize the same, you
+  create a fixed-size thread pool. By setting maximumPoolSize to an
+  essentially unbounded value such as <code>Integer.MAX_VALUE</code>, you
+  allow the pool to accommodate an arbitrary number of concurrent
+  tasks. Most typically, core and maximum pool sizes are set only
+  upon construction, but they may also be changed dynamically using 
+ <code>setCorePoolSize</code> and <code>setMaximumPoolSize</code>. </dd>
   
  <dt>On-demand construction</dt>
   
- <dd style="font-family:'DejaVu Sans', Arial, Helvetica, sans-serif">
-  By default, even core threads are initially created and
+ <dd>By default, even core threads are initially created and
   started only when new tasks arrive, but this can be overridden
   dynamically using method <code>prestartCoreThread</code> or <code>prestartAllCoreThreads</code>
  .  You probably want to prestart threads if
@@ -96,8 +93,7 @@
   
  <dt>Creating new threads</dt>
   
- <dd style="font-family:'DejaVu Sans', Arial, Helvetica, sans-serif">
-  New threads are created using a <code>ThreadFactory</code>.  If not
+ <dd>New threads are created using a <code>ThreadFactory</code>.  If not
   otherwise specified, a <code>Executors.defaultThreadFactory</code> is
   used, that creates threads to all be in the same <code>ThreadGroup</code>
   and with the same <code>NORM_PRIORITY</code> priority and
@@ -114,8 +110,7 @@
   
  <dt>Keep-alive times</dt>
   
- <dd style="font-family:'DejaVu Sans', Arial, Helvetica, sans-serif">
-  If the pool currently has more than corePoolSize threads,
+ <dd>If the pool currently has more than corePoolSize threads,
   excess threads will be terminated if they have been idle for more
   than the keepAliveTime (see <code>getKeepAliveTime(TimeUnit)</code>).
   This provides a means of reducing resource consumption when the
@@ -133,8 +128,7 @@
   
  <dt>Queuing</dt>
   
- <dd style="font-family:'DejaVu Sans', Arial, Helvetica, sans-serif">
-  Any <code>BlockingQueue</code> may be used to transfer and hold
+ <dd>Any <code>BlockingQueue</code> may be used to transfer and hold
   submitted tasks.  The use of this queue interacts with pool sizing: 
  <ul>
   
@@ -191,8 +185,7 @@
   
  <dt>Rejected tasks</dt>
   
- <dd style="font-family:'DejaVu Sans', Arial, Helvetica, sans-serif">
-  New tasks submitted in method <code>execute(Runnable)</code> will be 
+ <dd>New tasks submitted in method <code>execute(Runnable)</code> will be 
  <em>rejected</em> when the Executor has been shut down, and also when
   the Executor uses finite bounds for both maximum threads and work queue
   capacity, and is saturated.  In either case, the <code>execute</code> method
@@ -201,9 +194,8 @@
   policies are provided: 
  <ol>
   
- <li>In the default <code>ThreadPoolExecutor.AbortPolicy</code>, the
-  handler throws a runtime <code>RejectedExecutionException</code> upon
-  rejection. 
+ <li>In the default <code>ThreadPoolExecutor.AbortPolicy</code>, the handler
+  throws a runtime <code>RejectedExecutionException</code> upon rejection. 
  <li>In <code>ThreadPoolExecutor.CallerRunsPolicy</code>, the thread
   that invokes <code>execute</code> itself runs the task. This provides a
   simple feedback control mechanism that will slow down the rate that
@@ -222,8 +214,7 @@
   
  <dt>Hook methods</dt>
   
- <dd style="font-family:'DejaVu Sans', Arial, Helvetica, sans-serif">
-  This class provides <code>protected</code> overridable 
+ <dd>This class provides <code>protected</code> overridable 
  <code>beforeExecute(Thread, Runnable)</code> and 
  <code>afterExecute(Runnable, Throwable)</code> methods that are called
   before and after execution of each task.  These can be used to
@@ -238,22 +229,19 @@
   
  <dt>Queue maintenance</dt>
   
- <dd style="font-family:'DejaVu Sans', Arial, Helvetica, sans-serif">
-  Method <code>getQueue()</code> allows access to the work queue
+ <dd>Method <code>getQueue()</code> allows access to the work queue
   for purposes of monitoring and debugging.  Use of this method for
   any other purpose is strongly discouraged.  Two supplied methods, 
  <code>remove(Runnable)</code> and <code>purge</code> are available to
   assist in storage reclamation when large numbers of queued tasks
   become cancelled.</dd>
   
- <dt>Finalization</dt>
+ <dt>Reclamation</dt>
   
- <dd style="font-family:'DejaVu Sans', Arial, Helvetica, sans-serif">
-  A pool that is no longer referenced in a program <em>AND</em>
-  has no remaining threads will be <code>shutdown</code> automatically. If
-  you would like to ensure that unreferenced pools are reclaimed even
-  if users forget to call <code>shutdown</code>, then you must arrange
-  that unused threads eventually die, by setting appropriate
+ <dd>A pool that is no longer referenced in a program <em>AND</em>
+  has no remaining threads may be reclaimed (garbage collected)
+  without being explicitly shutdown. You can configure a pool to
+  allow all unused threads to eventually die by setting appropriate
   keep-alive times, using a lower bound of zero core threads and/or
   setting <code>allowCoreThreadTimeOut(boolean)</code>.  </dd>
   
@@ -304,9 +292,10 @@
 
 /*!
  @brief Creates a new <code>ThreadPoolExecutor</code> with the given initial
-  parameters and default thread factory and rejected execution handler.
- It may be more convenient to use one of the <code>Executors</code> factory
-  methods instead of this general purpose constructor.
+  parameters, the default thread factory and the default rejected
+  execution handler.
+ <p>It may be more convenient to use one of the <code>Executors</code>
+  factory methods instead of this general purpose constructor.
  @param corePoolSize the number of threads to keep in the pool, even         if they are idle, unless 
  <code>allowCoreThreadTimeOut</code>  is set
  @param maximumPoolSize the maximum number of threads to allow in the         pool
@@ -331,7 +320,8 @@
 
 /*!
  @brief Creates a new <code>ThreadPoolExecutor</code> with the given initial
-  parameters and default thread factory.
+  parameters and 
+ default thread factory.
  @param corePoolSize the number of threads to keep in the pool, even         if they are idle, unless 
  <code>allowCoreThreadTimeOut</code>  is set
  @param maximumPoolSize the maximum number of threads to allow in the         pool
@@ -359,7 +349,8 @@ withJavaUtilConcurrentRejectedExecutionHandler:(id<JavaUtilConcurrentRejectedExe
 
 /*!
  @brief Creates a new <code>ThreadPoolExecutor</code> with the given initial
-  parameters and default rejected execution handler.
+  parameters and default rejected execution handler
+ .
  @param corePoolSize the number of threads to keep in the pool, even         if they are idle, unless 
  <code>allowCoreThreadTimeOut</code>  is set
  @param maximumPoolSize the maximum number of threads to allow in the         pool
@@ -774,10 +765,6 @@ withJavaUtilConcurrentRejectedExecutionHandler:(id<JavaUtilConcurrentRejectedExe
 - (void)beforeExecuteWithJavaLangThread:(JavaLangThread *)t
                    withJavaLangRunnable:(id<JavaLangRunnable>)r;
 
-/*!
- @brief Invokes <code>shutdown</code> when this executor is no longer
-  referenced and it has no threads.
- */
 - (void)java_finalize;
 
 /*!
@@ -803,6 +790,11 @@ withJavaUtilConcurrentRejectedExecutionHandler:(id<JavaUtilConcurrentRejectedExe
  @param shutdownOK true if should return true if SHUTDOWN
  */
 - (jboolean)isRunningOrShutdownWithBoolean:(jboolean)shutdownOK;
+
+/*!
+ @brief Used by ScheduledThreadPoolExecutor.
+ */
+- (jboolean)isStopped;
 
 /*!
  @brief Performs any further cleanup following run state transition on
@@ -966,6 +958,8 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentThreadPoolExecutor_CallerRunsPolicy
 /*!
  @brief A handler for rejected tasks that throws a 
  <code>RejectedExecutionException</code>.
+ This is the default handler for <code>ThreadPoolExecutor</code> and 
+ <code>ScheduledThreadPoolExecutor</code>.
  */
 @interface JavaUtilConcurrentThreadPoolExecutor_AbortPolicy : NSObject < JavaUtilConcurrentRejectedExecutionHandler >
 
@@ -1097,6 +1091,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentThreadPoolExecutor_DiscardOldestPol
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaUtilConcurrentThreadPoolExecutor")

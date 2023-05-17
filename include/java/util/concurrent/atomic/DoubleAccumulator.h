@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaUtilConcurrentAtomicDoubleAccumulator
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -33,6 +30,11 @@
 #define INCLUDE_JavaIoSerializable 1
 #include "java/io/Serializable.h"
 
+@class JavaLangBoolean;
+@class JavaLangDouble;
+@class JavaLangFloat;
+@class JavaLangInteger;
+@class JavaLangLong;
 @protocol JavaUtilFunctionDoubleBinaryOperator;
 
 /*!
@@ -49,11 +51,13 @@
   read. 
  <p>The supplied accumulator function should be side-effect-free,
   since it may be re-applied when attempted updates fail due to
-  contention among threads. The function is applied with the current
-  value as its first argument, and the given update as the second
-  argument.  For example, to maintain a running maximum value, you
-  could supply <code>Double::max</code> along with <code>Double.NEGATIVE_INFINITY</code>
-  as the identity. The order of
+  contention among threads.  For predictable results, the accumulator
+  function should be commutative and associative within the floating
+  point tolerance required in usage contexts. The function is applied
+  with an existing value (or identity) as one argument, and a given
+  update as the other argument. For example, to maintain a running
+  maximum value, you could supply <code>Double::max</code> along with 
+ <code>Double.NEGATIVE_INFINITY</code> as the identity. The order of
   accumulation within or across threads is not guaranteed. Thus, this
   class may not be applicable if numerical stability is required,
   especially when combining values of substantially different orders
@@ -178,6 +182,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentAtomicDoubleAccumulator)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaUtilConcurrentAtomicDoubleAccumulator")

@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaSqlTimestamp
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -28,6 +25,10 @@
 #define RESTRICT_JavaUtilDate 1
 #define INCLUDE_JavaUtilDate 1
 #include "java/util/Date.h"
+
+@class JavaLangBoolean;
+@class JavaLangInteger;
+@class JavaLangLong;
 
 /*!
  @brief <P>A thin wrapper around <code>java.util.Date</code> that allows
@@ -69,7 +70,6 @@
   denotes implementation inheritance, and not type inheritance.
  */
 @interface JavaSqlTimestamp : JavaUtilDate
-@property (readonly, class) jlong serialVersionUID NS_SWIFT_NAME(serialVersionUID);
 
 #pragma mark Public
 
@@ -91,7 +91,7 @@
                               withInt:(jint)hour
                               withInt:(jint)minute
                               withInt:(jint)second
-                              withInt:(jint)nano __attribute__((deprecated));
+                              withInt:(jint)nano;
 
 /*!
  @brief Constructs a <code>Timestamp</code> object
@@ -295,6 +295,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaSqlTimestamp)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaSqlTimestamp")

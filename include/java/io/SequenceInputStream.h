@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaIoSequenceInputStream
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -30,6 +27,7 @@
 #include "java/io/InputStream.h"
 
 @class IOSByteArray;
+@class JavaLangInteger;
 @protocol JavaUtilEnumeration;
 
 /*!
@@ -201,6 +199,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaIoSequenceInputStream)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaIoSequenceInputStream")

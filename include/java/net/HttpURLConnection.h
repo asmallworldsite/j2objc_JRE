@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaNetHttpURLConnection
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -30,6 +27,9 @@
 #include "java/net/URLConnection.h"
 
 @class JavaIoInputStream;
+@class JavaLangBoolean;
+@class JavaLangInteger;
+@class JavaLangLong;
 @class JavaNetURL;
 @class JavaSecurityPermission;
 
@@ -64,7 +64,7 @@
   
  <p>For example, to retrieve the webpage at <code>http://www.android.com/</code>:
   @code
-     URL url = new URL("http://www.android.com/");
+      URL url = new URL("http://www.android.com/");
     HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
     try {
       InputStream in = new BufferedInputStream(urlConnection.getInputStream());
@@ -107,7 +107,7 @@
   memory before it is transmitted, wasting (and possibly exhausting) heap and
   increasing latency. 
  <p>For example, to perform an upload: @code
-     HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+      HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
     try {
       urlConnection.setDoOutput(true);
       urlConnection.setChunkedStreamingMode(0);
@@ -140,7 +140,7 @@
   callers of <code>getInputStream()</code>. The Content-Encoding and Content-Length
   response headers are cleared in this case. Gzip compression can be disabled by
   setting the acceptable encodings in the request header: @code
-     urlConnection.setRequestProperty("Accept-Encoding", "identity"); 
+      urlConnection.setRequestProperty("Accept-Encoding", "identity"); 
  
 @endcode
   
@@ -161,7 +161,7 @@
  <code>getHeaderFields()</code> or <code>getInputStream()</code>. For example, to
   check that a response was not redirected to an unexpected host: 
  @code
-     HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
+      HttpURLConnection urlConnection = (HttpURLConnection) url.openConnection();
     try {
       InputStream in = new BufferedInputStream(urlConnection.getInputStream());
       if (!url.getHost().equals(urlConnection.getURL().getHost())) {
@@ -179,7 +179,7 @@
  HTTP basic authentication</a>. Use 
  <code>Authenticator</code> to set the VM-wide authentication handler: 
  @code
-     Authenticator.setDefault(new Authenticator() {
+      Authenticator.setDefault(new Authenticator() {
       protected PasswordAuthentication getPasswordAuthentication() {
         return new PasswordAuthentication(username, password.toCharArray());
       }
@@ -194,7 +194,7 @@
   and server, <code>HttpURLConnection</code> includes an extensible cookie manager.
   Enable VM-wide cookie management using <code>CookieHandler</code> and <code>CookieManager</code>
  : @code
-     CookieManager cookieManager = new CookieManager();
+      CookieManager cookieManager = new CookieManager();
     CookieHandler.setDefault(cookieManager); 
  
 @endcode
@@ -215,7 +215,7 @@
  RFC 2109</a>. For compatibility
   with the most web servers, set the cookie version to 0. 
  <p>For example, to receive <code>www.twitter.com</code> in French: @code
-     HttpCookie cookie = new HttpCookie("lang", "fr");
+      HttpCookie cookie = new HttpCookie("lang", "fr");
     cookie.setDomain("twitter.com");
     cookie.setPath("/");
     cookie.setVersion(0);
@@ -323,42 +323,6 @@
    */
   jboolean instanceFollowRedirects_;
 }
-@property (readonly, class) jint HTTP_OK NS_SWIFT_NAME(HTTP_OK);
-@property (readonly, class) jint HTTP_CREATED NS_SWIFT_NAME(HTTP_CREATED);
-@property (readonly, class) jint HTTP_ACCEPTED NS_SWIFT_NAME(HTTP_ACCEPTED);
-@property (readonly, class) jint HTTP_NOT_AUTHORITATIVE NS_SWIFT_NAME(HTTP_NOT_AUTHORITATIVE);
-@property (readonly, class) jint HTTP_NO_CONTENT NS_SWIFT_NAME(HTTP_NO_CONTENT);
-@property (readonly, class) jint HTTP_RESET NS_SWIFT_NAME(HTTP_RESET);
-@property (readonly, class) jint HTTP_PARTIAL NS_SWIFT_NAME(HTTP_PARTIAL);
-@property (readonly, class) jint HTTP_MULT_CHOICE NS_SWIFT_NAME(HTTP_MULT_CHOICE);
-@property (readonly, class) jint HTTP_MOVED_PERM NS_SWIFT_NAME(HTTP_MOVED_PERM);
-@property (readonly, class) jint HTTP_MOVED_TEMP NS_SWIFT_NAME(HTTP_MOVED_TEMP);
-@property (readonly, class) jint HTTP_SEE_OTHER NS_SWIFT_NAME(HTTP_SEE_OTHER);
-@property (readonly, class) jint HTTP_NOT_MODIFIED NS_SWIFT_NAME(HTTP_NOT_MODIFIED);
-@property (readonly, class) jint HTTP_USE_PROXY NS_SWIFT_NAME(HTTP_USE_PROXY);
-@property (readonly, class) jint HTTP_BAD_REQUEST NS_SWIFT_NAME(HTTP_BAD_REQUEST);
-@property (readonly, class) jint HTTP_UNAUTHORIZED NS_SWIFT_NAME(HTTP_UNAUTHORIZED);
-@property (readonly, class) jint HTTP_PAYMENT_REQUIRED NS_SWIFT_NAME(HTTP_PAYMENT_REQUIRED);
-@property (readonly, class) jint HTTP_FORBIDDEN NS_SWIFT_NAME(HTTP_FORBIDDEN);
-@property (readonly, class) jint HTTP_NOT_FOUND NS_SWIFT_NAME(HTTP_NOT_FOUND);
-@property (readonly, class) jint HTTP_BAD_METHOD NS_SWIFT_NAME(HTTP_BAD_METHOD);
-@property (readonly, class) jint HTTP_NOT_ACCEPTABLE NS_SWIFT_NAME(HTTP_NOT_ACCEPTABLE);
-@property (readonly, class) jint HTTP_PROXY_AUTH NS_SWIFT_NAME(HTTP_PROXY_AUTH);
-@property (readonly, class) jint HTTP_CLIENT_TIMEOUT NS_SWIFT_NAME(HTTP_CLIENT_TIMEOUT);
-@property (readonly, class) jint HTTP_CONFLICT NS_SWIFT_NAME(HTTP_CONFLICT);
-@property (readonly, class) jint HTTP_GONE NS_SWIFT_NAME(HTTP_GONE);
-@property (readonly, class) jint HTTP_LENGTH_REQUIRED NS_SWIFT_NAME(HTTP_LENGTH_REQUIRED);
-@property (readonly, class) jint HTTP_PRECON_FAILED NS_SWIFT_NAME(HTTP_PRECON_FAILED);
-@property (readonly, class) jint HTTP_ENTITY_TOO_LARGE NS_SWIFT_NAME(HTTP_ENTITY_TOO_LARGE);
-@property (readonly, class) jint HTTP_REQ_TOO_LONG NS_SWIFT_NAME(HTTP_REQ_TOO_LONG);
-@property (readonly, class) jint HTTP_UNSUPPORTED_TYPE NS_SWIFT_NAME(HTTP_UNSUPPORTED_TYPE);
-@property (readonly, class) jint HTTP_SERVER_ERROR NS_SWIFT_NAME(HTTP_SERVER_ERROR);
-@property (readonly, class) jint HTTP_INTERNAL_ERROR NS_SWIFT_NAME(HTTP_INTERNAL_ERROR);
-@property (readonly, class) jint HTTP_NOT_IMPLEMENTED NS_SWIFT_NAME(HTTP_NOT_IMPLEMENTED);
-@property (readonly, class) jint HTTP_BAD_GATEWAY NS_SWIFT_NAME(HTTP_BAD_GATEWAY);
-@property (readonly, class) jint HTTP_UNAVAILABLE NS_SWIFT_NAME(HTTP_UNAVAILABLE);
-@property (readonly, class) jint HTTP_GATEWAY_TIMEOUT NS_SWIFT_NAME(HTTP_GATEWAY_TIMEOUT);
-@property (readonly, class) jint HTTP_VERSION NS_SWIFT_NAME(HTTP_VERSION);
 
 #pragma mark Public
 
@@ -916,6 +880,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaNetHttpURLConnection)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaNetHttpURLConnection")

@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaTextDateFormatSymbols
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -30,6 +27,9 @@
 #include "java/io/Serializable.h"
 
 @class IOSObjectArray;
+@class JavaLangBoolean;
+@class JavaLangInteger;
+@class JavaLangLong;
 @class JavaUtilLocale;
 
 /*!
@@ -75,6 +75,7 @@
  - seealso: SimpleDateFormat
  - seealso: java.util.SimpleTimeZone
  @author Chen-Lieh Huang
+ @since 1.1
  */
 @interface JavaTextDateFormatSymbols : NSObject < JavaIoSerializable, NSCopying > {
  @public
@@ -142,7 +143,7 @@
   </ul>
   The zone ID is <em>not</em> localized; it's one of the valid IDs of the 
  <code>TimeZone</code> class that are not 
- <a href="../java/util/TimeZone.html#CustomID">custom IDs</a>.
+ <a href="../util/TimeZone.html#CustomID">custom IDs</a>.
   All other entries are localized names.
    - seealso: java.util.TimeZone
    */
@@ -171,36 +172,6 @@
    */
   volatile_jint cachedHashCode_;
 }
-@property (readonly, copy, class) NSString *patternChars NS_SWIFT_NAME(patternChars);
-@property (readonly, class) jint PATTERN_ERA NS_SWIFT_NAME(PATTERN_ERA);
-@property (readonly, class) jint PATTERN_YEAR NS_SWIFT_NAME(PATTERN_YEAR);
-@property (readonly, class) jint PATTERN_MONTH NS_SWIFT_NAME(PATTERN_MONTH);
-@property (readonly, class) jint PATTERN_DAY_OF_MONTH NS_SWIFT_NAME(PATTERN_DAY_OF_MONTH);
-@property (readonly, class) jint PATTERN_HOUR_OF_DAY1 NS_SWIFT_NAME(PATTERN_HOUR_OF_DAY1);
-@property (readonly, class) jint PATTERN_HOUR_OF_DAY0 NS_SWIFT_NAME(PATTERN_HOUR_OF_DAY0);
-@property (readonly, class) jint PATTERN_MINUTE NS_SWIFT_NAME(PATTERN_MINUTE);
-@property (readonly, class) jint PATTERN_SECOND NS_SWIFT_NAME(PATTERN_SECOND);
-@property (readonly, class) jint PATTERN_MILLISECOND NS_SWIFT_NAME(PATTERN_MILLISECOND);
-@property (readonly, class) jint PATTERN_DAY_OF_WEEK NS_SWIFT_NAME(PATTERN_DAY_OF_WEEK);
-@property (readonly, class) jint PATTERN_DAY_OF_YEAR NS_SWIFT_NAME(PATTERN_DAY_OF_YEAR);
-@property (readonly, class) jint PATTERN_DAY_OF_WEEK_IN_MONTH NS_SWIFT_NAME(PATTERN_DAY_OF_WEEK_IN_MONTH);
-@property (readonly, class) jint PATTERN_WEEK_OF_YEAR NS_SWIFT_NAME(PATTERN_WEEK_OF_YEAR);
-@property (readonly, class) jint PATTERN_WEEK_OF_MONTH NS_SWIFT_NAME(PATTERN_WEEK_OF_MONTH);
-@property (readonly, class) jint PATTERN_AM_PM NS_SWIFT_NAME(PATTERN_AM_PM);
-@property (readonly, class) jint PATTERN_HOUR1 NS_SWIFT_NAME(PATTERN_HOUR1);
-@property (readonly, class) jint PATTERN_HOUR0 NS_SWIFT_NAME(PATTERN_HOUR0);
-@property (readonly, class) jint PATTERN_ZONE_NAME NS_SWIFT_NAME(PATTERN_ZONE_NAME);
-@property (readonly, class) jint PATTERN_ZONE_VALUE NS_SWIFT_NAME(PATTERN_ZONE_VALUE);
-@property (readonly, class) jint PATTERN_WEEK_YEAR NS_SWIFT_NAME(PATTERN_WEEK_YEAR);
-@property (readonly, class) jint PATTERN_ISO_DAY_OF_WEEK NS_SWIFT_NAME(PATTERN_ISO_DAY_OF_WEEK);
-@property (readonly, class) jint PATTERN_ISO_ZONE NS_SWIFT_NAME(PATTERN_ISO_ZONE);
-@property (readonly, class) jint PATTERN_STANDALONE_MONTH NS_SWIFT_NAME(PATTERN_STANDALONE_MONTH);
-@property (readonly, class) jint PATTERN_STANDALONE_DAY_OF_WEEK NS_SWIFT_NAME(PATTERN_STANDALONE_DAY_OF_WEEK);
-@property (readonly, class) jint PATTERN_DAY_PERIOD NS_SWIFT_NAME(PATTERN_DAY_PERIOD);
-@property (readonly, class) jint PATTERN_FLEXIBLE_DAY_PERIOD NS_SWIFT_NAME(PATTERN_FLEXIBLE_DAY_PERIOD);
-@property (readonly, class) jlong serialVersionUID NS_SWIFT_NAME(serialVersionUID);
-@property (readonly, class) jint currentSerialVersion NS_SWIFT_NAME(currentSerialVersion);
-@property (readonly, class) jint millisPerHour NS_SWIFT_NAME(millisPerHour);
 
 #pragma mark Public
 
@@ -295,6 +266,12 @@
 
 /*!
  @brief Gets month strings.For example: "January", "February", etc.
+ An array with either 12 or 13 elements will be returned depending
+  on whether or not <code>Calendar.UNDECIMBER</code>
+  is supported. Use 
+ <code>Calendar.JANUARY</code>,
+  <code>Calendar.FEBRUARY</code>,
+  etc. to index the result array. 
  <p>If the language requires different forms for formatting and
   stand-alone usages, this method returns month names in the
   formatting form. For example, the preferred month name for
@@ -310,8 +287,14 @@
 
 /*!
  @brief Gets short month strings.For example: "Jan", "Feb", etc.
+ An array with either 12 or 13 elements will be returned depending
+  on whether or not <code>Calendar.UNDECIMBER</code>
+  is supported. Use 
+ <code>Calendar.JANUARY</code>,
+  <code>Calendar.FEBRUARY</code>,
+  etc. to index the result array. 
  <p>If the language requires different forms for formatting and
-  stand-alone usages, This method returns short month names in
+  stand-alone usages, this method returns short month names in
   the formatting form. For example, the preferred abbreviation
   for January in the Catalan language is <em>de gen.</em> in the
   formatting form, while it is <em>gen.</em> in the stand-alone
@@ -325,15 +308,19 @@
 
 /*!
  @brief Gets short weekday strings.For example: "Sun", "Mon", etc.
- @return the short weekday strings. Use <code>Calendar.SUNDAY</code>,
-  <code>Calendar.MONDAY</code>, etc. to index the result array.
+ @return the short weekday strings. Use 
+ <code>Calendar.SUNDAY</code>,
+  <code>Calendar.MONDAY</code>, etc. to index
+  the result array.
  */
 - (IOSObjectArray *)getShortWeekdays;
 
 /*!
  @brief Gets weekday strings.For example: "Sunday", "Monday", etc.
- @return the weekday strings. Use <code>Calendar.SUNDAY</code>,
-  <code>Calendar.MONDAY</code>, etc. to index the result array.
+ @return the weekday strings. Use 
+ <code>Calendar.SUNDAY</code>,
+  <code>Calendar.MONDAY</code>, etc. to index
+  the result array.
  */
 - (IOSObjectArray *)getWeekdays;
 
@@ -400,29 +387,33 @@
 
 /*!
  @brief Sets month strings.For example: "January", "February", etc.
- @param newMonths the new month strings.
+ @param newMonths the new month strings. The array should  be indexed by 
+ <code>Calendar.JANUARY</code> ,  <code>Calendar.FEBRUARY</code>
+  , etc.
  */
 - (void)setMonthsWithNSStringArray:(IOSObjectArray *)newMonths;
 
 /*!
  @brief Sets short month strings.For example: "Jan", "Feb", etc.
- @param newShortMonths the new short month strings.
+ @param newShortMonths the new short month strings. The array should  be indexed by 
+ <code>Calendar.JANUARY</code> ,  <code>Calendar.FEBRUARY</code>
+  , etc.
  */
 - (void)setShortMonthsWithNSStringArray:(IOSObjectArray *)newShortMonths;
 
 /*!
  @brief Sets short weekday strings.For example: "Sun", "Mon", etc.
  @param newShortWeekdays the new short weekday strings. The array should  be indexed by 
-  <code> Calendar.SUNDAY </code> ,   <code>
-  Calendar.MONDAY </code> , etc.
+ <code>Calendar.SUNDAY</code> ,  <code>Calendar.MONDAY</code>
+  , etc.
  */
 - (void)setShortWeekdaysWithNSStringArray:(IOSObjectArray *)newShortWeekdays;
 
 /*!
  @brief Sets weekday strings.For example: "Sunday", "Monday", etc.
  @param newWeekdays the new weekday strings. The array should  be indexed by 
-  <code> Calendar.SUNDAY </code> ,   <code>
-  Calendar.MONDAY </code> , etc.
+ <code>Calendar.SUNDAY</code> ,  <code>Calendar.MONDAY</code>
+  , etc.
  */
 - (void)setWeekdaysWithNSStringArray:(IOSObjectArray *)newWeekdays;
 
@@ -615,9 +606,9 @@ inline jint JavaTextDateFormatSymbols_get_PATTERN_ISO_ZONE(void);
 #define JavaTextDateFormatSymbols_PATTERN_ISO_ZONE 21
 J2OBJC_STATIC_FIELD_CONSTANT(JavaTextDateFormatSymbols, PATTERN_ISO_ZONE, jint)
 
-inline jint JavaTextDateFormatSymbols_get_PATTERN_STANDALONE_MONTH(void);
-#define JavaTextDateFormatSymbols_PATTERN_STANDALONE_MONTH 22
-J2OBJC_STATIC_FIELD_CONSTANT(JavaTextDateFormatSymbols, PATTERN_STANDALONE_MONTH, jint)
+inline jint JavaTextDateFormatSymbols_get_PATTERN_MONTH_STANDALONE(void);
+#define JavaTextDateFormatSymbols_PATTERN_MONTH_STANDALONE 22
+J2OBJC_STATIC_FIELD_CONSTANT(JavaTextDateFormatSymbols, PATTERN_MONTH_STANDALONE, jint)
 
 inline jint JavaTextDateFormatSymbols_get_PATTERN_STANDALONE_DAY_OF_WEEK(void);
 #define JavaTextDateFormatSymbols_PATTERN_STANDALONE_DAY_OF_WEEK 23
@@ -674,6 +665,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaTextDateFormatSymbols)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaTextDateFormatSymbols")

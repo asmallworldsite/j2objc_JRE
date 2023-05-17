@@ -31,9 +31,6 @@
 #define INCLUDE_JavaSecurityKeyStore_ProtectionParameter 1
 #endif
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -47,8 +44,11 @@
 @class IOSCharArray;
 @class IOSClass;
 @class IOSObjectArray;
+@class JavaIoFile;
 @class JavaIoInputStream;
 @class JavaIoOutputStream;
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @class JavaSecurityCertCertificate;
 @class JavaSecurityKeyStoreSpi;
 @class JavaSecurityProvider;
@@ -103,9 +103,23 @@
   (SafeKeyper) are one option, and simpler mechanisms such as files may also
   be used (in a variety of formats). 
  <p> Typical ways to request a KeyStore object include
+  specifying an existing keystore file,
   relying on the default type and providing a specific keystore type. 
  <ul>
-  <li>To rely on the default type: 
+  <li>To specify an existing keystore file: 
+ @code
+
+     // get keystore password
+     char[] password = getPassword();
+     // probe the keystore file and load the keystore entries
+     KeyStore ks = KeyStore.getInstance(new File("keyStoreName"), password);
+ 
+@endcode
+  The system will probe the specified file to determine its keystore type
+  and return a keystore implementation with its entries already loaded.
+  When this approach is used there is no need to call the keystore's 
+ <code>load</code> method. 
+ <li>To rely on the default type: 
  @code
 
      KeyStore ks = KeyStore.getInstance(KeyStore.getDefaultType()); 
@@ -119,8 +133,8 @@
   
 @endcode
   The system will return the most preferred implementation of the
-  specified keystore type available in the environment. <p>
-  </ul>
+  specified keystore type available in the environment. 
+ </ul>
   
  <p> Before a keystore can be accessed, it must be 
  <code>loaded</code>.
@@ -375,6 +389,102 @@
           withJavaSecurityKeyStore_ProtectionParameter:(id<JavaSecurityKeyStore_ProtectionParameter>)protParam;
 
 /*!
+ @brief Returns a loaded keystore object of the appropriate keystore type.
+ First the keystore type is determined by probing the specified file.
+  Then a keystore object is instantiated and loaded using the data from
+  that file. 
+ <p>
+  A password may be given to unlock the keystore
+  (e.g. the keystore resides on a hardware token device),
+  or to check the integrity of the keystore data.
+  If a password is not given for integrity checking,
+  then integrity checking is not performed. 
+ <p>
+  This method traverses the list of registered security 
+ providers, starting with the most
+  preferred Provider.
+  For each <code>KeyStoreSpi</code> implementation supported by a
+  Provider, it invokes the <code>engineProbe</code>
+  method to
+  determine if it supports the specified keystore.
+  A new KeyStore object is returned that encapsulates the KeyStoreSpi
+  implementation from the first Provider that supports the specified file. 
+ <p> Note that the list of registered providers may be retrieved via the 
+ <code>Security.getProviders()</code> method.
+ @param file the keystore file
+ @param password the keystore password, which may be <code>null</code>
+ @return a keystore object loaded with keystore data
+ @throw KeyStoreExceptionif no Provider supports a KeyStoreSpi
+              implementation for the specified keystore file.
+ @throw IOExceptionif there is an I/O or format problem with the
+              keystore data, if a password is required but not given,
+              or if the given password was incorrect. If the error is
+              due to a wrong password, the <code>cause</code>
+              of the <code>IOException</code> should be an
+              <code>UnrecoverableKeyException</code>.
+ @throw NoSuchAlgorithmExceptionif the algorithm used to check the
+              integrity of the keystore cannot be found.
+ @throw CertificateExceptionif any of the certificates in the
+              keystore could not be loaded.
+ @throw IllegalArgumentExceptionif file does not exist or does not
+              refer to a normal file.
+ @throw NullPointerExceptionif file is <code>null</code>.
+ @throw SecurityExceptionif a security manager exists and its
+              <code>java.lang.SecurityManager.checkRead</code> method denies
+              read access to the specified file.
+ - seealso: Provider
+ @since 9
+ */
++ (JavaSecurityKeyStore *)getInstanceWithJavaIoFile:(JavaIoFile *)file
+                                      withCharArray:(IOSCharArray *)password;
+
+/*!
+ @brief Returns a loaded keystore object of the appropriate keystore type.
+ First the keystore type is determined by probing the specified file.
+  Then a keystore object is instantiated and loaded using the data from
+  that file.
+  A <code>LoadStoreParameter</code> may be supplied which specifies how to
+  unlock the keystore data or perform an integrity check. 
+ <p>
+  This method traverses the list of registered security providers
+ , starting with the most preferred Provider.
+  For each <code>KeyStoreSpi</code> implementation supported by a
+  Provider, it invokes the <code>engineProbe</code>
+  method to
+  determine if it supports the specified keystore.
+  A new KeyStore object is returned that encapsulates the KeyStoreSpi
+  implementation from the first Provider that supports the specified file. 
+ <p> Note that the list of registered providers may be retrieved via the 
+ <code>Security.getProviders()</code> method.
+ @param file the keystore file
+ @param param the <code>LoadStoreParameter</code>  that specifies how to load
+               the keystore, which may be <code>null</code>
+ @return a keystore object loaded with keystore data
+ @throw KeyStoreExceptionif no Provider supports a KeyStoreSpi
+              implementation for the specified keystore file.
+ @throw IOExceptionif there is an I/O or format problem with the
+              keystore data. If the error is due to an incorrect             
+ <code>ProtectionParameter</code> (e.g. wrong password)
+              the <code>cause</code> of the
+              <code>IOException</code> should be an
+              <code>UnrecoverableKeyException</code>.
+ @throw NoSuchAlgorithmExceptionif the algorithm used to check the
+              integrity of the keystore cannot be found.
+ @throw CertificateExceptionif any of the certificates in the
+              keystore could not be loaded.
+ @throw IllegalArgumentExceptionif file does not exist or does not
+              refer to a normal file, or if param is not recognized.
+ @throw NullPointerExceptionif file is <code>null</code>.
+ @throw SecurityExceptionif a security manager exists and its
+              <code>java.lang.SecurityManager.checkRead</code> method denies
+              read access to the specified file.
+ - seealso: Provider
+ @since 9
+ */
++ (JavaSecurityKeyStore *)getInstanceWithJavaIoFile:(JavaIoFile *)file
+        withJavaSecurityKeyStore_LoadStoreParameter:(id<JavaSecurityKeyStore_LoadStoreParameter>)param;
+
+/*!
  @brief Returns a keystore object of the specified type.
  <p> This method traverses the list of registered security Providers,
   starting with the most preferred Provider.
@@ -384,10 +494,10 @@
  <p> Note that the list of registered providers may be retrieved via the 
  <code>Security.getProviders()</code> method.
  @param type the type of keystore.  See the KeyStore section in the 
-  <a href="{@@docRoot}/../technotes/guides/security/StandardNames.html#KeyStore">
-   Java Cryptography Architecture Standard Algorithm Name Documentation
+  <a href="{@@docRoot}/../specs/security/standard-names.html#keystore-types">
+   Java Security Standard Algorithm Names Specification
   </a>  for information about standard keystore types.
- @return a keystore object of the specified type.
+ @return a keystore object of the specified type
  @throw KeyStoreExceptionif no Provider supports a
            KeyStoreSpi implementation for the
            specified type.
@@ -402,15 +512,17 @@
   object is returned.  Note that the specified Provider object
   does not have to be registered in the provider list.
  @param type the type of keystore.  See the KeyStore section in the 
-  <a href="{@@docRoot}/../technotes/guides/security/StandardNames.html#KeyStore">
-   Java Cryptography Architecture Standard Algorithm Name Documentation
+  <a href="{@@docRoot}/../specs/security/standard-names.html#keystore-types">
+   Java Security Standard Algorithm Names Specification
   </a>  for information about standard keystore types.
  @param provider the provider.
- @return a keystore object of the specified type.
- @throw KeyStoreExceptionif KeyStoreSpi
-           implementation for the specified type is not available
-           from the specified Provider object.
- @throw IllegalArgumentExceptionif the specified provider is null.
+ @return a keystore object of the specified type
+ @throw IllegalArgumentExceptionif the specified provider is
+          <code>null</code>
+ @throw KeyStoreExceptionif <code>KeyStoreSpi</code>
+          implementation for the specified type is not available
+          from the specified <code>Provider</code> object
+ @throw NullPointerExceptionif <code>type</code> is <code>null</code>
  - seealso: Provider
  @since 1.4
  */
@@ -426,11 +538,11 @@
  <p> Note that the list of registered providers may be retrieved via the 
  <code>Security.getProviders()</code> method.
  @param type the type of keystore.  See the KeyStore section in the 
-  <a href="{@@docRoot}/../technotes/guides/security/StandardNames.html#KeyStore">
-   Java Cryptography Architecture Standard Algorithm Name Documentation
+  <a href="{@@docRoot}/../specs/security/standard-names.html#keystore-types">
+   Java Security Standard Algorithm Names Specification
   </a>  for information about standard keystore types.
  @param provider the name of the provider.
- @return a keystore object of the specified type.
+ @return a keystore object of the specified type
  @throw KeyStoreExceptionif a KeyStoreSpi
            implementation for the specified type is not
            available from the specified provider.
@@ -707,7 +819,7 @@ withJavaSecurityCertCertificateArray:(IOSObjectArray *)chain;
 
 @end
 
-J2OBJC_EMPTY_STATIC_INIT(JavaSecurityKeyStore)
+J2OBJC_STATIC_INIT(JavaSecurityKeyStore)
 
 FOUNDATION_EXPORT void JavaSecurityKeyStore_initWithJavaSecurityKeyStoreSpi_withJavaSecurityProvider_withNSString_(JavaSecurityKeyStore *self, JavaSecurityKeyStoreSpi *keyStoreSpi, JavaSecurityProvider *provider, NSString *type);
 
@@ -722,6 +834,10 @@ FOUNDATION_EXPORT JavaSecurityKeyStore *JavaSecurityKeyStore_getInstanceWithNSSt
 FOUNDATION_EXPORT JavaSecurityKeyStore *JavaSecurityKeyStore_getInstanceWithNSString_withJavaSecurityProvider_(NSString *type, JavaSecurityProvider *provider);
 
 FOUNDATION_EXPORT NSString *JavaSecurityKeyStore_getDefaultType(void);
+
+FOUNDATION_EXPORT JavaSecurityKeyStore *JavaSecurityKeyStore_getInstanceWithJavaIoFile_withCharArray_(JavaIoFile *file, IOSCharArray *password);
+
+FOUNDATION_EXPORT JavaSecurityKeyStore *JavaSecurityKeyStore_getInstanceWithJavaIoFile_withJavaSecurityKeyStore_LoadStoreParameter_(JavaIoFile *file, id<JavaSecurityKeyStore_LoadStoreParameter> param);
 
 J2OBJC_TYPE_LITERAL_HEADER(JavaSecurityKeyStore)
 
@@ -787,6 +903,7 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaSecurityKeyStore_ProtectionParameter)
 #include "javax/security/auth/Destroyable.h"
 
 @class IOSCharArray;
+@class JavaLangBoolean;
 @protocol JavaSecuritySpecAlgorithmParameterSpec;
 
 /*!
@@ -814,9 +931,9 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaSecurityKeyStore_ProtectionParameter)
  @param password the password, which may be <code>null</code>
  @param protectionAlgorithm the encryption algorithm name, for      example, 
  <code>PBEWithHmacSHA256AndAES_256</code> .      See the Cipher section in the 
-  <a href="{@@docRoot}/../technotes/guides/security/StandardNames.html#Cipher">
-   Java Cryptography Architecture Standard Algorithm Name
-   Documentation </a>      for information about standard encryption algorithm names.
+  <a href="{@@docRoot}/../specs/security/standard-names.html#cipher-algorithm-names">
+   Java Security Standard Algorithm Names Specification
+  </a>      for information about standard encryption algorithm names.
  @param protectionParameters the encryption algorithm parameter      specification, which may be 
  <code>null</code>
  @throw NullPointerExceptionif <code>protectionAlgorithm</code> is
@@ -959,8 +1076,6 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaSecurityKeyStore_CallbackHandlerProtection)
 
 /*!
  @brief Retrieves the attributes associated with an entry.
- <p>
-  The default implementation returns an empty <code>Set</code>.
  @return an unmodifiable <code>Set</code> of attributes, possibly empty
  @since 1.8
  */
@@ -1074,7 +1189,6 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaSecurityKeyStore_Entry_Attribute)
 
 /*!
  @brief Retrieves the attributes associated with an entry.
- <p>
  @return an unmodifiable <code>Set</code> of attributes, possibly empty
  @since 1.8
  */
@@ -1177,7 +1291,6 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaSecurityKeyStore_PrivateKeyEntry)
 
 /*!
  @brief Retrieves the attributes associated with an entry.
- <p>
  @return an unmodifiable <code>Set</code> of attributes, possibly empty
  @since 1.8
  */
@@ -1259,7 +1372,6 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaSecurityKeyStore_SecretKeyEntry)
 
 /*!
  @brief Retrieves the attributes associated with an entry.
- <p>
  @return an unmodifiable <code>Set</code> of attributes, possibly empty
  @since 1.8
  */
@@ -1305,6 +1417,7 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaSecurityKeyStore_TrustedCertificateEntry)
 #define JavaSecurityKeyStore_Builder_
 
 @class JavaIoFile;
+@class JavaLangInteger;
 @class JavaSecurityKeyStore;
 @class JavaSecurityProvider;
 @protocol JavaSecurityKeyStore_ProtectionParameter;
@@ -1322,7 +1435,6 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaSecurityKeyStore_TrustedCertificateEntry)
  @since 1.5
  */
 @interface JavaSecurityKeyStore_Builder : NSObject
-@property (readonly, class) jint MAX_CALLBACK_TRIES NS_SWIFT_NAME(MAX_CALLBACK_TRIES);
 
 #pragma mark Public
 
@@ -1350,6 +1462,41 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaSecurityKeyStore_TrustedCertificateEntry)
     not been invoked prior to calling this method
  */
 - (id<JavaSecurityKeyStore_ProtectionParameter>)getProtectionParameterWithNSString:(NSString *)alias;
+
+/*!
+ @brief Returns a new Builder object.
+ <p>The first call to the <code>getKeyStore</code> method on the returned
+  builder will create a KeyStore using <code>file</code> to detect the
+  keystore type and then call its <code>load()</code> method.
+  It uses the same algorithm to determine the keystore type as
+  described in <code>KeyStore.getInstance(File, LoadStoreParameter)</code>.
+  The <code>inputStream</code> argument is constructed from <code>file</code>.
+  If <code>protection</code> is a <code>PasswordProtection</code>, the password
+  is obtained by calling the <code>getPassword</code> method.
+  Otherwise, if <code>protection</code> is a 
+ <code>CallbackHandlerProtection</code>,
+  the password is obtained by invoking the CallbackHandler. 
+ <p>Subsequent calls to <code>getKeyStore</code> return the same object
+  as the initial call. If the initial call failed with a
+  KeyStoreException, subsequent calls also throw a KeyStoreException. 
+ <p>Calls to <code>getProtectionParameter()</code>
+  will return a <code>PasswordProtection</code>
+  object encapsulating the password that was used to invoke the 
+ <code>load</code> method. 
+ <p><em>Note</em> that the <code>getKeyStore</code> method is executed
+  within the <code>AccessControlContext</code> of the code invoking this
+  method.
+ @return a new Builder object
+ @param file the File that contains the KeyStore data
+ @param protection the ProtectionParameter securing the KeyStore data
+ @throw NullPointerExceptionif file or protection is null
+ @throw IllegalArgumentExceptionif protection is not an instance
+    of either PasswordProtection or CallbackHandlerProtection; or
+    if file does not exist or does not refer to a normal file
+ @since 9
+ */
++ (JavaSecurityKeyStore_Builder *)newInstanceWithJavaIoFile:(JavaIoFile *)file
+               withJavaSecurityKeyStore_ProtectionParameter:(id<JavaSecurityKeyStore_ProtectionParameter>)protection OBJC_METHOD_FAMILY_NONE;
 
 /*!
  @brief Returns a new Builder that encapsulates the given KeyStore.
@@ -1385,7 +1532,7 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaSecurityKeyStore_TrustedCertificateEntry)
  <code>CallbackHandlerProtection</code>, the password is obtained
   by invoking the CallbackHandler. 
  <p>Subsequent calls to <code>getKeyStore</code> return the same object
-  as the initial call. If the initial call to failed with a
+  as the initial call. If the initial call failed with a
   KeyStoreException, subsequent calls also throw a
   KeyStoreException. 
  <p>The KeyStore is instantiated from <code>provider</code> if
@@ -1460,6 +1607,8 @@ FOUNDATION_EXPORT JavaSecurityKeyStore_Builder *JavaSecurityKeyStore_Builder_new
 
 FOUNDATION_EXPORT JavaSecurityKeyStore_Builder *JavaSecurityKeyStore_Builder_newInstanceWithNSString_withJavaSecurityProvider_withJavaIoFile_withJavaSecurityKeyStore_ProtectionParameter_(NSString *type, JavaSecurityProvider *provider, JavaIoFile *file, id<JavaSecurityKeyStore_ProtectionParameter> protection);
 
+FOUNDATION_EXPORT JavaSecurityKeyStore_Builder *JavaSecurityKeyStore_Builder_newInstanceWithJavaIoFile_withJavaSecurityKeyStore_ProtectionParameter_(JavaIoFile *file, id<JavaSecurityKeyStore_ProtectionParameter> protection);
+
 FOUNDATION_EXPORT JavaSecurityKeyStore_Builder *JavaSecurityKeyStore_Builder_newInstanceWithNSString_withJavaSecurityProvider_withJavaSecurityKeyStore_ProtectionParameter_(NSString *type, JavaSecurityProvider *provider, id<JavaSecurityKeyStore_ProtectionParameter> protection);
 
 J2OBJC_TYPE_LITERAL_HEADER(JavaSecurityKeyStore_Builder)
@@ -1503,6 +1652,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaSecurityKeyStore_SimpleLoadStoreParameter)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaSecurityKeyStore")

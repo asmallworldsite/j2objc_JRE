@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaxXmlDatatypeDuration
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -25,6 +22,9 @@
 #if !defined (JavaxXmlDatatypeDuration_) && (INCLUDE_ALL_JavaxXmlDatatypeDuration || defined(INCLUDE_JavaxXmlDatatypeDuration))
 #define JavaxXmlDatatypeDuration_
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
+@class JavaLangLong;
 @class JavaMathBigDecimal;
 @class JavaUtilCalendar;
 @class JavaUtilDate;
@@ -409,9 +409,9 @@
 
 /*!
  @brief <p>Return the name of the XML Schema date/time type that this instance
-  maps to.
- Type is computed based on fields that are set,
-  i.e. <code>isSet(DatatypeConstants.Field field)</code> == <code>true</code>.</p>
+  maps to.Type is computed based on fields that are set,
+  i.e.
+ <code>isSet(DatatypeConstants.Field field)</code> == <code>true</code>.</p>
   
  <table border="2" rules="all" cellpadding="2">
     <thead>
@@ -726,6 +726,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaxXmlDatatypeDuration)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaxXmlDatatypeDuration")

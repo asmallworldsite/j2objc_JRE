@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaUtilCollection
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -30,6 +27,8 @@
 #include "java/lang/Iterable.h"
 
 @class IOSObjectArray;
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @protocol JavaUtilFunctionPredicate;
 @protocol JavaUtilIterator;
 @protocol JavaUtilSpliterator;
@@ -460,7 +459,7 @@
   methods to create streams using a <code>Supplier</code> of the spliterator,
   as in: 
  @code
-    Stream<E> s = StreamSupport.stream(() -> spliterator(), spliteratorCharacteristics) 
+     Stream<E> s = StreamSupport.stream(() -> spliterator(), spliteratorCharacteristics) 
  
 @endcode
   <p>These requirements ensure that streams produced by the 
@@ -516,6 +515,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilCollection)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaUtilCollection")

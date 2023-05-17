@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaTextIOSCollator
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -29,6 +26,8 @@
 #define INCLUDE_JavaTextCollator 1
 #include "java/text/Collator.h"
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @class JavaTextCollationKey;
 @class JavaUtilLocale;
 
@@ -96,6 +95,7 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaTextIOSCollator)
 #include "java/text/CollationKey.h"
 
 @class IOSByteArray;
+@class JavaLangInteger;
 
 @interface JavaTextIOSCollator_IOSCollationKey : JavaTextCollationKey
 
@@ -127,6 +127,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaTextIOSCollator_IOSCollationKey)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaTextIOSCollator")

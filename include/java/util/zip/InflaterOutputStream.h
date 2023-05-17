@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaUtilZipInflaterOutputStream
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -31,6 +28,7 @@
 
 @class IOSByteArray;
 @class JavaIoOutputStream;
+@class JavaLangInteger;
 @class JavaUtilZipInflater;
 
 /*!
@@ -169,6 +167,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilZipInflaterOutputStream)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaUtilZipInflaterOutputStream")

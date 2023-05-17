@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaUtilConcurrentConcurrentNavigableMap
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -33,11 +30,15 @@
 #define INCLUDE_JavaUtilNavigableMap 1
 #include "java/util/NavigableMap.h"
 
+@class JavaLangBoolean;
 @protocol JavaUtilNavigableSet;
 
 /*!
  @brief A <code>ConcurrentMap</code> supporting <code>NavigableMap</code> operations,
   and recursively so for its navigable sub-maps.
+ <p>This interface is a member of the 
+ <a href="{@@docRoot}/java.base/java/util/package-summary.html#CollectionsFramework">
+  Java Collections Framework</a>.
  @author Doug Lea
  @since 1.6
  */
@@ -165,6 +166,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentConcurrentNavigableMap)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaUtilConcurrentConcurrentNavigableMap")

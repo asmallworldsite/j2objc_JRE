@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaUtilFunctionLongPredicate
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -24,6 +21,9 @@
 
 #if !defined (JavaUtilFunctionLongPredicate_) && (INCLUDE_ALL_JavaUtilFunctionLongPredicate || defined(INCLUDE_JavaUtilFunctionLongPredicate))
 #define JavaUtilFunctionLongPredicate_
+
+@class JavaLangBoolean;
+@class JavaLangLong;
 
 /*!
  @brief Represents a predicate (boolean-valued function) of one <code>long</code>-valued
@@ -99,6 +99,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilFunctionLongPredicate)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaUtilFunctionLongPredicate")

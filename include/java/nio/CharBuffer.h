@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaNioCharBuffer
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -46,6 +43,9 @@
 #include "java/lang/Readable.h"
 
 @class IOSCharArray;
+@class JavaLangBoolean;
+@class JavaLangCharacter;
+@class JavaLangInteger;
 @class JavaNioByteOrder;
 @protocol JavaUtilStreamIntStream;
 
@@ -390,7 +390,7 @@
  <tt>src.get(dst,&nbsp;off,&nbsp;len)</tt> has exactly the same effect as
   the loop 
  @code
-    for (int i = off; i < off + len; i++)
+     for (int i = off; i < off + len; i++)
           dst[i] = src.get(); 
  
 @endcode
@@ -535,7 +535,7 @@
  <tt>dst.put(src,&nbsp;off,&nbsp;len)</tt> has exactly the same effect as
   the loop 
  @code
-    for (int i = off; i < off + len; i++)
+     for (int i = off; i < off + len; i++)
           dst.put(a[i]); 
  
 @endcode
@@ -649,7 +649,7 @@
  <tt>dst.put(src,&nbsp;start,&nbsp;end)</tt> has exactly the same effect
   as the loop 
  @code
-    for (int i = start; i < end; i++)
+     for (int i = start; i < end; i++)
           dst.put(src.charAt(i)); 
  
 @endcode
@@ -888,6 +888,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaNioCharBuffer)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaNioCharBuffer")

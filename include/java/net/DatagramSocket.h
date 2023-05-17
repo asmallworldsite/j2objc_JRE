@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaNetDatagramSocket
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -31,6 +28,8 @@
 
 @class IOSClass;
 @class JavaIoFileDescriptor;
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @class JavaNetDatagramPacket;
 @class JavaNetDatagramSocketImpl;
 @class JavaNetInetAddress;
@@ -75,11 +74,6 @@
   JavaNetInetAddress *connectedAddress_;
   jint connectedPort_;
 }
-@property (readonly, class) jint ST_NOT_CONNECTED NS_SWIFT_NAME(ST_NOT_CONNECTED);
-@property (readonly, class) jint ST_CONNECTED NS_SWIFT_NAME(ST_CONNECTED);
-@property (readonly, class) jint ST_CONNECTED_NO_IMPL NS_SWIFT_NAME(ST_CONNECTED_NO_IMPL);
-@property (class, strong) IOSClass *implClass NS_SWIFT_NAME(implClass);
-@property (class, strong) id<JavaNetDatagramSocketImplFactory> factory NS_SWIFT_NAME(factory);
 
 #pragma mark Public
 
@@ -800,6 +794,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaNetDatagramSocket)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaNetDatagramSocket")

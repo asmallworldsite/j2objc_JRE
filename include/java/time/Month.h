@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaTimeMonth
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -38,6 +35,9 @@
 #include "java/time/temporal/TemporalAdjuster.h"
 
 @class IOSObjectArray;
+@class JavaLangBoolean;
+@class JavaLangInteger;
+@class JavaLangLong;
 @class JavaTimeFormatTextStyle;
 @class JavaTimeTemporalValueRange;
 @class JavaUtilLocale;
@@ -45,7 +45,7 @@
 @protocol JavaTimeTemporalTemporalField;
 @protocol JavaTimeTemporalTemporalQuery;
 
-typedef NS_ENUM(NSUInteger, JavaTimeMonth_Enum) {
+typedef NS_ENUM(jint, JavaTimeMonth_Enum) {
   JavaTimeMonth_Enum_JANUARY = 0,
   JavaTimeMonth_Enum_FEBRUARY = 1,
   JavaTimeMonth_Enum_MARCH = 2,
@@ -59,6 +59,12 @@ typedef NS_ENUM(NSUInteger, JavaTimeMonth_Enum) {
   JavaTimeMonth_Enum_NOVEMBER = 10,
   JavaTimeMonth_Enum_DECEMBER = 11,
 };
+#if J2OBJC_IMPORTED_BY_JAVA_IMPLEMENTATION
+#define JavaTimeMonth_ORDINAL jint
+#else
+#define JavaTimeMonth_ORDINAL JavaTimeMonth_Enum
+#endif
+
 
 /*!
  @brief A month-of-year, such as 'July'.
@@ -82,18 +88,6 @@ typedef NS_ENUM(NSUInteger, JavaTimeMonth_Enum) {
  */
 @interface JavaTimeMonth : JavaLangEnum < JavaTimeTemporalTemporalAccessor, JavaTimeTemporalTemporalAdjuster >
 
-@property (readonly, class, nonnull) JavaTimeMonth *JANUARY NS_SWIFT_NAME(JANUARY);
-@property (readonly, class, nonnull) JavaTimeMonth *FEBRUARY NS_SWIFT_NAME(FEBRUARY);
-@property (readonly, class, nonnull) JavaTimeMonth *MARCH NS_SWIFT_NAME(MARCH);
-@property (readonly, class, nonnull) JavaTimeMonth *APRIL NS_SWIFT_NAME(APRIL);
-@property (readonly, class, nonnull) JavaTimeMonth *MAY NS_SWIFT_NAME(MAY);
-@property (readonly, class, nonnull) JavaTimeMonth *JUNE NS_SWIFT_NAME(JUNE);
-@property (readonly, class, nonnull) JavaTimeMonth *JULY NS_SWIFT_NAME(JULY);
-@property (readonly, class, nonnull) JavaTimeMonth *AUGUST NS_SWIFT_NAME(AUGUST);
-@property (readonly, class, nonnull) JavaTimeMonth *SEPTEMBER NS_SWIFT_NAME(SEPTEMBER);
-@property (readonly, class, nonnull) JavaTimeMonth *OCTOBER NS_SWIFT_NAME(OCTOBER);
-@property (readonly, class, nonnull) JavaTimeMonth *NOVEMBER NS_SWIFT_NAME(NOVEMBER);
-@property (readonly, class, nonnull) JavaTimeMonth *DECEMBER NS_SWIFT_NAME(DECEMBER);
 #pragma mark Public
 
 /*!
@@ -389,6 +383,8 @@ typedef NS_ENUM(NSUInteger, JavaTimeMonth_Enum) {
 
 - (JavaTimeMonth_Enum)toNSEnum;
 
+- (JavaTimeMonth_ORDINAL)ordinal;
+
 @end
 
 J2OBJC_STATIC_INIT(JavaTimeMonth)
@@ -488,7 +484,7 @@ FOUNDATION_EXPORT IOSObjectArray *JavaTimeMonth_values(void);
 
 FOUNDATION_EXPORT JavaTimeMonth *JavaTimeMonth_valueOfWithNSString_(NSString *name);
 
-FOUNDATION_EXPORT JavaTimeMonth *JavaTimeMonth_fromOrdinal(NSUInteger ordinal);
+FOUNDATION_EXPORT JavaTimeMonth *JavaTimeMonth_fromOrdinal(JavaTimeMonth_ORDINAL ordinal);
 
 J2OBJC_TYPE_LITERAL_HEADER(JavaTimeMonth)
 
@@ -498,6 +494,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaTimeMonth)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaTimeMonth")

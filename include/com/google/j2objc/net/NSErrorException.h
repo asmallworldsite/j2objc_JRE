@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_ComGoogleJ2objcNetNSErrorException
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -29,6 +26,8 @@
 #define INCLUDE_JavaLangRuntimeException 1
 #include "java/lang/RuntimeException.h"
 
+@class JavaLangBoolean;
+@class JavaLangLong;
 @class JavaLangThrowable;
 
 /*!
@@ -101,6 +100,4 @@ J2OBJC_TYPE_LITERAL_HEADER(ComGoogleJ2objcNetNSErrorException)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_ComGoogleJ2objcNetNSErrorException")

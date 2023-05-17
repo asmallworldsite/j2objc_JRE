@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaNioByteOrder
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -32,8 +29,6 @@
  @since 1.4
  */
 @interface JavaNioByteOrder : NSObject
-@property (readonly, class, strong) JavaNioByteOrder *BIG_ENDIAN_ NS_SWIFT_NAME(BIG_ENDIAN_);
-@property (readonly, class, strong) JavaNioByteOrder *LITTLE_ENDIAN_ NS_SWIFT_NAME(LITTLE_ENDIAN_);
 
 #pragma mark Public
 
@@ -50,9 +45,9 @@
 
 /*!
  @brief Constructs a string describing this object.
- <p> This method returns the string <tt>"BIG_ENDIAN"</tt> for <code>BIG_ENDIAN</code>
-  and <tt>"LITTLE_ENDIAN"</tt> for <code>LITTLE_ENDIAN</code>.
-  </p>
+ <p> This method returns the string 
+ <code>"BIG_ENDIAN"</code> for <code>BIG_ENDIAN</code> and 
+ <code>"LITTLE_ENDIAN"</code> for <code>LITTLE_ENDIAN</code>.
  @return The specified string
  */
 - (NSString *)description;
@@ -94,6 +89,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaNioByteOrder)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaNioByteOrder")

@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaNioFileAttributeAclEntry
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -25,6 +22,8 @@
 #if !defined (JavaNioFileAttributeAclEntry_) && (INCLUDE_ALL_JavaNioFileAttributeAclEntry || defined(INCLUDE_JavaNioFileAttributeAclEntry))
 #define JavaNioFileAttributeAclEntry_
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @class JavaNioFileAttributeAclEntryType;
 @class JavaNioFileAttributeAclEntry_Builder;
 @protocol JavaNioFileAttributeUserPrincipal;
@@ -247,6 +246,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaNioFileAttributeAclEntry_Builder)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaNioFileAttributeAclEntry")

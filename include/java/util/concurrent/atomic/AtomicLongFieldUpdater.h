@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaUtilConcurrentAtomicAtomicLongFieldUpdater
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -26,6 +23,8 @@
 #define JavaUtilConcurrentAtomicAtomicLongFieldUpdater_
 
 @class IOSClass;
+@class JavaLangBoolean;
+@class JavaLangLong;
 @protocol JavaUtilFunctionLongBinaryOperator;
 @protocol JavaUtilFunctionLongUnaryOperator;
 
@@ -40,7 +39,10 @@
   Because this class cannot ensure that all uses of the field
   are appropriate for purposes of atomic access, it can
   guarantee atomicity only with respect to other invocations of 
- <code>compareAndSet</code> and <code>set</code> on the same updater.
+ <code>compareAndSet</code> and <code>set</code> on the same updater. 
+ <p>Object arguments for parameters of type <code>T</code> that are not
+  instances of the class passed to <code>newUpdater</code> will result in
+  a <code>ClassCastException</code> being thrown.
  @since 1.5
  @author Doug Lea
  */
@@ -49,14 +51,14 @@
 #pragma mark Public
 
 /*!
- @brief Atomically updates the field of the given object managed by this
-  updater with the results of applying the given function to the
-  current and given values, returning the updated value.The
-  function should be side-effect-free, since it may be re-applied
-  when attempted updates fail due to contention among threads.
- The
-  function is applied with the current value as its first argument,
-  and the given update as the second argument.
+ @brief Atomically updates (with memory effects as specified by <code>VarHandle.compareAndSet</code>
+ ) the field of the given object managed
+  by this updater with the results of applying the given function
+  to the current and given values, returning the updated value.
+ The function should be side-effect-free, since it may be
+  re-applied when attempted updates fail due to contention among
+  threads.  The function is applied with the current value as its
+  first argument, and the given update as the second argument.
  @param obj An object whose field to get and set
  @param x the update value
  @param accumulatorFunction a side-effect-free function of two arguments
@@ -87,8 +89,6 @@ withJavaUtilFunctionLongBinaryOperator:(id<JavaUtilFunctionLongBinaryOperator>)a
  @param expect the expected value
  @param update the new value
  @return <code>true</code> if successful
- @throw ClassCastExceptionif <code>obj</code> is not an instance
-  of the class possessing the field established in the constructor
  */
 - (jboolean)compareAndSetWithId:(id)obj
                        withLong:(jlong)expect
@@ -103,22 +103,22 @@ withJavaUtilFunctionLongBinaryOperator:(id<JavaUtilFunctionLongBinaryOperator>)a
 - (jlong)decrementAndGetWithId:(id)obj;
 
 /*!
- @brief Gets the current value held in the field of the given object managed
-  by this updater.
+ @brief Returns the current value held in the field of the given object
+  managed by this updater.
  @param obj An object whose field to get
  @return the current value
  */
 - (jlong)getWithId:(id)obj;
 
 /*!
- @brief Atomically updates the field of the given object managed by this
-  updater with the results of applying the given function to the
-  current and given values, returning the previous value.The
-  function should be side-effect-free, since it may be re-applied
-  when attempted updates fail due to contention among threads.
- The
-  function is applied with the current value as its first argument,
-  and the given update as the second argument.
+ @brief Atomically updates (with memory effects as specified by <code>VarHandle.compareAndSet</code>
+ ) the field of the given object managed
+  by this updater with the results of applying the given function
+  to the current and given values, returning the previous value.
+ The function should be side-effect-free, since it may be
+  re-applied when attempted updates fail due to contention among
+  threads.  The function is applied with the current value as its
+  first argument, and the given update as the second argument.
  @param obj An object whose field to get and set
  @param x the update value
  @param accumulatorFunction a side-effect-free function of two arguments
@@ -166,10 +166,12 @@ withJavaUtilFunctionLongBinaryOperator:(id<JavaUtilFunctionLongBinaryOperator>)a
                 withLong:(jlong)newValue;
 
 /*!
- @brief Atomically updates the field of the given object managed by this updater
-  with the results of applying the given function, returning the previous
-  value.The function should be side-effect-free, since it may be
-  re-applied when attempted updates fail due to contention among threads.
+ @brief Atomically updates (with memory effects as specified by <code>VarHandle.compareAndSet</code>
+ ) the field of the given object managed
+  by this updater with the results of applying the given
+  function, returning the previous value.The function should be
+  side-effect-free, since it may be re-applied when attempted
+  updates fail due to contention among threads.
  @param obj An object whose field to get and set
  @param updateFunction a side-effect-free function
  @return the previous value
@@ -224,10 +226,12 @@ withJavaUtilFunctionLongUnaryOperator:(id<JavaUtilFunctionLongUnaryOperator>)upd
          withLong:(jlong)newValue;
 
 /*!
- @brief Atomically updates the field of the given object managed by this updater
-  with the results of applying the given function, returning the updated
-  value.The function should be side-effect-free, since it may be
-  re-applied when attempted updates fail due to contention among threads.
+ @brief Atomically updates (with memory effects as specified by <code>VarHandle.compareAndSet</code>
+ ) the field of the given object managed
+  by this updater with the results of applying the given
+  function, returning the updated value.The function should be
+  side-effect-free, since it may be re-applied when attempted
+  updates fail due to contention among threads.
  @param obj An object whose field to get and set
  @param updateFunction a side-effect-free function
  @return the updated value
@@ -249,8 +253,6 @@ withJavaUtilFunctionLongUnaryOperator:(id<JavaUtilFunctionLongUnaryOperator>)upd
  @param expect the expected value
  @param update the new value
  @return <code>true</code> if successful
- @throw ClassCastExceptionif <code>obj</code> is not an instance
-  of the class possessing the field established in the constructor
  */
 - (jboolean)weakCompareAndSetWithId:(id)obj
                            withLong:(jlong)expect
@@ -263,6 +265,15 @@ withJavaUtilFunctionLongUnaryOperator:(id<JavaUtilFunctionLongUnaryOperator>)upd
  */
 - (instancetype __nonnull)init;
 
+#pragma mark Package-Private
+
+/*!
+ @brief Returns true if the two classes have the same class loader and
+  package qualifier
+ */
++ (jboolean)isSamePackageWithIOSClass:(IOSClass *)class1
+                         withIOSClass:(IOSClass *)class2;
+
 @end
 
 J2OBJC_EMPTY_STATIC_INIT(JavaUtilConcurrentAtomicAtomicLongFieldUpdater)
@@ -270,6 +281,8 @@ J2OBJC_EMPTY_STATIC_INIT(JavaUtilConcurrentAtomicAtomicLongFieldUpdater)
 FOUNDATION_EXPORT JavaUtilConcurrentAtomicAtomicLongFieldUpdater *JavaUtilConcurrentAtomicAtomicLongFieldUpdater_newUpdaterWithIOSClass_withNSString_(IOSClass *tclass, NSString *fieldName);
 
 FOUNDATION_EXPORT void JavaUtilConcurrentAtomicAtomicLongFieldUpdater_init(JavaUtilConcurrentAtomicAtomicLongFieldUpdater *self);
+
+FOUNDATION_EXPORT jboolean JavaUtilConcurrentAtomicAtomicLongFieldUpdater_isSamePackageWithIOSClass_withIOSClass_(IOSClass *class1, IOSClass *class2);
 
 J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentAtomicAtomicLongFieldUpdater)
 
@@ -279,6 +292,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentAtomicAtomicLongFieldUpdater)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaUtilConcurrentAtomicAtomicLongFieldUpdater")

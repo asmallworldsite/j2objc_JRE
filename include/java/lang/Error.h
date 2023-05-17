@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaLangError
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -28,6 +25,9 @@
 #define RESTRICT_JavaLangThrowable 1
 #define INCLUDE_JavaLangThrowable 1
 #include "java/lang/Throwable.h"
+
+@class JavaLangBoolean;
+@class JavaLangLong;
 
 /*!
  @brief An <code>Error</code> is a subclass of <code>Throwable</code>
@@ -45,10 +45,9 @@
   exceptions for the purposes of compile-time checking of exceptions.
  @author Frank Yellin
  - seealso: java.lang.ThreadDeath
- @since JDK1.0
+ @since 1.0
  */
 @interface JavaLangError : JavaLangThrowable
-@property (readonly, class) jlong serialVersionUID NS_SWIFT_NAME(serialVersionUID);
 
 #pragma mark Public
 
@@ -162,6 +161,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaLangError)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaLangError")

@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaSecurityCertPKIXBuilderParameters
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -29,6 +26,7 @@
 #define INCLUDE_JavaSecurityCertPKIXParameters 1
 #include "java/security/cert/PKIXParameters.h"
 
+@class JavaLangInteger;
 @class JavaSecurityKeyStore;
 @protocol JavaSecurityCertCertSelector;
 @protocol JavaUtilSet;
@@ -192,6 +190,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaSecurityCertPKIXBuilderParameters)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaSecurityCertPKIXBuilderParameters")

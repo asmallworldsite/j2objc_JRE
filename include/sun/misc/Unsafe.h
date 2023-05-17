@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_SunMiscUnsafe
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -26,7 +23,15 @@
 #define SunMiscUnsafe_
 
 @class IOSClass;
+@class JavaLangBoolean;
+@class JavaLangByte;
+@class JavaLangCharacter;
+@class JavaLangDouble;
+@class JavaLangFloat;
+@class JavaLangInteger;
+@class JavaLangLong;
 @class JavaLangReflectField;
+@class JavaLangShort;
 
 /*!
  @brief A collection of methods for performing low-level, unsafe operations.
@@ -36,7 +41,6 @@
  - seealso: #getUnsafe
  */
 @interface SunMiscUnsafe : NSObject
-@property (readonly, class) jint INVALID_FIELD_OFFSET NS_SWIFT_NAME(INVALID_FIELD_OFFSET);
 
 #pragma mark Public
 
@@ -640,6 +644,4 @@ J2OBJC_TYPE_LITERAL_HEADER(SunMiscUnsafe)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_SunMiscUnsafe")

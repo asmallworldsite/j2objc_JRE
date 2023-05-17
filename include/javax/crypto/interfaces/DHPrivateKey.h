@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaxCryptoInterfacesDHPrivateKey
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -33,6 +30,7 @@
 #define INCLUDE_JavaSecurityPrivateKey 1
 #include "java/security/PrivateKey.h"
 
+@class JavaLangLong;
 @class JavaMathBigInteger;
 
 /*!
@@ -49,11 +47,6 @@
  @return the private value, <code>x</code>
  */
 - (JavaMathBigInteger *)getX;
-
-@end
-
-@interface JavaxCryptoInterfacesDHPrivateKey : NSObject
-@property (readonly, class) jlong serialVersionUID NS_SWIFT_NAME(serialVersionUID);
 
 @end
 
@@ -75,6 +68,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaxCryptoInterfacesDHPrivateKey)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaxCryptoInterfacesDHPrivateKey")

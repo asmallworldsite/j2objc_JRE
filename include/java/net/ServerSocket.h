@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaNetServerSocket
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -30,6 +27,8 @@
 #include "java/io/Closeable.h"
 
 @class JavaIoFileDescriptor;
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @class JavaNetInetAddress;
 @class JavaNetSocket;
 @class JavaNetSocketAddress;
@@ -641,6 +640,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaNetServerSocket)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaNetServerSocket")

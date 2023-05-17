@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaUtilConcurrentBlockingDeque
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -33,6 +30,9 @@
 #define INCLUDE_JavaUtilDeque 1
 #include "java/util/Deque.h"
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
+@class JavaLangLong;
 @class JavaUtilConcurrentTimeUnit;
 @protocol JavaUtilIterator;
 
@@ -48,69 +48,69 @@
   blocks the current thread indefinitely until the operation can succeed,
   and the fourth blocks for only a given maximum time limit before giving
   up.  These methods are summarized in the following table: 
- <table BORDER CELLPADDING=3 CELLSPACING=1>
+ <table class="plain">
   <caption>Summary of BlockingDeque methods</caption>
    <tr>
-     <td ALIGN=CENTER COLSPAN=5> <b>First Element (Head)</b></td>
+     <th id="First" colspan="5"> First Element (Head)</th>
    </tr>
    <tr>
      <td></td>
-     <td ALIGN=CENTER><em>Throws exception</em></td>
-     <td ALIGN=CENTER><em>Special value</em></td>
-     <td ALIGN=CENTER><em>Blocks</em></td>
-     <td ALIGN=CENTER><em>Times out</em></td>
+     <th id="FThrow" style="font-weight:normal; font-style: italic">Throws exception</th>
+     <th id="FValue" style="font-weight:normal; font-style: italic">Special value</th>
+     <th id="FBlock" style="font-weight:normal; font-style: italic">Blocks</th>
+     <th id="FTimes" style="font-weight:normal; font-style: italic">Times out</th>
    </tr>
    <tr>
-     <td><b>Insert</b></td>
-     <td><code>addFirst(e)</code></td>
-     <td><code>offerFirst(e)</code></td>
-     <td><code>putFirst(e)</code></td>
-     <td><code>offerFirst(e, time, unit)</code></td>
+     <th id="FInsert" style="text-align:left">Insert</th>
+     <td headers="First FInsert FThrow"><code>addFirst(e)</code></td>
+     <td headers="First FInsert FValue"><code>offerFirst(e)</code></td>
+     <td headers="First FInsert FBlock"><code>putFirst(e)</code></td>
+     <td headers="First FInsert FTimes"><code>offerFirst(e, time, unit)</code></td>
    </tr>
    <tr>
-     <td><b>Remove</b></td>
-     <td><code>removeFirst()</code></td>
-     <td><code>pollFirst()</code></td>
-     <td><code>takeFirst()</code></td>
-     <td><code>pollFirst(time, unit)</code></td>
+     <th id="FRemove" style="text-align:left">Remove</th>
+     <td headers="First FRemove FThrow"><code>removeFirst()</code></td>
+     <td headers="First FRemove FValue"><code>pollFirst()</code></td>
+     <td headers="First FRemove FBlock"><code>takeFirst()</code></td>
+     <td headers="First FRemove FTimes"><code>pollFirst(time, unit)</code></td>
    </tr>
    <tr>
-     <td><b>Examine</b></td>
-     <td><code>getFirst()</code></td>
-     <td><code>peekFirst()</code></td>
-     <td><em>not applicable</em></td>
-     <td><em>not applicable</em></td>
+     <th id="FExamine" style="text-align:left">Examine</th>
+     <td headers="First FExamine FThrow"><code>getFirst()</code></td>
+     <td headers="First FExamine FValue"><code>peekFirst()</code></td>
+     <td headers="First FExamine FBlock" style="font-style:italic">not applicable</td>
+     <td headers="First FExamine FTimes" style="font-style:italic">not applicable</td>
    </tr>
    <tr>
-     <td ALIGN=CENTER COLSPAN=5> <b>Last Element (Tail)</b></td>
+     <th id="Last" colspan="5"> Last Element (Tail)</th>
    </tr>
    <tr>
      <td></td>
-     <td ALIGN=CENTER><em>Throws exception</em></td>
-     <td ALIGN=CENTER><em>Special value</em></td>
-     <td ALIGN=CENTER><em>Blocks</em></td>
-     <td ALIGN=CENTER><em>Times out</em></td>
+     <th id="LThrow" style="font-weight:normal; font-style: italic">Throws exception</th>
+     <th id="LValue" style="font-weight:normal; font-style: italic">Special value</th>
+     <th id="LBlock" style="font-weight:normal; font-style: italic">Blocks</th>
+     <th id="LTimes" style="font-weight:normal; font-style: italic">Times out</th>
    </tr>
    <tr>
-     <td><b>Insert</b></td>
-     <td><code>addLast(e)</code></td>
-     <td><code>offerLast(e)</code></td>
-     <td><code>putLast(e)</code></td>
-     <td><code>offerLast(e, time, unit)</code></td>
+     <th id="LInsert" style="text-align:left">Insert</th>
+     <td headers="Last LInsert LThrow"><code>addLast(e)</code></td>
+     <td headers="Last LInsert LValue"><code>offerLast(e)</code></td>
+     <td headers="Last LInsert LBlock"><code>putLast(e)</code></td>
+     <td headers="Last LInsert LTimes"><code>offerLast(e, time, unit)</code></td>
    </tr>
    <tr>
-     <td><b>Remove</b></td>
-     <td><code>removeLast()</code></td>
-     <td><code>pollLast()</code></td>
-     <td><code>takeLast()</code></td>
-     <td><code>pollLast(time, unit)</code></td>
+     <th id="LRemove" style="text-align:left">Remove</th>
+     <td headers="Last LRemove LThrow"><code>removeLast()</code></td>
+     <td headers="Last LRemove LValue"><code>pollLast()</code></td>
+     <td headers="Last LRemove LBlock"><code>takeLast()</code></td>
+     <td headers="Last LRemove LTimes"><code>pollLast(time, unit)</code></td>
    </tr>
    <tr>
-     <td><b>Examine</b></td>
-     <td><code>getLast()</code></td>
-     <td><code>peekLast()</code></td>
-     <td><em>not applicable</em></td>
-     <td><em>not applicable</em></td>
+     <th id="LExamine" style="text-align:left">Examine</th>
+     <td headers="Last LExamine LThrow"><code>getLast()</code></td>
+     <td headers="Last LExamine LValue"><code>peekLast()</code></td>
+     <td headers="Last LExamine LBlock" style="font-style:italic">not applicable</td>
+     <td headers="Last LExamine LTimes" style="font-style:italic">not applicable</td>
    </tr>
   </table>
   
@@ -121,60 +121,55 @@
  <code>BlockingQueue</code>. The methods inherited from the 
  <code>BlockingQueue</code> interface are precisely equivalent to 
  <code>BlockingDeque</code> methods as indicated in the following table: 
- <table BORDER CELLPADDING=3 CELLSPACING=1>
+ <table class="plain">
   <caption>Comparison of BlockingQueue and BlockingDeque methods</caption>
    <tr>
-     <td ALIGN=CENTER> <b><code>BlockingQueue</code> Method</b></td>
-     <td ALIGN=CENTER> <b>Equivalent <code>BlockingDeque</code> Method</b></td>
+     <td></td>
+     <th id="BQueue"> <code>BlockingQueue</code> Method</th>
+     <th id="BDeque"> Equivalent <code>BlockingDeque</code> Method</th>
    </tr>
    <tr>
-     <td ALIGN=CENTER COLSPAN=2> <b>Insert</b></td>
+     <th id="Insert" rowspan="4" style="text-align:left; vertical-align:top">Insert</th>
+     <th id="add" style="font-weight:normal; text-align:left"><code>add(e)</code></th>
+     <td headers="Insert BDeque add"><code>addLast(e)</code></td>
    </tr>
    <tr>
-     <td><code>add(e)</code></td>
-     <td><code>addLast(e)</code></td>
+     <th id="offer1" style="font-weight:normal; text-align:left"><code>offer(e)</code></th>
+     <td headers="Insert BDeque offer1"><code>offerLast(e)</code></td>
    </tr>
    <tr>
-     <td><code>offer(e)</code></td>
-     <td><code>offerLast(e)</code></td>
+     <th id="put" style="font-weight:normal; text-align:left"><code>put(e)</code></th>
+     <td headers="Insert BDeque put"><code>putLast(e)</code></td>
    </tr>
    <tr>
-     <td><code>put(e)</code></td>
-     <td><code>putLast(e)</code></td>
+     <th id="offer2" style="font-weight:normal; text-align:left"><code>offer(e, time, unit)</code></th>
+     <td headers="Insert BDeque offer2"><code>offerLast(e, time, unit)</code></td>
    </tr>
    <tr>
-     <td><code>offer(e, time, unit)</code></td>
-     <td><code>offerLast(e, time, unit)</code></td>
+     <th id="Remove" rowspan="4" style="text-align:left; vertical-align:top">Remove</th>
+     <th id="remove" style="font-weight:normal; text-align:left"><code>remove()</code></th>
+     <td headers="Remove BDeque remove"><code>removeFirst()</code></td>
    </tr>
    <tr>
-     <td ALIGN=CENTER COLSPAN=2> <b>Remove</b></td>
+     <th id="poll1" style="font-weight:normal; text-align:left"><code>poll()</code></th>
+     <td headers="Remove BDeque poll1"><code>pollFirst()</code></td>
    </tr>
    <tr>
-     <td><code>remove()</code></td>
-     <td><code>removeFirst()</code></td>
+     <th id="take" style="font-weight:normal; text-align:left"><code>take()</code></th>
+     <td headers="Remove BDeque take"><code>takeFirst()</code></td>
    </tr>
    <tr>
-     <td><code>poll()</code></td>
-     <td><code>pollFirst()</code></td>
+     <th id="poll2" style="font-weight:normal; text-align:left"><code>poll(time, unit)</code></th>
+     <td headers="Remove BDeque poll2"><code>pollFirst(time, unit)</code></td>
    </tr>
    <tr>
-     <td><code>take()</code></td>
-     <td><code>takeFirst()</code></td>
+     <th id="Examine" rowspan="2" style="text-align:left; vertical-align:top">Examine</th>
+     <th id="element" style="font-weight:normal; text-align:left"><code>element()</code></th>
+     <td headers="Examine BDeque element"><code>getFirst()</code></td>
    </tr>
    <tr>
-     <td><code>poll(time, unit)</code></td>
-     <td><code>pollFirst(time, unit)</code></td>
-   </tr>
-   <tr>
-     <td ALIGN=CENTER COLSPAN=2> <b>Examine</b></td>
-   </tr>
-   <tr>
-     <td><code>element()</code></td>
-     <td><code>getFirst()</code></td>
-   </tr>
-   <tr>
-     <td><code>peek()</code></td>
-     <td><code>peekFirst()</code></td>
+     <th id="peek" style="font-weight:normal; text-align:left"><code>peek()</code></th>
+     <td headers="Examine BDeque peek"><code>peekFirst()</code></td>
    </tr>
   </table>
   
@@ -185,7 +180,7 @@
   actions subsequent to the access or removal of that element from the 
  <code>BlockingDeque</code> in another thread. 
  <p>This interface is a member of the 
- <a href="{@@docRoot}/../technotes/guides/collections/index.html">
+ <a href="{@@docRoot}/java.base/java/util/package-summary.html#CollectionsFramework">
   Java Collections Framework</a>.
  @since 1.6
  @author Doug Lea
@@ -377,9 +372,9 @@ withJavaUtilConcurrentTimeUnit:(JavaUtilConcurrentTimeUnit *)unit;
  @return <code>true</code> if an element was removed as a result of this call
  @throw ClassCastExceptionif the class of the specified element
           is incompatible with this deque
-  (<a href="../Collection.html#optional-restrictions">optional</a>)
+  (<a href="{@@docRoot}/java.base/java/util/Collection.html#optional-restrictions">optional</a>)
  @throw NullPointerExceptionif the specified element is null
-  (<a href="../Collection.html#optional-restrictions">optional</a>)
+  (<a href="{@@docRoot}/java.base/java/util/Collection.html#optional-restrictions">optional</a>)
  */
 - (jboolean)removeFirstOccurrenceWithId:(id)o;
 
@@ -394,9 +389,9 @@ withJavaUtilConcurrentTimeUnit:(JavaUtilConcurrentTimeUnit *)unit;
  @return <code>true</code> if an element was removed as a result of this call
  @throw ClassCastExceptionif the class of the specified element
           is incompatible with this deque
-  (<a href="../Collection.html#optional-restrictions">optional</a>)
+  (<a href="{@@docRoot}/java.base/java/util/Collection.html#optional-restrictions">optional</a>)
  @throw NullPointerExceptionif the specified element is null
-  (<a href="../Collection.html#optional-restrictions">optional</a>)
+  (<a href="{@@docRoot}/java.base/java/util/Collection.html#optional-restrictions">optional</a>)
  */
 - (jboolean)removeLastOccurrenceWithId:(id)o;
 
@@ -476,7 +471,7 @@ withJavaUtilConcurrentTimeUnit:(JavaUtilConcurrentTimeUnit *)unit;
 /*!
  @brief Retrieves and removes the head of the queue represented by this deque
   (in other words, the first element of this deque).
- This method differs from <code>poll</code> only in that it
+ This method differs from <code>poll()</code> only in that it
   throws an exception if this deque is empty. 
  <p>This method is equivalent to <code>removeFirst</code>.
  @return the head of the queue represented by this deque
@@ -549,9 +544,9 @@ withJavaUtilConcurrentTimeUnit:(JavaUtilConcurrentTimeUnit *)unit;
  @return <code>true</code> if this deque changed as a result of the call
  @throw ClassCastExceptionif the class of the specified element
           is incompatible with this deque
-  (<a href="../Collection.html#optional-restrictions">optional</a>)
+  (<a href="{@@docRoot}/java.base/java/util/Collection.html#optional-restrictions">optional</a>)
  @throw NullPointerExceptionif the specified element is null
-  (<a href="../Collection.html#optional-restrictions">optional</a>)
+  (<a href="{@@docRoot}/java.base/java/util/Collection.html#optional-restrictions">optional</a>)
  */
 - (jboolean)removeWithId:(id)o;
 
@@ -563,9 +558,9 @@ withJavaUtilConcurrentTimeUnit:(JavaUtilConcurrentTimeUnit *)unit;
  @return <code>true</code> if this deque contains the specified element
  @throw ClassCastExceptionif the class of the specified element
           is incompatible with this deque
-  (<a href="../Collection.html#optional-restrictions">optional</a>)
+  (<a href="{@@docRoot}/java.base/java/util/Collection.html#optional-restrictions">optional</a>)
  @throw NullPointerExceptionif the specified element is null
-  (<a href="../Collection.html#optional-restrictions">optional</a>)
+  (<a href="{@@docRoot}/java.base/java/util/Collection.html#optional-restrictions">optional</a>)
  */
 - (jboolean)containsWithId:(id)o;
 
@@ -607,6 +602,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentBlockingDeque)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaUtilConcurrentBlockingDeque")

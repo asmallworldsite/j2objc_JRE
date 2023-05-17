@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaNioChannelsDatagramChannel
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -46,6 +43,9 @@
 #include "java/nio/channels/MulticastChannel.h"
 
 @class IOSObjectArray;
+@class JavaLangBoolean;
+@class JavaLangInteger;
+@class JavaLangLong;
 @class JavaNetDatagramSocket;
 @class JavaNetSocketAddress;
 @class JavaNioByteBuffer;
@@ -198,7 +198,7 @@
 - (JavaNioChannelsDatagramChannel *)disconnect;
 
 /*!
- @brief <p>
+ @brief  <p>
   If there is a security manager set, its <code>checkConnect</code> method is
   called with the local address and <code>-1</code> as its arguments to see
   if the operation is allowed.
@@ -518,6 +518,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaNioChannelsDatagramChannel)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaNioChannelsDatagramChannel")

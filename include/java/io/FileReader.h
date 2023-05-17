@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaIoFileReader
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -36,27 +33,27 @@
 @class JavaNioCharsetCharsetDecoder;
 
 /*!
- @brief Convenience class for reading character files.The constructors of this
-  class assume that the default character encoding and the default byte-buffer
-  size are appropriate.
- To specify these values yourself, construct an
-  InputStreamReader on a FileInputStream. 
- <p><code>FileReader</code> is meant for reading streams of characters.
-  For reading streams of raw bytes, consider using a 
- <code>FileInputStream</code>.
+ @brief Reads text from character files using a default buffer size.Decoding from bytes
+  to characters uses either a specified charset
+  or the platform's 
+ default charset.
+ <p>
+  The <code>FileReader</code> is meant for reading streams of characters. For reading
+  streams of raw bytes, consider using a <code>FileInputStream</code>.
  - seealso: InputStreamReader
  - seealso: FileInputStream
  @author Mark Reinhold
- @since JDK1.1
+ @since 1.1
  */
 @interface JavaIoFileReader : JavaIoInputStreamReader
 
 #pragma mark Public
 
 /*!
- @brief Creates a new <tt>FileReader</tt>, given the <tt>File</tt>
-  to read from.
- @param file the  <tt> File </tt>  to read from
+ @brief Creates a new <code>FileReader</code>, given the <code>File</code> to read,
+  using the platform's 
+ default charset.
+ @param file the <code>File</code>  to read
  @throw FileNotFoundExceptionif the file does not exist,
                     is a directory rather than a regular file,
                     or for some other reason cannot be opened for
@@ -65,22 +62,52 @@
 - (instancetype __nonnull)initWithJavaIoFile:(JavaIoFile *)file;
 
 /*!
- @brief Creates a new <tt>FileReader</tt>, given the 
- <tt>FileDescriptor</tt> to read from.
- @param fd the FileDescriptor to read from
+ @brief Creates a new <code>FileReader</code>, given the <code>File</code> to read and
+  the charset.
+ @param file the <code>File</code>  to read
+ @param charset the charset
+ @throw IOExceptionif the file does not exist,
+                    is a directory rather than a regular file,
+                    or for some other reason cannot be opened for
+                    reading.
+ @since 11
+ */
+- (instancetype __nonnull)initWithJavaIoFile:(JavaIoFile *)file
+                   withJavaNioCharsetCharset:(JavaNioCharsetCharset *)charset;
+
+/*!
+ @brief Creates a new <code>FileReader</code>, given the <code>FileDescriptor</code> to read,
+  using the platform's 
+ default charset.
+ @param fd the <code>FileDescriptor</code>  to read
  */
 - (instancetype __nonnull)initWithJavaIoFileDescriptor:(JavaIoFileDescriptor *)fd;
 
 /*!
- @brief Creates a new <tt>FileReader</tt>, given the name of the
-  file to read from.
- @param fileName the name of the file to read from
+ @brief Creates a new <code>FileReader</code>, given the name of the file to read,
+  using the platform's 
+ default charset.
+ @param fileName the name of the file to read
  @throw FileNotFoundExceptionif the named file does not exist,
                     is a directory rather than a regular file,
                     or for some other reason cannot be opened for
                     reading.
  */
 - (instancetype __nonnull)initWithNSString:(NSString *)fileName;
+
+/*!
+ @brief Creates a new <code>FileReader</code>, given the name of the file to read
+  and the charset.
+ @param fileName the name of the file to read
+ @param charset the charset
+ @throw IOExceptionif the named file does not exist,
+                    is a directory rather than a regular file,
+                    or for some other reason cannot be opened for
+                    reading.
+ @since 11
+ */
+- (instancetype __nonnull)initWithNSString:(NSString *)fileName
+                 withJavaNioCharsetCharset:(JavaNioCharsetCharset *)charset;
 
 // Disallowed inherited constructors, do not use.
 
@@ -117,6 +144,18 @@ FOUNDATION_EXPORT JavaIoFileReader *new_JavaIoFileReader_initWithJavaIoFileDescr
 
 FOUNDATION_EXPORT JavaIoFileReader *create_JavaIoFileReader_initWithJavaIoFileDescriptor_(JavaIoFileDescriptor *fd);
 
+FOUNDATION_EXPORT void JavaIoFileReader_initWithNSString_withJavaNioCharsetCharset_(JavaIoFileReader *self, NSString *fileName, JavaNioCharsetCharset *charset);
+
+FOUNDATION_EXPORT JavaIoFileReader *new_JavaIoFileReader_initWithNSString_withJavaNioCharsetCharset_(NSString *fileName, JavaNioCharsetCharset *charset) NS_RETURNS_RETAINED;
+
+FOUNDATION_EXPORT JavaIoFileReader *create_JavaIoFileReader_initWithNSString_withJavaNioCharsetCharset_(NSString *fileName, JavaNioCharsetCharset *charset);
+
+FOUNDATION_EXPORT void JavaIoFileReader_initWithJavaIoFile_withJavaNioCharsetCharset_(JavaIoFileReader *self, JavaIoFile *file, JavaNioCharsetCharset *charset);
+
+FOUNDATION_EXPORT JavaIoFileReader *new_JavaIoFileReader_initWithJavaIoFile_withJavaNioCharsetCharset_(JavaIoFile *file, JavaNioCharsetCharset *charset) NS_RETURNS_RETAINED;
+
+FOUNDATION_EXPORT JavaIoFileReader *create_JavaIoFileReader_initWithJavaIoFile_withJavaNioCharsetCharset_(JavaIoFile *file, JavaNioCharsetCharset *charset);
+
 J2OBJC_TYPE_LITERAL_HEADER(JavaIoFileReader)
 
 #endif
@@ -125,6 +164,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaIoFileReader)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaIoFileReader")

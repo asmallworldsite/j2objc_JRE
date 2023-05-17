@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaSecurityPrivateKey
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -32,6 +29,8 @@
 #define RESTRICT_JavaxSecurityAuthDestroyable 1
 #define INCLUDE_JavaxSecurityAuthDestroyable 1
 #include "javax/security/auth/Destroyable.h"
+
+@class JavaLangLong;
 
 /*!
  @brief A private key.
@@ -60,13 +59,9 @@
  - seealso: java.security.interfaces.RSAPrivateCrtKey
  @author Benjamin Renaud
  @author Josh Bloch
+ @since 1.1
  */
 @protocol JavaSecurityPrivateKey < JavaSecurityKey, JavaxSecurityAuthDestroyable, JavaObject >
-
-@end
-
-@interface JavaSecurityPrivateKey : NSObject
-@property (readonly, class) jlong serialVersionUID NS_SWIFT_NAME(serialVersionUID);
 
 @end
 
@@ -88,6 +83,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaSecurityPrivateKey)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaSecurityPrivateKey")

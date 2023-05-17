@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaSecurityCertPKIXCertPathChecker
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -29,6 +26,7 @@
 #define INCLUDE_JavaSecurityCertCertPathChecker 1
 #include "java/security/cert/CertPathChecker.h"
 
+@class JavaLangBoolean;
 @class JavaSecurityCertCertificate;
 @protocol JavaUtilCollection;
 @protocol JavaUtilSet;
@@ -92,7 +90,8 @@
 #pragma mark Public
 
 /*!
- @brief <p>This implementation calls 
+ @brief  
+ <p>This implementation calls 
  <code>check(cert, java.util.Collections.
  <String>emptySet())</code>.
  */
@@ -190,6 +189,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaSecurityCertPKIXCertPathChecker)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaSecurityCertPKIXCertPathChecker")

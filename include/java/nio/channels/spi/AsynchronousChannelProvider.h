@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaNioChannelsSpiAsynchronousChannelProvider
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -25,6 +22,7 @@
 #if !defined (JavaNioChannelsSpiAsynchronousChannelProvider_) && (INCLUDE_ALL_JavaNioChannelsSpiAsynchronousChannelProvider || defined(INCLUDE_JavaNioChannelsSpiAsynchronousChannelProvider))
 #define JavaNioChannelsSpiAsynchronousChannelProvider_
 
+@class JavaLangInteger;
 @class JavaNioChannelsAsynchronousChannelGroup;
 @class JavaNioChannelsAsynchronousServerSocketChannel;
 @class JavaNioChannelsAsynchronousSocketChannel;
@@ -111,7 +109,7 @@
  <ol>
     
  <li><p> If the system property
-    <tt>java.nio.channels.spi.AsynchronousChannelProvider</tt> is defined
+    <code>java.nio.channels.spi.AsynchronousChannelProvider</code> is defined
     then it is taken to be the fully-qualified name of a concrete provider class.
     The class is loaded and instantiated; if this process fails then an
     unspecified error is thrown.  </p></li>
@@ -119,8 +117,8 @@
  <li><p> If a provider class has been installed in a jar file that is
     visible to the system class loader, and that jar file contains a
     provider-configuration file named   
- <tt>java.nio.channels.spi.AsynchronousChannelProvider</tt> in the resource
-    directory <tt>META-INF/services</tt>, then the first class name
+ <code>java.nio.channels.spi.AsynchronousChannelProvider</code> in the resource
+    directory <code>META-INF/services</code>, then the first class name
     specified in that file is taken.  The class is loaded and
     instantiated; if this process fails then an unspecified error is
     thrown.  </p></li>
@@ -143,7 +141,7 @@
  @brief Initializes a new instance of this class.
  @throw SecurityException
  If a security manager has been installed and it denies
-           <code>RuntimePermission</code><tt>("asynchronousChannelProvider")</tt>
+           <code>RuntimePermission</code><code>("asynchronousChannelProvider")</code>
  */
 - (instancetype __nonnull)init;
 
@@ -163,6 +161,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaNioChannelsSpiAsynchronousChannelProvider)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaNioChannelsSpiAsynchronousChannelProvider")

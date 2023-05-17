@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaIoStreamTokenizer
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -27,6 +24,9 @@
 
 @class JavaIoInputStream;
 @class JavaIoReader;
+@class JavaLangBoolean;
+@class JavaLangDouble;
+@class JavaLangInteger;
 
 /*!
  @brief Parses a stream into a set of defined tokens, one at a time.The different
@@ -65,10 +65,6 @@
    */
   jint ttype_;
 }
-@property (readonly, class) jint TT_EOF NS_SWIFT_NAME(TT_EOF);
-@property (readonly, class) jint TT_EOL NS_SWIFT_NAME(TT_EOL);
-@property (readonly, class) jint TT_NUMBER NS_SWIFT_NAME(TT_NUMBER);
-@property (readonly, class) jint TT_WORD NS_SWIFT_NAME(TT_WORD);
 
 #pragma mark Public
 
@@ -80,7 +76,7 @@
  @throw NullPointerException
  if <code>is</code> is <code>null</code>.
  */
-- (instancetype __nonnull)initWithJavaIoInputStream:(JavaIoInputStream *)is __attribute__((deprecated));
+- (instancetype __nonnull)initWithJavaIoInputStream:(JavaIoInputStream *)is;
 
 /*!
  @brief Constructs a new <code>StreamTokenizer</code> with <code>r</code> as source reader.
@@ -282,6 +278,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaIoStreamTokenizer)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaIoStreamTokenizer")

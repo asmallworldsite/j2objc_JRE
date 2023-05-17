@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaIoIOError
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -29,6 +26,7 @@
 #define INCLUDE_JavaLangError 1
 #include "java/lang/Error.h"
 
+@class JavaLangBoolean;
 @class JavaLangThrowable;
 
 /*!
@@ -43,11 +41,11 @@
 /*!
  @brief Constructs a new instance of IOError with the specified cause.The
   IOError is created with the detail message of 
- <tt>(cause==null ?
- null : cause.toString())</tt> (which typically
+ <code>(cause==null ?
+ null : cause.toString())</code> (which typically
   contains the class and detail message of cause).
  @param cause The cause of this error, or 
-  <tt> null </tt>  if the cause          is not known
+ <code>null</code>  if the cause          is not known
  */
 - (instancetype __nonnull)initWithJavaLangThrowable:(JavaLangThrowable *)cause;
 
@@ -83,6 +81,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaIoIOError)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaIoIOError")

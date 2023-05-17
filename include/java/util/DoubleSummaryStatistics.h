@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaUtilDoubleSummaryStatistics
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -28,6 +25,9 @@
 #define RESTRICT_JavaUtilFunctionDoubleConsumer 1
 #define INCLUDE_JavaUtilFunctionDoubleConsumer 1
 #include "java/util/function/DoubleConsumer.h"
+
+@class JavaLangDouble;
+@class JavaLangLong;
 
 /*!
  @brief A state object for collecting statistics such as count, min, max, sum, and
@@ -164,6 +164,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilDoubleSummaryStatistics)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaUtilDoubleSummaryStatistics")

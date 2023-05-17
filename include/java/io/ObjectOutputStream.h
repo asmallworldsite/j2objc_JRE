@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaIoObjectOutputStream
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -41,6 +38,11 @@
 @class IOSClass;
 @class JavaIoObjectOutputStream_PutField;
 @class JavaIoObjectStreamClass;
+@class JavaLangBoolean;
+@class JavaLangDouble;
+@class JavaLangFloat;
+@class JavaLangInteger;
+@class JavaLangLong;
 
 /*!
  @brief An ObjectOutputStream writes primitive data types and graphs of Java objects
@@ -648,6 +650,14 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaIoObjectOutputStream)
 #if !defined (JavaIoObjectOutputStream_PutField_) && (INCLUDE_ALL_JavaIoObjectOutputStream || defined(INCLUDE_JavaIoObjectOutputStream_PutField))
 #define JavaIoObjectOutputStream_PutField_
 
+@class JavaLangBoolean;
+@class JavaLangByte;
+@class JavaLangCharacter;
+@class JavaLangDouble;
+@class JavaLangFloat;
+@class JavaLangInteger;
+@class JavaLangLong;
+@class JavaLangShort;
 @protocol JavaIoObjectOutput;
 
 /*!
@@ -781,7 +791,7 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaIoObjectOutputStream)
           the same stream that produced this <code>PutField</code>
           object
  */
-- (void)writeWithJavaIoObjectOutput:(id<JavaIoObjectOutput>)outArg __attribute__((deprecated));
+- (void)writeWithJavaIoObjectOutput:(id<JavaIoObjectOutput>)outArg;
 
 @end
 
@@ -797,6 +807,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaIoObjectOutputStream_PutField)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaIoObjectOutputStream")

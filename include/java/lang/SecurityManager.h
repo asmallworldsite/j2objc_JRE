@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaLangSecurityManager
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -28,7 +25,10 @@
 @class IOSClass;
 @class IOSObjectArray;
 @class JavaIoFileDescriptor;
+@class JavaLangBoolean;
+@class JavaLangByte;
 @class JavaLangClassLoader;
+@class JavaLangInteger;
 @class JavaLangThread;
 @class JavaLangThreadGroup;
 @class JavaNetInetAddress;
@@ -36,6 +36,11 @@
 
 /*!
  @brief Legacy security code; do not use.
+ <p>Security managers do <i>not</i> provide a secure environment for
+  executing untrusted code and are unsupported on Android. Untrusted code
+  cannot be safely isolated within a single VM on Android. Application
+  developers can assume that there's no SecurityManager installed,
+  i.e. <code>java.lang.System.getSecurityManager()</code> will return null.
  */
 @interface JavaLangSecurityManager : NSObject {
  @public
@@ -76,6 +81,8 @@
 
 - (void)checkListenWithInt:(jint)port;
 
+/*!
+ */
 - (void)checkMemberAccessWithIOSClass:(IOSClass *)clazz
                               withInt:(jint)which;
 
@@ -84,7 +91,7 @@
 /*!
  */
 - (void)checkMulticastWithJavaNetInetAddress:(JavaNetInetAddress *)maddr
-                                    withByte:(jbyte)ttl __attribute__((deprecated));
+                                    withByte:(jbyte)ttl;
 
 - (void)checkPackageAccessWithNSString:(NSString *)pkg;
 
@@ -114,6 +121,8 @@
 
 - (void)checkSystemClipboardAccess;
 
+/*!
+ */
 - (jboolean)checkTopLevelWindowWithId:(id)window;
 
 - (void)checkWriteWithJavaIoFileDescriptor:(JavaIoFileDescriptor *)fd;
@@ -122,7 +131,7 @@
 
 /*!
  */
-- (jboolean)getInCheck __attribute__((deprecated));
+- (jboolean)getInCheck;
 
 - (id)getSecurityContext;
 
@@ -135,29 +144,29 @@
 
 /*!
  */
-- (jint)classDepthWithNSString:(NSString *)name __attribute__((deprecated));
+- (jint)classDepthWithNSString:(NSString *)name;
 
 /*!
  */
-- (jint)classLoaderDepth __attribute__((deprecated));
+- (jint)classLoaderDepth;
 
 /*!
  */
-- (JavaLangClassLoader *)currentClassLoader __attribute__((deprecated));
+- (JavaLangClassLoader *)currentClassLoader;
 
 /*!
  */
-- (IOSClass *)currentLoadedClass __attribute__((deprecated));
+- (IOSClass *)currentLoadedClass;
 
 - (IOSObjectArray *)getClassContext;
 
 /*!
  */
-- (jboolean)inClassWithNSString:(NSString *)name __attribute__((deprecated));
+- (jboolean)inClassWithNSString:(NSString *)name;
 
 /*!
  */
-- (jboolean)inClassLoader __attribute__((deprecated));
+- (jboolean)inClassLoader;
 
 @end
 
@@ -177,6 +186,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaLangSecurityManager)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaLangSecurityManager")

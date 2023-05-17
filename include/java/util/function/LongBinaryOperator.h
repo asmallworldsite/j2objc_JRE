@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaUtilFunctionLongBinaryOperator
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -24,6 +21,8 @@
 
 #if !defined (JavaUtilFunctionLongBinaryOperator_) && (INCLUDE_ALL_JavaUtilFunctionLongBinaryOperator || defined(INCLUDE_JavaUtilFunctionLongBinaryOperator))
 #define JavaUtilFunctionLongBinaryOperator_
+
+@class JavaLangLong;
 
 /*!
  @brief Represents an operation upon two <code>long</code>-valued operands and producing a 
@@ -58,6 +57,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilFunctionLongBinaryOperator)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaUtilFunctionLongBinaryOperator")

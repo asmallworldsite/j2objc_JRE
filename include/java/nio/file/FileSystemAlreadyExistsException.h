@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaNioFileFileSystemAlreadyExistsException
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -29,14 +26,16 @@
 #define INCLUDE_JavaLangRuntimeException 1
 #include "java/lang/RuntimeException.h"
 
+@class JavaLangBoolean;
+@class JavaLangLong;
 @class JavaLangThrowable;
 
 /*!
  @brief Runtime exception thrown when an attempt is made to create a file system that
   already exists.
+ @since 1.7
  */
 @interface JavaNioFileFileSystemAlreadyExistsException : JavaLangRuntimeException
-@property (readonly, class) jlong serialVersionUID NS_SWIFT_NAME(serialVersionUID);
 
 #pragma mark Public
 
@@ -91,6 +90,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaNioFileFileSystemAlreadyExistsException)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaNioFileFileSystemAlreadyExistsException")

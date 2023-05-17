@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaSqlWrapper
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -26,6 +23,7 @@
 #define JavaSqlWrapper_
 
 @class IOSClass;
+@class JavaLangBoolean;
 
 /*!
  @brief Interface for JDBC classes which provide the ability to retrieve the delegate instance when the instance
@@ -87,6 +85,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaSqlWrapper)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaSqlWrapper")

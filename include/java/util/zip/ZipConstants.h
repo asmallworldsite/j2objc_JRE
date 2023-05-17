@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaUtilZipZipConstants
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -25,51 +22,10 @@
 #if !defined (JavaUtilZipZipConstants_) && (INCLUDE_ALL_JavaUtilZipZipConstants || defined(INCLUDE_JavaUtilZipZipConstants))
 #define JavaUtilZipZipConstants_
 
+@class JavaLangInteger;
+@class JavaLangLong;
+
 @protocol JavaUtilZipZipConstants < JavaObject >
-
-@end
-
-@interface JavaUtilZipZipConstants : NSObject
-@property (readonly, class) jlong LOCSIG NS_SWIFT_NAME(LOCSIG);
-@property (readonly, class) jlong EXTSIG NS_SWIFT_NAME(EXTSIG);
-@property (readonly, class) jlong CENSIG NS_SWIFT_NAME(CENSIG);
-@property (readonly, class) jlong ENDSIG NS_SWIFT_NAME(ENDSIG);
-@property (readonly, class) jint LOCHDR NS_SWIFT_NAME(LOCHDR);
-@property (readonly, class) jint EXTHDR NS_SWIFT_NAME(EXTHDR);
-@property (readonly, class) jint CENHDR NS_SWIFT_NAME(CENHDR);
-@property (readonly, class) jint ENDHDR NS_SWIFT_NAME(ENDHDR);
-@property (readonly, class) jint LOCVER NS_SWIFT_NAME(LOCVER);
-@property (readonly, class) jint LOCFLG NS_SWIFT_NAME(LOCFLG);
-@property (readonly, class) jint LOCHOW NS_SWIFT_NAME(LOCHOW);
-@property (readonly, class) jint LOCTIM NS_SWIFT_NAME(LOCTIM);
-@property (readonly, class) jint LOCCRC NS_SWIFT_NAME(LOCCRC);
-@property (readonly, class) jint LOCSIZ NS_SWIFT_NAME(LOCSIZ);
-@property (readonly, class) jint LOCLEN NS_SWIFT_NAME(LOCLEN);
-@property (readonly, class) jint LOCNAM NS_SWIFT_NAME(LOCNAM);
-@property (readonly, class) jint LOCEXT NS_SWIFT_NAME(LOCEXT);
-@property (readonly, class) jint EXTCRC NS_SWIFT_NAME(EXTCRC);
-@property (readonly, class) jint EXTSIZ NS_SWIFT_NAME(EXTSIZ);
-@property (readonly, class) jint EXTLEN NS_SWIFT_NAME(EXTLEN);
-@property (readonly, class) jint CENVEM NS_SWIFT_NAME(CENVEM);
-@property (readonly, class) jint CENVER NS_SWIFT_NAME(CENVER);
-@property (readonly, class) jint CENFLG NS_SWIFT_NAME(CENFLG);
-@property (readonly, class) jint CENHOW NS_SWIFT_NAME(CENHOW);
-@property (readonly, class) jint CENTIM NS_SWIFT_NAME(CENTIM);
-@property (readonly, class) jint CENCRC NS_SWIFT_NAME(CENCRC);
-@property (readonly, class) jint CENSIZ NS_SWIFT_NAME(CENSIZ);
-@property (readonly, class) jint CENLEN NS_SWIFT_NAME(CENLEN);
-@property (readonly, class) jint CENNAM NS_SWIFT_NAME(CENNAM);
-@property (readonly, class) jint CENEXT NS_SWIFT_NAME(CENEXT);
-@property (readonly, class) jint CENCOM NS_SWIFT_NAME(CENCOM);
-@property (readonly, class) jint CENDSK NS_SWIFT_NAME(CENDSK);
-@property (readonly, class) jint CENATT NS_SWIFT_NAME(CENATT);
-@property (readonly, class) jint CENATX NS_SWIFT_NAME(CENATX);
-@property (readonly, class) jint CENOFF NS_SWIFT_NAME(CENOFF);
-@property (readonly, class) jint ENDSUB NS_SWIFT_NAME(ENDSUB);
-@property (readonly, class) jint ENDTOT NS_SWIFT_NAME(ENDTOT);
-@property (readonly, class) jint ENDSIZ NS_SWIFT_NAME(ENDSIZ);
-@property (readonly, class) jint ENDOFF NS_SWIFT_NAME(ENDOFF);
-@property (readonly, class) jint ENDCOM NS_SWIFT_NAME(ENDCOM);
 
 @end
 
@@ -243,6 +199,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilZipZipConstants)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaUtilZipZipConstants")

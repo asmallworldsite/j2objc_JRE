@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaUtilUUID
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -34,6 +31,9 @@
 #include "java/lang/Comparable.h"
 
 @class IOSByteArray;
+@class JavaLangBoolean;
+@class JavaLangInteger;
+@class JavaLangLong;
 
 /*!
  @brief A class that represents an immutable universally unique identifier (UUID).
@@ -286,6 +286,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilUUID)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaUtilUUID")

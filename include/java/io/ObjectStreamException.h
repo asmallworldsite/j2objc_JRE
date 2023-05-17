@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaIoObjectStreamException
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -33,8 +30,7 @@
 
 /*!
  @brief Superclass of all exceptions specific to Object Stream classes.
- @author unascribed
- @since JDK1.1
+ @since 1.1
  */
 @interface JavaIoObjectStreamException : JavaIoIOException
 
@@ -47,9 +43,9 @@
 
 /*!
  @brief Create an ObjectStreamException with the specified argument.
- @param classname the detailed message for the exception
+ @param message the detailed message for the exception
  */
-- (instancetype __nonnull)initWithNSString:(NSString *)classname;
+- (instancetype __nonnull)initWithNSString:(NSString *)message;
 
 // Disallowed inherited constructors, do not use.
 
@@ -62,7 +58,7 @@
 
 J2OBJC_EMPTY_STATIC_INIT(JavaIoObjectStreamException)
 
-FOUNDATION_EXPORT void JavaIoObjectStreamException_initWithNSString_(JavaIoObjectStreamException *self, NSString *classname);
+FOUNDATION_EXPORT void JavaIoObjectStreamException_initWithNSString_(JavaIoObjectStreamException *self, NSString *message);
 
 FOUNDATION_EXPORT void JavaIoObjectStreamException_init(JavaIoObjectStreamException *self);
 
@@ -74,6 +70,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaIoObjectStreamException)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaIoObjectStreamException")

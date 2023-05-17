@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaUtilBase64
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -26,6 +23,7 @@
 #define JavaUtilBase64_
 
 @class IOSByteArray;
+@class JavaLangInteger;
 @class JavaUtilBase64_Decoder;
 @class JavaUtilBase64_Encoder;
 
@@ -159,6 +157,7 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilBase64)
 
 @class IOSByteArray;
 @class JavaIoOutputStream;
+@class JavaLangInteger;
 @class JavaNioByteBuffer;
 
 /*!
@@ -174,9 +173,6 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilBase64)
  @since 1.8
  */
 @interface JavaUtilBase64_Encoder : NSObject
-@property (readonly, class, strong) JavaUtilBase64_Encoder *RFC4648 NS_SWIFT_NAME(RFC4648);
-@property (readonly, class, strong) JavaUtilBase64_Encoder *RFC4648_URLSAFE NS_SWIFT_NAME(RFC4648_URLSAFE);
-@property (readonly, class, strong) JavaUtilBase64_Encoder *RFC2045 NS_SWIFT_NAME(RFC2045);
 
 #pragma mark Public
 
@@ -291,6 +287,7 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilBase64_Encoder)
 
 @class IOSByteArray;
 @class JavaIoInputStream;
+@class JavaLangInteger;
 @class JavaNioByteBuffer;
 
 /*!
@@ -316,9 +313,6 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilBase64_Encoder)
  @since 1.8
  */
 @interface JavaUtilBase64_Decoder : NSObject
-@property (readonly, class, strong) JavaUtilBase64_Decoder *RFC4648 NS_SWIFT_NAME(RFC4648);
-@property (readonly, class, strong) JavaUtilBase64_Decoder *RFC4648_URLSAFE NS_SWIFT_NAME(RFC4648_URLSAFE);
-@property (readonly, class, strong) JavaUtilBase64_Decoder *RFC2045 NS_SWIFT_NAME(RFC2045);
 
 #pragma mark Public
 
@@ -427,6 +421,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilBase64_Decoder)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaUtilBase64")

@@ -16,9 +16,6 @@
 #define INCLUDE_JavaSecurityCertCertPathValidatorException_Reason 1
 #endif
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -32,6 +29,7 @@
 #define INCLUDE_JavaSecurityGeneralSecurityException 1
 #include "java/security/GeneralSecurityException.h"
 
+@class JavaLangInteger;
 @class JavaLangThrowable;
 @class JavaSecurityCertCertPath;
 @protocol JavaSecurityCertCertPathValidatorException_Reason;
@@ -251,7 +249,7 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaSecurityCertCertPathValidatorException_Reason)
 
 @class IOSObjectArray;
 
-typedef NS_ENUM(NSUInteger, JavaSecurityCertCertPathValidatorException_BasicReason_Enum) {
+typedef NS_ENUM(jint, JavaSecurityCertCertPathValidatorException_BasicReason_Enum) {
   JavaSecurityCertCertPathValidatorException_BasicReason_Enum_UNSPECIFIED = 0,
   JavaSecurityCertCertPathValidatorException_BasicReason_Enum_EXPIRED = 1,
   JavaSecurityCertCertPathValidatorException_BasicReason_Enum_NOT_YET_VALID = 2,
@@ -260,6 +258,12 @@ typedef NS_ENUM(NSUInteger, JavaSecurityCertCertPathValidatorException_BasicReas
   JavaSecurityCertCertPathValidatorException_BasicReason_Enum_INVALID_SIGNATURE = 5,
   JavaSecurityCertCertPathValidatorException_BasicReason_Enum_ALGORITHM_CONSTRAINED = 6,
 };
+#if J2OBJC_IMPORTED_BY_JAVA_IMPLEMENTATION
+#define JavaSecurityCertCertPathValidatorException_BasicReason_ORDINAL jint
+#else
+#define JavaSecurityCertCertPathValidatorException_BasicReason_ORDINAL JavaSecurityCertCertPathValidatorException_BasicReason_Enum
+#endif
+
 
 /*!
  @brief The BasicReason enumerates the potential reasons that a certification
@@ -268,13 +272,6 @@ typedef NS_ENUM(NSUInteger, JavaSecurityCertCertPathValidatorException_BasicReas
  */
 @interface JavaSecurityCertCertPathValidatorException_BasicReason : JavaLangEnum < JavaSecurityCertCertPathValidatorException_Reason >
 
-@property (readonly, class, nonnull) JavaSecurityCertCertPathValidatorException_BasicReason *UNSPECIFIED NS_SWIFT_NAME(UNSPECIFIED);
-@property (readonly, class, nonnull) JavaSecurityCertCertPathValidatorException_BasicReason *EXPIRED NS_SWIFT_NAME(EXPIRED);
-@property (readonly, class, nonnull) JavaSecurityCertCertPathValidatorException_BasicReason *NOT_YET_VALID NS_SWIFT_NAME(NOT_YET_VALID);
-@property (readonly, class, nonnull) JavaSecurityCertCertPathValidatorException_BasicReason *REVOKED NS_SWIFT_NAME(REVOKED);
-@property (readonly, class, nonnull) JavaSecurityCertCertPathValidatorException_BasicReason *UNDETERMINED_REVOCATION_STATUS NS_SWIFT_NAME(UNDETERMINED_REVOCATION_STATUS);
-@property (readonly, class, nonnull) JavaSecurityCertCertPathValidatorException_BasicReason *INVALID_SIGNATURE NS_SWIFT_NAME(INVALID_SIGNATURE);
-@property (readonly, class, nonnull) JavaSecurityCertCertPathValidatorException_BasicReason *ALGORITHM_CONSTRAINED NS_SWIFT_NAME(ALGORITHM_CONSTRAINED);
 #pragma mark Public
 
 + (JavaSecurityCertCertPathValidatorException_BasicReason *)valueOfWithNSString:(NSString *)name;
@@ -284,6 +281,8 @@ typedef NS_ENUM(NSUInteger, JavaSecurityCertCertPathValidatorException_BasicReas
 #pragma mark Package-Private
 
 - (JavaSecurityCertCertPathValidatorException_BasicReason_Enum)toNSEnum;
+
+- (JavaSecurityCertCertPathValidatorException_BasicReason_ORDINAL)ordinal;
 
 @end
 
@@ -338,7 +337,7 @@ FOUNDATION_EXPORT IOSObjectArray *JavaSecurityCertCertPathValidatorException_Bas
 
 FOUNDATION_EXPORT JavaSecurityCertCertPathValidatorException_BasicReason *JavaSecurityCertCertPathValidatorException_BasicReason_valueOfWithNSString_(NSString *name);
 
-FOUNDATION_EXPORT JavaSecurityCertCertPathValidatorException_BasicReason *JavaSecurityCertCertPathValidatorException_BasicReason_fromOrdinal(NSUInteger ordinal);
+FOUNDATION_EXPORT JavaSecurityCertCertPathValidatorException_BasicReason *JavaSecurityCertCertPathValidatorException_BasicReason_fromOrdinal(JavaSecurityCertCertPathValidatorException_BasicReason_ORDINAL ordinal);
 
 J2OBJC_TYPE_LITERAL_HEADER(JavaSecurityCertCertPathValidatorException_BasicReason)
 
@@ -348,6 +347,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaSecurityCertCertPathValidatorException_BasicReaso
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaSecurityCertCertPathValidatorException")

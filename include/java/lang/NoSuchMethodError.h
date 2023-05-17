@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaLangNoSuchMethodError
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -37,8 +34,7 @@
   Normally, this error is caught by the compiler; this error can
   only occur at run time if the definition of a class has
   incompatibly changed.
- @author unascribed
- @since JDK1.0
+ @since 1.0
  */
 @interface JavaLangNoSuchMethodError : JavaLangIncompatibleClassChangeError
 
@@ -80,6 +76,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaLangNoSuchMethodError)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaLangNoSuchMethodError")

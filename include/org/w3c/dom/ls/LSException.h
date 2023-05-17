@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_OrgW3cDomLsLSException
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -29,6 +26,8 @@
 #define INCLUDE_JavaLangRuntimeException 1
 #include "java/lang/RuntimeException.h"
 
+@class JavaLangBoolean;
+@class JavaLangShort;
 @class JavaLangThrowable;
 
 /*!
@@ -49,8 +48,6 @@
  @public
   jshort code_;
 }
-@property (readonly, class) jshort PARSE_ERR NS_SWIFT_NAME(PARSE_ERR);
-@property (readonly, class) jshort SERIALIZE_ERR NS_SWIFT_NAME(SERIALIZE_ERR);
 
 #pragma mark Public
 
@@ -107,6 +104,4 @@ J2OBJC_TYPE_LITERAL_HEADER(OrgW3cDomLsLSException)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_OrgW3cDomLsLSException")

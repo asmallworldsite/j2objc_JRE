@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaSecurityPublicKey
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -29,14 +26,16 @@
 #define INCLUDE_JavaSecurityKey 1
 #include "java/security/Key.h"
 
+@class JavaLangLong;
+
 /*!
- @brief <p>A public key.
- This interface contains no methods or constants.
-  It merely serves to group (and provide type safety for) all public key
+ @brief <p>A public key.This interface contains no methods or constants.
+ It merely serves to group (and provide type safety for) all public key
   interfaces.
   Note: The specialized public key interfaces extend this interface.
   See, for example, the DSAPublicKey interface in 
  <code>java.security.interfaces</code>.
+ @since 1.1
  - seealso: Key
  - seealso: PrivateKey
  - seealso: Certificate
@@ -45,11 +44,6 @@
  - seealso: java.security.interfaces.RSAPublicKey
  */
 @protocol JavaSecurityPublicKey < JavaSecurityKey, JavaObject >
-
-@end
-
-@interface JavaSecurityPublicKey : NSObject
-@property (readonly, class) jlong serialVersionUID NS_SWIFT_NAME(serialVersionUID);
 
 @end
 
@@ -71,6 +65,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaSecurityPublicKey)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaSecurityPublicKey")

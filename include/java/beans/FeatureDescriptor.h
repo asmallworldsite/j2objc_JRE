@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaBeansFeatureDescriptor
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -25,6 +22,7 @@
 #if !defined (JavaBeansFeatureDescriptor_) && (INCLUDE_ALL_JavaBeansFeatureDescriptor || defined(INCLUDE_JavaBeansFeatureDescriptor))
 #define JavaBeansFeatureDescriptor_
 
+@class JavaLangBoolean;
 @protocol JavaUtilEnumeration;
 
 /*!
@@ -201,6 +199,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaBeansFeatureDescriptor)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaBeansFeatureDescriptor")

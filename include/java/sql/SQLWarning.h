@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaSqlSQLWarning
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -29,13 +26,13 @@
 #define INCLUDE_JavaSqlSQLException 1
 #include "java/sql/SQLException.h"
 
+@class JavaLangInteger;
 @class JavaLangThrowable;
 
 /*!
  @brief <P>An exception that provides information on  database access
-  warnings.
- Warnings are silently chained to the object whose method
-  caused it to be reported. 
+  warnings.Warnings are silently chained to the object whose method
+  caused it to be reported.
  <P>
   Warnings may be retrieved from <code>Connection</code>, <code>Statement</code>,
   and <code>ResultSet</code> objects.  Trying to retrieve a warning on a
@@ -243,6 +240,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaSqlSQLWarning)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaSqlSQLWarning")

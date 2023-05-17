@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaTimeFormatTextStyle
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -30,8 +27,10 @@
 #include "java/lang/Enum.h"
 
 @class IOSObjectArray;
+@class JavaLangBoolean;
+@class JavaLangInteger;
 
-typedef NS_ENUM(NSUInteger, JavaTimeFormatTextStyle_Enum) {
+typedef NS_ENUM(jint, JavaTimeFormatTextStyle_Enum) {
   JavaTimeFormatTextStyle_Enum_FULL = 0,
   JavaTimeFormatTextStyle_Enum_FULL_STANDALONE = 1,
   JavaTimeFormatTextStyle_Enum_SHORT = 2,
@@ -39,32 +38,30 @@ typedef NS_ENUM(NSUInteger, JavaTimeFormatTextStyle_Enum) {
   JavaTimeFormatTextStyle_Enum_NARROW = 4,
   JavaTimeFormatTextStyle_Enum_NARROW_STANDALONE = 5,
 };
+#if J2OBJC_IMPORTED_BY_JAVA_IMPLEMENTATION
+#define JavaTimeFormatTextStyle_ORDINAL jint
+#else
+#define JavaTimeFormatTextStyle_ORDINAL JavaTimeFormatTextStyle_Enum
+#endif
+
 
 /*!
  @brief Enumeration of the style of text formatting and parsing.
- <p>
-  Text styles define three sizes for the formatted text - 'full', 'short' and 'narrow'.
-  Each of these three sizes is available in both 'standard' and 'stand-alone' variations. 
- <p>
-  The difference between the three sizes is obvious in most languages.
-  For example, in English the 'full' month is 'January', the 'short' month is 'Jan'
-  and the 'narrow' month is 'J'. Note that the narrow size is often not unique.
-  For example, 'January', 'June' and 'July' all have the 'narrow' text 'J'. 
- <p>
-  The difference between the 'standard' and 'stand-alone' forms is trickier to describe
-  as there is no difference in English. However, in other languages there is a difference
-  in the word used when the text is used alone, as opposed to in a complete date.
-  For example, the word used for a month when used alone in a date picker is different
-  to the word used for month in association with a day and year in a date.
+ <p>Text styles define three sizes for the formatted text - 'full', 'short' and 'narrow'. Each of
+  these three sizes is available in both 'standard' and 'stand-alone' variations. 
+ <p>The difference between the three sizes is obvious in most languages. For example, in English
+  the 'full' month is 'January', the 'short' month is 'Jan' and the 'narrow' month is 'J'. Note
+  that the narrow size is often not unique. For example, 'January', 'June' and 'July' all have the
+  'narrow' text 'J'. 
+ <p>The difference between the 'standard' and 'stand-alone' forms is trickier to describe as there
+  is no difference in English. However, in other languages there is a difference in the word used
+  when the text is used alone, as opposed to in a complete date. For example, the word used for a
+  month when used alone in a date picker is different to the word used for month in association
+  with a day and year in a date.
+ @since 1.8
  */
 @interface JavaTimeFormatTextStyle : JavaLangEnum
 
-@property (readonly, class, nonnull) JavaTimeFormatTextStyle *FULL NS_SWIFT_NAME(FULL);
-@property (readonly, class, nonnull) JavaTimeFormatTextStyle *FULL_STANDALONE NS_SWIFT_NAME(FULL_STANDALONE);
-@property (readonly, class, nonnull) JavaTimeFormatTextStyle *SHORT NS_SWIFT_NAME(SHORT);
-@property (readonly, class, nonnull) JavaTimeFormatTextStyle *SHORT_STANDALONE NS_SWIFT_NAME(SHORT_STANDALONE);
-@property (readonly, class, nonnull) JavaTimeFormatTextStyle *NARROW NS_SWIFT_NAME(NARROW);
-@property (readonly, class, nonnull) JavaTimeFormatTextStyle *NARROW_STANDALONE NS_SWIFT_NAME(NARROW_STANDALONE);
 #pragma mark Public
 
 /*!
@@ -107,6 +104,8 @@ typedef NS_ENUM(NSUInteger, JavaTimeFormatTextStyle_Enum) {
 - (jint)zoneNameStyleIndex;
 
 - (JavaTimeFormatTextStyle_Enum)toNSEnum;
+
+- (JavaTimeFormatTextStyle_ORDINAL)ordinal;
 
 @end
 
@@ -161,7 +160,7 @@ FOUNDATION_EXPORT IOSObjectArray *JavaTimeFormatTextStyle_values(void);
 
 FOUNDATION_EXPORT JavaTimeFormatTextStyle *JavaTimeFormatTextStyle_valueOfWithNSString_(NSString *name);
 
-FOUNDATION_EXPORT JavaTimeFormatTextStyle *JavaTimeFormatTextStyle_fromOrdinal(NSUInteger ordinal);
+FOUNDATION_EXPORT JavaTimeFormatTextStyle *JavaTimeFormatTextStyle_fromOrdinal(JavaTimeFormatTextStyle_ORDINAL ordinal);
 
 J2OBJC_TYPE_LITERAL_HEADER(JavaTimeFormatTextStyle)
 
@@ -171,6 +170,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaTimeFormatTextStyle)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaTimeFormatTextStyle")

@@ -79,9 +79,6 @@
 #define INCLUDE_JavaUtilCollections_UnmodifiableCollection 1
 #endif
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -93,6 +90,8 @@
 
 @class IOSClass;
 @class IOSObjectArray;
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @class JavaUtilArrayList;
 @class JavaUtilRandom;
 @protocol JavaLangComparable;
@@ -148,9 +147,6 @@
  @since 1.2
  */
 @interface JavaUtilCollections : NSObject
-@property (readonly, class, strong) id<JavaUtilSet> EMPTY_SET NS_SWIFT_NAME(EMPTY_SET);
-@property (readonly, class, strong) id<JavaUtilList> EMPTY_LIST NS_SWIFT_NAME(EMPTY_LIST);
-@property (readonly, class, strong) id<JavaUtilMap> EMPTY_MAP NS_SWIFT_NAME(EMPTY_MAP);
 
 #pragma mark Public
 
@@ -297,12 +293,12 @@
   program to wrap the collection with a dynamically typesafe view.
   For example, this declaration:
    @code
-     Collection<String> c = new HashSet<>(); 
+      Collection<String> c = new HashSet<>(); 
  
 @endcode
   may be replaced temporarily by this one:
    @code
-     Collection<String> c = Collections.checkedCollection(
+      Collection<String> c = Collections.checkedCollection(
           new HashSet<>(), String.class); 
  
 @endcode
@@ -695,7 +691,7 @@
  @brief Returns an empty navigable map (immutable).This map is serializable.
  <p>This example illustrates the type-safe way to obtain an empty map: 
  @code
-     NavigableMap<String, Date> s = Collections.emptyNavigableMap(); 
+      NavigableMap<String, Date> s = Collections.emptyNavigableMap(); 
  
 @endcode
  @return an empty navigable map
@@ -708,7 +704,7 @@
  <p>This example illustrates the type-safe way to obtain an empty
   navigable set: 
  @code
-     NavigableSet<String> s = Collections.emptyNavigableSet(); 
+      NavigableSet<String> s = Collections.emptyNavigableSet(); 
  
 @endcode
  @return the empty navigable set
@@ -735,7 +731,7 @@
  @brief Returns an empty sorted map (immutable).This map is serializable.
  <p>This example illustrates the type-safe way to obtain an empty map: 
  @code
-     SortedMap<String, Date> s = Collections.emptySortedMap(); 
+      SortedMap<String, Date> s = Collections.emptySortedMap(); 
  
 @endcode
  @return an empty sorted map
@@ -748,7 +744,7 @@
  <p>This example illustrates the type-safe way to obtain an empty
   sorted set: 
  @code
-     SortedSet<String> s = Collections.emptySortedSet(); 
+      SortedSet<String> s = Collections.emptySortedSet(); 
  
 @endcode
  @return the empty sorted set
@@ -1913,6 +1909,8 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilCollections)
 #include "java/io/Serializable.h"
 
 @class IOSObjectArray;
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @protocol JavaUtilFunctionConsumer;
 @protocol JavaUtilFunctionPredicate;
 @protocol JavaUtilIterator;
@@ -2001,6 +1999,8 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilCollections_UnmodifiableCollection)
 #define INCLUDE_JavaIoSerializable 1
 #include "java/io/Serializable.h"
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @protocol JavaUtilCollection;
 
 /*!
@@ -2101,6 +2101,7 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilCollections_UnmodifiableSortedSet)
 #define INCLUDE_JavaIoSerializable 1
 #include "java/io/Serializable.h"
 
+@class JavaLangBoolean;
 @protocol JavaUtilIterator;
 @protocol JavaUtilSortedSet;
 
@@ -2167,6 +2168,8 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilCollections_UnmodifiableNavigableSet)
 #define INCLUDE_JavaUtilList 1
 #include "java/util/List.h"
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @protocol JavaUtilCollection;
 @protocol JavaUtilComparator;
 @protocol JavaUtilFunctionUnaryOperator;
@@ -2244,6 +2247,7 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilCollections_UnmodifiableList)
 #define INCLUDE_JavaUtilRandomAccess 1
 #include "java/util/RandomAccess.h"
 
+@class JavaLangInteger;
 @protocol JavaUtilList;
 
 /*!
@@ -2284,6 +2288,8 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilCollections_UnmodifiableRandomAccessList)
 #define INCLUDE_JavaIoSerializable 1
 #include "java/io/Serializable.h"
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @protocol JavaUtilCollection;
 @protocol JavaUtilFunctionBiConsumer;
 @protocol JavaUtilFunctionBiFunction;
@@ -2444,6 +2450,7 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilCollections_UnmodifiableSortedMap)
 #define INCLUDE_JavaIoSerializable 1
 #include "java/io/Serializable.h"
 
+@class JavaLangBoolean;
 @protocol JavaUtilMap_Entry;
 @protocol JavaUtilNavigableSet;
 @protocol JavaUtilSortedMap;
@@ -2529,6 +2536,8 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilCollections_UnmodifiableNavigableMap)
 #include "java/io/Serializable.h"
 
 @class IOSObjectArray;
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @protocol JavaUtilFunctionConsumer;
 @protocol JavaUtilFunctionPredicate;
 @protocol JavaUtilIterator;
@@ -2624,6 +2633,8 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilCollections_SynchronizedCollection)
 #define INCLUDE_JavaUtilSet 1
 #include "java/util/Set.h"
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @protocol JavaUtilCollection;
 
 /*!
@@ -2740,6 +2751,7 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilCollections_SynchronizedSortedSet)
 #define INCLUDE_JavaUtilNavigableSet 1
 #include "java/util/NavigableSet.h"
 
+@class JavaLangBoolean;
 @protocol JavaUtilIterator;
 @protocol JavaUtilSortedSet;
 
@@ -2824,6 +2836,8 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilCollections_SynchronizedNavigableSet)
 #define INCLUDE_JavaUtilList 1
 #include "java/util/List.h"
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @protocol JavaUtilCollection;
 @protocol JavaUtilComparator;
 @protocol JavaUtilFunctionUnaryOperator;
@@ -2913,6 +2927,7 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilCollections_SynchronizedList)
 #define INCLUDE_JavaUtilRandomAccess 1
 #include "java/util/RandomAccess.h"
 
+@class JavaLangInteger;
 @protocol JavaUtilList;
 
 /*!
@@ -2962,6 +2977,8 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilCollections_SynchronizedRandomAccessList)
 #define INCLUDE_JavaIoSerializable 1
 #include "java/io/Serializable.h"
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @protocol JavaUtilCollection;
 @protocol JavaUtilFunctionBiConsumer;
 @protocol JavaUtilFunctionBiFunction;
@@ -3140,6 +3157,7 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilCollections_SynchronizedSortedMap)
 #define INCLUDE_JavaUtilNavigableMap 1
 #include "java/util/NavigableMap.h"
 
+@class JavaLangBoolean;
 @protocol JavaUtilMap_Entry;
 @protocol JavaUtilNavigableSet;
 @protocol JavaUtilSortedMap;
@@ -3248,6 +3266,8 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilCollections_SynchronizedNavigableMap)
 
 @class IOSClass;
 @class IOSObjectArray;
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @protocol JavaUtilFunctionConsumer;
 @protocol JavaUtilFunctionPredicate;
 @protocol JavaUtilIterator;
@@ -3344,6 +3364,8 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilCollections_CheckedCollection)
 #include "java/io/Serializable.h"
 
 @class IOSClass;
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @protocol JavaUtilCollection;
 
 /*!
@@ -3407,6 +3429,8 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilCollections_CheckedQueue)
 #include "java/io/Serializable.h"
 
 @class IOSClass;
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @protocol JavaUtilCollection;
 
 /*!
@@ -3513,6 +3537,7 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilCollections_CheckedSortedSet)
 #include "java/io/Serializable.h"
 
 @class IOSClass;
+@class JavaLangBoolean;
 @protocol JavaUtilIterator;
 @protocol JavaUtilSortedSet;
 
@@ -3588,6 +3613,8 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilCollections_CheckedNavigableSet)
 #include "java/util/List.h"
 
 @class IOSClass;
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @protocol JavaUtilCollection;
 @protocol JavaUtilComparator;
 @protocol JavaUtilFunctionUnaryOperator;
@@ -3674,6 +3701,7 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilCollections_CheckedList)
 #include "java/util/RandomAccess.h"
 
 @class IOSClass;
+@class JavaLangInteger;
 @protocol JavaUtilList;
 
 /*!
@@ -3716,6 +3744,8 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilCollections_CheckedRandomAccessList)
 #include "java/io/Serializable.h"
 
 @class IOSClass;
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @protocol JavaUtilCollection;
 @protocol JavaUtilFunctionBiConsumer;
 @protocol JavaUtilFunctionBiFunction;
@@ -3888,6 +3918,7 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilCollections_CheckedSortedMap)
 #include "java/io/Serializable.h"
 
 @class IOSClass;
+@class JavaLangBoolean;
 @protocol JavaUtilComparator;
 @protocol JavaUtilMap_Entry;
 @protocol JavaUtilNavigableSet;
@@ -3997,6 +4028,8 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilCollections_CheckedNavigableMap)
 #include "java/io/Serializable.h"
 
 @class IOSObjectArray;
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @protocol JavaUtilCollection;
 @protocol JavaUtilDeque;
 @protocol JavaUtilFunctionConsumer;
@@ -4083,6 +4116,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilCollections_AsLIFOQueue)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaUtilCollections")

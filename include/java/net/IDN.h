@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaNetIDN
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -25,6 +22,8 @@
 #if !defined (JavaNetIDN_) && (INCLUDE_ALL_JavaNetIDN || defined(INCLUDE_JavaNetIDN))
 #define JavaNetIDN_
 
+@class JavaLangInteger;
+
 /*!
  @brief Converts internationalized domain names between Unicode and the ASCII Compatible Encoding
   (ACE) representation.
@@ -32,8 +31,6 @@
  @since 1.6
  */
 @interface JavaNetIDN : NSObject
-@property (readonly, class) jint ALLOW_UNASSIGNED NS_SWIFT_NAME(ALLOW_UNASSIGNED);
-@property (readonly, class) jint USE_STD3_ASCII_RULES NS_SWIFT_NAME(USE_STD3_ASCII_RULES);
 
 #pragma mark Public
 
@@ -121,6 +118,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaNetIDN)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaNetIDN")

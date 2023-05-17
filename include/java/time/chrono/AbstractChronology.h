@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaTimeChronoAbstractChronology
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -29,12 +26,16 @@
 #define INCLUDE_JavaTimeChronoChronology 1
 #include "java/time/chrono/Chronology.h"
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
+@class JavaLangLong;
 @class JavaTimeClock;
 @class JavaTimeFormatResolverStyle;
 @class JavaTimeFormatTextStyle;
 @class JavaTimeInstant;
 @class JavaTimeTemporalChronoField;
 @class JavaTimeZoneId;
+@class JavaTimeZoneOffset;
 @class JavaUtilLocale;
 @protocol JavaIoDataInput;
 @protocol JavaIoDataOutput;
@@ -44,7 +45,6 @@
 @protocol JavaTimeChronoChronoZonedDateTime;
 @protocol JavaTimeChronoEra;
 @protocol JavaTimeTemporalTemporalAccessor;
-@protocol JavaUtilComparator;
 @protocol JavaUtilMap;
 @protocol JavaUtilSet;
 
@@ -58,9 +58,6 @@
  @since 1.8
  */
 @interface JavaTimeChronoAbstractChronology : NSObject < JavaTimeChronoChronology >
-@property (readonly, class, strong) id<JavaUtilComparator> DATE_ORDER NS_SWIFT_NAME(DATE_ORDER);
-@property (readonly, class, strong) id<JavaUtilComparator> DATE_TIME_ORDER NS_SWIFT_NAME(DATE_TIME_ORDER);
-@property (readonly, class, strong) id<JavaUtilComparator> INSTANT_ORDER NS_SWIFT_NAME(INSTANT_ORDER);
 
 #pragma mark Public
 
@@ -319,30 +316,6 @@
 
 J2OBJC_STATIC_INIT(JavaTimeChronoAbstractChronology)
 
-/*!
- @brief ChronoLocalDate order constant.
- */
-inline id<JavaUtilComparator> JavaTimeChronoAbstractChronology_get_DATE_ORDER(void);
-/*! INTERNAL ONLY - Use accessor function from above. */
-FOUNDATION_EXPORT id<JavaUtilComparator> JavaTimeChronoAbstractChronology_DATE_ORDER;
-J2OBJC_STATIC_FIELD_OBJ_FINAL(JavaTimeChronoAbstractChronology, DATE_ORDER, id<JavaUtilComparator>)
-
-/*!
- @brief ChronoLocalDateTime order constant.
- */
-inline id<JavaUtilComparator> JavaTimeChronoAbstractChronology_get_DATE_TIME_ORDER(void);
-/*! INTERNAL ONLY - Use accessor function from above. */
-FOUNDATION_EXPORT id<JavaUtilComparator> JavaTimeChronoAbstractChronology_DATE_TIME_ORDER;
-J2OBJC_STATIC_FIELD_OBJ_FINAL(JavaTimeChronoAbstractChronology, DATE_TIME_ORDER, id<JavaUtilComparator>)
-
-/*!
- @brief ChronoZonedDateTime order constant.
- */
-inline id<JavaUtilComparator> JavaTimeChronoAbstractChronology_get_INSTANT_ORDER(void);
-/*! INTERNAL ONLY - Use accessor function from above. */
-FOUNDATION_EXPORT id<JavaUtilComparator> JavaTimeChronoAbstractChronology_INSTANT_ORDER;
-J2OBJC_STATIC_FIELD_OBJ_FINAL(JavaTimeChronoAbstractChronology, INSTANT_ORDER, id<JavaUtilComparator>)
-
 FOUNDATION_EXPORT id<JavaTimeChronoChronology> JavaTimeChronoAbstractChronology_registerChronoWithJavaTimeChronoChronology_(id<JavaTimeChronoChronology> chrono);
 
 FOUNDATION_EXPORT id<JavaTimeChronoChronology> JavaTimeChronoAbstractChronology_registerChronoWithJavaTimeChronoChronology_withNSString_(id<JavaTimeChronoChronology> chrono, NSString *id_);
@@ -365,6 +338,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaTimeChronoAbstractChronology)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaTimeChronoAbstractChronology")

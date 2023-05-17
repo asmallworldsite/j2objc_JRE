@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaSecurityCertExtension
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -27,6 +24,7 @@
 
 @class IOSByteArray;
 @class JavaIoOutputStream;
+@class JavaLangBoolean;
 
 /*!
  @brief This interface represents an X.509 extension.
@@ -103,6 +101,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaSecurityCertExtension)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaSecurityCertExtension")

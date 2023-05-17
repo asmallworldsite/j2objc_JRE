@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaLangStackOverflowError
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -34,8 +31,7 @@
 /*!
  @brief Thrown when a stack overflow occurs because an application
   recurses too deeply.
- @author unascribed
- @since JDK1.0
+ @since 1.0
  */
 @interface JavaLangStackOverflowError : JavaLangVirtualMachineError
 
@@ -84,6 +80,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaLangStackOverflowError)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaLangStackOverflowError")

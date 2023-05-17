@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaxNetSslSSLContextSpi
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -26,6 +23,7 @@
 #define JavaxNetSslSSLContextSpi_
 
 @class IOSObjectArray;
+@class JavaLangInteger;
 @class JavaSecuritySecureRandom;
 @class JavaxNetSslSSLEngine;
 @class JavaxNetSslSSLParameters;
@@ -186,6 +184,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaxNetSslSSLContextSpi)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaxNetSslSSLContextSpi")

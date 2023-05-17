@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaLangAnnotationTarget
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -31,21 +28,20 @@
 
 @class IOSClass;
 @class IOSObjectArray;
+@class JavaLangBoolean;
+@class JavaLangInteger;
 
 /*!
- @brief Indicates the contexts in which an annotation type is applicable.The
-  declaration contexts and type contexts in which an annotation type may be
-  applicable are specified in JLS 9.6.4.1, and denoted in source code by enum
-  constants of <code>java.lang.annotation.ElementType</code>.
- <p>If an <code>@@Target</code> meta-annotation is not present on an annotation type 
- <code>T</code> , then an annotation of type <code>T</code> may be written as a
-  modifier for any declaration except a type parameter declaration. 
- <p>If an <code>@@Target</code> meta-annotation is present, the compiler will enforce
-  the usage restrictions indicated by <code>ElementType</code>
-  enum constants, in line with JLS 9.7.4. 
- <p>For example, this <code>@@Target</code> meta-annotation indicates that the
-  declared type is itself a meta-annotation type.  It can only be used on
-  annotation type declarations: 
+ @brief Indicates the contexts in which an annotation type is applicable.The declaration contexts and
+  type contexts in which an annotation type may be applicable are specified in JLS 9.6.4.1, and
+  denoted in source code by enum constants of <code>java.lang.annotation.ElementType</code>.
+ <p>If an <code>@@Target</code> meta-annotation is not present on an annotation type <code>T</code> , then an
+  annotation of type <code>T</code> may be written as a modifier for any declaration except a type
+  parameter declaration. 
+ <p>If an <code>@@Target</code> meta-annotation is present, the compiler will enforce the usage
+  restrictions indicated by <code>ElementType</code> enum constants, in line with JLS 9.7.4. 
+ <p>For example, this <code>@@Target</code> meta-annotation indicates that the declared type is itself a
+  meta-annotation type. It can only be used on annotation type declarations: 
  @code
 
         &#064;Target(ElementType.ANNOTATION_TYPE)
@@ -55,9 +51,9 @@
   
 @endcode
   
- <p>This <code>@@Target</code> meta-annotation indicates that the declared type is
-  intended solely for use as a member type in complex annotation type
-  declarations.  It cannot be used to annotate anything directly: 
+ <p>This <code>@@Target</code> meta-annotation indicates that the declared type is intended solely for
+  use as a member type in complex annotation type declarations. It cannot be used to annotate
+  anything directly: 
  @code
 
         &#064;Target({})
@@ -67,9 +63,9 @@
   
 @endcode
   
- <p>It is a compile-time error for a single <code>ElementType</code> constant to
-  appear more than once in an <code>@@Target</code> annotation.  For example, the
-  following <code>@@Target</code> meta-annotation is illegal: 
+ <p>It is a compile-time error for a single <code>ElementType</code> constant to appear more than once
+  in an <code>@@Target</code> annotation. For example, the following <code>@@Target</code> meta-annotation is
+  illegal: 
  @code
 
         &#064;Target({ElementType.FIELD, ElementType.METHOD, ElementType.FIELD})
@@ -109,6 +105,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaLangAnnotationTarget)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaLangAnnotationTarget")

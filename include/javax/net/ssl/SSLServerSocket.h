@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaxNetSslSSLServerSocket
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -30,6 +27,8 @@
 #include "java/net/ServerSocket.h"
 
 @class IOSObjectArray;
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @class JavaNetInetAddress;
 @class JavaNetSocketImpl;
 @class JavaxNetSslSSLParameters;
@@ -134,7 +133,14 @@
   Normally, only a subset of these will actually
   be enabled by default, since this list may include cipher suites which
   do not meet quality of service requirements for those defaults.  Such
-  cipher suites are useful in specialized applications.
+  cipher suites are useful in specialized applications. 
+ <p class="caution">Applications should not blindly enable all supported
+  cipher suites.  The supported cipher suites can include signaling cipher suite
+  values that can cause connection problems if enabled inappropriately. 
+ <p>The proper way to use this method is to either check if a specific cipher
+  suite is supported via <code>Arrays.asList(getSupportedCipherSuites()).contains(...)</code>
+  or to filter a desired list of cipher suites to only the supported ones via 
+ <code>desiredSuiteSet.retainAll(Arrays.asList(getSupportedCipherSuites()))</code>.
  @return an array of cipher suite names
  - seealso: #getEnabledCipherSuites()
  - seealso: #setEnabledCipherSuites(String [])
@@ -203,6 +209,11 @@
   getSupportedProtocols() as being supported.
   Following a successful call to this method, only protocols listed
   in the <code>protocols</code> parameter are enabled for use. 
+ <p>
+  Because of the way the protocol version is negotiated, connections
+  will only be able to use a member of the lowest set of contiguous
+  enabled protocol versions.  For example, enabling TLSv1.2 and TLSv1
+  will result in connections only being able to use TLSv1. 
  <P>
   <code>SSLSocket</code>s returned from <code>accept()</code>
   inherit this setting.
@@ -474,6 +485,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaxNetSslSSLServerSocket)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaxNetSslSSLServerSocket")

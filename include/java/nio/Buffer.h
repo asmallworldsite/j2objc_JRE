@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaNioBuffer
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -24,6 +21,10 @@
 
 #if !defined (JavaNioBuffer_) && (INCLUDE_ALL_JavaNioBuffer || defined(INCLUDE_JavaNioBuffer))
 #define JavaNioBuffer_
+
+@class JavaLangBoolean;
+@class JavaLangInteger;
+@class JavaLangLong;
 
 /*!
  @brief A container for data of a specific primitive type.
@@ -158,7 +159,6 @@
    */
   jint _elementSizeShift_;
 }
-@property (readonly, class) jint SPLITERATOR_CHARACTERISTICS NS_SWIFT_NAME(SPLITERATOR_CHARACTERISTICS);
 
 #pragma mark Public
 
@@ -438,6 +438,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaNioBuffer)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaNioBuffer")

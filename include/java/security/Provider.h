@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaSecurityProvider
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -30,6 +27,9 @@
 #include "java/util/Properties.h"
 
 @class JavaIoInputStream;
+@class JavaLangBoolean;
+@class JavaLangDouble;
+@class JavaLangLong;
 @class JavaSecurityProvider_Service;
 @protocol JavaUtilCollection;
 @protocol JavaUtilEnumeration;
@@ -84,7 +84,6 @@
  @author Andreas Sterbenz
  */
 @interface JavaSecurityProvider : JavaUtilProperties
-@property (readonly, class) jlong serialVersionUID NS_SWIFT_NAME(serialVersionUID);
 
 #pragma mark Public
 
@@ -517,6 +516,7 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaSecurityProvider)
 #if !defined (JavaSecurityProvider_Service_) && (INCLUDE_ALL_JavaSecurityProvider || defined(INCLUDE_JavaSecurityProvider_Service))
 #define JavaSecurityProvider_Service_
 
+@class JavaLangBoolean;
 @class JavaSecurityProvider;
 @protocol JavaUtilList;
 @protocol JavaUtilMap;
@@ -682,6 +682,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaSecurityProvider_Service)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaSecurityProvider")

@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_AndroidIcuUtilVersionInfo
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -30,45 +27,14 @@
 #include "java/lang/Comparable.h"
 
 @class IOSObjectArray;
+@class JavaLangBoolean;
+@class JavaLangInteger;
 
 /*!
  @brief Class to store version numbers of the form major.minor.milli.micro.
  @author synwee
  */
 @interface AndroidIcuUtilVersionInfo : NSObject < JavaLangComparable >
-@property (readonly, class, strong) AndroidIcuUtilVersionInfo *UNICODE_1_0 NS_SWIFT_NAME(UNICODE_1_0);
-@property (readonly, class, strong) AndroidIcuUtilVersionInfo *UNICODE_1_0_1 NS_SWIFT_NAME(UNICODE_1_0_1);
-@property (readonly, class, strong) AndroidIcuUtilVersionInfo *UNICODE_1_1_0 NS_SWIFT_NAME(UNICODE_1_1_0);
-@property (readonly, class, strong) AndroidIcuUtilVersionInfo *UNICODE_1_1_5 NS_SWIFT_NAME(UNICODE_1_1_5);
-@property (readonly, class, strong) AndroidIcuUtilVersionInfo *UNICODE_2_0 NS_SWIFT_NAME(UNICODE_2_0);
-@property (readonly, class, strong) AndroidIcuUtilVersionInfo *UNICODE_2_1_2 NS_SWIFT_NAME(UNICODE_2_1_2);
-@property (readonly, class, strong) AndroidIcuUtilVersionInfo *UNICODE_2_1_5 NS_SWIFT_NAME(UNICODE_2_1_5);
-@property (readonly, class, strong) AndroidIcuUtilVersionInfo *UNICODE_2_1_8 NS_SWIFT_NAME(UNICODE_2_1_8);
-@property (readonly, class, strong) AndroidIcuUtilVersionInfo *UNICODE_2_1_9 NS_SWIFT_NAME(UNICODE_2_1_9);
-@property (readonly, class, strong) AndroidIcuUtilVersionInfo *UNICODE_3_0 NS_SWIFT_NAME(UNICODE_3_0);
-@property (readonly, class, strong) AndroidIcuUtilVersionInfo *UNICODE_3_0_1 NS_SWIFT_NAME(UNICODE_3_0_1);
-@property (readonly, class, strong) AndroidIcuUtilVersionInfo *UNICODE_3_1_0 NS_SWIFT_NAME(UNICODE_3_1_0);
-@property (readonly, class, strong) AndroidIcuUtilVersionInfo *UNICODE_3_1_1 NS_SWIFT_NAME(UNICODE_3_1_1);
-@property (readonly, class, strong) AndroidIcuUtilVersionInfo *UNICODE_3_2 NS_SWIFT_NAME(UNICODE_3_2);
-@property (readonly, class, strong) AndroidIcuUtilVersionInfo *UNICODE_4_0 NS_SWIFT_NAME(UNICODE_4_0);
-@property (readonly, class, strong) AndroidIcuUtilVersionInfo *UNICODE_4_0_1 NS_SWIFT_NAME(UNICODE_4_0_1);
-@property (readonly, class, strong) AndroidIcuUtilVersionInfo *UNICODE_4_1 NS_SWIFT_NAME(UNICODE_4_1);
-@property (readonly, class, strong) AndroidIcuUtilVersionInfo *UNICODE_5_0 NS_SWIFT_NAME(UNICODE_5_0);
-@property (readonly, class, strong) AndroidIcuUtilVersionInfo *UNICODE_5_1 NS_SWIFT_NAME(UNICODE_5_1);
-@property (readonly, class, strong) AndroidIcuUtilVersionInfo *UNICODE_5_2 NS_SWIFT_NAME(UNICODE_5_2);
-@property (readonly, class, strong) AndroidIcuUtilVersionInfo *UNICODE_6_0 NS_SWIFT_NAME(UNICODE_6_0);
-@property (readonly, class, strong) AndroidIcuUtilVersionInfo *UNICODE_6_1 NS_SWIFT_NAME(UNICODE_6_1);
-@property (readonly, class, strong) AndroidIcuUtilVersionInfo *UNICODE_6_2 NS_SWIFT_NAME(UNICODE_6_2);
-@property (readonly, class, strong) AndroidIcuUtilVersionInfo *UNICODE_6_3 NS_SWIFT_NAME(UNICODE_6_3);
-@property (readonly, class, strong) AndroidIcuUtilVersionInfo *UNICODE_7_0 NS_SWIFT_NAME(UNICODE_7_0);
-@property (readonly, class, strong) AndroidIcuUtilVersionInfo *UNICODE_8_0 NS_SWIFT_NAME(UNICODE_8_0);
-@property (readonly, class, strong) AndroidIcuUtilVersionInfo *UNICODE_9_0 NS_SWIFT_NAME(UNICODE_9_0);
-@property (readonly, class, strong) AndroidIcuUtilVersionInfo *ICU_VERSION NS_SWIFT_NAME(ICU_VERSION);
-@property (readonly, copy, class) NSString *ICU_DATA_VERSION_PATH NS_SWIFT_NAME(ICU_DATA_VERSION_PATH);
-@property (readonly, class, strong) AndroidIcuUtilVersionInfo *ICU_DATA_VERSION NS_SWIFT_NAME(ICU_DATA_VERSION);
-@property (readonly, class, strong) AndroidIcuUtilVersionInfo *UCOL_RUNTIME_VERSION NS_SWIFT_NAME(UCOL_RUNTIME_VERSION);
-@property (readonly, class, strong) AndroidIcuUtilVersionInfo *UCOL_BUILDER_VERSION NS_SWIFT_NAME(UCOL_BUILDER_VERSION);
-@property (readonly, class, strong) AndroidIcuUtilVersionInfo *UCOL_TAILORINGS_VERSION NS_SWIFT_NAME(UCOL_TAILORINGS_VERSION);
 
 #pragma mark Public
 
@@ -183,7 +149,7 @@
  @return A tailored version string
  */
 - (NSString *)getVersionStringWithInt:(jint)minDigits
-                              withInt:(jint)maxDigits __attribute__((deprecated));
+                              withInt:(jint)maxDigits;
 
 /*!
  @brief Returns the hash code value for this set.
@@ -194,7 +160,7 @@
 
 /*!
  */
-+ (AndroidIcuUtilVersionInfo *)javaVersion __attribute__((deprecated));
++ (AndroidIcuUtilVersionInfo *)javaVersion;
 
 /*!
  @brief Main method prints out ICU version information
@@ -517,6 +483,4 @@ J2OBJC_TYPE_LITERAL_HEADER(AndroidIcuUtilVersionInfo)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_AndroidIcuUtilVersionInfo")

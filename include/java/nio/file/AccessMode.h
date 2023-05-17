@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaNioFileAccessMode
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -31,11 +28,17 @@
 
 @class IOSObjectArray;
 
-typedef NS_ENUM(NSUInteger, JavaNioFileAccessMode_Enum) {
+typedef NS_ENUM(jint, JavaNioFileAccessMode_Enum) {
   JavaNioFileAccessMode_Enum_READ = 0,
   JavaNioFileAccessMode_Enum_WRITE = 1,
   JavaNioFileAccessMode_Enum_EXECUTE = 2,
 };
+#if J2OBJC_IMPORTED_BY_JAVA_IMPLEMENTATION
+#define JavaNioFileAccessMode_ORDINAL jint
+#else
+#define JavaNioFileAccessMode_ORDINAL JavaNioFileAccessMode_Enum
+#endif
+
 
 /*!
  @brief Defines access modes used to test the accessibility of a file.
@@ -43,9 +46,6 @@ typedef NS_ENUM(NSUInteger, JavaNioFileAccessMode_Enum) {
  */
 @interface JavaNioFileAccessMode : JavaLangEnum
 
-@property (readonly, class, nonnull) JavaNioFileAccessMode *READ NS_SWIFT_NAME(READ);
-@property (readonly, class, nonnull) JavaNioFileAccessMode *WRITE NS_SWIFT_NAME(WRITE);
-@property (readonly, class, nonnull) JavaNioFileAccessMode *EXECUTE NS_SWIFT_NAME(EXECUTE);
 #pragma mark Public
 
 + (JavaNioFileAccessMode *)valueOfWithNSString:(NSString *)name;
@@ -55,6 +55,8 @@ typedef NS_ENUM(NSUInteger, JavaNioFileAccessMode_Enum) {
 #pragma mark Package-Private
 
 - (JavaNioFileAccessMode_Enum)toNSEnum;
+
+- (JavaNioFileAccessMode_ORDINAL)ordinal;
 
 @end
 
@@ -85,7 +87,7 @@ FOUNDATION_EXPORT IOSObjectArray *JavaNioFileAccessMode_values(void);
 
 FOUNDATION_EXPORT JavaNioFileAccessMode *JavaNioFileAccessMode_valueOfWithNSString_(NSString *name);
 
-FOUNDATION_EXPORT JavaNioFileAccessMode *JavaNioFileAccessMode_fromOrdinal(NSUInteger ordinal);
+FOUNDATION_EXPORT JavaNioFileAccessMode *JavaNioFileAccessMode_fromOrdinal(JavaNioFileAccessMode_ORDINAL ordinal);
 
 J2OBJC_TYPE_LITERAL_HEADER(JavaNioFileAccessMode)
 
@@ -95,6 +97,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaNioFileAccessMode)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaNioFileAccessMode")

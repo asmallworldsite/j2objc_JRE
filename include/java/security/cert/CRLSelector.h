@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaSecurityCertCRLSelector
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -25,6 +22,7 @@
 #if !defined (JavaSecurityCertCRLSelector_) && (INCLUDE_ALL_JavaSecurityCertCRLSelector || defined(INCLUDE_JavaSecurityCertCRLSelector))
 #define JavaSecurityCertCRLSelector_
 
+@class JavaLangBoolean;
 @class JavaSecurityCertCRL;
 
 /*!
@@ -74,6 +72,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaSecurityCertCRLSelector)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaSecurityCertCRLSelector")

@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaUtilZipChecksum
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -26,6 +23,8 @@
 #define JavaUtilZipChecksum_
 
 @class IOSByteArray;
+@class JavaLangInteger;
+@class JavaLangLong;
 
 /*!
  @brief An interface representing a data checksum.
@@ -72,6 +71,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilZipChecksum)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaUtilZipChecksum")

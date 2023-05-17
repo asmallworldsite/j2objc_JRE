@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaNioByteBuffer
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -40,6 +37,14 @@
 @class IOSIntArray;
 @class IOSLongArray;
 @class IOSShortArray;
+@class JavaLangBoolean;
+@class JavaLangByte;
+@class JavaLangCharacter;
+@class JavaLangDouble;
+@class JavaLangFloat;
+@class JavaLangInteger;
+@class JavaLangLong;
+@class JavaLangShort;
 @class JavaNioByteOrder;
 @class JavaNioCharBuffer;
 @class JavaNioDoubleBuffer;
@@ -198,6 +203,81 @@
 }
 
 #pragma mark Public
+
+/*!
+ @brief Creates a new byte buffer whose content is a shared and aligned
+  subsequence of this buffer's content.
+ <p> The content of the new buffer will start at this buffer's current
+  position rounded up to the index of the nearest aligned byte for the
+  given unit size, and end at this buffer's limit rounded down to the index
+  of the nearest aligned byte for the given unit size.
+  If rounding results in out-of-bound values then the new buffer's capacity
+  and limit will be zero.  If rounding is within bounds the following
+  expressions will be true for a new buffer <code>nb</code> and unit size 
+ <code>unitSize</code>:
+  @code
+ nb.alignmentOffset(0, unitSize) == 0
+  nb.alignmentOffset(nb.limit(), unitSize) == 0 
+ 
+@endcode
+  
+ <p> Changes to this buffer's content will be visible in the new
+  buffer, and vice versa; the two buffers' position, limit, and mark
+  values will be independent. 
+ <p> The new buffer's position will be zero, its capacity and its limit
+  will be the number of bytes remaining in this buffer or fewer subject to
+  alignment, its mark will be undefined, and its byte order will be 
+ <code>BIG_ENDIAN</code>.
+  The new buffer will be direct if, and only if, this buffer is direct, and
+  it will be read-only if, and only if, this buffer is read-only.  </p>
+ @param unitSize The unit size in bytes, must be a power of 
+ <code>2</code>
+ @return The new byte buffer
+ @throw IllegalArgumentException
+ If the unit size not a power of <code>2</code>
+ @throw UnsupportedOperationException
+ If the native platform does not guarantee stable aligned slices
+          for the given unit size when managing the memory regions
+          of buffers of the same kind as this buffer (direct or
+          non-direct).  For example, if garbage collection would result
+          in the moving of a memory region covered by a non-direct buffer
+          from one location to another and both locations have different
+          alignment characteristics.
+ - seealso: #alignmentOffset(int, int)
+ - seealso: #slice()
+ @since 9
+ */
+- (JavaNioByteBuffer *)alignedSliceWithInt:(jint)unitSize;
+
+/*!
+ @brief Returns the memory address, pointing to the byte at the given index,
+  modulus the given unit size.
+ <p> A return value greater than zero indicates the address of the byte at
+  the index is misaligned for the unit size, and the value's quantity
+  indicates how much the index should be rounded up or down to locate a
+  byte at an aligned address.  Otherwise, a value of <code>0</code> indicates
+  that the address of the byte at the index is aligned for the unit size.
+ @param index The index to query for alignment offset, must be non-negative, no
+           upper bounds check is performed
+ @param unitSize The unit size in bytes, must be a power of 
+ <code>2</code>
+ @return The indexed byte's memory address modulus the unit size
+ @throw IllegalArgumentException
+ If the index is negative or the unit size is not a power of
+          <code>2</code>
+ @throw UnsupportedOperationException
+ If the native platform does not guarantee stable alignment offset
+          values for the given unit size when managing the memory regions
+          of buffers of the same kind as this buffer (direct or
+          non-direct).  For example, if garbage collection would result
+          in the moving of a memory region covered by a non-direct buffer
+          from one location to another and both locations have different
+          alignment characteristics.
+ - seealso: #alignedSlice(int)
+ @since 9
+ */
+- (jint)alignmentOffsetWithInt:(jint)index
+                       withInt:(jint)unitSize;
 
 /*!
  @brief Allocates a new byte buffer.
@@ -388,7 +468,7 @@
   from one channel to another via the buffer <tt>buf</tt>:
   
  <blockquote>@code
-  buf.clear();          // Prepare buffer for use
+   buf.clear();          // Prepare buffer for use
     while (in.read(buf) >= 0 || buf.position != 0) {
         buf.flip();
         out.write(buf);
@@ -498,7 +578,7 @@
  <tt>src.get(dst,&nbsp;off,&nbsp;len)</tt> has exactly the same effect as
   the loop 
  @code
-    for (int i = off; i < off + len; i++)
+     for (int i = off; i < off + len; i++)
           dst[i] = src.get(); 
  
 @endcode
@@ -794,7 +874,7 @@
  <tt>dst.put(src,&nbsp;off,&nbsp;len)</tt> has exactly the same effect as
   the loop 
  @code
-    for (int i = off; i < off + len; i++)
+     for (int i = off; i < off + len; i++)
           dst.put(a[i]); 
  
 @endcode
@@ -1256,6 +1336,9 @@
                     withInt:(jint)srcOffset
                     withInt:(jint)length;
 
+- (JavaNioByteBuffer *)sliceWithInt:(jint)pos
+                            withInt:(jint)lim;
+
 // Disallowed inherited constructors, do not use.
 
 - (instancetype __nonnull)initWithInt:(jint)arg0
@@ -1290,6 +1373,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaNioByteBuffer)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaNioByteBuffer")

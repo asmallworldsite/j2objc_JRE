@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaUtilConcurrentAtomicAtomicBoolean
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -29,14 +26,15 @@
 #define INCLUDE_JavaIoSerializable 1
 #include "java/io/Serializable.h"
 
+@class JavaLangBoolean;
+
 /*!
  @brief A <code>boolean</code> value that may be updated atomically.See the 
- <code>java.util.concurrent.atomic</code> package specification for
-  description of the properties of atomic variables.
- An 
- <code>AtomicBoolean</code> is used in applications such as atomically
-  updated flags, and cannot be used as a replacement for a 
- <code>java.lang.Boolean</code>.
+ <code>VarHandle</code> specification for descriptions of the properties
+  of atomic accesses.
+ An <code>AtomicBoolean</code> is used in
+  applications such as atomically updated flags, and cannot be used
+  as a replacement for a <code>java.lang.Boolean</code>.
  @since 1.5
  @author Doug Lea
  */
@@ -56,10 +54,11 @@
 - (instancetype __nonnull)initWithBoolean:(jboolean)initialValue;
 
 /*!
- @brief Atomically sets the value to the given updated value
-  if the current value <code>==</code> the expected value.
- @param expect the expected value
- @param update the new value
+ @brief Atomically sets the value to <code>newValue</code>
+  if the current value <code>== expectedValue</code>,
+  with memory effects as specified by <code>VarHandle.compareAndSet</code>.
+ @param expectedValue the expected value
+ @param newValue the new value
  @return <code>true</code> if successful. False return indicates that
   the actual value was not equal to the expected value.
  */
@@ -67,27 +66,31 @@
                          withBoolean:(jboolean)update;
 
 /*!
- @brief Returns the current value.
+ @brief Returns the current value,
+  with memory effects as specified by <code>VarHandle.getVolatile</code>.
  @return the current value
  */
 - (jboolean)get;
 
 /*!
- @brief Atomically sets to the given value and returns the previous value.
+ @brief Atomically sets the value to <code>newValue</code> and returns the old value,
+  with memory effects as specified by <code>VarHandle.getAndSet</code>.
  @param newValue the new value
  @return the previous value
  */
 - (jboolean)getAndSetWithBoolean:(jboolean)newValue;
 
 /*!
- @brief Eventually sets to the given value.
+ @brief Sets the value to <code>newValue</code>,
+  with memory effects as specified by <code>VarHandle.setRelease</code>.
  @param newValue the new value
  @since 1.6
  */
 - (void)lazySetWithBoolean:(jboolean)newValue;
 
 /*!
- @brief Unconditionally sets to the given value.
+ @brief Sets the value to <code>newValue</code>,
+  with memory effects as specified by <code>VarHandle.setVolatile</code>.
  @param newValue the new value
  */
 - (void)setWithBoolean:(jboolean)newValue;
@@ -99,14 +102,13 @@
 - (NSString *)description;
 
 /*!
- @brief Atomically sets the value to the given updated value
-  if the current value <code>==</code> the expected value.
- <p><a href="package-summary.html#weakCompareAndSet">May fail
-  spuriously and does not provide ordering guarantees</a>, so is
-  only rarely an appropriate alternative to <code>compareAndSet</code>.
- @param expect the expected value
- @param update the new value
+ @brief Possibly atomically sets the value to <code>newValue</code>
+  if the current value <code>== expectedValue</code>,
+  with memory effects as specified by <code>VarHandle.weakCompareAndSetPlain</code>.
+ @param expectedValue the expected value
+ @param newValue the new value
  @return <code>true</code> if successful
+ - seealso: #weakCompareAndSetPlain
  */
 - (jboolean)weakCompareAndSetWithBoolean:(jboolean)expect
                              withBoolean:(jboolean)update;
@@ -135,6 +137,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentAtomicAtomicBoolean)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaUtilConcurrentAtomicAtomicBoolean")

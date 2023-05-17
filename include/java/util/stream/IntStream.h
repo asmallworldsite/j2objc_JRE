@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaUtilStreamIntStream
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -30,6 +27,9 @@
 #include "java/util/stream/BaseStream.h"
 
 @class IOSIntArray;
+@class JavaLangBoolean;
+@class JavaLangInteger;
+@class JavaLangLong;
 @class JavaUtilIntSummaryStatistics;
 @class JavaUtilOptionalDouble;
 @class JavaUtilOptionalInt;
@@ -60,7 +60,7 @@
  <code>Stream</code> and <code>IntStream</code>, computing the sum of the weights of the
   red widgets: 
  @code
-    int sum = widgets.stream()
+     int sum = widgets.stream()
                        .filter(w -> w.getColor() == RED)
                        .mapToInt(w -> w.getWeight())
                        .sum(); 
@@ -256,7 +256,7 @@
   accumulation function, and returns the reduced value.This is equivalent
   to: 
  @code
-    int result = identity;
+     int result = identity;
       for (int element : this stream)
           result = accumulator.applyAsInt(result, element)
       return result; 
@@ -290,7 +290,7 @@ withJavaUtilFunctionIntBinaryOperator:(id<JavaUtilFunctionIntBinaryOperator>)op;
   function, and returns an <code>OptionalInt</code> describing the reduced value,
   if any.This is equivalent to: 
  @code
-    boolean foundAny = false;
+     boolean foundAny = false;
       int result = null;
       for (int element : this stream) {
           if (!
@@ -326,7 +326,7 @@ withJavaUtilFunctionIntBinaryOperator:(id<JavaUtilFunctionIntBinaryOperator>)op;
  This
   produces a result equivalent to: 
  @code
-    R result = supplier.get();
+     R result = supplier.get();
       for (int element : this stream)
           accumulator.accept(result, element);
       return result; 
@@ -358,7 +358,7 @@ withJavaUtilFunctionIntBinaryOperator:(id<JavaUtilFunctionIntBinaryOperator>)op;
   of a <a href="package-summary.html#Reduction">reduction</a>
   and is equivalent to: 
  @code
-    return reduce(0, Integer::sum); 
+     return reduce(0, Integer::sum); 
  
 @endcode
   
@@ -374,7 +374,7 @@ withJavaUtilFunctionIntBinaryOperator:(id<JavaUtilFunctionIntBinaryOperator>)op;
   case of a <a href="package-summary.html#Reduction">reduction</a>
   and is equivalent to: 
  @code
-    return reduce(Integer::min); 
+     return reduce(Integer::min); 
  
 @endcode
   
@@ -390,7 +390,7 @@ withJavaUtilFunctionIntBinaryOperator:(id<JavaUtilFunctionIntBinaryOperator>)op;
   case of a <a href="package-summary.html#Reduction">reduction</a>
   and is equivalent to: 
  @code
-    return reduce(Integer::max); 
+     return reduce(Integer::max); 
  
 @endcode
   
@@ -406,7 +406,7 @@ withJavaUtilFunctionIntBinaryOperator:(id<JavaUtilFunctionIntBinaryOperator>)op;
  <a href="package-summary.html#Reduction">reduction</a> and is
   equivalent to: 
  @code
-    return mapToLong(e -> 1L).sum(); 
+     return mapToLong(e -> 1L).sum(); 
  
 @endcode
   
@@ -681,6 +681,7 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilStreamIntStream)
 #define INCLUDE_JavaUtilFunctionIntConsumer 1
 #include "java/util/function/IntConsumer.h"
 
+@class JavaLangInteger;
 @protocol JavaUtilStreamIntStream;
 
 /*!
@@ -737,6 +738,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilStreamIntStream_Builder)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaUtilStreamIntStream")

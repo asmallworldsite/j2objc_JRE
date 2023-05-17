@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaSecurityInvalidParameterException
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -36,6 +33,7 @@
   is thrown when an invalid parameter is passed
   to a method.
  @author Benjamin Renaud
+ @since 1.1
  */
 @interface JavaSecurityInvalidParameterException : JavaLangIllegalArgumentException
 
@@ -87,6 +85,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaSecurityInvalidParameterException)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaSecurityInvalidParameterException")

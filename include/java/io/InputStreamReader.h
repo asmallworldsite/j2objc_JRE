@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaIoInputStreamReader
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -31,6 +28,8 @@
 
 @class IOSCharArray;
 @class JavaIoInputStream;
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @class JavaNioCharsetCharset;
 @class JavaNioCharsetCharsetDecoder;
 
@@ -57,7 +56,7 @@
  - seealso: InputStream
  - seealso: java.nio.charset.Charset
  @author Mark Reinhold
- @since JDK1.1
+ @since 1.1
  */
 @interface JavaIoInputStreamReader : JavaIoReader
 
@@ -187,6 +186,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaIoInputStreamReader)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaIoInputStreamReader")

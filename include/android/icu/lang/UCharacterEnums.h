@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_AndroidIcuLangUCharacterEnums
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -41,6 +38,8 @@ J2OBJC_TYPE_LITERAL_HEADER(AndroidIcuLangUCharacterEnums)
 #if !defined (AndroidIcuLangUCharacterEnums_ECharacterCategory_) && (INCLUDE_ALL_AndroidIcuLangUCharacterEnums || defined(INCLUDE_AndroidIcuLangUCharacterEnums_ECharacterCategory))
 #define AndroidIcuLangUCharacterEnums_ECharacterCategory_
 
+@class JavaLangByte;
+
 /*!
  @brief 'Enum' for the CharacterCategory constants.These constants are
   compatible in name <b>but not in value</b> with those defined in 
@@ -48,44 +47,6 @@ J2OBJC_TYPE_LITERAL_HEADER(AndroidIcuLangUCharacterEnums)
  - seealso: UCharacterCategory
  */
 @protocol AndroidIcuLangUCharacterEnums_ECharacterCategory < JavaObject >
-
-@end
-
-@interface AndroidIcuLangUCharacterEnums_ECharacterCategory : NSObject
-@property (readonly, class) jbyte UNASSIGNED NS_SWIFT_NAME(UNASSIGNED);
-@property (readonly, class) jbyte GENERAL_OTHER_TYPES NS_SWIFT_NAME(GENERAL_OTHER_TYPES);
-@property (readonly, class) jbyte UPPERCASE_LETTER NS_SWIFT_NAME(UPPERCASE_LETTER);
-@property (readonly, class) jbyte LOWERCASE_LETTER NS_SWIFT_NAME(LOWERCASE_LETTER);
-@property (readonly, class) jbyte TITLECASE_LETTER NS_SWIFT_NAME(TITLECASE_LETTER);
-@property (readonly, class) jbyte MODIFIER_LETTER NS_SWIFT_NAME(MODIFIER_LETTER);
-@property (readonly, class) jbyte OTHER_LETTER NS_SWIFT_NAME(OTHER_LETTER);
-@property (readonly, class) jbyte NON_SPACING_MARK NS_SWIFT_NAME(NON_SPACING_MARK);
-@property (readonly, class) jbyte ENCLOSING_MARK NS_SWIFT_NAME(ENCLOSING_MARK);
-@property (readonly, class) jbyte COMBINING_SPACING_MARK NS_SWIFT_NAME(COMBINING_SPACING_MARK);
-@property (readonly, class) jbyte DECIMAL_DIGIT_NUMBER NS_SWIFT_NAME(DECIMAL_DIGIT_NUMBER);
-@property (readonly, class) jbyte LETTER_NUMBER NS_SWIFT_NAME(LETTER_NUMBER);
-@property (readonly, class) jbyte OTHER_NUMBER NS_SWIFT_NAME(OTHER_NUMBER);
-@property (readonly, class) jbyte SPACE_SEPARATOR NS_SWIFT_NAME(SPACE_SEPARATOR);
-@property (readonly, class) jbyte LINE_SEPARATOR NS_SWIFT_NAME(LINE_SEPARATOR);
-@property (readonly, class) jbyte PARAGRAPH_SEPARATOR NS_SWIFT_NAME(PARAGRAPH_SEPARATOR);
-@property (readonly, class) jbyte CONTROL NS_SWIFT_NAME(CONTROL);
-@property (readonly, class) jbyte FORMAT NS_SWIFT_NAME(FORMAT);
-@property (readonly, class) jbyte PRIVATE_USE NS_SWIFT_NAME(PRIVATE_USE);
-@property (readonly, class) jbyte SURROGATE NS_SWIFT_NAME(SURROGATE);
-@property (readonly, class) jbyte DASH_PUNCTUATION NS_SWIFT_NAME(DASH_PUNCTUATION);
-@property (readonly, class) jbyte START_PUNCTUATION NS_SWIFT_NAME(START_PUNCTUATION);
-@property (readonly, class) jbyte END_PUNCTUATION NS_SWIFT_NAME(END_PUNCTUATION);
-@property (readonly, class) jbyte CONNECTOR_PUNCTUATION NS_SWIFT_NAME(CONNECTOR_PUNCTUATION);
-@property (readonly, class) jbyte OTHER_PUNCTUATION NS_SWIFT_NAME(OTHER_PUNCTUATION);
-@property (readonly, class) jbyte MATH_SYMBOL NS_SWIFT_NAME(MATH_SYMBOL);
-@property (readonly, class) jbyte CURRENCY_SYMBOL NS_SWIFT_NAME(CURRENCY_SYMBOL);
-@property (readonly, class) jbyte MODIFIER_SYMBOL NS_SWIFT_NAME(MODIFIER_SYMBOL);
-@property (readonly, class) jbyte OTHER_SYMBOL NS_SWIFT_NAME(OTHER_SYMBOL);
-@property (readonly, class) jbyte INITIAL_PUNCTUATION NS_SWIFT_NAME(INITIAL_PUNCTUATION);
-@property (readonly, class) jbyte INITIAL_QUOTE_PUNCTUATION NS_SWIFT_NAME(INITIAL_QUOTE_PUNCTUATION);
-@property (readonly, class) jbyte FINAL_PUNCTUATION NS_SWIFT_NAME(FINAL_PUNCTUATION);
-@property (readonly, class) jbyte FINAL_QUOTE_PUNCTUATION NS_SWIFT_NAME(FINAL_QUOTE_PUNCTUATION);
-@property (readonly, class) jbyte CHAR_CATEGORY_COUNT NS_SWIFT_NAME(CHAR_CATEGORY_COUNT);
 
 @end
 
@@ -345,6 +306,9 @@ J2OBJC_TYPE_LITERAL_HEADER(AndroidIcuLangUCharacterEnums_ECharacterCategory)
 #if !defined (AndroidIcuLangUCharacterEnums_ECharacterDirection_) && (INCLUDE_ALL_AndroidIcuLangUCharacterEnums || defined(INCLUDE_AndroidIcuLangUCharacterEnums_ECharacterDirection))
 #define AndroidIcuLangUCharacterEnums_ECharacterDirection_
 
+@class JavaLangByte;
+@class JavaLangInteger;
+
 /*!
  @brief 'Enum' for the CharacterDirection constants.Some constants are
   compatible in name <b>but not in value</b> with those defined in 
@@ -352,54 +316,6 @@ J2OBJC_TYPE_LITERAL_HEADER(AndroidIcuLangUCharacterEnums_ECharacterCategory)
  - seealso: UCharacterDirection
  */
 @protocol AndroidIcuLangUCharacterEnums_ECharacterDirection < JavaObject >
-
-@end
-
-@interface AndroidIcuLangUCharacterEnums_ECharacterDirection : NSObject
-@property (readonly, class) jint LEFT_TO_RIGHT NS_SWIFT_NAME(LEFT_TO_RIGHT);
-@property (readonly, class) jbyte DIRECTIONALITY_LEFT_TO_RIGHT NS_SWIFT_NAME(DIRECTIONALITY_LEFT_TO_RIGHT);
-@property (readonly, class) jint RIGHT_TO_LEFT NS_SWIFT_NAME(RIGHT_TO_LEFT);
-@property (readonly, class) jbyte DIRECTIONALITY_RIGHT_TO_LEFT NS_SWIFT_NAME(DIRECTIONALITY_RIGHT_TO_LEFT);
-@property (readonly, class) jint EUROPEAN_NUMBER NS_SWIFT_NAME(EUROPEAN_NUMBER);
-@property (readonly, class) jbyte DIRECTIONALITY_EUROPEAN_NUMBER NS_SWIFT_NAME(DIRECTIONALITY_EUROPEAN_NUMBER);
-@property (readonly, class) jint EUROPEAN_NUMBER_SEPARATOR NS_SWIFT_NAME(EUROPEAN_NUMBER_SEPARATOR);
-@property (readonly, class) jbyte DIRECTIONALITY_EUROPEAN_NUMBER_SEPARATOR NS_SWIFT_NAME(DIRECTIONALITY_EUROPEAN_NUMBER_SEPARATOR);
-@property (readonly, class) jint EUROPEAN_NUMBER_TERMINATOR NS_SWIFT_NAME(EUROPEAN_NUMBER_TERMINATOR);
-@property (readonly, class) jbyte DIRECTIONALITY_EUROPEAN_NUMBER_TERMINATOR NS_SWIFT_NAME(DIRECTIONALITY_EUROPEAN_NUMBER_TERMINATOR);
-@property (readonly, class) jint ARABIC_NUMBER NS_SWIFT_NAME(ARABIC_NUMBER);
-@property (readonly, class) jbyte DIRECTIONALITY_ARABIC_NUMBER NS_SWIFT_NAME(DIRECTIONALITY_ARABIC_NUMBER);
-@property (readonly, class) jint COMMON_NUMBER_SEPARATOR NS_SWIFT_NAME(COMMON_NUMBER_SEPARATOR);
-@property (readonly, class) jbyte DIRECTIONALITY_COMMON_NUMBER_SEPARATOR NS_SWIFT_NAME(DIRECTIONALITY_COMMON_NUMBER_SEPARATOR);
-@property (readonly, class) jint BLOCK_SEPARATOR NS_SWIFT_NAME(BLOCK_SEPARATOR);
-@property (readonly, class) jbyte DIRECTIONALITY_PARAGRAPH_SEPARATOR NS_SWIFT_NAME(DIRECTIONALITY_PARAGRAPH_SEPARATOR);
-@property (readonly, class) jint SEGMENT_SEPARATOR NS_SWIFT_NAME(SEGMENT_SEPARATOR);
-@property (readonly, class) jbyte DIRECTIONALITY_SEGMENT_SEPARATOR NS_SWIFT_NAME(DIRECTIONALITY_SEGMENT_SEPARATOR);
-@property (readonly, class) jint WHITE_SPACE_NEUTRAL NS_SWIFT_NAME(WHITE_SPACE_NEUTRAL);
-@property (readonly, class) jbyte DIRECTIONALITY_WHITESPACE NS_SWIFT_NAME(DIRECTIONALITY_WHITESPACE);
-@property (readonly, class) jint OTHER_NEUTRAL NS_SWIFT_NAME(OTHER_NEUTRAL);
-@property (readonly, class) jbyte DIRECTIONALITY_OTHER_NEUTRALS NS_SWIFT_NAME(DIRECTIONALITY_OTHER_NEUTRALS);
-@property (readonly, class) jint LEFT_TO_RIGHT_EMBEDDING NS_SWIFT_NAME(LEFT_TO_RIGHT_EMBEDDING);
-@property (readonly, class) jbyte DIRECTIONALITY_LEFT_TO_RIGHT_EMBEDDING NS_SWIFT_NAME(DIRECTIONALITY_LEFT_TO_RIGHT_EMBEDDING);
-@property (readonly, class) jint LEFT_TO_RIGHT_OVERRIDE NS_SWIFT_NAME(LEFT_TO_RIGHT_OVERRIDE);
-@property (readonly, class) jbyte DIRECTIONALITY_LEFT_TO_RIGHT_OVERRIDE NS_SWIFT_NAME(DIRECTIONALITY_LEFT_TO_RIGHT_OVERRIDE);
-@property (readonly, class) jint RIGHT_TO_LEFT_ARABIC NS_SWIFT_NAME(RIGHT_TO_LEFT_ARABIC);
-@property (readonly, class) jbyte DIRECTIONALITY_RIGHT_TO_LEFT_ARABIC NS_SWIFT_NAME(DIRECTIONALITY_RIGHT_TO_LEFT_ARABIC);
-@property (readonly, class) jint RIGHT_TO_LEFT_EMBEDDING NS_SWIFT_NAME(RIGHT_TO_LEFT_EMBEDDING);
-@property (readonly, class) jbyte DIRECTIONALITY_RIGHT_TO_LEFT_EMBEDDING NS_SWIFT_NAME(DIRECTIONALITY_RIGHT_TO_LEFT_EMBEDDING);
-@property (readonly, class) jint RIGHT_TO_LEFT_OVERRIDE NS_SWIFT_NAME(RIGHT_TO_LEFT_OVERRIDE);
-@property (readonly, class) jbyte DIRECTIONALITY_RIGHT_TO_LEFT_OVERRIDE NS_SWIFT_NAME(DIRECTIONALITY_RIGHT_TO_LEFT_OVERRIDE);
-@property (readonly, class) jint POP_DIRECTIONAL_FORMAT NS_SWIFT_NAME(POP_DIRECTIONAL_FORMAT);
-@property (readonly, class) jbyte DIRECTIONALITY_POP_DIRECTIONAL_FORMAT NS_SWIFT_NAME(DIRECTIONALITY_POP_DIRECTIONAL_FORMAT);
-@property (readonly, class) jint DIR_NON_SPACING_MARK NS_SWIFT_NAME(DIR_NON_SPACING_MARK);
-@property (readonly, class) jbyte DIRECTIONALITY_NONSPACING_MARK NS_SWIFT_NAME(DIRECTIONALITY_NONSPACING_MARK);
-@property (readonly, class) jint BOUNDARY_NEUTRAL NS_SWIFT_NAME(BOUNDARY_NEUTRAL);
-@property (readonly, class) jbyte DIRECTIONALITY_BOUNDARY_NEUTRAL NS_SWIFT_NAME(DIRECTIONALITY_BOUNDARY_NEUTRAL);
-@property (readonly, class) jbyte FIRST_STRONG_ISOLATE NS_SWIFT_NAME(FIRST_STRONG_ISOLATE);
-@property (readonly, class) jbyte LEFT_TO_RIGHT_ISOLATE NS_SWIFT_NAME(LEFT_TO_RIGHT_ISOLATE);
-@property (readonly, class) jbyte RIGHT_TO_LEFT_ISOLATE NS_SWIFT_NAME(RIGHT_TO_LEFT_ISOLATE);
-@property (readonly, class) jbyte POP_DIRECTIONAL_ISOLATE NS_SWIFT_NAME(POP_DIRECTIONAL_ISOLATE);
-@property (readonly, class) jint CHAR_DIRECTION_COUNT NS_SWIFT_NAME(CHAR_DIRECTION_COUNT);
-@property (readonly, class) jbyte DIRECTIONALITY_UNDEFINED NS_SWIFT_NAME(DIRECTIONALITY_UNDEFINED);
 
 @end
 
@@ -759,6 +675,4 @@ J2OBJC_TYPE_LITERAL_HEADER(AndroidIcuLangUCharacterEnums_ECharacterDirection)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_AndroidIcuLangUCharacterEnums")

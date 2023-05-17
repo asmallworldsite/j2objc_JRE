@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaSecurityCertLDAPCertStoreParameters
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -29,12 +26,19 @@
 #define INCLUDE_JavaSecurityCertCertStoreParameters 1
 #include "java/security/cert/CertStoreParameters.h"
 
+@class JavaLangInteger;
+
 /*!
  @brief Parameters used as input for the LDAP <code>CertStore</code> algorithm.
  <p>
   This class is used to provide necessary configuration parameters (server
   name and port number) to implementations of the LDAP <code>CertStore</code>
-  algorithm. 
+  algorithm. However, if you are retrieving certificates or CRLs from
+  an ldap URI as specified by RFC 5280, use the 
+ <code>URICertStoreParameters</code>
+  instead as the URI may contain additional information such as the
+  distinguished name that will help the LDAP CertStore find the specific
+  certificates and CRLs. 
  <p>
   <b>Concurrent Access</b>
   <p>
@@ -137,6 +141,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaSecurityCertLDAPCertStoreParameters)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaSecurityCertLDAPCertStoreParameters")

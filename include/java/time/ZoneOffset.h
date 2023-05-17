@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaTimeZoneOffset
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -45,6 +42,9 @@
 #define INCLUDE_JavaIoSerializable 1
 #include "java/io/Serializable.h"
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
+@class JavaLangLong;
 @class JavaTimeTemporalValueRange;
 @class JavaTimeZoneZoneRules;
 @protocol JavaIoDataInput;
@@ -84,9 +84,6 @@
  @since 1.8
  */
 @interface JavaTimeZoneOffset : JavaTimeZoneId < JavaTimeTemporalTemporalAccessor, JavaTimeTemporalTemporalAdjuster, JavaLangComparable, JavaIoSerializable >
-@property (readonly, class, strong) JavaTimeZoneOffset *UTC NS_SWIFT_NAME(UTC);
-@property (readonly, class, strong) JavaTimeZoneOffset *MIN NS_SWIFT_NAME(MIN);
-@property (readonly, class, strong) JavaTimeZoneOffset *MAX NS_SWIFT_NAME(MAX);
 
 #pragma mark Public
 
@@ -460,6 +457,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaTimeZoneOffset)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaTimeZoneOffset")

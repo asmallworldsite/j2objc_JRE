@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaTimeTemporalTemporalAdjusters
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -25,6 +22,7 @@
 #if !defined (JavaTimeTemporalTemporalAdjusters_) && (INCLUDE_ALL_JavaTimeTemporalTemporalAdjusters || defined(INCLUDE_JavaTimeTemporalTemporalAdjusters))
 #define JavaTimeTemporalTemporalAdjusters_
 
+@class JavaLangInteger;
 @class JavaTimeDayOfWeek;
 @protocol JavaTimeTemporalTemporalAdjuster;
 @protocol JavaUtilFunctionUnaryOperator;
@@ -69,32 +67,30 @@
 #pragma mark Public
 
 /*!
- @brief Returns the day-of-week in month adjuster, which returns a new date
-  in the same month with the ordinal day-of-week.
- This is used for expressions like the 'second Tuesday in March'. 
- <p>
-  The ISO calendar system behaves as follows:<br>
+ @brief Returns the day-of-week in month adjuster, which returns a new date with the ordinal
+  day-of-week based on the month.This is used for expressions like the 'second Tuesday in
+  March'.
+ <p>The ISO calendar system behaves as follows:<br>
   The input 2011-12-15 for (1,TUESDAY) will return 2011-12-06.<br>
   The input 2011-12-15 for (2,TUESDAY) will return 2011-12-13.<br>
   The input 2011-12-15 for (3,TUESDAY) will return 2011-12-20.<br>
   The input 2011-12-15 for (4,TUESDAY) will return 2011-12-27.<br>
   The input 2011-12-15 for (5,TUESDAY) will return 2012-01-03.<br>
   The input 2011-12-15 for (-1,TUESDAY) will return 2011-12-27 (last in month).<br>
-  The input 2011-12-15 for (-4,TUESDAY) will return 2011-12-06 (3 weeks before last in month).<br>
-  The input 2011-12-15 for (-5,TUESDAY) will return 2011-11-29 (4 weeks before last in month).<br>
+  The input 2011-12-15 for (-4,TUESDAY) will return 2011-12-06 (3 weeks before last in month). 
+ <br>
+  The input 2011-12-15 for (-5,TUESDAY) will return 2011-11-29 (4 weeks before last in month). 
+ <br>
   The input 2011-12-15 for (0,TUESDAY) will return 2011-11-29 (last in previous month).<br>
-  <p>
-  For a positive or zero ordinal, the algorithm is equivalent to finding the first
-  day-of-week that matches within the month and then adding a number of weeks to it.
-  For a negative ordinal, the algorithm is equivalent to finding the last
-  day-of-week that matches within the month and then subtracting a number of weeks to it.
-  The ordinal number of weeks is not validated and is interpreted leniently
-  according to this algorithm. This definition means that an ordinal of zero finds
-  the last matching day-of-week in the previous month. 
- <p>
-  The behavior is suitable for use with most calendar systems.
-  It uses the <code>DAY_OF_WEEK</code> and <code>DAY_OF_MONTH</code> fields
-  and the <code>DAYS</code> unit, and assumes a seven day week.
+  
+ <p>For a positive or zero ordinal, the algorithm is equivalent to finding the first day-of-week
+  that matches within the month and then adding a number of weeks to it. For a negative ordinal,
+  the algorithm is equivalent to finding the last day-of-week that matches within the month and
+  then subtracting a number of weeks to it. The ordinal number of weeks is not validated and is
+  interpreted leniently according to this algorithm. This definition means that an ordinal of
+  zero finds the last matching day-of-week in the previous month. 
+ <p>The behavior is suitable for use with most calendar systems. It uses the <code>DAY_OF_WEEK</code>
+  and <code>DAY_OF_MONTH</code> fields and the <code>DAYS</code> unit, and assumes a seven day week.
  @param ordinal the week within the month, unbounded but typically from -5 to 5
  @param dayOfWeek the day-of-week, not null
  @return the day-of-week in month adjuster, not null
@@ -298,7 +294,7 @@
  <p>
   In general, user-written adjusters should be static constants: 
  @code
- static TemporalAdjuster TWO_DAYS_LATER =
+  static TemporalAdjuster TWO_DAYS_LATER =
         TemporalAdjusters.ofDateAdjuster(date -> date.plusDays(2)); 
  
 @endcode
@@ -382,6 +378,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaTimeTemporalTemporalAdjusters)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaTimeTemporalTemporalAdjusters")

@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaLangClassNotFoundException
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -52,7 +49,7 @@
  - seealso: java.lang.Class#forName(java.lang.String)
  - seealso: java.lang.ClassLoader#findSystemClass(java.lang.String)
  - seealso: java.lang.ClassLoader#loadClass(java.lang.String, boolean)
- @since JDK1.0
+ @since 1.0
  */
 @interface JavaLangClassNotFoundException : JavaLangReflectiveOperationException
 
@@ -84,7 +81,7 @@
 /*!
  @brief Returns the cause of this exception (the exception that was raised
   if an error occurred while attempting to load the class; otherwise 
- <tt>null</tt>).
+ <code>null</code>).
  @return the cause of this exception.
  @since 1.4
  */
@@ -92,7 +89,7 @@
 
 /*!
  @brief Returns the exception that was raised if an error occurred while
-  attempting to load the class.Otherwise, returns <tt>null</tt>.
+  attempting to load the class.Otherwise, returns <code>null</code>.
  <p>This method predates the general-purpose exception chaining facility.
   The <code>Throwable.getCause()</code> method is now the preferred means of
   obtaining this information.
@@ -135,6 +132,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaLangClassNotFoundException)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaLangClassNotFoundException")

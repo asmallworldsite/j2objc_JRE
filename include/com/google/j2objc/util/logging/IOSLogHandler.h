@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_ComGoogleJ2objcUtilLoggingIOSLogHandler
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -36,7 +33,6 @@
  @author Tom Ball
  */
 @interface ComGoogleJ2objcUtilLoggingIOSLogHandler : JavaUtilLoggingHandler
-@property (readonly, copy, class) NSString *IOS_LOG_MANAGER_DEFAULTS NS_SWIFT_NAME(IOS_LOG_MANAGER_DEFAULTS);
 
 #pragma mark Public
 
@@ -107,6 +103,4 @@ J2OBJC_TYPE_LITERAL_HEADER(ComGoogleJ2objcUtilLoggingIOSLogHandler_IOSLogFormatt
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_ComGoogleJ2objcUtilLoggingIOSLogHandler")

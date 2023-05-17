@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaUtilIllegalFormatPrecisionException
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -28,6 +25,8 @@
 #define RESTRICT_JavaUtilIllegalFormatException 1
 #define INCLUDE_JavaUtilIllegalFormatException 1
 #include "java/util/IllegalFormatException.h"
+
+@class JavaLangInteger;
 
 /*!
  @brief Unchecked exception thrown when the precision is a negative value other than 
@@ -75,6 +74,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilIllegalFormatPrecisionException)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaUtilIllegalFormatPrecisionException")

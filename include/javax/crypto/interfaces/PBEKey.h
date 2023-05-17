@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaxCryptoInterfacesPBEKey
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -31,6 +28,8 @@
 
 @class IOSByteArray;
 @class IOSCharArray;
+@class JavaLangInteger;
+@class JavaLangLong;
 
 /*!
  @brief The interface to a PBE key.
@@ -67,11 +66,6 @@
 
 @end
 
-@interface JavaxCryptoInterfacesPBEKey : NSObject
-@property (readonly, class) jlong serialVersionUID NS_SWIFT_NAME(serialVersionUID);
-
-@end
-
 J2OBJC_EMPTY_STATIC_INIT(JavaxCryptoInterfacesPBEKey)
 
 /*!
@@ -90,6 +84,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaxCryptoInterfacesPBEKey)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaxCryptoInterfacesPBEKey")

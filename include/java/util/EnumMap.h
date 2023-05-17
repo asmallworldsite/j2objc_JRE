@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaUtilEnumMap
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -34,7 +31,9 @@
 #include "java/io/Serializable.h"
 
 @class IOSClass;
+@class JavaLangBoolean;
 @class JavaLangEnum;
+@class JavaLangInteger;
 @protocol JavaUtilCollection;
 @protocol JavaUtilMap;
 @protocol JavaUtilSet;
@@ -284,6 +283,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilEnumMap)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaUtilEnumMap")

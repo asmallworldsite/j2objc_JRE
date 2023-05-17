@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaIoStringReader
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -30,11 +27,14 @@
 #include "java/io/Reader.h"
 
 @class IOSCharArray;
+@class JavaLangBoolean;
+@class JavaLangInteger;
+@class JavaLangLong;
 
 /*!
  @brief A character stream whose source is a string.
  @author Mark Reinhold
- @since JDK1.1
+ @since 1.1
  */
 @interface JavaIoStringReader : JavaIoReader
 
@@ -50,7 +50,8 @@
  @brief Closes the stream and releases any system resources associated with
   it.Once the stream has been closed, further read(),
   ready(), mark(), or reset() invocations will throw an IOException.
- Closing a previously closed stream has no effect.
+ Closing a previously closed stream has no effect. This method will block
+  while there is another thread blocking on the reader.
  */
 - (void)close;
 
@@ -87,6 +88,7 @@
  @return The number of characters read, or -1 if the end of the
               stream has been reached
  @throw IOExceptionIf an I/O error occurs
+ @throw IndexOutOfBoundsException
  */
 - (jint)readWithCharArray:(IOSCharArray *)cbuf
                   withInt:(jint)off
@@ -145,6 +147,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaIoStringReader)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaIoStringReader")

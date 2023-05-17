@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaNioFileStandardWatchEventKinds
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -32,10 +29,6 @@
  @since 1.7
  */
 @interface JavaNioFileStandardWatchEventKinds : NSObject
-@property (readonly, class, strong) id<JavaNioFileWatchEvent_Kind> OVERFLOW_ NS_SWIFT_NAME(OVERFLOW_);
-@property (readonly, class, strong) id<JavaNioFileWatchEvent_Kind> ENTRY_CREATE NS_SWIFT_NAME(ENTRY_CREATE);
-@property (readonly, class, strong) id<JavaNioFileWatchEvent_Kind> ENTRY_DELETE NS_SWIFT_NAME(ENTRY_DELETE);
-@property (readonly, class, strong) id<JavaNioFileWatchEvent_Kind> ENTRY_MODIFY NS_SWIFT_NAME(ENTRY_MODIFY);
 
 @end
 
@@ -98,6 +91,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaNioFileStandardWatchEventKinds)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaNioFileStandardWatchEventKinds")

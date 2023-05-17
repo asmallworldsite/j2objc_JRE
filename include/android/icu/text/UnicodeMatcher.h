@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_AndroidIcuTextUnicodeMatcher
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -27,6 +24,9 @@
 
 @class AndroidIcuTextUnicodeSet;
 @class IOSIntArray;
+@class JavaLangBoolean;
+@class JavaLangCharacter;
+@class JavaLangInteger;
 @protocol AndroidIcuTextReplaceable;
 
 /*!
@@ -104,14 +104,6 @@
 
 @end
 
-@interface AndroidIcuTextUnicodeMatcher : NSObject
-@property (readonly, class) jint U_MISMATCH NS_SWIFT_NAME(U_MISMATCH);
-@property (readonly, class) jint U_PARTIAL_MATCH NS_SWIFT_NAME(U_PARTIAL_MATCH);
-@property (readonly, class) jint U_MATCH NS_SWIFT_NAME(U_MATCH);
-@property (readonly, class) jchar ETHER NS_SWIFT_NAME(ETHER);
-
-@end
-
 J2OBJC_EMPTY_STATIC_INIT(AndroidIcuTextUnicodeMatcher)
 
 /*!
@@ -168,6 +160,4 @@ J2OBJC_TYPE_LITERAL_HEADER(AndroidIcuTextUnicodeMatcher)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_AndroidIcuTextUnicodeMatcher")

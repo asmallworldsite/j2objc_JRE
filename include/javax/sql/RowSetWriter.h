@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaxSqlRowSetWriter
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -25,6 +22,7 @@
 #if !defined (JavaxSqlRowSetWriter_) && (INCLUDE_ALL_JavaxSqlRowSetWriter || defined(INCLUDE_JavaxSqlRowSetWriter))
 #define JavaxSqlRowSetWriter_
 
+@class JavaLangBoolean;
 @protocol JavaxSqlRowSetInternal;
 
 /*!
@@ -70,6 +68,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaxSqlRowSetWriter)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaxSqlRowSetWriter")

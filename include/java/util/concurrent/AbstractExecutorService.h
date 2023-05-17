@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaUtilConcurrentAbstractExecutorService
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -29,6 +26,7 @@
 #define INCLUDE_JavaUtilConcurrentExecutorService 1
 #include "java/util/concurrent/ExecutorService.h"
 
+@class JavaLangLong;
 @class JavaUtilConcurrentTimeUnit;
 @protocol JavaLangRunnable;
 @protocol JavaUtilCollection;
@@ -147,6 +145,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentAbstractExecutorService)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaUtilConcurrentAbstractExecutorService")

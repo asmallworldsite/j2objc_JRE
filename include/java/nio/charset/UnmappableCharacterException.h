@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaNioCharsetUnmappableCharacterException
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -28,6 +25,8 @@
 #define RESTRICT_JavaNioCharsetCharacterCodingException 1
 #define INCLUDE_JavaNioCharsetCharacterCodingException 1
 #include "java/nio/charset/CharacterCodingException.h"
+
+@class JavaLangInteger;
 
 /*!
  @brief Checked exception thrown when an input character (or byte) sequence
@@ -80,6 +79,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaNioCharsetUnmappableCharacterException)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaNioCharsetUnmappableCharacterException")

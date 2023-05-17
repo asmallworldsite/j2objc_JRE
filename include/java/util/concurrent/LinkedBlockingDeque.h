@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaUtilConcurrentLinkedBlockingDeque
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -38,10 +35,15 @@
 #include "java/io/Serializable.h"
 
 @class IOSObjectArray;
+@class JavaLangBoolean;
+@class JavaLangInteger;
+@class JavaLangLong;
 @class JavaUtilConcurrentLinkedBlockingDeque_Node;
 @class JavaUtilConcurrentLocksReentrantLock;
 @class JavaUtilConcurrentTimeUnit;
 @protocol JavaUtilCollection;
+@protocol JavaUtilFunctionConsumer;
+@protocol JavaUtilFunctionPredicate;
 @protocol JavaUtilIterator;
 @protocol JavaUtilSpliterator;
 
@@ -59,9 +61,11 @@
  , <code>contains</code>
  , <code>iterator.remove()</code>, and the bulk
   operations, all of which run in linear time. 
- <p>This class and its iterator implement all of the 
- <em>optional</em> methods of the <code>Collection</code> and <code>Iterator</code>
-  interfaces.
+ <p>This class and its iterator implement all of the <em>optional</em>
+  methods of the <code>Collection</code> and <code>Iterator</code> interfaces. 
+ <p>This class is a member of the 
+ <a href="{@@docRoot}/java.base/java/util/package-summary.html#CollectionsFramework">
+  Java Collections Framework</a>.
  @since 1.6
  @author Doug Lea
  */
@@ -122,6 +126,21 @@
 - (jboolean)addWithId:(id)e;
 
 /*!
+ @brief Appends all of the elements in the specified collection to the end of
+  this deque, in the order that they are returned by the specified
+  collection's iterator.Attempts to <code>addAll</code> of a deque to
+  itself result in <code>IllegalArgumentException</code>.
+ @param c the elements to be inserted into this deque
+ @return <code>true</code> if this deque changed as a result of the call
+ @throw NullPointerExceptionif the specified collection or any
+          of its elements are null
+ @throw IllegalArgumentExceptionif the collection is this deque
+ @throw IllegalStateExceptionif this deque is full
+ - seealso: #add(Object)
+ */
+- (jboolean)addAllWithJavaUtilCollection:(id<JavaUtilCollection>)c;
+
+/*!
  @throw IllegalStateExceptionif this deque is full
  @throw NullPointerException
  */
@@ -177,13 +196,18 @@
 
 /*!
  @brief Retrieves, but does not remove, the head of the queue represented by
-  this deque.This method differs from <code>peek</code> only in that
+  this deque.This method differs from <code>peek()</code> only in that
   it throws an exception if this deque is empty.
  <p>This method is equivalent to <code>getFirst</code>.
  @return the head of the queue represented by this deque
  @throw NoSuchElementExceptionif this deque is empty
  */
 - (id)element;
+
+/*!
+ @throw NullPointerException
+ */
+- (void)forEachWithJavaUtilFunctionConsumer:(id<JavaUtilFunctionConsumer>)action;
 
 /*!
  @throw NoSuchElementException
@@ -307,7 +331,7 @@ withJavaUtilConcurrentTimeUnit:(JavaUtilConcurrentTimeUnit *)unit;
 
 /*!
  @brief Retrieves and removes the head of the queue represented by this deque.
- This method differs from <code>poll</code> only in that it throws an
+ This method differs from <code>poll()</code> only in that it throws an
   exception if this deque is empty. 
  <p>This method is equivalent to <code>removeFirst</code>.
  @return the head of the queue represented by this deque
@@ -330,6 +354,11 @@ withJavaUtilConcurrentTimeUnit:(JavaUtilConcurrentTimeUnit *)unit;
 - (jboolean)removeWithId:(id)o;
 
 /*!
+ @throw NullPointerException
+ */
+- (jboolean)removeAllWithJavaUtilCollection:(id<JavaUtilCollection>)c;
+
+/*!
  @throw NoSuchElementException
  */
 - (id)removeFirst;
@@ -337,11 +366,21 @@ withJavaUtilConcurrentTimeUnit:(JavaUtilConcurrentTimeUnit *)unit;
 - (jboolean)removeFirstOccurrenceWithId:(id)o;
 
 /*!
+ @throw NullPointerException
+ */
+- (jboolean)removeIfWithJavaUtilFunctionPredicate:(id<JavaUtilFunctionPredicate>)filter;
+
+/*!
  @throw NoSuchElementException
  */
 - (id)removeLast;
 
 - (jboolean)removeLastOccurrenceWithId:(id)o;
+
+/*!
+ @throw NullPointerException
+ */
+- (jboolean)retainAllWithJavaUtilCollection:(id<JavaUtilCollection>)c;
 
 /*!
  @brief Returns the number of elements in this deque.
@@ -417,6 +456,23 @@ withJavaUtilConcurrentTimeUnit:(JavaUtilConcurrentTimeUnit *)unit;
 - (NSString *)description;
 
 #pragma mark Package-Private
+
+- (void)checkInvariants;
+
+/*!
+ @brief Runs action on each element found during a traversal starting at p.
+ If p is null, traversal starts at head.
+ */
+- (void)forEachFromWithJavaUtilFunctionConsumer:(id<JavaUtilFunctionConsumer>)action
+ withJavaUtilConcurrentLinkedBlockingDeque_Node:(JavaUtilConcurrentLinkedBlockingDeque_Node *)p;
+
+/*!
+ @brief Used for any element traversal that is not entirely under lock.
+ Such traversals must handle both:
+  - dequeued nodes (p.next == p)
+  - (possibly multiple) interior removed nodes (p.item == null)
+ */
+- (JavaUtilConcurrentLinkedBlockingDeque_Node *)succWithJavaUtilConcurrentLinkedBlockingDeque_Node:(JavaUtilConcurrentLinkedBlockingDeque_Node *)p;
 
 /*!
  @brief Unlinks x.
@@ -507,76 +563,8 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentLinkedBlockingDeque_Node)
 
 #endif
 
-#if !defined (JavaUtilConcurrentLinkedBlockingDeque_LBDSpliterator_) && (INCLUDE_ALL_JavaUtilConcurrentLinkedBlockingDeque || defined(INCLUDE_JavaUtilConcurrentLinkedBlockingDeque_LBDSpliterator))
-#define JavaUtilConcurrentLinkedBlockingDeque_LBDSpliterator_
-
-#define RESTRICT_JavaUtilSpliterator 1
-#define INCLUDE_JavaUtilSpliterator 1
-#include "java/util/Spliterator.h"
-
-@class JavaUtilConcurrentLinkedBlockingDeque;
-@class JavaUtilConcurrentLinkedBlockingDeque_Node;
-@protocol JavaUtilComparator;
-@protocol JavaUtilFunctionConsumer;
-
-/*!
- @brief A customized variant of Spliterators.IteratorSpliterator
- */
-@interface JavaUtilConcurrentLinkedBlockingDeque_LBDSpliterator : NSObject < JavaUtilSpliterator > {
- @public
-  JavaUtilConcurrentLinkedBlockingDeque *queue_;
-  JavaUtilConcurrentLinkedBlockingDeque_Node *current_;
-  jint batch_;
-  jboolean exhausted_;
-  jlong est_;
-}
-@property (readonly, class) jint MAX_BATCH NS_SWIFT_NAME(MAX_BATCH);
-
-#pragma mark Public
-
-- (jint)characteristics;
-
-- (jlong)estimateSize;
-
-- (void)forEachRemainingWithJavaUtilFunctionConsumer:(id<JavaUtilFunctionConsumer>)action;
-
-- (jboolean)tryAdvanceWithJavaUtilFunctionConsumer:(id<JavaUtilFunctionConsumer>)action;
-
-- (id<JavaUtilSpliterator>)trySplit;
-
-#pragma mark Package-Private
-
-- (instancetype __nonnull)initWithJavaUtilConcurrentLinkedBlockingDeque:(JavaUtilConcurrentLinkedBlockingDeque *)queue;
-
-// Disallowed inherited constructors, do not use.
-
-- (instancetype __nonnull)init NS_UNAVAILABLE;
-
-@end
-
-J2OBJC_EMPTY_STATIC_INIT(JavaUtilConcurrentLinkedBlockingDeque_LBDSpliterator)
-
-J2OBJC_FIELD_SETTER(JavaUtilConcurrentLinkedBlockingDeque_LBDSpliterator, queue_, JavaUtilConcurrentLinkedBlockingDeque *)
-J2OBJC_FIELD_SETTER(JavaUtilConcurrentLinkedBlockingDeque_LBDSpliterator, current_, JavaUtilConcurrentLinkedBlockingDeque_Node *)
-
-inline jint JavaUtilConcurrentLinkedBlockingDeque_LBDSpliterator_get_MAX_BATCH(void);
-#define JavaUtilConcurrentLinkedBlockingDeque_LBDSpliterator_MAX_BATCH 33554432
-J2OBJC_STATIC_FIELD_CONSTANT(JavaUtilConcurrentLinkedBlockingDeque_LBDSpliterator, MAX_BATCH, jint)
-
-FOUNDATION_EXPORT void JavaUtilConcurrentLinkedBlockingDeque_LBDSpliterator_initWithJavaUtilConcurrentLinkedBlockingDeque_(JavaUtilConcurrentLinkedBlockingDeque_LBDSpliterator *self, JavaUtilConcurrentLinkedBlockingDeque *queue);
-
-FOUNDATION_EXPORT JavaUtilConcurrentLinkedBlockingDeque_LBDSpliterator *new_JavaUtilConcurrentLinkedBlockingDeque_LBDSpliterator_initWithJavaUtilConcurrentLinkedBlockingDeque_(JavaUtilConcurrentLinkedBlockingDeque *queue) NS_RETURNS_RETAINED;
-
-FOUNDATION_EXPORT JavaUtilConcurrentLinkedBlockingDeque_LBDSpliterator *create_JavaUtilConcurrentLinkedBlockingDeque_LBDSpliterator_initWithJavaUtilConcurrentLinkedBlockingDeque_(JavaUtilConcurrentLinkedBlockingDeque *queue);
-
-J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentLinkedBlockingDeque_LBDSpliterator)
-
-#endif
-
 
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaUtilConcurrentLinkedBlockingDeque")

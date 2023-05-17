@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaIoFile
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -34,6 +31,10 @@
 #include "java/lang/Comparable.h"
 
 @class IOSObjectArray;
+@class JavaLangBoolean;
+@class JavaLangCharacter;
+@class JavaLangInteger;
+@class JavaLangLong;
 @class JavaNetURI;
 @class JavaNetURL;
 @protocol JavaIoFileFilter;
@@ -140,10 +141,6 @@
  @since JDK1.0
  */
 @interface JavaIoFile : NSObject < JavaIoSerializable, JavaLangComparable >
-@property (readonly, class) jchar separatorChar NS_SWIFT_NAME(separatorChar);
-@property (readonly, copy, class) NSString *separator NS_SWIFT_NAME(separator);
-@property (readonly, class) jchar pathSeparatorChar NS_SWIFT_NAME(pathSeparatorChar);
-@property (readonly, copy, class) NSString *pathSeparator NS_SWIFT_NAME(pathSeparator);
 
 #pragma mark Public
 
@@ -347,15 +344,14 @@
 
 /*!
  @brief <p> Creates a new empty file in the specified directory, using the
-  given prefix and suffix strings to generate its name.
- If this method
+  given prefix and suffix strings to generate its name.If this method
   returns successfully then it is guaranteed that: 
  <ol>
   <li> The file denoted by the returned abstract pathname did not exist
        before this method was invoked, and 
  <li> Neither this method nor any of its variants will return the same
        abstract pathname again in the current invocation of the virtual
-       machine. 
+       machine.
  </ol>
   This method provides only part of a temporary-file facility.  To arrange
   for a file created by this method to be deleted automatically, use the 
@@ -1286,7 +1282,7 @@
  - seealso: java.net.URL
  @since 1.2
  */
-- (JavaNetURL * __nonnull)toURL __attribute__((deprecated));
+- (JavaNetURL * __nonnull)toURL;
 
 #pragma mark Package-Private
 
@@ -1399,6 +1395,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaIoFile)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaIoFile")

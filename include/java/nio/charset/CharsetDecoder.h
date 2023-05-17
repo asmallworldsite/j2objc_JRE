@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaNioCharsetCharsetDecoder
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -25,6 +22,8 @@
 #if !defined (JavaNioCharsetCharsetDecoder_) && (INCLUDE_ALL_JavaNioCharsetCharsetDecoder || defined(INCLUDE_JavaNioCharsetCharsetDecoder))
 #define JavaNioCharsetCharsetDecoder_
 
+@class JavaLangBoolean;
+@class JavaLangFloat;
 @class JavaNioByteBuffer;
 @class JavaNioCharBuffer;
 @class JavaNioCharsetCharset;
@@ -507,6 +506,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaNioCharsetCharsetDecoder)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaNioCharsetCharsetDecoder")

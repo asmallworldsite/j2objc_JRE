@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaLangEnumConstantNotPresentException
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -30,6 +27,7 @@
 #include "java/lang/RuntimeException.h"
 
 @class IOSClass;
+@class JavaLangBoolean;
 @class JavaLangThrowable;
 
 /*!
@@ -47,7 +45,7 @@
 #pragma mark Public
 
 /*!
- @brief Constructs an <tt>EnumConstantNotPresentException</tt> for the
+ @brief Constructs an <code>EnumConstantNotPresentException</code> for the
   specified constant.
  @param enumType the type of the missing enum constant
  @param constantName the name of the missing enum constant
@@ -101,6 +99,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaLangEnumConstantNotPresentException)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaLangEnumConstantNotPresentException")

@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaIoIOException
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -29,19 +26,19 @@
 #define INCLUDE_JavaLangException 1
 #include "java/lang/Exception.h"
 
+@class JavaLangBoolean;
+@class JavaLangLong;
 @class JavaLangThrowable;
 
 /*!
  @brief Signals that an I/O exception of some sort has occurred.This
   class is the general class of exceptions produced by failed or
   interrupted I/O operations.
- @author unascribed
  - seealso: java.io.InputStream
  - seealso: java.io.OutputStream
- @since JDK1.0
+ @since 1.0
  */
 @interface JavaIoIOException : JavaLangException
-@property (readonly, class) jlong serialVersionUID NS_SWIFT_NAME(serialVersionUID);
 
 #pragma mark Public
 
@@ -137,6 +134,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaIoIOException)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaIoIOException")

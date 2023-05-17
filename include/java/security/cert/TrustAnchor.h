@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaSecurityCertTrustAnchor
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -67,7 +64,7 @@
  <p>
   The name constraints are specified as a byte array. This byte array
   contains the DER encoded form of the name constraints, as they
-  would appear in the NameConstraints structure defined in RFC 3280
+  would appear in the NameConstraints structure defined in RFC 5280
   and X.509. The ASN.1 notation for this structure is supplied in the
   documentation for 
  <code>TrustAnchor(X509Certificate trustedCert, byte[] nameConstraints)</code>
@@ -101,7 +98,7 @@
  <p>
   The name constraints are specified as a byte array. This byte array
   contains the DER encoded form of the name constraints, as they
-  would appear in the NameConstraints structure defined in RFC 3280
+  would appear in the NameConstraints structure defined in RFC 5280
   and X.509. The ASN.1 notation for this structure is supplied in the
   documentation for 
  <code>TrustAnchor(X509Certificate trustedCert, byte[] nameConstraints)</code>
@@ -132,10 +129,10 @@
   The name constraints are specified as a byte array. This byte array
   should contain the DER encoded form of the name constraints, as they
   would appear in the NameConstraints structure defined in 
- <a href="http://www.ietf.org/rfc/rfc3280">RFC 3280</a>
+ <a href="http://tools.ietf.org/html/rfc5280">RFC 5280</a>
   and X.509. The ASN.1 definition of this structure appears below. 
  @code
- NameConstraints ::= SEQUENCE {
+  NameConstraints ::= SEQUENCE {
         permittedSubtrees       [0]     GeneralSubtrees OPTIONAL,
         excludedSubtrees        [1]     GeneralSubtrees OPTIONAL }
    GeneralSubtrees ::= SEQUENCE SIZE (1..MAX) OF GeneralSubtree
@@ -205,7 +202,7 @@
  <p>
   The name constraints are returned as a byte array. This byte array
   contains the DER encoded form of the name constraints, as they
-  would appear in the NameConstraints structure defined in RFC 3280
+  would appear in the NameConstraints structure defined in RFC 5280
   and X.509. The ASN.1 notation for this structure is supplied in the
   documentation for 
  <code>TrustAnchor(X509Certificate trustedCert, byte[] nameConstraints)</code>
@@ -266,6 +263,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaSecurityCertTrustAnchor)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaSecurityCertTrustAnchor")

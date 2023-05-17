@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaUtilStreamCollectors
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -26,6 +23,7 @@
 #define JavaUtilStreamCollectors_
 
 @class IOSDoubleArray;
+@class JavaLangDouble;
 @protocol JavaLangCharSequence;
 @protocol JavaUtilComparator;
 @protocol JavaUtilFunctionBinaryOperator;
@@ -45,7 +43,7 @@
  <p>The following are examples of using the predefined collectors to perform
   common mutable reduction tasks: 
  @code
-    // Accumulate names into a List
+     // Accumulate names into a List
       List<String> list = people.stream().map(Person::getName).collect(Collectors.toList());
       // Accumulate names into a TreeSet
       Set<String> set = people.stream().map(Person::getName).collect(Collectors.toCollection(TreeSet::new));
@@ -74,11 +72,6 @@
  @since 1.8
  */
 @interface JavaUtilStreamCollectors : NSObject
-@property (readonly, class, strong) id<JavaUtilSet> CH_CONCURRENT_ID NS_SWIFT_NAME(CH_CONCURRENT_ID);
-@property (readonly, class, strong) id<JavaUtilSet> CH_CONCURRENT_NOID NS_SWIFT_NAME(CH_CONCURRENT_NOID);
-@property (readonly, class, strong) id<JavaUtilSet> CH_ID NS_SWIFT_NAME(CH_ID);
-@property (readonly, class, strong) id<JavaUtilSet> CH_UNORDERED_ID NS_SWIFT_NAME(CH_UNORDERED_ID);
-@property (readonly, class, strong) id<JavaUtilSet> CH_NOID NS_SWIFT_NAME(CH_NOID);
 
 #pragma mark Public
 
@@ -120,7 +113,7 @@
   transformation.For example, one could adapt the <code>toList()</code>
   collector to always produce an immutable list with: 
  @code
-    List<String> people
+     List<String> people
           = people.stream().collect(collectingAndThen(toList(), Collections::unmodifiableList)); 
  
 @endcode
@@ -175,7 +168,7 @@
   serializability, or thread-safety of the <code>Map</code> returned. 
  <p>For example, to compute the set of last names of people in each city: 
  @code
-    Map<City, Set<String>> namesByCity
+     Map<City, Set<String>> namesByCity
           = people.stream().collect(groupingBy(Person::getCity,
                                                mapping(Person::getLastName, toSet()))); 
  
@@ -205,7 +198,7 @@
  <p>For example, to compute the set of last names of people in each city,
   where the city names are sorted: 
  @code
-    Map<City, Set<String>> namesByCity
+     Map<City, Set<String>> namesByCity
           = people.stream().collect(groupingBy(Person::getCity, TreeMap::new,
                                                mapping(Person::getLastName, toSet()))); 
  
@@ -262,7 +255,7 @@
  <p>For example, to compute the set of last names of people in each city,
   where the city names are sorted: 
  @code
-    ConcurrentMap<City, Set<String>> namesByCity
+     ConcurrentMap<City, Set<String>> namesByCity
           = people.stream().collect(groupingByConcurrent(Person::getCity,
                                                          mapping(Person::getLastName, toSet()))); 
  
@@ -294,7 +287,7 @@
  <p>For example, to compute the set of last names of people in each city,
   where the city names are sorted: 
  @code
-    ConcurrentMap<City, Set<String>> namesByCity
+     ConcurrentMap<City, Set<String>> namesByCity
           = people.stream().collect(groupingBy(Person::getCity, ConcurrentSkipListMap::new,
                                                mapping(Person::getLastName, toSet()))); 
  
@@ -900,6 +893,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilStreamCollectors_CollectorImpl)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaUtilStreamCollectors")

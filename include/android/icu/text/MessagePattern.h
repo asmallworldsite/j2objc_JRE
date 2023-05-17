@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_AndroidIcuTextMessagePattern
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -32,6 +29,9 @@
 @class AndroidIcuTextMessagePattern_ApostropheMode;
 @class AndroidIcuTextMessagePattern_Part;
 @class AndroidIcuTextMessagePattern_Part_Type;
+@class JavaLangBoolean;
+@class JavaLangDouble;
+@class JavaLangInteger;
 @class JavaLangStringBuilder;
 
 /*!
@@ -90,9 +90,6 @@
  @author Markus Scherer
  */
 @interface AndroidIcuTextMessagePattern : NSObject < NSCopying, AndroidIcuUtilFreezable >
-@property (readonly, class) jint ARG_NAME_NOT_NUMBER NS_SWIFT_NAME(ARG_NAME_NOT_NUMBER);
-@property (readonly, class) jint ARG_NAME_NOT_VALID NS_SWIFT_NAME(ARG_NAME_NOT_VALID);
-@property (readonly, class) jdouble NO_NUMERIC_VALUE NS_SWIFT_NAME(NO_NUMERIC_VALUE);
 
 #pragma mark Public
 
@@ -414,10 +411,16 @@ J2OBJC_TYPE_LITERAL_HEADER(AndroidIcuTextMessagePattern)
 
 @class IOSObjectArray;
 
-typedef NS_ENUM(NSUInteger, AndroidIcuTextMessagePattern_ApostropheMode_Enum) {
+typedef NS_ENUM(jint, AndroidIcuTextMessagePattern_ApostropheMode_Enum) {
   AndroidIcuTextMessagePattern_ApostropheMode_Enum_DOUBLE_OPTIONAL = 0,
   AndroidIcuTextMessagePattern_ApostropheMode_Enum_DOUBLE_REQUIRED = 1,
 };
+#if J2OBJC_IMPORTED_BY_JAVA_IMPLEMENTATION
+#define AndroidIcuTextMessagePattern_ApostropheMode_ORDINAL jint
+#else
+#define AndroidIcuTextMessagePattern_ApostropheMode_ORDINAL AndroidIcuTextMessagePattern_ApostropheMode_Enum
+#endif
+
 
 /*!
  @brief Mode for when an apostrophe starts quoted literal text for MessageFormat output.
@@ -454,8 +457,6 @@ typedef NS_ENUM(NSUInteger, AndroidIcuTextMessagePattern_ApostropheMode_Enum) {
  */
 @interface AndroidIcuTextMessagePattern_ApostropheMode : JavaLangEnum
 
-@property (readonly, class, nonnull) AndroidIcuTextMessagePattern_ApostropheMode *DOUBLE_OPTIONAL NS_SWIFT_NAME(DOUBLE_OPTIONAL);
-@property (readonly, class, nonnull) AndroidIcuTextMessagePattern_ApostropheMode *DOUBLE_REQUIRED NS_SWIFT_NAME(DOUBLE_REQUIRED);
 #pragma mark Public
 
 + (AndroidIcuTextMessagePattern_ApostropheMode *)valueOfWithNSString:(NSString *)name;
@@ -465,6 +466,8 @@ typedef NS_ENUM(NSUInteger, AndroidIcuTextMessagePattern_ApostropheMode_Enum) {
 #pragma mark Package-Private
 
 - (AndroidIcuTextMessagePattern_ApostropheMode_Enum)toNSEnum;
+
+- (AndroidIcuTextMessagePattern_ApostropheMode_ORDINAL)ordinal;
 
 @end
 
@@ -500,7 +503,7 @@ FOUNDATION_EXPORT IOSObjectArray *AndroidIcuTextMessagePattern_ApostropheMode_va
 
 FOUNDATION_EXPORT AndroidIcuTextMessagePattern_ApostropheMode *AndroidIcuTextMessagePattern_ApostropheMode_valueOfWithNSString_(NSString *name);
 
-FOUNDATION_EXPORT AndroidIcuTextMessagePattern_ApostropheMode *AndroidIcuTextMessagePattern_ApostropheMode_fromOrdinal(NSUInteger ordinal);
+FOUNDATION_EXPORT AndroidIcuTextMessagePattern_ApostropheMode *AndroidIcuTextMessagePattern_ApostropheMode_fromOrdinal(AndroidIcuTextMessagePattern_ApostropheMode_ORDINAL ordinal);
 
 J2OBJC_TYPE_LITERAL_HEADER(AndroidIcuTextMessagePattern_ApostropheMode)
 
@@ -511,6 +514,8 @@ J2OBJC_TYPE_LITERAL_HEADER(AndroidIcuTextMessagePattern_ApostropheMode)
 
 @class AndroidIcuTextMessagePattern_ArgType;
 @class AndroidIcuTextMessagePattern_Part_Type;
+@class JavaLangBoolean;
+@class JavaLangInteger;
 
 /*!
  @brief A message pattern "part", representing a pattern parsing event.
@@ -597,8 +602,9 @@ J2OBJC_TYPE_LITERAL_HEADER(AndroidIcuTextMessagePattern_Part)
 #include "java/lang/Enum.h"
 
 @class IOSObjectArray;
+@class JavaLangBoolean;
 
-typedef NS_ENUM(NSUInteger, AndroidIcuTextMessagePattern_Part_Type_Enum) {
+typedef NS_ENUM(jint, AndroidIcuTextMessagePattern_Part_Type_Enum) {
   AndroidIcuTextMessagePattern_Part_Type_Enum_MSG_START = 0,
   AndroidIcuTextMessagePattern_Part_Type_Enum_MSG_LIMIT = 1,
   AndroidIcuTextMessagePattern_Part_Type_Enum_SKIP_SYNTAX = 2,
@@ -614,26 +620,18 @@ typedef NS_ENUM(NSUInteger, AndroidIcuTextMessagePattern_Part_Type_Enum) {
   AndroidIcuTextMessagePattern_Part_Type_Enum_ARG_INT = 12,
   AndroidIcuTextMessagePattern_Part_Type_Enum_ARG_DOUBLE = 13,
 };
+#if J2OBJC_IMPORTED_BY_JAVA_IMPLEMENTATION
+#define AndroidIcuTextMessagePattern_Part_Type_ORDINAL jint
+#else
+#define AndroidIcuTextMessagePattern_Part_Type_ORDINAL AndroidIcuTextMessagePattern_Part_Type_Enum
+#endif
+
 
 /*!
  @brief Part type constants.
  */
 @interface AndroidIcuTextMessagePattern_Part_Type : JavaLangEnum
 
-@property (readonly, class, nonnull) AndroidIcuTextMessagePattern_Part_Type *MSG_START NS_SWIFT_NAME(MSG_START);
-@property (readonly, class, nonnull) AndroidIcuTextMessagePattern_Part_Type *MSG_LIMIT NS_SWIFT_NAME(MSG_LIMIT);
-@property (readonly, class, nonnull) AndroidIcuTextMessagePattern_Part_Type *SKIP_SYNTAX NS_SWIFT_NAME(SKIP_SYNTAX);
-@property (readonly, class, nonnull) AndroidIcuTextMessagePattern_Part_Type *INSERT_CHAR NS_SWIFT_NAME(INSERT_CHAR);
-@property (readonly, class, nonnull) AndroidIcuTextMessagePattern_Part_Type *REPLACE_NUMBER NS_SWIFT_NAME(REPLACE_NUMBER);
-@property (readonly, class, nonnull) AndroidIcuTextMessagePattern_Part_Type *ARG_START NS_SWIFT_NAME(ARG_START);
-@property (readonly, class, nonnull) AndroidIcuTextMessagePattern_Part_Type *ARG_LIMIT NS_SWIFT_NAME(ARG_LIMIT);
-@property (readonly, class, nonnull) AndroidIcuTextMessagePattern_Part_Type *ARG_NUMBER NS_SWIFT_NAME(ARG_NUMBER);
-@property (readonly, class, nonnull) AndroidIcuTextMessagePattern_Part_Type *ARG_NAME NS_SWIFT_NAME(ARG_NAME);
-@property (readonly, class, nonnull) AndroidIcuTextMessagePattern_Part_Type *ARG_TYPE NS_SWIFT_NAME(ARG_TYPE);
-@property (readonly, class, nonnull) AndroidIcuTextMessagePattern_Part_Type *ARG_STYLE NS_SWIFT_NAME(ARG_STYLE);
-@property (readonly, class, nonnull) AndroidIcuTextMessagePattern_Part_Type *ARG_SELECTOR NS_SWIFT_NAME(ARG_SELECTOR);
-@property (readonly, class, nonnull) AndroidIcuTextMessagePattern_Part_Type *ARG_INT NS_SWIFT_NAME(ARG_INT);
-@property (readonly, class, nonnull) AndroidIcuTextMessagePattern_Part_Type *ARG_DOUBLE NS_SWIFT_NAME(ARG_DOUBLE);
 #pragma mark Public
 
 /*!
@@ -650,6 +648,8 @@ typedef NS_ENUM(NSUInteger, AndroidIcuTextMessagePattern_Part_Type_Enum) {
 #pragma mark Package-Private
 
 - (AndroidIcuTextMessagePattern_Part_Type_Enum)toNSEnum;
+
+- (AndroidIcuTextMessagePattern_Part_Type_ORDINAL)ordinal;
 
 @end
 
@@ -780,7 +780,7 @@ FOUNDATION_EXPORT IOSObjectArray *AndroidIcuTextMessagePattern_Part_Type_values(
 
 FOUNDATION_EXPORT AndroidIcuTextMessagePattern_Part_Type *AndroidIcuTextMessagePattern_Part_Type_valueOfWithNSString_(NSString *name);
 
-FOUNDATION_EXPORT AndroidIcuTextMessagePattern_Part_Type *AndroidIcuTextMessagePattern_Part_Type_fromOrdinal(NSUInteger ordinal);
+FOUNDATION_EXPORT AndroidIcuTextMessagePattern_Part_Type *AndroidIcuTextMessagePattern_Part_Type_fromOrdinal(AndroidIcuTextMessagePattern_Part_Type_ORDINAL ordinal);
 
 J2OBJC_TYPE_LITERAL_HEADER(AndroidIcuTextMessagePattern_Part_Type)
 
@@ -794,8 +794,9 @@ J2OBJC_TYPE_LITERAL_HEADER(AndroidIcuTextMessagePattern_Part_Type)
 #include "java/lang/Enum.h"
 
 @class IOSObjectArray;
+@class JavaLangBoolean;
 
-typedef NS_ENUM(NSUInteger, AndroidIcuTextMessagePattern_ArgType_Enum) {
+typedef NS_ENUM(jint, AndroidIcuTextMessagePattern_ArgType_Enum) {
   AndroidIcuTextMessagePattern_ArgType_Enum_NONE = 0,
   AndroidIcuTextMessagePattern_ArgType_Enum_SIMPLE = 1,
   AndroidIcuTextMessagePattern_ArgType_Enum_CHOICE = 2,
@@ -803,6 +804,12 @@ typedef NS_ENUM(NSUInteger, AndroidIcuTextMessagePattern_ArgType_Enum) {
   AndroidIcuTextMessagePattern_ArgType_Enum_SELECT = 4,
   AndroidIcuTextMessagePattern_ArgType_Enum_SELECTORDINAL = 5,
 };
+#if J2OBJC_IMPORTED_BY_JAVA_IMPLEMENTATION
+#define AndroidIcuTextMessagePattern_ArgType_ORDINAL jint
+#else
+#define AndroidIcuTextMessagePattern_ArgType_ORDINAL AndroidIcuTextMessagePattern_ArgType_Enum
+#endif
+
 
 /*!
  @brief Argument type constants.
@@ -812,12 +819,6 @@ typedef NS_ENUM(NSUInteger, AndroidIcuTextMessagePattern_ArgType_Enum) {
  */
 @interface AndroidIcuTextMessagePattern_ArgType : JavaLangEnum
 
-@property (readonly, class, nonnull) AndroidIcuTextMessagePattern_ArgType *NONE NS_SWIFT_NAME(NONE);
-@property (readonly, class, nonnull) AndroidIcuTextMessagePattern_ArgType *SIMPLE NS_SWIFT_NAME(SIMPLE);
-@property (readonly, class, nonnull) AndroidIcuTextMessagePattern_ArgType *CHOICE NS_SWIFT_NAME(CHOICE);
-@property (readonly, class, nonnull) AndroidIcuTextMessagePattern_ArgType *PLURAL NS_SWIFT_NAME(PLURAL);
-@property (readonly, class, nonnull) AndroidIcuTextMessagePattern_ArgType *SELECT NS_SWIFT_NAME(SELECT);
-@property (readonly, class, nonnull) AndroidIcuTextMessagePattern_ArgType *SELECTORDINAL NS_SWIFT_NAME(SELECTORDINAL);
 #pragma mark Public
 
 /*!
@@ -833,6 +834,8 @@ typedef NS_ENUM(NSUInteger, AndroidIcuTextMessagePattern_ArgType_Enum) {
 #pragma mark Package-Private
 
 - (AndroidIcuTextMessagePattern_ArgType_Enum)toNSEnum;
+
+- (AndroidIcuTextMessagePattern_ArgType_ORDINAL)ordinal;
 
 @end
 
@@ -889,7 +892,7 @@ FOUNDATION_EXPORT IOSObjectArray *AndroidIcuTextMessagePattern_ArgType_values(vo
 
 FOUNDATION_EXPORT AndroidIcuTextMessagePattern_ArgType *AndroidIcuTextMessagePattern_ArgType_valueOfWithNSString_(NSString *name);
 
-FOUNDATION_EXPORT AndroidIcuTextMessagePattern_ArgType *AndroidIcuTextMessagePattern_ArgType_fromOrdinal(NSUInteger ordinal);
+FOUNDATION_EXPORT AndroidIcuTextMessagePattern_ArgType *AndroidIcuTextMessagePattern_ArgType_fromOrdinal(AndroidIcuTextMessagePattern_ArgType_ORDINAL ordinal);
 
 J2OBJC_TYPE_LITERAL_HEADER(AndroidIcuTextMessagePattern_ArgType)
 
@@ -899,6 +902,4 @@ J2OBJC_TYPE_LITERAL_HEADER(AndroidIcuTextMessagePattern_ArgType)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_AndroidIcuTextMessagePattern")

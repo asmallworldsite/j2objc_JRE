@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaLangArrayStoreException
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -29,6 +26,7 @@
 #define INCLUDE_JavaLangRuntimeException 1
 #include "java/lang/RuntimeException.h"
 
+@class JavaLangBoolean;
 @class JavaLangThrowable;
 
 /*!
@@ -41,8 +39,7 @@
       x[0] = new Integer(0); 
   
 @endcode</blockquote>
- @author unascribed
- @since JDK1.0
+ @since 1.0
  */
 @interface JavaLangArrayStoreException : JavaLangRuntimeException
 
@@ -96,6 +93,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaLangArrayStoreException)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaLangArrayStoreException")

@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaNioChannelsAsynchronousServerSocketChannel
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -33,6 +30,7 @@
 #define INCLUDE_JavaNioChannelsNetworkChannel 1
 #include "java/nio/channels/NetworkChannel.h"
 
+@class JavaLangInteger;
 @class JavaNetSocketAddress;
 @class JavaNioChannelsAsynchronousChannelGroup;
 @class JavaNioChannelsSpiAsynchronousChannelProvider;
@@ -206,7 +204,7 @@ withJavaNioChannelsCompletionHandler:(id<JavaNioChannelsCompletionHandler>)handl
                                                                          withInt:(jint)backlog;
 
 /*!
- @brief <p>
+ @brief  <p>
   If there is a security manager set, its <code>checkConnect</code> method is
   called with the local address and <code>-1</code> as its arguments to see
   if the operation is allowed.
@@ -302,6 +300,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaNioChannelsAsynchronousServerSocketChannel)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaNioChannelsAsynchronousServerSocketChannel")

@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaNioMappedByteBuffer
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -31,6 +28,8 @@
 
 @class IOSByteArray;
 @class JavaIoFileDescriptor;
+@class JavaLangBoolean;
+@class JavaLangInteger;
 
 /*!
  @brief A direct byte buffer whose content is a memory-mapped region of a file.
@@ -143,6 +142,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaNioMappedByteBuffer)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaNioMappedByteBuffer")

@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaIoNotActiveException
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -31,8 +28,7 @@
 
 /*!
  @brief Thrown when serialization or deserialization is not active.
- @author unascribed
- @since JDK1.1
+ @since 1.1
  */
 @interface JavaIoNotActiveException : JavaIoObjectStreamException
 
@@ -73,6 +69,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaIoNotActiveException)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaIoNotActiveException")

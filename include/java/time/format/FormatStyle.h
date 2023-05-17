@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaTimeFormatFormatStyle
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -31,12 +28,18 @@
 
 @class IOSObjectArray;
 
-typedef NS_ENUM(NSUInteger, JavaTimeFormatFormatStyle_Enum) {
+typedef NS_ENUM(jint, JavaTimeFormatFormatStyle_Enum) {
   JavaTimeFormatFormatStyle_Enum_FULL = 0,
   JavaTimeFormatFormatStyle_Enum_LONG = 1,
   JavaTimeFormatFormatStyle_Enum_MEDIUM = 2,
   JavaTimeFormatFormatStyle_Enum_SHORT = 3,
 };
+#if J2OBJC_IMPORTED_BY_JAVA_IMPLEMENTATION
+#define JavaTimeFormatFormatStyle_ORDINAL jint
+#else
+#define JavaTimeFormatFormatStyle_ORDINAL JavaTimeFormatFormatStyle_Enum
+#endif
+
 
 /*!
  @brief Enumeration of the style of a localized date, time or date-time formatter.
@@ -47,10 +50,6 @@ typedef NS_ENUM(NSUInteger, JavaTimeFormatFormatStyle_Enum) {
  */
 @interface JavaTimeFormatFormatStyle : JavaLangEnum
 
-@property (readonly, class, nonnull) JavaTimeFormatFormatStyle *FULL NS_SWIFT_NAME(FULL);
-@property (readonly, class, nonnull) JavaTimeFormatFormatStyle *LONG NS_SWIFT_NAME(LONG);
-@property (readonly, class, nonnull) JavaTimeFormatFormatStyle *MEDIUM NS_SWIFT_NAME(MEDIUM);
-@property (readonly, class, nonnull) JavaTimeFormatFormatStyle *SHORT NS_SWIFT_NAME(SHORT);
 #pragma mark Public
 
 + (JavaTimeFormatFormatStyle *)valueOfWithNSString:(NSString *)name;
@@ -60,6 +59,8 @@ typedef NS_ENUM(NSUInteger, JavaTimeFormatFormatStyle_Enum) {
 #pragma mark Package-Private
 
 - (JavaTimeFormatFormatStyle_Enum)toNSEnum;
+
+- (JavaTimeFormatFormatStyle_ORDINAL)ordinal;
 
 @end
 
@@ -100,7 +101,7 @@ FOUNDATION_EXPORT IOSObjectArray *JavaTimeFormatFormatStyle_values(void);
 
 FOUNDATION_EXPORT JavaTimeFormatFormatStyle *JavaTimeFormatFormatStyle_valueOfWithNSString_(NSString *name);
 
-FOUNDATION_EXPORT JavaTimeFormatFormatStyle *JavaTimeFormatFormatStyle_fromOrdinal(NSUInteger ordinal);
+FOUNDATION_EXPORT JavaTimeFormatFormatStyle *JavaTimeFormatFormatStyle_fromOrdinal(JavaTimeFormatFormatStyle_ORDINAL ordinal);
 
 J2OBJC_TYPE_LITERAL_HEADER(JavaTimeFormatFormatStyle)
 
@@ -110,6 +111,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaTimeFormatFormatStyle)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaTimeFormatFormatStyle")

@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaxCryptoKeyAgreement
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -26,6 +23,8 @@
 #define JavaxCryptoKeyAgreement_
 
 @class IOSByteArray;
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @class JavaSecurityProvider;
 @class JavaSecuritySecureRandom;
 @class JavaxCryptoKeyAgreementSpi;
@@ -69,7 +68,7 @@
       </tr>
     </tbody>
   </table>
-  This algorithm is described in the <a href="{@@docRoot}/../technotes/guides/security/StandardNames.html#KeyAgreement">
+  This algorithm is described in the <a href="{@@docRoot}/../specs/security/standard-names.html#keyagreement-algorithms">
   KeyAgreement section</a> of the
   Java Cryptography Architecture Standard Algorithm Name Documentation.
  @author Jan Luehe
@@ -123,7 +122,7 @@
   private information and algorithm parameters will be used for
   subsequent key agreements.
  @param sharedSecret the buffer for the shared secret
- @param offset the offset in  <code> sharedSecret </code>  where the
+ @param offset the offset in <code>sharedSecret</code>  where the
    shared secret will be stored
  @return the number of bytes placed into <code>sharedSecret</code>
  @throw IllegalStateExceptionif this key agreement has not been
@@ -175,10 +174,10 @@
  <code>Security.getProviders()</code> method.
  @param algorithm the standard name of the requested key agreement  algorithm.
    See the KeyAgreement section in the 
-  <a href="{@@docRoot}/../technotes/guides/security/StandardNames.html#KeyAgreement">
-   Java Cryptography Architecture Standard Algorithm Name Documentation
+  <a href="{@@docRoot}/../specs/security/standard-names.html#keyagreement-algorithms">
+   Java Security Standard Algorithm Names Specification
   </a>  for information about standard algorithm names.
- @return the new <code>KeyAgreement</code> object.
+ @return the new <code>KeyAgreement</code> object
  @throw NullPointerExceptionif the specified algorithm
            is null.
  @throw NoSuchAlgorithmExceptionif no Provider supports a
@@ -197,11 +196,11 @@
   does not have to be registered in the provider list.
  @param algorithm the standard name of the requested key agreement  algorithm.
    See the KeyAgreement section in the 
-  <a href="{@@docRoot}/../technotes/guides/security/StandardNames.html#KeyAgreement">
-   Java Cryptography Architecture Standard Algorithm Name Documentation
+  <a href="{@@docRoot}/../specs/security/standard-names.html#keyagreement-algorithms">
+   Java Security Standard Algorithm Names Specification
   </a>  for information about standard algorithm names.
  @param provider the provider.
- @return the new <code>KeyAgreement</code> object.
+ @return the new <code>KeyAgreement</code> object
  @throw NullPointerExceptionif the specified algorithm
            is null.
  @throw NoSuchAlgorithmExceptionif a KeyAgreementSpi
@@ -225,11 +224,11 @@
  <code>Security.getProviders()</code> method.
  @param algorithm the standard name of the requested key agreement  algorithm.
    See the KeyAgreement section in the 
-  <a href="{@@docRoot}/../technotes/guides/security/StandardNames.html#KeyAgreement">
-   Java Cryptography Architecture Standard Algorithm Name Documentation
+  <a href="{@@docRoot}/../specs/security/standard-names.html#keyagreement-algorithms">
+   Java Security Standard Algorithm Names Specification
   </a>  for information about standard algorithm names.
  @param provider the name of the provider.
- @return the new <code>KeyAgreement</code> object.
+ @return the new <code>KeyAgreement</code> object
  @throw NullPointerExceptionif the specified algorithm
            is null.
  @throw NoSuchAlgorithmExceptionif a KeyAgreementSpi
@@ -375,6 +374,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaxCryptoKeyAgreement)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaxCryptoKeyAgreement")

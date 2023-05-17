@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaLangReflectiveOperationException
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -29,6 +26,8 @@
 #define INCLUDE_JavaLangException 1
 #include "java/lang/Exception.h"
 
+@class JavaLangBoolean;
+@class JavaLangLong;
 @class JavaLangThrowable;
 
 /*!
@@ -38,7 +37,6 @@
  @since 1.7
  */
 @interface JavaLangReflectiveOperationException : JavaLangException
-@property (readonly, class) jlong serialVersionUID NS_SWIFT_NAME(serialVersionUID);
 
 #pragma mark Public
 
@@ -131,6 +129,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaLangReflectiveOperationException)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaLangReflectiveOperationException")

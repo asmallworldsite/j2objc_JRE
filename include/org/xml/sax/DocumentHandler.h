@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_OrgXmlSaxDocumentHandler
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -26,6 +23,7 @@
 #define OrgXmlSaxDocumentHandler_
 
 @class IOSCharArray;
+@class JavaLangInteger;
 @protocol OrgXmlSaxAttributeList;
 @protocol OrgXmlSaxLocator;
 
@@ -63,7 +61,6 @@
  - seealso: org.xml.sax.Locator
  - seealso: org.xml.sax.HandlerBase
  */
-__attribute__((deprecated))
 @protocol OrgXmlSaxDocumentHandler < JavaObject >
 
 /*!
@@ -232,6 +229,4 @@ J2OBJC_TYPE_LITERAL_HEADER(OrgXmlSaxDocumentHandler)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_OrgXmlSaxDocumentHandler")

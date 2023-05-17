@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaUtilAbstractCollection
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -30,6 +27,8 @@
 #include "java/util/Collection.h"
 
 @class IOSObjectArray;
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @protocol JavaUtilFunctionConsumer;
 @protocol JavaUtilFunctionPredicate;
 @protocol JavaUtilIterator;
@@ -68,7 +67,8 @@
 #pragma mark Public
 
 /*!
- @brief <p>This implementation always throws an 
+ @brief  
+ <p>This implementation always throws an 
  <tt>UnsupportedOperationException</tt>.
  @throw UnsupportedOperationException
  @throw ClassCastException
@@ -79,7 +79,8 @@
 - (jboolean)addWithId:(id)e;
 
 /*!
- @brief <p>This implementation iterates over the specified collection, and adds
+ @brief  
+ <p>This implementation iterates over the specified collection, and adds
   each object returned by the iterator to this collection, in turn.
  <p>Note that this implementation will throw an 
  <tt>UnsupportedOperationException</tt> unless <tt>add</tt> is
@@ -94,7 +95,8 @@
 - (jboolean)addAllWithJavaUtilCollection:(id<JavaUtilCollection>)c;
 
 /*!
- @brief <p>This implementation iterates over this collection, removing each
+ @brief  
+ <p>This implementation iterates over this collection, removing each
   element using the <tt>Iterator.remove</tt> operation.
  Most
   implementations will probably choose to override this method for
@@ -108,7 +110,8 @@
 - (void)clear;
 
 /*!
- @brief <p>This implementation iterates over the elements in the collection,
+ @brief  
+ <p>This implementation iterates over the elements in the collection,
   checking each element in turn for equality with the specified element.
  @throw ClassCastException
  @throw NullPointerException
@@ -116,7 +119,8 @@
 - (jboolean)containsWithId:(id)o;
 
 /*!
- @brief <p>This implementation iterates over the specified collection,
+ @brief  
+ <p>This implementation iterates over the specified collection,
   checking each element returned by the iterator in turn to see
   if it's contained in this collection.
  If all elements are so contained 
@@ -128,7 +132,8 @@
 - (jboolean)containsAllWithJavaUtilCollection:(id<JavaUtilCollection>)c;
 
 /*!
- @brief <p>This implementation returns <tt>size() == 0</tt>.
+ @brief  
+ <p>This implementation returns <tt>size() == 0</tt>.
  */
 - (jboolean)isEmpty;
 
@@ -139,7 +144,8 @@
 - (id<JavaUtilIterator> __nonnull)iterator;
 
 /*!
- @brief <p>This implementation iterates over the collection looking for the
+ @brief  
+ <p>This implementation iterates over the collection looking for the
   specified element.
  If it finds the element, it removes the element
   from the collection using the iterator's remove method. 
@@ -154,7 +160,8 @@
 - (jboolean)removeWithId:(id)o;
 
 /*!
- @brief <p>This implementation iterates over this collection, checking each
+ @brief  
+ <p>This implementation iterates over this collection, checking each
   element returned by the iterator in turn to see if it's contained
   in the specified collection.
  If it's so contained, it's removed from
@@ -173,7 +180,8 @@
 - (jboolean)removeAllWithJavaUtilCollection:(id<JavaUtilCollection>)c;
 
 /*!
- @brief <p>This implementation iterates over this collection, checking each
+ @brief  
+ <p>This implementation iterates over this collection, checking each
   element returned by the iterator in turn to see if it's contained
   in the specified collection.
  If it's not so contained, it's removed
@@ -194,7 +202,8 @@
 - (jint)size;
 
 /*!
- @brief <p>This implementation returns an array containing all the elements
+ @brief  
+ <p>This implementation returns an array containing all the elements
   returned by this collection's iterator, in the same order, stored in
   consecutive elements of the array, starting with index <code>0</code>.
  The length of the returned array is equal to the number of elements
@@ -216,7 +225,8 @@
 - (IOSObjectArray * __nonnull)toArray;
 
 /*!
- @brief <p>This implementation returns an array containing all the elements
+ @brief  
+ <p>This implementation returns an array containing all the elements
   returned by this collection's iterator in the same order, stored in
   consecutive elements of the array, starting with index <code>0</code>.
  If the number of elements returned by the iterator is too large to
@@ -278,6 +288,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilAbstractCollection)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaUtilAbstractCollection")

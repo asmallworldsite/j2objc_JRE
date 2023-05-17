@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaUtilFunctionToIntFunction
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -24,6 +21,8 @@
 
 #if !defined (JavaUtilFunctionToIntFunction_) && (INCLUDE_ALL_JavaUtilFunctionToIntFunction || defined(INCLUDE_JavaUtilFunctionToIntFunction))
 #define JavaUtilFunctionToIntFunction_
+
+@class JavaLangInteger;
 
 /*!
  @brief Represents a function that produces an int-valued result.This is the 
@@ -54,6 +53,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilFunctionToIntFunction)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaUtilFunctionToIntFunction")

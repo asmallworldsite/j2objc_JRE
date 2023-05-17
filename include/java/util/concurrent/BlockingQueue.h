@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaUtilConcurrentBlockingQueue
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -29,14 +26,16 @@
 #define INCLUDE_JavaUtilQueue 1
 #include "java/util/Queue.h"
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
+@class JavaLangLong;
 @class JavaUtilConcurrentTimeUnit;
 @protocol JavaUtilCollection;
 
 /*!
- @brief A <code>java.util.Queue</code> that additionally supports operations
-  that wait for the queue to become non-empty when retrieving an
-  element, and wait for space to become available in the queue when
-  storing an element.
+ @brief A <code>Queue</code> that additionally supports operations that wait for
+  the queue to become non-empty when retrieving an element, and wait
+  for space to become available in the queue when storing an element.
  <p><code>BlockingQueue</code> methods come in four forms, with different ways
   of handling operations that cannot be satisfied immediately, but may be
   satisfied at some point in the future:
@@ -45,35 +44,35 @@
   blocks the current thread indefinitely until the operation can succeed,
   and the fourth blocks for only a given maximum time limit before giving
   up.  These methods are summarized in the following table: 
- <table BORDER CELLPADDING=3 CELLSPACING=1>
+ <table class="plain">
   <caption>Summary of BlockingQueue methods</caption>
    <tr>
      <td></td>
-     <td ALIGN=CENTER><em>Throws exception</em></td>
-     <td ALIGN=CENTER><em>Special value</em></td>
-     <td ALIGN=CENTER><em>Blocks</em></td>
-     <td ALIGN=CENTER><em>Times out</em></td>
+     <th scope="col" style="font-weight:normal; font-style:italic">Throws exception</th>
+     <th scope="col" style="font-weight:normal; font-style:italic">Special value</th>
+     <th scope="col" style="font-weight:normal; font-style:italic">Blocks</th>
+     <th scope="col" style="font-weight:normal; font-style:italic">Times out</th>
    </tr>
    <tr>
-     <td><b>Insert</b></td>
+     <th scope="row" style="text-align:left">Insert</th>
      <td><code>add(e)</code></td>
      <td><code>offer(e)</code></td>
      <td><code>put(e)</code></td>
      <td><code>offer(e, time, unit)</code></td>
    </tr>
    <tr>
-     <td><b>Remove</b></td>
+     <th scope="row" style="text-align:left">Remove</th>
      <td><code>remove()</code></td>
      <td><code>poll()</code></td>
      <td><code>take()</code></td>
      <td><code>poll(time, unit)</code></td>
    </tr>
    <tr>
-     <td><b>Examine</b></td>
+     <th scope="row" style="text-align:left">Examine</th>
      <td><code>element()</code></td>
      <td><code>peek()</code></td>
-     <td><em>not applicable</em></td>
-     <td><em>not applicable</em></td>
+     <td style="font-style: italic">not applicable</td>
+     <td style="font-style: italic">not applicable</td>
    </tr>
   </table>
   
@@ -90,7 +89,7 @@
   
  <p><code>BlockingQueue</code> implementations are designed to be used
   primarily for producer-consumer queues, but additionally support
-  the <code>java.util.Collection</code> interface.  So, for example, it is
+  the <code>Collection</code> interface.  So, for example, it is
   possible to remove an arbitrary element from a queue using 
  <code>remove(x)</code>. However, such operations are in general 
  <em>not</em> performed very efficiently, and are intended for only
@@ -151,7 +150,10 @@
  <code>BlockingQueue</code>
   <a href="package-summary.html#MemoryVisibility"><i>happen-before</i></a>
   actions subsequent to the access or removal of that element from the 
- <code>BlockingQueue</code> in another thread.
+ <code>BlockingQueue</code> in another thread. 
+ <p>This interface is a member of the 
+ <a href="{@@docRoot}/java.base/java/util/package-summary.html#CollectionsFramework">
+  Java Collections Framework</a>.
  @since 1.5
  @author Doug Lea
  */
@@ -274,9 +276,9 @@ withJavaUtilConcurrentTimeUnit:(JavaUtilConcurrentTimeUnit *)unit;
  @return <code>true</code> if this queue changed as a result of the call
  @throw ClassCastExceptionif the class of the specified element
           is incompatible with this queue
-  (<a href="../Collection.html#optional-restrictions">optional</a>)
+  (<a href="{@@docRoot}/java.base/java/util/Collection.html#optional-restrictions">optional</a>)
  @throw NullPointerExceptionif the specified element is null
-  (<a href="../Collection.html#optional-restrictions">optional</a>)
+  (<a href="{@@docRoot}/java.base/java/util/Collection.html#optional-restrictions">optional</a>)
  */
 - (jboolean)removeWithId:(id)o;
 
@@ -288,9 +290,9 @@ withJavaUtilConcurrentTimeUnit:(JavaUtilConcurrentTimeUnit *)unit;
  @return <code>true</code> if this queue contains the specified element
  @throw ClassCastExceptionif the class of the specified element
           is incompatible with this queue
-  (<a href="../Collection.html#optional-restrictions">optional</a>)
+  (<a href="{@@docRoot}/java.base/java/util/Collection.html#optional-restrictions">optional</a>)
  @throw NullPointerExceptionif the specified element is null
-  (<a href="../Collection.html#optional-restrictions">optional</a>)
+  (<a href="{@@docRoot}/java.base/java/util/Collection.html#optional-restrictions">optional</a>)
  */
 - (jboolean)containsWithId:(id)o;
 
@@ -357,6 +359,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentBlockingQueue)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaUtilConcurrentBlockingQueue")

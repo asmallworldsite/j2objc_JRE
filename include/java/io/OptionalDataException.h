@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaIoOptionalDataException
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -28,6 +25,9 @@
 #define RESTRICT_JavaIoObjectStreamException 1
 #define INCLUDE_JavaIoObjectStreamException 1
 #include "java/io/ObjectStreamException.h"
+
+@class JavaLangBoolean;
+@class JavaLangInteger;
 
 /*!
  @brief Exception indicating the failure of an object read operation due to
@@ -45,8 +45,7 @@
         OptionalDataException's eof field is set to true, and the length field
         is set to 0. 
  </ul>
- @author unascribed
- @since JDK1.1
+ @since 1.1
  */
 @interface JavaIoOptionalDataException : JavaIoObjectStreamException {
  @public
@@ -97,6 +96,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaIoOptionalDataException)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaIoOptionalDataException")

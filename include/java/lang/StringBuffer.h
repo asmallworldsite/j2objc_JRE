@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaLangStringBuffer
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -33,11 +30,21 @@
 #define INCLUDE_JavaIoSerializable 1
 #include "java/io/Serializable.h"
 
+#define RESTRICT_JavaLangComparable 1
+#define INCLUDE_JavaLangComparable 1
+#include "java/lang/Comparable.h"
+
 #define RESTRICT_JavaLangCharSequence 1
 #define INCLUDE_JavaLangCharSequence 1
 #include "java/lang/CharSequence.h"
 
 @class IOSCharArray;
+@class JavaLangBoolean;
+@class JavaLangCharacter;
+@class JavaLangDouble;
+@class JavaLangFloat;
+@class JavaLangInteger;
+@class JavaLangLong;
 
 /*!
  @brief A thread-safe, mutable sequence of characters.
@@ -103,10 +110,9 @@
  @author Arthur van Hoff
  - seealso: java.lang.StringBuilder
  - seealso: java.lang.String
- @since JDK1.0
+ @since 1.0
  */
-@interface JavaLangStringBuffer : JavaLangAbstractStringBuilder < JavaIoSerializable, JavaLangCharSequence >
-@property (readonly, class) jlong serialVersionUID NS_SWIFT_NAME(serialVersionUID);
+@interface JavaLangStringBuffer : JavaLangAbstractStringBuilder < JavaIoSerializable, JavaLangComparable, JavaLangCharSequence >
 
 #pragma mark Public
 
@@ -135,7 +141,7 @@
   the specified initial capacity.
  @param capacity the initial capacity.
  @throw NegativeArraySizeExceptionif the <code>capacity</code>
-                argument is less than <code>0</code>.
+              argument is less than <code>0</code>.
  */
 - (instancetype __nonnull)initWithInt:(jint)capacity;
 
@@ -239,20 +245,41 @@
 - (jchar)charAtWithInt:(jint)index;
 
 /*!
+ @throw IndexOutOfBoundsException
  @since 1.5
  */
 - (jint)codePointAtWithInt:(jint)index;
 
 /*!
+ @throw IndexOutOfBoundsException
  @since 1.5
  */
 - (jint)codePointBeforeWithInt:(jint)index;
 
 /*!
+ @throw IndexOutOfBoundsException
  @since 1.5
  */
 - (jint)codePointCountWithInt:(jint)beginIndex
                       withInt:(jint)endIndex;
+
+/*!
+ @brief Compares two <code>StringBuffer</code> instances lexicographically.This method
+  follows the same rules for lexicographical comparison as defined in the 
+ CharSequence.compare(this, another)
+  method.
+ <p>
+  For finer-grained, locale-sensitive String comparison, refer to 
+ <code>java.text.Collator</code>.
+ @param another the <code>StringBuffer</code>  to be compared with
+ @return the value <code>0</code> if this <code>StringBuffer</code> contains the same
+  character sequence as that of the argument <code>StringBuffer</code>; a negative integer
+  if this <code>StringBuffer</code> is lexicographically less than the 
+ <code>StringBuffer</code> argument; or a positive integer if this <code>StringBuffer</code>
+  is lexicographically greater than the <code>StringBuffer</code> argument.
+ @since 11
+ */
+- (jint)compareToWithId:(JavaLangStringBuffer *)another;
 
 /*!
  @throw StringIndexOutOfBoundsException
@@ -376,6 +403,7 @@
 - (jint)java_length;
 
 /*!
+ @throw IndexOutOfBoundsException
  @since 1.5
  */
 - (jint)offsetByCodePointsWithInt:(jint)index
@@ -390,7 +418,7 @@
                                       withNSString:(NSString *)str;
 
 /*!
- @since JDK1.0.2
+ @since 1.0.2
  */
 - (JavaLangStringBuffer * __nonnull)reverse;
 
@@ -483,6 +511,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaLangStringBuffer)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaLangStringBuffer")

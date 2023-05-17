@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaSecurityCertCertificateParsingException
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -36,6 +33,7 @@
   invalid DER-encoded certificate is parsed or unsupported DER features
   are found in the Certificate.
  @author Hemma Prafullchandra
+ @since 1.2
  */
 @interface JavaSecurityCertCertificateParsingException : JavaSecurityCertCertificateException
 
@@ -117,6 +115,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaSecurityCertCertificateParsingException)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaSecurityCertCertificateParsingException")

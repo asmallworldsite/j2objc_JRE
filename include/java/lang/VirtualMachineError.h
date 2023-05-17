@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaLangVirtualMachineError
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -29,13 +26,14 @@
 #define INCLUDE_JavaLangError 1
 #include "java/lang/Error.h"
 
+@class JavaLangBoolean;
 @class JavaLangThrowable;
 
 /*!
  @brief Thrown to indicate that the Java Virtual Machine is broken or has
   run out of resources necessary for it to continue operating.
  @author Frank Yellin
- @since JDK1.0
+ @since 1.0
  */
 @interface JavaLangVirtualMachineError : JavaLangError
 
@@ -110,6 +108,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaLangVirtualMachineError)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaLangVirtualMachineError")

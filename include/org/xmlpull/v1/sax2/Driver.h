@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_OrgXmlpullV1Sax2Driver
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -37,6 +34,8 @@
 #define INCLUDE_OrgXmlSaxAttributes 1
 #include "org/xml/sax/Attributes.h"
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @class OrgXmlSaxInputSource;
 @protocol OrgXmlSaxContentHandler;
 @protocol OrgXmlSaxDTDHandler;
@@ -56,13 +55,6 @@
   NSString *systemId_;
   id<OrgXmlpullV1XmlPullParser> pp_;
 }
-@property (readonly, copy, class) NSString *DECLARATION_HANDLER_PROPERTY NS_SWIFT_NAME(DECLARATION_HANDLER_PROPERTY);
-@property (readonly, copy, class) NSString *LEXICAL_HANDLER_PROPERTY NS_SWIFT_NAME(LEXICAL_HANDLER_PROPERTY);
-@property (readonly, copy, class) NSString *NAMESPACES_FEATURE NS_SWIFT_NAME(NAMESPACES_FEATURE);
-@property (readonly, copy, class) NSString *NAMESPACE_PREFIXES_FEATURE NS_SWIFT_NAME(NAMESPACE_PREFIXES_FEATURE);
-@property (readonly, copy, class) NSString *VALIDATION_FEATURE NS_SWIFT_NAME(VALIDATION_FEATURE);
-@property (readonly, copy, class) NSString *APACHE_SCHEMA_VALIDATION_FEATURE NS_SWIFT_NAME(APACHE_SCHEMA_VALIDATION_FEATURE);
-@property (readonly, copy, class) NSString *APACHE_DYNAMIC_VALIDATION_FEATURE NS_SWIFT_NAME(APACHE_DYNAMIC_VALIDATION_FEATURE);
 
 #pragma mark Public
 
@@ -217,6 +209,4 @@ J2OBJC_TYPE_LITERAL_HEADER(OrgXmlpullV1Sax2Driver)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_OrgXmlpullV1Sax2Driver")

@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaxNetSslSNIHostName
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -30,6 +27,8 @@
 #include "javax/net/ssl/SNIServerName.h"
 
 @class IOSByteArray;
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @class JavaxNetSslSNIMatcher;
 
 /*!
@@ -268,6 +267,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaxNetSslSNIHostName)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaxNetSslSNIHostName")

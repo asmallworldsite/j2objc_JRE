@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaTimeChronoIsoEra
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -34,6 +31,9 @@
 #include "java/time/chrono/Era.h"
 
 @class IOSObjectArray;
+@class JavaLangBoolean;
+@class JavaLangInteger;
+@class JavaLangLong;
 @class JavaTimeFormatTextStyle;
 @class JavaTimeTemporalValueRange;
 @class JavaUtilLocale;
@@ -41,49 +41,53 @@
 @protocol JavaTimeTemporalTemporalField;
 @protocol JavaTimeTemporalTemporalQuery;
 
-typedef NS_ENUM(NSUInteger, JavaTimeChronoIsoEra_Enum) {
+typedef NS_ENUM(jint, JavaTimeChronoIsoEra_Enum) {
   JavaTimeChronoIsoEra_Enum_BCE = 0,
   JavaTimeChronoIsoEra_Enum_CE = 1,
 };
+#if J2OBJC_IMPORTED_BY_JAVA_IMPLEMENTATION
+#define JavaTimeChronoIsoEra_ORDINAL jint
+#else
+#define JavaTimeChronoIsoEra_ORDINAL JavaTimeChronoIsoEra_Enum
+#endif
+
 
 /*!
  @brief An era in the ISO calendar system.
- <p>
-  The ISO-8601 standard does not define eras.
-  A definition has therefore been created with two eras - 'Current era' (CE) for
-  years on or after 0001-01-01 (ISO), and 'Before current era' (BCE) for years before that. 
- <table summary="ISO years and eras" cellpadding="2" cellspacing="3" border="0">
+ <p>The ISO-8601 standard does not define eras. A definition has therefore been created with two
+  eras - 'Current era' (CE) for years on or after 0001-01-01 (ISO), and 'Before current era' (BCE)
+  for years before that. 
+ <table class="striped" style="text-align:left">
+  <caption style="display:none">ISO years and eras</caption>
   <thead>
-  <tr class="tableSubHeadingColor">
-  <th class="colFirst" align="left">year-of-era</th>
-  <th class="colFirst" align="left">era</th>
-  <th class="colLast" align="left">proleptic-year</th>
+  <tr>
+  <th scope="col">year-of-era</th>
+  <th scope="col">era</th>
+  <th scope="col">proleptic-year</th>
   </tr>
   </thead>
   <tbody>
-  <tr class="rowColor">
-  <td>2</td><td>CE</td><td>2</td>
+  <tr>
+  <td>2</td><td>CE</td><th scope="row">2</th>
   </tr>
-  <tr class="altColor">
-  <td>1</td><td>CE</td><td>1</td>
+  <tr>
+  <td>1</td><td>CE</td><th scope="row">1</th>
   </tr>
-  <tr class="rowColor">
-  <td>1</td><td>BCE</td><td>0</td>
+  <tr>
+  <td>1</td><td>BCE</td><th scope="row">0</th>
   </tr>
-  <tr class="altColor">
-  <td>2</td><td>BCE</td><td>-1</td>
+  <tr>
+  <td>2</td><td>BCE</td><th scope="row">-1</th>
   </tr>
   </tbody>
   </table>
-  <p>
-  <b>Do not use <code>ordinal()</code> to obtain the numeric representation of <code>IsoEra</code>.
-  Use <code>getValue()</code> instead.</b>
+  
+ <p><b>Do not use <code>ordinal()</code> to obtain the numeric representation of <code>IsoEra</code>. Use 
+ <code>getValue()</code> instead.</b>
  @since 1.8
  */
 @interface JavaTimeChronoIsoEra : JavaLangEnum < JavaTimeChronoEra >
 
-@property (readonly, class, nonnull) JavaTimeChronoIsoEra *BCE NS_SWIFT_NAME(BCE);
-@property (readonly, class, nonnull) JavaTimeChronoIsoEra *CE NS_SWIFT_NAME(CE);
 #pragma mark Public
 
 /*!
@@ -113,6 +117,8 @@ typedef NS_ENUM(NSUInteger, JavaTimeChronoIsoEra_Enum) {
 
 - (JavaTimeChronoIsoEra_Enum)toNSEnum;
 
+- (JavaTimeChronoIsoEra_ORDINAL)ordinal;
+
 @end
 
 J2OBJC_STATIC_INIT(JavaTimeChronoIsoEra)
@@ -140,7 +146,7 @@ FOUNDATION_EXPORT IOSObjectArray *JavaTimeChronoIsoEra_values(void);
 
 FOUNDATION_EXPORT JavaTimeChronoIsoEra *JavaTimeChronoIsoEra_valueOfWithNSString_(NSString *name);
 
-FOUNDATION_EXPORT JavaTimeChronoIsoEra *JavaTimeChronoIsoEra_fromOrdinal(NSUInteger ordinal);
+FOUNDATION_EXPORT JavaTimeChronoIsoEra *JavaTimeChronoIsoEra_fromOrdinal(JavaTimeChronoIsoEra_ORDINAL ordinal);
 
 J2OBJC_TYPE_LITERAL_HEADER(JavaTimeChronoIsoEra)
 
@@ -150,6 +156,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaTimeChronoIsoEra)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaTimeChronoIsoEra")

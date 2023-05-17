@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaUtilHashSet
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -37,6 +34,10 @@
 #define INCLUDE_JavaIoSerializable 1
 #include "java/io/Serializable.h"
 
+@class JavaLangBoolean;
+@class JavaLangFloat;
+@class JavaLangInteger;
+@class JavaLangLong;
 @protocol JavaUtilCollection;
 @protocol JavaUtilIterator;
 @protocol JavaUtilSpliterator;
@@ -96,7 +97,6 @@
  @since 1.2
  */
 @interface JavaUtilHashSet : JavaUtilAbstractSet < JavaUtilSet, NSCopying, JavaIoSerializable >
-@property (readonly, class) jlong serialVersionUID NS_SWIFT_NAME(serialVersionUID);
 
 #pragma mark Public
 
@@ -281,6 +281,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilHashSet)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaUtilHashSet")

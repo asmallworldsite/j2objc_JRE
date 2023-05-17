@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaNetInet6Address
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -30,6 +27,8 @@
 #include "java/net/InetAddress.h"
 
 @class IOSByteArray;
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @class JavaNetInet6Address_Inet6AddressHolder;
 @class JavaNetNetworkInterface;
 
@@ -154,9 +153,6 @@
  @public
   JavaNetInet6Address_Inet6AddressHolder *holder6_;
 }
-@property (readonly, class) jint INADDRSZ NS_SWIFT_NAME(INADDRSZ);
-@property (readonly, class, strong) JavaNetInetAddress *ANY NS_SWIFT_NAME(ANY);
-@property (readonly, class, strong) JavaNetInetAddress *LOOPBACK NS_SWIFT_NAME(LOOPBACK);
 
 #pragma mark Public
 
@@ -448,6 +444,8 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaNetInet6Address)
 #define JavaNetInet6Address_Inet6AddressHolder_
 
 @class IOSByteArray;
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @class JavaNetInet6Address;
 @class JavaNetNetworkInterface;
 
@@ -558,6 +556,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaNetInet6Address_Inet6AddressHolder)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaNetInet6Address")

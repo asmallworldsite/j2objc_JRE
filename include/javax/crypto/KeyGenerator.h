@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaxCryptoKeyGenerator
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -25,6 +22,7 @@
 #if !defined (JavaxCryptoKeyGenerator_) && (INCLUDE_ALL_JavaxCryptoKeyGenerator || defined(INCLUDE_JavaxCryptoKeyGenerator))
 #define JavaxCryptoKeyGenerator_
 
+@class JavaLangInteger;
 @class JavaSecurityProvider;
 @class JavaSecuritySecureRandom;
 @class JavaxCryptoKeyGeneratorSpi;
@@ -353,6 +351,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaxCryptoKeyGenerator)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaxCryptoKeyGenerator")

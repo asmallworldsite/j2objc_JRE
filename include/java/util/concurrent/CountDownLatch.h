@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaUtilConcurrentCountDownLatch
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -25,6 +22,9 @@
 #if !defined (JavaUtilConcurrentCountDownLatch_) && (INCLUDE_ALL_JavaUtilConcurrentCountDownLatch || defined(INCLUDE_JavaUtilConcurrentCountDownLatch))
 #define JavaUtilConcurrentCountDownLatch_
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
+@class JavaLangLong;
 @class JavaUtilConcurrentTimeUnit;
 
 /*!
@@ -256,6 +256,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentCountDownLatch)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaUtilConcurrentCountDownLatch")

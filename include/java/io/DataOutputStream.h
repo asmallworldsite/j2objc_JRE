@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaIoDataOutputStream
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -35,6 +32,11 @@
 
 @class IOSByteArray;
 @class JavaIoOutputStream;
+@class JavaLangBoolean;
+@class JavaLangDouble;
+@class JavaLangFloat;
+@class JavaLangInteger;
+@class JavaLangLong;
 
 /*!
  @brief A data output stream lets an application write primitive Java data
@@ -42,7 +44,7 @@
   then use a data input stream to read the data back in.
  @author unascribed
  - seealso: java.io.DataInputStream
- @since JDK1.0
+ @since 1.0
  */
 @interface JavaIoDataOutputStream : JavaIoFilterOutputStream < JavaIoDataOutput > {
  @public
@@ -296,6 +298,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaIoDataOutputStream)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaIoDataOutputStream")

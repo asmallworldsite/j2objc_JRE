@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaUtilFormattableFlags
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -25,6 +22,8 @@
 #if !defined (JavaUtilFormattableFlags_) && (INCLUDE_ALL_JavaUtilFormattableFlags || defined(INCLUDE_JavaUtilFormattableFlags))
 #define JavaUtilFormattableFlags_
 
+@class JavaLangInteger;
+
 /*!
  @brief FomattableFlags are passed to the <code>Formattable.formatTo()</code>
   method and modify the output format for Formattables
@@ -33,9 +32,6 @@
  @since 1.5
  */
 @interface JavaUtilFormattableFlags : NSObject
-@property (readonly, class) jint LEFT_JUSTIFY NS_SWIFT_NAME(LEFT_JUSTIFY);
-@property (readonly, class) jint UPPERCASE NS_SWIFT_NAME(UPPERCASE);
-@property (readonly, class) jint ALTERNATE NS_SWIFT_NAME(ALTERNATE);
 
 @end
 
@@ -91,6 +87,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilFormattableFlags)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaUtilFormattableFlags")

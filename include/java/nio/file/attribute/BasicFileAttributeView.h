@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaNioFileAttributeBasicFileAttributeView
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -44,47 +41,52 @@
  <p> Where dynamic access to file attributes is required, the attributes
   supported by this attribute view have the following names and types: 
  <blockquote>
-   <table border="1" cellpadding="8" summary="Supported attributes">
+   <table class="striped">
+   <caption style="display:none">Supported attributes</caption>
+   <thead>
     <tr>
-      <th> Name </th>
-      <th> Type </th>
+      <th scope="col"> Name </th>
+      <th scope="col"> Type </th>
     </tr>
+   </thead>
+   <tbody>
    <tr>
-      <td> "lastModifiedTime" </td>
+      <th scope="row"> "lastModifiedTime" </th>
       <td> <code>FileTime</code> </td>
     </tr>
     <tr>
-      <td> "lastAccessTime" </td>
+      <th scope="row"> "lastAccessTime" </th>
       <td> <code>FileTime</code> </td>
     </tr>
     <tr>
-      <td> "creationTime" </td>
+      <th scope="row"> "creationTime" </th>
       <td> <code>FileTime</code> </td>
     </tr>
     <tr>
-      <td> "size" </td>
+      <th scope="row"> "size" </th>
       <td> <code>Long</code> </td>
     </tr>
     <tr>
-      <td> "isRegularFile" </td>
+      <th scope="row"> "isRegularFile" </th>
       <td> <code>Boolean</code> </td>
     </tr>
     <tr>
-      <td> "isDirectory" </td>
+      <th scope="row"> "isDirectory" </th>
       <td> <code>Boolean</code> </td>
     </tr>
     <tr>
-      <td> "isSymbolicLink" </td>
+      <th scope="row"> "isSymbolicLink" </th>
       <td> <code>Boolean</code> </td>
     </tr>
     <tr>
-      <td> "isOther" </td>
+      <th scope="row"> "isOther" </th>
       <td> <code>Boolean</code> </td>
     </tr>
     <tr>
-      <td> "fileKey" </td>
+      <th scope="row"> "fileKey" </th>
       <td> <code>Object</code> </td>
     </tr>
+  </tbody>
   </table>
   </blockquote>
   
@@ -178,6 +180,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaNioFileAttributeBasicFileAttributeView)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaNioFileAttributeBasicFileAttributeView")

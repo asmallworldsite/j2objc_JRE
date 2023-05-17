@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaSecurityAlgorithmParameterGeneratorSpi
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -25,6 +22,7 @@
 #if !defined (JavaSecurityAlgorithmParameterGeneratorSpi_) && (INCLUDE_ALL_JavaSecurityAlgorithmParameterGeneratorSpi || defined(INCLUDE_JavaSecurityAlgorithmParameterGeneratorSpi))
 #define JavaSecurityAlgorithmParameterGeneratorSpi_
 
+@class JavaLangInteger;
 @class JavaSecurityAlgorithmParameters;
 @class JavaSecuritySecureRandom;
 @protocol JavaSecuritySpecAlgorithmParameterSpec;
@@ -95,6 +93,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaSecurityAlgorithmParameterGeneratorSpi)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaSecurityAlgorithmParameterGeneratorSpi")

@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_AndroidIcuTextCurrencyPluralInfo
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -32,6 +29,9 @@
 @class AndroidIcuTextPluralRules;
 @class AndroidIcuTextPluralRules_FixedDecimal;
 @class AndroidIcuUtilULocale;
+@class JavaLangBoolean;
+@class JavaLangDouble;
+@class JavaLangInteger;
 @class JavaUtilLocale;
 @protocol JavaUtilIterator;
 
@@ -126,7 +126,7 @@
   value.
  When Java assertion is enabled, this method triggers an assertion failure.
  */
-- (NSUInteger)hash __attribute__((deprecated));
+- (NSUInteger)hash;
 
 /*!
  @brief Set currency plural patterns.These are initially set in the constructor based on the
@@ -163,13 +163,13 @@
  @brief Given a number, returns the keyword of the first rule that applies
   to the number.
  */
-- (NSString *)selectWithDouble:(jdouble)number __attribute__((deprecated));
+- (NSString *)selectWithDouble:(jdouble)number;
 
 /*!
  @brief Given a number, returns the keyword of the first rule that applies
   to the number.
  */
-- (NSString *)selectWithAndroidIcuTextPluralRules_FixedDecimal:(AndroidIcuTextPluralRules_FixedDecimal *)numberInfo __attribute__((deprecated));
+- (NSString *)selectWithAndroidIcuTextPluralRules_FixedDecimal:(AndroidIcuTextPluralRules_FixedDecimal *)numberInfo;
 
 @end
 
@@ -207,6 +207,4 @@ J2OBJC_TYPE_LITERAL_HEADER(AndroidIcuTextCurrencyPluralInfo)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_AndroidIcuTextCurrencyPluralInfo")

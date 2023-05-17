@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaNioFileFileVisitResult
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -31,12 +28,18 @@
 
 @class IOSObjectArray;
 
-typedef NS_ENUM(NSUInteger, JavaNioFileFileVisitResult_Enum) {
+typedef NS_ENUM(jint, JavaNioFileFileVisitResult_Enum) {
   JavaNioFileFileVisitResult_Enum_CONTINUE = 0,
   JavaNioFileFileVisitResult_Enum_TERMINATE = 1,
   JavaNioFileFileVisitResult_Enum_SKIP_SUBTREE = 2,
   JavaNioFileFileVisitResult_Enum_SKIP_SIBLINGS = 3,
 };
+#if J2OBJC_IMPORTED_BY_JAVA_IMPLEMENTATION
+#define JavaNioFileFileVisitResult_ORDINAL jint
+#else
+#define JavaNioFileFileVisitResult_ORDINAL JavaNioFileFileVisitResult_Enum
+#endif
+
 
 /*!
  @brief The result type of a <code>FileVisitor</code>.
@@ -45,10 +48,6 @@ typedef NS_ENUM(NSUInteger, JavaNioFileFileVisitResult_Enum) {
  */
 @interface JavaNioFileFileVisitResult : JavaLangEnum
 
-@property (readonly, class, nonnull) JavaNioFileFileVisitResult *CONTINUE NS_SWIFT_NAME(CONTINUE);
-@property (readonly, class, nonnull) JavaNioFileFileVisitResult *TERMINATE NS_SWIFT_NAME(TERMINATE);
-@property (readonly, class, nonnull) JavaNioFileFileVisitResult *SKIP_SUBTREE NS_SWIFT_NAME(SKIP_SUBTREE);
-@property (readonly, class, nonnull) JavaNioFileFileVisitResult *SKIP_SIBLINGS NS_SWIFT_NAME(SKIP_SIBLINGS);
 #pragma mark Public
 
 + (JavaNioFileFileVisitResult *)valueOfWithNSString:(NSString *)name;
@@ -58,6 +57,8 @@ typedef NS_ENUM(NSUInteger, JavaNioFileFileVisitResult_Enum) {
 #pragma mark Package-Private
 
 - (JavaNioFileFileVisitResult_Enum)toNSEnum;
+
+- (JavaNioFileFileVisitResult_ORDINAL)ordinal;
 
 @end
 
@@ -103,7 +104,7 @@ FOUNDATION_EXPORT IOSObjectArray *JavaNioFileFileVisitResult_values(void);
 
 FOUNDATION_EXPORT JavaNioFileFileVisitResult *JavaNioFileFileVisitResult_valueOfWithNSString_(NSString *name);
 
-FOUNDATION_EXPORT JavaNioFileFileVisitResult *JavaNioFileFileVisitResult_fromOrdinal(NSUInteger ordinal);
+FOUNDATION_EXPORT JavaNioFileFileVisitResult *JavaNioFileFileVisitResult_fromOrdinal(JavaNioFileFileVisitResult_ORDINAL ordinal);
 
 J2OBJC_TYPE_LITERAL_HEADER(JavaNioFileFileVisitResult)
 
@@ -113,6 +114,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaNioFileFileVisitResult)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaNioFileFileVisitResult")

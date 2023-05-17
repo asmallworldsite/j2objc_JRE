@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaLangClassFormatError
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -35,8 +32,7 @@
  @brief Thrown when the Java Virtual Machine attempts to read a class
   file and determines that the file is malformed or otherwise cannot
   be interpreted as a class file.
- @author unascribed
- @since JDK1.0
+ @since 1.0
  */
 @interface JavaLangClassFormatError : JavaLangLinkageError
 
@@ -83,6 +79,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaLangClassFormatError)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaLangClassFormatError")

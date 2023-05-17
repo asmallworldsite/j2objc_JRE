@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaUtilFormatter
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -2129,18 +2126,22 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilFormatter)
 
 @class IOSObjectArray;
 
-typedef NS_ENUM(NSUInteger, JavaUtilFormatter_BigDecimalLayoutForm_Enum) {
+typedef NS_ENUM(jint, JavaUtilFormatter_BigDecimalLayoutForm_Enum) {
   JavaUtilFormatter_BigDecimalLayoutForm_Enum_SCIENTIFIC = 0,
   JavaUtilFormatter_BigDecimalLayoutForm_Enum_DECIMAL_FLOAT = 1,
 };
+#if J2OBJC_IMPORTED_BY_JAVA_IMPLEMENTATION
+#define JavaUtilFormatter_BigDecimalLayoutForm_ORDINAL jint
+#else
+#define JavaUtilFormatter_BigDecimalLayoutForm_ORDINAL JavaUtilFormatter_BigDecimalLayoutForm_Enum
+#endif
+
 
 /*!
  @brief Enum for <code>BigDecimal</code> formatting.
  */
 @interface JavaUtilFormatter_BigDecimalLayoutForm : JavaLangEnum
 
-@property (readonly, class, nonnull) JavaUtilFormatter_BigDecimalLayoutForm *SCIENTIFIC NS_SWIFT_NAME(SCIENTIFIC);
-@property (readonly, class, nonnull) JavaUtilFormatter_BigDecimalLayoutForm *DECIMAL_FLOAT NS_SWIFT_NAME(DECIMAL_FLOAT);
 #pragma mark Public
 
 + (JavaUtilFormatter_BigDecimalLayoutForm *)valueOfWithNSString:(NSString *)name;
@@ -2150,6 +2151,8 @@ typedef NS_ENUM(NSUInteger, JavaUtilFormatter_BigDecimalLayoutForm_Enum) {
 #pragma mark Package-Private
 
 - (JavaUtilFormatter_BigDecimalLayoutForm_Enum)toNSEnum;
+
+- (JavaUtilFormatter_BigDecimalLayoutForm_ORDINAL)ordinal;
 
 @end
 
@@ -2174,7 +2177,7 @@ FOUNDATION_EXPORT IOSObjectArray *JavaUtilFormatter_BigDecimalLayoutForm_values(
 
 FOUNDATION_EXPORT JavaUtilFormatter_BigDecimalLayoutForm *JavaUtilFormatter_BigDecimalLayoutForm_valueOfWithNSString_(NSString *name);
 
-FOUNDATION_EXPORT JavaUtilFormatter_BigDecimalLayoutForm *JavaUtilFormatter_BigDecimalLayoutForm_fromOrdinal(NSUInteger ordinal);
+FOUNDATION_EXPORT JavaUtilFormatter_BigDecimalLayoutForm *JavaUtilFormatter_BigDecimalLayoutForm_fromOrdinal(JavaUtilFormatter_BigDecimalLayoutForm_ORDINAL ordinal);
 
 J2OBJC_TYPE_LITERAL_HEADER(JavaUtilFormatter_BigDecimalLayoutForm)
 
@@ -2184,6 +2187,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilFormatter_BigDecimalLayoutForm)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaUtilFormatter")

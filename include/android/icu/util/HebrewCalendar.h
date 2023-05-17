@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_AndroidIcuUtilHebrewCalendar
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -31,6 +28,8 @@
 
 @class AndroidIcuUtilTimeZone;
 @class AndroidIcuUtilULocale;
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @class JavaUtilDate;
 @class JavaUtilLocale;
 
@@ -91,19 +90,6 @@
  @author Alan Liu
  */
 @interface AndroidIcuUtilHebrewCalendar : AndroidIcuUtilCalendar
-@property (readonly, class) jint TISHRI NS_SWIFT_NAME(TISHRI);
-@property (readonly, class) jint HESHVAN NS_SWIFT_NAME(HESHVAN);
-@property (readonly, class) jint KISLEV NS_SWIFT_NAME(KISLEV);
-@property (readonly, class) jint TEVET NS_SWIFT_NAME(TEVET);
-@property (readonly, class) jint SHEVAT NS_SWIFT_NAME(SHEVAT);
-@property (readonly, class) jint ADAR_1 NS_SWIFT_NAME(ADAR_1);
-@property (readonly, class) jint ADAR NS_SWIFT_NAME(ADAR);
-@property (readonly, class) jint NISAN NS_SWIFT_NAME(NISAN);
-@property (readonly, class) jint IYAR NS_SWIFT_NAME(IYAR);
-@property (readonly, class) jint SIVAN NS_SWIFT_NAME(SIVAN);
-@property (readonly, class) jint TAMUZ NS_SWIFT_NAME(TAMUZ);
-@property (readonly, class) jint AV NS_SWIFT_NAME(AV);
-@property (readonly, class) jint ELUL NS_SWIFT_NAME(ELUL);
 
 #pragma mark Public
 
@@ -229,7 +215,7 @@
   The rule here is that if (year % 19) == 0, 3, 6, 8, 11, 14, or 17.
  The formula below performs the same test, believe it or not.
  */
-+ (jboolean)isLeapYearWithInt:(jint)year __attribute__((deprecated));
++ (jboolean)isLeapYearWithInt:(jint)year;
 
 /*!
  @brief Rolls (up/down) a specified amount time on the given field.For
@@ -316,11 +302,11 @@
 - (jint)handleGetYearLengthWithInt:(jint)eyear;
 
 /*!
- @brief <p>
+ @brief  <p>
   Overrides <code>Calendar.validateField(int)</code> to provide
   special handling for month validation for Hebrew calendar.
  */
-- (void)validateFieldWithInt:(jint)field __attribute__((deprecated));
+- (void)validateFieldWithInt:(jint)field;
 
 @end
 
@@ -483,6 +469,4 @@ J2OBJC_TYPE_LITERAL_HEADER(AndroidIcuUtilHebrewCalendar)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_AndroidIcuUtilHebrewCalendar")

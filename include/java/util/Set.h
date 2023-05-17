@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaUtilSet
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -30,6 +27,8 @@
 #include "java/util/Collection.h"
 
 @class IOSObjectArray;
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @protocol JavaUtilIterator;
 @protocol JavaUtilSpliterator;
 
@@ -403,6 +402,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilSet)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaUtilSet")

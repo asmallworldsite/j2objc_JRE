@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_AndroidIcuTextDecimalFormatSymbols
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -34,6 +31,9 @@
 @class AndroidIcuUtilULocale_Type;
 @class IOSCharArray;
 @class IOSObjectArray;
+@class JavaLangBoolean;
+@class JavaLangCharacter;
+@class JavaLangInteger;
 @class JavaUtilLocale;
 
 /*!
@@ -51,9 +51,6 @@
  @author Alan Liu
  */
 @interface AndroidIcuTextDecimalFormatSymbols : NSObject < NSCopying, JavaIoSerializable >
-@property (readonly, class) jint CURRENCY_SPC_CURRENCY_MATCH NS_SWIFT_NAME(CURRENCY_SPC_CURRENCY_MATCH);
-@property (readonly, class) jint CURRENCY_SPC_SURROUNDING_MATCH NS_SWIFT_NAME(CURRENCY_SPC_SURROUNDING_MATCH);
-@property (readonly, class) jint CURRENCY_SPC_INSERT NS_SWIFT_NAME(CURRENCY_SPC_INSERT);
 
 #pragma mark Public
 
@@ -780,6 +777,4 @@ J2OBJC_TYPE_LITERAL_HEADER(AndroidIcuTextDecimalFormatSymbols)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_AndroidIcuTextDecimalFormatSymbols")

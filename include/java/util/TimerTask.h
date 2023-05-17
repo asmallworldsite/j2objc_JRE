@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaUtilTimerTask
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -28,6 +25,10 @@
 #define RESTRICT_JavaLangRunnable 1
 #define INCLUDE_JavaLangRunnable 1
 #include "java/lang/Runnable.h"
+
+@class JavaLangBoolean;
+@class JavaLangInteger;
+@class JavaLangLong;
 
 /*!
  @brief A task that can be scheduled for one-time or repeated execution by a Timer.
@@ -59,10 +60,6 @@
    */
   jlong period_;
 }
-@property (readonly, class) jint VIRGIN NS_SWIFT_NAME(VIRGIN);
-@property (readonly, class) jint SCHEDULED NS_SWIFT_NAME(SCHEDULED);
-@property (readonly, class) jint EXECUTED NS_SWIFT_NAME(EXECUTED);
-@property (readonly, class) jint CANCELLED NS_SWIFT_NAME(CANCELLED);
 
 #pragma mark Public
 
@@ -103,7 +100,7 @@
   determine whether the current execution of the task is sufficiently
   timely to warrant performing the scheduled activity: 
  @code
-  public void run() {
+   public void run() {
         if (System.currentTimeMillis() - scheduledExecutionTime() >=
             MAX_TARDINESS)
                 return;  // Too late; skip this execution.
@@ -176,6 +173,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilTimerTask)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaUtilTimerTask")

@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaUtilGregorianCalendar
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -30,6 +27,9 @@
 #include "java/util/Calendar.h"
 
 @class IOSIntArray;
+@class JavaLangBoolean;
+@class JavaLangInteger;
+@class JavaLangLong;
 @class JavaUtilDate;
 @class JavaUtilLocale;
 @class JavaUtilTimeZone;
@@ -294,17 +294,6 @@
  @since JDK1.1
  */
 @interface JavaUtilGregorianCalendar : JavaUtilCalendar
-@property (readonly, class) jint BC NS_SWIFT_NAME(BC);
-@property (readonly, class) jint BCE NS_SWIFT_NAME(BCE);
-@property (readonly, class) jint AD NS_SWIFT_NAME(AD);
-@property (readonly, class) jint CE NS_SWIFT_NAME(CE);
-@property (readonly, class, strong) IOSIntArray *MONTH_LENGTH NS_SWIFT_NAME(MONTH_LENGTH);
-@property (readonly, class, strong) IOSIntArray *LEAP_MONTH_LENGTH NS_SWIFT_NAME(LEAP_MONTH_LENGTH);
-@property (readonly, class, strong) IOSIntArray *MIN_VALUES NS_SWIFT_NAME(MIN_VALUES);
-@property (readonly, class, strong) IOSIntArray *LEAST_MAX_VALUES NS_SWIFT_NAME(LEAST_MAX_VALUES);
-@property (readonly, class, strong) IOSIntArray *MAX_VALUES NS_SWIFT_NAME(MAX_VALUES);
-@property (readonly, class) jlong serialVersionUID NS_SWIFT_NAME(serialVersionUID);
-@property (readonly, class) jlong DEFAULT_GREGORIAN_CUTOVER NS_SWIFT_NAME(DEFAULT_GREGORIAN_CUTOVER);
 
 #pragma mark Public
 
@@ -980,6 +969,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilGregorianCalendar)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaUtilGregorianCalendar")

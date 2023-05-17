@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_AndroidIcuTextUCharacterIterator
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -30,6 +27,7 @@
 #include "android/icu/text/UForwardCharacterIterator.h"
 
 @class IOSCharArray;
+@class JavaLangInteger;
 @class JavaLangStringBuffer;
 @protocol AndroidIcuTextReplaceable;
 @protocol JavaTextCharacterIterator;
@@ -304,6 +302,4 @@ J2OBJC_TYPE_LITERAL_HEADER(AndroidIcuTextUCharacterIterator)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_AndroidIcuTextUCharacterIterator")

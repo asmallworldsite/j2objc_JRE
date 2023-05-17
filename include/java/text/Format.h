@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaTextFormat
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -108,7 +105,7 @@
   the field. For examples of these constants, see <code>ERA_FIELD</code> and its
   friends in <code>DateFormat</code>.
   
- <h4><a name="synchronization">Synchronization</a></h4>
+ <h4><a id="synchronization">Synchronization</a></h4>
   
  <p>
   Formats are generally not synchronized.
@@ -121,6 +118,7 @@
  - seealso: java.text.DateFormat
  - seealso: java.text.MessageFormat
  @author Mark Davis
+ @since 1.1
  */
 @interface JavaTextFormat : NSObject < JavaIoSerializable, NSCopying >
 
@@ -197,6 +195,7 @@
  @return An <code>Object</code> parsed from the string.
  @throw ParseExceptionif the beginning of the specified string
              cannot be parsed.
+ @throw NullPointerExceptionif <code>source</code> is null.
  */
 - (id)parseObjectWithNSString:(NSString *)source;
 
@@ -218,7 +217,7 @@
               index information as described above.
  @return An <code>Object</code> parsed from the string. In case of
           error, returns null.
- @throw NullPointerExceptionif <code>pos</code> is null.
+ @throw NullPointerExceptionif <code>source</code> or <code>pos</code> is null.
  */
 - (id)parseObjectWithNSString:(NSString *)source
     withJavaTextParsePosition:(JavaTextParsePosition *)pos;
@@ -329,6 +328,7 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaTextFormat_Field)
 #if !defined (JavaTextFormat_FieldDelegate_) && (INCLUDE_ALL_JavaTextFormat || defined(INCLUDE_JavaTextFormat_FieldDelegate))
 #define JavaTextFormat_FieldDelegate_
 
+@class JavaLangInteger;
 @class JavaLangStringBuffer;
 @class JavaTextFormat_Field;
 
@@ -390,6 +390,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaTextFormat_FieldDelegate)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaTextFormat")

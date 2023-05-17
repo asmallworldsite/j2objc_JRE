@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_AndroidIcuTextMessageFormat
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -32,6 +29,9 @@
 @class AndroidIcuTextMessagePattern_ApostropheMode;
 @class AndroidIcuUtilULocale;
 @class IOSObjectArray;
+@class JavaLangBoolean;
+@class JavaLangInteger;
+@class JavaLangLong;
 @class JavaLangStringBuffer;
 @class JavaTextFieldPosition;
 @class JavaTextFormat;
@@ -308,7 +308,6 @@
  @author Markus Scherer
  */
 @interface AndroidIcuTextMessageFormat : AndroidIcuTextUFormat
-@property (readonly, class) jlong serialVersionUID NS_SWIFT_NAME(serialVersionUID);
 
 #pragma mark Public
 
@@ -990,7 +989,6 @@ J2OBJC_TYPE_LITERAL_HEADER(AndroidIcuTextMessageFormat)
   from <code>MessageFormat.formatToCharacterIterator</code>.
  */
 @interface AndroidIcuTextMessageFormat_Field : JavaTextFormat_Field
-@property (readonly, class, strong) AndroidIcuTextMessageFormat_Field *ARGUMENT NS_SWIFT_NAME(ARGUMENT);
 
 #pragma mark Protected
 
@@ -1037,6 +1035,4 @@ J2OBJC_TYPE_LITERAL_HEADER(AndroidIcuTextMessageFormat_Field)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_AndroidIcuTextMessageFormat")

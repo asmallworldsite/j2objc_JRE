@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaTimeChronoChronoLocalDateTime
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -37,6 +34,9 @@
 #define INCLUDE_JavaLangComparable 1
 #include "java/lang/Comparable.h"
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
+@class JavaLangLong;
 @class JavaTimeFormatDateTimeFormatter;
 @class JavaTimeInstant;
 @class JavaTimeLocalTime;
@@ -87,9 +87,7 @@
 
 /*!
  @brief Gets the local date part of this date-time.
- <p>
-  This returns a local date with the same year, month and day
-  as this date-time.
+ <p>This returns a local date with the same year, month and day as this date-time.
  @return the date part of this date-time, not null
  */
 - (id<JavaTimeChronoChronoLocalDate>)toLocalDate;
@@ -483,6 +481,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaTimeChronoChronoLocalDateTime)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaTimeChronoChronoLocalDateTime")

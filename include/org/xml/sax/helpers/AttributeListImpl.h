@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_OrgXmlSaxHelpersAttributeListImpl
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -28,6 +25,8 @@
 #define RESTRICT_OrgXmlSaxAttributeList 1
 #define INCLUDE_OrgXmlSaxAttributeList 1
 #include "org/xml/sax/AttributeList.h"
+
+@class JavaLangInteger;
 
 /*!
  @brief Default implementation for AttributeList.
@@ -74,7 +73,6 @@
  - seealso: org.xml.sax.AttributeList
  - seealso: org.xml.sax.DocumentHandler#startElement
  */
-__attribute__((deprecated))
 @interface OrgXmlSaxHelpersAttributeListImpl : NSObject < OrgXmlSaxAttributeList >
 
 #pragma mark Public
@@ -225,6 +223,4 @@ J2OBJC_TYPE_LITERAL_HEADER(OrgXmlSaxHelpersAttributeListImpl)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_OrgXmlSaxHelpersAttributeListImpl")

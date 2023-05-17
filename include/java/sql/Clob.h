@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaSqlClob
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -29,6 +26,8 @@
 @class JavaIoOutputStream;
 @class JavaIoReader;
 @class JavaIoWriter;
+@class JavaLangInteger;
+@class JavaLangLong;
 
 /*!
  @brief The mapping in the Java<sup><font size=-2>TM</font></sup> programming language
@@ -343,6 +342,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaSqlClob)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaSqlClob")

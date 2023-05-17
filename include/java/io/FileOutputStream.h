@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaIoFileOutputStream
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -32,6 +29,8 @@
 @class IOSByteArray;
 @class JavaIoFile;
 @class JavaIoFileDescriptor;
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @class JavaNioChannelsFileChannel;
 
 /*!
@@ -129,7 +128,11 @@
   This constructor does not throw an exception if <code>fdObj</code>
   is <code>invalid</code>.
   However, if the methods are invoked on the resulting stream to attempt
-  I/O on the stream, an <code>IOException</code> is thrown.
+  I/O on the stream, an <code>IOException</code> is thrown. 
+ <p>
+  Android-specific warning: <code>close()</code> method doesn't close the <code>fdObj</code> provided,
+  because this object doesn't own the file descriptor, but the caller does. The caller can
+  call <code>android.system.Os.close(FileDescriptor)</code> to close the fd.
  @param fdObj the file descriptor to be opened for writing
  */
 - (instancetype __nonnull)initWithJavaIoFileDescriptor:(JavaIoFileDescriptor *)fdObj;
@@ -316,6 +319,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaIoFileOutputStream)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaIoFileOutputStream")

@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaxXmlXpathXPathConstants
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -37,12 +34,6 @@
  @since 1.5
  */
 @interface JavaxXmlXpathXPathConstants : NSObject
-@property (readonly, class, strong) JavaxXmlNamespaceQName *NUMBER NS_SWIFT_NAME(NUMBER);
-@property (readonly, class, strong) JavaxXmlNamespaceQName *STRING NS_SWIFT_NAME(STRING);
-@property (readonly, class, strong) JavaxXmlNamespaceQName *BOOLEAN NS_SWIFT_NAME(BOOLEAN);
-@property (readonly, class, strong) JavaxXmlNamespaceQName *NODESET NS_SWIFT_NAME(NODESET);
-@property (readonly, class, strong) JavaxXmlNamespaceQName *NODE NS_SWIFT_NAME(NODE);
-@property (readonly, copy, class) NSString *DOM_OBJECT_MODEL NS_SWIFT_NAME(DOM_OBJECT_MODEL);
 
 @end
 
@@ -118,6 +109,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaxXmlXpathXPathConstants)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaxXmlXpathXPathConstants")

@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaTimeChronoEra
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -33,6 +30,9 @@
 #define INCLUDE_JavaTimeTemporalTemporalAdjuster 1
 #include "java/time/temporal/TemporalAdjuster.h"
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
+@class JavaLangLong;
 @class JavaTimeFormatTextStyle;
 @class JavaTimeTemporalValueRange;
 @class JavaUtilLocale;
@@ -218,14 +218,9 @@
 
 /*!
  @brief Gets the textual representation of this era.
- <p>
-  This returns the textual name used to identify the era,
-  suitable for presentation to the user.
-  The parameters control the style of the returned text and the locale. 
- <p>
-  If no textual mapping is found then the <code>numeric value</code> is returned. 
- <p>
-  This default implementation is suitable for all implementations.
+ <p>This returns the textual name used to identify the era, suitable for presentation to the
+  user. The parameters control the style of the returned text and the locale. 
+ <p>If no textual mapping is found then the <code>numeric value</code> is returned.
  @param style the style of the text required, not null
  @param locale the locale to use, not null
  @return the text value of the era, not null
@@ -259,6 +254,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaTimeChronoEra)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaTimeChronoEra")

@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaUtilDate
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -32,6 +29,10 @@
 #define RESTRICT_JavaLangComparable 1
 #define INCLUDE_JavaLangComparable 1
 #include "java/lang/Comparable.h"
+
+@class JavaLangBoolean;
+@class JavaLangInteger;
+@class JavaLangLong;
 
 /*!
  @brief The class <code>Date</code> represents a specific instant
@@ -75,27 +76,29 @@
   well; for example, the time scale used by the satellite-based
   global positioning system (GPS) is synchronized to UTC but is 
  <i>not</i> adjusted for leap seconds. An interesting source of
-  further information is the U.S. Naval Observatory, particularly
-  the Directorate of Time at: 
+  further information is the United States Naval Observatory (USNO): 
  <blockquote>@code
 
-          <a href=http://tycho.usno.navy.mil>http://tycho.usno.navy.mil</a>
+          <a href="http://www.usno.navy.mil/USNO">http://www.usno.navy.mil/USNO</a>
    
 @endcode</blockquote>
   <p>
-  and their definitions of "Systems of Time" at: 
+  and the material regarding "Systems of Time" at: 
  <blockquote>@code
 
-          <a href=http://tycho.usno.navy.mil/systime.html>http://tycho.usno.navy.mil/systime.html</a>
+          <a href="http://www.usno.navy.mil/USNO/time/master-clock/systems-of-time">http://www.usno.navy.mil/USNO/time/master-clock/systems-of-time</a>
    
 @endcode</blockquote>
   <p>
+  which has descriptions of various different time systems including
+  UT, UT1, and UTC. 
+ <p>
   In all methods of class <code>Date</code> that accept or return
   year, month, date, hours, minutes, and seconds values, the
   following representations are used: 
  <ul>
   <li>A year <i>y</i> is represented by the integer
-      <i>y</i>&nbsp;<code>-&nbsp;1900</code>.
+      <i>y</i>&nbsp;<code>- 1900</code>.
   <li>A month is represented by an integer from 0 to 11; 0 is January,
       1 is February, and so forth; thus 11 is December. 
  <li>A date (day of month) is represented by an integer from 1 to 31
@@ -122,7 +125,7 @@
  - seealso: java.text.DateFormat
  - seealso: java.util.Calendar
  - seealso: java.util.TimeZone
- @since JDK1.0
+ @since 1.0
  */
 @interface JavaUtilDate : NSObject < JavaIoSerializable, NSCopying, JavaLangComparable >
 
@@ -148,7 +151,7 @@
  */
 - (instancetype __nonnull)initWithInt:(jint)year
                               withInt:(jint)month
-                              withInt:(jint)date __attribute__((deprecated));
+                              withInt:(jint)date;
 
 /*!
  @brief Allocates a <code>Date</code> object and initializes it so that
@@ -167,7 +170,7 @@
                               withInt:(jint)month
                               withInt:(jint)date
                               withInt:(jint)hrs
-                              withInt:(jint)min __attribute__((deprecated));
+                              withInt:(jint)min;
 
 /*!
  @brief Allocates a <code>Date</code> object and initializes it so that
@@ -188,7 +191,7 @@
                               withInt:(jint)date
                               withInt:(jint)hrs
                               withInt:(jint)min
-                              withInt:(jint)sec __attribute__((deprecated));
+                              withInt:(jint)sec;
 
 /*!
  @brief Allocates a <code>Date</code> object and initializes it to
@@ -209,14 +212,14 @@
  - seealso: java.text.DateFormat
  - seealso: java.util.Date#parse(java.lang.String)
  */
-- (instancetype __nonnull)initWithNSString:(NSString *)s __attribute__((deprecated));
+- (instancetype __nonnull)initWithNSString:(NSString *)s;
 
 /*!
  @brief Tests if this date is after the specified date.
  @param when a date.
  @return <code>true</code> if and only if the instant represented
-           by this <tt>Date</tt> object is strictly later than the
-           instant represented by <tt>when</tt>;
+           by this <code>Date</code> object is strictly later than the
+           instant represented by <code>when</code>;
            <code>false</code> otherwise.
  @throw NullPointerExceptionif <code>when</code> is null.
  */
@@ -226,8 +229,8 @@
  @brief Tests if this date is before the specified date.
  @param when a date.
  @return <code>true</code> if and only if the instant of time
-             represented by this <tt>Date</tt> object is strictly
-             earlier than the instant represented by <tt>when</tt>;
+             represented by this <code>Date</code> object is strictly
+             earlier than the instant represented by <code>when</code>;
            <code>false</code> otherwise.
  @throw NullPointerExceptionif <code>when</code> is null.
  */
@@ -240,7 +243,7 @@
 
 /*!
  @brief Compares two Dates for ordering.
- @param anotherDate the  <code> Date </code>  to be compared.
+ @param anotherDate the <code>Date</code>  to be compared.
  @return the value <code>0</code> if the argument Date is equal to
            this Date; a value less than <code>0</code> if this Date
            is before the Date argument; and a value greater than      
@@ -267,39 +270,39 @@
 - (jboolean)isEqual:(id)obj;
 
 /*!
- @brief Returns the day of the month represented by this <tt>Date</tt> object.
+ @brief Returns the day of the month represented by this <code>Date</code> object.
  The value returned is between <code>1</code> and <code>31</code>
   representing the day of the month that contains or begins with the
-  instant in time represented by this <tt>Date</tt> object, as
+  instant in time represented by this <code>Date</code> object, as
   interpreted in the local time zone.
  @return the day of the month represented by this date.
  - seealso: java.util.Calendar
  */
-- (jint)getDate __attribute__((deprecated));
+- (jint)getDate;
 
 /*!
  @brief Returns the day of the week represented by this date.The
-  returned value (<tt>0</tt> = Sunday, <tt>1</tt> = Monday, 
- <tt>2</tt> = Tuesday, <tt>3</tt> = Wednesday, <tt>4</tt> =
-  Thursday, <tt>5</tt> = Friday, <tt>6</tt> = Saturday)
+  returned value (<code>0</code> = Sunday, <code>1</code> = Monday, 
+ <code>2</code> = Tuesday, <code>3</code> = Wednesday, <code>4</code> =
+  Thursday, <code>5</code> = Friday, <code>6</code> = Saturday)
   represents the day of the week that contains or begins with
-  the instant in time represented by this <tt>Date</tt> object,
+  the instant in time represented by this <code>Date</code> object,
   as interpreted in the local time zone.
  @return the day of the week represented by this date.
  - seealso: java.util.Calendar
  */
-- (jint)getDay __attribute__((deprecated));
+- (jint)getDay;
 
 /*!
- @brief Returns the hour represented by this <tt>Date</tt> object.The
-  returned value is a number (<tt>0</tt> through <tt>23</tt>)
+ @brief Returns the hour represented by this <code>Date</code> object.The
+  returned value is a number (<code>0</code> through <code>23</code>)
   representing the hour within the day that contains or begins
-  with the instant in time represented by this <tt>Date</tt>
+  with the instant in time represented by this <code>Date</code>
   object, as interpreted in the local time zone.
  @return the hour represented by this date.
  - seealso: java.util.Calendar
  */
-- (jint)getHours __attribute__((deprecated));
+- (jint)getHours;
 
 /*!
  @brief Returns the number of minutes past the hour represented by this date,
@@ -308,17 +311,17 @@
  @return the number of minutes past the hour represented by this date.
  - seealso: java.util.Calendar
  */
-- (jint)getMinutes __attribute__((deprecated));
+- (jint)getMinutes;
 
 /*!
  @brief Returns a number representing the month that contains or begins
-  with the instant in time represented by this <tt>Date</tt> object.
+  with the instant in time represented by this <code>Date</code> object.
  The value returned is between <code>0</code> and <code>11</code>,
   with the value <code>0</code> representing January.
  @return the month represented by this date.
  - seealso: java.util.Calendar
  */
-- (jint)getMonth __attribute__((deprecated));
+- (jint)getMonth;
 
 /*!
  @brief Returns the number of seconds past the minute represented by this date.
@@ -328,11 +331,11 @@
  @return the number of seconds past the minute represented by this date.
  - seealso: java.util.Calendar
  */
-- (jint)getSeconds __attribute__((deprecated));
+- (jint)getSeconds;
 
 /*!
  @brief Returns the number of milliseconds since January 1, 1970, 00:00:00 GMT
-  represented by this <tt>Date</tt> object.
+  represented by this <code>Date</code> object.
  @return the number of milliseconds since January 1, 1970, 00:00:00 GMT
            represented by this date.
  */
@@ -372,7 +375,7 @@
  - seealso: java.util.Calendar#DST_OFFSET
  - seealso: java.util.TimeZone#getDefault
  */
-- (jint)getTimezoneOffset __attribute__((deprecated));
+- (jint)getTimezoneOffset;
 
 /*!
  @brief Returns a value that is the result of subtracting 1900 from the
@@ -382,11 +385,11 @@
  @return the year represented by this date, minus 1900.
  - seealso: java.util.Calendar
  */
-- (jint)getYear __attribute__((deprecated));
+- (jint)getYear;
 
 /*!
  @brief Returns a hash code value for this object.The result is the
-  exclusive OR of the two halves of the primitive <tt>long</tt>
+  exclusive OR of the two halves of the primitive <code>long</code>
   value returned by the <code>Date.getTime</code>
   method.
  That is, the hash code is the value of the expression: 
@@ -399,13 +402,13 @@
 - (NSUInteger)hash;
 
 /*!
- @brief Attempts to interpret the string <tt>s</tt> as a representation
+ @brief Attempts to interpret the string <code>s</code> as a representation
   of a date and time.If the attempt is successful, the time
   indicated is returned represented as the distance, measured in
   milliseconds, of that time from the epoch (00:00:00 GMT on
   January 1, 1970).
  If the attempt fails, an 
- <tt>IllegalArgumentException</tt> is thrown. 
+ <code>IllegalArgumentException</code> is thrown. 
  <p>
   It accepts many syntaxes; in particular, it recognizes the IETF
   standard date syntax: "Sat, 12 Aug 1995 13:30:00 GMT". It also
@@ -415,11 +418,11 @@
   meridian). If no time zone is specified, the local time zone is
   assumed. GMT and UTC are considered equivalent. 
  <p>
-  The string <tt>s</tt> is processed from left to right, looking for
-  data of interest. Any material in <tt>s</tt> that is within the
-  ASCII parenthesis characters <tt>(</tt> and <tt>)</tt> is ignored.
+  The string <code>s</code> is processed from left to right, looking for
+  data of interest. Any material in <code>s</code> that is within the
+  ASCII parenthesis characters <code>(</code> and <code>)</code> is ignored.
   Parentheses may be nested. Otherwise, the only characters permitted
-  within <tt>s</tt> are these ASCII characters: 
+  within <code>s</code> are these ASCII characters: 
  <blockquote>@code
 
   abcdefghijklmnopqrstuvwxyz
@@ -429,18 +432,18 @@
   and whitespace characters.<p>
   A consecutive sequence of decimal digits is treated as a decimal
   number:<ul>
-  <li>If a number is preceded by <tt>+</tt> or <tt>-</tt> and a year
+  <li>If a number is preceded by <code>+</code> or <code>-</code> and a year
       has already been recognized, then the number is a time-zone
       offset. If the number is less than 24, it is an offset measured
       in hours. Otherwise, it is regarded as an offset in minutes,
       expressed in 24-hour time format without punctuation. A
-      preceding <tt>-</tt> means a westward offset. Time zone offsets
+      preceding <code>-</code> means a westward offset. Time zone offsets
       are always relative to UTC (Greenwich). Thus, for example,     
- <tt>-5</tt> occurring in the string would mean "five hours west
-      of Greenwich" and <tt>+0430</tt> would mean "four hours and
+ <code>-5</code> occurring in the string would mean "five hours west
+      of Greenwich" and <code>+0430</code> would mean "four hours and
       thirty minutes east of Greenwich." It is permitted for the
-      string to specify <tt>GMT</tt>, <tt>UT</tt>, or <tt>UTC</tt>
-      redundantly-for example, <tt>GMT-5</tt> or <tt>utc+0430</tt>.
+      string to specify <code>GMT</code>, <code>UT</code>, or <code>UTC</code>
+      redundantly-for example, <code>GMT-5</code> or <code>utc+0430</code>.
   <li>The number is regarded as a year number if one of the
       following conditions is true: 
  <ul>
@@ -463,8 +466,8 @@
       unless an hour has already been recognized, in which case it is
       regarded as a minute. 
  <li>If the number is followed by a slash, it is regarded as a month
-      (it is decreased by 1 to produce a number in the range <tt>0</tt>
-      to <tt>11</tt>), unless a month has already been recognized, in
+      (it is decreased by 1 to produce a number in the range <code>0</code>
+      to <code>11</code>), unless a month has already been recognized, in
       which case it is regarded as a day of the month. 
  <li>If the number is followed by whitespace, a comma, a hyphen, or
       end of string, then if an hour has been recognized but not a
@@ -473,31 +476,34 @@
       otherwise, it is regarded as a day of the month. </ul><p>
   A consecutive sequence of letters is regarded as a word and treated
   as follows:<ul>
-  <li>A word that matches <tt>AM</tt>, ignoring case, is ignored (but
+  <li>A word that matches <code>AM</code>, ignoring case, is ignored (but
       the parse fails if an hour has not been recognized or is less
-      than <tt>1</tt> or greater than <tt>12</tt>).
-  <li>A word that matches <tt>PM</tt>, ignoring case, adds <tt>12</tt>
+      than <code>1</code> or greater than <code>12</code>).
+  <li>A word that matches <code>PM</code>, ignoring case, adds <code>12</code>
       to the hour (but the parse fails if an hour has not been
-      recognized or is less than <tt>1</tt> or greater than <tt>12</tt>).
-  <li>Any word that matches any prefix of <tt>SUNDAY, MONDAY, TUESDAY,
-      WEDNESDAY, THURSDAY, FRIDAY</tt>, or <tt>SATURDAY</tt>, ignoring
-      case, is ignored. For example, <tt>sat, Friday, TUE</tt>, and
-      <tt>Thurs</tt> are ignored. 
- <li>Otherwise, any word that matches any prefix of <tt>JANUARY,
+      recognized or is less than <code>1</code> or greater than <code>12</code>).
+  <li>Any word that matches any prefix of <code>SUNDAY, MONDAY, TUESDAY,
+      WEDNESDAY, THURSDAY, FRIDAY</code>
+ , or <code>SATURDAY</code>, ignoring
+      case, is ignored. For example, <code>sat, Friday, TUE</code>, and
+      <code>Thurs</code> are ignored. 
+ <li>Otherwise, any word that matches any prefix of <code>JANUARY,
       FEBRUARY, MARCH, APRIL, MAY, JUNE, JULY, AUGUST, SEPTEMBER,
-      OCTOBER, NOVEMBER</tt>, or <tt>DECEMBER</tt>, ignoring case, and
+      OCTOBER, NOVEMBER</code>
+ , or <code>DECEMBER</code>, ignoring case, and
       considering them in the order given here, is recognized as
-      specifying a month and is converted to a number (<tt>0</tt> to
-      <tt>11</tt>). For example, <tt>aug, Sept, april</tt>, and
-      <tt>NOV</tt> are recognized as months. So is <tt>Ma</tt>, which
-      is recognized as <tt>MARCH</tt>, not <tt>MAY</tt>.
-  <li>Any word that matches <tt>GMT, UT</tt>, or <tt>UTC</tt>, ignoring
+      specifying a month and is converted to a number (<code>0</code> to
+      <code>11</code>). For example, <code>aug, Sept, april</code>, and
+      <code>NOV</code> are recognized as months. So is <code>Ma</code>, which
+      is recognized as <code>MARCH</code>, not <code>MAY</code>.
+  <li>Any word that matches <code>GMT, UT</code>, or <code>UTC</code>, ignoring
       case, is treated as referring to UTC. 
- <li>Any word that matches <tt>EST, CST, MST</tt>, or <tt>PST</tt>,
+ <li>Any word that matches <code>EST, CST, MST</code>, or <code>PST</code>,
       ignoring case, is recognized as referring to the time zone in
       North America that is five, six, seven, or eight hours west of
-      Greenwich, respectively. Any word that matches <tt>EDT, CDT,
-      MDT</tt>, or <tt>PDT</tt>, ignoring case, is recognized as
+      Greenwich, respectively. Any word that matches <code>EDT, CDT,
+      MDT</code>
+ , or <code>PDT</code>, ignoring case, is recognized as
       referring to the same time zone, respectively, during daylight
       saving time.</ul><p>
   Once the entire string s has been scanned, it is converted to a time
@@ -511,11 +517,11 @@
            represented by the string argument.
  - seealso: java.text.DateFormat
  */
-+ (jlong)parseWithNSString:(NSString *)s __attribute__((deprecated));
++ (jlong)parseWithNSString:(NSString *)s;
 
 /*!
- @brief Sets the day of the month of this <tt>Date</tt> object to the
-  specified value.This <tt>Date</tt> object is modified so that
+ @brief Sets the day of the month of this <code>Date</code> object to the
+  specified value.This <code>Date</code> object is modified so that
   it represents a point in time within the specified day of the
   month, with the year, month, hour, minute, and second the same
   as before, as interpreted in the local time zone.
@@ -526,33 +532,33 @@
  @param date the day of the month value between 1-31.
  - seealso: java.util.Calendar
  */
-- (void)setDateWithInt:(jint)date __attribute__((deprecated));
+- (void)setDateWithInt:(jint)date;
 
 /*!
- @brief Sets the hour of this <tt>Date</tt> object to the specified value.
- This <tt>Date</tt> object is modified so that it represents a point
+ @brief Sets the hour of this <code>Date</code> object to the specified value.
+ This <code>Date</code> object is modified so that it represents a point
   in time within the specified hour of the day, with the year, month,
   date, minute, and second the same as before, as interpreted in the
   local time zone.
  @param hours the hour value.
  - seealso: java.util.Calendar
  */
-- (void)setHoursWithInt:(jint)hours __attribute__((deprecated));
+- (void)setHoursWithInt:(jint)hours;
 
 /*!
- @brief Sets the minutes of this <tt>Date</tt> object to the specified value.
- This <tt>Date</tt> object is modified so that it represents a point
+ @brief Sets the minutes of this <code>Date</code> object to the specified value.
+ This <code>Date</code> object is modified so that it represents a point
   in time within the specified minute of the hour, with the year, month,
   date, hour, and second the same as before, as interpreted in the
   local time zone.
  @param minutes the value of the minutes.
  - seealso: java.util.Calendar
  */
-- (void)setMinutesWithInt:(jint)minutes __attribute__((deprecated));
+- (void)setMinutesWithInt:(jint)minutes;
 
 /*!
  @brief Sets the month of this date to the specified value.This
-  <tt>Date</tt> object is modified so that it represents a point
+  <code>Date</code> object is modified so that it represents a point
   in time within the specified month, with the year, date, hour,
   minute, and second the same as before, as interpreted in the
   local time zone.
@@ -562,18 +568,18 @@
  @param month the month value between 0-11.
  - seealso: java.util.Calendar
  */
-- (void)setMonthWithInt:(jint)month __attribute__((deprecated));
+- (void)setMonthWithInt:(jint)month;
 
 /*!
- @brief Sets the seconds of this <tt>Date</tt> to the specified value.
- This <tt>Date</tt> object is modified so that it represents a
+ @brief Sets the seconds of this <code>Date</code> to the specified value.
+ This <code>Date</code> object is modified so that it represents a
   point in time within the specified second of the minute, with
   the year, month, date, hour, and minute the same as before, as
   interpreted in the local time zone.
  @param seconds the seconds value.
  - seealso: java.util.Calendar
  */
-- (void)setSecondsWithInt:(jint)seconds __attribute__((deprecated));
+- (void)setSecondsWithInt:(jint)seconds;
 
 /*!
  @brief Sets this <code>Date</code> object to represent a point in time that is 
@@ -583,7 +589,7 @@
 - (void)setTimeWithLong:(jlong)time;
 
 /*!
- @brief Sets the year of this <tt>Date</tt> object to be the specified
+ @brief Sets the year of this <code>Date</code> object to be the specified
   value plus 1900.This <code>Date</code> object is modified so
   that it represents a point in time within the specified year,
   with the month, date, hour, minute, and second the same as
@@ -595,28 +601,29 @@
  @param year the year value.
  - seealso: java.util.Calendar
  */
-- (void)setYearWithInt:(jint)year __attribute__((deprecated));
+- (void)setYearWithInt:(jint)year;
 
 /*!
- @brief Creates a string representation of this <tt>Date</tt> object of
+ @brief Creates a string representation of this <code>Date</code> object of
   the form: 
  <blockquote>@code
 
   d mon yyyy hh:mm:ss GMT
 @endcode</blockquote>
   where:<ul>
-  <li><i>d</i> is the day of the month (<tt>1</tt> through <tt>31</tt>),
+  <li><i>d</i> is the day of the month (<code>1</code> through <code>31</code>),
       as one or two decimal digits.
- <li><i>mon</i> is the month (<tt>Jan, Feb, Mar, Apr, May, Jun, Jul,
-      Aug, Sep, Oct, Nov, Dec</tt>).
+ <li><i>mon</i> is the month (<code>Jan, Feb, Mar, Apr, May, Jun, Jul,
+      Aug, Sep, Oct, Nov, Dec</code>
+ ).
   <li><i>yyyy</i> is the year, as four decimal digits. 
- <li><i>hh</i> is the hour of the day (<tt>00</tt> through <tt>23</tt>),
+ <li><i>hh</i> is the hour of the day (<code>00</code> through <code>23</code>),
       as two decimal digits. 
- <li><i>mm</i> is the minute within the hour (<tt>00</tt> through
-      <tt>59</tt>), as two decimal digits. 
- <li><i>ss</i> is the second within the minute (<tt>00</tt> through
-      <tt>61</tt>), as two decimal digits. 
- <li><i>GMT</i> is exactly the ASCII letters "<tt>GMT</tt>" to indicate
+ <li><i>mm</i> is the minute within the hour (<code>00</code> through
+      <code>59</code>), as two decimal digits. 
+ <li><i>ss</i> is the second within the minute (<code>00</code> through
+      <code>61</code>), as two decimal digits. 
+ <li><i>GMT</i> is exactly the ASCII letters "<code>GMT</code>" to indicate
       Greenwich Mean Time. 
  </ul><p>
   The result does not depend on the local time zone.
@@ -626,10 +633,10 @@
  - seealso: java.util.Date#toString()
  - seealso: java.util.Date#toLocaleString()
  */
-- (NSString *)toGMTString __attribute__((deprecated));
+- (NSString *)toGMTString;
 
 /*!
- @brief Creates a string representation of this <tt>Date</tt> object in an
+ @brief Creates a string representation of this <code>Date</code> object in an
   implementation-dependent form.The intent is that the form should
   be familiar to the user of the Java application, wherever it may
   happen to be running.
@@ -642,7 +649,7 @@
  - seealso: java.util.Date#toString()
  - seealso: java.util.Date#toGMTString()
  */
-- (NSString *)toLocaleString __attribute__((deprecated));
+- (NSString *)toLocaleString;
 
 /*!
  @brief Converts this <code>Date</code> object to a <code>String</code>
@@ -652,24 +659,26 @@
   dow mon dd hh:mm:ss zzz yyyy
 @endcode</blockquote>
   where:<ul>
-  <li><tt>dow</tt> is the day of the week (<tt>Sun, Mon, Tue, Wed,
-      Thu, Fri, Sat</tt>).
- <li><tt>mon</tt> is the month (<tt>Jan, Feb, Mar, Apr, May, Jun,
-      Jul, Aug, Sep, Oct, Nov, Dec</tt>).
-  <li><tt>dd</tt> is the day of the month (<tt>01</tt> through
-      <tt>31</tt>), as two decimal digits. 
- <li><tt>hh</tt> is the hour of the day (<tt>00</tt> through
-      <tt>23</tt>), as two decimal digits. 
- <li><tt>mm</tt> is the minute within the hour (<tt>00</tt> through
-      <tt>59</tt>), as two decimal digits. 
- <li><tt>ss</tt> is the second within the minute (<tt>00</tt> through
-      <tt>61</tt>, as two decimal digits. 
- <li><tt>zzz</tt> is the time zone (and may reflect daylight saving
+  <li><code>dow</code> is the day of the week (<code>Sun, Mon, Tue, Wed,
+      Thu, Fri, Sat</code>
+ ).
+ <li><code>mon</code> is the month (<code>Jan, Feb, Mar, Apr, May, Jun,
+      Jul, Aug, Sep, Oct, Nov, Dec</code>
+ ).
+  <li><code>dd</code> is the day of the month (<code>01</code> through
+      <code>31</code>), as two decimal digits. 
+ <li><code>hh</code> is the hour of the day (<code>00</code> through
+      <code>23</code>), as two decimal digits. 
+ <li><code>mm</code> is the minute within the hour (<code>00</code> through
+      <code>59</code>), as two decimal digits. 
+ <li><code>ss</code> is the second within the minute (<code>00</code> through
+      <code>61</code>, as two decimal digits. 
+ <li><code>zzz</code> is the time zone (and may reflect daylight saving
       time). Standard time zone abbreviations include those
-      recognized by the method <tt>parse</tt>. If time zone
-      information is not available, then <tt>zzz</tt> is empty -
+      recognized by the method <code>parse</code>. If time zone
+      information is not available, then <code>zzz</code> is empty -
       that is, it consists of no characters at all. 
- <li><tt>yyyy</tt> is the year, as four decimal digits. 
+ <li><code>yyyy</code> is the year, as four decimal digits. 
  </ul>
  @return a string representation of this date.
  - seealso: java.util.Date#toLocaleString()
@@ -681,7 +690,7 @@
  @brief Determines the date and time based on the arguments.The
   arguments are interpreted as a year, month, day of the month,
   hour of the day, minute within the hour, and second within the
-  minute, exactly as for the <tt>Date</tt> constructor with six
+  minute, exactly as for the <code>Date</code> constructor with six
   arguments, except that the arguments are interpreted relative
   to UTC rather than to the local time zone.
  The time indicated is
@@ -702,7 +711,7 @@
             withInt:(jint)date
             withInt:(jint)hrs
             withInt:(jint)min
-            withInt:(jint)sec __attribute__((deprecated));
+            withInt:(jint)sec;
 
 #pragma mark Package-Private
 
@@ -766,6 +775,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilDate)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaUtilDate")

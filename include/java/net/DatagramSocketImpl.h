@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaNetDatagramSocketImpl
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -30,6 +27,8 @@
 #include "java/net/SocketOptions.h"
 
 @class JavaIoFileDescriptor;
+@class JavaLangByte;
+@class JavaLangInteger;
 @class JavaNetDatagramPacket;
 @class JavaNetDatagramSocket;
 @class JavaNetInetAddress;
@@ -142,7 +141,7 @@ withJavaNetInetAddress:(JavaNetInetAddress *)laddr;
  @return a byte representing the TTL value
  - seealso: #setTTL(byte)
  */
-- (jbyte)getTTL __attribute__((deprecated));
+- (jbyte)getTTL;
 
 /*!
  @brief Join the multicast group.
@@ -249,7 +248,7 @@ withJavaNetInetAddress:(JavaNetInetAddress *)laddr;
   the time-to-live option.
  - seealso: #getTTL()
  */
-- (void)setTTLWithByte:(jbyte)ttl __attribute__((deprecated));
+- (void)setTTLWithByte:(jbyte)ttl;
 
 #pragma mark Package-Private
 
@@ -280,6 +279,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaNetDatagramSocketImpl)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaNetDatagramSocketImpl")

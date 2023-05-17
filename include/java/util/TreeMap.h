@@ -61,9 +61,6 @@
 #define INCLUDE_JavaUtilTreeMap_PrivateEntryIterator 1
 #endif
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -86,6 +83,8 @@
 #include "java/io/Serializable.h"
 
 @class JavaIoObjectInputStream;
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @class JavaUtilTreeMap_TreeMapEntry;
 @protocol JavaUtilCollection;
 @protocol JavaUtilComparator;
@@ -797,6 +796,8 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilTreeMap)
 #define INCLUDE_JavaUtilAbstractCollection 1
 #include "java/util/AbstractCollection.h"
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @class JavaUtilTreeMap;
 @protocol JavaUtilIterator;
 @protocol JavaUtilSpliterator;
@@ -846,6 +847,8 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilTreeMap_Values)
 #define INCLUDE_JavaUtilAbstractSet 1
 #include "java/util/AbstractSet.h"
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @class JavaUtilTreeMap;
 @protocol JavaUtilIterator;
 @protocol JavaUtilSpliterator;
@@ -899,6 +902,8 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilTreeMap_EntrySet)
 #define INCLUDE_JavaUtilNavigableSet 1
 #include "java/util/NavigableSet.h"
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @protocol JavaUtilComparator;
 @protocol JavaUtilIterator;
 @protocol JavaUtilNavigableMap;
@@ -992,6 +997,8 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilTreeMap_KeySet)
 #define INCLUDE_JavaUtilIterator 1
 #include "java/util/Iterator.h"
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @class JavaUtilTreeMap;
 @class JavaUtilTreeMap_TreeMapEntry;
 @protocol JavaUtilFunctionConsumer;
@@ -1180,6 +1187,8 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilTreeMap_DescendingKeyIterator)
 #define INCLUDE_JavaIoSerializable 1
 #include "java/io/Serializable.h"
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @class JavaUtilTreeMap;
 @class JavaUtilTreeMap_KeySet;
 @class JavaUtilTreeMap_NavigableSubMap_EntrySetView;
@@ -1379,6 +1388,8 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilTreeMap_NavigableSubMap)
 #define INCLUDE_JavaUtilAbstractSet 1
 #include "java/util/AbstractSet.h"
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @class JavaUtilTreeMap_NavigableSubMap;
 
 @interface JavaUtilTreeMap_NavigableSubMap_EntrySetView : JavaUtilAbstractSet
@@ -1418,6 +1429,8 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilTreeMap_NavigableSubMap_EntrySetView)
 #define INCLUDE_JavaUtilIterator 1
 #include "java/util/Iterator.h"
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @class JavaUtilTreeMap_NavigableSubMap;
 @class JavaUtilTreeMap_TreeMapEntry;
 @protocol JavaUtilFunctionConsumer;
@@ -1546,6 +1559,9 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilTreeMap_NavigableSubMap_DescendingSubMapEntry
 #define INCLUDE_JavaUtilSpliterator 1
 #include "java/util/Spliterator.h"
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
+@class JavaLangLong;
 @class JavaUtilTreeMap_NavigableSubMap;
 @class JavaUtilTreeMap_TreeMapEntry;
 @protocol JavaUtilComparator;
@@ -1598,6 +1614,9 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilTreeMap_NavigableSubMap_SubMapKeyIterator)
 #define INCLUDE_JavaUtilSpliterator 1
 #include "java/util/Spliterator.h"
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
+@class JavaLangLong;
 @class JavaUtilTreeMap_NavigableSubMap;
 @class JavaUtilTreeMap_TreeMapEntry;
 @protocol JavaUtilComparator;
@@ -1644,6 +1663,7 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilTreeMap_NavigableSubMap_DescendingSubMapKeyIt
 #if !defined (JavaUtilTreeMap_AscendingSubMap_) && (INCLUDE_ALL_JavaUtilTreeMap || defined(INCLUDE_JavaUtilTreeMap_AscendingSubMap))
 #define JavaUtilTreeMap_AscendingSubMap_
 
+@class JavaLangBoolean;
 @class JavaUtilTreeMap;
 @class JavaUtilTreeMap_TreeMapEntry;
 @protocol JavaUtilComparator;
@@ -1754,6 +1774,7 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilTreeMap_AscendingSubMap_AscendingEntrySetView
 #if !defined (JavaUtilTreeMap_DescendingSubMap_) && (INCLUDE_ALL_JavaUtilTreeMap || defined(INCLUDE_JavaUtilTreeMap_DescendingSubMap))
 #define JavaUtilTreeMap_DescendingSubMap_
 
+@class JavaLangBoolean;
 @class JavaUtilTreeMap;
 @class JavaUtilTreeMap_TreeMapEntry;
 @protocol JavaUtilComparator;
@@ -1868,6 +1889,9 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilTreeMap_DescendingSubMap_DescendingEntrySetVi
 #define INCLUDE_JavaUtilMap_Entry 1
 #include "java/util/Map.h"
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
+
 /*!
  @brief Node in the Tree.Doubles as a means to pass key-value pairs back to
   user (see Map.Entry).
@@ -1946,6 +1970,8 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilTreeMap_TreeMapEntry)
 #if !defined (JavaUtilTreeMap_TreeMapSpliterator_) && (INCLUDE_ALL_JavaUtilTreeMap || defined(INCLUDE_JavaUtilTreeMap_TreeMapSpliterator))
 #define JavaUtilTreeMap_TreeMapSpliterator_
 
+@class JavaLangInteger;
+@class JavaLangLong;
 @class JavaUtilTreeMap;
 @class JavaUtilTreeMap_TreeMapEntry;
 
@@ -2027,6 +2053,9 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilTreeMap_TreeMapSpliterator)
 #define INCLUDE_JavaUtilSpliterator 1
 #include "java/util/Spliterator.h"
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
+@class JavaLangLong;
 @class JavaUtilTreeMap;
 @class JavaUtilTreeMap_TreeMapEntry;
 @protocol JavaUtilComparator;
@@ -2076,6 +2105,9 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilTreeMap_KeySpliterator)
 #define INCLUDE_JavaUtilSpliterator 1
 #include "java/util/Spliterator.h"
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
+@class JavaLangLong;
 @class JavaUtilTreeMap;
 @class JavaUtilTreeMap_TreeMapEntry;
 @protocol JavaUtilComparator;
@@ -2123,6 +2155,9 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilTreeMap_DescendingKeySpliterator)
 #define INCLUDE_JavaUtilSpliterator 1
 #include "java/util/Spliterator.h"
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
+@class JavaLangLong;
 @class JavaUtilTreeMap;
 @class JavaUtilTreeMap_TreeMapEntry;
 @protocol JavaUtilComparator;
@@ -2170,6 +2205,9 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilTreeMap_ValueSpliterator)
 #define INCLUDE_JavaUtilSpliterator 1
 #include "java/util/Spliterator.h"
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
+@class JavaLangLong;
 @class JavaUtilTreeMap;
 @class JavaUtilTreeMap_TreeMapEntry;
 @protocol JavaUtilComparator;
@@ -2216,6 +2254,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilTreeMap_EntrySpliterator)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaUtilTreeMap")

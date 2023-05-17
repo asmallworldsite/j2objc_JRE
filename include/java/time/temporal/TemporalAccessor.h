@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaTimeTemporalTemporalAccessor
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -25,6 +22,9 @@
 #if !defined (JavaTimeTemporalTemporalAccessor_) && (INCLUDE_ALL_JavaTimeTemporalTemporalAccessor || defined(INCLUDE_JavaTimeTemporalTemporalAccessor))
 #define JavaTimeTemporalTemporalAccessor_
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
+@class JavaLangLong;
 @class JavaTimeTemporalValueRange;
 @protocol JavaTimeTemporalTemporalField;
 @protocol JavaTimeTemporalTemporalQuery;
@@ -163,6 +163,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaTimeTemporalTemporalAccessor)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaTimeTemporalTemporalAccessor")

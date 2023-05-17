@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaUtilScanner
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -36,6 +33,13 @@
 @class JavaIoFile;
 @class JavaIoIOException;
 @class JavaIoInputStream;
+@class JavaLangBoolean;
+@class JavaLangByte;
+@class JavaLangDouble;
+@class JavaLangFloat;
+@class JavaLangInteger;
+@class JavaLangLong;
+@class JavaLangShort;
 @class JavaMathBigDecimal;
 @class JavaMathBigInteger;
 @class JavaUtilLocale;
@@ -55,7 +59,7 @@
  <p>For example, this code allows a user to read a number from 
  <tt>System.in</tt>:
   <blockquote>@code
-    Scanner sc = new Scanner(System.in);
+     Scanner sc = new Scanner(System.in);
       int i = sc.nextInt(); 
  
 @endcode</blockquote>
@@ -63,7 +67,7 @@
  <p>As another example, this code allows <code>long</code> types to be
   assigned from entries in a file <code>myNumbers</code>:
   <blockquote>@code
-     Scanner sc = new Scanner(new File("myNumbers"));
+      Scanner sc = new Scanner(new File("myNumbers"));
        while (sc.hasNextLong()) {
            long aLong = sc.nextLong();
        } 
@@ -73,7 +77,7 @@
  <p>The scanner can also use delimiters other than whitespace. This
   example reads several items in from a string: 
  <blockquote>@code
-    String input = "1 fish 2 fish red fish blue fish";
+     String input = "1 fish 2 fish red fish blue fish";
       Scanner s = new Scanner(input).useDelimiter("\\s*fish\\s*");
       System.out.println(s.nextInt());     System.out.println(s.nextInt());
       System.out.println(s.next());     System.out.println(s.next());
@@ -83,7 +87,7 @@
   <p>
   prints the following output: 
  <blockquote>@code
-    1
+     1
       2
       red
       blue 
@@ -93,7 +97,7 @@
  <p>The same output can be generated with this code, which uses a regular
   expression to parse all four tokens at once: 
  <blockquote>@code
-    String input = "1 fish 2 fish red fish blue fish";
+     String input = "1 fish 2 fish red fish blue fish";
       Scanner s = new Scanner(input);
       s.findInLine("(\\d+) fish (\\d+) fish (\\w+) fish (\\w+)");
       MatchResult result = s.match();
@@ -1041,7 +1045,7 @@
  <tt>scanner.reset()</tt> behaves in exactly the same way as the
   invocation 
  <blockquote>@code
-  scanner.useDelimiter("\\p{javaWhitespace}+")
+   scanner.useDelimiter("\\p{javaWhitespace}+")
            .useLocale(Locale.getDefault(Locale.Category.FORMAT))
            .useRadix(10); 
  
@@ -1085,10 +1089,10 @@
 - (JavaUtilScanner *)skipWithNSString:(NSString *)pattern;
 
 /*!
- @brief <p>Returns the string representation of this <code>Scanner</code>.
- The
+ @brief <p>Returns the string representation of this <code>Scanner</code>.The
   string representation of a <code>Scanner</code> contains information
-  that may be useful for debugging. The exact format is unspecified.
+  that may be useful for debugging.
+ The exact format is unspecified.
  @return The string representation of this scanner
  */
 - (NSString *)description;
@@ -1206,6 +1210,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilScanner)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaUtilScanner")

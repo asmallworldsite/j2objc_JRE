@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaNioFileLinkOption
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -39,9 +36,15 @@
 
 @class IOSObjectArray;
 
-typedef NS_ENUM(NSUInteger, JavaNioFileLinkOption_Enum) {
+typedef NS_ENUM(jint, JavaNioFileLinkOption_Enum) {
   JavaNioFileLinkOption_Enum_NOFOLLOW_LINKS = 0,
 };
+#if J2OBJC_IMPORTED_BY_JAVA_IMPLEMENTATION
+#define JavaNioFileLinkOption_ORDINAL jint
+#else
+#define JavaNioFileLinkOption_ORDINAL JavaNioFileLinkOption_Enum
+#endif
+
 
 /*!
  @brief Defines the options as to how symbolic links are handled.
@@ -49,7 +52,6 @@ typedef NS_ENUM(NSUInteger, JavaNioFileLinkOption_Enum) {
  */
 @interface JavaNioFileLinkOption : JavaLangEnum < JavaNioFileOpenOption, JavaNioFileCopyOption >
 
-@property (readonly, class, nonnull) JavaNioFileLinkOption *NOFOLLOW_LINKS NS_SWIFT_NAME(NOFOLLOW_LINKS);
 #pragma mark Public
 
 + (JavaNioFileLinkOption *)valueOfWithNSString:(NSString *)name;
@@ -59,6 +61,8 @@ typedef NS_ENUM(NSUInteger, JavaNioFileLinkOption_Enum) {
 #pragma mark Package-Private
 
 - (JavaNioFileLinkOption_Enum)toNSEnum;
+
+- (JavaNioFileLinkOption_ORDINAL)ordinal;
 
 @end
 
@@ -80,7 +84,7 @@ FOUNDATION_EXPORT IOSObjectArray *JavaNioFileLinkOption_values(void);
 
 FOUNDATION_EXPORT JavaNioFileLinkOption *JavaNioFileLinkOption_valueOfWithNSString_(NSString *name);
 
-FOUNDATION_EXPORT JavaNioFileLinkOption *JavaNioFileLinkOption_fromOrdinal(NSUInteger ordinal);
+FOUNDATION_EXPORT JavaNioFileLinkOption *JavaNioFileLinkOption_fromOrdinal(JavaNioFileLinkOption_ORDINAL ordinal);
 
 J2OBJC_TYPE_LITERAL_HEADER(JavaNioFileLinkOption)
 
@@ -90,6 +94,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaNioFileLinkOption)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaNioFileLinkOption")

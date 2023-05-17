@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaNioIntBuffer
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -34,6 +31,8 @@
 #include "java/lang/Comparable.h"
 
 @class IOSIntArray;
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @class JavaNioByteOrder;
 
 /*!
@@ -279,7 +278,7 @@
  <tt>src.get(dst,&nbsp;off,&nbsp;len)</tt> has exactly the same effect as
   the loop 
  @code
-    for (int i = off; i < off + len; i++)
+     for (int i = off; i < off + len; i++)
           dst[i] = src.get(); 
  
 @endcode
@@ -419,7 +418,7 @@
  <tt>dst.put(src,&nbsp;off,&nbsp;len)</tt> has exactly the same effect as
   the loop 
  @code
-    for (int i = off; i < off + len; i++)
+     for (int i = off; i < off + len; i++)
           dst.put(a[i]); 
  
 @endcode
@@ -594,6 +593,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaNioIntBuffer)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaNioIntBuffer")

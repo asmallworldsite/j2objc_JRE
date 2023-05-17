@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_AndroidIcuTextDisplayContext
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -31,8 +28,9 @@
 
 @class AndroidIcuTextDisplayContext_Type;
 @class IOSObjectArray;
+@class JavaLangInteger;
 
-typedef NS_ENUM(NSUInteger, AndroidIcuTextDisplayContext_Enum) {
+typedef NS_ENUM(jint, AndroidIcuTextDisplayContext_Enum) {
   AndroidIcuTextDisplayContext_Enum_STANDARD_NAMES = 0,
   AndroidIcuTextDisplayContext_Enum_DIALECT_NAMES = 1,
   AndroidIcuTextDisplayContext_Enum_CAPITALIZATION_NONE = 2,
@@ -45,6 +43,12 @@ typedef NS_ENUM(NSUInteger, AndroidIcuTextDisplayContext_Enum) {
   AndroidIcuTextDisplayContext_Enum_SUBSTITUTE = 9,
   AndroidIcuTextDisplayContext_Enum_NO_SUBSTITUTE = 10,
 };
+#if J2OBJC_IMPORTED_BY_JAVA_IMPLEMENTATION
+#define AndroidIcuTextDisplayContext_ORDINAL jint
+#else
+#define AndroidIcuTextDisplayContext_ORDINAL AndroidIcuTextDisplayContext_Enum
+#endif
+
 
 /*!
  @brief Display context settings.
@@ -52,17 +56,6 @@ typedef NS_ENUM(NSUInteger, AndroidIcuTextDisplayContext_Enum) {
  */
 @interface AndroidIcuTextDisplayContext : JavaLangEnum
 
-@property (readonly, class, nonnull) AndroidIcuTextDisplayContext *STANDARD_NAMES NS_SWIFT_NAME(STANDARD_NAMES);
-@property (readonly, class, nonnull) AndroidIcuTextDisplayContext *DIALECT_NAMES NS_SWIFT_NAME(DIALECT_NAMES);
-@property (readonly, class, nonnull) AndroidIcuTextDisplayContext *CAPITALIZATION_NONE NS_SWIFT_NAME(CAPITALIZATION_NONE);
-@property (readonly, class, nonnull) AndroidIcuTextDisplayContext *CAPITALIZATION_FOR_MIDDLE_OF_SENTENCE NS_SWIFT_NAME(CAPITALIZATION_FOR_MIDDLE_OF_SENTENCE);
-@property (readonly, class, nonnull) AndroidIcuTextDisplayContext *CAPITALIZATION_FOR_BEGINNING_OF_SENTENCE NS_SWIFT_NAME(CAPITALIZATION_FOR_BEGINNING_OF_SENTENCE);
-@property (readonly, class, nonnull) AndroidIcuTextDisplayContext *CAPITALIZATION_FOR_UI_LIST_OR_MENU NS_SWIFT_NAME(CAPITALIZATION_FOR_UI_LIST_OR_MENU);
-@property (readonly, class, nonnull) AndroidIcuTextDisplayContext *CAPITALIZATION_FOR_STANDALONE NS_SWIFT_NAME(CAPITALIZATION_FOR_STANDALONE);
-@property (readonly, class, nonnull) AndroidIcuTextDisplayContext *LENGTH_FULL NS_SWIFT_NAME(LENGTH_FULL);
-@property (readonly, class, nonnull) AndroidIcuTextDisplayContext *LENGTH_SHORT NS_SWIFT_NAME(LENGTH_SHORT);
-@property (readonly, class, nonnull) AndroidIcuTextDisplayContext *SUBSTITUTE NS_SWIFT_NAME(SUBSTITUTE);
-@property (readonly, class, nonnull) AndroidIcuTextDisplayContext *NO_SUBSTITUTE NS_SWIFT_NAME(NO_SUBSTITUTE);
 #pragma mark Public
 
 /*!
@@ -84,6 +77,8 @@ typedef NS_ENUM(NSUInteger, AndroidIcuTextDisplayContext_Enum) {
 #pragma mark Package-Private
 
 - (AndroidIcuTextDisplayContext_Enum)toNSEnum;
+
+- (AndroidIcuTextDisplayContext_ORDINAL)ordinal;
 
 @end
 
@@ -185,7 +180,7 @@ FOUNDATION_EXPORT IOSObjectArray *AndroidIcuTextDisplayContext_values(void);
 
 FOUNDATION_EXPORT AndroidIcuTextDisplayContext *AndroidIcuTextDisplayContext_valueOfWithNSString_(NSString *name);
 
-FOUNDATION_EXPORT AndroidIcuTextDisplayContext *AndroidIcuTextDisplayContext_fromOrdinal(NSUInteger ordinal);
+FOUNDATION_EXPORT AndroidIcuTextDisplayContext *AndroidIcuTextDisplayContext_fromOrdinal(AndroidIcuTextDisplayContext_ORDINAL ordinal);
 
 J2OBJC_TYPE_LITERAL_HEADER(AndroidIcuTextDisplayContext)
 
@@ -200,22 +195,24 @@ J2OBJC_TYPE_LITERAL_HEADER(AndroidIcuTextDisplayContext)
 
 @class IOSObjectArray;
 
-typedef NS_ENUM(NSUInteger, AndroidIcuTextDisplayContext_Type_Enum) {
+typedef NS_ENUM(jint, AndroidIcuTextDisplayContext_Type_Enum) {
   AndroidIcuTextDisplayContext_Type_Enum_DIALECT_HANDLING = 0,
   AndroidIcuTextDisplayContext_Type_Enum_CAPITALIZATION = 1,
   AndroidIcuTextDisplayContext_Type_Enum_DISPLAY_LENGTH = 2,
   AndroidIcuTextDisplayContext_Type_Enum_SUBSTITUTE_HANDLING = 3,
 };
+#if J2OBJC_IMPORTED_BY_JAVA_IMPLEMENTATION
+#define AndroidIcuTextDisplayContext_Type_ORDINAL jint
+#else
+#define AndroidIcuTextDisplayContext_Type_ORDINAL AndroidIcuTextDisplayContext_Type_Enum
+#endif
+
 
 /*!
  @brief Type values for DisplayContext
  */
 @interface AndroidIcuTextDisplayContext_Type : JavaLangEnum
 
-@property (readonly, class, nonnull) AndroidIcuTextDisplayContext_Type *DIALECT_HANDLING NS_SWIFT_NAME(DIALECT_HANDLING);
-@property (readonly, class, nonnull) AndroidIcuTextDisplayContext_Type *CAPITALIZATION NS_SWIFT_NAME(CAPITALIZATION);
-@property (readonly, class, nonnull) AndroidIcuTextDisplayContext_Type *DISPLAY_LENGTH NS_SWIFT_NAME(DISPLAY_LENGTH);
-@property (readonly, class, nonnull) AndroidIcuTextDisplayContext_Type *SUBSTITUTE_HANDLING NS_SWIFT_NAME(SUBSTITUTE_HANDLING);
 #pragma mark Public
 
 + (AndroidIcuTextDisplayContext_Type *)valueOfWithNSString:(NSString *)name;
@@ -225,6 +222,8 @@ typedef NS_ENUM(NSUInteger, AndroidIcuTextDisplayContext_Type_Enum) {
 #pragma mark Package-Private
 
 - (AndroidIcuTextDisplayContext_Type_Enum)toNSEnum;
+
+- (AndroidIcuTextDisplayContext_Type_ORDINAL)ordinal;
 
 @end
 
@@ -262,7 +261,7 @@ FOUNDATION_EXPORT IOSObjectArray *AndroidIcuTextDisplayContext_Type_values(void)
 
 FOUNDATION_EXPORT AndroidIcuTextDisplayContext_Type *AndroidIcuTextDisplayContext_Type_valueOfWithNSString_(NSString *name);
 
-FOUNDATION_EXPORT AndroidIcuTextDisplayContext_Type *AndroidIcuTextDisplayContext_Type_fromOrdinal(NSUInteger ordinal);
+FOUNDATION_EXPORT AndroidIcuTextDisplayContext_Type *AndroidIcuTextDisplayContext_Type_fromOrdinal(AndroidIcuTextDisplayContext_Type_ORDINAL ordinal);
 
 J2OBJC_TYPE_LITERAL_HEADER(AndroidIcuTextDisplayContext_Type)
 
@@ -272,6 +271,4 @@ J2OBJC_TYPE_LITERAL_HEADER(AndroidIcuTextDisplayContext_Type)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_AndroidIcuTextDisplayContext")

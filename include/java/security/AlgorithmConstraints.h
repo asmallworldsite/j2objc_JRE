@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaSecurityAlgorithmConstraints
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -25,6 +22,7 @@
 #if !defined (JavaSecurityAlgorithmConstraints_) && (INCLUDE_ALL_JavaSecurityAlgorithmConstraints || defined(INCLUDE_JavaSecurityAlgorithmConstraints))
 #define JavaSecurityAlgorithmConstraints_
 
+@class JavaLangBoolean;
 @class JavaSecurityAlgorithmParameters;
 @protocol JavaSecurityKey;
 @protocol JavaUtilSet;
@@ -109,6 +107,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaSecurityAlgorithmConstraints)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaSecurityAlgorithmConstraints")

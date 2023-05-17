@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaNioChannelsServerSocketChannel
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -33,6 +30,7 @@
 #define INCLUDE_JavaNioChannelsNetworkChannel 1
 #include "java/nio/channels/NetworkChannel.h"
 
+@class JavaLangInteger;
 @class JavaNetServerSocket;
 @class JavaNetSocketAddress;
 @class JavaNioChannelsSocketChannel;
@@ -129,7 +127,7 @@
  <code>null</code>  to bind           to an automatically assigned socket address
  @return This channel
  @throw AlreadyBoundException
- @throw UnsupportedAddressTypeException
+ @throw UnresolvedAddressException
  @throw ClosedChannelException
  @throw IOException
  @throw SecurityException
@@ -174,7 +172,7 @@
                                                              withInt:(jint)backlog;
 
 /*!
- @brief <p>
+ @brief  <p>
   If there is a security manager set, its <code>checkConnect</code> method is
   called with the local address and <code>-1</code> as its arguments to see
   if the operation is allowed.
@@ -258,6 +256,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaNioChannelsServerSocketChannel)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaNioChannelsServerSocketChannel")

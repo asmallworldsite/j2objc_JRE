@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaUtilConcurrentCopyOnWriteArrayList
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -38,6 +35,8 @@
 #include "java/io/Serializable.h"
 
 @class IOSObjectArray;
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @protocol JavaUtilCollection;
 @protocol JavaUtilComparator;
 @protocol JavaUtilFunctionConsumer;
@@ -74,7 +73,10 @@
  <code>CopyOnWriteArrayList</code>
   <a href="package-summary.html#MemoryVisibility"><i>happen-before</i></a>
   actions subsequent to the access or removal of that element from the 
- <code>CopyOnWriteArrayList</code> in another thread.
+ <code>CopyOnWriteArrayList</code> in another thread. 
+ <p>This class is a member of the 
+ <a href="{@@docRoot}/java.base/java/util/package-summary.html#CollectionsFramework">
+  Java Collections Framework</a>.
  @since 1.5
  @author Doug Lea
  */
@@ -225,6 +227,9 @@
  */
 - (jboolean)isEqual:(id)o;
 
+/*!
+ @throw NullPointerException
+ */
 - (void)forEachWithJavaUtilFunctionConsumer:(id<JavaUtilFunctionConsumer>)action;
 
 /*!
@@ -299,7 +304,8 @@
 - (jint)lastIndexOfWithId:(id)o;
 
 /*!
- @brief <p>The returned iterator provides a snapshot of the state of the list
+ @brief  
+ <p>The returned iterator provides a snapshot of the state of the list
   when the iterator was constructed.
  No synchronization is needed while
   traversing the iterator. The iterator does <em>NOT</em> support the 
@@ -308,7 +314,8 @@
 - (id<JavaUtilListIterator> __nonnull)listIterator;
 
 /*!
- @brief <p>The returned iterator provides a snapshot of the state of the list
+ @brief  
+ <p>The returned iterator provides a snapshot of the state of the list
   when the iterator was constructed.
  No synchronization is needed while
   traversing the iterator. The iterator does <em>NOT</em> support the 
@@ -347,15 +354,18 @@
  @return <code>true</code> if this list changed as a result of the call
  @throw ClassCastExceptionif the class of an element of this list
           is incompatible with the specified collection
-  (<a href="../Collection.html#optional-restrictions">optional</a>)
+  (<a href="{@@docRoot}/java.base/java/util/Collection.html#optional-restrictions">optional</a>)
  @throw NullPointerExceptionif this list contains a null element and the
           specified collection does not permit null elements
-  (<a href="../Collection.html#optional-restrictions">optional</a>),
+  (<a href="{@@docRoot}/java.base/java/util/Collection.html#optional-restrictions">optional</a>),
           or if the specified collection is null
  - seealso: #remove(Object)
  */
 - (jboolean)removeAllWithJavaUtilCollection:(id<JavaUtilCollection>)c;
 
+/*!
+ @throw NullPointerException
+ */
 - (jboolean)removeIfWithJavaUtilFunctionPredicate:(id<JavaUtilFunctionPredicate>)filter;
 
 - (void)replaceAllWithJavaUtilFunctionUnaryOperator:(id<JavaUtilFunctionUnaryOperator>)operator_;
@@ -368,10 +378,10 @@
  @return <code>true</code> if this list changed as a result of the call
  @throw ClassCastExceptionif the class of an element of this list
           is incompatible with the specified collection
-  (<a href="{@@docRoot}/../api/java/util/Collection.html#optional-restrictions">optional</a>)
+  (<a href="{@@docRoot}/java.base/java/util/Collection.html#optional-restrictions">optional</a>)
  @throw NullPointerExceptionif this list contains a null element and the
           specified collection does not permit null elements
-  (<a href="{@@docRoot}/../api/java/util/Collection.html#optional-restrictions">optional</a>),
+  (<a href="{@@docRoot}/java.base/java/util/Collection.html#optional-restrictions">optional</a>),
           or if the specified collection is null
  - seealso: #remove(Object)
  */
@@ -486,6 +496,13 @@
 
 #pragma mark Package-Private
 
+- (jboolean)bulkRemoveWithJavaUtilFunctionPredicate:(id<JavaUtilFunctionPredicate>)filter
+                                            withInt:(jint)i
+                                            withInt:(jint)end;
+
++ (id)elementAtWithNSObjectArray:(IOSObjectArray *)a
+                         withInt:(jint)index;
+
 /*!
  @brief Gets the array.Non-private so as to also be accessible
   from CopyOnWriteArraySet class.
@@ -509,14 +526,22 @@
 - (void)removeRangeWithInt:(jint)fromIndex
                    withInt:(jint)toIndex;
 
+- (void)replaceAllRangeWithJavaUtilFunctionUnaryOperator:(id<JavaUtilFunctionUnaryOperator>)operator_
+                                                 withInt:(jint)i
+                                                 withInt:(jint)end;
+
 /*!
  @brief Sets the array.
  */
 - (void)setArrayWithNSObjectArray:(IOSObjectArray *)a;
 
+- (void)sortRangeWithJavaUtilComparator:(id<JavaUtilComparator>)c
+                                withInt:(jint)i
+                                withInt:(jint)end;
+
 @end
 
-J2OBJC_STATIC_INIT(JavaUtilConcurrentCopyOnWriteArrayList)
+J2OBJC_EMPTY_STATIC_INIT(JavaUtilConcurrentCopyOnWriteArrayList)
 
 J2OBJC_FIELD_SETTER(JavaUtilConcurrentCopyOnWriteArrayList, lock_, id)
 
@@ -538,6 +563,8 @@ FOUNDATION_EXPORT JavaUtilConcurrentCopyOnWriteArrayList *new_JavaUtilConcurrent
 
 FOUNDATION_EXPORT JavaUtilConcurrentCopyOnWriteArrayList *create_JavaUtilConcurrentCopyOnWriteArrayList_initWithNSObjectArray_(IOSObjectArray *toCopyIn);
 
+FOUNDATION_EXPORT id JavaUtilConcurrentCopyOnWriteArrayList_elementAtWithNSObjectArray_withInt_(IOSObjectArray *a, jint index);
+
 FOUNDATION_EXPORT NSString *JavaUtilConcurrentCopyOnWriteArrayList_outOfBoundsWithInt_withInt_(jint index, jint size);
 
 J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentCopyOnWriteArrayList)
@@ -552,6 +579,8 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentCopyOnWriteArrayList)
 #include "java/util/ListIterator.h"
 
 @class IOSObjectArray;
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @protocol JavaUtilFunctionConsumer;
 
 @interface JavaUtilConcurrentCopyOnWriteArrayList_COWIterator : NSObject < JavaUtilListIterator >
@@ -595,7 +624,7 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentCopyOnWriteArrayList)
 
 #pragma mark Package-Private
 
-- (instancetype __nonnull)initWithNSObjectArray:(IOSObjectArray *)elements
+- (instancetype __nonnull)initWithNSObjectArray:(IOSObjectArray *)es
                                         withInt:(jint)initialCursor;
 
 // Disallowed inherited constructors, do not use.
@@ -606,11 +635,11 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentCopyOnWriteArrayList)
 
 J2OBJC_EMPTY_STATIC_INIT(JavaUtilConcurrentCopyOnWriteArrayList_COWIterator)
 
-FOUNDATION_EXPORT void JavaUtilConcurrentCopyOnWriteArrayList_COWIterator_initWithNSObjectArray_withInt_(JavaUtilConcurrentCopyOnWriteArrayList_COWIterator *self, IOSObjectArray *elements, jint initialCursor);
+FOUNDATION_EXPORT void JavaUtilConcurrentCopyOnWriteArrayList_COWIterator_initWithNSObjectArray_withInt_(JavaUtilConcurrentCopyOnWriteArrayList_COWIterator *self, IOSObjectArray *es, jint initialCursor);
 
-FOUNDATION_EXPORT JavaUtilConcurrentCopyOnWriteArrayList_COWIterator *new_JavaUtilConcurrentCopyOnWriteArrayList_COWIterator_initWithNSObjectArray_withInt_(IOSObjectArray *elements, jint initialCursor) NS_RETURNS_RETAINED;
+FOUNDATION_EXPORT JavaUtilConcurrentCopyOnWriteArrayList_COWIterator *new_JavaUtilConcurrentCopyOnWriteArrayList_COWIterator_initWithNSObjectArray_withInt_(IOSObjectArray *es, jint initialCursor) NS_RETURNS_RETAINED;
 
-FOUNDATION_EXPORT JavaUtilConcurrentCopyOnWriteArrayList_COWIterator *create_JavaUtilConcurrentCopyOnWriteArrayList_COWIterator_initWithNSObjectArray_withInt_(IOSObjectArray *elements, jint initialCursor);
+FOUNDATION_EXPORT JavaUtilConcurrentCopyOnWriteArrayList_COWIterator *create_JavaUtilConcurrentCopyOnWriteArrayList_COWIterator_initWithNSObjectArray_withInt_(IOSObjectArray *es, jint initialCursor);
 
 J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentCopyOnWriteArrayList_COWIterator)
 
@@ -620,6 +649,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentCopyOnWriteArrayList_COWIterator)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaUtilConcurrentCopyOnWriteArrayList")

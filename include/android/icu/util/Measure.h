@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_AndroidIcuUtilMeasure
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -26,6 +23,8 @@
 #define AndroidIcuUtilMeasure_
 
 @class AndroidIcuUtilMeasureUnit;
+@class JavaLangBoolean;
+@class JavaLangInteger;
 
 /*!
  @brief An amount of a specified unit, consisting of a Number and a Unit.
@@ -105,6 +104,4 @@ J2OBJC_TYPE_LITERAL_HEADER(AndroidIcuUtilMeasure)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_AndroidIcuUtilMeasure")

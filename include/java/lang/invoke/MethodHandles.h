@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaLangInvokeMethodHandles
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -28,6 +25,7 @@
 @class IOSClass;
 @class IOSIntArray;
 @class IOSObjectArray;
+@class JavaLangInteger;
 @class JavaLangInvokeMethodHandle;
 @class JavaLangInvokeMethodHandles_Lookup;
 @class JavaLangInvokeMethodType;
@@ -169,6 +167,7 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaLangInvokeMethodHandles)
 #define JavaLangInvokeMethodHandles_Lookup_
 
 @class IOSClass;
+@class JavaLangInteger;
 @class JavaLangInvokeMethodHandle;
 @class JavaLangInvokeMethodType;
 @class JavaLangReflectConstructor;
@@ -177,10 +176,6 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaLangInvokeMethodHandles)
 @protocol JavaLangInvokeMethodHandleInfo;
 
 @interface JavaLangInvokeMethodHandles_Lookup : NSObject
-@property (readonly, class) jint PUBLIC NS_SWIFT_NAME(PUBLIC);
-@property (readonly, class) jint PRIVATE NS_SWIFT_NAME(PRIVATE);
-@property (readonly, class) jint PROTECTED NS_SWIFT_NAME(PROTECTED);
-@property (readonly, class) jint PACKAGE NS_SWIFT_NAME(PACKAGE);
 
 #pragma mark Public
 
@@ -275,6 +270,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaLangInvokeMethodHandles_Lookup)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaLangInvokeMethodHandles")

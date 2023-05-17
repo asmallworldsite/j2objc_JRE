@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaTextDecimalFormatSymbols
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -30,6 +27,10 @@
 #include "java/io/Serializable.h"
 
 @class IOSObjectArray;
+@class JavaLangBoolean;
+@class JavaLangCharacter;
+@class JavaLangInteger;
+@class JavaLangLong;
 @class JavaUtilCurrency;
 @class JavaUtilLocale;
 
@@ -45,9 +46,9 @@
  - seealso: DecimalFormat
  @author Mark Davis
  @author Alan Liu
+ @since 1.1
  */
 @interface JavaTextDecimalFormatSymbols : NSObject < NSCopying, JavaIoSerializable >
-@property (readonly, class) jlong serialVersionUID NS_SWIFT_NAME(serialVersionUID);
 
 #pragma mark Public
 
@@ -435,6 +436,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaTextDecimalFormatSymbols)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaTextDecimalFormatSymbols")

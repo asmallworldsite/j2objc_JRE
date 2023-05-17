@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaLangBoolean
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -34,35 +31,36 @@
 #include "java/lang/Comparable.h"
 
 @class IOSClass;
+@class JavaLangInteger;
 
 /*!
  @brief The Boolean class wraps a value of the primitive type 
  <code>boolean</code> in an object.An object of type 
  <code>Boolean</code> contains a single field whose type is 
  <code>boolean</code>.
- <p>
-  In addition, this class provides many methods for
+ <p>In addition, this class provides many methods for
   converting a <code>boolean</code> to a <code>String</code> and a 
  <code>String</code> to a <code>boolean</code>, as well as other
   constants and methods useful when dealing with a 
  <code>boolean</code>.
+  
+ <!-- Android-removed: paragraph on ValueBased
+ <p>This is a <a href="{@@docRoot}/java.base/java/lang/doc-files/ValueBased.html">value-based</a>
+ class; programmers should treat instances that are
+ {@@linkplain #equals(Object) equal} as interchangeable and should not
+ use instances for synchronization, or unpredictable behavior may
+ occur. For example, in a future release, synchronization may fail.
+ -->
  @author Arthur van Hoff
- @since JDK1.0
+ @since 1.0
  */
 @interface JavaLangBoolean : NSObject < JavaIoSerializable, JavaLangComparable >
-@property (readonly, class, strong) JavaLangBoolean *TRUE_ NS_SWIFT_NAME(TRUE_);
-@property (readonly, class, strong) JavaLangBoolean *FALSE_ NS_SWIFT_NAME(FALSE_);
-@property (readonly, class, strong) IOSClass *TYPE NS_SWIFT_NAME(TYPE);
 
 #pragma mark Public
 
 /*!
  @brief Allocates a <code>Boolean</code> object representing the 
  <code>value</code> argument.
- <p><b>Note: It is rarely appropriate to use this constructor.
-  Unless a <i>new</i> instance is required, the static factory 
- <code>valueOf(boolean)</code> is generally a better choice. It is
-  likely to yield significantly better space and time performance.</b>
  @param value the value of the <code>Boolean</code> .
  */
 - (instancetype __nonnull)initWithBoolean:(jboolean)value;
@@ -71,12 +69,8 @@
  @brief Allocates a <code>Boolean</code> object representing the value 
  <code>true</code> if the string argument is not <code>null</code>
   and is equal, ignoring case, to the string <code>"true"</code>.
- Otherwise, allocate a <code>Boolean</code> object representing the
-  value <code>false</code>. Examples:<p>
-  <code>new Boolean("True")</code> produces a <code>Boolean</code> object
-  that represents <code>true</code>.<br>
-  <code>new Boolean("yes")</code> produces a <code>Boolean</code> object
-  that represents <code>false</code>.
+ Otherwise, allocates a <code>Boolean</code> object representing the
+  value <code>false</code>.
  @param s the string to be converted to a <code>Boolean</code> .
  */
 - (instancetype __nonnull)initWithNSString:(NSString *)s;
@@ -130,17 +124,13 @@
 - (jboolean)isEqual:(id)obj;
 
 /*!
- @brief Returns <code>true</code> if and only if the system property
-  named by the argument exists and is equal to the string 
- <code>"true"</code>.
- (Beginning with version 1.0.2 of the
-  Java<small><sup>TM</sup></small> platform, the test of
-  this string is case insensitive.) A system property is accessible
-  through <code>getProperty</code>, a method defined by the 
- <code>System</code> class. 
- <p>
-  If there is no property with the specified name, or if the specified
-  name is empty or null, then <code>false</code> is returned.
+ @brief Returns <code>true</code> if and only if the system property named
+  by the argument exists and is equal to, ignoring case, the
+  string <code>"true"</code>.
+ A system property is accessible through <code>getProperty</code>, a
+  method defined by the <code>System</code> class.  <p> If there is no
+  property with the specified name, or if the specified name is
+  empty or null, then <code>false</code> is returned.
  @param name the system property name.
  @return the <code>boolean</code> value of the system property.
  @throw SecurityExceptionfor the same reasons as
@@ -208,7 +198,8 @@
   returned represents the value <code>true</code> if the string argument
   is not <code>null</code> and is equal, ignoring case, to the string 
  <code>"true"</code>.
- <p>
+ Otherwise, a false value is returned, including for a null
+  argument.<p>
   Example: <code>Boolean.parseBoolean("True")</code> returns <code>true</code>.<br>
   Example: <code>Boolean.parseBoolean("yes")</code> returns <code>false</code>.
  @param s the <code>String</code>  containing the boolean                  representation to be parsed
@@ -258,6 +249,8 @@
   specified string.The <code>Boolean</code> returned represents a
   true value if the string argument is not <code>null</code>
   and is equal, ignoring case, to the string <code>"true"</code>.
+ Otherwise, a false value is returned, including for a null
+  argument.
  @param s a string.
  @return the <code>Boolean</code> value represented by the string.
  */
@@ -291,7 +284,7 @@ J2OBJC_STATIC_FIELD_OBJ_FINAL(JavaLangBoolean, FALSE, JavaLangBoolean *)
 
 /*!
  @brief The Class object representing the primitive type boolean.
- @since JDK1.1
+ @since 1.1
  */
 inline IOSClass *JavaLangBoolean_get_TYPE(void);
 /*! INTERNAL ONLY - Use accessor function from above. */
@@ -340,6 +333,4 @@ BOXED_INC_AND_DEC(Boolean, booleanValue, JavaLangBoolean)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaLangBoolean")

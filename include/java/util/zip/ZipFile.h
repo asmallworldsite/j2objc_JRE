@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaUtilZipZipFile
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -35,6 +32,9 @@
 
 @class JavaIoFile;
 @class JavaIoInputStream;
+@class JavaLangBoolean;
+@class JavaLangInteger;
+@class JavaLangLong;
 @class JavaNioCharsetCharset;
 @class JavaUtilZipZipEntry;
 @protocol JavaUtilEnumeration;
@@ -51,8 +51,6 @@
  @public
   jlong jzfile_;
 }
-@property (readonly, class) jint OPEN_READ NS_SWIFT_NAME(OPEN_READ);
-@property (readonly, class) jint OPEN_DELETE NS_SWIFT_NAME(OPEN_DELETE);
 
 #pragma mark Public
 
@@ -337,6 +335,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilZipZipFile)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaUtilZipZipFile")

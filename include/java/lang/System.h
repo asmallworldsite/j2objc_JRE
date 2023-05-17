@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaLangSystem
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -28,6 +25,9 @@
 @class JavaIoConsole;
 @class JavaIoInputStream;
 @class JavaIoPrintStream;
+@class JavaLangBoolean;
+@class JavaLangInteger;
+@class JavaLangLong;
 @class JavaLangSecurityManager;
 @class JavaLangThrowable;
 @class JavaUtilProperties;
@@ -40,9 +40,6 @@
  @author Tom Ball
  */
 @interface JavaLangSystem : NSObject
-@property (nonatomic, setter=setInWithJavaIoInputStream:, class, strong) JavaIoInputStream *in NS_SWIFT_NAME(in);
-@property (nonatomic, setter=setOutWithJavaIoPrintStream:, class, strong) JavaIoPrintStream *out NS_SWIFT_NAME(out);
-@property (nonatomic, setter=setErrWithJavaIoPrintStream:, class, strong) JavaIoPrintStream *err NS_SWIFT_NAME(err);
 
 #pragma mark Public
 
@@ -279,6 +276,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaLangSystem)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaLangSystem")

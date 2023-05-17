@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaNetMulticastSocket
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -29,6 +26,9 @@
 #define INCLUDE_JavaNetDatagramSocket 1
 #include "java/net/DatagramSocket.h"
 
+@class JavaLangBoolean;
+@class JavaLangByte;
+@class JavaLangInteger;
 @class JavaNetDatagramPacket;
 @class JavaNetDatagramSocketImpl;
 @class JavaNetInetAddress;
@@ -204,7 +204,7 @@
  @return the default time-to-live value
  - seealso: #setTTL(byte)
  */
-- (jbyte)getTTL __attribute__((deprecated));
+- (jbyte)getTTL;
 
 /*!
  @brief Joins a multicast group.Its behavior may be affected by 
@@ -320,7 +320,7 @@
  - seealso: SecurityManager#checkConnect
  */
 - (void)sendWithJavaNetDatagramPacket:(JavaNetDatagramPacket *)p
-                             withByte:(jbyte)ttl __attribute__((deprecated));
+                             withByte:(jbyte)ttl;
 
 /*!
  @brief Set the multicast network interface used by methods
@@ -387,7 +387,7 @@
   while setting the default time-to-live value
  - seealso: #getTTL()
  */
-- (void)setTTLWithByte:(jbyte)ttl __attribute__((deprecated));
+- (void)setTTLWithByte:(jbyte)ttl;
 
 // Disallowed inherited constructors, do not use.
 
@@ -426,6 +426,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaNetMulticastSocket)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaNetMulticastSocket")

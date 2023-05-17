@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_AndroidIcuTextUnicodeSet
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -47,6 +44,8 @@
 @class AndroidIcuUtilOutputInt;
 @class IOSIntArray;
 @class IOSObjectArray;
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @class JavaLangStringBuffer;
 @class JavaTextParsePosition;
 @class JavaUtilTreeSet;
@@ -296,14 +295,6 @@
  @public
   JavaUtilTreeSet *strings_;
 }
-@property (readonly, class, strong) AndroidIcuTextUnicodeSet *EMPTY NS_SWIFT_NAME(EMPTY);
-@property (readonly, class, strong) AndroidIcuTextUnicodeSet *ALL_CODE_POINTS NS_SWIFT_NAME(ALL_CODE_POINTS);
-@property (readonly, class) jint MIN_VALUE NS_SWIFT_NAME(MIN_VALUE);
-@property (readonly, class) jint MAX_VALUE NS_SWIFT_NAME(MAX_VALUE);
-@property (readonly, class) jint IGNORE_SPACE NS_SWIFT_NAME(IGNORE_SPACE);
-@property (readonly, class) jint CASE NS_SWIFT_NAME(CASE);
-@property (readonly, class) jint CASE_INSENSITIVE NS_SWIFT_NAME(CASE_INSENSITIVE);
-@property (readonly, class) jint ADD_CASE_MAPPINGS NS_SWIFT_NAME(ADD_CASE_MAPPINGS);
 
 #pragma mark Public
 
@@ -526,7 +517,7 @@
  @param dontCare Set with the don't-care characters for spanning
  @return the input set, modified
  */
-- (AndroidIcuTextUnicodeSet *)addBridgesWithAndroidIcuTextUnicodeSet:(AndroidIcuTextUnicodeSet *)dontCare __attribute__((deprecated));
+- (AndroidIcuTextUnicodeSet *)addBridgesWithAndroidIcuTextUnicodeSet:(AndroidIcuTextUnicodeSet *)dontCare;
 
 /*!
  @brief Implementation of UnicodeMatcher API.Union the set of all
@@ -610,7 +601,7 @@
 - (AndroidIcuTextUnicodeSet *)applyPatternWithNSString:(NSString *)pattern
                              withJavaTextParsePosition:(JavaTextParsePosition *)pos
                          withAndroidIcuTextSymbolTable:(id<AndroidIcuTextSymbolTable>)symbols
-                                               withInt:(jint)options __attribute__((deprecated));
+                                               withInt:(jint)options;
 
 /*!
  @brief Modifies this set to contain those code points which have the
@@ -746,7 +737,7 @@ withJavaLangCharSequence:(id<JavaLangCharSequence>)string;
   Collection satisfies the right criteria, so it is left to the user to avoid those circumstances.
  */
 + (jint)compareWithJavaUtilIterator:(id<JavaUtilIterator>)first
-               withJavaUtilIterator:(id<JavaUtilIterator>)other __attribute__((deprecated));
+               withJavaUtilIterator:(id<JavaUtilIterator>)other;
 
 /*!
  */
@@ -947,7 +938,7 @@ withJavaLangCharSequence:(id<JavaLangCharSequence>)string;
  */
 - (jint)findInWithJavaLangCharSequence:(id<JavaLangCharSequence>)value
                                withInt:(jint)fromIndex
-                           withBoolean:(jboolean)findNot __attribute__((deprecated));
+                           withBoolean:(jboolean)findNot;
 
 /*!
  @brief Find the last index before fromIndex where the UnicodeSet matches at that index.
@@ -957,7 +948,7 @@ withJavaLangCharSequence:(id<JavaLangCharSequence>)string;
  */
 - (jint)findLastInWithJavaLangCharSequence:(id<JavaLangCharSequence>)value
                                    withInt:(jint)fromIndex
-                               withBoolean:(jboolean)findNot __attribute__((deprecated));
+                               withBoolean:(jboolean)findNot;
 
 /*!
  @brief Freeze this class, according to the Freezable interface.
@@ -986,7 +977,7 @@ withJavaLangCharSequence:(id<JavaLangCharSequence>)string;
  For internal use only.
  @return the symbol table
  */
-+ (AndroidIcuTextUnicodeSet_XSymbolTable *)getDefaultXSymbolTable __attribute__((deprecated));
++ (AndroidIcuTextUnicodeSet_XSymbolTable *)getDefaultXSymbolTable;
 
 /*!
  @brief Iteration method that returns the number of ranges contained in
@@ -1020,12 +1011,12 @@ withJavaLangCharSequence:(id<JavaLangCharSequence>)string;
  @brief Get the Regex equivalent for this UnicodeSet
  @return regex pattern equivalent to this UnicodeSet
  */
-- (NSString *)getRegexEquivalent __attribute__((deprecated));
+- (NSString *)getRegexEquivalent;
 
 /*!
  @brief Return the value of the first code point, if the string is exactly one code point.Otherwise return Integer.MAX_VALUE.
  */
-+ (jint)getSingleCodePointWithJavaLangCharSequence:(id<JavaLangCharSequence>)s __attribute__((deprecated));
++ (jint)getSingleCodePointWithJavaLangCharSequence:(id<JavaLangCharSequence>)s;
 
 /*!
  @brief Returns the hash code value for this set.
@@ -1078,7 +1069,7 @@ withJavaLangCharSequence:(id<JavaLangCharSequence>)string;
  If not, returns -1.
  */
 - (jint)matchesAtWithJavaLangCharSequence:(id<JavaLangCharSequence>)text
-                                  withInt:(jint)offset __attribute__((deprecated));
+                                  withInt:(jint)offset;
 
 /*!
  @brief Implementation of UnicodeMatcher API.Returns <tt>true</tt> if
@@ -1254,7 +1245,7 @@ withJavaLangCharSequence:(id<JavaLangCharSequence>)string;
   with null to clear the value, you MUST also call <code>UnicodeProperty.ResetCacheProperties</code>.
  @param xSymbolTable the new default symbol table.
  */
-+ (void)setDefaultXSymbolTableWithAndroidIcuTextUnicodeSet_XSymbolTable:(AndroidIcuTextUnicodeSet_XSymbolTable *)xSymbolTable __attribute__((deprecated));
++ (void)setDefaultXSymbolTableWithAndroidIcuTextUnicodeSet_XSymbolTable:(AndroidIcuTextUnicodeSet_XSymbolTable *)xSymbolTable;
 
 /*!
  @brief Returns the number of elements in this set (its cardinality)
@@ -1297,7 +1288,7 @@ withAndroidIcuTextUnicodeSet_SpanCondition:(AndroidIcuTextUnicodeSet_SpanConditi
 - (jint)spanAndCountWithJavaLangCharSequence:(id<JavaLangCharSequence>)s
                                      withInt:(jint)start
   withAndroidIcuTextUnicodeSet_SpanCondition:(AndroidIcuTextUnicodeSet_SpanCondition *)spanCondition
-                 withAndroidIcuUtilOutputInt:(AndroidIcuUtilOutputInt *)outCount __attribute__((deprecated));
+                 withAndroidIcuUtilOutputInt:(AndroidIcuUtilOutputInt *)outCount;
 
 /*!
  @brief Span a string backwards (from the fromIndex) using this UnicodeSet.
@@ -1343,7 +1334,7 @@ withAndroidIcuTextUnicodeSet_SpanCondition:(AndroidIcuTextUnicodeSet_SpanConditi
  @return The string after it has been stripped.
  */
 - (NSString *)stripFromWithJavaLangCharSequence:(id<JavaLangCharSequence>)source
-                                    withBoolean:(jboolean)matches __attribute__((deprecated));
+                                    withBoolean:(jboolean)matches;
 
 /*!
  @brief Add the contents of the UnicodeSet (as strings) into an array.
@@ -1558,6 +1549,8 @@ J2OBJC_TYPE_LITERAL_HEADER(AndroidIcuTextUnicodeSet)
 
 @class AndroidIcuTextUnicodeSet;
 @class IOSCharArray;
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @class JavaTextParsePosition;
 @protocol AndroidIcuTextUnicodeMatcher;
 
@@ -1622,6 +1615,8 @@ J2OBJC_TYPE_LITERAL_HEADER(AndroidIcuTextUnicodeSet_XSymbolTable)
 #if !defined (AndroidIcuTextUnicodeSet_EntryRange_) && (INCLUDE_ALL_AndroidIcuTextUnicodeSet || defined(INCLUDE_AndroidIcuTextUnicodeSet_EntryRange))
 #define AndroidIcuTextUnicodeSet_EntryRange_
 
+@class JavaLangInteger;
+
 /*!
  @brief A struct-like class used for iteration through ranges, for faster iteration than by String.
  Read about the restrictions on usage in <code>UnicodeSet.ranges()</code>.
@@ -1671,20 +1666,23 @@ J2OBJC_TYPE_LITERAL_HEADER(AndroidIcuTextUnicodeSet_EntryRange)
 
 @class IOSObjectArray;
 
-typedef NS_ENUM(NSUInteger, AndroidIcuTextUnicodeSet_ComparisonStyle_Enum) {
+typedef NS_ENUM(jint, AndroidIcuTextUnicodeSet_ComparisonStyle_Enum) {
   AndroidIcuTextUnicodeSet_ComparisonStyle_Enum_SHORTER_FIRST = 0,
   AndroidIcuTextUnicodeSet_ComparisonStyle_Enum_LEXICOGRAPHIC = 1,
   AndroidIcuTextUnicodeSet_ComparisonStyle_Enum_LONGER_FIRST = 2,
 };
+#if J2OBJC_IMPORTED_BY_JAVA_IMPLEMENTATION
+#define AndroidIcuTextUnicodeSet_ComparisonStyle_ORDINAL jint
+#else
+#define AndroidIcuTextUnicodeSet_ComparisonStyle_ORDINAL AndroidIcuTextUnicodeSet_ComparisonStyle_Enum
+#endif
+
 
 /*!
  @brief Comparison style enums used by <code>UnicodeSet.compareTo(UnicodeSet, ComparisonStyle)</code>.
  */
 @interface AndroidIcuTextUnicodeSet_ComparisonStyle : JavaLangEnum
 
-@property (readonly, class, nonnull) AndroidIcuTextUnicodeSet_ComparisonStyle *SHORTER_FIRST NS_SWIFT_NAME(SHORTER_FIRST);
-@property (readonly, class, nonnull) AndroidIcuTextUnicodeSet_ComparisonStyle *LEXICOGRAPHIC NS_SWIFT_NAME(LEXICOGRAPHIC);
-@property (readonly, class, nonnull) AndroidIcuTextUnicodeSet_ComparisonStyle *LONGER_FIRST NS_SWIFT_NAME(LONGER_FIRST);
 #pragma mark Public
 
 + (AndroidIcuTextUnicodeSet_ComparisonStyle *)valueOfWithNSString:(NSString *)name;
@@ -1694,6 +1692,8 @@ typedef NS_ENUM(NSUInteger, AndroidIcuTextUnicodeSet_ComparisonStyle_Enum) {
 #pragma mark Package-Private
 
 - (AndroidIcuTextUnicodeSet_ComparisonStyle_Enum)toNSEnum;
+
+- (AndroidIcuTextUnicodeSet_ComparisonStyle_ORDINAL)ordinal;
 
 @end
 
@@ -1721,7 +1721,7 @@ FOUNDATION_EXPORT IOSObjectArray *AndroidIcuTextUnicodeSet_ComparisonStyle_value
 
 FOUNDATION_EXPORT AndroidIcuTextUnicodeSet_ComparisonStyle *AndroidIcuTextUnicodeSet_ComparisonStyle_valueOfWithNSString_(NSString *name);
 
-FOUNDATION_EXPORT AndroidIcuTextUnicodeSet_ComparisonStyle *AndroidIcuTextUnicodeSet_ComparisonStyle_fromOrdinal(NSUInteger ordinal);
+FOUNDATION_EXPORT AndroidIcuTextUnicodeSet_ComparisonStyle *AndroidIcuTextUnicodeSet_ComparisonStyle_fromOrdinal(AndroidIcuTextUnicodeSet_ComparisonStyle_ORDINAL ordinal);
 
 J2OBJC_TYPE_LITERAL_HEADER(AndroidIcuTextUnicodeSet_ComparisonStyle)
 
@@ -1736,12 +1736,18 @@ J2OBJC_TYPE_LITERAL_HEADER(AndroidIcuTextUnicodeSet_ComparisonStyle)
 
 @class IOSObjectArray;
 
-typedef NS_ENUM(NSUInteger, AndroidIcuTextUnicodeSet_SpanCondition_Enum) {
+typedef NS_ENUM(jint, AndroidIcuTextUnicodeSet_SpanCondition_Enum) {
   AndroidIcuTextUnicodeSet_SpanCondition_Enum_NOT_CONTAINED = 0,
   AndroidIcuTextUnicodeSet_SpanCondition_Enum_CONTAINED = 1,
   AndroidIcuTextUnicodeSet_SpanCondition_Enum_SIMPLE = 2,
   AndroidIcuTextUnicodeSet_SpanCondition_Enum_CONDITION_COUNT = 3,
 };
+#if J2OBJC_IMPORTED_BY_JAVA_IMPLEMENTATION
+#define AndroidIcuTextUnicodeSet_SpanCondition_ORDINAL jint
+#else
+#define AndroidIcuTextUnicodeSet_SpanCondition_ORDINAL AndroidIcuTextUnicodeSet_SpanCondition_Enum
+#endif
+
 
 /*!
  @brief Argument values for whether span() and similar functions continue while the current character is contained vs.
@@ -1783,10 +1789,6 @@ typedef NS_ENUM(NSUInteger, AndroidIcuTextUnicodeSet_SpanCondition_Enum) {
  */
 @interface AndroidIcuTextUnicodeSet_SpanCondition : JavaLangEnum
 
-@property (readonly, class, nonnull) AndroidIcuTextUnicodeSet_SpanCondition *NOT_CONTAINED NS_SWIFT_NAME(NOT_CONTAINED);
-@property (readonly, class, nonnull) AndroidIcuTextUnicodeSet_SpanCondition *CONTAINED NS_SWIFT_NAME(CONTAINED);
-@property (readonly, class, nonnull) AndroidIcuTextUnicodeSet_SpanCondition *SIMPLE NS_SWIFT_NAME(SIMPLE);
-@property (readonly, class, nonnull) AndroidIcuTextUnicodeSet_SpanCondition *CONDITION_COUNT NS_SWIFT_NAME(CONDITION_COUNT);
 #pragma mark Public
 
 + (AndroidIcuTextUnicodeSet_SpanCondition *)valueOfWithNSString:(NSString *)name;
@@ -1796,6 +1798,8 @@ typedef NS_ENUM(NSUInteger, AndroidIcuTextUnicodeSet_SpanCondition_Enum) {
 #pragma mark Package-Private
 
 - (AndroidIcuTextUnicodeSet_SpanCondition_Enum)toNSEnum;
+
+- (AndroidIcuTextUnicodeSet_SpanCondition_ORDINAL)ordinal;
 
 @end
 
@@ -1860,7 +1864,7 @@ FOUNDATION_EXPORT IOSObjectArray *AndroidIcuTextUnicodeSet_SpanCondition_values(
 
 FOUNDATION_EXPORT AndroidIcuTextUnicodeSet_SpanCondition *AndroidIcuTextUnicodeSet_SpanCondition_valueOfWithNSString_(NSString *name);
 
-FOUNDATION_EXPORT AndroidIcuTextUnicodeSet_SpanCondition *AndroidIcuTextUnicodeSet_SpanCondition_fromOrdinal(NSUInteger ordinal);
+FOUNDATION_EXPORT AndroidIcuTextUnicodeSet_SpanCondition *AndroidIcuTextUnicodeSet_SpanCondition_fromOrdinal(AndroidIcuTextUnicodeSet_SpanCondition_ORDINAL ordinal);
 
 J2OBJC_TYPE_LITERAL_HEADER(AndroidIcuTextUnicodeSet_SpanCondition)
 
@@ -1870,6 +1874,4 @@ J2OBJC_TYPE_LITERAL_HEADER(AndroidIcuTextUnicodeSet_SpanCondition)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_AndroidIcuTextUnicodeSet")

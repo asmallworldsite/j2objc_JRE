@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaIoPrintWriter
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -33,26 +30,38 @@
 @class IOSObjectArray;
 @class JavaIoFile;
 @class JavaIoOutputStream;
+@class JavaLangBoolean;
+@class JavaLangCharacter;
+@class JavaLangDouble;
+@class JavaLangFloat;
+@class JavaLangInteger;
+@class JavaLangLong;
+@class JavaNioCharsetCharset;
 @class JavaUtilLocale;
 @protocol JavaLangCharSequence;
 
 /*!
  @brief Prints formatted representations of objects to a text-output stream.This
-  class implements all of the <tt>print</tt> methods found in <code>PrintStream</code>
+  class implements all of the <code>print</code> methods found in <code>PrintStream</code>
  .
  It does not contain methods for writing raw bytes, for which
   a program should use unencoded byte streams. 
  <p> Unlike the <code>PrintStream</code> class, if automatic flushing is enabled
-  it will be done only when one of the <tt>println</tt>, <tt>printf</tt>, or 
- <tt>format</tt> methods is invoked, rather than whenever a newline character
+  it will be done only when one of the <code>println</code>, <code>printf</code>, or 
+ <code>format</code> methods is invoked, rather than whenever a newline character
   happens to be output.  These methods use the platform's own notion of line
   separator rather than the newline character. 
  <p> Methods in this class never throw I/O exceptions, although some of its
   constructors may.  The client may inquire as to whether any errors have
   occurred by invoking <code>checkError()</code>.
+  
+ <p> This class always replaces malformed and unmappable character sequences with
+  the charset's default replacement string.
+  The java.nio.charset.CharsetEncoder class should be used when more
+  control over the encoding process is required.
  @author Frank Yellin
  @author Mark Reinhold
- @since JDK1.1
+ @since 1.1
  */
 @interface JavaIoPrintWriter : JavaIoWriter {
  @public
@@ -99,6 +108,28 @@
            exists then it will be truncated to zero size; otherwise, a new
            file will be created.  The output will be written to the file
            and is buffered.
+ @param charset A 
+ charset
+ @throw IOException
+ if an I/O error occurs while opening or creating the file
+ @throw SecurityException
+ If a security manager is present and <code>checkWrite(file.getPath())</code>
+           denies write access to the file
+ @since 10
+ */
+- (instancetype __nonnull)initWithJavaIoFile:(JavaIoFile *)file
+                   withJavaNioCharsetCharset:(JavaNioCharsetCharset *)charset;
+
+/*!
+ @brief Creates a new PrintWriter, without automatic line flushing, with the
+  specified file and charset.This convenience constructor creates the
+  necessary intermediate <code>OutputStreamWriter</code>
+ , which will encode characters using the provided
+  charset.
+ @param file The file to use as the destination of this writer.  If the file
+           exists then it will be truncated to zero size; otherwise, a new
+           file will be created.  The output will be written to the file
+           and is buffered.
  @param csn The name of a supported 
  charset
  @throw FileNotFoundException
@@ -132,13 +163,28 @@
   OutputStreamWriter, which will convert characters into bytes using the
   default character encoding.
  @param outArg An output stream
- @param autoFlush A boolean; if true, the  <tt> println </tt>
-  ,                      <tt> printf </tt> , or  <tt> format </tt>  methods will
-                      flush the output buffer
+ @param autoFlush A boolean; if true, the <code>println</code> ,                     
+ <code>printf</code> , or <code>format</code>  methods will                     flush the output buffer
  - seealso: java.io.OutputStreamWriter#OutputStreamWriter(java.io.OutputStream)
  */
 - (instancetype __nonnull)initWithJavaIoOutputStream:(JavaIoOutputStream *)outArg
                                          withBoolean:(jboolean)autoFlush;
+
+/*!
+ @brief Creates a new PrintWriter from an existing OutputStream.This
+  convenience constructor creates the necessary intermediate
+  OutputStreamWriter, which will convert characters into bytes using the
+  specified charset.
+ @param outArg An output stream
+ @param autoFlush A boolean; if true, the <code>println</code> ,                     
+ <code>printf</code> , or <code>format</code>  methods will                     flush the output buffer
+ @param charset A 
+ charset
+ @since 10
+ */
+- (instancetype __nonnull)initWithJavaIoOutputStream:(JavaIoOutputStream *)outArg
+                                         withBoolean:(jboolean)autoFlush
+                           withJavaNioCharsetCharset:(JavaNioCharsetCharset *)charset;
 
 /*!
  @brief Creates a new PrintWriter, without automatic line flushing, with the
@@ -163,6 +209,29 @@
  @since 1.5
  */
 - (instancetype __nonnull)initWithNSString:(NSString *)fileName;
+
+/*!
+ @brief Creates a new PrintWriter, without automatic line flushing, with the
+  specified file name and charset.This convenience constructor creates
+  the necessary intermediate <code>OutputStreamWriter</code>
+ , which will encode characters using the provided
+  charset.
+ @param fileName The name of the file to use as the destination of this writer.
+           If the file exists then it will be truncated to zero size;
+           otherwise, a new file will be created.  The output will be
+           written to the file and is buffered.
+ @param charset A 
+ charset
+ @throw IOException
+ if an I/O error occurs while opening or creating the file
+ @throw SecurityException
+ If a security manager is present and <code>checkWrite(fileName)</code>
+  denies write
+           access to the file
+ @since 10
+ */
+- (instancetype __nonnull)initWithNSString:(NSString *)fileName
+                 withJavaNioCharsetCharset:(JavaNioCharsetCharset *)charset;
 
 /*!
  @brief Creates a new PrintWriter, without automatic line flushing, with the
@@ -210,11 +279,11 @@
 
 /*!
  @brief Appends the specified character to this writer.
- <p> An invocation of this method of the form <tt>out.append(c)</tt>
+ <p> An invocation of this method of the form <code>out.append(c)</code>
   behaves in exactly the same way as the invocation 
  @code
-
-      out.write(c) 
+     out.write(c) 
+ 
 @endcode
  @param c The 16-bit character to append
  @return This writer
@@ -224,21 +293,21 @@
 
 /*!
  @brief Appends the specified character sequence to this writer.
- <p> An invocation of this method of the form <tt>out.append(csq)</tt>
+ <p> An invocation of this method of the form <code>out.append(csq)</code>
   behaves in exactly the same way as the invocation 
  @code
-
-      out.write(csq.toString()) 
+     out.write(csq.toString()) 
+ 
 @endcode
   
- <p> Depending on the specification of <tt>toString</tt> for the
-  character sequence <tt>csq</tt>, the entire sequence may not be
-  appended. For instance, invoking the <tt>toString</tt> method of a
+ <p> Depending on the specification of <code>toString</code> for the
+  character sequence <code>csq</code>, the entire sequence may not be
+  appended. For instance, invoking the <code>toString</code> method of a
   character buffer will return a subsequence whose content depends upon
   the buffer's position and limit.
  @param csq The character sequence to append.  If 
-  <tt> csq </tt>  is           <tt>
-  null </tt> , then the four characters  <tt> "null" </tt>  are          appended to this writer.
+ <code>csq</code>  is          <code>null</code>
+  , then the four characters <code>"null"</code>  are          appended to this writer.
  @return This writer
  @since 1.5
  */
@@ -246,26 +315,27 @@
 
 /*!
  @brief Appends a subsequence of the specified character sequence to this writer.
- <p> An invocation of this method of the form <tt>out.append(csq, start,
-  end)</tt> when <tt>csq</tt> is not <tt>null</tt>, behaves in
+ <p> An invocation of this method of the form 
+ <code>out.append(csq, start, end)</code>
+  when <code>csq</code> is not <code>null</code>, behaves in
   exactly the same way as the invocation 
  @code
-
-      out.write(csq.subSequence(start, end).toString()) 
+     out.write(csq.subSequence(start, end).toString()) 
+ 
 @endcode
  @param csq The character sequence from which a subsequence will be
            appended.  If 
-  <tt> csq </tt>  is  <tt> null </tt> , then characters          will be appended as if 
-  <tt> csq </tt>  contained the four          characters 
-  <tt> "null" </tt> .
+ <code>csq</code>  is <code>null</code> , then characters          will be appended as if 
+ <code>csq</code>  contained the four          characters <code>"null"</code>
+  .
  @param start The index of the first character in the subsequence
  @param end The index of the character following the last character in the
            subsequence
  @return This writer
  @throw IndexOutOfBoundsException
- If <tt>start</tt> or <tt>end</tt> are negative, <tt>start</tt>
-           is greater than <tt>end</tt>, or <tt>end</tt> is greater than
-           <tt>csq.length()</tt>
+ If <code>start</code> or <code>end</code> are negative, <code>start</code>
+           is greater than <code>end</code>, or <code>end</code> is greater than
+           <code>csq.length()</code>
  @since 1.5
  */
 - (JavaIoPrintWriter * __nonnull)appendWithJavaLangCharSequence:(id<JavaLangCharSequence>)csq
@@ -299,7 +369,7 @@
   method will flush the output buffer.
  @param l The 
  locale  to apply during          formatting.  If 
-  <tt> l </tt>  is  <tt> null </tt>  then no localization          is applied.
+ <code>l</code>  is <code>null</code>  then no localization          is applied.
  @param format A format string as described in 
   <a href="../util/Formatter.html#syntax">
   Format string syntax </a> .
@@ -308,7 +378,7 @@
            extra arguments are ignored.  The number of arguments is
            variable and may be zero.  The maximum number of arguments is
            limited by the maximum dimension of a Java array as defined by
-            <cite> The Java &trade;  Virtual Machine Specification </cite> .          The behaviour on a           <tt> null </tt>  argument depends on the  <a href="../util/Formatter.html#syntax"> conversion </a> .
+            <cite> The Java &trade;  Virtual Machine Specification </cite> .          The behaviour on a          <code>null</code>  argument depends on the  <a href="../util/Formatter.html#syntax"> conversion </a> .
  @throw java.util.IllegalFormatException
  If a format string contains an illegal syntax, a format
            specifier that is incompatible with the given arguments,
@@ -318,7 +388,7 @@
  Details</a> section of the
            formatter class specification.
  @throw NullPointerException
- If the <tt>format</tt> is <tt>null</tt>
+ If the <code>format</code> is <code>null</code>
  @return This writer
  @since 1.5
  */
@@ -341,7 +411,7 @@
            extra arguments are ignored.  The number of arguments is
            variable and may be zero.  The maximum number of arguments is
            limited by the maximum dimension of a Java array as defined by
-            <cite> The Java &trade;  Virtual Machine Specification </cite> .          The behaviour on a           <tt> null </tt>  argument depends on the  <a href="../util/Formatter.html#syntax"> conversion </a> .
+            <cite> The Java &trade;  Virtual Machine Specification </cite> .          The behaviour on a          <code>null</code>  argument depends on the  <a href="../util/Formatter.html#syntax"> conversion </a> .
  @throw java.util.IllegalFormatException
  If a format string contains an illegal syntax, a format
            specifier that is incompatible with the given arguments,
@@ -351,7 +421,7 @@
  Details</a> section of the
            Formatter class specification.
  @throw NullPointerException
- If the <tt>format</tt> is <tt>null</tt>
+ If the <code>format</code> is <code>null</code>
  @return This writer
  @since 1.5
  */
@@ -359,28 +429,28 @@
                                   withNSObjectArray:(IOSObjectArray *)args;
 
 /*!
- @brief Prints a boolean value.The string produced by <code><code>java.lang.String.valueOf(boolean)</code>
- </code> is translated into bytes
+ @brief Prints a boolean value.The string produced by <code>java.lang.String.valueOf(boolean)</code>
+  is translated into bytes
   according to the platform's default character encoding, and these bytes
-  are written in exactly the manner of the <code><code>write(int)</code>
- </code> method.
- @param b The  <code> boolean </code>  to be printed
+  are written in exactly the manner of the <code>write(int)</code>
+  method.
+ @param b The <code>boolean</code>  to be printed
  */
 - (void)printWithBoolean:(jboolean)b;
 
 /*!
  @brief Prints a character.The character is translated into one or more bytes
   according to the platform's default character encoding, and these bytes
-  are written in exactly the manner of the <code><code>write(int)</code>
- </code> method.
- @param c The  <code> char </code>  to be printed
+  are written in exactly the manner of the <code>write(int)</code>
+  method.
+ @param c The <code>char</code>  to be printed
  */
 - (void)printWithChar:(jchar)c;
 
 /*!
  @brief Prints an array of characters.The characters are converted into bytes
   according to the platform's default character encoding, and these bytes
-  are written in exactly the manner of the <code><code>write(int)</code></code>
+  are written in exactly the manner of the <code>write(int)</code>
   method.
  @param s The array of chars to be printed
  @throw NullPointerExceptionIf <code>s</code> is <code>null</code>
@@ -389,55 +459,55 @@
 
 /*!
  @brief Prints a double-precision floating-point number.The string produced by 
- <code><code>java.lang.String.valueOf(double)</code></code> is translated into
+ <code>java.lang.String.valueOf(double)</code> is translated into
   bytes according to the platform's default character encoding, and these
-  bytes are written in exactly the manner of the <code><code>write(int)</code>
- </code> method.
- @param d The  <code> double </code>  to be printed
+  bytes are written in exactly the manner of the <code>write(int)</code>
+  method.
+ @param d The <code>double</code>  to be printed
  - seealso: java.lang.Double#toString(double)
  */
 - (void)printWithDouble:(jdouble)d;
 
 /*!
- @brief Prints a floating-point number.The string produced by <code><code>java.lang.String.valueOf(float)</code>
- </code> is translated into bytes
+ @brief Prints a floating-point number.The string produced by <code>java.lang.String.valueOf(float)</code>
+  is translated into bytes
   according to the platform's default character encoding, and these bytes
-  are written in exactly the manner of the <code><code>write(int)</code></code>
+  are written in exactly the manner of the <code>write(int)</code>
   method.
- @param f The  <code> float </code>  to be printed
+ @param f The <code>float</code>  to be printed
  - seealso: java.lang.Float#toString(float)
  */
 - (void)printWithFloat:(jfloat)f;
 
 /*!
- @brief Prints an integer.The string produced by <code><code>java.lang.String.valueOf(int)</code>
- </code> is translated into bytes according
+ @brief Prints an integer.The string produced by <code>java.lang.String.valueOf(int)</code>
+  is translated into bytes according
   to the platform's default character encoding, and these bytes are
-  written in exactly the manner of the <code><code>write(int)</code></code>
+  written in exactly the manner of the <code>write(int)</code>
   method.
- @param i The  <code> int </code>  to be printed
+ @param i The <code>int</code>  to be printed
  - seealso: java.lang.Integer#toString(int)
  */
 - (void)printWithInt:(jint)i;
 
 /*!
- @brief Prints a long integer.The string produced by <code><code>java.lang.String.valueOf(long)</code>
- </code> is translated into bytes
+ @brief Prints a long integer.The string produced by <code>java.lang.String.valueOf(long)</code>
+  is translated into bytes
   according to the platform's default character encoding, and these bytes
-  are written in exactly the manner of the <code><code>write(int)</code></code>
+  are written in exactly the manner of the <code>write(int)</code>
   method.
- @param l The  <code> long </code>  to be printed
+ @param l The <code>long</code>  to be printed
  - seealso: java.lang.Long#toString(long)
  */
 - (void)printWithLong:(jlong)l;
 
 /*!
- @brief Prints an object.The string produced by the <code><code>java.lang.String.valueOf(Object)</code>
- </code> method is translated into bytes
+ @brief Prints an object.The string produced by the <code>java.lang.String.valueOf(Object)</code>
+  method is translated into bytes
   according to the platform's default character encoding, and these bytes
-  are written in exactly the manner of the <code><code>write(int)</code></code>
+  are written in exactly the manner of the <code>write(int)</code>
   method.
- @param obj The  <code> Object </code>  to be printed
+ @param obj The <code>Object</code>  to be printed
  - seealso: java.lang.Object#toString()
  */
 - (void)printWithId:(id)obj;
@@ -448,8 +518,8 @@
  Otherwise, the string's characters are
   converted into bytes according to the platform's default character
   encoding, and these bytes are written in exactly the manner of the 
- <code><code>write(int)</code></code> method.
- @param s The  <code> String </code>  to be printed
+ <code>write(int)</code> method.
+ @param s The <code>String</code>  to be printed
  */
 - (void)printWithNSString:(NSString *)s;
 
@@ -457,15 +527,16 @@
  @brief A convenience method to write a formatted string to this writer using
   the specified format string and arguments.If automatic flushing is
   enabled, calls to this method will flush the output buffer.
- <p> An invocation of this method of the form <tt>out.printf(l, format,
-  args)</tt> behaves in exactly the same way as the invocation 
+ <p> An invocation of this method of the form 
+ <code>out.printf(l, format, args)</code>
+  behaves in exactly the same way as the invocation 
  @code
-
-      out.format(l, format, args) 
+     out.format(l, format, args) 
+ 
 @endcode
  @param l The 
  locale  to apply during          formatting.  If 
-  <tt> l </tt>  is  <tt> null </tt>  then no localization          is applied.
+ <code>l</code>  is <code>null</code>  then no localization          is applied.
  @param format A format string as described in 
   <a href="../util/Formatter.html#syntax">
   Format string syntax </a> .
@@ -474,7 +545,7 @@
            extra arguments are ignored.  The number of arguments is
            variable and may be zero.  The maximum number of arguments is
            limited by the maximum dimension of a Java array as defined by
-            <cite> The Java &trade;  Virtual Machine Specification </cite> .          The behaviour on a           <tt> null </tt>  argument depends on the  <a href="../util/Formatter.html#syntax"> conversion </a> .
+            <cite> The Java &trade;  Virtual Machine Specification </cite> .          The behaviour on a          <code>null</code>  argument depends on the  <a href="../util/Formatter.html#syntax"> conversion </a> .
  @throw java.util.IllegalFormatException
  If a format string contains an illegal syntax, a format
            specifier that is incompatible with the given arguments,
@@ -484,7 +555,7 @@
  Details</a> section of the
            formatter class specification.
  @throw NullPointerException
- If the <tt>format</tt> is <tt>null</tt>
+ If the <code>format</code> is <code>null</code>
  @return This writer
  @since 1.5
  */
@@ -496,11 +567,12 @@
  @brief A convenience method to write a formatted string to this writer using
   the specified format string and arguments.If automatic flushing is
   enabled, calls to this method will flush the output buffer.
- <p> An invocation of this method of the form <tt>out.printf(format,
-  args)</tt> behaves in exactly the same way as the invocation 
+ <p> An invocation of this method of the form 
+ <code>out.printf(format, args)</code>
+  behaves in exactly the same way as the invocation 
  @code
-
-      out.format(format, args) 
+     out.format(format, args) 
+ 
 @endcode
  @param format A format string as described in 
   <a href="../util/Formatter.html#syntax">
@@ -510,7 +582,7 @@
            extra arguments are ignored.  The number of arguments is
            variable and may be zero.  The maximum number of arguments is
            limited by the maximum dimension of a Java array as defined by
-            <cite> The Java &trade;  Virtual Machine Specification </cite> .          The behaviour on a           <tt> null </tt>  argument depends on the  <a href="../util/Formatter.html#syntax"> conversion </a> .
+            <cite> The Java &trade;  Virtual Machine Specification </cite> .          The behaviour on a          <code>null</code>  argument depends on the  <a href="../util/Formatter.html#syntax"> conversion </a> .
  @throw java.util.IllegalFormatException
  If a format string contains an illegal syntax, a format
            specifier that is incompatible with the given arguments,
@@ -520,7 +592,7 @@
  Details</a> section of the
            formatter class specification.
  @throw NullPointerException
- If the <tt>format</tt> is <tt>null</tt>
+ If the <code>format</code> is <code>null</code>
  @return This writer
  @since 1.5
  */
@@ -537,57 +609,57 @@
 
 /*!
  @brief Prints a boolean value and then terminates the line.This method behaves
-  as though it invokes <code><code>print(boolean)</code></code> and then 
- <code><code>println()</code></code>.
- @param x the  <code> boolean </code>  value to be printed
+  as though it invokes <code>print(boolean)</code> and then 
+ <code>println()</code>.
+ @param x the <code>boolean</code>  value to be printed
  */
 - (void)printlnWithBoolean:(jboolean)x;
 
 /*!
  @brief Prints a character and then terminates the line.This method behaves as
-  though it invokes <code><code>print(char)</code></code> and then <code><code>println()</code>
- </code>.
- @param x the  <code> char </code>  value to be printed
+  though it invokes <code>print(char)</code> and then <code>println()</code>
+ .
+ @param x the <code>char</code>  value to be printed
  */
 - (void)printlnWithChar:(jchar)x;
 
 /*!
  @brief Prints an array of characters and then terminates the line.This method
-  behaves as though it invokes <code><code>print(char[])</code></code> and then 
- <code><code>println()</code></code>.
- @param x the array of  <code> char </code>  values to be printed
+  behaves as though it invokes <code>print(char[])</code> and then 
+ <code>println()</code>.
+ @param x the array of <code>char</code>  values to be printed
  */
 - (void)printlnWithCharArray:(IOSCharArray *)x;
 
 /*!
  @brief Prints a double-precision floating-point number and then terminates the
-  line.This method behaves as though it invokes <code><code>print(double)</code>
- </code> and then <code><code>println()</code></code>.
- @param x the  <code> double </code>  value to be printed
+  line.This method behaves as though it invokes <code>print(double)</code>
+  and then <code>println()</code>.
+ @param x the <code>double</code>  value to be printed
  */
 - (void)printlnWithDouble:(jdouble)x;
 
 /*!
  @brief Prints a floating-point number and then terminates the line.This method
-  behaves as though it invokes <code><code>print(float)</code></code> and then 
- <code><code>println()</code></code>.
- @param x the  <code> float </code>  value to be printed
+  behaves as though it invokes <code>print(float)</code> and then 
+ <code>println()</code>.
+ @param x the <code>float</code>  value to be printed
  */
 - (void)printlnWithFloat:(jfloat)x;
 
 /*!
  @brief Prints an integer and then terminates the line.This method behaves as
-  though it invokes <code><code>print(int)</code></code> and then <code><code>println()</code>
- </code>.
- @param x the  <code> int </code>  value to be printed
+  though it invokes <code>print(int)</code> and then <code>println()</code>
+ .
+ @param x the <code>int</code>  value to be printed
  */
 - (void)printlnWithInt:(jint)x;
 
 /*!
  @brief Prints a long integer and then terminates the line.This method behaves
-  as though it invokes <code><code>print(long)</code></code> and then 
- <code><code>println()</code></code>.
- @param x the  <code> long </code>  value to be printed
+  as though it invokes <code>print(long)</code> and then 
+ <code>println()</code>.
+ @param x the <code>long</code>  value to be printed
  */
 - (void)printlnWithLong:(jlong)x;
 
@@ -595,17 +667,17 @@
  @brief Prints an Object and then terminates the line.This method calls
   at first String.valueOf(x) to get the printed object's string value,
   then behaves as
-  though it invokes <code><code>print(String)</code></code> and then 
- <code><code>println()</code></code>.
- @param x The  <code> Object </code>  to be printed.
+  though it invokes <code>print(String)</code> and then 
+ <code>println()</code>.
+ @param x The <code>Object</code>  to be printed.
  */
 - (void)printlnWithId:(id)x;
 
 /*!
  @brief Prints a String and then terminates the line.This method behaves as
-  though it invokes <code><code>print(String)</code></code> and then 
- <code><code>println()</code></code>.
- @param x the  <code> String </code>  value to be printed
+  though it invokes <code>print(String)</code> and then 
+ <code>println()</code>.
+ @param x the <code>String</code>  value to be printed
  */
 - (void)printlnWithNSString:(NSString *)x;
 
@@ -621,6 +693,10 @@
  @param buf Array of characters
  @param off Offset from which to start writing characters
  @param len Number of characters to write
+ @throw IndexOutOfBoundsException
+ If the values of the <code>off</code> and <code>len</code> parameters
+           cause the corresponding method of the underlying <code>Writer</code>
+           to throw an <code>IndexOutOfBoundsException</code>
  */
 - (void)writeWithCharArray:(IOSCharArray *)buf
                    withInt:(jint)off
@@ -644,6 +720,10 @@
  @param s A String
  @param off Offset from which to start writing characters
  @param len Number of characters to write
+ @throw IndexOutOfBoundsException
+ If the values of the <code>off</code> and <code>len</code> parameters
+           cause the corresponding method of the underlying <code>Writer</code>
+           to throw an <code>IndexOutOfBoundsException</code>
  */
 - (void)writeWithNSString:(NSString *)s
                   withInt:(jint)off
@@ -654,7 +734,7 @@
 /*!
  @brief Clears the error state of this stream.
  <p> This method will cause subsequent invocations of <code>checkError()</code>
-  to return <tt>false</tt> until another write
+  to return <code>false</code> until another write
   operation fails and invokes <code>setError()</code>.
  @since 1.6
  */
@@ -663,7 +743,7 @@
 /*!
  @brief Indicates that an error has occurred.
  <p> This method will cause subsequent invocations of <code>checkError()</code>
-  to return <tt>true</tt> until <code>clearError()</code>
+  to return <code>true</code> until <code>clearError()</code>
   is invoked.
  */
 - (void)setError;
@@ -704,6 +784,12 @@ FOUNDATION_EXPORT JavaIoPrintWriter *new_JavaIoPrintWriter_initWithJavaIoOutputS
 
 FOUNDATION_EXPORT JavaIoPrintWriter *create_JavaIoPrintWriter_initWithJavaIoOutputStream_withBoolean_(JavaIoOutputStream *outArg, jboolean autoFlush);
 
+FOUNDATION_EXPORT void JavaIoPrintWriter_initWithJavaIoOutputStream_withBoolean_withJavaNioCharsetCharset_(JavaIoPrintWriter *self, JavaIoOutputStream *outArg, jboolean autoFlush, JavaNioCharsetCharset *charset);
+
+FOUNDATION_EXPORT JavaIoPrintWriter *new_JavaIoPrintWriter_initWithJavaIoOutputStream_withBoolean_withJavaNioCharsetCharset_(JavaIoOutputStream *outArg, jboolean autoFlush, JavaNioCharsetCharset *charset) NS_RETURNS_RETAINED;
+
+FOUNDATION_EXPORT JavaIoPrintWriter *create_JavaIoPrintWriter_initWithJavaIoOutputStream_withBoolean_withJavaNioCharsetCharset_(JavaIoOutputStream *outArg, jboolean autoFlush, JavaNioCharsetCharset *charset);
+
 FOUNDATION_EXPORT void JavaIoPrintWriter_initWithNSString_(JavaIoPrintWriter *self, NSString *fileName);
 
 FOUNDATION_EXPORT JavaIoPrintWriter *new_JavaIoPrintWriter_initWithNSString_(NSString *fileName) NS_RETURNS_RETAINED;
@@ -715,6 +801,12 @@ FOUNDATION_EXPORT void JavaIoPrintWriter_initWithNSString_withNSString_(JavaIoPr
 FOUNDATION_EXPORT JavaIoPrintWriter *new_JavaIoPrintWriter_initWithNSString_withNSString_(NSString *fileName, NSString *csn) NS_RETURNS_RETAINED;
 
 FOUNDATION_EXPORT JavaIoPrintWriter *create_JavaIoPrintWriter_initWithNSString_withNSString_(NSString *fileName, NSString *csn);
+
+FOUNDATION_EXPORT void JavaIoPrintWriter_initWithNSString_withJavaNioCharsetCharset_(JavaIoPrintWriter *self, NSString *fileName, JavaNioCharsetCharset *charset);
+
+FOUNDATION_EXPORT JavaIoPrintWriter *new_JavaIoPrintWriter_initWithNSString_withJavaNioCharsetCharset_(NSString *fileName, JavaNioCharsetCharset *charset) NS_RETURNS_RETAINED;
+
+FOUNDATION_EXPORT JavaIoPrintWriter *create_JavaIoPrintWriter_initWithNSString_withJavaNioCharsetCharset_(NSString *fileName, JavaNioCharsetCharset *charset);
 
 FOUNDATION_EXPORT void JavaIoPrintWriter_initWithJavaIoFile_(JavaIoPrintWriter *self, JavaIoFile *file);
 
@@ -728,6 +820,12 @@ FOUNDATION_EXPORT JavaIoPrintWriter *new_JavaIoPrintWriter_initWithJavaIoFile_wi
 
 FOUNDATION_EXPORT JavaIoPrintWriter *create_JavaIoPrintWriter_initWithJavaIoFile_withNSString_(JavaIoFile *file, NSString *csn);
 
+FOUNDATION_EXPORT void JavaIoPrintWriter_initWithJavaIoFile_withJavaNioCharsetCharset_(JavaIoPrintWriter *self, JavaIoFile *file, JavaNioCharsetCharset *charset);
+
+FOUNDATION_EXPORT JavaIoPrintWriter *new_JavaIoPrintWriter_initWithJavaIoFile_withJavaNioCharsetCharset_(JavaIoFile *file, JavaNioCharsetCharset *charset) NS_RETURNS_RETAINED;
+
+FOUNDATION_EXPORT JavaIoPrintWriter *create_JavaIoPrintWriter_initWithJavaIoFile_withJavaNioCharsetCharset_(JavaIoFile *file, JavaNioCharsetCharset *charset);
+
 J2OBJC_TYPE_LITERAL_HEADER(JavaIoPrintWriter)
 
 #endif
@@ -736,6 +834,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaIoPrintWriter)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaIoPrintWriter")

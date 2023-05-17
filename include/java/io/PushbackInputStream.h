@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaIoPushbackInputStream
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -31,20 +28,24 @@
 
 @class IOSByteArray;
 @class JavaIoInputStream;
+@class JavaLangBoolean;
+@class JavaLangInteger;
+@class JavaLangLong;
 
 /*!
  @brief A <code>PushbackInputStream</code> adds
   functionality to another input stream, namely
-  the  ability to "push back" or "unread"
-  one byte.This is useful in situations where
-  it is  convenient for a fragment of code
+  the  ability to "push back" or "unread" bytes,
+  by storing pushed-back bytes in an internal buffer.
+ This is useful in situations where
+  it is convenient for a fragment of code
   to read an indefinite number of data bytes
   that  are delimited by a particular byte
   value; after reading the terminating byte,
   the  code fragment can "unread" it, so that
   the next read operation on the input stream
   will reread the byte that was pushed back.
- For example, bytes representing the  characters
+  For example, bytes representing the  characters
   constituting an identifier might be terminated
   by a byte representing an  operator character;
   a method whose job is to read just an identifier
@@ -52,13 +53,13 @@
   then push the operator back to be re-read.
  @author David Connelly
  @author Jonathan Payne
- @since JDK1.0
+ @since 1.0
  */
 @interface JavaIoPushbackInputStream : JavaIoFilterInputStream {
  @public
   /*!
    @brief The pushback buffer.
-   @since JDK1.1
+   @since 1.1
    */
   IOSByteArray *buf_;
   /*!
@@ -66,7 +67,7 @@
   be read.When the buffer is empty, <code>pos</code> is equal to 
  <code>buf.length</code>; when the buffer is full, <code>pos</code> is
   equal to zero.
-   @since JDK1.1
+   @since 1.1
    */
   jint pos_;
 }
@@ -75,11 +76,9 @@
 
 /*!
  @brief Creates a <code>PushbackInputStream</code>
-  and saves its  argument, the input stream 
+  with a 1-byte pushback buffer, and saves its argument, the input stream 
  <code>in</code>, for later use.Initially,
-  there is no pushed-back byte  (the field 
- <code>pushBack</code> is initialized to 
- <code>-1</code>).
+  the pushback buffer is empty.
  @param inArg the input stream from which bytes will be read.
  */
 - (instancetype __nonnull)initWithJavaIoInputStream:(JavaIoInputStream *)inArg;
@@ -87,15 +86,13 @@
 /*!
  @brief Creates a <code>PushbackInputStream</code>
   with a pushback buffer of the specified <code>size</code>,
-  and saves its  argument, the input stream 
+  and saves its argument, the input stream 
  <code>in</code>, for later use.Initially,
-  there is no pushed-back byte  (the field 
- <code>pushBack</code> is initialized to 
- <code>-1</code>).
+  the pushback buffer is empty.
  @param inArg the input stream from which bytes will be read.
  @param size the size of the pushback buffer.
  @throw IllegalArgumentExceptionif <code>size <= 0</code>
- @since JDK1.1
+ @since 1.1
  */
 - (instancetype __nonnull)initWithJavaIoInputStream:(JavaIoInputStream *)inArg
                                             withInt:(jint)size;
@@ -221,10 +218,10 @@
   more bytes need to be skipped.  The actual number of bytes skipped
   is returned.
  @param n
- @throw IOExceptionif the stream does not support seek,
-             or the stream has been closed by
-             invoking its <code>close()</code> method,
-             or an I/O error occurs.
+ @throw IOExceptionif the stream has been closed by
+              invoking its <code>close()</code> method,
+              <code>in.skip(n)</code> throws an IOException,
+              or an I/O error occurs.
  - seealso: java.io.FilterInputStream#in
  - seealso: java.io.InputStream#skip(long n)
  @since 1.2
@@ -241,7 +238,7 @@
              buffer for the specified number of bytes,
              or this input stream has been closed by
              invoking its <code>close()</code> method.
- @since JDK1.1
+ @since 1.1
  */
 - (void)unreadWithByteArray:(IOSByteArray *)b;
 
@@ -257,7 +254,7 @@
              buffer for the specified number of bytes,
              or this input stream has been closed by
              invoking its <code>close()</code> method.
- @since JDK1.1
+ @since 1.1
  */
 - (void)unreadWithByteArray:(IOSByteArray *)b
                     withInt:(jint)off
@@ -301,6 +298,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaIoPushbackInputStream)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaIoPushbackInputStream")

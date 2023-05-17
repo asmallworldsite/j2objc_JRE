@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaNioChannelsSpiAbstractSelector
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -29,6 +26,8 @@
 #define INCLUDE_JavaNioChannelsSelector 1
 #include "java/nio/channels/Selector.h"
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @class JavaNioChannelsSelectionKey;
 @class JavaNioChannelsSpiAbstractSelectableChannel;
 @class JavaNioChannelsSpiAbstractSelectionKey;
@@ -43,9 +42,8 @@
   after, respectively, invoking an I/O operation that might block
   indefinitely.  In order to ensure that the <code>end</code> method is always
   invoked, these methods should be used within a 
- <tt>try</tt>&nbsp;...&nbsp;<tt>finally</tt> block: 
- <blockquote>@code
-
+ <code>try</code>&nbsp;...&nbsp;<code>finally</code> block: 
+ <blockquote><pre id="be">
   try {
       begin();
       // Perform blocking I/O operation here
@@ -98,7 +96,7 @@
 /*!
  @brief Marks the beginning of an I/O operation that might block indefinitely.
  <p> This method should be invoked in tandem with the <code>end</code>
-  method, using a <tt>try</tt>&nbsp;...&nbsp;<tt>finally</tt> block as
+  method, using a <code>try</code>&nbsp;...&nbsp;<code>finally</code> block as
   shown <a href="#be">above</a>, in order to implement interruption for
   this selector. 
  <p> Invoking this method arranges for the selector's <code>wakeup</code>
@@ -126,7 +124,7 @@
 /*!
  @brief Marks the end of an I/O operation that might block indefinitely.
  <p> This method should be invoked in tandem with the <code>begin</code>
-  method, using a <tt>try</tt>&nbsp;...&nbsp;<tt>finally</tt> block as
+  method, using a <code>try</code>&nbsp;...&nbsp;<code>finally</code> block as
   shown <a href="#be">above</a>, in order to implement interruption for
   this selector.  </p>
  */
@@ -184,6 +182,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaNioChannelsSpiAbstractSelector)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaNioChannelsSpiAbstractSelector")

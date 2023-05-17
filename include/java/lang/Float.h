@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaLangFloat
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -30,6 +27,12 @@
 #include "java/lang/Comparable.h"
 
 @class IOSClass;
+@class JavaLangBoolean;
+@class JavaLangByte;
+@class JavaLangDouble;
+@class JavaLangInteger;
+@class JavaLangLong;
+@class JavaLangShort;
 
 /*!
  @brief The <code>Float</code> class wraps a value of primitive type 
@@ -41,23 +44,27 @@
  <code>String</code> to a <code>float</code>, as well as other
   constants and methods useful when dealing with a 
  <code>float</code>.
+  
+ <!-- Android-removed: paragraph on ValueBased
+ <p>This is a <a href="{@@docRoot}/java.base/java/lang/doc-files/ValueBased.html">value-based</a>
+ class; programmers should treat instances that are
+ {@@linkplain #equals(Object) equal} as interchangeable and should not
+ use instances for synchronization, or unpredictable behavior may
+ occur. For example, in a future release, synchronization may fail.
+ -->
+  
+ <h2><a id=equivalenceRelation>Floating-point Equality, Equivalence,
+  and Comparison</a></h2>
+  The class <code>java.lang.Double</code> has a <a href="Double.html#equivalenceRelation">
+ discussion of equality,
+  equivalence, and comparison of floating-point values</a> that is
+  equality applicable to <code>float</code> values.
  @author Lee Boynton
  @author Arthur van Hoff
  @author Joseph D. Darcy
- @since JDK1.0
+ @since 1.0
  */
 @interface JavaLangFloat : NSNumber < JavaLangComparable >
-@property (readonly, class) jfloat POSITIVE_INFINITY NS_SWIFT_NAME(POSITIVE_INFINITY);
-@property (readonly, class) jfloat NEGATIVE_INFINITY NS_SWIFT_NAME(NEGATIVE_INFINITY);
-@property (readonly, class) jfloat NaN NS_SWIFT_NAME(NaN);
-@property (readonly, class) jfloat MAX_VALUE NS_SWIFT_NAME(MAX_VALUE);
-@property (readonly, class) jfloat MIN_NORMAL NS_SWIFT_NAME(MIN_NORMAL);
-@property (readonly, class) jfloat MIN_VALUE NS_SWIFT_NAME(MIN_VALUE);
-@property (readonly, class) jint MAX_EXPONENT NS_SWIFT_NAME(MAX_EXPONENT);
-@property (readonly, class) jint MIN_EXPONENT NS_SWIFT_NAME(MIN_EXPONENT);
-@property (readonly, class) jint SIZE NS_SWIFT_NAME(SIZE);
-@property (readonly, class) jint BYTES NS_SWIFT_NAME(BYTES);
-@property (readonly, class, strong) IOSClass *TYPE NS_SWIFT_NAME(TYPE);
 
 #pragma mark Public
 
@@ -82,8 +89,7 @@
  <code>float</code> value as if by the <code>valueOf</code> method.
  @param s a string to be converted to a <code>Float</code> .
  @throw NumberFormatExceptionif the string does not contain a
-                parsable number.
- - seealso: java.lang.Float#valueOf(java.lang.String)
+               parsable number.
  */
 - (instancetype __nonnull)initWithNSString:(NSString *)s;
 
@@ -118,22 +124,28 @@
                withFloat:(jfloat)f2;
 
 /*!
- @brief Compares two <code>Float</code> objects numerically.There are
-  two ways in which comparisons performed by this method differ
-  from those performed by the Java language numerical comparison
-  operators (<code><, <=, ==, >=, ></code>) when
-  applied to primitive <code>float</code> values: 
- <ul><li>
-           <code>Float.NaN</code> is considered by this method to
-           be equal to itself and greater than all other          
- <code>float</code> values
-           (including <code>Float.POSITIVE_INFINITY</code>).
- <li>
-           <code>0.0f</code> is considered by this method to be greater
-           than <code>-0.0f</code>.
+ @brief Compares two <code>Float</code> objects numerically.
+ This method imposes a total order on <code>Float</code> objects
+  with two differences compared to the incomplete order defined by
+  the Java language numerical comparison operators (<code><, <=,
+  ==, >=, ></code>
+ ) on <code>float</code> values. 
+ <ul><li> A NaN is <em>unordered</em> with respect to other
+           values and unequal to itself under the comparison
+           operators.  This method chooses to define <code>Float.NaN</code>
+  to be equal to itself and greater than all
+           other <code>double</code> values (including <code>Float.POSITIVE_INFINITY</code>
+ ).
+       <li> Positive zero and negative zero compare equal
+       numerically, but are distinct and distinguishable values.
+       This method chooses to define positive zero (<code>+0.0f</code>),
+       to be greater than negative zero (<code>-0.0f</code>).
   </ul>
   This ensures that the <i>natural ordering</i> of <code>Float</code>
-  objects imposed by this method is <i>consistent with equals</i>.
+  objects imposed by this method is <i>consistent with
+  equals</i>; see <a href="Double.html#equivalenceRelation">this
+  discussion</a> for details of floating-point comparison and
+  ordering.
  @param anotherFloat the <code>Float</code>  to be compared.
  @return the value <code>0</code> if <code>anotherFloat</code> is
            numerically equal to this <code>Float</code>; a value
@@ -143,7 +155,6 @@
            <code>Float</code> is numerically greater than
            <code>anotherFloat</code>.
  @since 1.2
- - seealso: Comparable#compareTo(Object)
  */
 - (jint)compareToWithId:(JavaLangFloat *)anotherFloat;
 
@@ -165,29 +176,7 @@
   purpose, two <code>float</code> values are considered to be the
   same if and only if the method <code>floatToIntBits(float)</code>
   returns the identical <code>int</code> value when applied to
-  each. 
- <p>Note that in most cases, for two instances of class 
- <code>Float</code>, <code>f1</code> and <code>f2</code>, the value
-  of <code>f1.equals(f2)</code> is <code>true</code> if and only if 
- <blockquote>@code
-
-    f1.floatValue() == f2.floatValue() 
-  
-@endcode</blockquote>
-  
- <p>also has the value <code>true</code>. However, there are two exceptions: 
- <ul>
-  <li>If <code>f1</code> and <code>f2</code> both represent
-      <code>Float.NaN</code>, then the <code>equals</code> method returns
-      <code>true</code>, even though <code>Float.NaN==Float.NaN</code>
-      has the value <code>false</code>.
-  <li>If <code>f1</code> represents <code>+0.0f</code> while
-      <code>f2</code> represents <code>-0.0f</code>, or vice
-      versa, the <code>equal</code> test has the value
-      <code>false</code>, even though <code>0.0f==-0.0f</code>
-      has the value <code>true</code>.
-  </ul>
-  This definition allows hash tables to operate properly.
+  each.
  @param obj the object to be compared
  @return <code>true</code> if the objects are the same;
            <code>false</code> otherwise.
@@ -444,7 +433,7 @@
   after a narrowing primitive conversion.
  @return the <code>float</code> value represented by this object
            converted to type <code>short</code>
- @since JDK1.1
+ @since 1.1
  */
 - (jshort)shortValue;
 
@@ -507,23 +496,27 @@
   
  </ul>
   
- <table border>
+ <table class="striped">
   <caption>Examples</caption>
-  <tr><th>Floating-point Value</th><th>Hexadecimal String</th>
-  <tr><td><code>1.0</code></td> <td><code>0x1.0p0</code></td>
-  <tr><td><code>-1.0</code></td>        <td><code>-0x1.0p0</code></td>
-  <tr><td><code>2.0</code></td> <td><code>0x1.0p1</code></td>
-  <tr><td><code>3.0</code></td> <td><code>0x1.8p1</code></td>
-  <tr><td><code>0.5</code></td> <td><code>0x1.0p-1</code></td>
-  <tr><td><code>0.25</code></td>        <td><code>0x1.0p-2</code></td>
-  <tr><td><code>Float.MAX_VALUE</code></td>
+  <thead>
+  <tr><th scope="col">Floating-point Value</th><th scope="col">Hexadecimal String</th>
+  </thead>
+  <tbody>
+  <tr><th scope="row"><code>1.0</code></th> <td><code>0x1.0p0</code></td>
+  <tr><th scope="row"><code>-1.0</code></th>        <td><code>-0x1.0p0</code></td>
+  <tr><th scope="row"><code>2.0</code></th> <td><code>0x1.0p1</code></td>
+  <tr><th scope="row"><code>3.0</code></th> <td><code>0x1.8p1</code></td>
+  <tr><th scope="row"><code>0.5</code></th> <td><code>0x1.0p-1</code></td>
+  <tr><th scope="row"><code>0.25</code></th>        <td><code>0x1.0p-2</code></td>
+  <tr><th scope="row"><code>Float.MAX_VALUE</code></th>
       <td><code>0x1.fffffep127</code></td>
-  <tr><td><code>Minimum Normal Value</code></td>
+  <tr><th scope="row"><code>Minimum Normal Value</code></th>
       <td><code>0x1.0p-126</code></td>
-  <tr><td><code>Maximum Subnormal Value</code></td>
+  <tr><th scope="row"><code>Maximum Subnormal Value</code></th>
       <td><code>0x0.fffffep-126</code></td>
-  <tr><td><code>Float.MIN_VALUE</code></td>
+  <tr><th scope="row"><code>Float.MIN_VALUE</code></th>
       <td><code>0x0.000002p-126</code></td>
+  </tbody>
   </table>
  @param f the <code>float</code>  to be converted.
  @return a hex string representation of the argument.
@@ -676,7 +669,7 @@
   <i>HexNumeral</i>, <i>HexDigits</i>, <i>SignedInteger</i> and 
  <i>FloatTypeSuffix</i> are as defined in the lexical structure
   sections of 
- <cite>The Java&trade; Language Specification</cite>,
+ <cite>The Java Language Specification</cite>,
   except that underscores are not accepted between digits.
   If <code>s</code> does not have the form of
   a <i>FloatValue</i>, then a <code>NumberFormatException</code>
@@ -840,7 +833,7 @@ J2OBJC_STATIC_FIELD_CONSTANT(JavaLangFloat, BYTES, jint)
 /*!
  @brief The <code>Class</code> instance representing the primitive type 
  <code>float</code>.
- @since JDK1.1
+ @since 1.1
  */
 inline IOSClass *JavaLangFloat_get_TYPE(void);
 /*! INTERNAL ONLY - Use accessor function from above. */
@@ -909,6 +902,4 @@ BOXED_COMPOUND_ASSIGN_FPMOD(Float, floatValue, jfloat, JavaLangFloat)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaLangFloat")

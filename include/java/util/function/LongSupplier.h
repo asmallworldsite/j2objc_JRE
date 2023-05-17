@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaUtilFunctionLongSupplier
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -24,6 +21,8 @@
 
 #if !defined (JavaUtilFunctionLongSupplier_) && (INCLUDE_ALL_JavaUtilFunctionLongSupplier || defined(INCLUDE_JavaUtilFunctionLongSupplier))
 #define JavaUtilFunctionLongSupplier_
+
+@class JavaLangLong;
 
 /*!
  @brief Represents a supplier of <code>long</code>-valued results.This is the 
@@ -55,6 +54,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilFunctionLongSupplier)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaUtilFunctionLongSupplier")

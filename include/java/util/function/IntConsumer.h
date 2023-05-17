@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaUtilFunctionIntConsumer
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -24,6 +21,8 @@
 
 #if !defined (JavaUtilFunctionIntConsumer_) && (INCLUDE_ALL_JavaUtilFunctionIntConsumer || defined(INCLUDE_JavaUtilFunctionIntConsumer))
 #define JavaUtilFunctionIntConsumer_
+
+@class JavaLangInteger;
 
 /*!
  @brief Represents an operation that accepts a single <code>int</code>-valued argument and
@@ -72,6 +71,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilFunctionIntConsumer)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaUtilFunctionIntConsumer")

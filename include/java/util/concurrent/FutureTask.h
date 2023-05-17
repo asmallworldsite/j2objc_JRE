@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaUtilConcurrentFutureTask
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -29,6 +26,8 @@
 #define INCLUDE_JavaUtilConcurrentRunnableFuture 1
 #include "java/util/concurrent/RunnableFuture.h"
 
+@class JavaLangBoolean;
+@class JavaLangLong;
 @class JavaLangThrowable;
 @class JavaUtilConcurrentTimeUnit;
 @protocol JavaLangRunnable;
@@ -208,6 +207,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentFutureTask_WaitNode)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaUtilConcurrentFutureTask")

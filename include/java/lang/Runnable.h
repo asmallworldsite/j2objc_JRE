@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaLangRunnable
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -49,7 +46,7 @@
  @author Arthur van Hoff
  - seealso: java.lang.Thread
  - seealso: java.util.concurrent.Callable
- @since JDK1.0
+ @since 1.0
  */
 @protocol JavaLangRunnable < JavaObject >
 
@@ -77,6 +74,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaLangRunnable)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaLangRunnable")

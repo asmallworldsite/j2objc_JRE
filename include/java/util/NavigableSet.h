@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaUtilNavigableSet
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -29,6 +26,7 @@
 #define INCLUDE_JavaUtilSortedSet 1
 #include "java/util/SortedSet.h"
 
+@class JavaLangBoolean;
 @protocol JavaUtilIterator;
 
 /*!
@@ -264,7 +262,8 @@
                               withBoolean:(jboolean)inclusive;
 
 /*!
- @brief <p>Equivalent to <code>subSet(fromElement, true, toElement, false)</code>.
+ @brief  
+ <p>Equivalent to <code>subSet(fromElement, true, toElement, false)</code>.
  @throw ClassCastException
  @throw NullPointerException
  @throw IllegalArgumentException
@@ -273,7 +272,8 @@
                                withId:(id)toElement;
 
 /*!
- @brief <p>Equivalent to <code>headSet(toElement, false)</code>.
+ @brief  
+ <p>Equivalent to <code>headSet(toElement, false)</code>.
  @throw ClassCastException
  @throw NullPointerException
  @throw IllegalArgumentException
@@ -281,7 +281,8 @@
 - (id<JavaUtilSortedSet>)headSetWithId:(id)toElement;
 
 /*!
- @brief <p>Equivalent to <code>tailSet(fromElement, true)</code>.
+ @brief  
+ <p>Equivalent to <code>tailSet(fromElement, true)</code>.
  @throw ClassCastException
  @throw NullPointerException
  @throw IllegalArgumentException
@@ -300,6 +301,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilNavigableSet)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaUtilNavigableSet")

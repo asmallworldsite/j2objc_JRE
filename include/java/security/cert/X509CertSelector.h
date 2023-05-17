@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaSecurityCertX509CertSelector
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -31,6 +28,8 @@
 
 @class IOSBooleanArray;
 @class IOSByteArray;
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @class JavaMathBigInteger;
 @class JavaSecurityCertCertificate;
 @class JavaSecurityCertX509Certificate;
@@ -68,7 +67,7 @@
   number. Other unique combinations include the issuer, subject,
   subjectKeyIdentifier and/or the subjectPublicKey criteria. 
  <p>
-  Please refer to <a href="http://www.ietf.org/rfc/rfc3280.txt">RFC 3280:
+  Please refer to <a href="http://tools.ietf.org/html/rfc5280">RFC 5280:
   Internet X.509 Public Key Infrastructure Certificate and CRL Profile</a> for
   definitions of the X.509 certificate extensions mentioned below. 
  <p>
@@ -85,15 +84,6 @@
  @author Steve Hanna
  */
 @interface JavaSecurityCertX509CertSelector : NSObject < JavaSecurityCertCertSelector >
-@property (readonly, class) jint NAME_ANY NS_SWIFT_NAME(NAME_ANY);
-@property (readonly, class) jint NAME_RFC822 NS_SWIFT_NAME(NAME_RFC822);
-@property (readonly, class) jint NAME_DNS NS_SWIFT_NAME(NAME_DNS);
-@property (readonly, class) jint NAME_X400 NS_SWIFT_NAME(NAME_X400);
-@property (readonly, class) jint NAME_DIRECTORY NS_SWIFT_NAME(NAME_DIRECTORY);
-@property (readonly, class) jint NAME_EDI NS_SWIFT_NAME(NAME_EDI);
-@property (readonly, class) jint NAME_URI NS_SWIFT_NAME(NAME_URI);
-@property (readonly, class) jint NAME_IP NS_SWIFT_NAME(NAME_IP);
-@property (readonly, class) jint NAME_OID NS_SWIFT_NAME(NAME_OID);
 
 #pragma mark Public
 
@@ -115,14 +105,14 @@
  <p>
   The name is provided as a byte array. This byte array should contain
   the DER encoded name, as it would appear in the GeneralName structure
-  defined in RFC 3280 and X.509. The ASN.1 definition of this structure
+  defined in RFC 5280 and X.509. The ASN.1 definition of this structure
   appears in the documentation for 
  <code>addSubjectAlternativeName(int type, byte [] name)</code>
  .
   <p>
   Note that the byte array supplied here is cloned to protect against
   subsequent modifications.
- @param type the name type (0-8, as specified in              RFC 3280, section 4.2.1.7)
+ @param type the name type (0-8, as specified in              RFC 5280, section 4.2.1.6)
  @param name a byte array containing the name in ASN.1 DER encoded form
  @throw IOExceptionif a parsing error occurs
  */
@@ -141,7 +131,7 @@
  <p>
   The name is provided in string format. RFC 822, DNS, and URI names
   use the well-established string formats for those types (subject to
-  the restrictions included in RFC 3280). IPv4 address names are
+  the restrictions included in RFC 5280). IPv4 address names are
   supplied using dotted quad notation. OID address names are represented
   as a series of nonnegative integers separated by periods. And
   directory names (distinguished names) are supplied in RFC 2253 format.
@@ -156,7 +146,7 @@
   This method should not be relied on as it can fail to match some
   certificates because of a loss of encoding information in the RFC 2253
   String form of some distinguished names.
- @param type the name type (0-8, as specified in              RFC 3280, section 4.2.1.7)
+ @param type the name type (0-8, as specified in              RFC 5280, section 4.2.1.6)
  @param name the name in string form
  @throw IOExceptionif a parsing error occurs
  */
@@ -178,12 +168,12 @@
  <p>
   The name is provided as a byte array. This byte array should contain
   the DER encoded name, as it would appear in the GeneralName structure
-  defined in RFC 3280 and X.509. The encoded byte array should only contain
+  defined in RFC 5280 and X.509. The encoded byte array should only contain
   the encoded value of the name, and should not include the tag associated
   with the name in the GeneralName structure. The ASN.1 definition of this
   structure appears below. 
  @code
- GeneralName ::= CHOICE {
+  GeneralName ::= CHOICE {
         otherName                       [0]     OtherName,
         rfc822Name                      [1]     IA5String,
         dNSName                         [2]     IA5String,
@@ -221,7 +211,7 @@
   The name is provided in string format. 
  <a href="http://www.ietf.org/rfc/rfc822.txt">RFC 822</a>, DNS, and URI
   names use the well-established string formats for those types (subject to
-  the restrictions included in RFC 3280). IPv4 address names are
+  the restrictions included in RFC 5280). IPv4 address names are
   supplied using dotted quad notation. OID address names are represented
   as a series of nonnegative integers separated by periods. And
   directory names (distinguished names) are supplied in RFC 2253 format.
@@ -236,7 +226,7 @@
   This method should not be relied on as it can fail to match some
   certificates because of a loss of encoding information in the RFC 2253
   String form of some distinguished names.
- @param type the name type (0-8, as specified in              RFC 3280, section 4.2.1.7)
+ @param type the name type (0-8, as specified in              RFC 5280, section 4.2.1.6)
  @param name the name in string form (not <code>null</code> )
  @throw IOExceptionif a parsing error occurs
  */
@@ -405,7 +395,7 @@
  <p>
   The name constraints are returned as a byte array. This byte array
   contains the DER encoded form of the name constraints, as they
-  would appear in the NameConstraints structure defined in RFC 3280
+  would appear in the NameConstraints structure defined in RFC 5280
   and X.509. The ASN.1 notation for this structure is supplied in the
   documentation for 
  <code>setNameConstraints(byte [] bytes)</code>.
@@ -858,10 +848,10 @@
  <p>
   The name constraints are specified as a byte array. This byte array
   should contain the DER encoded form of the name constraints, as they
-  would appear in the NameConstraints structure defined in RFC 3280
+  would appear in the NameConstraints structure defined in RFC 5280
   and X.509. The ASN.1 definition of this structure appears below. 
  @code
- NameConstraints ::= SEQUENCE {
+  NameConstraints ::= SEQUENCE {
         permittedSubtrees       [0]     GeneralSubtrees OPTIONAL,
         excludedSubtrees        [1]     GeneralSubtrees OPTIONAL }
    GeneralSubtrees ::= SEQUENCE SIZE (1..MAX) OF GeneralSubtree
@@ -1283,6 +1273,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaSecurityCertX509CertSelector)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaSecurityCertX509CertSelector")

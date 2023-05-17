@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaNetURI
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -33,6 +30,9 @@
 #define INCLUDE_JavaIoSerializable 1
 #include "java/io/Serializable.h"
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
+@class JavaLangLong;
 @class JavaNetURL;
 
 /*!
@@ -378,7 +378,6 @@
  - seealso: <a href="http://www.ietf.org/rfc/rfc2732.txt">RFC&nbsp;2732: Format for Literal IPv6 Addresses in URLs</a>
  */
 @interface JavaNetURI : NSObject < JavaLangComparable, JavaIoSerializable >
-@property (readonly, class) jlong serialVersionUID NS_SWIFT_NAME(serialVersionUID);
 
 #pragma mark Public
 
@@ -1231,6 +1230,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaNetURI)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaNetURI")

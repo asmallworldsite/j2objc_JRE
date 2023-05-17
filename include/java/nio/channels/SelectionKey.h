@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaNioChannelsSelectionKey
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -25,6 +22,8 @@
 #if !defined (JavaNioChannelsSelectionKey_) && (INCLUDE_ALL_JavaNioChannelsSelectionKey || defined(INCLUDE_JavaNioChannelsSelectionKey))
 #define JavaNioChannelsSelectionKey_
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @class JavaNioChannelsSelectableChannel;
 @class JavaNioChannelsSelector;
 
@@ -39,7 +38,7 @@
  <i>cancelled-key set</i></a> for removal during the
   next selection operation.  The validity of a key may be tested by invoking
   its <code>isValid</code> method. 
- <a name="opsets"></a>
+ <a id="opsets"></a>
   
  <p> A selection key contains two <i>operation sets</i> represented as
   integer values.  Each bit of an operation set denotes a category of
@@ -79,15 +78,9 @@
  <i>attachment</i> of a single arbitrary object to a key.  An object can be
   attached via the <code>attach</code> method and then later retrieved via
   the <code>attachment</code> method. 
- <p> Selection keys are safe for use by multiple concurrent threads.  The
-  operations of reading and writing the interest set will, in general, be
-  synchronized with certain operations of the selector.  Exactly how this
-  synchronization is performed is implementation-dependent: In a naive
-  implementation, reading or writing the interest set may block indefinitely
-  if a selection operation is already in progress; in a high-performance
-  implementation, reading or writing the interest set may block briefly, if at
-  all.  In any case, a selection operation will always use the interest-set
-  value that was current at the moment that the operation began.  </p>
+ <p> Selection keys are safe for use by multiple concurrent threads.  A
+  selection operation will always use the interest-set value that was current
+  at the moment that the operation began.  </p>
  @author Mark Reinhold
  @author JSR-51 Expert Group
  @since 1.4
@@ -95,10 +88,6 @@
  - seealso: Selector
  */
 @interface JavaNioChannelsSelectionKey : NSObject
-@property (readonly, class) jint OP_READ NS_SWIFT_NAME(OP_READ);
-@property (readonly, class) jint OP_WRITE NS_SWIFT_NAME(OP_WRITE);
-@property (readonly, class) jint OP_CONNECT NS_SWIFT_NAME(OP_CONNECT);
-@property (readonly, class) jint OP_ACCEPT NS_SWIFT_NAME(OP_ACCEPT);
 
 #pragma mark Public
 
@@ -107,18 +96,18 @@
  <p> An attached object may later be retrieved via the <code>attachment</code>
   method.  Only one object may be attached at a time; invoking
   this method causes any previous attachment to be discarded.  The current
-  attachment may be discarded by attaching <tt>null</tt>.  </p>
+  attachment may be discarded by attaching <code>null</code>.  </p>
  @param ob The object to be attached; may be 
-  <tt> null </tt>
+ <code>null</code>
  @return The previously-attached object, if any,
-           otherwise <tt>null</tt>
+           otherwise <code>null</code>
  */
 - (id)attachWithId:(id)ob;
 
 /*!
  @brief Retrieves the current attachment.
  @return The object currently attached to this key,
-           or <tt>null</tt> if there is no attachment
+           or <code>null</code> if there is no attachment
  */
 - (id)attachment;
 
@@ -148,9 +137,7 @@
 /*!
  @brief Retrieves this key's interest set.
  <p> It is guaranteed that the returned set will only contain operation
-  bits that are valid for this key's channel. 
- <p> This method may be invoked at any time.  Whether or not it blocks,
-  and for how long, is implementation-dependent.  </p>
+  bits that are valid for this key's channel. </p>
  @return This key's interest set
  @throw CancelledKeyException
  If this key has been cancelled
@@ -159,8 +146,10 @@
 
 /*!
  @brief Sets this key's interest set to the given value.
- <p> This method may be invoked at any time.  Whether or not it blocks,
-  and for how long, is implementation-dependent.  </p>
+ <p> This method may be invoked at any time.  If this method is invoked
+  while a selection operation is in progress then it has no effect upon
+  that operation; the change to the key's interest set will be seen by the
+  next selection operation.
  @param ops The new interest set
  @return This selection key
  @throw IllegalArgumentException
@@ -173,9 +162,47 @@
 - (JavaNioChannelsSelectionKey *)interestOpsWithInt:(jint)ops;
 
 /*!
+ @brief Atomically sets this key's interest set to the bitwise intersection ("and")
+  of the existing interest set and the given value.This method is guaranteed
+  to be atomic with respect to other concurrent calls to this method or to 
+ <code>interestOpsOr(int)</code>.
+ <p> This method may be invoked at any time.  If this method is invoked
+  while a selection operation is in progress then it has no effect upon
+  that operation; the change to the key's interest set will be seen by the
+  next selection operation.
+ @param ops The interest set to apply
+ @return The previous interest set
+ @throw CancelledKeyException
+ If this key has been cancelled
+ @since 11
+ */
+- (jint)interestOpsAndWithInt:(jint)ops;
+
+/*!
+ @brief Atomically sets this key's interest set to the bitwise union ("or") of
+  the existing interest set and the given value.This method is guaranteed
+  to be atomic with respect to other concurrent calls to this method or to 
+ <code>interestOpsAnd(int)</code>.
+ <p> This method may be invoked at any time.  If this method is invoked
+  while a selection operation is in progress then it has no effect upon
+  that operation; the change to the key's interest set will be seen by the
+  next selection operation.
+ @param ops The interest set to apply
+ @return The previous interest set
+ @throw IllegalArgumentException
+ If a bit in the set does not correspond to an operation that
+           is supported by this key's channel, that is, if          
+ <code>(ops & ~channel().validOps()) != 0</code>
+ @throw CancelledKeyException
+ If this key has been cancelled
+ @since 11
+ */
+- (jint)interestOpsOrWithInt:(jint)ops;
+
+/*!
  @brief Tests whether this key's channel is ready to accept a new socket
   connection.
- <p> An invocation of this method of the form <tt>k.isAcceptable()</tt>
+ <p> An invocation of this method of the form <code>k.isAcceptable()</code>
   behaves in exactly the same way as the expression 
  <blockquote>@code
  k.readyOps() & OP_ACCEPT != 0 
@@ -183,8 +210,8 @@
 @endcode</blockquote>
   
  <p> If this key's channel does not support socket-accept operations then
-  this method always returns <tt>false</tt>.  </p>
- @return <tt>true</tt> if, and only if,
+  this method always returns <code>false</code>.  </p>
+ @return <code>true</code> if, and only if,
            <code>readyOps() & OP_ACCEPT</code> is nonzero
  @throw CancelledKeyException
  If this key has been cancelled
@@ -194,7 +221,7 @@
 /*!
  @brief Tests whether this key's channel has either finished, or failed to
   finish, its socket-connection operation.
- <p> An invocation of this method of the form <tt>k.isConnectable()</tt>
+ <p> An invocation of this method of the form <code>k.isConnectable()</code>
   behaves in exactly the same way as the expression 
  <blockquote>@code
  k.readyOps() & OP_CONNECT != 0 
@@ -202,8 +229,8 @@
 @endcode</blockquote>
   
  <p> If this key's channel does not support socket-connect operations
-  then this method always returns <tt>false</tt>.  </p>
- @return <tt>true</tt> if, and only if,
+  then this method always returns <code>false</code>.  </p>
+ @return <code>true</code> if, and only if,
            <code>readyOps() & OP_CONNECT</code> is nonzero
  @throw CancelledKeyException
  If this key has been cancelled
@@ -212,7 +239,7 @@
 
 /*!
  @brief Tests whether this key's channel is ready for reading.
- <p> An invocation of this method of the form <tt>k.isReadable()</tt>
+ <p> An invocation of this method of the form <code>k.isReadable()</code>
   behaves in exactly the same way as the expression 
  <blockquote>@code
  k.readyOps() & OP_READ != 0 
@@ -220,8 +247,8 @@
 @endcode</blockquote>
   
  <p> If this key's channel does not support read operations then this
-  method always returns <tt>false</tt>.  </p>
- @return <tt>true</tt> if, and only if,
+  method always returns <code>false</code>.  </p>
+ @return <code>true</code> if, and only if,
                  <code>readyOps() & OP_READ</code> is nonzero
  @throw CancelledKeyException
  If this key has been cancelled
@@ -232,13 +259,13 @@
  @brief Tells whether or not this key is valid.
  <p> A key is valid upon creation and remains so until it is cancelled,
   its channel is closed, or its selector is closed.  </p>
- @return <tt>true</tt> if, and only if, this key is valid
+ @return <code>true</code> if, and only if, this key is valid
  */
 - (jboolean)isValid;
 
 /*!
  @brief Tests whether this key's channel is ready for writing.
- <p> An invocation of this method of the form <tt>k.isWritable()</tt>
+ <p> An invocation of this method of the form <code>k.isWritable()</code>
   behaves in exactly the same way as the expression 
  <blockquote>@code
  k.readyOps() & OP_WRITE != 0 
@@ -246,8 +273,8 @@
 @endcode</blockquote>
   
  <p> If this key's channel does not support write operations then this
-  method always returns <tt>false</tt>.  </p>
- @return <tt>true</tt> if, and only if,
+  method always returns <code>false</code>.  </p>
+ @return <code>true</code> if, and only if,
            <code>readyOps() & OP_WRITE</code> is nonzero
  @throw CancelledKeyException
  If this key has been cancelled
@@ -285,12 +312,12 @@ J2OBJC_STATIC_INIT(JavaNioChannelsSelectionKey)
 /*!
  @brief Operation-set bit for read operations.
  <p> Suppose that a selection key's interest set contains 
- <tt>OP_READ</tt> at the start of a <a href="Selector.html#selop">
+ <code>OP_READ</code> at the start of a <a href="Selector.html#selop">
  selection operation</a>.  If the selector
   detects that the corresponding channel is ready for reading, has reached
   end-of-stream, has been remotely shut down for further reading, or has
-  an error pending, then it will add <tt>OP_READ</tt> to the key's
-  ready-operation set and add the key to its selected-key&nbsp;set.  </p>
+  an error pending, then it will add <code>OP_READ</code> to the key's
+  ready-operation set.  </p>
  */
 inline jint JavaNioChannelsSelectionKey_get_OP_READ(void);
 #define JavaNioChannelsSelectionKey_OP_READ 1
@@ -299,12 +326,11 @@ J2OBJC_STATIC_FIELD_CONSTANT(JavaNioChannelsSelectionKey, OP_READ, jint)
 /*!
  @brief Operation-set bit for write operations.
  <p> Suppose that a selection key's interest set contains 
- <tt>OP_WRITE</tt> at the start of a <a href="Selector.html#selop">
+ <code>OP_WRITE</code> at the start of a <a href="Selector.html#selop">
  selection operation</a>.  If the selector
   detects that the corresponding channel is ready for writing, has been
   remotely shut down for further writing, or has an error pending, then it
-  will add <tt>OP_WRITE</tt> to the key's ready set and add the key to its
-  selected-key&nbsp;set.  </p>
+  will add <code>OP_WRITE</code> to the key's ready set.  </p>
  */
 inline jint JavaNioChannelsSelectionKey_get_OP_WRITE(void);
 #define JavaNioChannelsSelectionKey_OP_WRITE 4
@@ -313,12 +339,11 @@ J2OBJC_STATIC_FIELD_CONSTANT(JavaNioChannelsSelectionKey, OP_WRITE, jint)
 /*!
  @brief Operation-set bit for socket-connect operations.
  <p> Suppose that a selection key's interest set contains 
- <tt>OP_CONNECT</tt> at the start of a <a href="Selector.html#selop">
+ <code>OP_CONNECT</code> at the start of a <a href="Selector.html#selop">
  selection operation</a>.  If the selector
   detects that the corresponding socket channel is ready to complete its
   connection sequence, or has an error pending, then it will add 
- <tt>OP_CONNECT</tt> to the key's ready set and add the key to its
-  selected-key&nbsp;set.  </p>
+ <code>OP_CONNECT</code> to the key's ready set.  </p>
  */
 inline jint JavaNioChannelsSelectionKey_get_OP_CONNECT(void);
 #define JavaNioChannelsSelectionKey_OP_CONNECT 8
@@ -327,12 +352,11 @@ J2OBJC_STATIC_FIELD_CONSTANT(JavaNioChannelsSelectionKey, OP_CONNECT, jint)
 /*!
  @brief Operation-set bit for socket-accept operations.
  <p> Suppose that a selection key's interest set contains 
- <tt>OP_ACCEPT</tt> at the start of a <a href="Selector.html#selop">
+ <code>OP_ACCEPT</code> at the start of a <a href="Selector.html#selop">
  selection operation</a>.  If the selector
   detects that the corresponding server-socket channel is ready to accept
   another connection, or has an error pending, then it will add 
- <tt>OP_ACCEPT</tt> to the key's ready set and add the key to its
-  selected-key&nbsp;set.  </p>
+ <code>OP_ACCEPT</code> to the key's ready set.  </p>
  */
 inline jint JavaNioChannelsSelectionKey_get_OP_ACCEPT(void);
 #define JavaNioChannelsSelectionKey_OP_ACCEPT 16
@@ -348,6 +372,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaNioChannelsSelectionKey)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaNioChannelsSelectionKey")

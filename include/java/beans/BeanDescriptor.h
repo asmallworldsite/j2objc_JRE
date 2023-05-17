@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaBeansBeanDescriptor
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -40,11 +37,10 @@
 
 /*!
  @brief <p>
-  Constructs an instance with the bean's <code>Class</code>.
- The descriptor's 
+  Constructs an instance with the bean's <code>Class</code>.The descriptor's 
  <code>getName()</code> is set as the unqualified name of the 
  <code>beanClass</code>.
-  </p>
+ </p>
  @param beanClass The bean's Class.
  */
 - (instancetype __nonnull)initWithIOSClass:(IOSClass *)beanClass;
@@ -52,10 +48,9 @@
 /*!
  @brief <p>
   Constructs an instance with the bean's <code>Class</code> and a customizer 
- <code>Class</code>.
- The descriptor's <code>getName()</code> is set as the
+ <code>Class</code>.The descriptor's <code>getName()</code> is set as the
   unqualified name of the <code>beanClass</code>.
-  </p>
+ </p>
  @param beanClass The bean's Class.
  @param customizerClass The bean's customizer Class.
  */
@@ -73,7 +68,7 @@
 /*!
  @brief <p>
   Gets the bean's customizer <code>Class</code>/
-  </p>
+ </p>
  @return A <code>Class</code> instance or <code>null</code>.
  */
 - (IOSClass *)getCustomizerClass;
@@ -106,6 +101,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaBeansBeanDescriptor)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaBeansBeanDescriptor")

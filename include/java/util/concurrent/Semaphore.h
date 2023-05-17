@@ -19,9 +19,6 @@
 #define INCLUDE_JavaUtilConcurrentSemaphore_Sync 1
 #endif
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -35,6 +32,9 @@
 #define INCLUDE_JavaIoSerializable 1
 #include "java/io/Serializable.h"
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
+@class JavaLangLong;
 @class JavaUtilConcurrentTimeUnit;
 @protocol JavaUtilCollection;
 
@@ -67,19 +67,19 @@
     protected synchronized Object getNextAvailableItem() {
       for (int i = 0; i < MAX_AVAILABLE; ++i) {
         if (!used[i]) {
-           used[i] = true;
-           return items[i];
+          used[i] = true;
+          return items[i];
         }      }
       return null; // not reached
     }
     protected synchronized boolean markAsUnused(Object item) {
       for (int i = 0; i < MAX_AVAILABLE; ++i) {
         if (item == items[i]) {
-           if (used[i]) {
-             used[i] = false;
-             return true;
-           } else
-             return false;
+          if (used[i]) {
+            used[i] = false;
+            return true;
+          } else
+            return false;
         }      }
       return false;
     }  }
@@ -282,8 +282,11 @@
 - (jint)availablePermits;
 
 /*!
- @brief Acquires and returns all permits that are immediately available.
- @return the number of permits acquired
+ @brief Acquires and returns all permits that are immediately
+  available, or if negative permits are available, releases them.
+ Upon return, zero permits are available.
+ @return the number of permits acquired or, if negative, the
+  number released
  */
 - (jint)drainPermits;
 
@@ -549,6 +552,9 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentSemaphore)
 #define INCLUDE_JavaUtilConcurrentLocksAbstractQueuedSynchronizer 1
 #include "java/util/concurrent/locks/AbstractQueuedSynchronizer.h"
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
+
 /*!
  @brief Synchronization implementation for semaphore.Uses AQS state
   to represent permits.
@@ -590,6 +596,8 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentSemaphore_Sync)
 #if !defined (JavaUtilConcurrentSemaphore_NonfairSync_) && (INCLUDE_ALL_JavaUtilConcurrentSemaphore || defined(INCLUDE_JavaUtilConcurrentSemaphore_NonfairSync))
 #define JavaUtilConcurrentSemaphore_NonfairSync_
 
+@class JavaLangInteger;
+
 /*!
  @brief NonFair version
  */
@@ -619,6 +627,8 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentSemaphore_NonfairSync)
 
 #if !defined (JavaUtilConcurrentSemaphore_FairSync_) && (INCLUDE_ALL_JavaUtilConcurrentSemaphore || defined(INCLUDE_JavaUtilConcurrentSemaphore_FairSync))
 #define JavaUtilConcurrentSemaphore_FairSync_
+
+@class JavaLangInteger;
 
 /*!
  @brief Fair version
@@ -651,6 +661,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentSemaphore_FairSync)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaUtilConcurrentSemaphore")

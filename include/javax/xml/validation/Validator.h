@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaxXmlValidationValidator
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -25,6 +22,7 @@
 #if !defined (JavaxXmlValidationValidator_) && (INCLUDE_ALL_JavaxXmlValidationValidator || defined(INCLUDE_JavaxXmlValidationValidator))
 #define JavaxXmlValidationValidator_
 
+@class JavaLangBoolean;
 @protocol JavaxXmlTransformResult;
 @protocol JavaxXmlTransformSource;
 @protocol OrgW3cDomLsLSResourceResolver;
@@ -404,6 +402,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaxXmlValidationValidator)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaxXmlValidationValidator")

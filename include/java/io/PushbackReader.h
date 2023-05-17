@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaIoPushbackReader
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -31,12 +28,15 @@
 
 @class IOSCharArray;
 @class JavaIoReader;
+@class JavaLangBoolean;
+@class JavaLangInteger;
+@class JavaLangLong;
 
 /*!
  @brief A character-stream reader that allows characters to be pushed back into the
   stream.
  @author Mark Reinhold
- @since JDK1.1
+ @since 1.1
  */
 @interface JavaIoPushbackReader : JavaIoFilterReader
 
@@ -61,7 +61,8 @@
  @brief Closes the stream and releases any system resources associated with
   it.Once the stream has been closed, further read(),
   unread(), ready(), or skip() invocations will throw an IOException.
- Closing a previously closed stream has no effect.
+ Closing a previously closed stream has no effect. This method will block
+  while there is another thread blocking on the reader.
  @throw IOExceptionIf an I/O error occurs
  */
 - (void)close;
@@ -95,6 +96,7 @@
  @return The number of characters read, or -1 if the end of the
               stream has been reached
  @throw IOExceptionIf an I/O error occurs
+ @throw IndexOutOfBoundsException
  */
 - (jint)readWithCharArray:(IOSCharArray *)cbuf
                   withInt:(jint)off
@@ -184,6 +186,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaIoPushbackReader)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaIoPushbackReader")

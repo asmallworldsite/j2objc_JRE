@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaxNetSslSSLSession
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -27,6 +24,9 @@
 
 @class IOSByteArray;
 @class IOSObjectArray;
+@class JavaLangBoolean;
+@class JavaLangInteger;
+@class JavaLangLong;
 @protocol JavaSecurityPrincipal;
 @protocol JavaxNetSslSSLSessionContext;
 
@@ -367,6 +367,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaxNetSslSSLSession)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaxNetSslSSLSession")

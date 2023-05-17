@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaSecurityKeyRep
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -37,7 +34,7 @@
  <p>
   Note that a serialized Key may contain sensitive information
   which should not be exposed in untrusted environments.  See the 
- <a href="../../../platform/serialization/spec/security.html">
+ <a href="{@@docRoot}/../specs/serialization/security.html">
   Security Appendix</a>
   of the Serialization Specification for more information.
  - seealso: Key
@@ -53,7 +50,6 @@
 
 /*!
  @brief Construct the alternate Key class.
- <p>
  @param type either one of Type.SECRET, Type.PUBLIC, or Type.PRIVATE
  @param algorithm the algorithm returned from           
  <code>Key.getAlgorithm()</code>
@@ -87,8 +83,6 @@
   the key algorithm, constructs a PKCS8EncodedKeySpec with the
   encoded key bytes, and generates a private key from the spec 
  </ul>
-  
- <p>
  @return the resolved Key object
  @throw ObjectStreamExceptionif the Type/format
    combination is unrecognized, if the algorithm, key format, or
@@ -124,11 +118,17 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaSecurityKeyRep)
 
 @class IOSObjectArray;
 
-typedef NS_ENUM(NSUInteger, JavaSecurityKeyRep_Type_Enum) {
+typedef NS_ENUM(jint, JavaSecurityKeyRep_Type_Enum) {
   JavaSecurityKeyRep_Type_Enum_SECRET = 0,
   JavaSecurityKeyRep_Type_Enum_PUBLIC = 1,
   JavaSecurityKeyRep_Type_Enum_PRIVATE = 2,
 };
+#if J2OBJC_IMPORTED_BY_JAVA_IMPLEMENTATION
+#define JavaSecurityKeyRep_Type_ORDINAL jint
+#else
+#define JavaSecurityKeyRep_Type_ORDINAL JavaSecurityKeyRep_Type_Enum
+#endif
+
 
 /*!
  @brief Key type.
@@ -136,9 +136,6 @@ typedef NS_ENUM(NSUInteger, JavaSecurityKeyRep_Type_Enum) {
  */
 @interface JavaSecurityKeyRep_Type : JavaLangEnum
 
-@property (readonly, class, nonnull) JavaSecurityKeyRep_Type *SECRET NS_SWIFT_NAME(SECRET);
-@property (readonly, class, nonnull) JavaSecurityKeyRep_Type *PUBLIC NS_SWIFT_NAME(PUBLIC);
-@property (readonly, class, nonnull) JavaSecurityKeyRep_Type *PRIVATE NS_SWIFT_NAME(PRIVATE);
 #pragma mark Public
 
 + (JavaSecurityKeyRep_Type *)valueOfWithNSString:(NSString *)name;
@@ -148,6 +145,8 @@ typedef NS_ENUM(NSUInteger, JavaSecurityKeyRep_Type_Enum) {
 #pragma mark Package-Private
 
 - (JavaSecurityKeyRep_Type_Enum)toNSEnum;
+
+- (JavaSecurityKeyRep_Type_ORDINAL)ordinal;
 
 @end
 
@@ -178,7 +177,7 @@ FOUNDATION_EXPORT IOSObjectArray *JavaSecurityKeyRep_Type_values(void);
 
 FOUNDATION_EXPORT JavaSecurityKeyRep_Type *JavaSecurityKeyRep_Type_valueOfWithNSString_(NSString *name);
 
-FOUNDATION_EXPORT JavaSecurityKeyRep_Type *JavaSecurityKeyRep_Type_fromOrdinal(NSUInteger ordinal);
+FOUNDATION_EXPORT JavaSecurityKeyRep_Type *JavaSecurityKeyRep_Type_fromOrdinal(JavaSecurityKeyRep_Type_ORDINAL ordinal);
 
 J2OBJC_TYPE_LITERAL_HEADER(JavaSecurityKeyRep_Type)
 
@@ -188,6 +187,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaSecurityKeyRep_Type)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaSecurityKeyRep")

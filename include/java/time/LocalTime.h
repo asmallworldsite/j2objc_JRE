@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaTimeLocalTime
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -41,6 +38,9 @@
 #define INCLUDE_JavaIoSerializable 1
 #include "java/io/Serializable.h"
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
+@class JavaLangLong;
 @class JavaTimeClock;
 @class JavaTimeFormatDateTimeFormatter;
 @class JavaTimeLocalDate;
@@ -78,22 +78,6 @@
  @since 1.8
  */
 @interface JavaTimeLocalTime : NSObject < JavaTimeTemporalTemporal, JavaTimeTemporalTemporalAdjuster, JavaLangComparable, JavaIoSerializable >
-@property (readonly, class, strong) JavaTimeLocalTime *MIN NS_SWIFT_NAME(MIN);
-@property (readonly, class, strong) JavaTimeLocalTime *MAX NS_SWIFT_NAME(MAX);
-@property (readonly, class, strong) JavaTimeLocalTime *MIDNIGHT NS_SWIFT_NAME(MIDNIGHT);
-@property (readonly, class, strong) JavaTimeLocalTime *NOON NS_SWIFT_NAME(NOON);
-@property (readonly, class) jint HOURS_PER_DAY NS_SWIFT_NAME(HOURS_PER_DAY);
-@property (readonly, class) jint MINUTES_PER_HOUR NS_SWIFT_NAME(MINUTES_PER_HOUR);
-@property (readonly, class) jint MINUTES_PER_DAY NS_SWIFT_NAME(MINUTES_PER_DAY);
-@property (readonly, class) jint SECONDS_PER_MINUTE NS_SWIFT_NAME(SECONDS_PER_MINUTE);
-@property (readonly, class) jint SECONDS_PER_HOUR NS_SWIFT_NAME(SECONDS_PER_HOUR);
-@property (readonly, class) jint SECONDS_PER_DAY NS_SWIFT_NAME(SECONDS_PER_DAY);
-@property (readonly, class) jlong MILLIS_PER_DAY NS_SWIFT_NAME(MILLIS_PER_DAY);
-@property (readonly, class) jlong MICROS_PER_DAY NS_SWIFT_NAME(MICROS_PER_DAY);
-@property (readonly, class) jlong NANOS_PER_SECOND NS_SWIFT_NAME(NANOS_PER_SECOND);
-@property (readonly, class) jlong NANOS_PER_MINUTE NS_SWIFT_NAME(NANOS_PER_MINUTE);
-@property (readonly, class) jlong NANOS_PER_HOUR NS_SWIFT_NAME(NANOS_PER_HOUR);
-@property (readonly, class) jlong NANOS_PER_DAY NS_SWIFT_NAME(NANOS_PER_DAY);
 
 #pragma mark Public
 
@@ -1157,6 +1141,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaTimeLocalTime)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaTimeLocalTime")

@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaNioNIOAccess
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -25,6 +22,8 @@
 #if !defined (JavaNioNIOAccess_) && (INCLUDE_ALL_JavaNioNIOAccess || defined(INCLUDE_JavaNioNIOAccess))
 #define JavaNioNIOAccess_
 
+@class JavaLangInteger;
+@class JavaLangLong;
 @class JavaNioBuffer;
 
 /*!
@@ -84,6 +83,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaNioNIOAccess)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaNioNIOAccess")

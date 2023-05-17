@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaUtilAbstractList
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -33,6 +30,8 @@
 #define INCLUDE_JavaUtilList 1
 #include "java/util/List.h"
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @protocol JavaUtilCollection;
 @protocol JavaUtilComparator;
 @protocol JavaUtilFunctionUnaryOperator;
@@ -287,6 +286,9 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilAbstractList)
 #define INCLUDE_JavaUtilSpliterator 1
 #include "java/util/Spliterator.h"
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
+@class JavaLangLong;
 @class JavaUtilAbstractList;
 @protocol JavaUtilComparator;
 @protocol JavaUtilFunctionConsumer;
@@ -346,6 +348,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilAbstractList_RandomAccessSpliterator)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaUtilAbstractList")

@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaTimeFormatDecimalStyle
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -25,6 +22,9 @@
 #if !defined (JavaTimeFormatDecimalStyle_) && (INCLUDE_ALL_JavaTimeFormatDecimalStyle || defined(INCLUDE_JavaTimeFormatDecimalStyle))
 #define JavaTimeFormatDecimalStyle_
 
+@class JavaLangBoolean;
+@class JavaLangCharacter;
+@class JavaLangInteger;
 @class JavaUtilLocale;
 @protocol JavaUtilSet;
 
@@ -36,7 +36,6 @@
  @since 1.8
  */
 @interface JavaTimeFormatDecimalStyle : NSObject
-@property (readonly, class, strong) JavaTimeFormatDecimalStyle *STANDARD NS_SWIFT_NAME(STANDARD);
 
 #pragma mark Public
 
@@ -99,8 +98,9 @@
 
 /*!
  @brief Obtains the DecimalStyle for the specified locale.
- <p>
-  This method provides access to locale sensitive decimal style symbols.
+ <p>This method provides access to locale sensitive decimal style symbols. If the locale
+  contains "nu" (Numbering System) <a href="../../util/Locale.html#def_locale_extension">Unicode
+  extensions</a>, returned instance will reflect the values specified with those extensions.
  @param locale the locale, not null
  @return the decimal style, not null
  */
@@ -214,6 +214,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaTimeFormatDecimalStyle)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaTimeFormatDecimalStyle")

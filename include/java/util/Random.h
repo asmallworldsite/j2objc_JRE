@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaUtilRandom
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -30,6 +27,11 @@
 #include "java/io/Serializable.h"
 
 @class IOSByteArray;
+@class JavaLangBoolean;
+@class JavaLangDouble;
+@class JavaLangFloat;
+@class JavaLangInteger;
+@class JavaLangLong;
 @protocol JavaUtilStreamDoubleStream;
 @protocol JavaUtilStreamIntStream;
 @protocol JavaUtilStreamLongStream;
@@ -70,10 +72,6 @@
  @since 1.0
  */
 @interface JavaUtilRandom : NSObject < JavaIoSerializable >
-@property (readonly, class) jlong serialVersionUID NS_SWIFT_NAME(serialVersionUID);
-@property (readonly, copy, class) NSString *BadBound NS_SWIFT_NAME(BadBound);
-@property (readonly, copy, class) NSString *BadRange NS_SWIFT_NAME(BadRange);
-@property (readonly, copy, class) NSString *BadSize NS_SWIFT_NAME(BadSize);
 
 #pragma mark Public
 
@@ -444,7 +442,7 @@
  <code>double</code> values from the stated range with perfect uniformity. 
  <p>[In early versions of Java, the result was incorrectly calculated as:
    @code
-   return (((long)next(27) << 27) + next(27))
+    return (((long)next(27) << 27) + next(27))
       / (double)(1L << 54);
  
 @endcode
@@ -488,7 +486,7 @@
   values from the stated range with perfect uniformity.<p>
   [In early versions of Java, the result was incorrectly calculated as:
    @code
-   return next(30) / ((float)(1 << 30));
+    return next(30) / ((float)(1 << 30));
  
 @endcode
   This might seem to be equivalent, if not better, but in fact it
@@ -778,6 +776,9 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilRandom)
 #define INCLUDE_JavaUtilSpliterator_OfInt 1
 #include "java/util/Spliterator.h"
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
+@class JavaLangLong;
 @class JavaUtilRandom;
 @protocol JavaUtilComparator;
 @protocol JavaUtilFunctionConsumer;
@@ -848,6 +849,9 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilRandom_RandomIntsSpliterator)
 #define INCLUDE_JavaUtilSpliterator_OfLong 1
 #include "java/util/Spliterator.h"
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
+@class JavaLangLong;
 @class JavaUtilRandom;
 @protocol JavaUtilComparator;
 @protocol JavaUtilFunctionConsumer;
@@ -912,6 +916,10 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilRandom_RandomLongsSpliterator)
 #define INCLUDE_JavaUtilSpliterator_OfDouble 1
 #include "java/util/Spliterator.h"
 
+@class JavaLangBoolean;
+@class JavaLangDouble;
+@class JavaLangInteger;
+@class JavaLangLong;
 @class JavaUtilRandom;
 @protocol JavaUtilComparator;
 @protocol JavaUtilFunctionConsumer;
@@ -973,6 +981,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilRandom_RandomDoublesSpliterator)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaUtilRandom")

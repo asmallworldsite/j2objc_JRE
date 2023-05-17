@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaLangStringIndexOutOfBoundsException
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -29,32 +26,44 @@
 #define INCLUDE_JavaLangIndexOutOfBoundsException 1
 #include "java/lang/IndexOutOfBoundsException.h"
 
+@class JavaLangInteger;
+@class JavaLangLong;
+
 /*!
- @brief Thrown by <code>String</code> methods to indicate that an index
-  is either negative or greater than the size of the string.For
-  some methods such as the charAt method, this exception also is
-  thrown when the index is equal to the size of the string.
- @author unascribed
+ @brief Thrown by <code>String</code> methods to indicate that an index is either negative
+  or greater than the size of the string.For some methods such as the 
+ <code>charAt</code> method, this exception also is thrown when the
+  index is equal to the size of the string.
  - seealso: java.lang.String#charAt(int)
- @since JDK1.0
+ @since 1.0
  */
 @interface JavaLangStringIndexOutOfBoundsException : JavaLangIndexOutOfBoundsException
 
 #pragma mark Public
 
 /*!
- @brief Constructs a <code>StringIndexOutOfBoundsException</code> with no
-  detail message.
- @since JDK1.0.
+ @brief Constructs a <code>StringIndexOutOfBoundsException</code> with no detail
+  message.
  */
 - (instancetype __nonnull)init;
 
 /*!
- @brief Constructs a new <code>StringIndexOutOfBoundsException</code>
-  class with an argument indicating the illegal index.
+ @brief Constructs a new <code>StringIndexOutOfBoundsException</code> class with an
+  argument indicating the illegal index.
+ <p>The index is included in this exception's detail message.  The
+  exact presentation format of the detail message is unspecified.
  @param index the illegal index.
  */
 - (instancetype __nonnull)initWithInt:(jint)index;
+
+/*!
+ @brief Constructs a <code>StringIndexOutOfBoundsException</code> with the specified
+  detail message.
+ @param s the detail message.
+ */
+- (instancetype __nonnull)initWithNSString:(NSString *)s;
+
+#pragma mark Package-Private
 
 /*!
  @brief Used internally for consistent high-quality error reporting.
@@ -70,13 +79,6 @@
                               withInt:(jint)count;
 
 /*!
- @brief Constructs a <code>StringIndexOutOfBoundsException</code> with
-  the specified detail message.
- @param s the detail message.
- */
-- (instancetype __nonnull)initWithNSString:(NSString *)s;
-
-/*!
  @brief Used internally for consistent high-quality error reporting.
  */
 - (instancetype __nonnull)initWithNSString:(NSString *)s
@@ -88,6 +90,10 @@
 - (instancetype __nonnull)initWithNSString:(NSString *)s
                                    withInt:(jint)offset
                                    withInt:(jint)count;
+
+// Disallowed inherited constructors, do not use.
+
+- (instancetype __nonnull)initWithLong:(jlong)arg0 NS_UNAVAILABLE;
 
 @end
 
@@ -143,6 +149,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaLangStringIndexOutOfBoundsException)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaLangStringIndexOutOfBoundsException")

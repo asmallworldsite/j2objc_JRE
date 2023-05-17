@@ -16,9 +16,6 @@
 #define INCLUDE_JavaUtilLoggingLogManager_LoggerContext 1
 #endif
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -30,6 +27,8 @@
 
 @class IOSClass;
 @class JavaIoInputStream;
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @class JavaUtilLoggingFormatter;
 @class JavaUtilLoggingLevel;
 @class JavaUtilLoggingLogManager_LoggerContext;
@@ -139,7 +138,6 @@
  @since 1.4
  */
 @interface JavaUtilLoggingLogManager : NSObject
-@property (readonly, copy, class) NSString *LOGGING_MXBEAN_NAME NS_SWIFT_NAME(LOGGING_MXBEAN_NAME);
 
 #pragma mark Public
 
@@ -173,7 +171,7 @@
               the caller does not have LoggingPermission("control").
  @throw NullPointerExceptionif the PropertyChangeListener is null.
  */
-- (void)addPropertyChangeListenerWithJavaBeansPropertyChangeListener:(id<JavaBeansPropertyChangeListener>)l __attribute__((deprecated));
+- (void)addPropertyChangeListenerWithJavaBeansPropertyChangeListener:(id<JavaBeansPropertyChangeListener>)l;
 
 /*!
  @brief Check that the current context is trusted to modify the logging
@@ -289,7 +287,7 @@
  @throw SecurityExceptionif a security manager exists and if
               the caller does not have LoggingPermission("control").
  */
-- (void)removePropertyChangeListenerWithJavaBeansPropertyChangeListener:(id<JavaBeansPropertyChangeListener>)l __attribute__((deprecated));
+- (void)removePropertyChangeListenerWithJavaBeansPropertyChangeListener:(id<JavaBeansPropertyChangeListener>)l;
 
 /*!
  @brief Reset the logging configuration.
@@ -309,7 +307,7 @@
   (such as J2EE containers) can subclass the object.
  It is non-public as
   it is intended that there only be one LogManager object, whose value is
-  retrieved by calling Logmanager.getLogManager.
+  retrieved by calling LogManager.getLogManager.
  */
 - (instancetype __nonnull)init;
 
@@ -380,6 +378,7 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilLoggingLogManager)
 #if !defined (JavaUtilLoggingLogManager_LoggerContext_) && (INCLUDE_ALL_JavaUtilLoggingLogManager || defined(INCLUDE_JavaUtilLoggingLogManager_LoggerContext))
 #define JavaUtilLoggingLogManager_LoggerContext_
 
+@class JavaLangBoolean;
 @class JavaUtilLoggingLogManager;
 @class JavaUtilLoggingLogManager_LogNode;
 @class JavaUtilLoggingLogManager_LoggerWeakRef;
@@ -551,6 +550,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilLoggingLogManager_LogNode)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaUtilLoggingLogManager")

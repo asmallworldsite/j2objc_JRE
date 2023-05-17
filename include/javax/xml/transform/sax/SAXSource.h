@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaxXmlTransformSaxSAXSource
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -45,18 +42,17 @@
  @version $Revision: 446598 $, $Date: 2006-09-15 05:55:40 -0700 (Fri, 15 Sep 2006) $
  */
 @interface JavaxXmlTransformSaxSAXSource : NSObject < JavaxXmlTransformSource >
-@property (readonly, copy, class) NSString *FEATURE NS_SWIFT_NAME(FEATURE);
 
 #pragma mark Public
 
 /*!
- @brief <p>Zero-argument default constructor.
- If this constructor is used, and
+ @brief <p>Zero-argument default constructor.If this constructor is used, and
   no SAX source is set using 
  <code>setInputSource(InputSource inputSource)</code> , then the 
  <code>Transformer</code> will
   create an empty source <code>org.xml.sax.InputSource</code> using 
- <code>new InputSource()</code>.</p>
+ <code>new InputSource()</code>.
+ </p>
  - seealso: javax.xml.transform.Transformer#transform(Source xmlSource, Result outputTarget)
  */
 - (instancetype __nonnull)init;
@@ -181,6 +177,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaxXmlTransformSaxSAXSource)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaxXmlTransformSaxSAXSource")

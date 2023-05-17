@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaTimeZoneZoneOffsetTransitionRule
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -29,6 +26,8 @@
 #define INCLUDE_JavaIoSerializable 1
 #include "java/io/Serializable.h"
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @class JavaTimeDayOfWeek;
 @class JavaTimeLocalTime;
 @class JavaTimeMonth;
@@ -40,14 +39,13 @@
 
 /*!
  @brief A rule expressing how to create a transition.
- <p>
-  This class allows rules for identifying future transitions to be expressed.
-  A rule might be written in many forms: 
+ <p>This class allows rules for identifying future transitions to be expressed. A rule might be
+  written in many forms: 
  <ul>
-  <li>the 16th March 
- <li>the Sunday on or after the 16th March 
- <li>the Sunday on or before the 16th March 
- <li>the last Sunday in February 
+    <li>the 16th March
+    <li>the Sunday on or after the 16th March
+    <li>the Sunday on or before the 16th March
+    <li>the last Sunday in February 
  </ul>
   These different rule types can be expressed and queried.
  @since 1.8
@@ -58,8 +56,7 @@
 
 /*!
  @brief Creates a transition instance for the specified year.
- <p>
-  Calculations are performed using the ISO-8601 chronology.
+ <p>Calculations are performed using the ISO-8601 chronology.
  @param year the year to create a transition for, not null
  @return the transition instance, not null
  */
@@ -67,8 +64,7 @@
 
 /*!
  @brief Checks if this object equals another.
- <p>
-  The entire state of the object is compared.
+ <p>The entire state of the object is compared.
  @param otherRule the other object to compare to, null returns false
  @return true if equal
  */
@@ -76,52 +72,42 @@
 
 /*!
  @brief Gets the indicator of the day-of-month of the transition.
- <p>
-  If the rule defines an exact date then the day is the month of that date. 
- <p>
-  If the rule defines a week where the transition might occur, then the day
-  defines either the start of the end of the transition week. 
- <p>
-  If the value is positive, then it represents a normal day-of-month, and is the
-  earliest possible date that the transition can be.
-  The date may refer to 29th February which should be treated as 1st March in non-leap years. 
- <p>
-  If the value is negative, then it represents the number of days back from the
-  end of the month where <code>-1</code> is the last day of the month.
-  In this case, the day identified is the latest possible date that the transition can be.
+ <p>If the rule defines an exact date then the day is the month of that date. 
+ <p>If the rule defines a week where the transition might occur, then the day defines either the
+  start of the end of the transition week. 
+ <p>If the value is positive, then it represents a normal day-of-month, and is the earliest
+  possible date that the transition can be. The date may refer to 29th February which should be
+  treated as 1st March in non-leap years. 
+ <p>If the value is negative, then it represents the number of days back from the end of the
+  month where <code>-1</code> is the last day of the month. In this case, the day identified is the
+  latest possible date that the transition can be.
  @return the day-of-month indicator, from -28 to 31 excluding 0
  */
 - (jint)getDayOfMonthIndicator;
 
 /*!
  @brief Gets the day-of-week of the transition.
- <p>
-  If the rule defines an exact date then this returns null. 
- <p>
-  If the rule defines a week where the cutover might occur, then this method
-  returns the day-of-week that the month-day will be adjusted to.
-  If the day is positive then the adjustment is later.
-  If the day is negative then the adjustment is earlier.
+ <p>If the rule defines an exact date then this returns null. 
+ <p>If the rule defines a week where the cutover might occur, then this method returns the
+  day-of-week that the month-day will be adjusted to. If the day is positive then the adjustment
+  is later. If the day is negative then the adjustment is earlier.
  @return the day-of-week that the transition occurs, null if the rule defines an exact date
  */
 - (JavaTimeDayOfWeek *)getDayOfWeek;
 
 /*!
- @brief Gets the local time of day of the transition which must be checked with 
- <code>isMidnightEndOfDay()</code>.
- <p>
-  The time is converted into an instant using the time definition.
+ @brief Gets the local time of day of the transition which must be checked with <code>isMidnightEndOfDay()</code>
+ .
+ <p>The time is converted into an instant using the time definition.
  @return the local time of day of the transition, not null
  */
 - (JavaTimeLocalTime *)getLocalTime;
 
 /*!
  @brief Gets the month of the transition.
- <p>
-  If the rule defines an exact date then the month is the month of that date. 
- <p>
-  If the rule defines a week where the transition might occur, then the month
-  if the month of either the earliest or latest possible date of the cutover.
+ <p>If the rule defines an exact date then the month is the month of that date. 
+ <p>If the rule defines a week where the transition might occur, then the month if the month of
+  either the earliest or latest possible date of the cutover.
  @return the month of the transition, not null
  */
 - (JavaTimeMonth *)getMonth;
@@ -146,9 +132,8 @@
 
 /*!
  @brief Gets the time definition, specifying how to convert the time to an instant.
- <p>
-  The local time can be converted to an instant using the standard offset,
-  the wall offset or UTC.
+ <p>The local time can be converted to an instant using the standard offset, the wall offset or
+  UTC.
  @return the time definition, not null
  */
 - (JavaTimeZoneZoneOffsetTransitionRule_TimeDefinition *)getTimeDefinition;
@@ -161,20 +146,18 @@
 
 /*!
  @brief Is the transition local time midnight at the end of day.
- <p>
-  The transition may be represented as occurring at 24:00.
+ <p>The transition may be represented as occurring at 24:00.
  @return whether a local time of midnight is at the start or end of the day
  */
 - (jboolean)isMidnightEndOfDay;
 
 /*!
  @brief Obtains an instance defining the yearly rule to create transitions between two offsets.
- <p>
-  Applications should normally obtain an instance from <code>ZoneRules</code>.
-  This factory is only intended for use when creating <code>ZoneRules</code>.
+ <p>Applications should normally obtain an instance from <code>ZoneRules</code>. This factory is only
+  intended for use when creating <code>ZoneRules</code>.
  @param month the month of the month-day of the first day of the cutover week, not null
- @param dayOfMonthIndicator the day of the month-day of the cutover week, positive if the week is that   day or later, negative if the week is that day or earlier, counting from the last day of the month,
-    from -28 to 31 excluding 0
+ @param dayOfMonthIndicator the day of the month-day of the cutover week, positive if the week      is that day or later, negative if the week is that day or earlier, counting from the last
+       day of the month, from -28 to 31 excluding 0
  @param dayOfWeek the required day-of-week, null if the month-day should not be changed
  @param time the cutover time in the 'before' offset, not null
  @param timeEndOfDay whether the time is midnight at the end of day
@@ -185,6 +168,7 @@
  @return the rule, not null
  @throw IllegalArgumentExceptionif the day of month indicator is invalid
  @throw IllegalArgumentExceptionif the end of day flag is true when the time is not midnight
+ @throw IllegalArgumentExceptionif <code>time.getNano()</code> returns non-zero value
  */
 + (JavaTimeZoneZoneOffsetTransitionRule *)ofWithJavaTimeMonth:(JavaTimeMonth *)month
                                                       withInt:(jint)dayOfMonthIndicator
@@ -207,8 +191,8 @@
 /*!
  @brief Creates an instance defining the yearly rule to create transitions between two offsets.
  @param month the month of the month-day of the first day of the cutover week, not null
- @param dayOfMonthIndicator the day of the month-day of the cutover week, positive if the week is that   day or later, negative if the week is that day or earlier, counting from the last day of the month,
-    from -28 to 31 excluding 0
+ @param dayOfMonthIndicator the day of the month-day of the cutover week, positive if the week      is that day or later, negative if the week is that day or earlier, counting from the last
+       day of the month, from -28 to 31 excluding 0
  @param dayOfWeek the required day-of-week, null if the month-day should not be changed
  @param time the cutover time in the 'before' offset, not null
  @param timeEndOfDay whether the time is midnight at the end of day
@@ -277,41 +261,37 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaTimeZoneZoneOffsetTransitionRule)
 @class JavaTimeLocalDateTime;
 @class JavaTimeZoneOffset;
 
-typedef NS_ENUM(NSUInteger, JavaTimeZoneZoneOffsetTransitionRule_TimeDefinition_Enum) {
+typedef NS_ENUM(jint, JavaTimeZoneZoneOffsetTransitionRule_TimeDefinition_Enum) {
   JavaTimeZoneZoneOffsetTransitionRule_TimeDefinition_Enum_UTC = 0,
   JavaTimeZoneZoneOffsetTransitionRule_TimeDefinition_Enum_WALL = 1,
   JavaTimeZoneZoneOffsetTransitionRule_TimeDefinition_Enum_STANDARD = 2,
 };
+#if J2OBJC_IMPORTED_BY_JAVA_IMPLEMENTATION
+#define JavaTimeZoneZoneOffsetTransitionRule_TimeDefinition_ORDINAL jint
+#else
+#define JavaTimeZoneZoneOffsetTransitionRule_TimeDefinition_ORDINAL JavaTimeZoneZoneOffsetTransitionRule_TimeDefinition_Enum
+#endif
+
 
 /*!
- @brief A definition of the way a local time can be converted to the actual
-  transition date-time.
- <p>
-  Time zone rules are expressed in one of three ways: 
+ @brief A definition of the way a local time can be converted to the actual transition date-time.
+ <p>Time zone rules are expressed in one of three ways: 
  <ul>
-  <li>Relative to UTC</li>
-  <li>Relative to the standard offset in force</li>
-  <li>Relative to the wall offset (what you would see on a clock on the wall)</li>
-  </ul>
+    <li>Relative to UTC
+    <li>Relative to the standard offset in force
+    <li>Relative to the wall offset (what you would see on a clock on the wall) 
+ </ul>
  */
 @interface JavaTimeZoneZoneOffsetTransitionRule_TimeDefinition : JavaLangEnum
 
-@property (readonly, class, nonnull) JavaTimeZoneZoneOffsetTransitionRule_TimeDefinition *UTC NS_SWIFT_NAME(UTC);
-@property (readonly, class, nonnull) JavaTimeZoneZoneOffsetTransitionRule_TimeDefinition *WALL NS_SWIFT_NAME(WALL);
-@property (readonly, class, nonnull) JavaTimeZoneZoneOffsetTransitionRule_TimeDefinition *STANDARD NS_SWIFT_NAME(STANDARD);
 #pragma mark Public
 
 /*!
- @brief Converts the specified local date-time to the local date-time actually
-  seen on a wall clock.
- <p>
-  This method converts using the type of this enum.
-  The output is defined relative to the 'before' offset of the transition. 
- <p>
-  The UTC type uses the UTC offset.
-  The STANDARD type uses the standard offset.
-  The WALL type returns the input date-time.
-  The result is intended for use with the wall-offset.
+ @brief Converts the specified local date-time to the local date-time actually seen on a wall clock.
+ <p>This method converts using the type of this enum. The output is defined relative to the
+  'before' offset of the transition. 
+ <p>The UTC type uses the UTC offset. The STANDARD type uses the standard offset. The WALL
+  type returns the input date-time. The result is intended for use with the wall-offset.
  @param dateTime the local date-time, not null
  @param standardOffset the standard offset, not null
  @param wallOffset the wall offset, not null
@@ -328,6 +308,8 @@ typedef NS_ENUM(NSUInteger, JavaTimeZoneZoneOffsetTransitionRule_TimeDefinition_
 #pragma mark Package-Private
 
 - (JavaTimeZoneZoneOffsetTransitionRule_TimeDefinition_Enum)toNSEnum;
+
+- (JavaTimeZoneZoneOffsetTransitionRule_TimeDefinition_ORDINAL)ordinal;
 
 @end
 
@@ -358,7 +340,7 @@ FOUNDATION_EXPORT IOSObjectArray *JavaTimeZoneZoneOffsetTransitionRule_TimeDefin
 
 FOUNDATION_EXPORT JavaTimeZoneZoneOffsetTransitionRule_TimeDefinition *JavaTimeZoneZoneOffsetTransitionRule_TimeDefinition_valueOfWithNSString_(NSString *name);
 
-FOUNDATION_EXPORT JavaTimeZoneZoneOffsetTransitionRule_TimeDefinition *JavaTimeZoneZoneOffsetTransitionRule_TimeDefinition_fromOrdinal(NSUInteger ordinal);
+FOUNDATION_EXPORT JavaTimeZoneZoneOffsetTransitionRule_TimeDefinition *JavaTimeZoneZoneOffsetTransitionRule_TimeDefinition_fromOrdinal(JavaTimeZoneZoneOffsetTransitionRule_TimeDefinition_ORDINAL ordinal);
 
 J2OBJC_TYPE_LITERAL_HEADER(JavaTimeZoneZoneOffsetTransitionRule_TimeDefinition)
 
@@ -368,6 +350,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaTimeZoneZoneOffsetTransitionRule_TimeDefinition)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaTimeZoneZoneOffsetTransitionRule")

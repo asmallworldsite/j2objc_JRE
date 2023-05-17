@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaLangIndexOutOfBoundsException
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -29,6 +26,9 @@
 #define INCLUDE_JavaLangRuntimeException 1
 #include "java/lang/RuntimeException.h"
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
+@class JavaLangLong;
 @class JavaLangThrowable;
 
 /*!
@@ -37,22 +37,41 @@
  <p>
   Applications can subclass this class to indicate similar exceptions.
  @author Frank Yellin
- @since JDK1.0
+ @since 1.0
  */
 @interface JavaLangIndexOutOfBoundsException : JavaLangRuntimeException
 
 #pragma mark Public
 
 /*!
- @brief Constructs an <code>IndexOutOfBoundsException</code> with no
-  detail message.
+ @brief Constructs an <code>IndexOutOfBoundsException</code> with no detail message.
  */
 - (instancetype __nonnull)init;
 
 /*!
- @brief Constructs an <code>IndexOutOfBoundsException</code> with the
-  specified detail message.
- @param s the detail message.
+ @brief Constructs a new <code>IndexOutOfBoundsException</code> class with an
+  argument indicating the illegal index.
+ <p>The index is included in this exception's detail message.  The
+  exact presentation format of the detail message is unspecified.
+ @param index the illegal index.
+ @since 9
+ */
+- (instancetype __nonnull)initWithInt:(jint)index;
+
+/*!
+ @brief Constructs a new <code>IndexOutOfBoundsException</code> class with an
+  argument indicating the illegal index.
+ <p>The index is included in this exception's detail message.  The
+  exact presentation format of the detail message is unspecified.
+ @param index the illegal index.
+ @since 16
+ */
+- (instancetype __nonnull)initWithLong:(jlong)index;
+
+/*!
+ @brief Constructs an <code>IndexOutOfBoundsException</code> with the specified detail
+  message.
+ @param s the detail message
  */
 - (instancetype __nonnull)initWithNSString:(NSString *)s;
 
@@ -84,6 +103,18 @@ FOUNDATION_EXPORT JavaLangIndexOutOfBoundsException *new_JavaLangIndexOutOfBound
 
 FOUNDATION_EXPORT JavaLangIndexOutOfBoundsException *create_JavaLangIndexOutOfBoundsException_initWithNSString_(NSString *s);
 
+FOUNDATION_EXPORT void JavaLangIndexOutOfBoundsException_initWithInt_(JavaLangIndexOutOfBoundsException *self, jint index);
+
+FOUNDATION_EXPORT JavaLangIndexOutOfBoundsException *new_JavaLangIndexOutOfBoundsException_initWithInt_(jint index) NS_RETURNS_RETAINED;
+
+FOUNDATION_EXPORT JavaLangIndexOutOfBoundsException *create_JavaLangIndexOutOfBoundsException_initWithInt_(jint index);
+
+FOUNDATION_EXPORT void JavaLangIndexOutOfBoundsException_initWithLong_(JavaLangIndexOutOfBoundsException *self, jlong index);
+
+FOUNDATION_EXPORT JavaLangIndexOutOfBoundsException *new_JavaLangIndexOutOfBoundsException_initWithLong_(jlong index) NS_RETURNS_RETAINED;
+
+FOUNDATION_EXPORT JavaLangIndexOutOfBoundsException *create_JavaLangIndexOutOfBoundsException_initWithLong_(jlong index);
+
 J2OBJC_TYPE_LITERAL_HEADER(JavaLangIndexOutOfBoundsException)
 
 #endif
@@ -92,6 +123,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaLangIndexOutOfBoundsException)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaLangIndexOutOfBoundsException")

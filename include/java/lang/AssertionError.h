@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaLangAssertionError
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -29,6 +26,12 @@
 #define INCLUDE_JavaLangError 1
 #include "java/lang/Error.h"
 
+@class JavaLangBoolean;
+@class JavaLangCharacter;
+@class JavaLangDouble;
+@class JavaLangFloat;
+@class JavaLangInteger;
+@class JavaLangLong;
 @class JavaLangThrowable;
 
 /*!
@@ -41,8 +44,8 @@
    
 @endcode
   has as its detail message the <i>string conversion</i> of 
- <i>expression</i> (as defined in section 15.18.1.1 of 
- <cite>The Java&trade; Language Specification</cite>),
+ <i>expression</i> (as defined in section 5.1.11 of 
+ <cite>The Java Language Specification</cite>),
   regardless of the type of <i>expression</i>.
  @since 1.4
  */
@@ -58,8 +61,8 @@
 /*!
  @brief Constructs an AssertionError with its detail message derived
   from the specified <code>boolean</code>, which is converted to
-  a string as defined in section 15.18.1.1 of 
- <cite>The Java&trade; Language Specification</cite>.
+  a string as defined in section 5.1.11 of 
+ <cite>The Java Language Specification</cite>.
  @param detailMessage value to be used in constructing detail message
  */
 - (instancetype __nonnull)initWithBoolean:(jboolean)detailMessage;
@@ -67,8 +70,8 @@
 /*!
  @brief Constructs an AssertionError with its detail message derived
   from the specified <code>char</code>, which is converted to a
-  string as defined in section 15.18.1.1 of 
- <cite>The Java&trade; Language Specification</cite>.
+  string as defined in section 5.1.11 of 
+ <cite>The Java Language Specification</cite>.
  @param detailMessage value to be used in constructing detail message
  */
 - (instancetype __nonnull)initWithChar:(jchar)detailMessage;
@@ -76,8 +79,8 @@
 /*!
  @brief Constructs an AssertionError with its detail message derived
   from the specified <code>double</code>, which is converted to a
-  string as defined in section 15.18.1.1 of 
- <cite>The Java&trade; Language Specification</cite>.
+  string as defined in section 5.1.11 of 
+ <cite>The Java Language Specification</cite>.
  @param detailMessage value to be used in constructing detail message
  */
 - (instancetype __nonnull)initWithDouble:(jdouble)detailMessage;
@@ -85,8 +88,8 @@
 /*!
  @brief Constructs an AssertionError with its detail message derived
   from the specified <code>float</code>, which is converted to a
-  string as defined in section 15.18.1.1 of 
- <cite>The Java&trade; Language Specification</cite>.
+  string as defined in section 5.1.11 of 
+ <cite>The Java Language Specification</cite>.
  @param detailMessage value to be used in constructing detail message
  */
 - (instancetype __nonnull)initWithFloat:(jfloat)detailMessage;
@@ -94,8 +97,8 @@
 /*!
  @brief Constructs an AssertionError with its detail message derived
   from the specified <code>int</code>, which is converted to a
-  string as defined in section 15.18.1.1 of 
- <cite>The Java&trade; Language Specification</cite>.
+  string as defined in section 5.1.11 of 
+ <cite>The Java Language Specification</cite>.
  @param detailMessage value to be used in constructing detail message
  */
 - (instancetype __nonnull)initWithInt:(jint)detailMessage;
@@ -103,8 +106,8 @@
 /*!
  @brief Constructs an AssertionError with its detail message derived
   from the specified <code>long</code>, which is converted to a
-  string as defined in section 15.18.1.1 of 
- <cite>The Java&trade; Language Specification</cite>.
+  string as defined in section 5.1.11 of 
+ <cite>The Java Language Specification</cite>.
  @param detailMessage value to be used in constructing detail message
  */
 - (instancetype __nonnull)initWithLong:(jlong)detailMessage;
@@ -112,8 +115,8 @@
 /*!
  @brief Constructs an AssertionError with its detail message derived
   from the specified object, which is converted to a string as
-  defined in section 15.18.1.1 of 
- <cite>The Java&trade; Language Specification</cite>.
+  defined in section 5.1.11 of 
+ <cite>The Java Language Specification</cite>.
  <p>
   If the specified object is an instance of <code>Throwable</code>, it
   becomes the <i>cause</i> of the newly constructed assertion error.
@@ -210,6 +213,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaLangAssertionError)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaLangAssertionError")

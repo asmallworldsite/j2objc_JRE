@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaUtilJarManifest
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -27,6 +24,8 @@
 
 @class JavaIoInputStream;
 @class JavaIoOutputStream;
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @class JavaLangStringBuffer;
 @class JavaUtilJarAttributes;
 @protocol JavaUtilMap;
@@ -200,6 +199,9 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilJarManifest)
 
 @class IOSByteArray;
 @class JavaIoInputStream;
+@class JavaLangByte;
+@class JavaLangInteger;
+@class JavaLangLong;
 
 @interface JavaUtilJarManifest_FastInputStream : JavaIoFilterInputStream
 
@@ -256,6 +258,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilJarManifest_FastInputStream)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaUtilJarManifest")

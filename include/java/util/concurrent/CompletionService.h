@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaUtilConcurrentCompletionService
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -25,6 +22,7 @@
 #if !defined (JavaUtilConcurrentCompletionService_) && (INCLUDE_ALL_JavaUtilConcurrentCompletionService || defined(INCLUDE_JavaUtilConcurrentCompletionService))
 #define JavaUtilConcurrentCompletionService_
 
+@class JavaLangLong;
 @class JavaUtilConcurrentTimeUnit;
 @protocol JavaLangRunnable;
 @protocol JavaUtilConcurrentCallable;
@@ -51,6 +49,7 @@
   <a href="package-summary.html#MemoryVisibility"><i>happen-before</i></a>
   actions taken by that task, which in turn <i>happen-before</i>
   actions following a successful return from the corresponding <code>take()</code>.
+ @since 1.5
  */
 @protocol JavaUtilConcurrentCompletionService < JavaObject >
 
@@ -126,6 +125,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentCompletionService)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaUtilConcurrentCompletionService")

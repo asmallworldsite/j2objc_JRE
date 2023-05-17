@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaSecurityCertCertPath
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -30,6 +27,8 @@
 #include "java/io/Serializable.h"
 
 @class IOSByteArray;
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @protocol JavaUtilIterator;
 @protocol JavaUtilList;
 
@@ -91,9 +90,9 @@
   <li><code>PKCS7</code></li>
   <li><code>PkiPath</code></li>
   </ul>
-  These encodings are described in the <a href="{@@docRoot}/../technotes/guides/security/StandardNames.html#CertPathEncodings">
+  These encodings are described in the <a href="{@@docRoot}/../specs/security/standard-names.html#certpath-encodings">
   CertPath Encodings section</a> of the
-  Java Cryptography Architecture Standard Algorithm Name Documentation.
+  Java Security Standard Algorithm Names Specification.
   Consult the release documentation for your implementation to see if any
   other encodings are supported. 
  <p>
@@ -187,7 +186,7 @@
   a certification path is defined to be the result of the following
   calculation: 
  @code
- hashCode = path.getType().hashCode();
+  hashCode = path.getType().hashCode();
    hashCode = 31*hashCode + path.getCertificates().hashCode(); 
  
 @endcode
@@ -298,6 +297,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaSecurityCertCertPath_CertPathRep)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaSecurityCertCertPath")

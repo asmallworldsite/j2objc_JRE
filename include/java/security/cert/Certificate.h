@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaSecurityCertCertificate
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -30,6 +27,8 @@
 #include "java/io/Serializable.h"
 
 @class IOSByteArray;
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @class JavaSecurityProvider;
 @protocol JavaSecurityPublicKey;
 
@@ -37,7 +36,7 @@
  @brief <p>Abstract class for managing a variety of identity certificates.
  An identity certificate is a binding of a principal to a public key which
   is vouched for by another principal.  (A principal represents
-  an entity such as an individual user, a group, or a corporation.)
+  an entity such as an individual user, a group, or a corporation.) 
  <p>
   This class is an abstraction for certificates that have different
   formats but important common uses.  For example, different types of
@@ -52,6 +51,7 @@
  - seealso: X509Certificate
  - seealso: CertificateFactory
  @author Hemma Prafullchandra
+ @since 1.2
  */
 @interface JavaSecurityCertCertificate : NSObject < JavaIoSerializable >
 
@@ -162,8 +162,8 @@
 /*!
  @brief Creates a certificate of the specified type.
  @param type the standard name of the certificate type.  See the CertificateFactory section in the 
-  <a href="{@@docRoot}/../technotes/guides/security/StandardNames.html#CertificateFactory">
-   Java Cryptography Architecture Standard Algorithm Name Documentation
+  <a href="{@@docRoot}/../specs/security/standard-names.html#certificatefactory-types">
+   Java Security Standard Algorithm Names Specification
   </a>  for information about standard certificate types.
  */
 - (instancetype __nonnull)initWithNSString:(NSString *)type;
@@ -211,8 +211,7 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaSecurityCertCertificate)
 /*!
  @brief Construct the alternate Certificate class with the Certificate
   type and Certificate encoding bytes.
- <p>
- @param type the standard name of the Certificate type.  <p>
+ @param type the standard name of the Certificate type.
  @param data the Certificate data.
  */
 - (instancetype __nonnull)initWithNSString:(NSString *)type
@@ -220,7 +219,6 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaSecurityCertCertificate)
 
 /*!
  @brief Resolve the Certificate Object.
- <p>
  @return the resolved Certificate Object
  @throw java.io.ObjectStreamExceptionif the Certificate
        could not be resolved
@@ -249,6 +247,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaSecurityCertCertificate_CertificateRep)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaSecurityCertCertificate")

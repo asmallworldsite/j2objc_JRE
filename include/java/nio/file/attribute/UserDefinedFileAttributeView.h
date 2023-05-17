@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaNioFileAttributeUserDefinedFileAttributeView
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -29,6 +26,7 @@
 #define INCLUDE_JavaNioFileAttributeFileAttributeView 1
 #include "java/nio/file/attribute/FileAttributeView.h"
 
+@class JavaLangInteger;
 @class JavaNioByteBuffer;
 @protocol JavaUtilList;
 
@@ -84,7 +82,7 @@
  @throw SecurityException
  In the case of the default provider, a security manager is
            installed, and it denies <code>RuntimePermission</code>
- <tt>("accessUserDefinedAttributes")</tt>
+ <code>("accessUserDefinedAttributes")</code>
            or its <code>checkRead</code> method
            denies read access to the file.
  */
@@ -101,7 +99,7 @@
  @throw SecurityException
  In the case of the default provider, a security manager is
            installed, and it denies <code>RuntimePermission</code>
- <tt>("accessUserDefinedAttributes")</tt>
+ <code>("accessUserDefinedAttributes")</code>
            or its <code>checkRead</code> method
            denies read access to the file.
  */
@@ -142,7 +140,7 @@
  @throw SecurityException
  In the case of the default provider, a security manager is
            installed, and it denies <code>RuntimePermission</code>
- <tt>("accessUserDefinedAttributes")</tt>
+ <code>("accessUserDefinedAttributes")</code>
            or its <code>checkRead</code> method
            denies read access to the file.
  - seealso: #size
@@ -185,7 +183,7 @@
  @throw SecurityException
  In the case of the default provider, a security manager is
            installed, and it denies <code>RuntimePermission</code>
- <tt>("accessUserDefinedAttributes")</tt>
+ <code>("accessUserDefinedAttributes")</code>
            or its <code>checkWrite</code>
            method denies write access to the file.
  */
@@ -200,7 +198,7 @@
  @throw SecurityException
  In the case of the default provider, a security manager is
            installed, and it denies <code>RuntimePermission</code>
- <tt>("accessUserDefinedAttributes")</tt>
+ <code>("accessUserDefinedAttributes")</code>
            or its <code>checkWrite</code>
            method denies write access to the file.
  */
@@ -218,6 +216,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaNioFileAttributeUserDefinedFileAttributeView)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaNioFileAttributeUserDefinedFileAttributeView")

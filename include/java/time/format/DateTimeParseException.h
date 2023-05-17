@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaTimeFormatDateTimeParseException
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -29,6 +26,7 @@
 #define INCLUDE_JavaTimeDateTimeException 1
 #include "java/time/DateTimeException.h"
 
+@class JavaLangInteger;
 @class JavaLangThrowable;
 @protocol JavaLangCharSequence;
 
@@ -107,6 +105,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaTimeFormatDateTimeParseException)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaTimeFormatDateTimeParseException")

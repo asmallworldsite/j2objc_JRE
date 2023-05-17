@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaIoReader
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -34,6 +31,9 @@
 #include "java/io/Closeable.h"
 
 @class IOSCharArray;
+@class JavaLangBoolean;
+@class JavaLangInteger;
+@class JavaLangLong;
 @class JavaNioCharBuffer;
 
 /*!
@@ -53,7 +53,7 @@
  - seealso: StringReader
  - seealso: Writer
  @author Mark Reinhold
- @since JDK1.1
+ @since 1.1
  */
 @interface JavaIoReader : NSObject < JavaLangReadable, JavaIoCloseable > {
  @public
@@ -62,7 +62,7 @@
   efficiency, a character-stream object may use an object other than
   itself to protect critical sections.
    A subclass should therefore use
-  the object in this field rather than <tt>this</tt> or a synchronized
+  the object in this field rather than <code>this</code> or a synchronized
   method.
    */
   id lock_;
@@ -107,7 +107,7 @@
  <p> Subclasses that intend to support efficient single-character input
   should override this method.
  @return The character read, as an integer in the range 0 to 65535
-              (<tt>0x00-0xffff</tt>), or -1 if the end of the stream has
+              (<code>0x00-0xffff</code>), or -1 if the end of the stream has
               been reached
  @throw IOExceptionIf an I/O error occurs
  */
@@ -134,6 +134,9 @@
  @return The number of characters read, or -1 if the end of the
               stream has been reached
  @throw IOExceptionIf an I/O error occurs
+ @throw IndexOutOfBoundsException
+ If <code>off</code> is negative, or <code>len</code> is negative,
+              or <code>len</code> is greater than <code>cbuf.length - off</code>
  */
 - (jint)readWithCharArray:(IOSCharArray *)cbuf
                   withInt:(jint)off
@@ -221,6 +224,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaIoReader)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaIoReader")

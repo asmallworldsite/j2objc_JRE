@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaUtilFunctionIntBinaryOperator
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -24,6 +21,8 @@
 
 #if !defined (JavaUtilFunctionIntBinaryOperator_) && (INCLUDE_ALL_JavaUtilFunctionIntBinaryOperator || defined(INCLUDE_JavaUtilFunctionIntBinaryOperator))
 #define JavaUtilFunctionIntBinaryOperator_
+
+@class JavaLangInteger;
 
 /*!
  @brief Represents an operation upon two <code>int</code>-valued operands and producing an 
@@ -58,6 +57,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilFunctionIntBinaryOperator)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaUtilFunctionIntBinaryOperator")

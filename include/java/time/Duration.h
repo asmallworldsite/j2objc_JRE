@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaTimeDuration
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -37,6 +34,9 @@
 #define INCLUDE_JavaIoSerializable 1
 #include "java/io/Serializable.h"
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
+@class JavaLangLong;
 @protocol JavaIoDataInput;
 @protocol JavaIoDataOutput;
 @protocol JavaLangCharSequence;
@@ -71,7 +71,6 @@
  @since 1.8
  */
 @interface JavaTimeDuration : NSObject < JavaTimeTemporalTemporalAmount, JavaLangComparable, JavaIoSerializable >
-@property (readonly, class, strong) JavaTimeDuration *ZERO NS_SWIFT_NAME(ZERO);
 
 #pragma mark Public
 
@@ -820,6 +819,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaTimeDuration)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaTimeDuration")

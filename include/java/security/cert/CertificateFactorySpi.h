@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaSecurityCertCertificateFactorySpi
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -242,8 +239,8 @@
  @brief Returns an iteration of the <code>CertPath</code> encodings supported
   by this certificate factory, with the default encoding first.See
   the CertPath Encodings section in the <a href="{@@docRoot}/..
- /technotes/guides/security/StandardNames.html#CertPathEncodings">
-  Java Cryptography Architecture Standard Algorithm Name Documentation</a>
+ /specs/security/standard-names.html#certpath-encodings">
+  Java Security Standard Algorithm Names Specification</a>
   for information about standard encoding names. 
  <p>
   Attempts to modify the returned <code>Iterator</code> via its 
@@ -275,6 +272,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaSecurityCertCertificateFactorySpi)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaSecurityCertCertificateFactorySpi")

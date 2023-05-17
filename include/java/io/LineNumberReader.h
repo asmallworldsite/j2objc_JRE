@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaIoLineNumberReader
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -31,6 +28,8 @@
 
 @class IOSCharArray;
 @class JavaIoReader;
+@class JavaLangInteger;
+@class JavaLangLong;
 
 /*!
  @brief A buffered character-input stream that keeps track of line numbers.This
@@ -39,16 +38,16 @@
   respectively.
  <p> By default, line numbering begins at 0. This number increments at every 
  <a href="#lt">line terminator</a> as the data is read, and can be changed
-  with a call to <tt>setLineNumber(int)</tt>.  Note however, that 
- <tt>setLineNumber(int)</tt> does not actually change the current position in
+  with a call to <code>setLineNumber(int)</code>.  Note however, that 
+ <code>setLineNumber(int)</code> does not actually change the current position in
   the stream; it only changes the value that will be returned by 
- <tt>getLineNumber()</tt>.
+ <code>getLineNumber()</code>.
   
- <p> A line is considered to be <a name="lt">terminated</a> by any one of a
+ <p> A line is considered to be <a id="lt">terminated</a> by any one of a
   line feed ('\n'), a carriage return ('\r'), or a carriage return followed
   immediately by a linefeed.
  @author Mark Reinhold
- @since JDK1.1
+ @since 1.1
  */
 @interface JavaIoLineNumberReader : JavaIoBufferedReader
 
@@ -112,6 +111,7 @@
            already been reached
  @throw IOException
  If an I/O error occurs
+ @throw IndexOutOfBoundsException
  */
 - (jint)readWithCharArray:(IOSCharArray *)cbuf
                   withInt:(jint)off
@@ -122,7 +122,7 @@
   read the current line number is incremented.
  @return A String containing the contents of the line, not including
            any <a href="#lt">line termination characters</a>, or
-           <tt>null</tt> if the end of the stream has been reached
+           <code>null</code> if the end of the stream has been reached
  @throw IOException
  If an I/O error occurs
  */
@@ -150,7 +150,7 @@
  @throw IOException
  If an I/O error occurs
  @throw IllegalArgumentException
- If <tt>n</tt> is negative
+ If <code>n</code> is negative
  */
 - (jlong)skipWithLong:(jlong)n;
 
@@ -178,6 +178,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaIoLineNumberReader)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaIoLineNumberReader")

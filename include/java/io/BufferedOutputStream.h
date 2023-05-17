@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaIoBufferedOutputStream
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -31,6 +28,7 @@
 
 @class IOSByteArray;
 @class JavaIoOutputStream;
+@class JavaLangInteger;
 
 /*!
  @brief The class implements a buffered output stream.By setting up such
@@ -38,7 +36,7 @@
   output stream without necessarily causing a call to the underlying
   system for each byte written.
  @author Arthur van Hoff
- @since JDK1.0
+ @since 1.0
  */
 @interface JavaIoBufferedOutputStream : JavaIoFilterOutputStream {
  @public
@@ -48,8 +46,8 @@
   IOSByteArray *buf_;
   /*!
    @brief The number of valid bytes in the buffer.This value is always
-  in the range <tt>0</tt> through <tt>buf.length</tt>; elements 
- <tt>buf[0]</tt> through <tt>buf[count-1]</tt> contain valid
+  in the range <code>0</code> through <code>buf.length</code>; elements 
+ <code>buf[0]</code> through <code>buf[count-1]</code> contain valid
   byte data.
    */
   jint count_;
@@ -134,6 +132,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaIoBufferedOutputStream)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaIoBufferedOutputStream")

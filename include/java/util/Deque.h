@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaUtilDeque
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -29,6 +26,8 @@
 #define INCLUDE_JavaUtilQueue 1
 #include "java/util/Queue.h"
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @protocol JavaUtilIterator;
 
 /*!
@@ -528,6 +527,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilDeque)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaUtilDeque")

@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaxCryptoMacSpi
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -26,6 +23,8 @@
 #define JavaxCryptoMacSpi_
 
 @class IOSByteArray;
+@class JavaLangByte;
+@class JavaLangInteger;
 @class JavaNioByteBuffer;
 @protocol JavaSecurityKey;
 @protocol JavaSecuritySpecAlgorithmParameterSpec;
@@ -131,6 +130,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaxCryptoMacSpi)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaxCryptoMacSpi")

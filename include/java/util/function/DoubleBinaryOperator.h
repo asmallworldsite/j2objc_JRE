@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaUtilFunctionDoubleBinaryOperator
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -24,6 +21,8 @@
 
 #if !defined (JavaUtilFunctionDoubleBinaryOperator_) && (INCLUDE_ALL_JavaUtilFunctionDoubleBinaryOperator || defined(INCLUDE_JavaUtilFunctionDoubleBinaryOperator))
 #define JavaUtilFunctionDoubleBinaryOperator_
+
+@class JavaLangDouble;
 
 /*!
  @brief Represents an operation upon two <code>double</code>-valued operands and producing a 
@@ -58,6 +57,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilFunctionDoubleBinaryOperator)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaUtilFunctionDoubleBinaryOperator")

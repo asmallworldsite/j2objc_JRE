@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_OrgXmlSaxExtAttributes2
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -28,6 +25,9 @@
 #define RESTRICT_OrgXmlSaxAttributes 1
 #define INCLUDE_OrgXmlSaxAttributes 1
 #include "org/xml/sax/Attributes.h"
+
+@class JavaLangBoolean;
+@class JavaLangInteger;
 
 /*!
  @brief SAX2 extension to augment the per-attribute information
@@ -154,6 +154,4 @@ J2OBJC_TYPE_LITERAL_HEADER(OrgXmlSaxExtAttributes2)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_OrgXmlSaxExtAttributes2")

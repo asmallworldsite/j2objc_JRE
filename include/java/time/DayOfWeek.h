@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaTimeDayOfWeek
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -38,6 +35,9 @@
 #include "java/time/temporal/TemporalAdjuster.h"
 
 @class IOSObjectArray;
+@class JavaLangBoolean;
+@class JavaLangInteger;
+@class JavaLangLong;
 @class JavaTimeFormatTextStyle;
 @class JavaTimeTemporalValueRange;
 @class JavaUtilLocale;
@@ -45,7 +45,7 @@
 @protocol JavaTimeTemporalTemporalField;
 @protocol JavaTimeTemporalTemporalQuery;
 
-typedef NS_ENUM(NSUInteger, JavaTimeDayOfWeek_Enum) {
+typedef NS_ENUM(jint, JavaTimeDayOfWeek_Enum) {
   JavaTimeDayOfWeek_Enum_MONDAY = 0,
   JavaTimeDayOfWeek_Enum_TUESDAY = 1,
   JavaTimeDayOfWeek_Enum_WEDNESDAY = 2,
@@ -54,6 +54,12 @@ typedef NS_ENUM(NSUInteger, JavaTimeDayOfWeek_Enum) {
   JavaTimeDayOfWeek_Enum_SATURDAY = 5,
   JavaTimeDayOfWeek_Enum_SUNDAY = 6,
 };
+#if J2OBJC_IMPORTED_BY_JAVA_IMPLEMENTATION
+#define JavaTimeDayOfWeek_ORDINAL jint
+#else
+#define JavaTimeDayOfWeek_ORDINAL JavaTimeDayOfWeek_Enum
+#endif
+
 
 /*!
  @brief A day-of-week, such as 'Tuesday'.
@@ -81,13 +87,6 @@ typedef NS_ENUM(NSUInteger, JavaTimeDayOfWeek_Enum) {
  */
 @interface JavaTimeDayOfWeek : JavaLangEnum < JavaTimeTemporalTemporalAccessor, JavaTimeTemporalTemporalAdjuster >
 
-@property (readonly, class, nonnull) JavaTimeDayOfWeek *MONDAY NS_SWIFT_NAME(MONDAY);
-@property (readonly, class, nonnull) JavaTimeDayOfWeek *TUESDAY NS_SWIFT_NAME(TUESDAY);
-@property (readonly, class, nonnull) JavaTimeDayOfWeek *WEDNESDAY NS_SWIFT_NAME(WEDNESDAY);
-@property (readonly, class, nonnull) JavaTimeDayOfWeek *THURSDAY NS_SWIFT_NAME(THURSDAY);
-@property (readonly, class, nonnull) JavaTimeDayOfWeek *FRIDAY NS_SWIFT_NAME(FRIDAY);
-@property (readonly, class, nonnull) JavaTimeDayOfWeek *SATURDAY NS_SWIFT_NAME(SATURDAY);
-@property (readonly, class, nonnull) JavaTimeDayOfWeek *SUNDAY NS_SWIFT_NAME(SUNDAY);
 #pragma mark Public
 
 /*!
@@ -329,6 +328,8 @@ typedef NS_ENUM(NSUInteger, JavaTimeDayOfWeek_Enum) {
 
 - (JavaTimeDayOfWeek_Enum)toNSEnum;
 
+- (JavaTimeDayOfWeek_ORDINAL)ordinal;
+
 @end
 
 J2OBJC_STATIC_INIT(JavaTimeDayOfWeek)
@@ -393,7 +394,7 @@ FOUNDATION_EXPORT IOSObjectArray *JavaTimeDayOfWeek_values(void);
 
 FOUNDATION_EXPORT JavaTimeDayOfWeek *JavaTimeDayOfWeek_valueOfWithNSString_(NSString *name);
 
-FOUNDATION_EXPORT JavaTimeDayOfWeek *JavaTimeDayOfWeek_fromOrdinal(NSUInteger ordinal);
+FOUNDATION_EXPORT JavaTimeDayOfWeek *JavaTimeDayOfWeek_fromOrdinal(JavaTimeDayOfWeek_ORDINAL ordinal);
 
 J2OBJC_TYPE_LITERAL_HEADER(JavaTimeDayOfWeek)
 
@@ -403,6 +404,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaTimeDayOfWeek)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaTimeDayOfWeek")

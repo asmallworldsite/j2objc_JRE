@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaNioFileFileSystem
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -30,6 +27,7 @@
 #include "java/io/Closeable.h"
 
 @class IOSObjectArray;
+@class JavaLangBoolean;
 @class JavaNioFileAttributeUserPrincipalLookupService;
 @class JavaNioFileSpiFileSystemProvider;
 @protocol JavaLangIterable;
@@ -126,7 +124,7 @@
   store is not accessible, then it is not returned by the iterator. 
  <p> In the case of the default provider, and a security manager is
   installed, the security manager is invoked to check <code>RuntimePermission</code>
- <tt>("getFileStoreAttributes")</tt>. If denied, then
+ <code>("getFileStoreAttributes")</code>. If denied, then
   no file stores are returned by the iterator. In addition, the security
   manager's <code>SecurityManager.checkRead(String)</code> method is invoked to
   check read access to the file store's <em>top-most</em> directory. If
@@ -214,32 +212,39 @@
  <p> When the syntax is "<code>glob</code>" then the <code>String</code>
   representation of the path is matched using a limited pattern language
   that resembles regular expressions but with a simpler syntax. For example: 
- <blockquote>
-  <table border="0" summary="Pattern Language">
+ <table class="striped" style="text-align:left; margin-left:2em">
+  <caption style="display:none">Pattern Language</caption>
+  <thead>
   <tr>
-    <td><code>*.java</code></td>
+    <th scope="col">Example
+    <th scope="col">Description
+  </tr>
+  </thead>
+  <tbody>
+  <tr>
+    <th scope="row"><code>*.java</code></th>
     <td>Matches a path that represents a file name ending in <code>.java</code></td>
   </tr>
   <tr>
-    <td><code>*.*</code></td>
+    <th scope="row"><code>*.*</code></th>
     <td>Matches file names containing a dot</td>
   </tr>
   <tr>
-    <td><code>*.{java,class}</code></td>
+    <th scope="row"><code>*.{java,class}</code></th>
     <td>Matches file names ending with <code>.java</code> or <code>.class</code></td>
   </tr>
   <tr>
-    <td><code>foo.?</code></td>
+    <th scope="row"><code>foo.?</code></th>
     <td>Matches file names starting with <code>foo.</code> and a single
     character extension</td>
   </tr>
   <tr>
-    <td><tt>&#47;home&#47;*&#47;
- *</tt>   <td>Matches <tt>&#47;home&#47;gus&#47;data</tt></td>
+    <th scope="row"><code>&#47;home&#47;*&#47;
+ *</code>   <td>Matches <code>&#47;home&#47;gus&#47;data</code></td>
   </tr>
   <tr>
-    <td><tt>&#47;home&#47;
- **</tt>   <td>Matches <tt>&#47;home&#47;gus</tt> and   <tt>&#47;home&#47;gus&#47;data</tt></td> </tr> </table> </blockquote> <p> The following rules are used to interpret glob patterns: <ul>   <li><p> The <code>*</code> character matches zero or more <code>characters</code> of a <code>name</code> component without   crossing directory boundaries. </p></li>   <li><p> The <code>**</code> characters matches zero or more <code>characters</code>
+    <th scope="row"><code>&#47;home&#47;
+ **</code>   <td>Matches <code>&#47;home&#47;gus</code> and   <code>&#47;home&#47;gus&#47;data</code></td> </tr> </tbody> </table> <p> The following rules are used to interpret glob patterns: <ul>   <li><p> The <code>*</code> character matches zero or more <code>characters</code> of a <code>name</code> component without   crossing directory boundaries. </p></li>   <li><p> The <code>**</code> characters matches zero or more <code>characters</code>
   crossing directory boundaries. </p></li>
     
  <li><p> The <code>?</code> character matches exactly one character of a
@@ -270,7 +275,7 @@
     character is used to separate the subpatterns. Groups cannot be nested.   
  </p></li>
     
- <li><p> Leading period<tt>&#47;</tt>dot characters in file name are
+ <li><p> Leading period<code>&#47;</code>dot characters in file name are
     treated as regular characters in match operations. For example,
     the <code>"*"</code> glob pattern matches file name <code>".login"</code>.
     The <code>Files.isHidden</code> method may be used to test whether a file
@@ -426,6 +431,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaNioFileFileSystem)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaNioFileFileSystem")

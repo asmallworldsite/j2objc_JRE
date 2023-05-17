@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaIoExternalizable
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -61,7 +58,7 @@
  - seealso: java.io.ObjectOutput
  - seealso: java.io.ObjectInput
  - seealso: java.io.Serializable
- @since JDK1.1
+ @since 1.1
  */
 @protocol JavaIoExternalizable < JavaIoSerializable, JavaObject >
 
@@ -100,6 +97,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaIoExternalizable)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaIoExternalizable")

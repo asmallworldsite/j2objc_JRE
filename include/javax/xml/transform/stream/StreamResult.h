@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaxXmlTransformStreamStreamResult
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -40,7 +37,6 @@
  @author <a href="Jeff.Suttor@@Sun.com">Jeff Suttor</a>
  */
 @interface JavaxXmlTransformStreamStreamResult : NSObject < JavaxXmlTransformResult >
-@property (readonly, copy, class) NSString *FEATURE NS_SWIFT_NAME(FEATURE);
 
 #pragma mark Public
 
@@ -197,6 +193,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaxXmlTransformStreamStreamResult)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaxXmlTransformStreamStreamResult")

@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_AndroidSystemErrnoException
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -30,6 +27,8 @@
 #include "java/lang/Exception.h"
 
 @class JavaIoIOException;
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @class JavaLangThrowable;
 @class JavaNetSocketException;
 
@@ -116,6 +115,4 @@ J2OBJC_TYPE_LITERAL_HEADER(AndroidSystemErrnoException)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_AndroidSystemErrnoException")

@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaxNetSslHttpsURLConnection
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -191,10 +188,46 @@
 /*!
  @brief Sets the default <code>HostnameVerifier</code> inherited by a
   new instance of this class.
- <P>
-  If this method is not called, the default 
- <code>HostnameVerifier</code> assumes the connection should not
-  be permitted.
+ <p>
+  Developers are <em>strongly</em> discouraged from changing the default 
+ <code>HostnameVerifier</code> as <code>getDefaultHostnameVerifier()</code> is used by several
+  classes for hostname verification on Android. 
+ <table>
+      <tr>
+          <th>User</th>
+          <th>Effect</th>
+      </tr>
+      <tr>
+          <td>Android's default <code>TrustManager</code>, as used with Android's default
+          <code>SSLContext</code>, <code>SSLSocketFactory</code> and <code>SSLSocket</code> implementations.
+          </td>
+          <td>The <code>HostnameVerifier</code> is used to verify the peer's
+          certificate hostname after connecting if <code>SSLParameters.setEndpointIdentificationAlgorithm("HTTPS")</code>
+  has been called.
+          Instances use the <em>current</em> default <code>HostnameVerifier</code> at verification
+          time.</td>
+      </tr>
+      <tr>
+          <td><code>android.net.SSLCertificateSocketFactory</code></td>
+          <td>The current default <code>HostnameVerifier</code> is used from various <code>createSocket</code>
+  methods. See <code>android.net.SSLCertificateSocketFactory</code> for
+          details; for example <code>android.net.SSLCertificateSocketFactory.createSocket(String, int)</code>
+ .
+          </td>
+      </tr>
+      <tr>
+          <td>Android's default <code>HttpsURLConnection</code> implementation.</td>
+          <td>The <code>HostnameVerifier</code> is used after a successful TLS handshake to verify
+          the URI host against the TLS session server. Instances use the default <code>HostnameVerifier</code>
+  set <em>when they were created</em> unless overridden with <code>setHostnameVerifier(HostnameVerifier)</code>
+ .
+          Android's <code>HttpsURLConnection</code> relies on the <code>HostnameVerifier</code>
+          for the <em>entire</em> hostname verification step.</td>
+      </tr>
+  </table>
+  <p>
+  If this method is not called, the default <code>HostnameVerifier</code> will check the
+  hostname according to RFC 2818.
  @param v the default host name verifier
  @throw IllegalArgumentExceptionif the <code>HostnameVerifier</code>
            parameter is null.
@@ -228,6 +261,9 @@
   verifier set by <code>setDefaultHostnameVerifier</code>
  .  Calls to this method replace
   this object's <code>HostnameVerifier</code>.
+  <p>
+  Android's <code>HttpsURLConnection</code> relies on the <code>HostnameVerifier</code>
+  for the <em>entire</em> hostname verification step.
  @param v the host name verifier
  @throw IllegalArgumentExceptionif the <code>HostnameVerifier</code>
    parameter is null.
@@ -248,6 +284,9 @@
  @param sf the SSL socket factory
  @throw IllegalArgumentExceptionif the <code>SSLSocketFactory</code>
            parameter is null.
+ @throw SecurityExceptionif a security manager exists and its
+          <code>checkSetFactory</code> method does not allow
+          a socket factory to be specified.
  - seealso: #getSSLSocketFactory()
  */
 - (void)setSSLSocketFactoryWithJavaxNetSslSSLSocketFactory:(JavaxNetSslSSLSocketFactory *)sf;
@@ -285,6 +324,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaxNetSslHttpsURLConnection)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaxNetSslHttpsURLConnection")

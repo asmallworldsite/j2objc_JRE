@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaNioFileSpiFileSystemProvider
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -29,6 +26,7 @@
 @class IOSObjectArray;
 @class JavaIoInputStream;
 @class JavaIoOutputStream;
+@class JavaLangBoolean;
 @class JavaNetURI;
 @class JavaNioChannelsAsynchronousFileChannel;
 @class JavaNioChannelsFileChannel;
@@ -853,6 +851,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaNioFileSpiFileSystemProvider)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaNioFileSpiFileSystemProvider")

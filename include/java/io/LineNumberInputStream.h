@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaIoLineNumberInputStream
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -31,6 +28,8 @@
 
 @class IOSByteArray;
 @class JavaIoInputStream;
+@class JavaLangInteger;
+@class JavaLangLong;
 
 /*!
  @brief This class is an input stream filter that provides the added
@@ -46,9 +45,8 @@
  <code>1</code> when a <code>read</code> returns a newline character.
  @author Arthur van Hoff
  - seealso: java.io.LineNumberReader
- @since JDK1.0
+ @since 1.0
  */
-__attribute__((deprecated))
 @interface JavaIoLineNumberInputStream : JavaIoFilterInputStream {
  @public
   jint pushBack_;
@@ -220,6 +218,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaIoLineNumberInputStream)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaIoLineNumberInputStream")

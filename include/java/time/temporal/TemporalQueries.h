@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaTimeTemporalTemporalQueries
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -73,13 +70,6 @@
  @since 1.8
  */
 @interface JavaTimeTemporalTemporalQueries : NSObject
-@property (readonly, class, strong) id<JavaTimeTemporalTemporalQuery> ZONE_ID NS_SWIFT_NAME(ZONE_ID);
-@property (readonly, class, strong) id<JavaTimeTemporalTemporalQuery> CHRONO NS_SWIFT_NAME(CHRONO);
-@property (readonly, class, strong) id<JavaTimeTemporalTemporalQuery> PRECISION NS_SWIFT_NAME(PRECISION);
-@property (readonly, class, strong) id<JavaTimeTemporalTemporalQuery> OFFSET NS_SWIFT_NAME(OFFSET);
-@property (readonly, class, strong) id<JavaTimeTemporalTemporalQuery> ZONE NS_SWIFT_NAME(ZONE);
-@property (readonly, class, strong) id<JavaTimeTemporalTemporalQuery> LOCAL_DATE NS_SWIFT_NAME(LOCAL_DATE);
-@property (readonly, class, strong) id<JavaTimeTemporalTemporalQuery> LOCAL_TIME NS_SWIFT_NAME(LOCAL_TIME);
 
 #pragma mark Public
 
@@ -347,6 +337,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaTimeTemporalTemporalQueries)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaTimeTemporalTemporalQueries")

@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaxSqlRowSetEvent
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -29,6 +26,7 @@
 #define INCLUDE_JavaUtilEventObject 1
 #include "java/util/EventObject.h"
 
+@class JavaLangLong;
 @protocol JavaxSqlRowSet;
 
 /*!
@@ -46,7 +44,6 @@
  @since 1.4
  */
 @interface JavaxSqlRowSetEvent : JavaUtilEventObject
-@property (readonly, class) jlong serialVersionUID NS_SWIFT_NAME(serialVersionUID);
 
 #pragma mark Public
 
@@ -89,6 +86,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaxSqlRowSetEvent)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaxSqlRowSetEvent")

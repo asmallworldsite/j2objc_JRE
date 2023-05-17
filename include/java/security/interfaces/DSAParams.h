@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaSecurityInterfacesDSAParams
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -36,6 +33,7 @@
  - seealso: java.security.Signature
  @author Benjamin Renaud
  @author Josh Bloch
+ @since 1.1
  */
 @protocol JavaSecurityInterfacesDSAParams < JavaObject >
 
@@ -69,6 +67,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaSecurityInterfacesDSAParams)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaSecurityInterfacesDSAParams")

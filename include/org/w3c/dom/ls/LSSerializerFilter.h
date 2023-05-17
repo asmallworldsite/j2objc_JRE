@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_OrgW3cDomLsLSSerializerFilter
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -28,6 +25,8 @@
 #define RESTRICT_OrgW3cDomTraversalNodeFilter 1
 #define INCLUDE_OrgW3cDomTraversalNodeFilter 1
 #include "org/w3c/dom/traversal/NodeFilter.h"
+
+@class JavaLangInteger;
 
 /*!
  @brief <code>LSSerializerFilter</code>s provide applications the ability to
@@ -89,6 +88,4 @@ J2OBJC_TYPE_LITERAL_HEADER(OrgW3cDomLsLSSerializerFilter)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_OrgW3cDomLsLSSerializerFilter")

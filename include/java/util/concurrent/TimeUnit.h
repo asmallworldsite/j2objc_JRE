@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaUtilConcurrentTimeUnit
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -30,9 +27,11 @@
 #include "java/lang/Enum.h"
 
 @class IOSObjectArray;
+@class JavaLangLong;
 @class JavaLangThread;
+@class JavaTimeDuration;
 
-typedef NS_ENUM(NSUInteger, JavaUtilConcurrentTimeUnit_Enum) {
+typedef NS_ENUM(jint, JavaUtilConcurrentTimeUnit_Enum) {
   JavaUtilConcurrentTimeUnit_Enum_NANOSECONDS = 0,
   JavaUtilConcurrentTimeUnit_Enum_MICROSECONDS = 1,
   JavaUtilConcurrentTimeUnit_Enum_MILLISECONDS = 2,
@@ -41,6 +40,12 @@ typedef NS_ENUM(NSUInteger, JavaUtilConcurrentTimeUnit_Enum) {
   JavaUtilConcurrentTimeUnit_Enum_HOURS = 5,
   JavaUtilConcurrentTimeUnit_Enum_DAYS = 6,
 };
+#if J2OBJC_IMPORTED_BY_JAVA_IMPLEMENTATION
+#define JavaUtilConcurrentTimeUnit_ORDINAL jint
+#else
+#define JavaUtilConcurrentTimeUnit_ORDINAL JavaUtilConcurrentTimeUnit_Enum
+#endif
+
 
 /*!
  @brief A <code>TimeUnit</code> represents time durations at a given unit of
@@ -76,23 +81,26 @@ typedef NS_ENUM(NSUInteger, JavaUtilConcurrentTimeUnit_Enum) {
  @author Doug Lea
  */
 @interface JavaUtilConcurrentTimeUnit : JavaLangEnum
-@property (readonly, class) jlong C0 NS_SWIFT_NAME(C0);
-@property (readonly, class) jlong C1 NS_SWIFT_NAME(C1);
-@property (readonly, class) jlong C2 NS_SWIFT_NAME(C2);
-@property (readonly, class) jlong C3 NS_SWIFT_NAME(C3);
-@property (readonly, class) jlong C4 NS_SWIFT_NAME(C4);
-@property (readonly, class) jlong C5 NS_SWIFT_NAME(C5);
-@property (readonly, class) jlong C6 NS_SWIFT_NAME(C6);
-@property (readonly, class) jlong MAX NS_SWIFT_NAME(MAX);
 
-@property (readonly, class, nonnull) JavaUtilConcurrentTimeUnit *NANOSECONDS NS_SWIFT_NAME(NANOSECONDS);
-@property (readonly, class, nonnull) JavaUtilConcurrentTimeUnit *MICROSECONDS NS_SWIFT_NAME(MICROSECONDS);
-@property (readonly, class, nonnull) JavaUtilConcurrentTimeUnit *MILLISECONDS NS_SWIFT_NAME(MILLISECONDS);
-@property (readonly, class, nonnull) JavaUtilConcurrentTimeUnit *SECONDS NS_SWIFT_NAME(SECONDS);
-@property (readonly, class, nonnull) JavaUtilConcurrentTimeUnit *MINUTES NS_SWIFT_NAME(MINUTES);
-@property (readonly, class, nonnull) JavaUtilConcurrentTimeUnit *HOURS NS_SWIFT_NAME(HOURS);
-@property (readonly, class, nonnull) JavaUtilConcurrentTimeUnit *DAYS NS_SWIFT_NAME(DAYS);
 #pragma mark Public
+
+/*!
+ @brief Converts the given time duration to this unit.
+ <p>For any TimeUnit <code>unit</code>,
+  <code>unit.convert(Duration.ofNanos(n))</code>
+  is equivalent to 
+ <code>unit.convert(n, NANOSECONDS)</code>, and 
+ <code>unit.convert(Duration.of(n, unit.toChronoUnit()))</code>
+  is equivalent to <code>n</code> (in the absence of overflow).
+ @param duration the time duration
+ @return the converted duration in this unit,
+  or <code>Long.MIN_VALUE</code> if conversion would negatively overflow,
+  or <code>Long.MAX_VALUE</code> if it would positively overflow.
+ @throw NullPointerExceptionif <code>duration</code> is null
+ - seealso: Duration#of(long,TemporalUnit)
+ @since 11
+ */
+- (jlong)convertWithJavaTimeDuration:(JavaTimeDuration *)duration;
 
 /*!
  @brief Converts the given time duration in the given unit to this unit.
@@ -107,8 +115,8 @@ typedef NS_ENUM(NSUInteger, JavaUtilConcurrentTimeUnit_Enum) {
  @param sourceDuration the time duration in the given <code>sourceUnit</code>
  @param sourceUnit the unit of the <code>sourceDuration</code>  argument
  @return the converted duration in this unit,
-  or <code>Long.MIN_VALUE</code> if conversion would negatively
-  overflow, or <code>Long.MAX_VALUE</code> if it would positively overflow.
+  or <code>Long.MIN_VALUE</code> if conversion would negatively overflow,
+  or <code>Long.MAX_VALUE</code> if it would positively overflow.
  */
 - (jlong)convertWithLong:(jlong)sourceDuration
 withJavaUtilConcurrentTimeUnit:(JavaUtilConcurrentTimeUnit *)sourceUnit;
@@ -140,16 +148,17 @@ withJavaUtilConcurrentTimeUnit:(JavaUtilConcurrentTimeUnit *)sourceUnit;
   using this time unit.
  This is a convenience method that converts timeout arguments
   into the form required by the <code>Object.wait</code> method. 
- <p>For example, you could implement a blocking <code>poll</code>
-  method (see <code>BlockingQueue.poll</code>)
+ <p>For example, you could implement a blocking <code>poll</code> method
+  (see <code>BlockingQueue.poll</code>)
   using: 
  @code
-  public synchronized Object poll(long timeout, TimeUnit unit)
+  public E poll(long timeout, TimeUnit unit)
       throws InterruptedException {
-    while (empty) {
-      unit.timedWait(this, timeout);
-      ...
-    }  }
+    synchronized (lock) {
+      while (isEmpty()) {
+        unit.timedWait(lock, timeout);
+        ...
+      }    }    }
  
 @endcode
  @param obj the object to wait on
@@ -173,8 +182,8 @@ withJavaUtilConcurrentTimeUnit:(JavaUtilConcurrentTimeUnit *)sourceUnit;
  <code>HOURS.convert(duration, this)</code>.
  @param duration the duration
  @return the converted duration,
-  or <code>Long.MIN_VALUE</code> if conversion would negatively
-  overflow, or <code>Long.MAX_VALUE</code> if it would positively overflow.
+  or <code>Long.MIN_VALUE</code> if conversion would negatively overflow,
+  or <code>Long.MAX_VALUE</code> if it would positively overflow.
  @since 1.6
  */
 - (jlong)toHoursWithLong:(jlong)duration;
@@ -184,8 +193,8 @@ withJavaUtilConcurrentTimeUnit:(JavaUtilConcurrentTimeUnit *)sourceUnit;
  <code>MICROSECONDS.convert(duration, this)</code>.
  @param duration the duration
  @return the converted duration,
-  or <code>Long.MIN_VALUE</code> if conversion would negatively
-  overflow, or <code>Long.MAX_VALUE</code> if it would positively overflow.
+  or <code>Long.MIN_VALUE</code> if conversion would negatively overflow,
+  or <code>Long.MAX_VALUE</code> if it would positively overflow.
  */
 - (jlong)toMicrosWithLong:(jlong)duration;
 
@@ -194,8 +203,8 @@ withJavaUtilConcurrentTimeUnit:(JavaUtilConcurrentTimeUnit *)sourceUnit;
  <code>MILLISECONDS.convert(duration, this)</code>.
  @param duration the duration
  @return the converted duration,
-  or <code>Long.MIN_VALUE</code> if conversion would negatively
-  overflow, or <code>Long.MAX_VALUE</code> if it would positively overflow.
+  or <code>Long.MIN_VALUE</code> if conversion would negatively overflow,
+  or <code>Long.MAX_VALUE</code> if it would positively overflow.
  */
 - (jlong)toMillisWithLong:(jlong)duration;
 
@@ -204,8 +213,8 @@ withJavaUtilConcurrentTimeUnit:(JavaUtilConcurrentTimeUnit *)sourceUnit;
  <code>MINUTES.convert(duration, this)</code>.
  @param duration the duration
  @return the converted duration,
-  or <code>Long.MIN_VALUE</code> if conversion would negatively
-  overflow, or <code>Long.MAX_VALUE</code> if it would positively overflow.
+  or <code>Long.MIN_VALUE</code> if conversion would negatively overflow,
+  or <code>Long.MAX_VALUE</code> if it would positively overflow.
  @since 1.6
  */
 - (jlong)toMinutesWithLong:(jlong)duration;
@@ -215,8 +224,8 @@ withJavaUtilConcurrentTimeUnit:(JavaUtilConcurrentTimeUnit *)sourceUnit;
  <code>NANOSECONDS.convert(duration, this)</code>.
  @param duration the duration
  @return the converted duration,
-  or <code>Long.MIN_VALUE</code> if conversion would negatively
-  overflow, or <code>Long.MAX_VALUE</code> if it would positively overflow.
+  or <code>Long.MIN_VALUE</code> if conversion would negatively overflow,
+  or <code>Long.MAX_VALUE</code> if it would positively overflow.
  */
 - (jlong)toNanosWithLong:(jlong)duration;
 
@@ -225,8 +234,8 @@ withJavaUtilConcurrentTimeUnit:(JavaUtilConcurrentTimeUnit *)sourceUnit;
  <code>SECONDS.convert(duration, this)</code>.
  @param duration the duration
  @return the converted duration,
-  or <code>Long.MIN_VALUE</code> if conversion would negatively
-  overflow, or <code>Long.MAX_VALUE</code> if it would positively overflow.
+  or <code>Long.MIN_VALUE</code> if conversion would negatively overflow,
+  or <code>Long.MAX_VALUE</code> if it would positively overflow.
  */
 - (jlong)toSecondsWithLong:(jlong)duration;
 
@@ -236,25 +245,9 @@ withJavaUtilConcurrentTimeUnit:(JavaUtilConcurrentTimeUnit *)sourceUnit;
 
 #pragma mark Package-Private
 
-/*!
- @brief Utility to compute the excess-nanosecond argument to wait,
-  sleep, join.
- @param d the duration
- @param m the number of milliseconds
- @return the number of nanoseconds
- */
-- (jint)excessNanosWithLong:(jlong)d
-                   withLong:(jlong)m;
-
-/*!
- @brief Scale d by m, checking for overflow.
- This has a short name to make above code more readable.
- */
-+ (jlong)xWithLong:(jlong)d
-          withLong:(jlong)m
-          withLong:(jlong)over;
-
 - (JavaUtilConcurrentTimeUnit_Enum)toNSEnum;
+
+- (JavaUtilConcurrentTimeUnit_ORDINAL)ordinal;
 
 @end
 
@@ -308,45 +301,11 @@ J2OBJC_ENUM_CONSTANT(JavaUtilConcurrentTimeUnit, HOURS)
 inline JavaUtilConcurrentTimeUnit *JavaUtilConcurrentTimeUnit_get_DAYS(void);
 J2OBJC_ENUM_CONSTANT(JavaUtilConcurrentTimeUnit, DAYS)
 
-inline jlong JavaUtilConcurrentTimeUnit_get_C0(void);
-#define JavaUtilConcurrentTimeUnit_C0 1LL
-J2OBJC_STATIC_FIELD_CONSTANT(JavaUtilConcurrentTimeUnit, C0, jlong)
-
-inline jlong JavaUtilConcurrentTimeUnit_get_C1(void);
-#define JavaUtilConcurrentTimeUnit_C1 1000LL
-J2OBJC_STATIC_FIELD_CONSTANT(JavaUtilConcurrentTimeUnit, C1, jlong)
-
-inline jlong JavaUtilConcurrentTimeUnit_get_C2(void);
-#define JavaUtilConcurrentTimeUnit_C2 1000000LL
-J2OBJC_STATIC_FIELD_CONSTANT(JavaUtilConcurrentTimeUnit, C2, jlong)
-
-inline jlong JavaUtilConcurrentTimeUnit_get_C3(void);
-#define JavaUtilConcurrentTimeUnit_C3 1000000000LL
-J2OBJC_STATIC_FIELD_CONSTANT(JavaUtilConcurrentTimeUnit, C3, jlong)
-
-inline jlong JavaUtilConcurrentTimeUnit_get_C4(void);
-#define JavaUtilConcurrentTimeUnit_C4 60000000000LL
-J2OBJC_STATIC_FIELD_CONSTANT(JavaUtilConcurrentTimeUnit, C4, jlong)
-
-inline jlong JavaUtilConcurrentTimeUnit_get_C5(void);
-#define JavaUtilConcurrentTimeUnit_C5 3600000000000LL
-J2OBJC_STATIC_FIELD_CONSTANT(JavaUtilConcurrentTimeUnit, C5, jlong)
-
-inline jlong JavaUtilConcurrentTimeUnit_get_C6(void);
-#define JavaUtilConcurrentTimeUnit_C6 86400000000000LL
-J2OBJC_STATIC_FIELD_CONSTANT(JavaUtilConcurrentTimeUnit, C6, jlong)
-
-inline jlong JavaUtilConcurrentTimeUnit_get_MAX(void);
-#define JavaUtilConcurrentTimeUnit_MAX 9223372036854775807LL
-J2OBJC_STATIC_FIELD_CONSTANT(JavaUtilConcurrentTimeUnit, MAX, jlong)
-
-FOUNDATION_EXPORT jlong JavaUtilConcurrentTimeUnit_xWithLong_withLong_withLong_(jlong d, jlong m, jlong over);
-
 FOUNDATION_EXPORT IOSObjectArray *JavaUtilConcurrentTimeUnit_values(void);
 
 FOUNDATION_EXPORT JavaUtilConcurrentTimeUnit *JavaUtilConcurrentTimeUnit_valueOfWithNSString_(NSString *name);
 
-FOUNDATION_EXPORT JavaUtilConcurrentTimeUnit *JavaUtilConcurrentTimeUnit_fromOrdinal(NSUInteger ordinal);
+FOUNDATION_EXPORT JavaUtilConcurrentTimeUnit *JavaUtilConcurrentTimeUnit_fromOrdinal(JavaUtilConcurrentTimeUnit_ORDINAL ordinal);
 
 J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentTimeUnit)
 
@@ -356,6 +315,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentTimeUnit)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaUtilConcurrentTimeUnit")

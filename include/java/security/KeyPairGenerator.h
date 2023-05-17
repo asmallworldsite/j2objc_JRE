@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaSecurityKeyPairGenerator
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -29,6 +26,7 @@
 #define INCLUDE_JavaSecurityKeyPairGeneratorSpi 1
 #include "java/security/KeyPairGeneratorSpi.h"
 
+@class JavaLangInteger;
 @class JavaSecurityKeyPair;
 @class JavaSecurityProvider;
 @class JavaSecuritySecureRandom;
@@ -65,19 +63,19 @@
   provider what to do about the algorithm-specific parameters (if any) to be
   associated with each of the keys. 
  <p>If the algorithm is the <i>DSA</i> algorithm, and the keysize (modulus
-  size) is 512, 768, or 1024, then the <i>Sun</i> provider uses a set of
+  size) is 512, 768, 1024, or 2048, then the <i>Sun</i> provider uses a set of
   precomputed values for the <code>p</code>, <code>q</code>, and 
  <code>g</code> parameters. If the modulus size is not one of the above
   values, the <i>Sun</i> provider creates a new set of parameters. Other
   providers might have precomputed parameter sets for more than just the
-  three modulus sizes mentioned above. Still others might not have a list of
+  modulus sizes mentioned above. Still others might not have a list of
   precomputed parameters at all and instead always create new parameter sets. 
  <li><b>Algorithm-Specific Initialization</b>
   <p>For situations where a set of algorithm-specific parameters already
   exists (e.g., so-called <i>community parameters</i> in DSA), there are two 
  <code>initialize</code>
   methods that have an <code>AlgorithmParameterSpec</code>
-  argument. One also has a <code>SecureRandom</code> argument, while the
+  argument. One also has a <code>SecureRandom</code> argument, while
   the other uses the <code>SecureRandom</code>
   implementation of the highest-priority installed provider as the source
   of randomness. (If none of the installed providers supply an implementation of 
@@ -123,10 +121,11 @@
       </tr>
     </tbody>
   </table>
-  These algorithms are described in the <a href="{@@docRoot}/../technotes/guides/security/StandardNames.html#KeyPairGenerator">
+  These algorithms are described in the <a href="{@@docRoot}/../specs/security/standard-names.html#keypairgenerator-algorithms">
   KeyPairGenerator section</a> of the
   Java Cryptography Architecture Standard Algorithm Name Documentation.
  @author Benjamin Renaud
+ @since 1.1
  - seealso: java.security.spec.AlgorithmParameterSpec
  */
 @interface JavaSecurityKeyPairGenerator : JavaSecurityKeyPairGeneratorSpi {
@@ -163,8 +162,8 @@
 
 /*!
  @brief Returns the standard name of the algorithm for this key pair generator.
- See the KeyPairGenerator section in the <a href="{@@docRoot}/../technotes/guides/security/StandardNames.html#KeyPairGenerator">
-  Java Cryptography Architecture Standard Algorithm Name Documentation</a>
+ See the KeyPairGenerator section in the <a href="{@@docRoot}/../specs/security/standard-names.html#keypairgenerator-algorithms">
+  Java Security Standard Algorithm Names Specification</a>
   for information about standard algorithm names.
  @return the standard string name of the algorithm.
  */
@@ -181,13 +180,14 @@
  <p> Note that the list of registered providers may be retrieved via the 
  <code>Security.getProviders()</code> method.
  @param algorithm the standard string name of the algorithm.  See the KeyPairGenerator section in the 
-  <a href="{@@docRoot}/../technotes/guides/security/StandardNames.html#KeyPairGenerator">
-   Java Cryptography Architecture Standard Algorithm Name Documentation
+  <a href="{@@docRoot}/../specs/security/standard-names.html#keypairgenerator-algorithms">
+   Java Security Standard Algorithm Names Specification
   </a>  for information about standard algorithm names.
- @return the new KeyPairGenerator object.
- @throw NoSuchAlgorithmExceptionif no Provider supports a
-           KeyPairGeneratorSpi implementation for the
-           specified algorithm.
+ @return the new <code>KeyPairGenerator</code> object
+ @throw NoSuchAlgorithmExceptionif no <code>Provider</code> supports a
+          <code>KeyPairGeneratorSpi</code> implementation for the
+          specified algorithm
+ @throw NullPointerExceptionif <code>algorithm</code> is <code>null</code>
  - seealso: Provider
  */
 + (JavaSecurityKeyPairGenerator *)getInstanceWithNSString:(NSString *)algorithm;
@@ -200,15 +200,17 @@
   object is returned.  Note that the specified Provider object
   does not have to be registered in the provider list.
  @param algorithm the standard string name of the algorithm.  See the KeyPairGenerator section in the 
-  <a href="{@@docRoot}/../technotes/guides/security/StandardNames.html#KeyPairGenerator">
-   Java Cryptography Architecture Standard Algorithm Name Documentation
+  <a href="{@@docRoot}/../specs/security/standard-names.html#keypairgenerator-algorithms">
+   Java Security Standard Algorithm Names Specification
   </a>  for information about standard algorithm names.
  @param provider the provider.
- @return the new KeyPairGenerator object.
- @throw NoSuchAlgorithmExceptionif a KeyPairGeneratorSpi
-           implementation for the specified algorithm is not available
-           from the specified Provider object.
- @throw IllegalArgumentExceptionif the specified provider is null.
+ @return the new <code>KeyPairGenerator</code> object
+ @throw IllegalArgumentExceptionif the specified provider is
+          <code>null</code>
+ @throw NoSuchAlgorithmExceptionif a <code>KeyPairGeneratorSpi</code>
+          implementation for the specified algorithm is not available
+          from the specified <code>Provider</code> object
+ @throw NullPointerExceptionif <code>algorithm</code> is <code>null</code>
  - seealso: Provider
  @since 1.4
  */
@@ -225,18 +227,19 @@
  <p> Note that the list of registered providers may be retrieved via the 
  <code>Security.getProviders()</code> method.
  @param algorithm the standard string name of the algorithm.  See the KeyPairGenerator section in the 
-  <a href="{@@docRoot}/../technotes/guides/security/StandardNames.html#KeyPairGenerator">
-   Java Cryptography Architecture Standard Algorithm Name Documentation
+  <a href="{@@docRoot}/../specs/security/standard-names.html#keypairgenerator-algorithms">
+   Java Security Standard Algorithm Names Specification
   </a>  for information about standard algorithm names.
  @param provider the string name of the provider.
- @return the new KeyPairGenerator object.
- @throw NoSuchAlgorithmExceptionif a KeyPairGeneratorSpi
-           implementation for the specified algorithm is not
-           available from the specified provider.
+ @return the new <code>KeyPairGenerator</code> object
+ @throw IllegalArgumentExceptionif the provider name is <code>null</code>
+          or empty
+ @throw NoSuchAlgorithmExceptionif a <code>KeyPairGeneratorSpi</code>
+          implementation for the specified algorithm is not
+          available from the specified provider
  @throw NoSuchProviderExceptionif the specified provider is not
-           registered in the security provider list.
- @throw IllegalArgumentExceptionif the provider name is null
-           or empty.
+          registered in the security provider list
+ @throw NullPointerExceptionif <code>algorithm</code> is <code>null</code>
  - seealso: Provider
  */
 + (JavaSecurityKeyPairGenerator *)getInstanceWithNSString:(NSString *)algorithm
@@ -255,7 +258,7 @@
   of randomness.
  (If none of the installed providers supply an implementation of 
  <code>SecureRandom</code>, a system-provided source of randomness is
-  used.). 
+  used.) 
  <p>This concrete method has been added to this previously-defined
   abstract class.
   This method calls the KeyPairGeneratorSpi 
@@ -326,8 +329,8 @@ withJavaSecuritySecureRandom:(JavaSecuritySecureRandom *)random OBJC_METHOD_FAMI
 /*!
  @brief Creates a KeyPairGenerator object for the specified algorithm.
  @param algorithm the standard string name of the algorithm.  See the KeyPairGenerator section in the 
-  <a href="{@@docRoot}/../technotes/guides/security/StandardNames.html#KeyPairGenerator">
-   Java Cryptography Architecture Standard Algorithm Name Documentation
+  <a href="{@@docRoot}/../specs/security/standard-names.html#keypairgenerator-algorithms">
+   Java Security Standard Algorithm Names Specification
   </a>  for information about standard algorithm names.
  */
 - (instancetype __nonnull)initWithNSString:(NSString *)algorithm;
@@ -362,6 +365,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaSecurityKeyPairGenerator)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaSecurityKeyPairGenerator")

@@ -25,9 +25,6 @@
 #define INCLUDE_JavaUtilConcurrentSynchronousQueue_Transferer 1
 #endif
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -50,6 +47,9 @@
 #include "java/io/Serializable.h"
 
 @class IOSObjectArray;
+@class JavaLangBoolean;
+@class JavaLangInteger;
+@class JavaLangLong;
 @class JavaUtilConcurrentTimeUnit;
 @protocol JavaUtilCollection;
 @protocol JavaUtilIterator;
@@ -81,16 +81,15 @@
   waiting producer and consumer threads.  By default, this ordering
   is not guaranteed. However, a queue constructed with fairness set
   to <code>true</code> grants threads access in FIFO order. 
- <p>This class and its iterator implement all of the 
- <em>optional</em> methods of the <code>Collection</code> and <code>Iterator</code>
-  interfaces.
+ <p>This class and its iterator implement all of the <em>optional</em>
+  methods of the <code>Collection</code> and <code>Iterator</code> interfaces. 
+ <p>This class is a member of the 
+ <a href="{@@docRoot}/java.base/java/util/package-summary.html#CollectionsFramework">
+  Java Collections Framework</a>.
  @since 1.5
  @author Doug Lea and Bill Scherer and Michael Scott
  */
 @interface JavaUtilConcurrentSynchronousQueue : JavaUtilAbstractQueue < JavaUtilConcurrentBlockingQueue, JavaIoSerializable >
-@property (readonly, class) jint MAX_TIMED_SPINS NS_SWIFT_NAME(MAX_TIMED_SPINS);
-@property (readonly, class) jint MAX_UNTIMED_SPINS NS_SWIFT_NAME(MAX_UNTIMED_SPINS);
-@property (readonly, class) jlong SPIN_FOR_TIMEOUT_THRESHOLD NS_SWIFT_NAME(SPIN_FOR_TIMEOUT_THRESHOLD);
 
 #pragma mark Public
 
@@ -255,7 +254,7 @@ withJavaUtilConcurrentTimeUnit:(JavaUtilConcurrentTimeUnit *)unit;
 
 /*!
  @brief Returns an empty spliterator in which calls to 
- <code>java.util.Spliterator.trySplit()</code> always return <code>null</code>.
+ <code>trySplit</code> always return <code>null</code>.
  @return an empty spliterator
  @since 1.8
  */
@@ -345,6 +344,9 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentSynchronousQueue)
 #if !defined (JavaUtilConcurrentSynchronousQueue_Transferer_) && (INCLUDE_ALL_JavaUtilConcurrentSynchronousQueue || defined(INCLUDE_JavaUtilConcurrentSynchronousQueue_Transferer))
 #define JavaUtilConcurrentSynchronousQueue_Transferer_
 
+@class JavaLangBoolean;
+@class JavaLangLong;
+
 /*!
  @brief Shared internal API for dual stacks and queues.
  */
@@ -382,6 +384,9 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentSynchronousQueue_Transferer)
 #if !defined (JavaUtilConcurrentSynchronousQueue_TransferStack_) && (INCLUDE_ALL_JavaUtilConcurrentSynchronousQueue || defined(INCLUDE_JavaUtilConcurrentSynchronousQueue_TransferStack))
 #define JavaUtilConcurrentSynchronousQueue_TransferStack_
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
+@class JavaLangLong;
 @class JavaUtilConcurrentSynchronousQueue_TransferStack_SNode;
 
 /*!
@@ -394,9 +399,6 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentSynchronousQueue_Transferer)
    */
   volatile_id head_;
 }
-@property (readonly, class) jint REQUEST NS_SWIFT_NAME(REQUEST);
-@property (readonly, class) jint DATA NS_SWIFT_NAME(DATA);
-@property (readonly, class) jint FULFILLING NS_SWIFT_NAME(FULFILLING);
 
 #pragma mark Package-Private
 
@@ -495,6 +497,8 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentSynchronousQueue_TransferStack)
 #if !defined (JavaUtilConcurrentSynchronousQueue_TransferStack_SNode_) && (INCLUDE_ALL_JavaUtilConcurrentSynchronousQueue || defined(INCLUDE_JavaUtilConcurrentSynchronousQueue_TransferStack_SNode))
 #define JavaUtilConcurrentSynchronousQueue_TransferStack_SNode_
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @class JavaLangThread;
 
 /*!
@@ -558,6 +562,8 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentSynchronousQueue_TransferStack_SNod
 #if !defined (JavaUtilConcurrentSynchronousQueue_TransferQueue_) && (INCLUDE_ALL_JavaUtilConcurrentSynchronousQueue || defined(INCLUDE_JavaUtilConcurrentSynchronousQueue_TransferQueue))
 #define JavaUtilConcurrentSynchronousQueue_TransferQueue_
 
+@class JavaLangBoolean;
+@class JavaLangLong;
 @class JavaUtilConcurrentSynchronousQueue_TransferQueue_QNode;
 
 /*!
@@ -651,6 +657,7 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentSynchronousQueue_TransferQueue)
 #if !defined (JavaUtilConcurrentSynchronousQueue_TransferQueue_QNode_) && (INCLUDE_ALL_JavaUtilConcurrentSynchronousQueue || defined(INCLUDE_JavaUtilConcurrentSynchronousQueue_TransferQueue_QNode))
 #define JavaUtilConcurrentSynchronousQueue_TransferQueue_QNode_
 
+@class JavaLangBoolean;
 @class JavaLangThread;
 
 /*!
@@ -788,6 +795,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentSynchronousQueue_FifoWaitQueue)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaUtilConcurrentSynchronousQueue")

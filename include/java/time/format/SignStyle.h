@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaTimeFormatSignStyle
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -30,14 +27,21 @@
 #include "java/lang/Enum.h"
 
 @class IOSObjectArray;
+@class JavaLangBoolean;
 
-typedef NS_ENUM(NSUInteger, JavaTimeFormatSignStyle_Enum) {
+typedef NS_ENUM(jint, JavaTimeFormatSignStyle_Enum) {
   JavaTimeFormatSignStyle_Enum_NORMAL = 0,
   JavaTimeFormatSignStyle_Enum_ALWAYS = 1,
   JavaTimeFormatSignStyle_Enum_NEVER = 2,
   JavaTimeFormatSignStyle_Enum_NOT_NEGATIVE = 3,
   JavaTimeFormatSignStyle_Enum_EXCEEDS_PAD = 4,
 };
+#if J2OBJC_IMPORTED_BY_JAVA_IMPLEMENTATION
+#define JavaTimeFormatSignStyle_ORDINAL jint
+#else
+#define JavaTimeFormatSignStyle_ORDINAL JavaTimeFormatSignStyle_Enum
+#endif
+
 
 /*!
  @brief Enumeration of ways to handle the positive/negative sign.
@@ -49,11 +53,6 @@ typedef NS_ENUM(NSUInteger, JavaTimeFormatSignStyle_Enum) {
  */
 @interface JavaTimeFormatSignStyle : JavaLangEnum
 
-@property (readonly, class, nonnull) JavaTimeFormatSignStyle *NORMAL NS_SWIFT_NAME(NORMAL);
-@property (readonly, class, nonnull) JavaTimeFormatSignStyle *ALWAYS NS_SWIFT_NAME(ALWAYS);
-@property (readonly, class, nonnull) JavaTimeFormatSignStyle *NEVER NS_SWIFT_NAME(NEVER);
-@property (readonly, class, nonnull) JavaTimeFormatSignStyle *NOT_NEGATIVE NS_SWIFT_NAME(NOT_NEGATIVE);
-@property (readonly, class, nonnull) JavaTimeFormatSignStyle *EXCEEDS_PAD NS_SWIFT_NAME(EXCEEDS_PAD);
 #pragma mark Public
 
 + (JavaTimeFormatSignStyle *)valueOfWithNSString:(NSString *)name;
@@ -73,6 +72,8 @@ typedef NS_ENUM(NSUInteger, JavaTimeFormatSignStyle_Enum) {
                  withBoolean:(jboolean)fixedWidth;
 
 - (JavaTimeFormatSignStyle_Enum)toNSEnum;
+
+- (JavaTimeFormatSignStyle_ORDINAL)ordinal;
 
 @end
 
@@ -133,7 +134,7 @@ FOUNDATION_EXPORT IOSObjectArray *JavaTimeFormatSignStyle_values(void);
 
 FOUNDATION_EXPORT JavaTimeFormatSignStyle *JavaTimeFormatSignStyle_valueOfWithNSString_(NSString *name);
 
-FOUNDATION_EXPORT JavaTimeFormatSignStyle *JavaTimeFormatSignStyle_fromOrdinal(NSUInteger ordinal);
+FOUNDATION_EXPORT JavaTimeFormatSignStyle *JavaTimeFormatSignStyle_fromOrdinal(JavaTimeFormatSignStyle_ORDINAL ordinal);
 
 J2OBJC_TYPE_LITERAL_HEADER(JavaTimeFormatSignStyle)
 
@@ -143,6 +144,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaTimeFormatSignStyle)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaTimeFormatSignStyle")

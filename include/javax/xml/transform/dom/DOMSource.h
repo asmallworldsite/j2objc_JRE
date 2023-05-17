@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaxXmlTransformDomDOMSource
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -45,17 +42,16 @@
  - seealso: <a href="http://www.w3.org/TR/DOM-Level-2">Document Object Model (DOM) Level 2 Specification</a>
  */
 @interface JavaxXmlTransformDomDOMSource : NSObject < JavaxXmlTransformSource >
-@property (readonly, copy, class) NSString *FEATURE NS_SWIFT_NAME(FEATURE);
 
 #pragma mark Public
 
 /*!
- @brief <p>Zero-argument default constructor.
- If this constructor is used, and
+ @brief <p>Zero-argument default constructor.If this constructor is used, and
   no DOM source is set using <code>setNode(Node node)</code> , then the 
  <code>Transformer</code> will
   create an empty source <code>org.w3c.dom.Document</code> using 
- <code>javax.xml.parsers.DocumentBuilder.newDocument()</code>.</p>
+ <code>javax.xml.parsers.DocumentBuilder.newDocument()</code>.
+ </p>
  - seealso: javax.xml.transform.Transformer#transform(Source xmlSource, Result outputTarget)
  */
 - (instancetype __nonnull)init;
@@ -146,6 +142,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaxXmlTransformDomDOMSource)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaxXmlTransformDomDOMSource")

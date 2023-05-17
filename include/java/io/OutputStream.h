@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaIoOutputStream
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -34,6 +31,7 @@
 #include "java/io/Flushable.h"
 
 @class IOSByteArray;
+@class JavaLangInteger;
 
 /*!
  @brief This abstract class is the superclass of all classes representing
@@ -50,12 +48,15 @@
  - seealso: java.io.FilterOutputStream
  - seealso: java.io.InputStream
  - seealso: java.io.OutputStream#write(int)
- @since JDK1.0
+ @since 1.0
  */
 @interface JavaIoOutputStream : NSObject < JavaIoCloseable, JavaIoFlushable >
 
 #pragma mark Public
 
+/*!
+ @brief Constructor for subclasses to call.
+ */
 - (instancetype __nonnull)init;
 
 /*!
@@ -90,6 +91,23 @@
 - (void)flush;
 
 /*!
+ @brief Returns a new <code>OutputStream</code> which discards all bytes.The
+  returned stream is initially open.
+ The stream is closed by calling
+  the <code>close()</code> method.  Subsequent calls to <code>close()</code> have
+  no effect. 
+ <p> While the stream is open, the <code>write(int)</code>, <code>write(byte[])</code>
+ , and <code>write(byte[], int, int)</code> methods do nothing.
+  After the stream has been closed, these methods all throw <code>IOException</code>
+ .
+  
+ <p> The <code>flush()</code> method does nothing.
+ @return an <code>OutputStream</code> which discards all bytes
+ @since 11
+ */
++ (JavaIoOutputStream *)nullOutputStream;
+
+/*!
  @brief Writes <code>b.length</code> bytes from the specified byte array
   to this output stream.The general contract for <code>write(b)</code>
   is that it should have exactly the same effect as the call 
@@ -119,7 +137,7 @@
  <p>
   If <code>off</code> is negative, or <code>len</code> is negative, or 
  <code>off+len</code> is greater than the length of the array 
- <code>b</code>, then an <tt>IndexOutOfBoundsException</tt> is thrown.
+ <code>b</code>, then an <code>IndexOutOfBoundsException</code> is thrown.
  @param b the data.
  @param off the start offset in the data.
  @param len the number of bytes to write.
@@ -141,7 +159,7 @@
  <p>
   Subclasses of <code>OutputStream</code> must provide an
   implementation for this method.
- @param b the  <code> byte </code> .
+ @param b the <code>byte</code> .
  @throw IOExceptionif an I/O error occurs. In particular,
               an <code>IOException</code> may be thrown if the
               output stream has been closed.
@@ -154,6 +172,8 @@ J2OBJC_EMPTY_STATIC_INIT(JavaIoOutputStream)
 
 FOUNDATION_EXPORT void JavaIoOutputStream_init(JavaIoOutputStream *self);
 
+FOUNDATION_EXPORT JavaIoOutputStream *JavaIoOutputStream_nullOutputStream(void);
+
 J2OBJC_TYPE_LITERAL_HEADER(JavaIoOutputStream)
 
 #endif
@@ -162,6 +182,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaIoOutputStream)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaIoOutputStream")

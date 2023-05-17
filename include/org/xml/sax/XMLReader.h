@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_OrgXmlSaxXMLReader
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -25,6 +22,7 @@
 #if !defined (OrgXmlSaxXMLReader_) && (INCLUDE_ALL_OrgXmlSaxXMLReader || defined(INCLUDE_OrgXmlSaxXMLReader))
 #define OrgXmlSaxXMLReader_
 
+@class JavaLangBoolean;
 @class OrgXmlSaxInputSource;
 @protocol OrgXmlSaxContentHandler;
 @protocol OrgXmlSaxDTDHandler;
@@ -374,6 +372,4 @@ J2OBJC_TYPE_LITERAL_HEADER(OrgXmlSaxXMLReader)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_OrgXmlSaxXMLReader")

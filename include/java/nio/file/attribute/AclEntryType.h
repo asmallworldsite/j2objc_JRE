@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaNioFileAttributeAclEntryType
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -31,12 +28,18 @@
 
 @class IOSObjectArray;
 
-typedef NS_ENUM(NSUInteger, JavaNioFileAttributeAclEntryType_Enum) {
+typedef NS_ENUM(jint, JavaNioFileAttributeAclEntryType_Enum) {
   JavaNioFileAttributeAclEntryType_Enum_ALLOW = 0,
   JavaNioFileAttributeAclEntryType_Enum_DENY = 1,
   JavaNioFileAttributeAclEntryType_Enum_AUDIT = 2,
   JavaNioFileAttributeAclEntryType_Enum_ALARM = 3,
 };
+#if J2OBJC_IMPORTED_BY_JAVA_IMPLEMENTATION
+#define JavaNioFileAttributeAclEntryType_ORDINAL jint
+#else
+#define JavaNioFileAttributeAclEntryType_ORDINAL JavaNioFileAttributeAclEntryType_Enum
+#endif
+
 
 /*!
  @brief A typesafe enumeration of the access control entry types.
@@ -44,10 +47,6 @@ typedef NS_ENUM(NSUInteger, JavaNioFileAttributeAclEntryType_Enum) {
  */
 @interface JavaNioFileAttributeAclEntryType : JavaLangEnum
 
-@property (readonly, class, nonnull) JavaNioFileAttributeAclEntryType *ALLOW NS_SWIFT_NAME(ALLOW);
-@property (readonly, class, nonnull) JavaNioFileAttributeAclEntryType *DENY NS_SWIFT_NAME(DENY);
-@property (readonly, class, nonnull) JavaNioFileAttributeAclEntryType *AUDIT NS_SWIFT_NAME(AUDIT);
-@property (readonly, class, nonnull) JavaNioFileAttributeAclEntryType *ALARM NS_SWIFT_NAME(ALARM);
 #pragma mark Public
 
 + (JavaNioFileAttributeAclEntryType *)valueOfWithNSString:(NSString *)name;
@@ -57,6 +56,8 @@ typedef NS_ENUM(NSUInteger, JavaNioFileAttributeAclEntryType_Enum) {
 #pragma mark Package-Private
 
 - (JavaNioFileAttributeAclEntryType_Enum)toNSEnum;
+
+- (JavaNioFileAttributeAclEntryType_ORDINAL)ordinal;
 
 @end
 
@@ -95,7 +96,7 @@ FOUNDATION_EXPORT IOSObjectArray *JavaNioFileAttributeAclEntryType_values(void);
 
 FOUNDATION_EXPORT JavaNioFileAttributeAclEntryType *JavaNioFileAttributeAclEntryType_valueOfWithNSString_(NSString *name);
 
-FOUNDATION_EXPORT JavaNioFileAttributeAclEntryType *JavaNioFileAttributeAclEntryType_fromOrdinal(NSUInteger ordinal);
+FOUNDATION_EXPORT JavaNioFileAttributeAclEntryType *JavaNioFileAttributeAclEntryType_fromOrdinal(JavaNioFileAttributeAclEntryType_ORDINAL ordinal);
 
 J2OBJC_TYPE_LITERAL_HEADER(JavaNioFileAttributeAclEntryType)
 
@@ -105,6 +106,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaNioFileAttributeAclEntryType)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaNioFileAttributeAclEntryType")

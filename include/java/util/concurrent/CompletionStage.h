@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaUtilConcurrentCompletionStage
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -686,12 +683,8 @@
   CompletableFuture, this method may return this stage itself.
  Otherwise, invocation of this method may be equivalent in
   effect to <code>thenApply(x -> x)</code>, but returning an instance
-  of type <code>CompletableFuture</code>. A CompletionStage
-  implementation that does not choose to interoperate with others
-  may throw <code>UnsupportedOperationException</code>.
+  of type <code>CompletableFuture</code>.
  @return the CompletableFuture
- @throw UnsupportedOperationExceptionif this implementation
-  does not interoperate with CompletableFuture
  */
 - (JavaUtilConcurrentCompletableFuture *)toCompletableFuture;
 
@@ -707,6 +700,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentCompletionStage)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaUtilConcurrentCompletionStage")

@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaUtilLocale
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -30,6 +27,10 @@
 #include "java/io/Serializable.h"
 
 @class IOSObjectArray;
+@class JavaLangBoolean;
+@class JavaLangCharacter;
+@class JavaLangInteger;
+@class JavaLangLong;
 @class JavaUtilLocale_Category;
 @class JavaUtilLocale_FilteringMode;
 @class SunUtilLocaleBaseLocale;
@@ -496,31 +497,6 @@
  @since 1.1
  */
 @interface JavaUtilLocale : NSObject < NSCopying, JavaIoSerializable >
-@property (readonly, class, strong) JavaUtilLocale *ENGLISH NS_SWIFT_NAME(ENGLISH);
-@property (readonly, class, strong) JavaUtilLocale *FRENCH NS_SWIFT_NAME(FRENCH);
-@property (readonly, class, strong) JavaUtilLocale *GERMAN NS_SWIFT_NAME(GERMAN);
-@property (readonly, class, strong) JavaUtilLocale *ITALIAN NS_SWIFT_NAME(ITALIAN);
-@property (readonly, class, strong) JavaUtilLocale *JAPANESE NS_SWIFT_NAME(JAPANESE);
-@property (readonly, class, strong) JavaUtilLocale *KOREAN NS_SWIFT_NAME(KOREAN);
-@property (readonly, class, strong) JavaUtilLocale *CHINESE NS_SWIFT_NAME(CHINESE);
-@property (readonly, class, strong) JavaUtilLocale *SIMPLIFIED_CHINESE NS_SWIFT_NAME(SIMPLIFIED_CHINESE);
-@property (readonly, class, strong) JavaUtilLocale *TRADITIONAL_CHINESE NS_SWIFT_NAME(TRADITIONAL_CHINESE);
-@property (readonly, class, strong) JavaUtilLocale *FRANCE NS_SWIFT_NAME(FRANCE);
-@property (readonly, class, strong) JavaUtilLocale *GERMANY NS_SWIFT_NAME(GERMANY);
-@property (readonly, class, strong) JavaUtilLocale *ITALY NS_SWIFT_NAME(ITALY);
-@property (readonly, class, strong) JavaUtilLocale *JAPAN NS_SWIFT_NAME(JAPAN);
-@property (readonly, class, strong) JavaUtilLocale *KOREA NS_SWIFT_NAME(KOREA);
-@property (readonly, class, strong) JavaUtilLocale *CHINA NS_SWIFT_NAME(CHINA);
-@property (readonly, class, strong) JavaUtilLocale *PRC NS_SWIFT_NAME(PRC);
-@property (readonly, class, strong) JavaUtilLocale *TAIWAN NS_SWIFT_NAME(TAIWAN);
-@property (readonly, class, strong) JavaUtilLocale *UK NS_SWIFT_NAME(UK);
-@property (readonly, class, strong) JavaUtilLocale *US NS_SWIFT_NAME(US);
-@property (readonly, class, strong) JavaUtilLocale *CANADA NS_SWIFT_NAME(CANADA);
-@property (readonly, class, strong) JavaUtilLocale *CANADA_FRENCH NS_SWIFT_NAME(CANADA_FRENCH);
-@property (readonly, class, strong) JavaUtilLocale *ROOT NS_SWIFT_NAME(ROOT);
-@property (readonly, class) jchar PRIVATE_USE_EXTENSION NS_SWIFT_NAME(PRIVATE_USE_EXTENSION);
-@property (readonly, class) jchar UNICODE_LOCALE_EXTENSION NS_SWIFT_NAME(UNICODE_LOCALE_EXTENSION);
-@property (readonly, class) jlong serialVersionUID NS_SWIFT_NAME(serialVersionUID);
 
 #pragma mark Public
 
@@ -1687,10 +1663,16 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilLocale)
 
 @class IOSObjectArray;
 
-typedef NS_ENUM(NSUInteger, JavaUtilLocale_Category_Enum) {
+typedef NS_ENUM(jint, JavaUtilLocale_Category_Enum) {
   JavaUtilLocale_Category_Enum_DISPLAY = 0,
   JavaUtilLocale_Category_Enum_FORMAT = 1,
 };
+#if J2OBJC_IMPORTED_BY_JAVA_IMPLEMENTATION
+#define JavaUtilLocale_Category_ORDINAL jint
+#else
+#define JavaUtilLocale_Category_ORDINAL JavaUtilLocale_Category_Enum
+#endif
+
 
 /*!
  @brief Enum for locale categories.These locale categories are used to get/set
@@ -1708,8 +1690,6 @@ typedef NS_ENUM(NSUInteger, JavaUtilLocale_Category_Enum) {
   NSString *variantKey_;
 }
 
-@property (readonly, class, nonnull) JavaUtilLocale_Category *DISPLAY NS_SWIFT_NAME(DISPLAY);
-@property (readonly, class, nonnull) JavaUtilLocale_Category *FORMAT NS_SWIFT_NAME(FORMAT);
 #pragma mark Public
 
 + (JavaUtilLocale_Category *)valueOfWithNSString:(NSString *)name;
@@ -1719,6 +1699,8 @@ typedef NS_ENUM(NSUInteger, JavaUtilLocale_Category_Enum) {
 #pragma mark Package-Private
 
 - (JavaUtilLocale_Category_Enum)toNSEnum;
+
+- (JavaUtilLocale_Category_ORDINAL)ordinal;
 
 @end
 
@@ -1750,7 +1732,7 @@ FOUNDATION_EXPORT IOSObjectArray *JavaUtilLocale_Category_values(void);
 
 FOUNDATION_EXPORT JavaUtilLocale_Category *JavaUtilLocale_Category_valueOfWithNSString_(NSString *name);
 
-FOUNDATION_EXPORT JavaUtilLocale_Category *JavaUtilLocale_Category_fromOrdinal(NSUInteger ordinal);
+FOUNDATION_EXPORT JavaUtilLocale_Category *JavaUtilLocale_Category_fromOrdinal(JavaUtilLocale_Category_ORDINAL ordinal);
 
 J2OBJC_TYPE_LITERAL_HEADER(JavaUtilLocale_Category)
 
@@ -1759,6 +1741,7 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilLocale_Category)
 #if !defined (JavaUtilLocale_Builder_) && (INCLUDE_ALL_JavaUtilLocale || defined(INCLUDE_JavaUtilLocale_Builder))
 #define JavaUtilLocale_Builder_
 
+@class JavaLangCharacter;
 @class JavaUtilLocale;
 
 /*!
@@ -2027,13 +2010,19 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilLocale_Builder)
 
 @class IOSObjectArray;
 
-typedef NS_ENUM(NSUInteger, JavaUtilLocale_FilteringMode_Enum) {
+typedef NS_ENUM(jint, JavaUtilLocale_FilteringMode_Enum) {
   JavaUtilLocale_FilteringMode_Enum_AUTOSELECT_FILTERING = 0,
   JavaUtilLocale_FilteringMode_Enum_EXTENDED_FILTERING = 1,
   JavaUtilLocale_FilteringMode_Enum_IGNORE_EXTENDED_RANGES = 2,
   JavaUtilLocale_FilteringMode_Enum_MAP_EXTENDED_RANGES = 3,
   JavaUtilLocale_FilteringMode_Enum_REJECT_EXTENDED_RANGES = 4,
 };
+#if J2OBJC_IMPORTED_BY_JAVA_IMPLEMENTATION
+#define JavaUtilLocale_FilteringMode_ORDINAL jint
+#else
+#define JavaUtilLocale_FilteringMode_ORDINAL JavaUtilLocale_FilteringMode_Enum
+#endif
+
 
 /*!
  @brief This enum provides constants to select a filtering mode for locale
@@ -2125,11 +2114,6 @@ typedef NS_ENUM(NSUInteger, JavaUtilLocale_FilteringMode_Enum) {
  */
 @interface JavaUtilLocale_FilteringMode : JavaLangEnum
 
-@property (readonly, class, nonnull) JavaUtilLocale_FilteringMode *AUTOSELECT_FILTERING NS_SWIFT_NAME(AUTOSELECT_FILTERING);
-@property (readonly, class, nonnull) JavaUtilLocale_FilteringMode *EXTENDED_FILTERING NS_SWIFT_NAME(EXTENDED_FILTERING);
-@property (readonly, class, nonnull) JavaUtilLocale_FilteringMode *IGNORE_EXTENDED_RANGES NS_SWIFT_NAME(IGNORE_EXTENDED_RANGES);
-@property (readonly, class, nonnull) JavaUtilLocale_FilteringMode *MAP_EXTENDED_RANGES NS_SWIFT_NAME(MAP_EXTENDED_RANGES);
-@property (readonly, class, nonnull) JavaUtilLocale_FilteringMode *REJECT_EXTENDED_RANGES NS_SWIFT_NAME(REJECT_EXTENDED_RANGES);
 #pragma mark Public
 
 + (JavaUtilLocale_FilteringMode *)valueOfWithNSString:(NSString *)name;
@@ -2139,6 +2123,8 @@ typedef NS_ENUM(NSUInteger, JavaUtilLocale_FilteringMode_Enum) {
 #pragma mark Package-Private
 
 - (JavaUtilLocale_FilteringMode_Enum)toNSEnum;
+
+- (JavaUtilLocale_FilteringMode_ORDINAL)ordinal;
 
 @end
 
@@ -2194,7 +2180,7 @@ FOUNDATION_EXPORT IOSObjectArray *JavaUtilLocale_FilteringMode_values(void);
 
 FOUNDATION_EXPORT JavaUtilLocale_FilteringMode *JavaUtilLocale_FilteringMode_valueOfWithNSString_(NSString *name);
 
-FOUNDATION_EXPORT JavaUtilLocale_FilteringMode *JavaUtilLocale_FilteringMode_fromOrdinal(NSUInteger ordinal);
+FOUNDATION_EXPORT JavaUtilLocale_FilteringMode *JavaUtilLocale_FilteringMode_fromOrdinal(JavaUtilLocale_FilteringMode_ORDINAL ordinal);
 
 J2OBJC_TYPE_LITERAL_HEADER(JavaUtilLocale_FilteringMode)
 
@@ -2203,6 +2189,9 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilLocale_FilteringMode)
 #if !defined (JavaUtilLocale_LanguageRange_) && (INCLUDE_ALL_JavaUtilLocale || defined(INCLUDE_JavaUtilLocale_LanguageRange))
 #define JavaUtilLocale_LanguageRange_
 
+@class JavaLangBoolean;
+@class JavaLangDouble;
+@class JavaLangInteger;
 @protocol JavaUtilList;
 @protocol JavaUtilMap;
 
@@ -2242,8 +2231,6 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilLocale_FilteringMode)
  @since 1.8
  */
 @interface JavaUtilLocale_LanguageRange : NSObject
-@property (readonly, class) jdouble MAX_WEIGHT NS_SWIFT_NAME(MAX_WEIGHT);
-@property (readonly, class) jdouble MIN_WEIGHT NS_SWIFT_NAME(MIN_WEIGHT);
 
 #pragma mark Public
 
@@ -2479,6 +2466,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilLocale_LanguageRange)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaUtilLocale")

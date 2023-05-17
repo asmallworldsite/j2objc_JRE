@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaSecurityCertX509Extension
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -26,6 +23,7 @@
 #define JavaSecurityCertX509Extension_
 
 @class IOSByteArray;
+@class JavaLangBoolean;
 @protocol JavaUtilSet;
 
 /*!
@@ -64,6 +62,7 @@
   extension value (i.e., the <code>extnValue</code>). This can then
   be handled by a <em>Class</em> that understands the extension.
  @author Hemma Prafullchandra
+ @since 1.2
  */
 @protocol JavaSecurityCertX509Extension < JavaObject >
 
@@ -142,30 +141,35 @@
   represented by a set of nonnegative whole numbers separated
   by periods. 
  <p>For example:<br>
-  <table border=groove summary="Examples of OIDs and extension names">
+  <table class="striped">
+  <caption style="display:none">Examples of OIDs and extension names</caption>
+  <thead>
   <tr>
-  <th>OID <em>(Object Identifier)</em></th>
-  <th>Extension Name</th></tr>
-  <tr><td>2.5.29.14</td>
+  <th scope="col">OID <em>(Object Identifier)</em></th>
+  <th scope="col">Extension Name</th></tr>
+  </thead>
+  <tbody style="text-align:left">
+  <tr><th scope="row">2.5.29.14</th>
   <td>SubjectKeyIdentifier</td></tr>
-  <tr><td>2.5.29.15</td>
+  <tr><th scope="row">2.5.29.15</th>
   <td>KeyUsage</td></tr>
-  <tr><td>2.5.29.16</td>
+  <tr><th scope="row">2.5.29.16</th>
   <td>PrivateKeyUsage</td></tr>
-  <tr><td>2.5.29.17</td>
+  <tr><th scope="row">2.5.29.17</th>
   <td>SubjectAlternativeName</td></tr>
-  <tr><td>2.5.29.18</td>
+  <tr><th scope="row">2.5.29.18</th>
   <td>IssuerAlternativeName</td></tr>
-  <tr><td>2.5.29.19</td>
+  <tr><th scope="row">2.5.29.19</th>
   <td>BasicConstraints</td></tr>
-  <tr><td>2.5.29.30</td>
+  <tr><th scope="row">2.5.29.30</th>
   <td>NameConstraints</td></tr>
-  <tr><td>2.5.29.33</td>
+  <tr><th scope="row">2.5.29.33</th>
   <td>PolicyMappings</td></tr>
-  <tr><td>2.5.29.35</td>
+  <tr><th scope="row">2.5.29.35</th>
   <td>AuthorityKeyIdentifier</td></tr>
-  <tr><td>2.5.29.36</td>
+  <tr><th scope="row">2.5.29.36</th>
   <td>PolicyConstraints</td></tr>
+  </tbody>
   </table>
  @param oid the Object Identifier value for the extension.
  @return the DER-encoded octet string of the extension value or
@@ -185,6 +189,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaSecurityCertX509Extension)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaSecurityCertX509Extension")

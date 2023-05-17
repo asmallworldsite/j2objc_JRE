@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaxXmlTransformSaxSAXTransformerFactory
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -46,8 +43,6 @@
   the XMLReader.</p>
  */
 @interface JavaxXmlTransformSaxSAXTransformerFactory : JavaxXmlTransformTransformerFactory
-@property (readonly, copy, class) NSString *FEATURE NS_SWIFT_NAME(FEATURE);
-@property (readonly, copy, class) NSString *FEATURE_XMLFILTER NS_SWIFT_NAME(FEATURE_XMLFILTER);
 
 #pragma mark Public
 
@@ -157,6 +152,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaxXmlTransformSaxSAXTransformerFactory)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaxXmlTransformSaxSAXTransformerFactory")

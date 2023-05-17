@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaUtilConcurrentExecutorCompletionService
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -29,6 +26,7 @@
 #define INCLUDE_JavaUtilConcurrentCompletionService 1
 #include "java/util/concurrent/CompletionService.h"
 
+@class JavaLangLong;
 @class JavaUtilConcurrentTimeUnit;
 @protocol JavaLangRunnable;
 @protocol JavaUtilConcurrentBlockingQueue;
@@ -54,13 +52,11 @@
   void solve(Executor e,
              Collection<Callable<Result>> solvers)
       throws InterruptedException, ExecutionException {
-    CompletionService<Result> ecs
-        = new ExecutorCompletionService<Result>(e);
-    for (Callable<Result> s : solvers)
-      ecs.submit(s);
-    int n = solvers.size();
-    for (int i = 0; i < n; ++i) {
-      Result r = ecs.take().get();
+    CompletionService<Result> cs
+        = new ExecutorCompletionService<>(e);
+    solvers.forEach(cs::submit);
+    for (int i = solvers.size(); i > 0; i--) {
+      Result r = cs.take().get();
       if (r != null)
         use(r);
     }  }
@@ -73,31 +69,30 @@
   void solve(Executor e,
              Collection<Callable<Result>> solvers)
       throws InterruptedException {
-    CompletionService<Result> ecs
-        = new ExecutorCompletionService<Result>(e);
+    CompletionService<Result> cs
+        = new ExecutorCompletionService<>(e);
     int n = solvers.size();
     List<Future<Result>> futures = new ArrayList<>(n);
     Result result = null;
     try {
-      for (Callable<Result> s : solvers)
-        futures.add(ecs.submit(s));
-      for (int i = 0; i < n; ++i) {
+      solvers.forEach(solver -> futures.add(cs.submit(solver)));
+      for (int i = n; i > 0; i--) {
         try {
-          Result r = ecs.take().get();
+          Result r = cs.take().get();
           if (r != null) {
             result = r;
             break;
           }
-        } catch (ExecutionException ignore) {}      }      }
-    finally {
-      for (Future<Result> f : futures)
-        f.cancel(true);
+        } catch (ExecutionException ignore) {}      }
+    } finally {
+      futures.forEach(future -> future.cancel(true));
     }
     if (result != null)
       use(result);
   }
  
 @endcode
+ @since 1.5
  */
 @interface JavaUtilConcurrentExecutorCompletionService : NSObject < JavaUtilConcurrentCompletionService >
 
@@ -131,8 +126,16 @@
 - (id<JavaUtilConcurrentFuture>)pollWithLong:(jlong)timeout
               withJavaUtilConcurrentTimeUnit:(JavaUtilConcurrentTimeUnit *)unit;
 
+/*!
+ @throw RejectedExecutionException
+ @throw NullPointerException
+ */
 - (id<JavaUtilConcurrentFuture>)submitWithJavaUtilConcurrentCallable:(id<JavaUtilConcurrentCallable>)task;
 
+/*!
+ @throw RejectedExecutionException
+ @throw NullPointerException
+ */
 - (id<JavaUtilConcurrentFuture>)submitWithJavaLangRunnable:(id<JavaLangRunnable>)task
                                                     withId:(id)result;
 
@@ -166,6 +169,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentExecutorCompletionService)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaUtilConcurrentExecutorCompletionService")

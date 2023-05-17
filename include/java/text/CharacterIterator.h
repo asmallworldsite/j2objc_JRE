@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaTextCharacterIterator
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -24,6 +21,9 @@
 
 #if !defined (JavaTextCharacterIterator_) && (INCLUDE_ALL_JavaTextCharacterIterator || defined(INCLUDE_JavaTextCharacterIterator))
 #define JavaTextCharacterIterator_
+
+@class JavaLangCharacter;
+@class JavaLangInteger;
 
 /*!
  @brief This interface defines a protocol for bidirectional iteration over text.
@@ -78,6 +78,7 @@
   } 
  
 @endcode
+ @since 1.1
  - seealso: StringCharacterIterator
  - seealso: AttributedCharacterIterator
  */
@@ -162,11 +163,6 @@
 
 @end
 
-@interface JavaTextCharacterIterator : NSObject
-@property (readonly, class) jchar DONE NS_SWIFT_NAME(DONE);
-
-@end
-
 J2OBJC_EMPTY_STATIC_INIT(JavaTextCharacterIterator)
 
 /*!
@@ -186,6 +182,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaTextCharacterIterator)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaTextCharacterIterator")

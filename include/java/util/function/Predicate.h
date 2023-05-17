@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaUtilFunctionPredicate
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -24,6 +21,8 @@
 
 #if !defined (JavaUtilFunctionPredicate_) && (INCLUDE_ALL_JavaUtilFunctionPredicate || defined(INCLUDE_JavaUtilFunctionPredicate))
 #define JavaUtilFunctionPredicate_
+
+@class JavaLangBoolean;
 
 /*!
  @brief Represents a predicate (boolean-valued function) of one argument.
@@ -112,6 +111,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilFunctionPredicate)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaUtilFunctionPredicate")

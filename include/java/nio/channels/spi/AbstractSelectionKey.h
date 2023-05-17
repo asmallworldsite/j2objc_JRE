@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaNioChannelsSpiAbstractSelectionKey
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -28,6 +25,8 @@
 #define RESTRICT_JavaNioChannelsSelectionKey 1
 #define INCLUDE_JavaNioChannelsSelectionKey 1
 #include "java/nio/channels/SelectionKey.h"
+
+@class JavaLangBoolean;
 
 /*!
  @brief Base implementation class for selection keys.
@@ -74,6 +73,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaNioChannelsSpiAbstractSelectionKey)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaNioChannelsSpiAbstractSelectionKey")

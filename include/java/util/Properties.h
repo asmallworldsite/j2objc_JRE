@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaUtilProperties
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -35,6 +32,8 @@
 @class JavaIoPrintWriter;
 @class JavaIoReader;
 @class JavaIoWriter;
+@class JavaLangFloat;
+@class JavaLangInteger;
 @class JavaUtilProperties_LineReader;
 @protocol JavaUtilEnumeration;
 @protocol JavaUtilMap;
@@ -408,7 +407,7 @@ cheeses
  <code>Strings</code>.
  */
 - (void)saveWithJavaIoOutputStream:(JavaIoOutputStream *)outArg
-                      withNSString:(NSString *)comments __attribute__((deprecated));
+                      withNSString:(NSString *)comments;
 
 /*!
  @brief Calls the <tt>Hashtable</tt> method <code>put</code>.Provided for
@@ -654,6 +653,7 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilProperties_KeyValueLoader)
 @class IOSCharArray;
 @class JavaIoInputStream;
 @class JavaIoReader;
+@class JavaLangInteger;
 
 /*!
  @brief Read in a "logical line" from an InputStream/Reader, skip all comment
@@ -730,7 +730,6 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilProperties_LineReader)
 @end
 
 @interface JavaUtilProperties_XmlLoader : NSObject
-@property (readonly, class, strong) id<JavaUtilProperties_XmlLoader> INSTANCE NS_SWIFT_NAME(INSTANCE);
 
 @end
 
@@ -749,6 +748,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilProperties_XmlLoader)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaUtilProperties")

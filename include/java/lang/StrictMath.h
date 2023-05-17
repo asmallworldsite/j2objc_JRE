@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaLangStrictMath
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -24,6 +21,11 @@
 
 #if !defined (JavaLangStrictMath_) && (INCLUDE_ALL_JavaLangStrictMath || defined(INCLUDE_JavaLangStrictMath))
 #define JavaLangStrictMath_
+
+@class JavaLangDouble;
+@class JavaLangFloat;
+@class JavaLangInteger;
+@class JavaLangLong;
 
 /*!
  @brief The class <code>StrictMath</code> contains methods for performing basic
@@ -34,7 +36,7 @@
   produce the same results as certain published algorithms. These
   algorithms are available from the well-known network library 
  <code>netlib</code> as the package "Freely Distributable Math
-  Library," <a href="ftp://ftp.netlib.org/fdlibm.tar">
+  Library," <a href="https://www.netlib.org/fdlibm/">
  <code>fdlibm</code></a>. These
   algorithms, which are written in the C programming language, are
   then to be understood as executed with all floating-point
@@ -61,19 +63,23 @@
   The best practice is to choose the primitive type and algorithm to avoid
   overflow. In cases where the size is <code>int</code> or <code>long</code> and
   overflow errors need to be detected, the methods <code>addExact</code>,
-  <code>subtractExact</code>, <code>multiplyExact</code>, and <code>toIntExact</code>
+  <code>subtractExact</code>, <code>multiplyExact</code>, <code>toIntExact</code>,
+  <code>incrementExact</code>, <code>decrementExact</code> and <code>negateExact</code>
   throw an <code>ArithmeticException</code> when the results overflow.
-  For other arithmetic operations such as divide, absolute value,
-  increment, decrement, and negation overflow occurs only with
-  a specific minimum or maximum value and should be checked against
-  the minimum or maximum as appropriate.
- @author unascribed
+  For the arithmetic operations divide and absolute value, overflow
+  occurs only with a specific minimum or maximum value and
+  should be checked against the minimum or maximum as appropriate. 
+ <h2><a id=Ieee754RecommendedOps>IEEE 754 Recommended
+  Operations</a></h2>
+  The <code>Math</code> class discusses how the shared
+  quality of implementation criteria for selected <code>Math</code> and 
+ <code>StrictMath</code> methods <a href="Math.html#Ieee754RecommendedOps">
+ relate to the IEEE 754
+  recommended operations</a>.
  @author Joseph D. Darcy
  @since 1.3
  */
 @interface JavaLangStrictMath : NSObject
-@property (readonly, class) jdouble E NS_SWIFT_NAME(E);
-@property (readonly, class) jdouble PI NS_SWIFT_NAME(PI);
 
 #pragma mark Public
 
@@ -86,8 +92,6 @@
   is positive zero. 
  <li>If the argument is infinite, the result is positive infinity. 
  <li>If the argument is NaN, the result is NaN.</ul>
-  In other words, the result is the same as the value of the expression: 
- <p><code>Double.longBitsToDouble((Double.doubleToLongBits(a)<<1)>>>1)</code>
  @param a the argument whose absolute value is to be determined
  @return the absolute value of the argument.
  */
@@ -102,8 +106,6 @@
   result is positive zero. 
  <li>If the argument is infinite, the result is positive infinity. 
  <li>If the argument is NaN, the result is NaN.</ul>
-  In other words, the result is the same as the value of the expression: 
- <p><code>Float.intBitsToFloat(0x7fffffff & Float.floatToIntBits(a))</code>
  @param a the argument whose absolute value is to be determined
  @return the absolute value of the argument.
  */
@@ -113,12 +115,14 @@
  @brief Returns the absolute value of an <code>int</code> value.
  If the argument is not negative, the argument is returned.
   If the argument is negative, the negation of the argument is returned. 
- <p>Note that if the argument is equal to the value of 
- <code>Integer.MIN_VALUE</code>, the most negative representable 
- <code>int</code> value, the result is that same value, which is
-  negative.
+ <p>Note that if the argument is equal to the value of <code>Integer.MIN_VALUE</code>
+ , the most negative representable <code>int</code>
+  value, the result is that same value, which is negative. In
+  contrast, the <code>StrictMath.absExact(int)</code> method throws an 
+ <code>ArithmeticException</code> for this value.
  @param a the  argument whose absolute value is to be determined.
  @return the absolute value of the argument.
+ - seealso: Math#absExact(int)
  */
 + (jint)absWithInt:(jint)a;
 
@@ -126,20 +130,61 @@
  @brief Returns the absolute value of a <code>long</code> value.
  If the argument is not negative, the argument is returned.
   If the argument is negative, the negation of the argument is returned. 
- <p>Note that if the argument is equal to the value of 
- <code>Long.MIN_VALUE</code>, the most negative representable 
- <code>long</code> value, the result is that same value, which
-  is negative.
+ <p>Note that if the argument is equal to the value of <code>Long.MIN_VALUE</code>
+ , the most negative representable <code>long</code>
+  value, the result is that same value, which is negative. In
+  contrast, the <code>StrictMath.absExact(long)</code> method throws
+  an <code>ArithmeticException</code> for this value.
  @param a the  argument whose absolute value is to be determined.
  @return the absolute value of the argument.
+ - seealso: Math#absExact(long)
  */
 + (jlong)absWithLong:(jlong)a;
+
+/*!
+ @brief Returns the mathematical absolute value of an <code>int</code> value
+  if it is exactly representable as an <code>int</code>, throwing 
+ <code>ArithmeticException</code> if the result overflows the
+  positive <code>int</code> range.
+ <p>Since the range of two's complement integers is asymmetric
+  with one additional negative value (JLS 4.2.1), the
+  mathematical absolute value of <code>Integer.MIN_VALUE</code>
+  overflows the positive <code>int</code> range, so an exception is
+  thrown for that argument.
+ @param a the argument whose absolute value is to be determined
+ @return the absolute value of the argument, unless overflow occurs
+ @throw ArithmeticExceptionif the argument is <code>Integer.MIN_VALUE</code>
+ - seealso: Math#abs(int)
+ - seealso: Math#absExact(int)
+ @since 15
+ */
++ (jint)absExactWithInt:(jint)a;
+
+/*!
+ @brief Returns the mathematical absolute value of an <code>long</code> value
+  if it is exactly representable as an <code>long</code>, throwing 
+ <code>ArithmeticException</code> if the result overflows the
+  positive <code>long</code> range.
+ <p>Since the range of two's complement integers is asymmetric
+  with one additional negative value (JLS 4.2.1), the
+  mathematical absolute value of <code>Long.MIN_VALUE</code> overflows
+  the positive <code>long</code> range, so an exception is thrown for
+  that argument.
+ @param a the argument whose absolute value is to be determined
+ @return the absolute value of the argument, unless overflow occurs
+ @throw ArithmeticExceptionif the argument is <code>Long.MIN_VALUE</code>
+ - seealso: Math#abs(long)
+ - seealso: Math#absExact(long)
+ @since 15
+ */
++ (jlong)absExactWithLong:(jlong)a;
 
 /*!
  @brief Returns the arc cosine of a value; the returned angle is in the
   range 0.0 through <i>pi</i>.Special case: 
  <ul><li>If the argument is NaN or its absolute value is greater
   than 1, then the result is NaN.
+ <li>If the argument is <code>1.0</code>, the result is positive zero. 
  </ul>
  @param a the value whose arc cosine is to be returned.
  @return the arc cosine of the argument.
@@ -189,7 +234,11 @@
   range -<i>pi</i>/2 through <i>pi</i>/2.Special cases: 
  <ul><li>If the argument is NaN, then the result is NaN.
  <li>If the argument is zero, then the result is a zero with the
-  same sign as the argument.</ul>
+  same sign as the argument. 
+ <li>If the argument is infinite,
+  then the result is the closest value to <i>pi</i>/2 with the
+  same sign as the input. 
+ </ul>
  @param a the value whose arc tangent is to be returned.
  @return the arc tangent of the argument.
  */
@@ -319,7 +368,8 @@
  @brief Returns the trigonometric cosine of an angle.Special cases: 
  <ul><li>If the argument is NaN or an infinity, then the
   result is NaN.
- </ul>
+ <li>If the argument is zero, then the result is <code>1.0</code>.
+  </ul>
  @param a an angle, in radians.
  @return the cosine of the argument.
  */
@@ -347,13 +397,39 @@
 + (jdouble)coshWithDouble:(jdouble)x;
 
 /*!
+ @brief Returns the argument decremented by one,
+  throwing an exception if the result overflows an <code>int</code>.
+ The overflow only occurs for the minimum value.
+ @param a the value to decrement
+ @return the result
+ @throw ArithmeticExceptionif the result overflows an int
+ - seealso: Math#decrementExact(int)
+ @since 14
+ */
++ (jint)decrementExactWithInt:(jint)a;
+
+/*!
+ @brief Returns the argument decremented by one,
+  throwing an exception if the result overflows a <code>long</code>.
+ The overflow only occurs for the minimum value.
+ @param a the value to decrement
+ @return the result
+ @throw ArithmeticExceptionif the result overflows a long
+ - seealso: Math#decrementExact(long)
+ @since 14
+ */
++ (jlong)decrementExactWithLong:(jlong)a;
+
+/*!
  @brief Returns Euler's number <i>e</i> raised to the power of a 
  <code>double</code> value.Special cases: 
  <ul><li>If the argument is NaN, the result is NaN.
  <li>If the argument is positive infinity, then the result is
   positive infinity. 
  <li>If the argument is negative infinity, then the result is
-  positive zero.</ul>
+  positive zero. 
+ <li>If the argument is zero, then the result is <code>1.0</code>.
+  </ul>
  @param a the exponent to raise  <i> e </i>  to.
  @return the value <i>e</i><sup><code>a</code></sup>,
            where <i>e</i> is the base of the natural logarithms.
@@ -427,6 +503,28 @@
  There is one special case, if the dividend is the 
  Long.MIN_VALUE and the divisor is <code>-1</code>,
   then integer overflow occurs and
+  the result is equal to <code>Long.MIN_VALUE</code>.
+  <p>
+  See <code>Math.floorDiv</code> for examples and
+  a comparison to the integer division <code>/</code> operator.
+ @param x the dividend
+ @param y the divisor
+ @return the largest (closest to positive infinity) 
+ <code>int</code> value that is less than or equal to the algebraic quotient.
+ @throw ArithmeticExceptionif the divisor <code>y</code> is zero
+ - seealso: Math#floorDiv(long, int)
+ - seealso: Math#floor(double)
+ @since 9
+ */
++ (jlong)floorDivWithLong:(jlong)x
+                  withInt:(jint)y;
+
+/*!
+ @brief Returns the largest (closest to positive infinity) 
+ <code>long</code> value that is less than or equal to the algebraic quotient.
+ There is one special case, if the dividend is the 
+ Long.MIN_VALUE and the divisor is <code>-1</code>,
+  then integer overflow occurs and
   the result is equal to the <code>Long.MIN_VALUE</code>.
   <p>
   See <code>Math.floorDiv</code> for examples and
@@ -469,6 +567,32 @@
                 withInt:(jint)y;
 
 /*!
+ @brief Returns the floor modulus of the <code>long</code> and <code>int</code> arguments.
+ <p>
+  The floor modulus is <code>x - (floorDiv(x, y) * y)</code>,
+  has the same sign as the divisor <code>y</code>, and
+  is in the range of <code>-abs(y) < r < +abs(y)</code>.
+  
+ <p>
+  The relationship between <code>floorDiv</code> and <code>floorMod</code> is such that: 
+ <ul>
+    <li><code>floorDiv(x, y) * y + floorMod(x, y) == x</code>
+  </ul>
+  <p>
+  See <code>Math.floorMod</code> for examples and
+  a comparison to the <code>%</code> operator.
+ @param x the dividend
+ @param y the divisor
+ @return the floor modulus <code>x - (floorDiv(x, y) * y)</code>
+ @throw ArithmeticExceptionif the divisor <code>y</code> is zero
+ - seealso: Math#floorMod(long, int)
+ - seealso: StrictMath#floorDiv(long, int)
+ @since 9
+ */
++ (jint)floorModWithLong:(jlong)x
+                 withInt:(jint)y;
+
+/*!
  @brief Returns the floor modulus of the <code>long</code> arguments.
  <p>
   The floor modulus is <code>x - (floorDiv(x, y) * y)</code>,
@@ -492,6 +616,90 @@
  */
 + (jlong)floorModWithLong:(jlong)x
                  withLong:(jlong)y;
+
+/*!
+ @brief Returns the fused multiply add of the three arguments; that is,
+  returns the exact product of the first two arguments summed
+  with the third argument and then rounded once to the nearest 
+ <code>double</code>.
+ The rounding is done using the round to nearest even
+  rounding mode
+ .
+  In contrast, if <code>a * b + c</code> is evaluated as a regular
+  floating-point expression, two rounding errors are involved,
+  the first for the multiply operation, the second for the
+  addition operation. 
+ <p>Special cases: 
+ <ul>
+  <li> If any argument is NaN, the result is NaN. 
+ <li> If one of the first two arguments is infinite and the
+  other is zero, the result is NaN. 
+ <li> If the exact product of the first two arguments is infinite
+  (in other words, at least one of the arguments is infinite and
+  the other is neither zero nor NaN) and the third argument is an
+  infinity of the opposite sign, the result is NaN. 
+ </ul>
+  
+ <p>Note that <code>fusedMac(a, 1.0, c)</code> returns the same
+  result as (<code>a + c</code>).  However, 
+ <code>fusedMac(a, b, +0.0)</code> does <em>not</em> always return the
+  same result as (<code>a * b</code>) since 
+ <code>fusedMac(-0.0, +0.0, +0.0)</code> is <code>+0.0</code> while
+  (<code>-0.0 * +0.0</code>) is <code>-0.0</code>; <code>fusedMac(a, b, -0.0)</code> is
+  equivalent to (<code>a * b</code>) however.
+ @param a a value
+ @param b a value
+ @param c a value
+ @return (<i>a</i>&nbsp;&times;&nbsp;<i>b</i>&nbsp;+&nbsp;<i>c</i>)
+  computed, as if with unlimited range and precision, and rounded
+  once to the nearest <code>double</code> value
+ @since 9
+ */
++ (jdouble)fmaWithDouble:(jdouble)a
+              withDouble:(jdouble)b
+              withDouble:(jdouble)c;
+
+/*!
+ @brief Returns the fused multiply add of the three arguments; that is,
+  returns the exact product of the first two arguments summed
+  with the third argument and then rounded once to the nearest 
+ <code>float</code>.
+ The rounding is done using the round to nearest even
+  rounding mode
+ .
+  In contrast, if <code>a * b + c</code> is evaluated as a regular
+  floating-point expression, two rounding errors are involved,
+  the first for the multiply operation, the second for the
+  addition operation. 
+ <p>Special cases: 
+ <ul>
+  <li> If any argument is NaN, the result is NaN. 
+ <li> If one of the first two arguments is infinite and the
+  other is zero, the result is NaN. 
+ <li> If the exact product of the first two arguments is infinite
+  (in other words, at least one of the arguments is infinite and
+  the other is neither zero nor NaN) and the third argument is an
+  infinity of the opposite sign, the result is NaN. 
+ </ul>
+  
+ <p>Note that <code>fma(a, 1.0f, c)</code> returns the same
+  result as (<code>a + c</code>).  However, 
+ <code>fma(a, b, +0.0f)</code> does <em>not</em> always return the
+  same result as (<code>a * b</code>) since 
+ <code>fma(-0.0f, +0.0f, +0.0f)</code> is <code>+0.0f</code> while
+  (<code>-0.0f * +0.0f</code>) is <code>-0.0f</code>; <code>fma(a, b, -0.0f)</code> is
+  equivalent to (<code>a * b</code>) however.
+ @param a a value
+ @param b a value
+ @param c a value
+ @return (<i>a</i>&nbsp;&times;&nbsp;<i>b</i>&nbsp;+&nbsp;<i>c</i>)
+  computed, as if with unlimited range and precision, and rounded
+  once to the nearest <code>float</code> value
+ @since 9
+ */
++ (jfloat)fmaWithFloat:(jfloat)a
+             withFloat:(jfloat)b
+             withFloat:(jfloat)c;
 
 /*!
  @brief Returns the unbiased exponent used in the representation of a 
@@ -533,6 +741,7 @@
   is positive infinity. 
  <li> If either argument is NaN and neither argument is infinite,
   then the result is NaN. 
+ <li> If both arguments are zero, the result is positive zero. 
  </ul>
  @param x a value
  @param y a value
@@ -568,6 +777,30 @@
                         withDouble:(jdouble)f2;
 
 /*!
+ @brief Returns the argument incremented by one,
+  throwing an exception if the result overflows an <code>int</code>.
+ The overflow only occurs for the maximum value.
+ @param a the value to increment
+ @return the result
+ @throw ArithmeticExceptionif the result overflows an int
+ - seealso: Math#incrementExact(int)
+ @since 14
+ */
++ (jint)incrementExactWithInt:(jint)a;
+
+/*!
+ @brief Returns the argument incremented by one,
+  throwing an exception if the result overflows a <code>long</code>.
+ The overflow only occurs for the maximum value.
+ @param a the value to increment
+ @return the result
+ @throw ArithmeticExceptionif the result overflows a long
+ - seealso: Math#incrementExact(long)
+ @since 14
+ */
++ (jlong)incrementExactWithLong:(jlong)a;
+
+/*!
  @brief Returns the natural logarithm (base <i>e</i>) of a <code>double</code>
   value.Special cases: 
  <ul><li>If the argument is NaN or less than zero, then the result
@@ -575,7 +808,10 @@
  <li>If the argument is positive infinity, then the result is
   positive infinity. 
  <li>If the argument is positive zero or negative zero, then the
-  result is negative infinity.</ul>
+  result is negative infinity. 
+ <li>If the argument is <code>1.0</code>, then the result is positive
+  zero. 
+ </ul>
  @param a a value
  @return the value ln&nbsp;<code>a</code>, the natural logarithm of
            <code>a</code>.
@@ -591,9 +827,11 @@
   positive infinity. 
  <li>If the argument is positive zero or negative zero, then the
   result is negative infinity. 
- <li> If the argument is equal to 10<sup><i>n</i></sup> for
-  integer <i>n</i>, then the result is <i>n</i>.
-  </ul>
+ <li>If the argument is equal to 10<sup><i>n</i></sup> for
+  integer <i>n</i>, then the result is <i>n</i>. In particular,
+  if the argument is <code>1.0</code> (10<sup>0</sup>), then the
+  result is positive zero. 
+ </ul>
  @param a a value
  @return the base 10 logarithm of  <code>a</code>.
  @since 1.5
@@ -760,6 +998,19 @@
                      withInt:(jint)y;
 
 /*!
+ @brief Returns the product of the arguments, throwing an exception if the result
+  overflows a <code>long</code>.
+ @param x the first value
+ @param y the second value
+ @return the result
+ @throw ArithmeticExceptionif the result overflows a long
+ - seealso: Math#multiplyExact(long,int)
+ @since 9
+ */
++ (jlong)multiplyExactWithLong:(jlong)x
+                       withInt:(jint)y;
+
+/*!
  @brief Returns the product of the arguments,
   throwing an exception if the result overflows a <code>long</code>.
  @param x the first value
@@ -771,6 +1022,53 @@
  */
 + (jlong)multiplyExactWithLong:(jlong)x
                       withLong:(jlong)y;
+
+/*!
+ @brief Returns the exact mathematical product of the arguments.
+ @param x the first value
+ @param y the second value
+ @return the result
+ - seealso: Math#multiplyFull(int,int)
+ @since 9
+ */
++ (jlong)multiplyFullWithInt:(jint)x
+                     withInt:(jint)y;
+
+/*!
+ @brief Returns as a <code>long</code> the most significant 64 bits of the 128-bit
+  product of two 64-bit factors.
+ @param x the first value
+ @param y the second value
+ @return the result
+ - seealso: Math#multiplyHigh(long,long)
+ @since 9
+ */
++ (jlong)multiplyHighWithLong:(jlong)x
+                     withLong:(jlong)y;
+
+/*!
+ @brief Returns the negation of the argument,
+  throwing an exception if the result overflows an <code>int</code>.
+ The overflow only occurs for the minimum value.
+ @param a the value to negate
+ @return the result
+ @throw ArithmeticExceptionif the result overflows an int
+ - seealso: Math#negateExact(int)
+ @since 14
+ */
++ (jint)negateExactWithInt:(jint)a;
+
+/*!
+ @brief Returns the negation of the argument,
+  throwing an exception if the result overflows a <code>long</code>.
+ The overflow only occurs for the minimum value.
+ @param a the value to negate
+ @return the result
+ @throw ArithmeticExceptionif the result overflows a long
+ - seealso: Math#negateExact(long)
+ @since 14
+ */
++ (jlong)negateExactWithLong:(jlong)a;
 
 /*!
  @brief Returns the floating-point number adjacent to the first
@@ -1123,21 +1421,19 @@
 + (jint)roundWithFloat:(jfloat)a;
 
 /*!
- @brief Returns <code>d</code> &times;
-  2<sup><code>scaleFactor</code></sup> rounded as if performed
-  by a single correctly rounded floating-point multiply to a
-  member of the double value set.See the Java
-  Language Specification for a discussion of floating-point
-  value sets.
- If the exponent of the result is between <code>Double.MIN_EXPONENT</code>
-  and <code>Double.MAX_EXPONENT</code>, the
-  answer is calculated exactly.  If the exponent of the result
-  would be larger than <code>Double.MAX_EXPONENT</code>, an
-  infinity is returned.  Note that if the result is subnormal,
-  precision may be lost; that is, when <code>scalb(x, n)</code>
-  is subnormal, <code>scalb(scalb(x, n), -n)</code> may not equal 
- <i>x</i>.  When the result is non-NaN, the result has the same
-  sign as <code>d</code>.
+ @brief Returns <code>d</code> &times; 2<sup><code>scaleFactor</code></sup>
+  rounded as if performed by a single correctly rounded
+  floating-point multiply.If the exponent of the result is
+  between <code>Double.MIN_EXPONENT</code> and <code>Double.MAX_EXPONENT</code>
+ , the answer is calculated exactly.
+ If the
+  exponent of the result would be larger than <code>Double.MAX_EXPONENT</code>
+ , an infinity is returned.  Note that if
+  the result is subnormal, precision may be lost; that is, when 
+ <code>scalb(x, n)</code> is subnormal, <code>scalb(scalb(x, n),
+  -n)</code>
+  may not equal <i>x</i>.  When the result is non-NaN, the
+  result has the same sign as <code>d</code>.
   
  <p>Special cases: 
  <ul>
@@ -1156,21 +1452,19 @@
                    withInt:(jint)scaleFactor;
 
 /*!
- @brief Returns <code>f</code> &times;
-  2<sup><code>scaleFactor</code></sup> rounded as if performed
-  by a single correctly rounded floating-point multiply to a
-  member of the float value set.See the Java
-  Language Specification for a discussion of floating-point
-  value sets.
- If the exponent of the result is between <code>Float.MIN_EXPONENT</code>
-  and <code>Float.MAX_EXPONENT</code>, the
-  answer is calculated exactly.  If the exponent of the result
-  would be larger than <code>Float.MAX_EXPONENT</code>, an
-  infinity is returned.  Note that if the result is subnormal,
-  precision may be lost; that is, when <code>scalb(x, n)</code>
-  is subnormal, <code>scalb(scalb(x, n), -n)</code> may not equal 
- <i>x</i>.  When the result is non-NaN, the result has the same
-  sign as <code>f</code>.
+ @brief Returns <code>f</code> &times; 2<sup><code>scaleFactor</code></sup>
+  rounded as if performed by a single correctly rounded
+  floating-point multiply.If the exponent of the result is
+  between <code>Float.MIN_EXPONENT</code> and <code>Float.MAX_EXPONENT</code>
+ , the answer is calculated exactly.
+ If the
+  exponent of the result would be larger than <code>Float.MAX_EXPONENT</code>
+ , an infinity is returned.  Note that if the
+  result is subnormal, precision may be lost; that is, when 
+ <code>scalb(x, n)</code> is subnormal, <code>scalb(scalb(x, n),
+  -n)</code>
+  may not equal <i>x</i>.  When the result is non-NaN, the
+  result has the same sign as <code>f</code>.
   
  <p>Special cases: 
  <ul>
@@ -1348,8 +1642,8 @@
 + (jdouble)toDegreesWithDouble:(jdouble)angrad;
 
 /*!
- @brief Returns the value of the <code>long</code> argument;
-  throwing an exception if the value overflows an <code>int</code>.
+ @brief Returns the value of the <code>long</code> argument, throwing an exception
+  if the value overflows an <code>int</code>.
  @param value the long value
  @return the argument as an int
  @throw ArithmeticExceptionif the <code>argument</code> overflows an int
@@ -1493,21 +1787,47 @@ FOUNDATION_EXPORT jlong JavaLangStrictMath_subtractExactWithLong_withLong_(jlong
 
 FOUNDATION_EXPORT jint JavaLangStrictMath_multiplyExactWithInt_withInt_(jint x, jint y);
 
+FOUNDATION_EXPORT jlong JavaLangStrictMath_multiplyExactWithLong_withInt_(jlong x, jint y);
+
 FOUNDATION_EXPORT jlong JavaLangStrictMath_multiplyExactWithLong_withLong_(jlong x, jlong y);
+
+FOUNDATION_EXPORT jint JavaLangStrictMath_incrementExactWithInt_(jint a);
+
+FOUNDATION_EXPORT jlong JavaLangStrictMath_incrementExactWithLong_(jlong a);
+
+FOUNDATION_EXPORT jint JavaLangStrictMath_decrementExactWithInt_(jint a);
+
+FOUNDATION_EXPORT jlong JavaLangStrictMath_decrementExactWithLong_(jlong a);
+
+FOUNDATION_EXPORT jint JavaLangStrictMath_negateExactWithInt_(jint a);
+
+FOUNDATION_EXPORT jlong JavaLangStrictMath_negateExactWithLong_(jlong a);
 
 FOUNDATION_EXPORT jint JavaLangStrictMath_toIntExactWithLong_(jlong value);
 
+FOUNDATION_EXPORT jlong JavaLangStrictMath_multiplyFullWithInt_withInt_(jint x, jint y);
+
+FOUNDATION_EXPORT jlong JavaLangStrictMath_multiplyHighWithLong_withLong_(jlong x, jlong y);
+
 FOUNDATION_EXPORT jint JavaLangStrictMath_floorDivWithInt_withInt_(jint x, jint y);
+
+FOUNDATION_EXPORT jlong JavaLangStrictMath_floorDivWithLong_withInt_(jlong x, jint y);
 
 FOUNDATION_EXPORT jlong JavaLangStrictMath_floorDivWithLong_withLong_(jlong x, jlong y);
 
 FOUNDATION_EXPORT jint JavaLangStrictMath_floorModWithInt_withInt_(jint x, jint y);
 
+FOUNDATION_EXPORT jint JavaLangStrictMath_floorModWithLong_withInt_(jlong x, jint y);
+
 FOUNDATION_EXPORT jlong JavaLangStrictMath_floorModWithLong_withLong_(jlong x, jlong y);
 
 FOUNDATION_EXPORT jint JavaLangStrictMath_absWithInt_(jint a);
 
+FOUNDATION_EXPORT jint JavaLangStrictMath_absExactWithInt_(jint a);
+
 FOUNDATION_EXPORT jlong JavaLangStrictMath_absWithLong_(jlong a);
+
+FOUNDATION_EXPORT jlong JavaLangStrictMath_absExactWithLong_(jlong a);
 
 FOUNDATION_EXPORT jfloat JavaLangStrictMath_absWithFloat_(jfloat a);
 
@@ -1528,6 +1848,10 @@ FOUNDATION_EXPORT jlong JavaLangStrictMath_minWithLong_withLong_(jlong a, jlong 
 FOUNDATION_EXPORT jfloat JavaLangStrictMath_minWithFloat_withFloat_(jfloat a, jfloat b);
 
 FOUNDATION_EXPORT jdouble JavaLangStrictMath_minWithDouble_withDouble_(jdouble a, jdouble b);
+
+FOUNDATION_EXPORT jdouble JavaLangStrictMath_fmaWithDouble_withDouble_withDouble_(jdouble a, jdouble b, jdouble c);
+
+FOUNDATION_EXPORT jfloat JavaLangStrictMath_fmaWithFloat_withFloat_withFloat_(jfloat a, jfloat b, jfloat c);
 
 FOUNDATION_EXPORT jdouble JavaLangStrictMath_ulpWithDouble_(jdouble d);
 
@@ -1581,6 +1905,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaLangStrictMath)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaLangStrictMath")

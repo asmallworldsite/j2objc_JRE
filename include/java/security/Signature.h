@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaSecuritySignature
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -30,6 +27,9 @@
 #include "java/security/SignatureSpi.h"
 
 @class IOSByteArray;
+@class JavaLangBoolean;
+@class JavaLangByte;
+@class JavaLangInteger;
 @class JavaNioByteBuffer;
 @class JavaSecurityAlgorithmParameters;
 @class JavaSecurityCertCertificate;
@@ -220,7 +220,7 @@
       </tr>
     </tbody>
   </table>
-  These algorithms are described in the <a href="{@@docRoot}/../technotes/guides/security/StandardNames.html#Signature">
+  These algorithms are described in the <a href="{@@docRoot}openjdk-redirect.html?v=8&path=/technotes/guides/security/StandardNames.html#Signature">
   Signature section</a> of the
   Java Cryptography Architecture Standard Algorithm Name Documentation.
  @author Benjamin Renaud
@@ -233,9 +233,6 @@
    */
   jint state_;
 }
-@property (readonly, class) jint UNINITIALIZED NS_SWIFT_NAME(UNINITIALIZED);
-@property (readonly, class) jint SIGN NS_SWIFT_NAME(SIGN);
-@property (readonly, class) jint VERIFY NS_SWIFT_NAME(VERIFY);
 
 #pragma mark Public
 
@@ -269,7 +266,7 @@
  <p> Note that the list of registered providers may be retrieved via the 
  <code>Security.getProviders()</code> method.
  @param algorithm the standard name of the algorithm requested.  See the Signature section in the 
-  <a href="{@@docRoot}/../technotes/guides/security/StandardNames.html#Signature">
+  <a href="{@@docRoot}openjdk-redirect.html?v=8&path=/technotes/guides/security/StandardNames.html#Signature">
    Java Cryptography Architecture Standard Algorithm Name Documentation
   </a>  for information about standard algorithm names.
  @return the new Signature object.
@@ -288,7 +285,7 @@
   object is returned.  Note that the specified Provider object
   does not have to be registered in the provider list.
  @param algorithm the name of the algorithm requested.  See the Signature section in the 
-  <a href="{@@docRoot}/../technotes/guides/security/StandardNames.html#Signature">
+  <a href="{@@docRoot}openjdk-redirect.html?v=8&path=/technotes/guides/security/StandardNames.html#Signature">
    Java Cryptography Architecture Standard Algorithm Name Documentation
   </a>  for information about standard algorithm names.
  @param provider the provider.
@@ -313,7 +310,7 @@
  <p> Note that the list of registered providers may be retrieved via the 
  <code>Security.getProviders()</code> method.
  @param algorithm the name of the algorithm requested.  See the Signature section in the 
-  <a href="{@@docRoot}/../technotes/guides/security/StandardNames.html#Signature">
+  <a href="{@@docRoot}openjdk-redirect.html?v=8&path=/technotes/guides/security/StandardNames.html#Signature">
    Java Cryptography Architecture Standard Algorithm Name Documentation
   </a>  for information about standard algorithm names.
  @param provider the name of the provider.
@@ -348,7 +345,7 @@
   trying to get this parameter.
  - seealso: #setParameter(String, Object)
  */
-- (id)getParameterWithNSString:(NSString *)param __attribute__((deprecated));
+- (id)getParameterWithNSString:(NSString *)param;
 
 /*!
  @brief Returns the parameters used with this signature object.
@@ -444,7 +441,7 @@
  - seealso: #getParameter
  */
 - (void)setParameterWithNSString:(NSString *)param
-                          withId:(id)value __attribute__((deprecated));
+                          withId:(id)value;
 
 /*!
  @brief Returns the signature bytes of all the data updated.
@@ -587,7 +584,7 @@
 /*!
  @brief Creates a Signature object for the specified algorithm.
  @param algorithm the standard string name of the algorithm.  See the Signature section in the 
-  <a href="{@@docRoot}/../technotes/guides/security/StandardNames.html#Signature">
+  <a href="{@@docRoot}openjdk-redirect.html?v=8&path=/technotes/guides/security/StandardNames.html#Signature">
    Java Cryptography Architecture Standard Algorithm Name Documentation
   </a>  for information about standard algorithm names.
  */
@@ -647,6 +644,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaSecuritySignature)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaSecuritySignature")

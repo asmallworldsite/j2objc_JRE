@@ -25,9 +25,6 @@
 #define INCLUDE_JavaUtilConcurrentForkJoinTask 1
 #endif
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -46,6 +43,10 @@
 #include "java/io/Serializable.h"
 
 @class IOSObjectArray;
+@class JavaLangBoolean;
+@class JavaLangInteger;
+@class JavaLangLong;
+@class JavaLangShort;
 @class JavaLangThrowable;
 @class JavaUtilConcurrentForkJoinPool;
 @class JavaUtilConcurrentTimeUnit;
@@ -98,7 +99,7 @@
   that initiated the computation as well as the thread actually
   encountering the exception; minimally only the latter. 
  <p>It is possible to define and use ForkJoinTasks that may block,
-  but doing do requires three further considerations: (1) Completion
+  but doing so requires three further considerations: (1) Completion
   of few if any <em>other</em> tasks should be dependent on a task
   that blocks on external synchronization or I/O. Event-style async
   tasks that are never joined (for example, those subclassing <code>CountedCompleter</code>
@@ -137,11 +138,11 @@
  <code>isCompletedNormally</code> is true if a task completed without
   cancellation or encountering an exception; <code>isCancelled</code> is
   true if the task was cancelled (in which case <code>getException</code>
-  returns a <code>java.util.concurrent.CancellationException</code>); and 
+  returns a <code>CancellationException</code>); and 
  <code>isCompletedAbnormally</code> is true if a task was either
   cancelled or encountered an exception, in which case <code>getException</code>
   will return either the encountered exception or 
- <code>java.util.concurrent.CancellationException</code>.
+ <code>CancellationException</code>.
   
  <p>The ForkJoinTask class is not usually directly subclassed.
   Instead, you subclass one of the abstract classes that support a
@@ -204,16 +205,22 @@
 @interface JavaUtilConcurrentForkJoinTask : NSObject < JavaUtilConcurrentFuture, JavaIoSerializable > {
  @public
   /*!
-   @brief The run status of this task
+   @brief The status field holds run control status bits packed into a
+  single int to ensure atomicity.Status is initially zero, and
+  takes on nonnegative values until completed, upon which it
+  holds (sign bit) DONE, possibly with ABNORMAL (cancelled or
+  exceptional) and THROWN (in which case an exception has been
+  stored).
+   Tasks with dependent blocked waiting joiners have the
+  SIGNAL bit set.  Completion of a task with SIGNAL set awakens
+  any waiters via notifyAll. (Waiters also help signal others
+  upon completion.)
+  These control bits occupy only (some of) the upper half (16
+  bits) of status field. The lower bits are used for user-defined
+  tags.
    */
   volatile_jint status_;
 }
-@property (readonly, class) jint DONE_MASK NS_SWIFT_NAME(DONE_MASK);
-@property (readonly, class) jint NORMAL NS_SWIFT_NAME(NORMAL);
-@property (readonly, class) jint CANCELLED NS_SWIFT_NAME(CANCELLED);
-@property (readonly, class) jint EXCEPTIONAL NS_SWIFT_NAME(EXCEPTIONAL);
-@property (readonly, class) jint SIGNAL NS_SWIFT_NAME(SIGNAL);
-@property (readonly, class) jint SMASK NS_SWIFT_NAME(SMASK);
 
 #pragma mark Public
 
@@ -527,14 +534,13 @@ withJavaUtilConcurrentTimeUnit:(JavaUtilConcurrentTimeUnit *)unit;
 - (jboolean)isDone;
 
 /*!
- @brief Returns the result of the computation when it <code>is
-  done</code>
- .This method differs from <code>get()</code> in that
-  abnormal completion results in <code>RuntimeException</code> or 
- <code>Error</code>, not <code>ExecutionException</code>, and that
-  interrupts of the calling thread do <em>not</em> cause the
-  method to abruptly return by throwing <code>InterruptedException</code>
- .
+ @brief Returns the result of the computation when it 
+ is done.
+ This method differs from <code>get()</code> in that abnormal
+  completion results in <code>RuntimeException</code> or <code>Error</code>,
+  not <code>ExecutionException</code>, and that interrupts of the
+  calling thread do <em>not</em> cause the method to abruptly
+  return by throwing <code>InterruptedException</code>.
  @return the computed result
  */
 - (id)join;
@@ -813,6 +819,8 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentForkJoinTask)
 #define INCLUDE_JavaLangRefWeakReference 1
 #include "java/lang/ref/WeakReference.h"
 
+@class JavaLangInteger;
+@class JavaLangLong;
 @class JavaLangRefReferenceQueue;
 @class JavaLangThrowable;
 @class JavaUtilConcurrentForkJoinTask;
@@ -880,6 +888,7 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentForkJoinTask_ExceptionNode)
 #define INCLUDE_JavaUtilConcurrentRunnableFuture 1
 #include "java/util/concurrent/RunnableFuture.h"
 
+@class JavaLangBoolean;
 @protocol JavaLangRunnable;
 
 /*!
@@ -902,6 +911,8 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentForkJoinTask_ExceptionNode)
 - (void)run;
 
 - (void)setRawResultWithId:(id)v;
+
+- (NSString *)description;
 
 #pragma mark Package-Private
 
@@ -936,6 +947,8 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentForkJoinTask_AdaptedRunnable)
 #define INCLUDE_JavaUtilConcurrentRunnableFuture 1
 #include "java/util/concurrent/RunnableFuture.h"
 
+@class JavaLangBoolean;
+@class JavaLangLong;
 @class JavaLangVoid;
 @class JavaUtilConcurrentTimeUnit;
 @protocol JavaLangRunnable;
@@ -967,6 +980,8 @@ withJavaUtilConcurrentTimeUnit:(JavaUtilConcurrentTimeUnit *)arg1;
 
 - (void)setRawResultWithId:(JavaLangVoid *)v;
 
+- (NSString *)description;
+
 #pragma mark Package-Private
 
 - (instancetype __nonnull)initWithJavaLangRunnable:(id<JavaLangRunnable>)runnable;
@@ -994,6 +1009,8 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentForkJoinTask_AdaptedRunnableAction)
 #if !defined (JavaUtilConcurrentForkJoinTask_RunnableExecuteAction_) && (INCLUDE_ALL_JavaUtilConcurrentForkJoinTask || defined(INCLUDE_JavaUtilConcurrentForkJoinTask_RunnableExecuteAction))
 #define JavaUtilConcurrentForkJoinTask_RunnableExecuteAction_
 
+@class JavaLangBoolean;
+@class JavaLangLong;
 @class JavaLangThrowable;
 @class JavaLangVoid;
 @class JavaUtilConcurrentTimeUnit;
@@ -1057,6 +1074,7 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentForkJoinTask_RunnableExecuteAction)
 #define INCLUDE_JavaUtilConcurrentRunnableFuture 1
 #include "java/util/concurrent/RunnableFuture.h"
 
+@class JavaLangBoolean;
 @protocol JavaUtilConcurrentCallable;
 
 /*!
@@ -1077,6 +1095,8 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentForkJoinTask_RunnableExecuteAction)
 - (void)run;
 
 - (void)setRawResultWithId:(id)v;
+
+- (NSString *)description;
 
 #pragma mark Package-Private
 
@@ -1107,6 +1127,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentForkJoinTask_AdaptedCallable)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaUtilConcurrentForkJoinTask")

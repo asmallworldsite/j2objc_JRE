@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaNioChannelsSpiSelectorProvider
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -41,7 +38,7 @@
   system-wide default provider instance, which is returned by the <code>provider</code>
   method.  The first invocation of that method will locate
   the default provider as specified below. 
- <p> The system-wide default provider is used by the static <tt>open</tt>
+ <p> The system-wide default provider is used by the static <code>open</code>
   methods of the <code>DatagramChannel</code>
  , <code>Pipe</code>, <code>Selector</code>
  , <code>ServerSocketChannel</code>
@@ -49,7 +46,7 @@
   classes.  It is also
   used by the <code>System.inheritedChannel()</code>
   method. A program may make use of a provider other than the default provider
-  by instantiating that provider and then directly invoking the <tt>open</tt>
+  by instantiating that provider and then directly invoking the <code>open</code>
   methods defined in this class. 
  <p> All of the methods in this class are safe for use by multiple concurrent
   threads.  </p>
@@ -103,12 +100,12 @@
  <p> The first invocation of this method creates the channel that is
   returned. Subsequent invocations of this method return the same
   channel. </p>
- @return The inherited channel, if any, otherwise <tt>null</tt>.
+ @return The inherited channel, if any, otherwise <code>null</code>.
  @throw IOException
  If an I/O error occurs
  @throw SecurityException
  If a security manager has been installed and it denies
-           <code>RuntimePermission</code><tt>("inheritedChannel")</tt>
+           <code>RuntimePermission</code><code>("inheritedChannel")</code>
  @since 1.5
  */
 - (id<JavaNioChannelsChannel>)inheritedChannel;
@@ -174,7 +171,7 @@
  <ol>
     
  <li><p> If the system property
-    <tt>java.nio.channels.spi.SelectorProvider</tt> is defined then it is
+    <code>java.nio.channels.spi.SelectorProvider</code> is defined then it is
     taken to be the fully-qualified name of a concrete provider class.
     The class is loaded and instantiated; if this process fails then an
     unspecified error is thrown.  </p></li>
@@ -182,8 +179,8 @@
  <li><p> If a provider class has been installed in a jar file that is
     visible to the system class loader, and that jar file contains a
     provider-configuration file named   
- <tt>java.nio.channels.spi.SelectorProvider</tt> in the resource
-    directory <tt>META-INF/services</tt>, then the first class name
+ <code>java.nio.channels.spi.SelectorProvider</code> in the resource
+    directory <code>META-INF/services</code>, then the first class name
     specified in that file is taken.  The class is loaded and
     instantiated; if this process fails then an unspecified error is
     thrown.  </p></li>
@@ -206,7 +203,7 @@
  @brief Initializes a new instance of this class.
  @throw SecurityException
  If a security manager has been installed and it denies
-           <code>RuntimePermission</code><tt>("selectorProvider")</tt>
+           <code>RuntimePermission</code><code>("selectorProvider")</code>
  */
 - (instancetype __nonnull)init;
 
@@ -226,6 +223,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaNioChannelsSpiSelectorProvider)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaNioChannelsSpiSelectorProvider")

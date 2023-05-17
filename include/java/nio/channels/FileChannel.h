@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaNioChannelsFileChannel
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -42,6 +39,9 @@
 #include "java/nio/channels/ScatteringByteChannel.h"
 
 @class IOSObjectArray;
+@class JavaLangBoolean;
+@class JavaLangInteger;
+@class JavaLangLong;
 @class JavaNioByteBuffer;
 @class JavaNioChannelsFileChannel_MapMode;
 @class JavaNioChannelsFileLock;
@@ -940,9 +940,6 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaNioChannelsFileChannel)
  - seealso: java.nio.channels.FileChannel#map
  */
 @interface JavaNioChannelsFileChannel_MapMode : NSObject
-@property (readonly, class, strong) JavaNioChannelsFileChannel_MapMode *READ_ONLY NS_SWIFT_NAME(READ_ONLY);
-@property (readonly, class, strong) JavaNioChannelsFileChannel_MapMode *READ_WRITE NS_SWIFT_NAME(READ_WRITE);
-@property (readonly, class, strong) JavaNioChannelsFileChannel_MapMode *PRIVATE NS_SWIFT_NAME(PRIVATE);
 
 #pragma mark Public
 
@@ -992,6 +989,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaNioChannelsFileChannel_MapMode)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaNioChannelsFileChannel")

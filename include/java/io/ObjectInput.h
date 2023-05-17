@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaIoObjectInput
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -34,90 +31,88 @@
 #include "java/lang/AutoCloseable.h"
 
 @class IOSByteArray;
+@class JavaLangInteger;
+@class JavaLangLong;
 
 /*!
- @brief Defines an interface for classes that allow reading serialized objects.
- - seealso: ObjectInputStream
- - seealso: ObjectOutput
+ @brief ObjectInput extends the DataInput interface to include the reading of
+  objects.DataInput includes methods for the input of primitive types,
+  ObjectInput extends that interface to include objects, arrays, and Strings.
+ @author unascribed
+ - seealso: java.io.InputStream
+ - seealso: java.io.ObjectOutputStream
+ - seealso: java.io.ObjectInputStream
+ @since 1.1
  */
 @protocol JavaIoObjectInput < JavaIoDataInput, JavaLangAutoCloseable, JavaObject >
 
 /*!
- @brief Indicates the number of bytes of primitive data that can be read without
-  blocking.
- @return the number of bytes available.
- @throw IOException
- if an I/O error occurs.
- */
-- (jint)available;
-
-/*!
- @brief Closes this stream.Implementations of this method should free any
-  resources used by the stream.
- @throw IOException
- if an I/O error occurs while closing the input stream.
- */
-- (void)close;
-
-/*!
- @brief Reads a single byte from this stream and returns it as an integer in the
-  range from 0 to 255.Returns -1 if the end of this stream has been
-  reached.
- Blocks if no input is available.
- @return the byte read or -1 if the end of this stream has been reached.
- @throw IOException
- if this stream is closed or another I/O error occurs.
- */
-- (jint)read;
-
-/*!
- @brief Reads bytes from this stream into the byte array <code>buffer</code>.Blocks
-  while waiting for input.
- @param buffer the array in which to store the bytes read.
- @return the number of bytes read or -1 if the end of this stream has been
-          reached.
- @throw IOException
- if this stream is closed or another I/O error occurs.
- */
-- (jint)readWithByteArray:(IOSByteArray *)buffer;
-
-/*!
- @brief Reads at most <code>count</code> bytes from this stream and stores them in
-  byte array <code>buffer</code> starting at offset <code>count</code>.Blocks while
-  waiting for input.
- @param buffer the array in which to store the bytes read.
- @param offset the initial position in 
- <code>buffer</code>  to store the bytes read             from this stream.
- @param count the maximum number of bytes to store in 
- <code>buffer</code> .
- @return the number of bytes read or -1 if the end of this stream has been
-          reached.
- @throw IOException
- if this stream is closed or another I/O error occurs.
- */
-- (jint)readWithByteArray:(IOSByteArray *)buffer
-                  withInt:(jint)offset
-                  withInt:(jint)count;
-
-/*!
- @brief Reads the next object from this stream.
- @return the object read.
- @throw ClassNotFoundException
- if the object's class cannot be found.
- @throw IOException
- if this stream is closed or another I/O error occurs.
+ @brief Read and return an object.The class that implements this interface
+  defines where the object is "read" from.
+ @return the object read from the stream
+ @throw java.lang.ClassNotFoundExceptionIf the class of a serialized
+       object cannot be found.
+ @throw IOExceptionIf any of the usual Input/Output
+  related exceptions occur.
  */
 - (id)readObject;
 
 /*!
- @brief Skips <code>byteCount</code> bytes on this stream.Less than <code>byteCount</code> byte are
-  skipped if the end of this stream is reached before the operation
-  completes.
- @return the number of bytes actually skipped.
- @throw IOException
- if this stream is closed or another I/O error occurs.
+ @brief Reads a byte of data.This method will block if no input is
+  available.
+ @return the byte read, or -1 if the end of the
+           stream is reached.
+ @throw IOExceptionIf an I/O error has occurred.
  */
-- (jlong)skipWithLong:(jlong)byteCount;
+- (jint)read;
+
+/*!
+ @brief Reads into an array of bytes.This method will
+  block until some input is available.
+ @param b the buffer into which the data is read
+ @return the actual number of bytes read, -1 is
+           returned when the end of the stream is reached.
+ @throw IOExceptionIf an I/O error has occurred.
+ */
+- (jint)readWithByteArray:(IOSByteArray *)b;
+
+/*!
+ @brief Reads into an array of bytes.This method will
+  block until some input is available.
+ @param b the buffer into which the data is read
+ @param off the start offset of the data
+ @param len the maximum number of bytes read
+ @return the actual number of bytes read, -1 is
+           returned when the end of the stream is reached.
+ @throw IOExceptionIf an I/O error has occurred.
+ */
+- (jint)readWithByteArray:(IOSByteArray *)b
+                  withInt:(jint)off
+                  withInt:(jint)len;
+
+/*!
+ @brief Skips n bytes of input.
+ @param n the number of bytes to be skipped
+ @return the actual number of bytes skipped.
+ @throw IOExceptionIf an I/O error has occurred.
+ */
+- (jlong)skipWithLong:(jlong)n;
+
+/*!
+ @brief Returns the number of bytes that can be read
+  without blocking.
+ @return the number of available bytes.
+ @throw IOExceptionIf an I/O error has occurred.
+ */
+- (jint)available;
+
+/*!
+ @brief Closes the input stream.Must be called
+  to release any resources associated with
+  the stream.
+ @throw IOExceptionIf an I/O error has occurred.
+ */
+- (void)close;
 
 @end
 
@@ -131,6 +126,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaIoObjectInput)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaIoObjectInput")

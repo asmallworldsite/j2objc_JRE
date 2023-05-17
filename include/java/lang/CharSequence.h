@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaLangCharSequence
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -25,10 +22,12 @@
 #if !defined (JavaLangCharSequence_) && (INCLUDE_ALL_JavaLangCharSequence || defined(INCLUDE_JavaLangCharSequence))
 #define JavaLangCharSequence_
 
+@class JavaLangCharacter;
+@class JavaLangInteger;
 @protocol JavaUtilStreamIntStream;
 
 /*!
- @brief A <tt>CharSequence</tt> is a readable sequence of <code>char</code> values.This
+ @brief A <code>CharSequence</code> is a readable sequence of <code>char</code> values.This
   interface provides uniform, read-only access to many different kinds of 
  <code>char</code> sequences.
  A <code>char</code> value represents a character in the <i>Basic
@@ -36,12 +35,12 @@
  Unicode Character Representation</a> for details. 
  <p> This interface does not refine the general contracts of the <code>equals</code>
   and <code>hashCode</code>
-  methods.  The result of comparing two
-  objects that implement <tt>CharSequence</tt> is therefore, in general,
-  undefined.  Each object may be implemented by a different class, and there
+  methods. The result of testing two objects
+  that implement <code>CharSequence</code> for equality is therefore, in general, undefined.
+  Each object may be implemented by a different class, and there
   is no guarantee that each class will be capable of testing its instances
   for equality with those of the other.  It is therefore inappropriate to use
-  arbitrary <tt>CharSequence</tt> instances as elements in a set or as keys in
+  arbitrary <code>CharSequence</code> instances as elements in a set or as keys in
   a map. </p>
  @author Mike McCloskey
  @since 1.4
@@ -57,35 +56,35 @@
 
 /*!
  @brief Returns the <code>char</code> value at the specified index.An index ranges from zero
-  to <tt>length() - 1</tt>.
+  to <code>length() - 1</code>.
  The first <code>char</code> value of the sequence is at
   index zero, the next at index one, and so on, as for array
   indexing. 
  <p>If the <code>char</code> value specified by the index is a 
- <a href="{@@docRoot}/java/lang/Character.html#unicode">surrogate</a>, the surrogate
+ <a href="{@@docRoot}/java.base/java/lang/Character.html#unicode">surrogate</a>, the surrogate
   value is returned.
- @param index the index of the  <code> char </code>  value to be returned
+ @param index the index of the <code>char</code>  value to be returned
  @return the specified <code>char</code> value
  @throw IndexOutOfBoundsException
- if the <tt>index</tt> argument is negative or not less than
-           <tt>length()</tt>
+ if the <code>index</code> argument is negative or not less than
+           <code>length()</code>
  */
 - (jchar)charAtWithInt:(jint)index;
 
 /*!
  @brief Returns a <code>CharSequence</code> that is a subsequence of this sequence.
  The subsequence starts with the <code>char</code> value at the specified index and
-  ends with the <code>char</code> value at index <tt>end - 1</tt>.  The length
+  ends with the <code>char</code> value at index <code>end - 1</code>.  The length
   (in <code>char</code>s) of the
-  returned sequence is <tt>end - start</tt>, so if <tt>start == end</tt>
+  returned sequence is <code>end - start</code>, so if <code>start == end</code>
   then an empty sequence is returned.
  @param start the start index, inclusive
  @param end the end index, exclusive
  @return the specified subsequence
  @throw IndexOutOfBoundsException
- if <tt>start</tt> or <tt>end</tt> are negative,
-           if <tt>end</tt> is greater than <tt>length()</tt>,
-           or if <tt>start</tt> is greater than <tt>end</tt>
+ if <code>start</code> or <code>end</code> are negative,
+           if <code>end</code> is greater than <code>length()</code>,
+           or if <code>start</code> is greater than <code>end</code>
  */
 - (id<JavaLangCharSequence> __nonnull)subSequenceFrom:(jint)start
                                                    to:(jint)end;
@@ -100,11 +99,14 @@
 
 /*!
  @brief Returns a stream of <code>int</code> zero-extending the <code>char</code> values
-  from this sequence.Any char which maps to a <a href="{@@docRoot}/java/lang/Character.html#unicode">
+  from this sequence.Any char which maps to a <a href="{@@docRoot}/java.base/java/lang/Character.html#unicode">
  surrogate code
   point</a> is passed through uninterpreted.
- <p>If the sequence is mutated while the stream is being read, the
-  result is undefined.
+ <p>The stream binds to this sequence when the terminal stream operation
+  commences (specifically, for mutable sequences the spliterator for the
+  stream is <a href="../util/Spliterator.html#binding"><em>late-binding</em></a>).
+  If the sequence is modified during that operation then the result is
+  undefined.
  @return an IntStream of char values from this sequence
  @since 1.8
  */
@@ -118,12 +120,45 @@
  Any other code units, including ordinary BMP characters,
   unpaired surrogates, and undefined code units, are zero-extended to 
  <code>int</code> values which are then passed to the stream. 
- <p>If the sequence is mutated while the stream is being read, the result
-  is undefined.
+ <p>The stream binds to this sequence when the terminal stream operation
+  commences (specifically, for mutable sequences the spliterator for the
+  stream is <a href="../util/Spliterator.html#binding"><em>late-binding</em></a>).
+  If the sequence is modified during that operation then the result is
+  undefined.
  @return an IntStream of Unicode code points from this sequence
  @since 1.8
  */
 - (id<JavaUtilStreamIntStream> __nonnull)codePoints;
+
+@end
+
+@interface JavaLangCharSequence : NSObject
+
+/*!
+ @brief Compares two <code>CharSequence</code> instances lexicographically.Returns a
+  negative value, zero, or a positive value if the first sequence is lexicographically
+  less than, equal to, or greater than the second, respectively.
+ <p>
+  The lexicographical ordering of <code>CharSequence</code> is defined as follows.
+  Consider a <code>CharSequence</code> <i>cs</i> of length <i>len</i> to be a
+  sequence of char values, <i>cs[0]</i> to <i>cs[len-1]</i>. Suppose <i>k</i>
+  is the lowest index at which the corresponding char values from each sequence
+  differ. The lexicographic ordering of the sequences is determined by a numeric
+  comparison of the char values <i>cs1[k]</i> with <i>cs2[k]</i>. If there is
+  no such index <i>k</i>, the shorter sequence is considered lexicographically
+  less than the other. If the sequences have the same length, the sequences are
+  considered lexicographically equal.
+ @param cs1 the first <code>CharSequence</code>
+ @param cs2 the second <code>CharSequence</code>
+ @return the value <code>0</code> if the two <code>CharSequence</code> are equal;
+           a negative integer if the first <code>CharSequence</code>
+           is lexicographically less than the second; or a
+           positive integer if the first <code>CharSequence</code> is
+           lexicographically greater than the second.
+ @since 11
+ */
++ (jint)compareWithJavaLangCharSequence:(id<JavaLangCharSequence>)cs1
+               withJavaLangCharSequence:(id<JavaLangCharSequence>)cs2;
 
 @end
 
@@ -133,6 +168,8 @@ FOUNDATION_EXPORT id<JavaUtilStreamIntStream> JavaLangCharSequence_chars(id<Java
 
 FOUNDATION_EXPORT id<JavaUtilStreamIntStream> JavaLangCharSequence_codePoints(id<JavaLangCharSequence> self);
 
+FOUNDATION_EXPORT jint JavaLangCharSequence_compareWithJavaLangCharSequence_withJavaLangCharSequence_(id<JavaLangCharSequence> cs1, id<JavaLangCharSequence> cs2);
+
 J2OBJC_TYPE_LITERAL_HEADER(JavaLangCharSequence)
 
 #endif
@@ -141,6 +178,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaLangCharSequence)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaLangCharSequence")

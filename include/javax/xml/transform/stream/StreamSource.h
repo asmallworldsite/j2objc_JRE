@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaxXmlTransformStreamStreamSource
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -44,19 +41,18 @@
  @version $Revision: 829971 $, $Date: 2009-10-26 14:15:39 -0700 (Mon, 26 Oct 2009) $
  */
 @interface JavaxXmlTransformStreamStreamSource : NSObject < JavaxXmlTransformSource >
-@property (readonly, copy, class) NSString *FEATURE NS_SWIFT_NAME(FEATURE);
 
 #pragma mark Public
 
 /*!
- @brief <p>Zero-argument default constructor.
- If this constructor is used, and
+ @brief <p>Zero-argument default constructor.If this constructor is used, and
   no Stream source is set using 
  <code>setInputStream(java.io.InputStream inputStream)</code> or 
  <code>setReader(java.io.Reader reader)</code>, then the 
  <code>Transformer</code> will
   create an empty source <code>java.io.InputStream</code> using 
- <code>new InputStream()</code>.</p>
+ <code>new InputStream()</code>.
+ </p>
  - seealso: javax.xml.transform.Transformer#transform(Source xmlSource, Result outputTarget)
  */
 - (instancetype __nonnull)init;
@@ -268,6 +264,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaxXmlTransformStreamStreamSource)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaxXmlTransformStreamStreamSource")

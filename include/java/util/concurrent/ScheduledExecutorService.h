@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaUtilConcurrentScheduledExecutorService
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -29,6 +26,7 @@
 #define INCLUDE_JavaUtilConcurrentExecutorService 1
 #include "java/util/concurrent/ExecutorService.h"
 
+@class JavaLangLong;
 @class JavaUtilConcurrentTimeUnit;
 @protocol JavaLangRunnable;
 @protocol JavaUtilConcurrentCallable;
@@ -69,14 +67,12 @@
     private final ScheduledExecutorService scheduler =
       Executors.newScheduledThreadPool(1);
     public void beepForAnHour() {
-      final Runnable beeper = new Runnable() {
-        public void run() { System.out.println("beep"); }
-      };
-      final ScheduledFuture<?> beeperHandle =
+      Runnable beeper = () -> System.out.println("beep");
+      ScheduledFuture<?> beeperHandle =
         scheduler.scheduleAtFixedRate(beeper, 10, 10, SECONDS);
-      scheduler.schedule(new Runnable() {
-        public void run() { beeperHandle.cancel(true); }
-      }, 60 * 60, SECONDS);    }    }
+      Runnable canceller = () -> beeperHandle.cancel(false);
+      scheduler.schedule(canceller, 1, HOURS);
+    }  }
  
 @endcode
  @since 1.5
@@ -85,8 +81,7 @@
 @protocol JavaUtilConcurrentScheduledExecutorService < JavaUtilConcurrentExecutorService, JavaObject >
 
 /*!
- @brief Creates and executes a one-shot action that becomes enabled
-  after the given delay.
+ @brief Submits a one-shot task that becomes enabled after the given delay.
  @param command the task to execute
  @param delay the time from now to delay execution
  @param unit the time unit of the delay parameter
@@ -95,31 +90,31 @@
           <code>null</code> upon completion
  @throw RejectedExecutionExceptionif the task cannot be
           scheduled for execution
- @throw NullPointerExceptionif command is null
+ @throw NullPointerExceptionif command or unit is null
  */
 - (id<JavaUtilConcurrentScheduledFuture>)scheduleWithJavaLangRunnable:(id<JavaLangRunnable>)command
                                                              withLong:(jlong)delay
                                        withJavaUtilConcurrentTimeUnit:(JavaUtilConcurrentTimeUnit *)unit;
 
 /*!
- @brief Creates and executes a ScheduledFuture that becomes enabled after the
-  given delay.
+ @brief Submits a value-returning one-shot task that becomes enabled
+  after the given delay.
  @param callable the function to execute
  @param delay the time from now to delay execution
  @param unit the time unit of the delay parameter
  @return a ScheduledFuture that can be used to extract result or cancel
  @throw RejectedExecutionExceptionif the task cannot be
           scheduled for execution
- @throw NullPointerExceptionif callable is null
+ @throw NullPointerExceptionif callable or unit is null
  */
 - (id<JavaUtilConcurrentScheduledFuture>)scheduleWithJavaUtilConcurrentCallable:(id<JavaUtilConcurrentCallable>)callable
                                                                        withLong:(jlong)delay
                                                  withJavaUtilConcurrentTimeUnit:(JavaUtilConcurrentTimeUnit *)unit;
 
 /*!
- @brief Creates and executes a periodic action that becomes enabled first
-  after the given initial delay, and subsequently with the given
-  period; that is, executions will commence after 
+ @brief Submits a periodic action that becomes enabled first after the
+  given initial delay, and subsequently with the given period;
+  that is, executions will commence after 
  <code>initialDelay</code>, then <code>initialDelay + period</code>, then 
  <code>initialDelay + 2 * period</code>, and so on.
  <p>The sequence of task executions continues indefinitely until
@@ -129,9 +124,9 @@
   via the returned future. 
  <li>The executor terminates, also resulting in task cancellation. 
  <li>An execution of the task throws an exception.  In this case
-  calling <code>get</code> on the returned future will
-  throw <code>ExecutionException</code>.
-  </ul>
+  calling <code>get</code> on the returned future will throw 
+ <code>ExecutionException</code>, holding the exception as its cause. 
+ </ul>
   Subsequent executions are suppressed.  Subsequent calls to 
  <code>isDone()</code> on the returned future will
   return <code>true</code>.
@@ -150,7 +145,7 @@
           abnormal termination of a task execution.
  @throw RejectedExecutionExceptionif the task cannot be
           scheduled for execution
- @throw NullPointerExceptionif command is null
+ @throw NullPointerExceptionif command or unit is null
  @throw IllegalArgumentExceptionif period less than or equal to zero
  */
 - (id<JavaUtilConcurrentScheduledFuture>)scheduleAtFixedRateWithJavaLangRunnable:(id<JavaLangRunnable>)command
@@ -159,10 +154,10 @@
                                                   withJavaUtilConcurrentTimeUnit:(JavaUtilConcurrentTimeUnit *)unit;
 
 /*!
- @brief Creates and executes a periodic action that becomes enabled first
-  after the given initial delay, and subsequently with the
-  given delay between the termination of one execution and the
-  commencement of the next.
+ @brief Submits a periodic action that becomes enabled first after the
+  given initial delay, and subsequently with the given delay
+  between the termination of one execution and the commencement of
+  the next.
  <p>The sequence of task executions continues indefinitely until
   one of the following exceptional completions occur: 
  <ul>
@@ -170,9 +165,9 @@
   via the returned future. 
  <li>The executor terminates, also resulting in task cancellation. 
  <li>An execution of the task throws an exception.  In this case
-  calling <code>get</code> on the returned future will
-  throw <code>ExecutionException</code>.
-  </ul>
+  calling <code>get</code> on the returned future will throw 
+ <code>ExecutionException</code>, holding the exception as its cause. 
+ </ul>
   Subsequent executions are suppressed.  Subsequent calls to 
  <code>isDone()</code> on the returned future will
   return <code>true</code>.
@@ -187,7 +182,7 @@
           abnormal termination of a task execution.
  @throw RejectedExecutionExceptionif the task cannot be
           scheduled for execution
- @throw NullPointerExceptionif command is null
+ @throw NullPointerExceptionif command or unit is null
  @throw IllegalArgumentExceptionif delay less than or equal to zero
  */
 - (id<JavaUtilConcurrentScheduledFuture>)scheduleWithFixedDelayWithJavaLangRunnable:(id<JavaLangRunnable>)command
@@ -207,6 +202,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentScheduledExecutorService)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaUtilConcurrentScheduledExecutorService")

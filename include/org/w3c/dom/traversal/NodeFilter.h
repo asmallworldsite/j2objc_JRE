@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_OrgW3cDomTraversalNodeFilter
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -25,6 +22,8 @@
 #if !defined (OrgW3cDomTraversalNodeFilter_) && (INCLUDE_ALL_OrgW3cDomTraversalNodeFilter || defined(INCLUDE_OrgW3cDomTraversalNodeFilter))
 #define OrgW3cDomTraversalNodeFilter_
 
+@class JavaLangInteger;
+@class JavaLangShort;
 @protocol OrgW3cDomNode;
 
 /*!
@@ -61,26 +60,6 @@
     rejected, or skipped, as defined above.
  */
 - (jshort)acceptNodeWithOrgW3cDomNode:(id<OrgW3cDomNode>)n;
-
-@end
-
-@interface OrgW3cDomTraversalNodeFilter : NSObject
-@property (readonly, class) jshort FILTER_ACCEPT NS_SWIFT_NAME(FILTER_ACCEPT);
-@property (readonly, class) jshort FILTER_REJECT NS_SWIFT_NAME(FILTER_REJECT);
-@property (readonly, class) jshort FILTER_SKIP NS_SWIFT_NAME(FILTER_SKIP);
-@property (readonly, class) jint SHOW_ALL NS_SWIFT_NAME(SHOW_ALL);
-@property (readonly, class) jint SHOW_ELEMENT NS_SWIFT_NAME(SHOW_ELEMENT);
-@property (readonly, class) jint SHOW_ATTRIBUTE NS_SWIFT_NAME(SHOW_ATTRIBUTE);
-@property (readonly, class) jint SHOW_TEXT NS_SWIFT_NAME(SHOW_TEXT);
-@property (readonly, class) jint SHOW_CDATA_SECTION NS_SWIFT_NAME(SHOW_CDATA_SECTION);
-@property (readonly, class) jint SHOW_ENTITY_REFERENCE NS_SWIFT_NAME(SHOW_ENTITY_REFERENCE);
-@property (readonly, class) jint SHOW_ENTITY NS_SWIFT_NAME(SHOW_ENTITY);
-@property (readonly, class) jint SHOW_PROCESSING_INSTRUCTION NS_SWIFT_NAME(SHOW_PROCESSING_INSTRUCTION);
-@property (readonly, class) jint SHOW_COMMENT NS_SWIFT_NAME(SHOW_COMMENT);
-@property (readonly, class) jint SHOW_DOCUMENT NS_SWIFT_NAME(SHOW_DOCUMENT);
-@property (readonly, class) jint SHOW_DOCUMENT_TYPE NS_SWIFT_NAME(SHOW_DOCUMENT_TYPE);
-@property (readonly, class) jint SHOW_DOCUMENT_FRAGMENT NS_SWIFT_NAME(SHOW_DOCUMENT_FRAGMENT);
-@property (readonly, class) jint SHOW_NOTATION NS_SWIFT_NAME(SHOW_NOTATION);
 
 @end
 
@@ -238,6 +217,4 @@ J2OBJC_TYPE_LITERAL_HEADER(OrgW3cDomTraversalNodeFilter)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_OrgW3cDomTraversalNodeFilter")

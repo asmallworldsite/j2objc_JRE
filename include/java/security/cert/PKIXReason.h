@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaSecurityCertPKIXReason
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -35,7 +32,7 @@
 
 @class IOSObjectArray;
 
-typedef NS_ENUM(NSUInteger, JavaSecurityCertPKIXReason_Enum) {
+typedef NS_ENUM(jint, JavaSecurityCertPKIXReason_Enum) {
   JavaSecurityCertPKIXReason_Enum_NAME_CHAINING = 0,
   JavaSecurityCertPKIXReason_Enum_INVALID_KEY_USAGE = 1,
   JavaSecurityCertPKIXReason_Enum_INVALID_POLICY = 2,
@@ -45,24 +42,22 @@ typedef NS_ENUM(NSUInteger, JavaSecurityCertPKIXReason_Enum) {
   JavaSecurityCertPKIXReason_Enum_PATH_TOO_LONG = 6,
   JavaSecurityCertPKIXReason_Enum_INVALID_NAME = 7,
 };
+#if J2OBJC_IMPORTED_BY_JAVA_IMPLEMENTATION
+#define JavaSecurityCertPKIXReason_ORDINAL jint
+#else
+#define JavaSecurityCertPKIXReason_ORDINAL JavaSecurityCertPKIXReason_Enum
+#endif
+
 
 /*!
  @brief The <code>PKIXReason</code> enumerates the potential PKIX-specific reasons
   that an X.509 certification path may be invalid according to the PKIX
-  (RFC 3280) standard.These reasons are in addition to those of the 
+  (RFC 5280) standard.These reasons are in addition to those of the 
  <code>CertPathValidatorException.BasicReason</code> enumeration.
  @since 1.7
  */
 @interface JavaSecurityCertPKIXReason : JavaLangEnum < JavaSecurityCertCertPathValidatorException_Reason >
 
-@property (readonly, class, nonnull) JavaSecurityCertPKIXReason *NAME_CHAINING NS_SWIFT_NAME(NAME_CHAINING);
-@property (readonly, class, nonnull) JavaSecurityCertPKIXReason *INVALID_KEY_USAGE NS_SWIFT_NAME(INVALID_KEY_USAGE);
-@property (readonly, class, nonnull) JavaSecurityCertPKIXReason *INVALID_POLICY NS_SWIFT_NAME(INVALID_POLICY);
-@property (readonly, class, nonnull) JavaSecurityCertPKIXReason *NO_TRUST_ANCHOR NS_SWIFT_NAME(NO_TRUST_ANCHOR);
-@property (readonly, class, nonnull) JavaSecurityCertPKIXReason *UNRECOGNIZED_CRIT_EXT NS_SWIFT_NAME(UNRECOGNIZED_CRIT_EXT);
-@property (readonly, class, nonnull) JavaSecurityCertPKIXReason *NOT_CA_CERT NS_SWIFT_NAME(NOT_CA_CERT);
-@property (readonly, class, nonnull) JavaSecurityCertPKIXReason *PATH_TOO_LONG NS_SWIFT_NAME(PATH_TOO_LONG);
-@property (readonly, class, nonnull) JavaSecurityCertPKIXReason *INVALID_NAME NS_SWIFT_NAME(INVALID_NAME);
 #pragma mark Public
 
 + (JavaSecurityCertPKIXReason *)valueOfWithNSString:(NSString *)name;
@@ -72,6 +67,8 @@ typedef NS_ENUM(NSUInteger, JavaSecurityCertPKIXReason_Enum) {
 #pragma mark Package-Private
 
 - (JavaSecurityCertPKIXReason_Enum)toNSEnum;
+
+- (JavaSecurityCertPKIXReason_ORDINAL)ordinal;
 
 @end
 
@@ -133,7 +130,7 @@ FOUNDATION_EXPORT IOSObjectArray *JavaSecurityCertPKIXReason_values(void);
 
 FOUNDATION_EXPORT JavaSecurityCertPKIXReason *JavaSecurityCertPKIXReason_valueOfWithNSString_(NSString *name);
 
-FOUNDATION_EXPORT JavaSecurityCertPKIXReason *JavaSecurityCertPKIXReason_fromOrdinal(NSUInteger ordinal);
+FOUNDATION_EXPORT JavaSecurityCertPKIXReason *JavaSecurityCertPKIXReason_fromOrdinal(JavaSecurityCertPKIXReason_ORDINAL ordinal);
 
 J2OBJC_TYPE_LITERAL_HEADER(JavaSecurityCertPKIXReason)
 
@@ -143,6 +140,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaSecurityCertPKIXReason)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaSecurityCertPKIXReason")

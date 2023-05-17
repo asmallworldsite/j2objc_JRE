@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaIoFilterInputStream
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -30,6 +27,9 @@
 #include "java/io/InputStream.h"
 
 @class IOSByteArray;
+@class JavaLangBoolean;
+@class JavaLangInteger;
+@class JavaLangLong;
 
 /*!
  @brief A <code>FilterInputStream</code> contains
@@ -46,7 +46,7 @@
   and may also provide additional methods
   and fields.
  @author Jonathan Payne
- @since JDK1.0
+ @since 1.0
  */
 @interface JavaIoFilterInputStream : JavaIoInputStream {
  @public
@@ -133,7 +133,7 @@
 - (jint)read;
 
 /*!
- @brief Reads up to <code>byte.length</code> bytes of data from this
+ @brief Reads up to <code>b.length</code> bytes of data from this
   input stream into an array of bytes.This method blocks until some
   input is available.
  <p>
@@ -211,8 +211,7 @@
   This method simply performs <code>in.skip(n)</code>.
  @param n the number of bytes to be skipped.
  @return the actual number of bytes skipped.
- @throw IOExceptionif the stream does not support seek,
-                           or if some other I/O error occurs.
+ @throw IOExceptionif <code>in.skip(n)</code> throws an IOException.
  */
 - (jlong)skipWithLong:(jlong)n;
 
@@ -252,6 +251,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaIoFilterInputStream)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaIoFilterInputStream")

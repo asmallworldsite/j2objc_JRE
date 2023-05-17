@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaxLangModelElementModifier
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -31,7 +28,7 @@
 
 @class IOSObjectArray;
 
-typedef NS_ENUM(NSUInteger, JavaxLangModelElementModifier_Enum) {
+typedef NS_ENUM(jint, JavaxLangModelElementModifier_Enum) {
   JavaxLangModelElementModifier_Enum_PUBLIC = 0,
   JavaxLangModelElementModifier_Enum_PROTECTED = 1,
   JavaxLangModelElementModifier_Enum_PRIVATE = 2,
@@ -44,20 +41,15 @@ typedef NS_ENUM(NSUInteger, JavaxLangModelElementModifier_Enum) {
   JavaxLangModelElementModifier_Enum_NATIVE = 9,
   JavaxLangModelElementModifier_Enum_STRICTFP = 10,
 };
+#if J2OBJC_IMPORTED_BY_JAVA_IMPLEMENTATION
+#define JavaxLangModelElementModifier_ORDINAL jint
+#else
+#define JavaxLangModelElementModifier_ORDINAL JavaxLangModelElementModifier_Enum
+#endif
+
 
 @interface JavaxLangModelElementModifier : JavaLangEnum
 
-@property (readonly, class, nonnull) JavaxLangModelElementModifier *PUBLIC NS_SWIFT_NAME(PUBLIC);
-@property (readonly, class, nonnull) JavaxLangModelElementModifier *PROTECTED NS_SWIFT_NAME(PROTECTED);
-@property (readonly, class, nonnull) JavaxLangModelElementModifier *PRIVATE NS_SWIFT_NAME(PRIVATE);
-@property (readonly, class, nonnull) JavaxLangModelElementModifier *ABSTRACT NS_SWIFT_NAME(ABSTRACT);
-@property (readonly, class, nonnull) JavaxLangModelElementModifier *STATIC NS_SWIFT_NAME(STATIC);
-@property (readonly, class, nonnull) JavaxLangModelElementModifier *FINAL NS_SWIFT_NAME(FINAL);
-@property (readonly, class, nonnull) JavaxLangModelElementModifier *TRANSIENT NS_SWIFT_NAME(TRANSIENT);
-@property (readonly, class, nonnull) JavaxLangModelElementModifier *VOLATILE NS_SWIFT_NAME(VOLATILE);
-@property (readonly, class, nonnull) JavaxLangModelElementModifier *SYNCHRONIZED NS_SWIFT_NAME(SYNCHRONIZED);
-@property (readonly, class, nonnull) JavaxLangModelElementModifier *NATIVE NS_SWIFT_NAME(NATIVE);
-@property (readonly, class, nonnull) JavaxLangModelElementModifier *STRICTFP NS_SWIFT_NAME(STRICTFP);
 #pragma mark Public
 
 - (NSString *)description;
@@ -69,6 +61,8 @@ typedef NS_ENUM(NSUInteger, JavaxLangModelElementModifier_Enum) {
 #pragma mark Package-Private
 
 - (JavaxLangModelElementModifier_Enum)toNSEnum;
+
+- (JavaxLangModelElementModifier_ORDINAL)ordinal;
 
 @end
 
@@ -114,7 +108,7 @@ FOUNDATION_EXPORT IOSObjectArray *JavaxLangModelElementModifier_values(void);
 
 FOUNDATION_EXPORT JavaxLangModelElementModifier *JavaxLangModelElementModifier_valueOfWithNSString_(NSString *name);
 
-FOUNDATION_EXPORT JavaxLangModelElementModifier *JavaxLangModelElementModifier_fromOrdinal(NSUInteger ordinal);
+FOUNDATION_EXPORT JavaxLangModelElementModifier *JavaxLangModelElementModifier_fromOrdinal(JavaxLangModelElementModifier_ORDINAL ordinal);
 
 J2OBJC_TYPE_LITERAL_HEADER(JavaxLangModelElementModifier)
 
@@ -124,6 +118,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaxLangModelElementModifier)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaxLangModelElementModifier")

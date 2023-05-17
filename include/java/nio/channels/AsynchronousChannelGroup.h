@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaNioChannelsAsynchronousChannelGroup
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -25,6 +22,9 @@
 #if !defined (JavaNioChannelsAsynchronousChannelGroup_) && (INCLUDE_ALL_JavaNioChannelsAsynchronousChannelGroup || defined(INCLUDE_JavaNioChannelsAsynchronousChannelGroup))
 #define JavaNioChannelsAsynchronousChannelGroup_
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
+@class JavaLangLong;
 @class JavaNioChannelsSpiAsynchronousChannelProvider;
 @class JavaUtilConcurrentTimeUnit;
 @protocol JavaUtilConcurrentExecutorService;
@@ -297,6 +297,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaNioChannelsAsynchronousChannelGroup)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaNioChannelsAsynchronousChannelGroup")

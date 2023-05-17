@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaLangNoSuchMethodException
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -33,8 +30,7 @@
 
 /*!
  @brief Thrown when a particular method cannot be found.
- @author unascribed
- @since JDK1.0
+ @since 1.0
  */
 @interface JavaLangNoSuchMethodException : JavaLangReflectiveOperationException
 
@@ -82,6 +78,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaLangNoSuchMethodException)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaLangNoSuchMethodException")

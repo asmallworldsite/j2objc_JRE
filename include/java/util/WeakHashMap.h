@@ -22,9 +22,6 @@
 #define INCLUDE_JavaUtilWeakHashMap_WeakHashMapSpliterator 1
 #endif
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -43,6 +40,9 @@
 #include "java/util/Map.h"
 
 @class IOSObjectArray;
+@class JavaLangBoolean;
+@class JavaLangFloat;
+@class JavaLangInteger;
 @class JavaUtilWeakHashMap_Entry;
 @protocol JavaUtilCollection;
 @protocol JavaUtilFunctionBiConsumer;
@@ -431,6 +431,8 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilWeakHashMap)
 #define INCLUDE_JavaUtilMap_Entry 1
 #include "java/util/Map.h"
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @class JavaLangRefReferenceQueue;
 
 /*!
@@ -489,6 +491,8 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilWeakHashMap_Entry)
 #if !defined (JavaUtilWeakHashMap_WeakHashMapSpliterator_) && (INCLUDE_ALL_JavaUtilWeakHashMap || defined(INCLUDE_JavaUtilWeakHashMap_WeakHashMapSpliterator))
 #define JavaUtilWeakHashMap_WeakHashMapSpliterator_
 
+@class JavaLangInteger;
+@class JavaLangLong;
 @class JavaUtilWeakHashMap;
 @class JavaUtilWeakHashMap_Entry;
 
@@ -548,6 +552,9 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilWeakHashMap_WeakHashMapSpliterator)
 #define INCLUDE_JavaUtilSpliterator 1
 #include "java/util/Spliterator.h"
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
+@class JavaLangLong;
 @class JavaUtilWeakHashMap;
 @protocol JavaUtilComparator;
 @protocol JavaUtilFunctionConsumer;
@@ -593,6 +600,9 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilWeakHashMap_KeySpliterator)
 #define INCLUDE_JavaUtilSpliterator 1
 #include "java/util/Spliterator.h"
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
+@class JavaLangLong;
 @class JavaUtilWeakHashMap;
 @protocol JavaUtilComparator;
 @protocol JavaUtilFunctionConsumer;
@@ -638,6 +648,9 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilWeakHashMap_ValueSpliterator)
 #define INCLUDE_JavaUtilSpliterator 1
 #include "java/util/Spliterator.h"
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
+@class JavaLangLong;
 @class JavaUtilWeakHashMap;
 @protocol JavaUtilComparator;
 @protocol JavaUtilFunctionConsumer;
@@ -680,6 +693,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilWeakHashMap_EntrySpliterator)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaUtilWeakHashMap")

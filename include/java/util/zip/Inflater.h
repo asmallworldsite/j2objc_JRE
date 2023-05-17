@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaUtilZipInflater
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -26,6 +23,9 @@
 #define JavaUtilZipInflater_
 
 @class IOSByteArray;
+@class JavaLangBoolean;
+@class JavaLangInteger;
+@class JavaLangLong;
 
 /*!
  @brief This class provides support for general purpose decompression using the
@@ -304,6 +304,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilZipInflater)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaUtilZipInflater")

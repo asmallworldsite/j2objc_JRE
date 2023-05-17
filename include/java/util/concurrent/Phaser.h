@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaUtilConcurrentPhaser
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -25,13 +22,15 @@
 #if !defined (JavaUtilConcurrentPhaser_) && (INCLUDE_ALL_JavaUtilConcurrentPhaser || defined(INCLUDE_JavaUtilConcurrentPhaser))
 #define JavaUtilConcurrentPhaser_
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
+@class JavaLangLong;
 @class JavaUtilConcurrentTimeUnit;
 
 /*!
  @brief A reusable synchronization barrier, similar in functionality to 
- <code>CyclicBarrier</code> and 
- <code>CountDownLatch</code>
-  but supporting more flexible usage.
+ <code>CyclicBarrier</code> and <code>CountDownLatch</code> but supporting
+  more flexible usage.
  <p><b>Registration.</b> Unlike the case for other barriers, the
   number of parties <em>registered</em> to synchronize on a phaser
   may vary over time.  Tasks may be registered at any time (using
@@ -131,21 +130,19 @@
  <p>A <code>Phaser</code> may be used instead of a <code>CountDownLatch</code>
   to control a one-shot action serving a variable number of parties.
   The typical idiom is for the method setting this up to first
-  register, then start the actions, then deregister, as in: 
+  register, then start all the actions, then deregister, as in: 
  @code
   void runTasks(List<Runnable> tasks) {
-    final Phaser phaser = new Phaser(1); // "1" to register self
+    Phaser startingGate = new Phaser(1); // "1" to register self
     // create and start threads
-    for (final Runnable task : tasks) {
-      phaser.register();
-      new Thread() {
-        public void run() {
-          phaser.arriveAndAwaitAdvance(); // await all creation
-          task.run();
-        }
-      }.start();    }
-    // allow threads to start and deregister self
-    phaser.arriveAndDeregister();
+    for (Runnable task : tasks) {
+      startingGate.register();
+      new Thread(() -> {
+        startingGate.arriveAndAwaitAdvance();
+        task.run();
+      }).start();    }
+    // deregister self to allow threads to proceed
+    startingGate.arriveAndDeregister();
   }
  
 @endcode
@@ -154,30 +151,30 @@
   for a given number of iterations is to override <code>onAdvance</code>:
   
  @code
-  void startTasks(List<Runnable> tasks, final int iterations) {
-    final Phaser phaser = new Phaser() {
+  void startTasks(List<Runnable> tasks, int iterations) {
+    Phaser phaser = new Phaser() {
       protected boolean onAdvance(int phase, int registeredParties) {
-        return phase >= iterations || registeredParties == 0;
+        return phase >= iterations - 1 || registeredParties == 0;
       }
     };
     phaser.register();
-    for (final Runnable task : tasks) {
+    for (Runnable task : tasks) {
       phaser.register();
-      new Thread() {
-        public void run() {
-          do {
-            task.run();
-            phaser.arriveAndAwaitAdvance();
-          } while (!phaser.isTerminated());        }
-      }.start();    }
-    phaser.arriveAndDeregister(); // deregister self, don't wait
+      new Thread(() -> {
+        do {
+          task.run();
+          phaser.arriveAndAwaitAdvance();
+        } while (!phaser.isTerminated());
+      }).start();    }
+    // allow threads to proceed; don't wait for them
+    phaser.arriveAndDeregister();
   }
  
 @endcode
   If the main task must later await termination, it
   may re-register and then execute a similar loop: 
  @code
-   // ...
+    // ...
     phaser.register();
     while (!phaser.isTerminated())
       phaser.arriveAndAwaitAdvance();
@@ -235,7 +232,6 @@
  @author Doug Lea
  */
 @interface JavaUtilConcurrentPhaser : NSObject
-@property (readonly, class) jint SPINS_PER_ARRIVAL NS_SWIFT_NAME(SPINS_PER_ARRIVAL);
 
 #pragma mark Public
 
@@ -583,6 +579,9 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentPhaser)
 #define INCLUDE_JavaUtilConcurrentForkJoinPool_ManagedBlocker 1
 #include "java/util/concurrent/ForkJoinPool.h"
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
+@class JavaLangLong;
 @class JavaLangThread;
 @class JavaUtilConcurrentPhaser;
 
@@ -642,6 +641,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentPhaser_QNode)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaUtilConcurrentPhaser")

@@ -16,9 +16,6 @@
 #define INCLUDE_JavaxNetSslSSLSocketFactory 1
 #endif
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -33,6 +30,9 @@
 #include "javax/net/SocketFactory.h"
 
 @class IOSObjectArray;
+@class JavaIoInputStream;
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @class JavaNetSocket;
 
 /*!
@@ -42,7 +42,6 @@
  @author David Brownell
  */
 @interface JavaxNetSslSSLSocketFactory : JavaxNetSocketFactory
-@property (readonly, class) jboolean DEBUG_ NS_SWIFT_NAME(DEBUG_);
 
 #pragma mark Public
 
@@ -50,6 +49,47 @@
  @brief Constructor is used only by subclasses.
  */
 - (instancetype __nonnull)init;
+
+/*!
+ @brief Creates a server mode <code>Socket</code> layered over an
+  existing connected socket, and is able to read data which has
+  already been consumed/removed from the <code>Socket</code>'s
+  underlying <code>InputStream</code>.
+ <p>
+  This method can be used by a server application that needs to
+  observe the inbound data but still create valid SSL/TLS
+  connections: for example, inspection of Server Name Indication
+  (SNI) extensions (See section 3 of <A HREF="http://www.ietf.org/rfc/rfc6066.txt">
+ TLS Extensions
+  (RFC6066)</A>).  Data that has been already removed from the
+  underlying <code>InputStream</code> should be loaded into the 
+ <code>consumed</code> stream before this method is called, perhaps
+  using a <code>java.io.ByteArrayInputStream</code>.  When this 
+ <code>Socket</code> begins handshaking, it will read all of the data in 
+ <code>consumed</code> until it reaches <code>EOF</code>, then all further
+  data is read from the underlying <code>InputStream</code> as
+  usual. 
+ <p>
+  The returned socket is configured using the socket options
+  established for this factory, and is set to use server mode when
+  handshaking (see <code>SSLSocket.setUseClientMode(boolean)</code>).
+ @param s the existing socket
+ @param consumed the consumed inbound network data that has already been
+           removed from the existing 
+ <code>Socket</code>          <code>InputStream</code>
+  .  This parameter may be          <code>null</code>  if no data has been removed.
+ @param autoClose close the underlying socket when this socket is closed.
+ @return the <code>Socket</code> compliant with the socket options
+          established for this factory
+ @throw IOExceptionif an I/O error occurs when creating the socket
+ @throw UnsupportedOperationExceptionif the underlying provider
+          does not implement the operation
+ @throw NullPointerExceptionif <code>s</code> is <code>null</code>
+ @since 1.8
+ */
+- (JavaNetSocket *)createSocketWithJavaNetSocket:(JavaNetSocket *)s
+                           withJavaIoInputStream:(JavaIoInputStream *)consumed
+                                     withBoolean:(jboolean)autoClose;
 
 /*!
  @brief Returns a socket layered over an existing socket connected to the named
@@ -104,7 +144,14 @@
   be enabled by default, since this list may include cipher suites which
   do not meet quality of service requirements for those defaults.
  Such
-  cipher suites are useful in specialized applications.
+  cipher suites are useful in specialized applications. 
+ <p class="caution">Applications should not blindly enable all supported
+  cipher suites.  The supported cipher suites can include signaling cipher suite
+  values that can cause connection problems if enabled inappropriately. 
+ <p>The proper way to use this method is to either check if a specific cipher
+  suite is supported via <code>Arrays.asList(getSupportedCipherSuites()).contains(...)</code>
+  or to filter a desired list of cipher suites to only the supported ones via 
+ <code>desiredSuiteSet.retainAll(Arrays.asList(getSupportedCipherSuites()))</code>.
  - seealso: #getDefaultCipherSuites()
  @return an array of cipher suite names
  */
@@ -137,7 +184,9 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaxNetSslSSLSocketFactory)
 #define JavaxNetSslDefaultSSLSocketFactory_
 
 @class IOSObjectArray;
+@class JavaLangBoolean;
 @class JavaLangException;
+@class JavaLangInteger;
 @class JavaNetInetAddress;
 @class JavaNetSocket;
 
@@ -198,6 +247,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaxNetSslDefaultSSLSocketFactory)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaxNetSslSSLSocketFactory")

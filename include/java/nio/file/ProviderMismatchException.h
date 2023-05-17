@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaNioFileProviderMismatchException
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -29,15 +26,16 @@
 #define INCLUDE_JavaLangIllegalArgumentException 1
 #include "java/lang/IllegalArgumentException.h"
 
+@class JavaLangLong;
 @class JavaLangThrowable;
 
 /*!
  @brief Unchecked exception thrown when an attempt is made to invoke a method on an
   object created by one file system provider with a parameter created by a
   different file system provider.
+ @since 1.7
  */
 @interface JavaNioFileProviderMismatchException : JavaLangIllegalArgumentException
-@property (readonly, class) jlong serialVersionUID NS_SWIFT_NAME(serialVersionUID);
 
 #pragma mark Public
 
@@ -87,6 +85,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaNioFileProviderMismatchException)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaNioFileProviderMismatchException")

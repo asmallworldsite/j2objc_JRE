@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaSqlDriverManager
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -27,6 +24,7 @@
 
 @class JavaIoPrintStream;
 @class JavaIoPrintWriter;
+@class JavaLangInteger;
 @class JavaSqlSQLPermission;
 @class JavaUtilProperties;
 @protocol JavaSqlConnection;
@@ -38,7 +36,7 @@
  <br>
   <B>NOTE:</B> The <code>DataSource</code> interface, new in the
   JDBC 2.0 API, provides another way to connect to a data source.
-  The use of a <code>DataSource</code> object is the preferred means of
+ The use of a <code>DataSource</code> object is the preferred means of
   connecting to a data source. 
  <P>As part of its initialization, the <code>DriverManager</code> class will
   attempt to load the driver classes referenced in the "jdbc.drivers"
@@ -80,7 +78,6 @@
  - seealso: Connection
  */
 @interface JavaSqlDriverManager : NSObject
-@property (readonly, class, strong) JavaSqlSQLPermission *SET_LOG_PERMISSION NS_SWIFT_NAME(SET_LOG_PERMISSION);
 
 #pragma mark Public
 
@@ -167,7 +164,7 @@
  @return the logging/tracing PrintStream; if disabled, is <code>null</code>
  - seealso: #setLogStream
  */
-+ (JavaIoPrintStream *)getLogStream __attribute__((deprecated));
++ (JavaIoPrintStream *)getLogStream;
 
 /*!
  @brief Retrieves the log writer.
@@ -221,7 +218,7 @@
  - seealso: SecurityManager#checkPermission
  - seealso: #getLogStream
  */
-+ (void)setLogStreamWithJavaIoPrintStream:(JavaIoPrintStream *)outArg __attribute__((deprecated));
++ (void)setLogStreamWithJavaIoPrintStream:(JavaIoPrintStream *)outArg;
 
 /*!
  @brief Sets the logging/tracing <code>PrintWriter</code> object
@@ -302,6 +299,8 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaSqlDriverManager)
 #if !defined (JavaSqlDriverInfo_) && (INCLUDE_ALL_JavaSqlDriverManager || defined(INCLUDE_JavaSqlDriverInfo))
 #define JavaSqlDriverInfo_
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @protocol JavaSqlDriver;
 
 @interface JavaSqlDriverInfo : NSObject {
@@ -345,6 +344,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaSqlDriverInfo)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaSqlDriverManager")

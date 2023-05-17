@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaLangPackage
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -31,7 +28,9 @@
 
 @class IOSClass;
 @class IOSObjectArray;
+@class JavaLangBoolean;
 @class JavaLangClassLoader;
+@class JavaLangInteger;
 @class JavaNetURL;
 @protocol JavaLangAnnotationAnnotation;
 
@@ -315,6 +314,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaLangPackage)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaLangPackage")

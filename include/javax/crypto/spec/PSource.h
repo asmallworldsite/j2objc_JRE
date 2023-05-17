@@ -16,9 +16,6 @@
 #define INCLUDE_JavaxCryptoSpecPSource 1
 #endif
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -95,7 +92,6 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaxCryptoSpecPSource)
  @since 1.5
  */
 @interface JavaxCryptoSpecPSource_PSpecified : JavaxCryptoSpecPSource
-@property (readonly, class, strong) JavaxCryptoSpecPSource_PSpecified *DEFAULT NS_SWIFT_NAME(DEFAULT);
 
 #pragma mark Public
 
@@ -146,6 +142,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaxCryptoSpecPSource_PSpecified)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaxCryptoSpecPSource")

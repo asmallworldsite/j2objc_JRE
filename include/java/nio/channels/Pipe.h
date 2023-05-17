@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaNioChannelsPipe
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -105,6 +102,7 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaNioChannelsPipe)
 #define INCLUDE_JavaNioChannelsScatteringByteChannel 1
 #include "java/nio/channels/ScatteringByteChannel.h"
 
+@class JavaLangInteger;
 @class JavaNioChannelsSpiSelectorProvider;
 
 /*!
@@ -157,6 +155,7 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaNioChannelsPipe_SourceChannel)
 #define INCLUDE_JavaNioChannelsGatheringByteChannel 1
 #include "java/nio/channels/GatheringByteChannel.h"
 
+@class JavaLangInteger;
 @class JavaNioChannelsSpiSelectorProvider;
 
 /*!
@@ -198,6 +197,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaNioChannelsPipe_SinkChannel)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaNioChannelsPipe")

@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaMathBigInteger
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -33,6 +30,13 @@
 @class IOSCharArray;
 @class IOSIntArray;
 @class IOSObjectArray;
+@class JavaLangBoolean;
+@class JavaLangByte;
+@class JavaLangDouble;
+@class JavaLangFloat;
+@class JavaLangInteger;
+@class JavaLangLong;
+@class JavaLangShort;
 @class JavaUtilRandom;
 
 /*!
@@ -121,13 +125,6 @@
    */
   IOSIntArray *mag_;
 }
-@property (readonly, class) jlong LONG_MASK NS_SWIFT_NAME(LONG_MASK);
-@property (readonly, class) jint BURNIKEL_ZIEGLER_THRESHOLD NS_SWIFT_NAME(BURNIKEL_ZIEGLER_THRESHOLD);
-@property (readonly, class) jint BURNIKEL_ZIEGLER_OFFSET NS_SWIFT_NAME(BURNIKEL_ZIEGLER_OFFSET);
-@property (readonly, class, strong) JavaMathBigInteger *ZERO NS_SWIFT_NAME(ZERO);
-@property (readonly, class, strong) JavaMathBigInteger *ONE NS_SWIFT_NAME(ONE);
-@property (readonly, class, strong) JavaMathBigInteger *TEN NS_SWIFT_NAME(TEN);
-@property (class, strong) IOSIntArray *bnExpModThreshTable NS_SWIFT_NAME(bnExpModThreshTable);
 
 #pragma mark Public
 
@@ -987,6 +984,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaMathBigInteger)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaMathBigInteger")

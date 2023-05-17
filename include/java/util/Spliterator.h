@@ -25,9 +25,6 @@
 #define INCLUDE_JavaUtilSpliterator 1
 #endif
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -37,6 +34,9 @@
 #if !defined (JavaUtilSpliterator_) && (INCLUDE_ALL_JavaUtilSpliterator || defined(INCLUDE_JavaUtilSpliterator))
 #define JavaUtilSpliterator_
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
+@class JavaLangLong;
 @protocol JavaUtilComparator;
 @protocol JavaUtilFunctionConsumer;
 
@@ -249,18 +249,6 @@
 
 @end
 
-@interface JavaUtilSpliterator : NSObject
-@property (readonly, class) jint ORDERED NS_SWIFT_NAME(ORDERED);
-@property (readonly, class) jint DISTINCT NS_SWIFT_NAME(DISTINCT);
-@property (readonly, class) jint SORTED NS_SWIFT_NAME(SORTED);
-@property (readonly, class) jint SIZED NS_SWIFT_NAME(SIZED);
-@property (readonly, class) jint NONNULL NS_SWIFT_NAME(NONNULL);
-@property (readonly, class) jint IMMUTABLE NS_SWIFT_NAME(IMMUTABLE);
-@property (readonly, class) jint CONCURRENT NS_SWIFT_NAME(CONCURRENT);
-@property (readonly, class) jint SUBSIZED NS_SWIFT_NAME(SUBSIZED);
-
-@end
-
 J2OBJC_EMPTY_STATIC_INIT(JavaUtilSpliterator)
 
 /*!
@@ -381,6 +369,8 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilSpliterator)
 #if !defined (JavaUtilSpliterator_OfPrimitive_) && (INCLUDE_ALL_JavaUtilSpliterator || defined(INCLUDE_JavaUtilSpliterator_OfPrimitive))
 #define JavaUtilSpliterator_OfPrimitive_
 
+@class JavaLangBoolean;
+
 /*!
  @brief A Spliterator specialized for primitive values.
  - seealso: Spliterator.OfInt
@@ -431,6 +421,7 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilSpliterator_OfPrimitive)
 #if !defined (JavaUtilSpliterator_OfInt_) && (INCLUDE_ALL_JavaUtilSpliterator || defined(INCLUDE_JavaUtilSpliterator_OfInt))
 #define JavaUtilSpliterator_OfInt_
 
+@class JavaLangBoolean;
 @protocol JavaUtilFunctionConsumer;
 @protocol JavaUtilFunctionIntConsumer;
 
@@ -471,6 +462,7 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilSpliterator_OfInt)
 #if !defined (JavaUtilSpliterator_OfLong_) && (INCLUDE_ALL_JavaUtilSpliterator || defined(INCLUDE_JavaUtilSpliterator_OfLong))
 #define JavaUtilSpliterator_OfLong_
 
+@class JavaLangBoolean;
 @protocol JavaUtilFunctionConsumer;
 @protocol JavaUtilFunctionLongConsumer;
 
@@ -511,6 +503,7 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilSpliterator_OfLong)
 #if !defined (JavaUtilSpliterator_OfDouble_) && (INCLUDE_ALL_JavaUtilSpliterator || defined(INCLUDE_JavaUtilSpliterator_OfDouble))
 #define JavaUtilSpliterator_OfDouble_
 
+@class JavaLangBoolean;
 @protocol JavaUtilFunctionConsumer;
 @protocol JavaUtilFunctionDoubleConsumer;
 
@@ -552,6 +545,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilSpliterator_OfDouble)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaUtilSpliterator")

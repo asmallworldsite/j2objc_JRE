@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaxXmlDatatypeDatatypeFactory
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -25,7 +22,10 @@
 #if !defined (JavaxXmlDatatypeDatatypeFactory_) && (INCLUDE_ALL_JavaxXmlDatatypeDatatypeFactory || defined(INCLUDE_JavaxXmlDatatypeDatatypeFactory))
 #define JavaxXmlDatatypeDatatypeFactory_
 
+@class JavaLangBoolean;
 @class JavaLangClassLoader;
+@class JavaLangInteger;
+@class JavaLangLong;
 @class JavaMathBigDecimal;
 @class JavaMathBigInteger;
 @class JavaUtilGregorianCalendar;
@@ -67,8 +67,6 @@
  @since 1.5
  */
 @interface JavaxXmlDatatypeDatatypeFactory : NSObject
-@property (readonly, copy, class) NSString *DATATYPEFACTORY_PROPERTY NS_SWIFT_NAME(DATATYPEFACTORY_PROPERTY);
-@property (readonly, copy, class) NSString *DATATYPEFACTORY_IMPLEMENTATION_CLASS NS_SWIFT_NAME(DATATYPEFACTORY_IMPLEMENTATION_CLASS);
 
 #pragma mark Public
 
@@ -474,10 +472,10 @@
 /*!
  @brief <p>Constructor allowing for complete value spaces allowed by
   W3C XML Schema 1.0 recommendation for xsd:dateTime and related
-  builtin datatypes.
- Note that <code>year</code> parameter supports
+  builtin datatypes.Note that <code>year</code> parameter supports
   arbitrarily large numbers and fractionalSecond has infinite
-  precision.</p>
+  precision.
+ </p>
   
  <p>A <code>null</code> value indicates that field is not set.</p>
  @param year of  <code> XMLGregorianCalendar </code>  to be created.
@@ -768,6 +766,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaxXmlDatatypeDatatypeFactory)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaxXmlDatatypeDatatypeFactory")

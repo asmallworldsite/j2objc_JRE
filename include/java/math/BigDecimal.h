@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaMathBigDecimal
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -31,6 +28,13 @@
 
 @class IOSCharArray;
 @class IOSObjectArray;
+@class JavaLangBoolean;
+@class JavaLangByte;
+@class JavaLangDouble;
+@class JavaLangFloat;
+@class JavaLangInteger;
+@class JavaLangLong;
+@class JavaLangShort;
 @class JavaMathBigInteger;
 @class JavaMathMathContext;
 @class JavaMathRoundingMode;
@@ -207,18 +211,6 @@
  @author Sergey V. Kuksenko
  */
 @interface JavaMathBigDecimal : NSNumber < JavaLangComparable >
-@property (readonly, class) jlong INFLATED NS_SWIFT_NAME(INFLATED);
-@property (readonly, class, strong) JavaMathBigDecimal *ZERO NS_SWIFT_NAME(ZERO);
-@property (readonly, class, strong) JavaMathBigDecimal *ONE NS_SWIFT_NAME(ONE);
-@property (readonly, class, strong) JavaMathBigDecimal *TEN NS_SWIFT_NAME(TEN);
-@property (readonly, class) jint ROUND_UP NS_SWIFT_NAME(ROUND_UP);
-@property (readonly, class) jint ROUND_DOWN NS_SWIFT_NAME(ROUND_DOWN);
-@property (readonly, class) jint ROUND_CEILING NS_SWIFT_NAME(ROUND_CEILING);
-@property (readonly, class) jint ROUND_FLOOR NS_SWIFT_NAME(ROUND_FLOOR);
-@property (readonly, class) jint ROUND_HALF_UP NS_SWIFT_NAME(ROUND_HALF_UP);
-@property (readonly, class) jint ROUND_HALF_DOWN NS_SWIFT_NAME(ROUND_HALF_DOWN);
-@property (readonly, class) jint ROUND_HALF_EVEN NS_SWIFT_NAME(ROUND_HALF_EVEN);
-@property (readonly, class) jint ROUND_UNNECESSARY NS_SWIFT_NAME(ROUND_UNNECESSARY);
 
 #pragma mark Public
 
@@ -447,7 +439,7 @@
  @param val<code>long</code>  value to be converted to <code>BigDecimal</code> .
  @since 1.5
  */
-- (instancetype __nonnull)initWithLong:(jlong)val;
+- (instancetype __nonnull)initWithLongLong:(jlong)val;
 
 /*!
  @brief Translates a <code>long</code> into a <code>BigDecimal</code>, with
@@ -1947,11 +1939,11 @@ FOUNDATION_EXPORT JavaMathBigDecimal *new_JavaMathBigDecimal_initWithInt_withJav
 
 FOUNDATION_EXPORT JavaMathBigDecimal *create_JavaMathBigDecimal_initWithInt_withJavaMathMathContext_(jint val, JavaMathMathContext *mc);
 
-FOUNDATION_EXPORT void JavaMathBigDecimal_initWithLong_(JavaMathBigDecimal *self, jlong val);
+FOUNDATION_EXPORT void JavaMathBigDecimal_initWithLongLong_(JavaMathBigDecimal *self, jlong val);
 
-FOUNDATION_EXPORT JavaMathBigDecimal *new_JavaMathBigDecimal_initWithLong_(jlong val) NS_RETURNS_RETAINED;
+FOUNDATION_EXPORT JavaMathBigDecimal *new_JavaMathBigDecimal_initWithLongLong_(jlong val) NS_RETURNS_RETAINED;
 
-FOUNDATION_EXPORT JavaMathBigDecimal *create_JavaMathBigDecimal_initWithLong_(jlong val);
+FOUNDATION_EXPORT JavaMathBigDecimal *create_JavaMathBigDecimal_initWithLongLong_(jlong val);
 
 FOUNDATION_EXPORT void JavaMathBigDecimal_initWithLong_withJavaMathMathContext_(JavaMathBigDecimal *self, jlong val, JavaMathMathContext *mc);
 
@@ -1983,6 +1975,8 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaMathBigDecimal)
 #define JavaMathBigDecimal_StringBuilderHelper_
 
 @class IOSCharArray;
+@class JavaLangInteger;
+@class JavaLangLong;
 @class JavaLangStringBuilder;
 
 @interface JavaMathBigDecimal_StringBuilderHelper : NSObject {
@@ -1990,8 +1984,6 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaMathBigDecimal)
   JavaLangStringBuilder *sb_;
   IOSCharArray *cmpCharArray_;
 }
-@property (readonly, class, strong) IOSCharArray *DIGIT_TENS NS_SWIFT_NAME(DIGIT_TENS);
-@property (readonly, class, strong) IOSCharArray *DIGIT_ONES NS_SWIFT_NAME(DIGIT_ONES);
 
 #pragma mark Package-Private
 
@@ -2042,6 +2034,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaMathBigDecimal_StringBuilderHelper)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaMathBigDecimal")

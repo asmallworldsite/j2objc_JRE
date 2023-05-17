@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_OrgXmlSaxHelpersXMLReaderAdapter
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -34,6 +31,7 @@
 #include "org/xml/sax/ContentHandler.h"
 
 @class IOSCharArray;
+@class JavaLangInteger;
 @class JavaUtilLocale;
 @class OrgXmlSaxHelpersXMLReaderAdapter_AttributesAdapter;
 @class OrgXmlSaxInputSource;
@@ -309,6 +307,7 @@ J2OBJC_TYPE_LITERAL_HEADER(OrgXmlSaxHelpersXMLReaderAdapter)
 #define INCLUDE_OrgXmlSaxAttributeList 1
 #include "org/xml/sax/AttributeList.h"
 
+@class JavaLangInteger;
 @protocol OrgXmlSaxAttributes;
 
 /*!
@@ -388,6 +387,4 @@ J2OBJC_TYPE_LITERAL_HEADER(OrgXmlSaxHelpersXMLReaderAdapter_AttributesAdapter)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_OrgXmlSaxHelpersXMLReaderAdapter")

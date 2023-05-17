@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaxCryptoCipher
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -27,6 +24,8 @@
 
 @class IOSByteArray;
 @class IOSObjectArray;
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @class JavaNioByteBuffer;
 @class JavaSecurityAlgorithmParameters;
 @class JavaSecurityCertCertificate;
@@ -64,9 +63,8 @@
   provider-specific default values for the mode and padding scheme are used).
   For example, the following is a valid transformation: 
  @code
-
-      Cipher c = Cipher.getInstance("<i>DES/CBC/PKCS5Padding</i>");
-   
+     Cipher c = Cipher.getInstance("DES/CBC/PKCS5Padding"); 
+ 
 @endcode
   Using modes such as <code>CFB</code> and <code>OFB</code>, block
   ciphers can encrypt data in units smaller than the cipher's actual
@@ -238,13 +236,6 @@
  @since 1.4
  */
 @interface JavaxCryptoCipher : NSObject
-@property (readonly, class) jint ENCRYPT_MODE NS_SWIFT_NAME(ENCRYPT_MODE);
-@property (readonly, class) jint DECRYPT_MODE NS_SWIFT_NAME(DECRYPT_MODE);
-@property (readonly, class) jint WRAP_MODE NS_SWIFT_NAME(WRAP_MODE);
-@property (readonly, class) jint UNWRAP_MODE NS_SWIFT_NAME(UNWRAP_MODE);
-@property (readonly, class) jint PUBLIC_KEY NS_SWIFT_NAME(PUBLIC_KEY);
-@property (readonly, class) jint PRIVATE_KEY NS_SWIFT_NAME(PRIVATE_KEY);
-@property (readonly, class) jint SECRET_KEY NS_SWIFT_NAME(SECRET_KEY);
 
 #pragma mark Public
 
@@ -1648,22 +1639,24 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaxCryptoCipher)
 
 @class IOSObjectArray;
 
-typedef NS_ENUM(NSUInteger, JavaxCryptoCipher_NeedToSet_Enum) {
+typedef NS_ENUM(jint, JavaxCryptoCipher_NeedToSet_Enum) {
   JavaxCryptoCipher_NeedToSet_Enum_NONE = 0,
   JavaxCryptoCipher_NeedToSet_Enum_MODE = 1,
   JavaxCryptoCipher_NeedToSet_Enum_PADDING = 2,
   JavaxCryptoCipher_NeedToSet_Enum_BOTH = 3,
 };
+#if J2OBJC_IMPORTED_BY_JAVA_IMPLEMENTATION
+#define JavaxCryptoCipher_NeedToSet_ORDINAL jint
+#else
+#define JavaxCryptoCipher_NeedToSet_ORDINAL JavaxCryptoCipher_NeedToSet_Enum
+#endif
+
 
 /*!
  @brief Items that need to be set on the Cipher instance.
  */
 @interface JavaxCryptoCipher_NeedToSet : JavaLangEnum
 
-@property (readonly, class, nonnull) JavaxCryptoCipher_NeedToSet *NONE NS_SWIFT_NAME(NONE);
-@property (readonly, class, nonnull) JavaxCryptoCipher_NeedToSet *MODE NS_SWIFT_NAME(MODE);
-@property (readonly, class, nonnull) JavaxCryptoCipher_NeedToSet *PADDING NS_SWIFT_NAME(PADDING);
-@property (readonly, class, nonnull) JavaxCryptoCipher_NeedToSet *BOTH NS_SWIFT_NAME(BOTH);
 #pragma mark Public
 
 + (JavaxCryptoCipher_NeedToSet *)valueOfWithNSString:(NSString *)name;
@@ -1673,6 +1666,8 @@ typedef NS_ENUM(NSUInteger, JavaxCryptoCipher_NeedToSet_Enum) {
 #pragma mark Package-Private
 
 - (JavaxCryptoCipher_NeedToSet_Enum)toNSEnum;
+
+- (JavaxCryptoCipher_NeedToSet_ORDINAL)ordinal;
 
 @end
 
@@ -1697,7 +1692,7 @@ FOUNDATION_EXPORT IOSObjectArray *JavaxCryptoCipher_NeedToSet_values(void);
 
 FOUNDATION_EXPORT JavaxCryptoCipher_NeedToSet *JavaxCryptoCipher_NeedToSet_valueOfWithNSString_(NSString *name);
 
-FOUNDATION_EXPORT JavaxCryptoCipher_NeedToSet *JavaxCryptoCipher_NeedToSet_fromOrdinal(NSUInteger ordinal);
+FOUNDATION_EXPORT JavaxCryptoCipher_NeedToSet *JavaxCryptoCipher_NeedToSet_fromOrdinal(JavaxCryptoCipher_NeedToSet_ORDINAL ordinal);
 
 J2OBJC_TYPE_LITERAL_HEADER(JavaxCryptoCipher_NeedToSet)
 
@@ -1740,6 +1735,7 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaxCryptoCipher_Transform)
 #if !defined (JavaxCryptoCipher_InitParams_) && (INCLUDE_ALL_JavaxCryptoCipher || defined(INCLUDE_JavaxCryptoCipher_InitParams))
 #define JavaxCryptoCipher_InitParams_
 
+@class JavaLangInteger;
 @class JavaSecurityAlgorithmParameters;
 @class JavaSecuritySecureRandom;
 @class JavaxCryptoCipher_InitType;
@@ -1802,11 +1798,17 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaxCryptoCipher_InitParams)
 
 @class IOSObjectArray;
 
-typedef NS_ENUM(NSUInteger, JavaxCryptoCipher_InitType_Enum) {
+typedef NS_ENUM(jint, JavaxCryptoCipher_InitType_Enum) {
   JavaxCryptoCipher_InitType_Enum_KEY = 0,
   JavaxCryptoCipher_InitType_Enum_ALGORITHM_PARAMS = 1,
   JavaxCryptoCipher_InitType_Enum_ALGORITHM_PARAM_SPEC = 2,
 };
+#if J2OBJC_IMPORTED_BY_JAVA_IMPLEMENTATION
+#define JavaxCryptoCipher_InitType_ORDINAL jint
+#else
+#define JavaxCryptoCipher_InitType_ORDINAL JavaxCryptoCipher_InitType_Enum
+#endif
+
 
 /*!
  @brief Used to keep track of which underlying <code>CipherSpi#engineInit(...)
@@ -1815,9 +1817,6 @@ typedef NS_ENUM(NSUInteger, JavaxCryptoCipher_InitType_Enum) {
  */
 @interface JavaxCryptoCipher_InitType : JavaLangEnum
 
-@property (readonly, class, nonnull) JavaxCryptoCipher_InitType *KEY NS_SWIFT_NAME(KEY);
-@property (readonly, class, nonnull) JavaxCryptoCipher_InitType *ALGORITHM_PARAMS NS_SWIFT_NAME(ALGORITHM_PARAMS);
-@property (readonly, class, nonnull) JavaxCryptoCipher_InitType *ALGORITHM_PARAM_SPEC NS_SWIFT_NAME(ALGORITHM_PARAM_SPEC);
 #pragma mark Public
 
 + (JavaxCryptoCipher_InitType *)valueOfWithNSString:(NSString *)name;
@@ -1827,6 +1826,8 @@ typedef NS_ENUM(NSUInteger, JavaxCryptoCipher_InitType_Enum) {
 #pragma mark Package-Private
 
 - (JavaxCryptoCipher_InitType_Enum)toNSEnum;
+
+- (JavaxCryptoCipher_InitType_ORDINAL)ordinal;
 
 @end
 
@@ -1848,7 +1849,7 @@ FOUNDATION_EXPORT IOSObjectArray *JavaxCryptoCipher_InitType_values(void);
 
 FOUNDATION_EXPORT JavaxCryptoCipher_InitType *JavaxCryptoCipher_InitType_valueOfWithNSString_(NSString *name);
 
-FOUNDATION_EXPORT JavaxCryptoCipher_InitType *JavaxCryptoCipher_InitType_fromOrdinal(NSUInteger ordinal);
+FOUNDATION_EXPORT JavaxCryptoCipher_InitType *JavaxCryptoCipher_InitType_fromOrdinal(JavaxCryptoCipher_InitType_ORDINAL ordinal);
 
 J2OBJC_TYPE_LITERAL_HEADER(JavaxCryptoCipher_InitType)
 
@@ -1955,6 +1956,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaxCryptoCipher_CipherSpiAndProvider)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaxCryptoCipher")

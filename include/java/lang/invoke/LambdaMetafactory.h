@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaLangInvokeLambdaMetafactory
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -26,15 +23,13 @@
 #define JavaLangInvokeLambdaMetafactory_
 
 @class IOSObjectArray;
+@class JavaLangInteger;
 @class JavaLangInvokeCallSite;
 @class JavaLangInvokeMethodHandle;
 @class JavaLangInvokeMethodHandles_Lookup;
 @class JavaLangInvokeMethodType;
 
 @interface JavaLangInvokeLambdaMetafactory : NSObject
-@property (readonly, class) jint FLAG_SERIALIZABLE NS_SWIFT_NAME(FLAG_SERIALIZABLE);
-@property (readonly, class) jint FLAG_MARKERS NS_SWIFT_NAME(FLAG_MARKERS);
-@property (readonly, class) jint FLAG_BRIDGES NS_SWIFT_NAME(FLAG_BRIDGES);
 
 #pragma mark Public
 
@@ -86,6 +81,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaLangInvokeLambdaMetafactory)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaLangInvokeLambdaMetafactory")

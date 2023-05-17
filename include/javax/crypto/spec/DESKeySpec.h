@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaxCryptoSpecDESKeySpec
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -30,6 +27,8 @@
 #include "java/security/spec/KeySpec.h"
 
 @class IOSByteArray;
+@class JavaLangBoolean;
+@class JavaLangInteger;
 
 /*!
  @brief This class specifies a DES key.
@@ -37,7 +36,6 @@
  @since 1.4
  */
 @interface JavaxCryptoSpecDESKeySpec : NSObject < JavaSecuritySpecKeySpec >
-@property (readonly, class) jint DES_KEY_LEN NS_SWIFT_NAME(DES_KEY_LEN);
 
 #pragma mark Public
 
@@ -147,6 +145,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaxCryptoSpecDESKeySpec)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaxCryptoSpecDESKeySpec")

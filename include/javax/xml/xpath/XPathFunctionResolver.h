@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaxXmlXpathXPathFunctionResolver
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -25,6 +22,7 @@
 #if !defined (JavaxXmlXpathXPathFunctionResolver_) && (INCLUDE_ALL_JavaxXmlXpathXPathFunctionResolver || defined(INCLUDE_JavaxXmlXpathXPathFunctionResolver))
 #define JavaxXmlXpathXPathFunctionResolver_
 
+@class JavaLangInteger;
 @class JavaxXmlNamespaceQName;
 @protocol JavaxXmlXpathXPathFunction;
 
@@ -78,6 +76,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaxXmlXpathXPathFunctionResolver)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaxXmlXpathXPathFunctionResolver")

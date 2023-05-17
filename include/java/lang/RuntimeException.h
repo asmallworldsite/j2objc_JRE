@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaLangRuntimeException
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -29,6 +26,8 @@
 #define INCLUDE_JavaLangException 1
 #include "java/lang/Exception.h"
 
+@class JavaLangBoolean;
+@class JavaLangLong;
 @class JavaLangThrowable;
 
 /*!
@@ -41,10 +40,9 @@
   can be thrown by the execution of the method or constructor and
   propagate outside the method or constructor boundary.
  @author Frank Yellin
- @since JDK1.0
+ @since 1.0
  */
 @interface JavaLangRuntimeException : JavaLangException
-@property (readonly, class) jlong serialVersionUID NS_SWIFT_NAME(serialVersionUID);
 
 #pragma mark Public
 
@@ -73,7 +71,7 @@
  @param message the detail message (which is saved for later retrieval          by the 
  <code>getMessage()</code>  method).
  @param cause the cause (which is saved for later retrieval by the          
- <code>getCause()</code>  method).  (A  <tt> null </tt>  value is          permitted, and indicates that the cause is nonexistent or
+ <code>getCause()</code>  method).  (A <code>null</code>  value is          permitted, and indicates that the cause is nonexistent or
            unknown.)
  @since 1.4
  */
@@ -82,13 +80,13 @@
 
 /*!
  @brief Constructs a new runtime exception with the specified cause and a
-  detail message of <tt>(cause==null ?
- null : cause.toString())</tt>
+  detail message of <code>(cause==null ?
+ null : cause.toString())</code>
   (which typically contains the class and detail message of 
- <tt>cause</tt>).This constructor is useful for runtime exceptions
+ <code>cause</code>).This constructor is useful for runtime exceptions
   that are little more than wrappers for other throwables.
  @param cause the cause (which is saved for later retrieval by the          
- <code>getCause()</code>  method).  (A  <tt> null </tt>  value is          permitted, and indicates that the cause is nonexistent or
+ <code>getCause()</code>  method).  (A <code>null</code>  value is          permitted, and indicates that the cause is nonexistent or
            unknown.)
  @since 1.4
  */
@@ -158,6 +156,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaLangRuntimeException)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaLangRuntimeException")

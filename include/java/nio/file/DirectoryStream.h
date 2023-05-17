@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaNioFileDirectoryStream
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -138,6 +135,8 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaNioFileDirectoryStream)
 #if !defined (JavaNioFileDirectoryStream_Filter_) && (INCLUDE_ALL_JavaNioFileDirectoryStream || defined(INCLUDE_JavaNioFileDirectoryStream_Filter))
 #define JavaNioFileDirectoryStream_Filter_
 
+@class JavaLangBoolean;
+
 /*!
  @brief An interface that is implemented by objects that decide if a directory
   entry should be accepted or filtered.A <code>Filter</code> is passed as the
@@ -169,6 +168,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaNioFileDirectoryStream_Filter)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaNioFileDirectoryStream")

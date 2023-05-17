@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaIoConsole
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -35,26 +32,94 @@
 @class JavaIoReader;
 
 /*!
- @brief Provides access to the console, if available.The system-wide instance can
-  be accessed via <code>java.lang.System.console</code>.
+ @brief Methods to access the character-based console device, if any, associated
+  with the current Java virtual machine.
+ <p> Whether a virtual machine has a console is dependent upon the
+  underlying platform and also upon the manner in which the virtual
+  machine is invoked.  If the virtual machine is started from an
+  interactive command line without redirecting the standard input and
+  output streams then its console will exist and will typically be
+  connected to the keyboard and display from which the virtual machine
+  was launched.  If the virtual machine is started automatically, for
+  example by a background job scheduler, then it will typically not
+  have a console. 
+ <p>
+  If this virtual machine has a console then it is represented by a
+  unique instance of this class which can be obtained by invoking the 
+ <code>java.lang.System.console()</code> method.  If no console device is
+  available then an invocation of that method will return <tt>null</tt>.
+  <p>
+  Read and write operations are synchronized to guarantee the atomic
+  completion of critical operations; therefore invoking methods 
+ <code>readLine()</code>, <code>readPassword()</code>, <code>format()</code>,
+  <code>printf()</code> as well as the read, format and write operations
+  on the objects returned by <code>reader()</code> and <code>writer()</code> may
+  block in multithreaded scenarios. 
+ <p>
+  Invoking <tt>close()</tt> on the objects returned by the <code>reader()</code>
+  and the <code>writer()</code> will not close the underlying stream of those
+  objects. 
+ <p>
+  The console-read methods return <tt>null</tt> when the end of the
+  console input stream is reached, for example by typing control-D on
+  Unix or control-Z on Windows.  Subsequent read operations will succeed
+  if additional characters are later entered on the console's input
+  device. 
+ <p>
+  Unless otherwise specified, passing a <tt>null</tt> argument to any method
+  in this class will cause a <code>NullPointerException</code> to be thrown. 
+ <p>
+  <b>Security note:</b>
+  If an application needs to read a password or other secure data, it should
+  use <code>readPassword()</code> or <code>readPassword(String, Object...)</code> and
+  manually zero the returned character array after processing to minimize the
+  lifetime of sensitive data in memory. 
+ <blockquote>@code
+ Console cons;
+  char[] passwd;
+  if ((cons = System.console()) != null &&
+      (passwd = cons.readPassword("[%s]", "Password:")) != null) {
+      ...
+      java.util.Arrays.fill(passwd, ' ');
+  } 
+ 
+@endcode</blockquote>
+ @author Xueming Shen
  @since 1.6
  */
 @interface JavaIoConsole : NSObject < JavaIoFlushable >
 
 #pragma mark Public
 
+/*!
+ @brief Flushes the console and forces any buffered output to be written
+  immediately .
+ */
 - (void)flush;
 
 /*!
- @brief Writes a formatted string to the console using
+ @brief Writes a formatted string to this console's output stream using
   the specified format string and arguments.
- @param format the format string (see <code>java.util.Formatter.format</code> )
- @param args the list of arguments passed to the formatter. If there are
-              more arguments than required by 
- <code>format</code> ,             additional arguments are ignored.
- @return the console instance.
+ @param fmt A format string as described in 
+  <a href="../util/Formatter.html#syntax">
+  Format string syntax </a>
+ @param args Arguments referenced by the format specifiers in the format
+           string.  If there are more arguments than format specifiers, the
+           extra arguments are ignored.  The number of arguments is
+           variable and may be zero.  The maximum number of arguments is
+           limited by the maximum dimension of a Java array as defined by
+            <cite> The Java &trade;  Virtual Machine Specification </cite> .          The behaviour on a           <tt> null </tt>  argument depends on the  <a href="../util/Formatter.html#syntax"> conversion </a> .
+ @throw IllegalFormatException
+ If a format string contains an illegal syntax, a format
+           specifier that is incompatible with the given arguments,
+           insufficient arguments given the format string, or other
+           illegal conditions.  For specification of all possible
+           formatting errors, see the <a href="../util/Formatter.html#detail">
+ Details</a> section
+           of the formatter class specification.
+ @return This console
  */
-- (JavaIoConsole *)formatWithNSString:(NSString *)format
+- (JavaIoConsole *)formatWithNSString:(NSString *)fmt
                     withNSObjectArray:(IOSObjectArray *)args;
 
 /*!
@@ -63,50 +128,121 @@
 + (JavaIoConsole *)getConsole;
 
 /*!
- @brief Equivalent to <code>format(format, args)</code>.
+ @brief A convenience method to write a formatted string to this console's
+  output stream using the specified format string and arguments.
+ <p> An invocation of this method of the form <tt>con.printf(format,
+  args)</tt> behaves in exactly the same way as the invocation of 
+ @code
+con.format(format, args)
+@endcode.
+ @param format A format string as described in 
+  <a href="../util/Formatter.html#syntax">
+  Format string syntax </a> .
+ @param args Arguments referenced by the format specifiers in the format
+           string.  If there are more arguments than format specifiers, the
+           extra arguments are ignored.  The number of arguments is
+           variable and may be zero.  The maximum number of arguments is
+           limited by the maximum dimension of a Java array as defined by
+            <cite> The Java &trade;  Virtual Machine Specification </cite> .          The behaviour on a           <tt> null </tt>  argument depends on the  <a href="../util/Formatter.html#syntax"> conversion </a> .
+ @throw IllegalFormatException
+ If a format string contains an illegal syntax, a format
+           specifier that is incompatible with the given arguments,
+           insufficient arguments given the format string, or other
+           illegal conditions.  For specification of all possible
+           formatting errors, see the <a href="../util/Formatter.html#detail">
+ Details</a> section of the
+           formatter class specification.
+ @return This console
  */
 - (JavaIoConsole *)printfWithNSString:(NSString *)format
                     withNSObjectArray:(IOSObjectArray *)args;
 
 /*!
- @brief Returns the <code>Reader</code> associated with this console.
+ @brief Retrieves the unique <code>Reader</code> object associated
+  with this console.
+ <p>
+  This method is intended to be used by sophisticated applications, for
+  example, a <code>java.util.Scanner</code> object which utilizes the rich
+  parsing/scanning functionality provided by the <tt>Scanner</tt>:
+  <blockquote>@code
+
+  Console con = System.console();
+  if (con != null) {
+      Scanner sc = new Scanner(con.reader());
+      ...
+  } 
+  
+@endcode</blockquote>
+  <p>
+  For simple applications requiring only line-oriented reading, use 
+ <tt><code>readLine</code></tt>.
+  <p>
+  The bulk read operations <code>read(char[])</code>,
+  <code>read(char[], int, int)</code> and 
+ <code>read(java.nio.CharBuffer)</code>
+  on the returned object will not read in characters beyond the line
+  bound for each invocation, even if the destination buffer has space for
+  more characters. The <code>Reader</code>'s <code>read</code> methods may block if a
+  line bound has not been entered or reached on the console's input device.
+  A line bound is considered to be any one of a line feed (<tt>'\n'</tt>),
+  a carriage return (<tt>'\r'</tt>), a carriage return followed immediately
+  by a linefeed, or an end of stream.
+ @return The reader associated with this console
  */
 - (JavaIoReader *)reader;
 
 /*!
- @brief Reads a line from the console.
- @return the line, or null at EOF.
+ @brief Reads a single line of text from the console.
+ @throw IOError
+ If an I/O error occurs.
+ @return A string containing the line read from the console, not
+           including any line-termination characters, or <tt>null</tt>
+           if an end of stream has been reached.
  */
 - (NSString *)readLine;
 
 /*!
- @brief Reads a line from this console, using the specified prompt.
- The prompt is given as a format string and optional arguments.
-  Note that this can be a source of errors: if it is possible that your
-  prompt contains <code>%</code> characters, you must use the format string <code>"%s"</code>
-  and pass the actual prompt as a parameter.
- @param format the format string (see <code>java.util.Formatter.format</code> )
- @param args the list of arguments passed to the formatter. If there are
-              more arguments than required by 
- <code>format</code> ,             additional arguments are ignored.
- @return the line, or null at EOF.
- */
-- (NSString *)readLineWithNSString:(NSString *)format
-                 withNSObjectArray:(IOSObjectArray *)args;
-
-/*!
- @brief This method is unimplemented on Android.
+ @brief Reads a password or passphrase from the console with echoing disabled
+ @throw IOError
+ If an I/O error occurs.
+ @return A character array containing the password or passphrase read
+           from the console, not including any line-termination characters,
+           or <tt>null</tt> if an end of stream has been reached.
  */
 - (IOSCharArray *)readPassword;
 
 /*!
- @brief This method is unimplemented on Android.
+ @brief Provides a formatted prompt, then reads a password or passphrase from
+  the console with echoing disabled.
+ @param fmt A format string as described in 
+  <a href="../util/Formatter.html#syntax">
+  Format string syntax </a>          for the prompt text.
+ @param args Arguments referenced by the format specifiers in the format
+           string.  If there are more arguments than format specifiers, the
+           extra arguments are ignored.  The maximum number of arguments is
+           limited by the maximum dimension of a Java array as defined by
+            <cite> The Java &trade;  Virtual Machine Specification </cite> .
+ @throw IllegalFormatException
+ If a format string contains an illegal syntax, a format
+           specifier that is incompatible with the given arguments,
+           insufficient arguments given the format string, or other
+           illegal conditions.  For specification of all possible
+           formatting errors, see the <a href="../util/Formatter.html#detail">
+ Details</a>
+           section of the formatter class specification.
+ @throw IOError
+ If an I/O error occurs.
+ @return A character array containing the password or passphrase read
+           from the console, not including any line-termination characters,
+           or <tt>null</tt> if an end of stream has been reached.
  */
-- (IOSCharArray *)readPasswordWithNSString:(NSString *)format
+- (IOSCharArray *)readPasswordWithNSString:(NSString *)fmt
                          withNSObjectArray:(IOSObjectArray *)args;
 
 /*!
- @brief Returns the <code>Writer</code> associated with this console.
+ @brief Retrieves the unique <code>PrintWriter</code> object
+  associated with this console.
+ @return The printwriter associated with this console
  */
 - (JavaIoPrintWriter *)writer;
 
@@ -128,6 +264,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaIoConsole)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaIoConsole")

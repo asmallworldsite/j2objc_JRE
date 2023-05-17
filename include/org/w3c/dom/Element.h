@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_OrgW3cDomElement
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -29,6 +26,7 @@
 #define INCLUDE_OrgW3cDomNode 1
 #include "org/w3c/dom/Node.h"
 
+@class JavaLangBoolean;
 @protocol OrgW3cDomAttr;
 @protocol OrgW3cDomNodeList;
 @protocol OrgW3cDomTypeInfo;
@@ -463,6 +461,4 @@ J2OBJC_TYPE_LITERAL_HEADER(OrgW3cDomElement)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_OrgW3cDomElement")

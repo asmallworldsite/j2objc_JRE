@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaTimeOffsetTime
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -41,6 +38,9 @@
 #define INCLUDE_JavaIoSerializable 1
 #include "java/io/Serializable.h"
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
+@class JavaLangLong;
 @class JavaTimeClock;
 @class JavaTimeFormatDateTimeFormatter;
 @class JavaTimeInstant;
@@ -72,8 +72,6 @@
  @since 1.8
  */
 @interface JavaTimeOffsetTime : NSObject < JavaTimeTemporalTemporal, JavaTimeTemporalTemporalAdjuster, JavaLangComparable, JavaIoSerializable >
-@property (readonly, class, strong) JavaTimeOffsetTime *MIN NS_SWIFT_NAME(MIN);
-@property (readonly, class, strong) JavaTimeOffsetTime *MAX NS_SWIFT_NAME(MAX);
 
 #pragma mark Public
 
@@ -1045,6 +1043,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaTimeOffsetTime)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaTimeOffsetTime")

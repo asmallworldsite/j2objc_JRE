@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaAwtFontTextAttribute
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -32,6 +29,7 @@
 @class JavaLangBoolean;
 @class JavaLangFloat;
 @class JavaLangInteger;
+@class JavaLangLong;
 
 /*!
  @brief The <code>TextAttribute</code> class defines attribute keys and
@@ -78,66 +76,6 @@
  </UL>
  */
 @interface JavaAwtFontTextAttribute : JavaTextAttributedCharacterIterator_Attribute
-@property (readonly, class) jlong serialVersionUID NS_SWIFT_NAME(serialVersionUID);
-@property (readonly, class, strong) JavaAwtFontTextAttribute *FAMILY NS_SWIFT_NAME(FAMILY);
-@property (readonly, class, strong) JavaAwtFontTextAttribute *WEIGHT NS_SWIFT_NAME(WEIGHT);
-@property (readonly, class, strong) JavaLangFloat *WEIGHT_EXTRA_LIGHT NS_SWIFT_NAME(WEIGHT_EXTRA_LIGHT);
-@property (readonly, class, strong) JavaLangFloat *WEIGHT_LIGHT NS_SWIFT_NAME(WEIGHT_LIGHT);
-@property (readonly, class, strong) JavaLangFloat *WEIGHT_DEMILIGHT NS_SWIFT_NAME(WEIGHT_DEMILIGHT);
-@property (readonly, class, strong) JavaLangFloat *WEIGHT_REGULAR NS_SWIFT_NAME(WEIGHT_REGULAR);
-@property (readonly, class, strong) JavaLangFloat *WEIGHT_SEMIBOLD NS_SWIFT_NAME(WEIGHT_SEMIBOLD);
-@property (readonly, class, strong) JavaLangFloat *WEIGHT_MEDIUM NS_SWIFT_NAME(WEIGHT_MEDIUM);
-@property (readonly, class, strong) JavaLangFloat *WEIGHT_DEMIBOLD NS_SWIFT_NAME(WEIGHT_DEMIBOLD);
-@property (readonly, class, strong) JavaLangFloat *WEIGHT_BOLD NS_SWIFT_NAME(WEIGHT_BOLD);
-@property (readonly, class, strong) JavaLangFloat *WEIGHT_HEAVY NS_SWIFT_NAME(WEIGHT_HEAVY);
-@property (readonly, class, strong) JavaLangFloat *WEIGHT_EXTRABOLD NS_SWIFT_NAME(WEIGHT_EXTRABOLD);
-@property (readonly, class, strong) JavaLangFloat *WEIGHT_ULTRABOLD NS_SWIFT_NAME(WEIGHT_ULTRABOLD);
-@property (readonly, class, strong) JavaAwtFontTextAttribute *WIDTH NS_SWIFT_NAME(WIDTH);
-@property (readonly, class, strong) JavaLangFloat *WIDTH_CONDENSED NS_SWIFT_NAME(WIDTH_CONDENSED);
-@property (readonly, class, strong) JavaLangFloat *WIDTH_SEMI_CONDENSED NS_SWIFT_NAME(WIDTH_SEMI_CONDENSED);
-@property (readonly, class, strong) JavaLangFloat *WIDTH_REGULAR NS_SWIFT_NAME(WIDTH_REGULAR);
-@property (readonly, class, strong) JavaLangFloat *WIDTH_SEMI_EXTENDED NS_SWIFT_NAME(WIDTH_SEMI_EXTENDED);
-@property (readonly, class, strong) JavaLangFloat *WIDTH_EXTENDED NS_SWIFT_NAME(WIDTH_EXTENDED);
-@property (readonly, class, strong) JavaAwtFontTextAttribute *POSTURE NS_SWIFT_NAME(POSTURE);
-@property (readonly, class, strong) JavaLangFloat *POSTURE_REGULAR NS_SWIFT_NAME(POSTURE_REGULAR);
-@property (readonly, class, strong) JavaLangFloat *POSTURE_OBLIQUE NS_SWIFT_NAME(POSTURE_OBLIQUE);
-@property (readonly, class, strong) JavaAwtFontTextAttribute *SIZE NS_SWIFT_NAME(SIZE);
-@property (readonly, class, strong) JavaAwtFontTextAttribute *TRANSFORM NS_SWIFT_NAME(TRANSFORM);
-@property (readonly, class, strong) JavaAwtFontTextAttribute *SUPERSCRIPT NS_SWIFT_NAME(SUPERSCRIPT);
-@property (readonly, class, strong) JavaLangInteger *SUPERSCRIPT_SUPER NS_SWIFT_NAME(SUPERSCRIPT_SUPER);
-@property (readonly, class, strong) JavaLangInteger *SUPERSCRIPT_SUB NS_SWIFT_NAME(SUPERSCRIPT_SUB);
-@property (readonly, class, strong) JavaAwtFontTextAttribute *FONT NS_SWIFT_NAME(FONT);
-@property (readonly, class, strong) JavaAwtFontTextAttribute *CHAR_REPLACEMENT NS_SWIFT_NAME(CHAR_REPLACEMENT);
-@property (readonly, class, strong) JavaAwtFontTextAttribute *FOREGROUND NS_SWIFT_NAME(FOREGROUND);
-@property (readonly, class, strong) JavaAwtFontTextAttribute *BACKGROUND NS_SWIFT_NAME(BACKGROUND);
-@property (readonly, class, strong) JavaAwtFontTextAttribute *UNDERLINE NS_SWIFT_NAME(UNDERLINE);
-@property (readonly, class, strong) JavaLangInteger *UNDERLINE_ON NS_SWIFT_NAME(UNDERLINE_ON);
-@property (readonly, class, strong) JavaAwtFontTextAttribute *STRIKETHROUGH NS_SWIFT_NAME(STRIKETHROUGH);
-@property (readonly, class, strong) JavaLangBoolean *STRIKETHROUGH_ON NS_SWIFT_NAME(STRIKETHROUGH_ON);
-@property (readonly, class, strong) JavaAwtFontTextAttribute *RUN_DIRECTION NS_SWIFT_NAME(RUN_DIRECTION);
-@property (readonly, class, strong) JavaLangBoolean *RUN_DIRECTION_LTR NS_SWIFT_NAME(RUN_DIRECTION_LTR);
-@property (readonly, class, strong) JavaLangBoolean *RUN_DIRECTION_RTL NS_SWIFT_NAME(RUN_DIRECTION_RTL);
-@property (readonly, class, strong) JavaAwtFontTextAttribute *BIDI_EMBEDDING NS_SWIFT_NAME(BIDI_EMBEDDING);
-@property (readonly, class, strong) JavaAwtFontTextAttribute *JUSTIFICATION NS_SWIFT_NAME(JUSTIFICATION);
-@property (readonly, class, strong) JavaLangFloat *JUSTIFICATION_FULL NS_SWIFT_NAME(JUSTIFICATION_FULL);
-@property (readonly, class, strong) JavaLangFloat *JUSTIFICATION_NONE NS_SWIFT_NAME(JUSTIFICATION_NONE);
-@property (readonly, class, strong) JavaAwtFontTextAttribute *INPUT_METHOD_HIGHLIGHT NS_SWIFT_NAME(INPUT_METHOD_HIGHLIGHT);
-@property (readonly, class, strong) JavaAwtFontTextAttribute *INPUT_METHOD_UNDERLINE NS_SWIFT_NAME(INPUT_METHOD_UNDERLINE);
-@property (readonly, class, strong) JavaLangInteger *UNDERLINE_LOW_ONE_PIXEL NS_SWIFT_NAME(UNDERLINE_LOW_ONE_PIXEL);
-@property (readonly, class, strong) JavaLangInteger *UNDERLINE_LOW_TWO_PIXEL NS_SWIFT_NAME(UNDERLINE_LOW_TWO_PIXEL);
-@property (readonly, class, strong) JavaLangInteger *UNDERLINE_LOW_DOTTED NS_SWIFT_NAME(UNDERLINE_LOW_DOTTED);
-@property (readonly, class, strong) JavaLangInteger *UNDERLINE_LOW_GRAY NS_SWIFT_NAME(UNDERLINE_LOW_GRAY);
-@property (readonly, class, strong) JavaLangInteger *UNDERLINE_LOW_DASHED NS_SWIFT_NAME(UNDERLINE_LOW_DASHED);
-@property (readonly, class, strong) JavaAwtFontTextAttribute *SWAP_COLORS NS_SWIFT_NAME(SWAP_COLORS);
-@property (readonly, class, strong) JavaLangBoolean *SWAP_COLORS_ON NS_SWIFT_NAME(SWAP_COLORS_ON);
-@property (readonly, class, strong) JavaAwtFontTextAttribute *NUMERIC_SHAPING NS_SWIFT_NAME(NUMERIC_SHAPING);
-@property (readonly, class, strong) JavaAwtFontTextAttribute *KERNING NS_SWIFT_NAME(KERNING);
-@property (readonly, class, strong) JavaLangInteger *KERNING_ON NS_SWIFT_NAME(KERNING_ON);
-@property (readonly, class, strong) JavaAwtFontTextAttribute *LIGATURES NS_SWIFT_NAME(LIGATURES);
-@property (readonly, class, strong) JavaLangInteger *LIGATURES_ON NS_SWIFT_NAME(LIGATURES_ON);
-@property (readonly, class, strong) JavaAwtFontTextAttribute *TRACKING NS_SWIFT_NAME(TRACKING);
-@property (readonly, class, strong) JavaLangFloat *TRACKING_TIGHT NS_SWIFT_NAME(TRACKING_TIGHT);
-@property (readonly, class, strong) JavaLangFloat *TRACKING_LOOSE NS_SWIFT_NAME(TRACKING_LOOSE);
 
 #pragma mark Protected
 
@@ -1005,6 +943,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaAwtFontTextAttribute)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaAwtFontTextAttribute")

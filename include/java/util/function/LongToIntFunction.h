@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaUtilFunctionLongToIntFunction
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -24,6 +21,9 @@
 
 #if !defined (JavaUtilFunctionLongToIntFunction_) && (INCLUDE_ALL_JavaUtilFunctionLongToIntFunction || defined(INCLUDE_JavaUtilFunctionLongToIntFunction))
 #define JavaUtilFunctionLongToIntFunction_
+
+@class JavaLangInteger;
+@class JavaLangLong;
 
 /*!
  @brief Represents a function that accepts a long-valued argument and produces an
@@ -55,6 +55,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilFunctionLongToIntFunction)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaUtilFunctionLongToIntFunction")

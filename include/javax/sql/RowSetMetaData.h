@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaxSqlRowSetMetaData
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -28,6 +25,9 @@
 #define RESTRICT_JavaSqlResultSetMetaData 1
 #define INCLUDE_JavaSqlResultSetMetaData 1
 #include "java/sql/ResultSetMetaData.h"
+
+@class JavaLangBoolean;
+@class JavaLangInteger;
 
 /*!
  @brief An object that contains information about the columns in a 
@@ -235,6 +235,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaxSqlRowSetMetaData)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaxSqlRowSetMetaData")

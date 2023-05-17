@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaLangInterruptedException
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -29,6 +26,7 @@
 #define INCLUDE_JavaLangException 1
 #include "java/lang/Exception.h"
 
+@class JavaLangBoolean;
 @class JavaLangThrowable;
 
 /*!
@@ -51,7 +49,7 @@
  - seealso: java.lang.Thread#sleep(long)
  - seealso: java.lang.Thread#interrupt()
  - seealso: java.lang.Thread#interrupted()
- @since JDK1.0
+ @since 1.0
  */
 @interface JavaLangInterruptedException : JavaLangException
 
@@ -105,6 +103,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaLangInterruptedException)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaLangInterruptedException")

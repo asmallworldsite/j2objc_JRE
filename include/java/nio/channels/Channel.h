@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaNioChannelsChannel
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -28,6 +25,8 @@
 #define RESTRICT_JavaIoCloseable 1
 #define INCLUDE_JavaIoCloseable 1
 #include "java/io/Closeable.h"
+
+@class JavaLangBoolean;
 
 /*!
  @brief A nexus for I/O operations.
@@ -82,6 +81,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaNioChannelsChannel)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaNioChannelsChannel")

@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaxCryptoExemptionMechanismSpi
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -26,6 +23,7 @@
 #define JavaxCryptoExemptionMechanismSpi_
 
 @class IOSByteArray;
+@class JavaLangInteger;
 @class JavaSecurityAlgorithmParameters;
 @protocol JavaSecurityKey;
 @protocol JavaSecuritySpecAlgorithmParameterSpec;
@@ -161,6 +159,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaxCryptoExemptionMechanismSpi)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaxCryptoExemptionMechanismSpi")

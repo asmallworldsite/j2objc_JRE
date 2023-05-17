@@ -40,9 +40,6 @@
 #define INCLUDE_JavaUtilStreamStreams_AbstractStreamBuilderImpl 1
 #endif
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -63,7 +60,6 @@
  @since 1.8
  */
 @interface JavaUtilStreamStreams : NSObject
-@property (readonly, class, strong) id NONE NS_SWIFT_NAME(NONE);
 
 #pragma mark Package-Private
 
@@ -118,6 +114,9 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilStreamStreams)
 #define INCLUDE_JavaUtilSpliterator_OfInt 1
 #include "java/util/Spliterator.h"
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
+@class JavaLangLong;
 @protocol JavaUtilComparator;
 @protocol JavaUtilFunctionConsumer;
 @protocol JavaUtilFunctionIntConsumer;
@@ -172,6 +171,9 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilStreamStreams_RangeIntSpliterator)
 #define INCLUDE_JavaUtilSpliterator_OfLong 1
 #include "java/util/Spliterator.h"
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
+@class JavaLangLong;
 @protocol JavaUtilComparator;
 @protocol JavaUtilFunctionConsumer;
 @protocol JavaUtilFunctionLongConsumer;
@@ -228,6 +230,9 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilStreamStreams_RangeLongSpliterator)
 #define INCLUDE_JavaUtilSpliterator 1
 #include "java/util/Spliterator.h"
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
+@class JavaLangLong;
 @protocol JavaUtilComparator;
 @protocol JavaUtilFunctionConsumer;
 
@@ -259,6 +264,7 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilStreamStreams_AbstractStreamBuilderImpl)
 #define INCLUDE_JavaUtilStreamStream_Builder 1
 #include "java/util/stream/Stream.h"
 
+@class JavaLangBoolean;
 @class JavaUtilStreamSpinedBuffer;
 @protocol JavaUtilFunctionConsumer;
 @protocol JavaUtilStreamStream;
@@ -328,6 +334,8 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilStreamStreams_StreamBuilderImpl)
 #define INCLUDE_JavaUtilSpliterator_OfInt 1
 #include "java/util/Spliterator.h"
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @class JavaUtilStreamSpinedBuffer_OfInt;
 @protocol JavaUtilFunctionConsumer;
 @protocol JavaUtilFunctionIntConsumer;
@@ -395,6 +403,8 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilStreamStreams_IntStreamBuilderImpl)
 #define INCLUDE_JavaUtilSpliterator_OfLong 1
 #include "java/util/Spliterator.h"
 
+@class JavaLangBoolean;
+@class JavaLangLong;
 @class JavaUtilStreamSpinedBuffer_OfLong;
 @protocol JavaUtilFunctionConsumer;
 @protocol JavaUtilFunctionLongConsumer;
@@ -462,6 +472,8 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilStreamStreams_LongStreamBuilderImpl)
 #define INCLUDE_JavaUtilSpliterator_OfDouble 1
 #include "java/util/Spliterator.h"
 
+@class JavaLangBoolean;
+@class JavaLangDouble;
 @class JavaUtilStreamSpinedBuffer_OfDouble;
 @protocol JavaUtilFunctionConsumer;
 @protocol JavaUtilFunctionDoubleConsumer;
@@ -525,6 +537,9 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilStreamStreams_DoubleStreamBuilderImpl)
 #define INCLUDE_JavaUtilSpliterator 1
 #include "java/util/Spliterator.h"
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
+@class JavaLangLong;
 @protocol JavaUtilComparator;
 @protocol JavaUtilFunctionConsumer;
 
@@ -602,6 +617,8 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilStreamStreams_ConcatSpliterator_OfRef)
 #define RESTRICT_JavaUtilSpliterator 1
 #define INCLUDE_JavaUtilSpliterator_OfPrimitive 1
 #include "java/util/Spliterator.h"
+
+@class JavaLangBoolean;
 
 @interface JavaUtilStreamStreams_ConcatSpliterator_OfPrimitive : JavaUtilStreamStreams_ConcatSpliterator < JavaUtilSpliterator_OfPrimitive >
 
@@ -707,6 +724,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilStreamStreams_ConcatSpliterator_OfDouble)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaUtilStreamStreams")

@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaIoUnsupportedEncodingException
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -34,7 +31,7 @@
 /*!
  @brief The Character Encoding is not supported.
  @author Asmus Freytag
- @since JDK1.1
+ @since 1.1
  */
 @interface JavaIoUnsupportedEncodingException : JavaIoIOException
 
@@ -82,6 +79,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaIoUnsupportedEncodingException)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaIoUnsupportedEncodingException")

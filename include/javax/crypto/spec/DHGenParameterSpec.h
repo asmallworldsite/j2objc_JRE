@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaxCryptoSpecDHGenParameterSpec
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -28,6 +25,8 @@
 #define RESTRICT_JavaSecuritySpecAlgorithmParameterSpec 1
 #define INCLUDE_JavaSecuritySpecAlgorithmParameterSpec 1
 #include "java/security/spec/AlgorithmParameterSpec.h"
+
+@class JavaLangInteger;
 
 /*!
  @brief This class specifies the set of parameters used for generating
@@ -90,6 +89,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaxCryptoSpecDHGenParameterSpec)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaxCryptoSpecDHGenParameterSpec")

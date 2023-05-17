@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaNioCharsetCodingErrorAction
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -36,9 +33,6 @@
  @since 1.4
  */
 @interface JavaNioCharsetCodingErrorAction : NSObject
-@property (readonly, class, strong) JavaNioCharsetCodingErrorAction *IGNORE NS_SWIFT_NAME(IGNORE);
-@property (readonly, class, strong) JavaNioCharsetCodingErrorAction *REPLACE NS_SWIFT_NAME(REPLACE);
-@property (readonly, class, strong) JavaNioCharsetCodingErrorAction *REPORT NS_SWIFT_NAME(REPORT);
 
 #pragma mark Public
 
@@ -94,6 +88,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaNioCharsetCodingErrorAction)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaNioCharsetCodingErrorAction")

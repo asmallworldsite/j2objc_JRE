@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaNioFileProviderNotFoundException
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -29,13 +26,15 @@
 #define INCLUDE_JavaLangRuntimeException 1
 #include "java/lang/RuntimeException.h"
 
+@class JavaLangBoolean;
+@class JavaLangLong;
 @class JavaLangThrowable;
 
 /*!
  @brief Runtime exception thrown when a provider of the required type cannot be found.
+ @since 1.7
  */
 @interface JavaNioFileProviderNotFoundException : JavaLangRuntimeException
-@property (readonly, class) jlong serialVersionUID NS_SWIFT_NAME(serialVersionUID);
 
 #pragma mark Public
 
@@ -90,6 +89,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaNioFileProviderNotFoundException)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaNioFileProviderNotFoundException")

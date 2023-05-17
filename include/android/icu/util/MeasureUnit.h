@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_AndroidIcuUtilMeasureUnit
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -31,6 +28,8 @@
 
 @class AndroidIcuTextUnicodeSet;
 @class AndroidIcuUtilTimeUnit;
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @protocol AndroidIcuUtilMeasureUnit_Factory;
 @protocol JavaUtilSet;
 
@@ -51,148 +50,6 @@
    */
   NSString *subType_;
 }
-@property (readonly, class, strong) AndroidIcuTextUnicodeSet *ASCII NS_SWIFT_NAME(ASCII);
-@property (readonly, class, strong) AndroidIcuTextUnicodeSet *ASCII_HYPHEN_DIGITS NS_SWIFT_NAME(ASCII_HYPHEN_DIGITS);
-@property (class, strong) id<AndroidIcuUtilMeasureUnit_Factory> CURRENCY_FACTORY NS_SWIFT_NAME(CURRENCY_FACTORY);
-@property (class, strong) id<AndroidIcuUtilMeasureUnit_Factory> TIMEUNIT_FACTORY NS_SWIFT_NAME(TIMEUNIT_FACTORY);
-@property (readonly, class, strong) AndroidIcuUtilMeasureUnit *G_FORCE NS_SWIFT_NAME(G_FORCE);
-@property (readonly, class, strong) AndroidIcuUtilMeasureUnit *METER_PER_SECOND_SQUARED NS_SWIFT_NAME(METER_PER_SECOND_SQUARED);
-@property (readonly, class, strong) AndroidIcuUtilMeasureUnit *ARC_MINUTE NS_SWIFT_NAME(ARC_MINUTE);
-@property (readonly, class, strong) AndroidIcuUtilMeasureUnit *ARC_SECOND NS_SWIFT_NAME(ARC_SECOND);
-@property (readonly, class, strong) AndroidIcuUtilMeasureUnit *DEGREE NS_SWIFT_NAME(DEGREE);
-@property (readonly, class, strong) AndroidIcuUtilMeasureUnit *RADIAN NS_SWIFT_NAME(RADIAN);
-@property (readonly, class, strong) AndroidIcuUtilMeasureUnit *REVOLUTION_ANGLE NS_SWIFT_NAME(REVOLUTION_ANGLE);
-@property (readonly, class, strong) AndroidIcuUtilMeasureUnit *ACRE NS_SWIFT_NAME(ACRE);
-@property (readonly, class, strong) AndroidIcuUtilMeasureUnit *HECTARE NS_SWIFT_NAME(HECTARE);
-@property (readonly, class, strong) AndroidIcuUtilMeasureUnit *SQUARE_CENTIMETER NS_SWIFT_NAME(SQUARE_CENTIMETER);
-@property (readonly, class, strong) AndroidIcuUtilMeasureUnit *SQUARE_FOOT NS_SWIFT_NAME(SQUARE_FOOT);
-@property (readonly, class, strong) AndroidIcuUtilMeasureUnit *SQUARE_INCH NS_SWIFT_NAME(SQUARE_INCH);
-@property (readonly, class, strong) AndroidIcuUtilMeasureUnit *SQUARE_KILOMETER NS_SWIFT_NAME(SQUARE_KILOMETER);
-@property (readonly, class, strong) AndroidIcuUtilMeasureUnit *SQUARE_METER NS_SWIFT_NAME(SQUARE_METER);
-@property (readonly, class, strong) AndroidIcuUtilMeasureUnit *SQUARE_MILE NS_SWIFT_NAME(SQUARE_MILE);
-@property (readonly, class, strong) AndroidIcuUtilMeasureUnit *SQUARE_YARD NS_SWIFT_NAME(SQUARE_YARD);
-@property (readonly, class, strong) AndroidIcuUtilMeasureUnit *KARAT NS_SWIFT_NAME(KARAT);
-@property (readonly, class, strong) AndroidIcuUtilMeasureUnit *MILLIGRAM_PER_DECILITER NS_SWIFT_NAME(MILLIGRAM_PER_DECILITER);
-@property (readonly, class, strong) AndroidIcuUtilMeasureUnit *MILLIMOLE_PER_LITER NS_SWIFT_NAME(MILLIMOLE_PER_LITER);
-@property (readonly, class, strong) AndroidIcuUtilMeasureUnit *PART_PER_MILLION NS_SWIFT_NAME(PART_PER_MILLION);
-@property (readonly, class, strong) AndroidIcuUtilMeasureUnit *LITER_PER_100KILOMETERS NS_SWIFT_NAME(LITER_PER_100KILOMETERS);
-@property (readonly, class, strong) AndroidIcuUtilMeasureUnit *LITER_PER_KILOMETER NS_SWIFT_NAME(LITER_PER_KILOMETER);
-@property (readonly, class, strong) AndroidIcuUtilMeasureUnit *MILE_PER_GALLON NS_SWIFT_NAME(MILE_PER_GALLON);
-@property (readonly, class, strong) AndroidIcuUtilMeasureUnit *MILE_PER_GALLON_IMPERIAL NS_SWIFT_NAME(MILE_PER_GALLON_IMPERIAL);
-@property (readonly, class, strong) AndroidIcuUtilMeasureUnit *EAST NS_SWIFT_NAME(EAST);
-@property (readonly, class, strong) AndroidIcuUtilMeasureUnit *NORTH NS_SWIFT_NAME(NORTH);
-@property (readonly, class, strong) AndroidIcuUtilMeasureUnit *SOUTH NS_SWIFT_NAME(SOUTH);
-@property (readonly, class, strong) AndroidIcuUtilMeasureUnit *WEST NS_SWIFT_NAME(WEST);
-@property (readonly, class, strong) AndroidIcuUtilMeasureUnit *BIT NS_SWIFT_NAME(BIT);
-@property (readonly, class, strong) AndroidIcuUtilMeasureUnit *BYTE NS_SWIFT_NAME(BYTE);
-@property (readonly, class, strong) AndroidIcuUtilMeasureUnit *GIGABIT NS_SWIFT_NAME(GIGABIT);
-@property (readonly, class, strong) AndroidIcuUtilMeasureUnit *GIGABYTE NS_SWIFT_NAME(GIGABYTE);
-@property (readonly, class, strong) AndroidIcuUtilMeasureUnit *KILOBIT NS_SWIFT_NAME(KILOBIT);
-@property (readonly, class, strong) AndroidIcuUtilMeasureUnit *KILOBYTE NS_SWIFT_NAME(KILOBYTE);
-@property (readonly, class, strong) AndroidIcuUtilMeasureUnit *MEGABIT NS_SWIFT_NAME(MEGABIT);
-@property (readonly, class, strong) AndroidIcuUtilMeasureUnit *MEGABYTE NS_SWIFT_NAME(MEGABYTE);
-@property (readonly, class, strong) AndroidIcuUtilMeasureUnit *TERABIT NS_SWIFT_NAME(TERABIT);
-@property (readonly, class, strong) AndroidIcuUtilMeasureUnit *TERABYTE NS_SWIFT_NAME(TERABYTE);
-@property (readonly, class, strong) AndroidIcuUtilMeasureUnit *CENTURY NS_SWIFT_NAME(CENTURY);
-@property (readonly, class, strong) AndroidIcuUtilTimeUnit *DAY NS_SWIFT_NAME(DAY);
-@property (readonly, class, strong) AndroidIcuUtilTimeUnit *HOUR NS_SWIFT_NAME(HOUR);
-@property (readonly, class, strong) AndroidIcuUtilMeasureUnit *MICROSECOND NS_SWIFT_NAME(MICROSECOND);
-@property (readonly, class, strong) AndroidIcuUtilMeasureUnit *MILLISECOND NS_SWIFT_NAME(MILLISECOND);
-@property (readonly, class, strong) AndroidIcuUtilTimeUnit *MINUTE NS_SWIFT_NAME(MINUTE);
-@property (readonly, class, strong) AndroidIcuUtilTimeUnit *MONTH NS_SWIFT_NAME(MONTH);
-@property (readonly, class, strong) AndroidIcuUtilMeasureUnit *NANOSECOND NS_SWIFT_NAME(NANOSECOND);
-@property (readonly, class, strong) AndroidIcuUtilTimeUnit *SECOND NS_SWIFT_NAME(SECOND);
-@property (readonly, class, strong) AndroidIcuUtilTimeUnit *WEEK NS_SWIFT_NAME(WEEK);
-@property (readonly, class, strong) AndroidIcuUtilTimeUnit *YEAR NS_SWIFT_NAME(YEAR);
-@property (readonly, class, strong) AndroidIcuUtilMeasureUnit *AMPERE NS_SWIFT_NAME(AMPERE);
-@property (readonly, class, strong) AndroidIcuUtilMeasureUnit *MILLIAMPERE NS_SWIFT_NAME(MILLIAMPERE);
-@property (readonly, class, strong) AndroidIcuUtilMeasureUnit *OHM NS_SWIFT_NAME(OHM);
-@property (readonly, class, strong) AndroidIcuUtilMeasureUnit *VOLT NS_SWIFT_NAME(VOLT);
-@property (readonly, class, strong) AndroidIcuUtilMeasureUnit *CALORIE NS_SWIFT_NAME(CALORIE);
-@property (readonly, class, strong) AndroidIcuUtilMeasureUnit *FOODCALORIE NS_SWIFT_NAME(FOODCALORIE);
-@property (readonly, class, strong) AndroidIcuUtilMeasureUnit *JOULE NS_SWIFT_NAME(JOULE);
-@property (readonly, class, strong) AndroidIcuUtilMeasureUnit *KILOCALORIE NS_SWIFT_NAME(KILOCALORIE);
-@property (readonly, class, strong) AndroidIcuUtilMeasureUnit *KILOJOULE NS_SWIFT_NAME(KILOJOULE);
-@property (readonly, class, strong) AndroidIcuUtilMeasureUnit *KILOWATT_HOUR NS_SWIFT_NAME(KILOWATT_HOUR);
-@property (readonly, class, strong) AndroidIcuUtilMeasureUnit *GIGAHERTZ NS_SWIFT_NAME(GIGAHERTZ);
-@property (readonly, class, strong) AndroidIcuUtilMeasureUnit *HERTZ NS_SWIFT_NAME(HERTZ);
-@property (readonly, class, strong) AndroidIcuUtilMeasureUnit *KILOHERTZ NS_SWIFT_NAME(KILOHERTZ);
-@property (readonly, class, strong) AndroidIcuUtilMeasureUnit *MEGAHERTZ NS_SWIFT_NAME(MEGAHERTZ);
-@property (readonly, class, strong) AndroidIcuUtilMeasureUnit *ASTRONOMICAL_UNIT NS_SWIFT_NAME(ASTRONOMICAL_UNIT);
-@property (readonly, class, strong) AndroidIcuUtilMeasureUnit *CENTIMETER NS_SWIFT_NAME(CENTIMETER);
-@property (readonly, class, strong) AndroidIcuUtilMeasureUnit *DECIMETER NS_SWIFT_NAME(DECIMETER);
-@property (readonly, class, strong) AndroidIcuUtilMeasureUnit *FATHOM NS_SWIFT_NAME(FATHOM);
-@property (readonly, class, strong) AndroidIcuUtilMeasureUnit *FOOT NS_SWIFT_NAME(FOOT);
-@property (readonly, class, strong) AndroidIcuUtilMeasureUnit *FURLONG NS_SWIFT_NAME(FURLONG);
-@property (readonly, class, strong) AndroidIcuUtilMeasureUnit *INCH NS_SWIFT_NAME(INCH);
-@property (readonly, class, strong) AndroidIcuUtilMeasureUnit *KILOMETER NS_SWIFT_NAME(KILOMETER);
-@property (readonly, class, strong) AndroidIcuUtilMeasureUnit *LIGHT_YEAR NS_SWIFT_NAME(LIGHT_YEAR);
-@property (readonly, class, strong) AndroidIcuUtilMeasureUnit *METER NS_SWIFT_NAME(METER);
-@property (readonly, class, strong) AndroidIcuUtilMeasureUnit *MICROMETER NS_SWIFT_NAME(MICROMETER);
-@property (readonly, class, strong) AndroidIcuUtilMeasureUnit *MILE NS_SWIFT_NAME(MILE);
-@property (readonly, class, strong) AndroidIcuUtilMeasureUnit *MILE_SCANDINAVIAN NS_SWIFT_NAME(MILE_SCANDINAVIAN);
-@property (readonly, class, strong) AndroidIcuUtilMeasureUnit *MILLIMETER NS_SWIFT_NAME(MILLIMETER);
-@property (readonly, class, strong) AndroidIcuUtilMeasureUnit *NANOMETER NS_SWIFT_NAME(NANOMETER);
-@property (readonly, class, strong) AndroidIcuUtilMeasureUnit *NAUTICAL_MILE NS_SWIFT_NAME(NAUTICAL_MILE);
-@property (readonly, class, strong) AndroidIcuUtilMeasureUnit *PARSEC NS_SWIFT_NAME(PARSEC);
-@property (readonly, class, strong) AndroidIcuUtilMeasureUnit *PICOMETER NS_SWIFT_NAME(PICOMETER);
-@property (readonly, class, strong) AndroidIcuUtilMeasureUnit *YARD NS_SWIFT_NAME(YARD);
-@property (readonly, class, strong) AndroidIcuUtilMeasureUnit *LUX NS_SWIFT_NAME(LUX);
-@property (readonly, class, strong) AndroidIcuUtilMeasureUnit *CARAT NS_SWIFT_NAME(CARAT);
-@property (readonly, class, strong) AndroidIcuUtilMeasureUnit *GRAM NS_SWIFT_NAME(GRAM);
-@property (readonly, class, strong) AndroidIcuUtilMeasureUnit *KILOGRAM NS_SWIFT_NAME(KILOGRAM);
-@property (readonly, class, strong) AndroidIcuUtilMeasureUnit *METRIC_TON NS_SWIFT_NAME(METRIC_TON);
-@property (readonly, class, strong) AndroidIcuUtilMeasureUnit *MICROGRAM NS_SWIFT_NAME(MICROGRAM);
-@property (readonly, class, strong) AndroidIcuUtilMeasureUnit *MILLIGRAM NS_SWIFT_NAME(MILLIGRAM);
-@property (readonly, class, strong) AndroidIcuUtilMeasureUnit *OUNCE NS_SWIFT_NAME(OUNCE);
-@property (readonly, class, strong) AndroidIcuUtilMeasureUnit *OUNCE_TROY NS_SWIFT_NAME(OUNCE_TROY);
-@property (readonly, class, strong) AndroidIcuUtilMeasureUnit *POUND NS_SWIFT_NAME(POUND);
-@property (readonly, class, strong) AndroidIcuUtilMeasureUnit *STONE NS_SWIFT_NAME(STONE);
-@property (readonly, class, strong) AndroidIcuUtilMeasureUnit *TON NS_SWIFT_NAME(TON);
-@property (readonly, class, strong) AndroidIcuUtilMeasureUnit *GIGAWATT NS_SWIFT_NAME(GIGAWATT);
-@property (readonly, class, strong) AndroidIcuUtilMeasureUnit *HORSEPOWER NS_SWIFT_NAME(HORSEPOWER);
-@property (readonly, class, strong) AndroidIcuUtilMeasureUnit *KILOWATT NS_SWIFT_NAME(KILOWATT);
-@property (readonly, class, strong) AndroidIcuUtilMeasureUnit *MEGAWATT NS_SWIFT_NAME(MEGAWATT);
-@property (readonly, class, strong) AndroidIcuUtilMeasureUnit *MILLIWATT NS_SWIFT_NAME(MILLIWATT);
-@property (readonly, class, strong) AndroidIcuUtilMeasureUnit *WATT NS_SWIFT_NAME(WATT);
-@property (readonly, class, strong) AndroidIcuUtilMeasureUnit *HECTOPASCAL NS_SWIFT_NAME(HECTOPASCAL);
-@property (readonly, class, strong) AndroidIcuUtilMeasureUnit *INCH_HG NS_SWIFT_NAME(INCH_HG);
-@property (readonly, class, strong) AndroidIcuUtilMeasureUnit *MILLIBAR NS_SWIFT_NAME(MILLIBAR);
-@property (readonly, class, strong) AndroidIcuUtilMeasureUnit *MILLIMETER_OF_MERCURY NS_SWIFT_NAME(MILLIMETER_OF_MERCURY);
-@property (readonly, class, strong) AndroidIcuUtilMeasureUnit *POUND_PER_SQUARE_INCH NS_SWIFT_NAME(POUND_PER_SQUARE_INCH);
-@property (readonly, class, strong) AndroidIcuUtilMeasureUnit *KILOMETER_PER_HOUR NS_SWIFT_NAME(KILOMETER_PER_HOUR);
-@property (readonly, class, strong) AndroidIcuUtilMeasureUnit *KNOT NS_SWIFT_NAME(KNOT);
-@property (readonly, class, strong) AndroidIcuUtilMeasureUnit *METER_PER_SECOND NS_SWIFT_NAME(METER_PER_SECOND);
-@property (readonly, class, strong) AndroidIcuUtilMeasureUnit *MILE_PER_HOUR NS_SWIFT_NAME(MILE_PER_HOUR);
-@property (readonly, class, strong) AndroidIcuUtilMeasureUnit *CELSIUS NS_SWIFT_NAME(CELSIUS);
-@property (readonly, class, strong) AndroidIcuUtilMeasureUnit *FAHRENHEIT NS_SWIFT_NAME(FAHRENHEIT);
-@property (readonly, class, strong) AndroidIcuUtilMeasureUnit *GENERIC_TEMPERATURE NS_SWIFT_NAME(GENERIC_TEMPERATURE);
-@property (readonly, class, strong) AndroidIcuUtilMeasureUnit *KELVIN NS_SWIFT_NAME(KELVIN);
-@property (readonly, class, strong) AndroidIcuUtilMeasureUnit *ACRE_FOOT NS_SWIFT_NAME(ACRE_FOOT);
-@property (readonly, class, strong) AndroidIcuUtilMeasureUnit *BUSHEL NS_SWIFT_NAME(BUSHEL);
-@property (readonly, class, strong) AndroidIcuUtilMeasureUnit *CENTILITER NS_SWIFT_NAME(CENTILITER);
-@property (readonly, class, strong) AndroidIcuUtilMeasureUnit *CUBIC_CENTIMETER NS_SWIFT_NAME(CUBIC_CENTIMETER);
-@property (readonly, class, strong) AndroidIcuUtilMeasureUnit *CUBIC_FOOT NS_SWIFT_NAME(CUBIC_FOOT);
-@property (readonly, class, strong) AndroidIcuUtilMeasureUnit *CUBIC_INCH NS_SWIFT_NAME(CUBIC_INCH);
-@property (readonly, class, strong) AndroidIcuUtilMeasureUnit *CUBIC_KILOMETER NS_SWIFT_NAME(CUBIC_KILOMETER);
-@property (readonly, class, strong) AndroidIcuUtilMeasureUnit *CUBIC_METER NS_SWIFT_NAME(CUBIC_METER);
-@property (readonly, class, strong) AndroidIcuUtilMeasureUnit *CUBIC_MILE NS_SWIFT_NAME(CUBIC_MILE);
-@property (readonly, class, strong) AndroidIcuUtilMeasureUnit *CUBIC_YARD NS_SWIFT_NAME(CUBIC_YARD);
-@property (readonly, class, strong) AndroidIcuUtilMeasureUnit *CUP NS_SWIFT_NAME(CUP);
-@property (readonly, class, strong) AndroidIcuUtilMeasureUnit *CUP_METRIC NS_SWIFT_NAME(CUP_METRIC);
-@property (readonly, class, strong) AndroidIcuUtilMeasureUnit *DECILITER NS_SWIFT_NAME(DECILITER);
-@property (readonly, class, strong) AndroidIcuUtilMeasureUnit *FLUID_OUNCE NS_SWIFT_NAME(FLUID_OUNCE);
-@property (readonly, class, strong) AndroidIcuUtilMeasureUnit *GALLON NS_SWIFT_NAME(GALLON);
-@property (readonly, class, strong) AndroidIcuUtilMeasureUnit *GALLON_IMPERIAL NS_SWIFT_NAME(GALLON_IMPERIAL);
-@property (readonly, class, strong) AndroidIcuUtilMeasureUnit *HECTOLITER NS_SWIFT_NAME(HECTOLITER);
-@property (readonly, class, strong) AndroidIcuUtilMeasureUnit *LITER NS_SWIFT_NAME(LITER);
-@property (readonly, class, strong) AndroidIcuUtilMeasureUnit *MEGALITER NS_SWIFT_NAME(MEGALITER);
-@property (readonly, class, strong) AndroidIcuUtilMeasureUnit *MILLILITER NS_SWIFT_NAME(MILLILITER);
-@property (readonly, class, strong) AndroidIcuUtilMeasureUnit *PINT NS_SWIFT_NAME(PINT);
-@property (readonly, class, strong) AndroidIcuUtilMeasureUnit *PINT_METRIC NS_SWIFT_NAME(PINT_METRIC);
-@property (readonly, class, strong) AndroidIcuUtilMeasureUnit *QUART NS_SWIFT_NAME(QUART);
-@property (readonly, class, strong) AndroidIcuUtilMeasureUnit *TABLESPOON NS_SWIFT_NAME(TABLESPOON);
-@property (readonly, class, strong) AndroidIcuUtilMeasureUnit *TEASPOON NS_SWIFT_NAME(TEASPOON);
 
 #pragma mark Public
 
@@ -239,13 +96,13 @@
   However, for special purposes (such as CLDR tooling), it is available.
  */
 + (AndroidIcuUtilMeasureUnit *)internalGetInstanceWithNSString:(NSString *)type
-                                                  withNSString:(NSString *)subType __attribute__((deprecated));
+                                                  withNSString:(NSString *)subType;
 
 /*!
  @brief For ICU use only.
  */
 + (AndroidIcuUtilMeasureUnit *)resolveUnitPerUnitWithAndroidIcuUtilMeasureUnit:(AndroidIcuUtilMeasureUnit *)unit
-                                                 withAndroidIcuUtilMeasureUnit:(AndroidIcuUtilMeasureUnit *)perUnit __attribute__((deprecated));
+                                                 withAndroidIcuUtilMeasureUnit:(AndroidIcuUtilMeasureUnit *)perUnit;
 
 /*!
  */
@@ -256,13 +113,13 @@
 /*!
  */
 - (instancetype __nonnull)initWithNSString:(NSString *)type
-                              withNSString:(NSString *)subType __attribute__((deprecated));
+                              withNSString:(NSString *)subType;
 
 /*!
  */
 + (AndroidIcuUtilMeasureUnit *)addUnitWithNSString:(NSString *)type
                                       withNSString:(NSString *)unitName
-             withAndroidIcuUtilMeasureUnit_Factory:(id<AndroidIcuUtilMeasureUnit_Factory>)factory __attribute__((deprecated));
+             withAndroidIcuUtilMeasureUnit_Factory:(id<AndroidIcuUtilMeasureUnit_Factory>)factory;
 
 // Disallowed inherited constructors, do not use.
 
@@ -1430,13 +1287,12 @@ J2OBJC_TYPE_LITERAL_HEADER(AndroidIcuUtilMeasureUnit)
 
 /*!
  */
-__attribute__((deprecated))
 @protocol AndroidIcuUtilMeasureUnit_Factory < JavaObject >
 
 /*!
  */
 - (AndroidIcuUtilMeasureUnit *)createWithNSString:(NSString *)type
-                                     withNSString:(NSString *)subType __attribute__((deprecated));
+                                     withNSString:(NSString *)subType;
 
 @end
 
@@ -1493,6 +1349,4 @@ J2OBJC_TYPE_LITERAL_HEADER(AndroidIcuUtilMeasureUnit_MeasureUnitProxy)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_AndroidIcuUtilMeasureUnit")

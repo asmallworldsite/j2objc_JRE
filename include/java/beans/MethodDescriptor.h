@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaBeansMethodDescriptor
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -41,10 +38,9 @@
 
 /*!
  @brief <p>
-  Constructs an instance with the given <code>Method</code>.
- The 
- <code>getName()</code> is set as the name of the <code>method</code>
-  passed. 
+  Constructs an instance with the given <code>Method</code>.The
+  <code>getName()</code> is set as the name of the <code>method</code>
+  passed.
  </p>
  @param method The Method to set.
  */
@@ -53,9 +49,8 @@
 /*!
  @brief <p>
   Constructs an instance with the given <code>Method</code> and 
- <code>ParameterDescriptor</code>s.
- The <code>getName()</code> is set as the name
-  of the <code>method</code> passed. 
+ <code>ParameterDescriptor</code>s.The <code>getName()</code> is set as the name
+  of the <code>method</code> passed.
  </p>
  @param method The Method to set.
  @param parameterDescriptors An array of parameter descriptors.
@@ -112,6 +107,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaBeansMethodDescriptor)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaBeansMethodDescriptor")

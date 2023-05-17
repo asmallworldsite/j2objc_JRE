@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaTextDecimalFormat
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -29,6 +26,10 @@
 #define INCLUDE_JavaTextNumberFormat 1
 #include "java/text/NumberFormat.h"
 
+@class JavaLangBoolean;
+@class JavaLangDouble;
+@class JavaLangInteger;
+@class JavaLangLong;
 @class JavaLangStringBuffer;
 @class JavaMathRoundingMode;
 @class JavaTextDecimalFormatSymbols;
@@ -351,12 +352,6 @@
  @author Alan Liu
  */
 @interface JavaTextDecimalFormat : JavaTextNumberFormat
-@property (readonly, class) jint currentSerialVersion NS_SWIFT_NAME(currentSerialVersion);
-@property (readonly, class) jint DOUBLE_INTEGER_DIGITS NS_SWIFT_NAME(DOUBLE_INTEGER_DIGITS);
-@property (readonly, class) jint DOUBLE_FRACTION_DIGITS NS_SWIFT_NAME(DOUBLE_FRACTION_DIGITS);
-@property (readonly, class) jint MAXIMUM_INTEGER_DIGITS NS_SWIFT_NAME(MAXIMUM_INTEGER_DIGITS);
-@property (readonly, class) jint MAXIMUM_FRACTION_DIGITS NS_SWIFT_NAME(MAXIMUM_FRACTION_DIGITS);
-@property (readonly, class) jlong serialVersionUID NS_SWIFT_NAME(serialVersionUID);
 
 #pragma mark Public
 
@@ -980,6 +975,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaTextDecimalFormat)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaTextDecimalFormat")

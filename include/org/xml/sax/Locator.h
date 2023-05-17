@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_OrgXmlSaxLocator
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -24,6 +21,8 @@
 
 #if !defined (OrgXmlSaxLocator_) && (INCLUDE_ALL_OrgXmlSaxLocator || defined(INCLUDE_OrgXmlSaxLocator))
 #define OrgXmlSaxLocator_
+
+@class JavaLangInteger;
 
 /*!
  @brief Interface for associating a SAX event with a document location.
@@ -148,6 +147,4 @@ J2OBJC_TYPE_LITERAL_HEADER(OrgXmlSaxLocator)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_OrgXmlSaxLocator")

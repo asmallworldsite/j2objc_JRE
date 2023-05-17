@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_AndroidIcuUtilLocaleData
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -30,23 +27,14 @@
 @class AndroidIcuUtilLocaleData_PaperSize;
 @class AndroidIcuUtilULocale;
 @class AndroidIcuUtilVersionInfo;
+@class JavaLangBoolean;
+@class JavaLangInteger;
 
 /*!
  @brief A class for accessing miscellaneous data in the locale bundles
  @author ram
  */
 @interface AndroidIcuUtilLocaleData : NSObject
-@property (readonly, class) jint ES_STANDARD NS_SWIFT_NAME(ES_STANDARD);
-@property (readonly, class) jint ES_AUXILIARY NS_SWIFT_NAME(ES_AUXILIARY);
-@property (readonly, class) jint ES_INDEX NS_SWIFT_NAME(ES_INDEX);
-@property (readonly, class) jint ES_CURRENCY NS_SWIFT_NAME(ES_CURRENCY);
-@property (readonly, class) jint ES_PUNCTUATION NS_SWIFT_NAME(ES_PUNCTUATION);
-@property (readonly, class) jint ES_COUNT NS_SWIFT_NAME(ES_COUNT);
-@property (readonly, class) jint QUOTATION_START NS_SWIFT_NAME(QUOTATION_START);
-@property (readonly, class) jint QUOTATION_END NS_SWIFT_NAME(QUOTATION_END);
-@property (readonly, class) jint ALT_QUOTATION_START NS_SWIFT_NAME(ALT_QUOTATION_START);
-@property (readonly, class) jint ALT_QUOTATION_END NS_SWIFT_NAME(ALT_QUOTATION_END);
-@property (readonly, class) jint DELIMITER_COUNT NS_SWIFT_NAME(DELIMITER_COUNT);
 
 #pragma mark Public
 
@@ -299,9 +287,6 @@ J2OBJC_TYPE_LITERAL_HEADER(AndroidIcuUtilLocaleData)
  @brief Enumeration for representing the measurement systems.
  */
 @interface AndroidIcuUtilLocaleData_MeasurementSystem : NSObject
-@property (readonly, class, strong) AndroidIcuUtilLocaleData_MeasurementSystem *SI NS_SWIFT_NAME(SI);
-@property (readonly, class, strong) AndroidIcuUtilLocaleData_MeasurementSystem *US NS_SWIFT_NAME(US);
-@property (readonly, class, strong) AndroidIcuUtilLocaleData_MeasurementSystem *UK NS_SWIFT_NAME(UK);
 
 @end
 
@@ -339,6 +324,8 @@ J2OBJC_TYPE_LITERAL_HEADER(AndroidIcuUtilLocaleData_MeasurementSystem)
 #if !defined (AndroidIcuUtilLocaleData_PaperSize_) && (INCLUDE_ALL_AndroidIcuUtilLocaleData || defined(INCLUDE_AndroidIcuUtilLocaleData_PaperSize))
 #define AndroidIcuUtilLocaleData_PaperSize_
 
+@class JavaLangInteger;
+
 /*!
  @brief A class that represents the size of letter head
   used in the country
@@ -375,6 +362,4 @@ J2OBJC_TYPE_LITERAL_HEADER(AndroidIcuUtilLocaleData_PaperSize)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_AndroidIcuUtilLocaleData")

@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaNioFilePathMatcher
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -25,6 +22,7 @@
 #if !defined (JavaNioFilePathMatcher_) && (INCLUDE_ALL_JavaNioFilePathMatcher || defined(INCLUDE_JavaNioFilePathMatcher))
 #define JavaNioFilePathMatcher_
 
+@class JavaLangBoolean;
 @protocol JavaNioFilePath;
 
 /*!
@@ -56,6 +54,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaNioFilePathMatcher)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaNioFilePathMatcher")

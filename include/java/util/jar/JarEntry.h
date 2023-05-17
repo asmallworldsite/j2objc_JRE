@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaUtilJarJarEntry
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -31,10 +28,13 @@
 
 @class IOSByteArray;
 @class IOSObjectArray;
+@class JavaLangInteger;
+@class JavaLangLong;
 @class JavaUtilJarAttributes;
 
 /*!
  @brief This class is used to represent a JAR file entry.
+ @since 1.2
  */
 @interface JavaUtilJarJarEntry : JavaUtilZipZipEntry {
  @public
@@ -114,6 +114,22 @@
  */
 - (IOSObjectArray *)getCodeSigners;
 
+/*!
+ @brief Returns the real name of this <code>JarEntry</code>.
+ If this <code>JarEntry</code> is an entry of a 
+ <a href="JarFile.html#multirelease">multi-release jar file</a> and the 
+ <code>JarFile</code> is configured to be processed as such, the name returned
+  by this method is the path name of the versioned entry that the 
+ <code>JarEntry</code> represents, rather than the path name of the base entry
+  that <code>getName()</code> returns. If the <code>JarEntry</code> does not represent
+  a versioned entry of a multi-release <code>JarFile</code> or the <code>JarFile</code>
+  is not configured for processing a multi-release jar file, this method
+  returns the same name that <code>getName()</code> returns.
+ @return the real name of the JarEntry
+ @since 10
+ */
+- (NSString *)getRealName;
+
 // Disallowed inherited constructors, do not use.
 
 - (instancetype __nonnull)init NS_UNAVAILABLE;
@@ -162,6 +178,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilJarJarEntry)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaUtilJarJarEntry")

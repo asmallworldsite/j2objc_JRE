@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaLangSecurityException
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -29,20 +26,20 @@
 #define INCLUDE_JavaLangRuntimeException 1
 #include "java/lang/RuntimeException.h"
 
+@class JavaLangBoolean;
 @class JavaLangThrowable;
 
 /*!
  @brief Thrown by the security manager to indicate a security violation.
- @author unascribed
  - seealso: java.lang.SecurityManager
- @since JDK1.0
+ @since 1.0
  */
 @interface JavaLangSecurityException : JavaLangRuntimeException
 
 #pragma mark Public
 
 /*!
- @brief Constructs a <code>SecurityException</code> with no detail  message.
+ @brief Constructs a <code>SecurityException</code> with no detail message.
  */
 - (instancetype __nonnull)init;
 
@@ -59,7 +56,7 @@
  @param message the detail message (which is saved for later retrieval         by the 
  <code>getMessage()</code>  method).
  @param cause the cause (which is saved for later retrieval by the         
- <code>getCause()</code>  method).  (A  <tt> null </tt>  value is permitted,         and indicates that the cause is nonexistent or unknown.)
+ <code>getCause()</code>  method).  (A <code>null</code>  value is permitted,         and indicates that the cause is nonexistent or unknown.)
  @since 1.5
  */
 - (instancetype __nonnull)initWithNSString:(NSString *)message
@@ -67,12 +64,12 @@
 
 /*!
  @brief Creates a <code>SecurityException</code> with the specified cause
-  and a detail message of <tt>(cause==null ?
- null : cause.toString())</tt>
+  and a detail message of <code>(cause==null ?
+ null : cause.toString())</code>
   (which typically contains the class and detail message of 
- <tt>cause</tt>).
+ <code>cause</code>).
  @param cause the cause (which is saved for later retrieval by the         
- <code>getCause()</code>  method).  (A  <tt> null </tt>  value is permitted,         and indicates that the cause is nonexistent or unknown.)
+ <code>getCause()</code>  method).  (A <code>null</code>  value is permitted,         and indicates that the cause is nonexistent or unknown.)
  @since 1.5
  */
 - (instancetype __nonnull)initWithJavaLangThrowable:(JavaLangThrowable *)cause;
@@ -120,6 +117,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaLangSecurityException)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaLangSecurityException")

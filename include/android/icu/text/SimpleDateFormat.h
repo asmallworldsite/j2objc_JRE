@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_AndroidIcuTextSimpleDateFormat
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -40,6 +37,10 @@
 @class AndroidIcuUtilULocale;
 @class IOSBooleanArray;
 @class IOSObjectArray;
+@class JavaLangBoolean;
+@class JavaLangCharacter;
+@class JavaLangInteger;
+@class JavaLangLong;
 @class JavaLangStringBuffer;
 @class JavaTextFieldPosition;
 @class JavaTextParsePosition;
@@ -712,9 +713,6 @@
  @author Mark Davis, Chen-Lieh Huang, Alan Liu
  */
 @interface AndroidIcuTextSimpleDateFormat : AndroidIcuTextDateFormat
-@property (readonly, class) jint currentSerialVersion NS_SWIFT_NAME(currentSerialVersion);
-@property (class) jboolean DelayedHebrewMonthCheck NS_SWIFT_NAME(DelayedHebrewMonthCheck);
-@property (readonly, class, strong) AndroidIcuTextUnicodeSet *DATE_PATTERN_TYPE NS_SWIFT_NAME(DATE_PATTERN_TYPE);
 
 #pragma mark Public
 
@@ -749,7 +747,7 @@
  */
 - (instancetype __nonnull)initWithNSString:(NSString *)pattern
        withAndroidIcuTextDateFormatSymbols:(AndroidIcuTextDateFormatSymbols *)formatData
-                 withAndroidIcuUtilULocale:(AndroidIcuUtilULocale *)loc __attribute__((deprecated));
+                 withAndroidIcuUtilULocale:(AndroidIcuUtilULocale *)loc;
 
 /*!
  @brief Constructs a SimpleDateFormat using the given pattern and locale.
@@ -845,7 +843,7 @@
  @param formatConfig the format configuration
  @return A SimpleDateFormat instance
  */
-+ (AndroidIcuTextSimpleDateFormat *)getInstanceWithAndroidIcuUtilCalendar_FormatConfiguration:(AndroidIcuUtilCalendar_FormatConfiguration *)formatConfig __attribute__((deprecated));
++ (AndroidIcuTextSimpleDateFormat *)getInstanceWithAndroidIcuUtilCalendar_FormatConfiguration:(AndroidIcuUtilCalendar_FormatConfiguration *)formatConfig;
 
 /*!
  @brief give the NumberFormat used for the field like 'y'(year) and 'M'(year)
@@ -882,7 +880,7 @@
 - (JavaLangStringBuffer *)intervalFormatByAlgorithmWithAndroidIcuUtilCalendar:(AndroidIcuUtilCalendar *)fromCalendar
                                                    withAndroidIcuUtilCalendar:(AndroidIcuUtilCalendar *)toCalendar
                                                      withJavaLangStringBuffer:(JavaLangStringBuffer *)appendTo
-                                                    withJavaTextFieldPosition:(JavaTextFieldPosition *)pos __attribute__((deprecated));
+                                                    withJavaTextFieldPosition:(JavaTextFieldPosition *)pos;
 
 /*!
  @brief Overrides DateFormat
@@ -1046,7 +1044,7 @@ withAndroidIcuTextDateFormatSymbols:(AndroidIcuTextDateFormatSymbols *)fmtData
                         withInt:(jint)fieldNum
 withAndroidIcuTextDisplayContext:(AndroidIcuTextDisplayContext *)capitalizationContext
       withJavaTextFieldPosition:(JavaTextFieldPosition *)pos
-     withAndroidIcuUtilCalendar:(AndroidIcuUtilCalendar *)cal __attribute__((deprecated));
+     withAndroidIcuUtilCalendar:(AndroidIcuUtilCalendar *)cal;
 
 /*!
  @brief Formats a single field; useFastFormat variant.Reuses a
@@ -1063,7 +1061,7 @@ withAndroidIcuTextDisplayContext:(AndroidIcuTextDisplayContext *)capitalizationC
                                   withInt:(jint)fieldNum
          withAndroidIcuTextDisplayContext:(AndroidIcuTextDisplayContext *)capitalizationContext
                 withJavaTextFieldPosition:(JavaTextFieldPosition *)pos
-               withAndroidIcuUtilCalendar:(AndroidIcuUtilCalendar *)cal __attribute__((deprecated));
+               withAndroidIcuUtilCalendar:(AndroidIcuUtilCalendar *)cal;
 
 /*!
  @brief Protected method that converts one field of the input string into a
@@ -1107,7 +1105,7 @@ withAndroidIcuTextDisplayContext:(AndroidIcuTextDisplayContext *)capitalizationC
                                withJavaLangStringBuffer:(JavaLangStringBuffer *)buf
                                                 withInt:(jint)value
                                                 withInt:(jint)minDigits
-                                                withInt:(jint)maxDigits __attribute__((deprecated));
+                                                withInt:(jint)maxDigits;
 
 #pragma mark Package-Private
 
@@ -1224,6 +1222,4 @@ J2OBJC_TYPE_LITERAL_HEADER(AndroidIcuTextSimpleDateFormat)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_AndroidIcuTextSimpleDateFormat")

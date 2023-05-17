@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaLangAnnotationRetentionPolicy
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -31,11 +28,17 @@
 
 @class IOSObjectArray;
 
-typedef NS_ENUM(NSUInteger, JavaLangAnnotationRetentionPolicy_Enum) {
+typedef NS_ENUM(jint, JavaLangAnnotationRetentionPolicy_Enum) {
   JavaLangAnnotationRetentionPolicy_Enum_SOURCE = 0,
   JavaLangAnnotationRetentionPolicy_Enum_CLASS = 1,
   JavaLangAnnotationRetentionPolicy_Enum_RUNTIME = 2,
 };
+#if J2OBJC_IMPORTED_BY_JAVA_IMPLEMENTATION
+#define JavaLangAnnotationRetentionPolicy_ORDINAL jint
+#else
+#define JavaLangAnnotationRetentionPolicy_ORDINAL JavaLangAnnotationRetentionPolicy_Enum
+#endif
+
 
 /*!
  @brief Annotation retention policy.The constants of this enumerated type
@@ -48,9 +51,6 @@ typedef NS_ENUM(NSUInteger, JavaLangAnnotationRetentionPolicy_Enum) {
  */
 @interface JavaLangAnnotationRetentionPolicy : JavaLangEnum
 
-@property (readonly, class, nonnull) JavaLangAnnotationRetentionPolicy *SOURCE NS_SWIFT_NAME(SOURCE);
-@property (readonly, class, nonnull) JavaLangAnnotationRetentionPolicy *CLASS NS_SWIFT_NAME(CLASS);
-@property (readonly, class, nonnull) JavaLangAnnotationRetentionPolicy *RUNTIME NS_SWIFT_NAME(RUNTIME);
 #pragma mark Public
 
 + (JavaLangAnnotationRetentionPolicy *)valueOfWithNSString:(NSString *)name;
@@ -60,6 +60,8 @@ typedef NS_ENUM(NSUInteger, JavaLangAnnotationRetentionPolicy_Enum) {
 #pragma mark Package-Private
 
 - (JavaLangAnnotationRetentionPolicy_Enum)toNSEnum;
+
+- (JavaLangAnnotationRetentionPolicy_ORDINAL)ordinal;
 
 @end
 
@@ -94,7 +96,7 @@ FOUNDATION_EXPORT IOSObjectArray *JavaLangAnnotationRetentionPolicy_values(void)
 
 FOUNDATION_EXPORT JavaLangAnnotationRetentionPolicy *JavaLangAnnotationRetentionPolicy_valueOfWithNSString_(NSString *name);
 
-FOUNDATION_EXPORT JavaLangAnnotationRetentionPolicy *JavaLangAnnotationRetentionPolicy_fromOrdinal(NSUInteger ordinal);
+FOUNDATION_EXPORT JavaLangAnnotationRetentionPolicy *JavaLangAnnotationRetentionPolicy_fromOrdinal(JavaLangAnnotationRetentionPolicy_ORDINAL ordinal);
 
 J2OBJC_TYPE_LITERAL_HEADER(JavaLangAnnotationRetentionPolicy)
 
@@ -104,6 +106,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaLangAnnotationRetentionPolicy)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaLangAnnotationRetentionPolicy")

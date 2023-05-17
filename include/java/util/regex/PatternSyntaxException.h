@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaUtilRegexPatternSyntaxException
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -29,12 +26,12 @@
 #define INCLUDE_JavaLangIllegalArgumentException 1
 #include "java/lang/IllegalArgumentException.h"
 
+@class JavaLangInteger;
 @class JavaLangThrowable;
 
 /*!
  @brief Unchecked exception thrown to indicate a syntax error in a
   regular-expression pattern.
- @author unascribed
  @since 1.4
  */
 @interface JavaUtilRegexPatternSyntaxException : JavaLangIllegalArgumentException
@@ -46,8 +43,8 @@
  @param desc A description of the error
  @param regex The erroneous pattern
  @param index The approximate index in the pattern of the error,
-           or  <tt>
-  -1 </tt>  if the index is not known
+           or <code>-1</code>
+   if the index is not known
  */
 - (instancetype __nonnull)initWithNSString:(NSString *)desc
                               withNSString:(NSString *)regex
@@ -62,7 +59,7 @@
 /*!
  @brief Retrieves the error index.
  @return The approximate index in the pattern of the error,
-          or <tt>-1</tt> if the index is not known
+          or <code>-1</code> if the index is not known
  */
 - (jint)getIndex;
 
@@ -93,7 +90,7 @@
 
 @end
 
-J2OBJC_STATIC_INIT(JavaUtilRegexPatternSyntaxException)
+J2OBJC_EMPTY_STATIC_INIT(JavaUtilRegexPatternSyntaxException)
 
 FOUNDATION_EXPORT void JavaUtilRegexPatternSyntaxException_initWithNSString_withNSString_withInt_(JavaUtilRegexPatternSyntaxException *self, NSString *desc, NSString *regex, jint index);
 
@@ -109,6 +106,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilRegexPatternSyntaxException)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaUtilRegexPatternSyntaxException")

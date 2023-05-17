@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaxXmlParsersDocumentBuilderFactory
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -25,6 +22,7 @@
 #if !defined (JavaxXmlParsersDocumentBuilderFactory_) && (INCLUDE_ALL_JavaxXmlParsersDocumentBuilderFactory || defined(INCLUDE_JavaxXmlParsersDocumentBuilderFactory))
 #define JavaxXmlParsersDocumentBuilderFactory_
 
+@class JavaLangBoolean;
 @class JavaLangClassLoader;
 @class JavaxXmlParsersDocumentBuilder;
 @class JavaxXmlValidationSchema;
@@ -213,21 +211,10 @@
  </p>
   
  <p>
-  All implementations are required to support the <code>javax.xml.XMLConstants.FEATURE_SECURE_PROCESSING</code> feature.
-  When the feature is:</p>
-  <ul>
-    <li>
-      <code>true</code>: the implementation will limit XML processing to conform to implementation limits.
-      Examples include entity expansion limits and XML Schema constructs that would consume large amounts of resources.
-      If XML processing is limited for security reasons, it will be reported via a call to the registered    
- <code>org.xml.sax.ErrorHandler.fatalError(SAXParseException exception)</code>.
-      See <code>DocumentBuilder.setErrorHandler(org.xml.sax.ErrorHandler errorHandler)</code>.
-    </li>
-    <li>
-      <code>false</code>: the implementation will processing XML according to the XML specifications without
-      regard to possible implementation limits.   
- </li>
-  </ul>
+  Earlier versions of this documentation have mandated support for the 
+ <code>javax.xml.XMLConstants.FEATURE_SECURE_PROCESSING</code> feature, but this is not a
+  supported feature on any version of Android. 
+ </p>
  @param name Feature name.
  @param value Is feature state  <code> true </code>  or  <code> false </code>
   .
@@ -240,9 +227,9 @@
 
 /*!
  @brief <p>Specifies that the parser produced by this code will
-  ignore comments.
- By default the value of this is set to <code>false
-  </code>.</p>
+  ignore comments.By default the value of this is set to <code>false
+  </code>.
+ </p>
  @param ignoreComments <code> boolean </code>  value to ignore comments during processing
  */
 - (void)setIgnoringCommentsWithBoolean:(jboolean)ignoreComments;
@@ -384,6 +371,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaxXmlParsersDocumentBuilderFactory)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaxXmlParsersDocumentBuilderFactory")

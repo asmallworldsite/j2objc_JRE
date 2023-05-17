@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaUtilIllegalFormatConversionException
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -30,6 +27,7 @@
 #include "java/util/IllegalFormatException.h"
 
 @class IOSClass;
+@class JavaLangCharacter;
 
 /*!
  @brief Unchecked exception thrown when the argument corresponding to the format
@@ -88,6 +86,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilIllegalFormatConversionException)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaUtilIllegalFormatConversionException")

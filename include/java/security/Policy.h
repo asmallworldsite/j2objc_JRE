@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaSecurityPolicy
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -25,6 +22,7 @@
 #if !defined (JavaSecurityPolicy_) && (INCLUDE_ALL_JavaSecurityPolicy || defined(INCLUDE_JavaSecurityPolicy))
 #define JavaSecurityPolicy_
 
+@class JavaLangBoolean;
 @class JavaSecurityCodeSource;
 @class JavaSecurityPermission;
 @class JavaSecurityPermissionCollection;
@@ -36,7 +34,6 @@
  @brief Legacy security code; do not use.
  */
 @interface JavaSecurityPolicy : NSObject
-@property (readonly, class, strong) JavaSecurityPermissionCollection *UNSUPPORTED_EMPTY_COLLECTION NS_SWIFT_NAME(UNSUPPORTED_EMPTY_COLLECTION);
 
 #pragma mark Public
 
@@ -114,6 +111,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaSecurityPolicy_Parameters)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaSecurityPolicy")

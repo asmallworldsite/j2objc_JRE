@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaMathRoundingMode
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -30,8 +27,9 @@
 #include "java/lang/Enum.h"
 
 @class IOSObjectArray;
+@class JavaLangInteger;
 
-typedef NS_ENUM(NSUInteger, JavaMathRoundingMode_Enum) {
+typedef NS_ENUM(jint, JavaMathRoundingMode_Enum) {
   JavaMathRoundingMode_Enum_UP = 0,
   JavaMathRoundingMode_Enum_DOWN = 1,
   JavaMathRoundingMode_Enum_CEILING = 2,
@@ -41,6 +39,12 @@ typedef NS_ENUM(NSUInteger, JavaMathRoundingMode_Enum) {
   JavaMathRoundingMode_Enum_HALF_EVEN = 6,
   JavaMathRoundingMode_Enum_UNNECESSARY = 7,
 };
+#if J2OBJC_IMPORTED_BY_JAVA_IMPLEMENTATION
+#define JavaMathRoundingMode_ORDINAL jint
+#else
+#define JavaMathRoundingMode_ORDINAL JavaMathRoundingMode_Enum
+#endif
+
 
 /*!
  @brief Specifies a <i>rounding behavior</i> for numerical operations
@@ -106,14 +110,6 @@ typedef NS_ENUM(NSUInteger, JavaMathRoundingMode_Enum) {
   jint oldMode_;
 }
 
-@property (readonly, class, nonnull) JavaMathRoundingMode *UP NS_SWIFT_NAME(UP);
-@property (readonly, class, nonnull) JavaMathRoundingMode *DOWN NS_SWIFT_NAME(DOWN);
-@property (readonly, class, nonnull) JavaMathRoundingMode *CEILING NS_SWIFT_NAME(CEILING);
-@property (readonly, class, nonnull) JavaMathRoundingMode *FLOOR NS_SWIFT_NAME(FLOOR);
-@property (readonly, class, nonnull) JavaMathRoundingMode *HALF_UP NS_SWIFT_NAME(HALF_UP);
-@property (readonly, class, nonnull) JavaMathRoundingMode *HALF_DOWN NS_SWIFT_NAME(HALF_DOWN);
-@property (readonly, class, nonnull) JavaMathRoundingMode *HALF_EVEN NS_SWIFT_NAME(HALF_EVEN);
-@property (readonly, class, nonnull) JavaMathRoundingMode *UNNECESSARY NS_SWIFT_NAME(UNNECESSARY);
 #pragma mark Public
 
 /*!
@@ -132,6 +128,8 @@ typedef NS_ENUM(NSUInteger, JavaMathRoundingMode_Enum) {
 #pragma mark Package-Private
 
 - (JavaMathRoundingMode_Enum)toNSEnum;
+
+- (JavaMathRoundingMode_ORDINAL)ordinal;
 
 @end
 
@@ -361,7 +359,7 @@ FOUNDATION_EXPORT IOSObjectArray *JavaMathRoundingMode_values(void);
 
 FOUNDATION_EXPORT JavaMathRoundingMode *JavaMathRoundingMode_valueOfWithNSString_(NSString *name);
 
-FOUNDATION_EXPORT JavaMathRoundingMode *JavaMathRoundingMode_fromOrdinal(NSUInteger ordinal);
+FOUNDATION_EXPORT JavaMathRoundingMode *JavaMathRoundingMode_fromOrdinal(JavaMathRoundingMode_ORDINAL ordinal);
 
 J2OBJC_TYPE_LITERAL_HEADER(JavaMathRoundingMode)
 
@@ -371,6 +369,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaMathRoundingMode)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaMathRoundingMode")

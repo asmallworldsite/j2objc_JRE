@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaSecuritySpecECFieldF2m
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -30,6 +27,8 @@
 #include "java/security/spec/ECField.h"
 
 @class IOSIntArray;
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @class JavaMathBigInteger;
 
 /*!
@@ -191,6 +190,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaSecuritySpecECFieldF2m)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaSecuritySpecECFieldF2m")

@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaUtilArrays
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -35,6 +32,14 @@
 @class IOSLongArray;
 @class IOSObjectArray;
 @class IOSShortArray;
+@class JavaLangBoolean;
+@class JavaLangByte;
+@class JavaLangCharacter;
+@class JavaLangDouble;
+@class JavaLangFloat;
+@class JavaLangInteger;
+@class JavaLangLong;
+@class JavaLangShort;
 @protocol JavaUtilComparator;
 @protocol JavaUtilFunctionBinaryOperator;
 @protocol JavaUtilFunctionDoubleBinaryOperator;
@@ -77,7 +82,6 @@
  @since 1.2
  */
 @interface JavaUtilArrays : NSObject
-@property (readonly, class) jint MIN_ARRAY_SORT_GRAN NS_SWIFT_NAME(MIN_ARRAY_SORT_GRAN);
 
 #pragma mark Public
 
@@ -3499,6 +3503,7 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilArrays)
 #define INCLUDE_JavaUtilComparator 1
 #include "java/util/Comparator.h"
 
+@class JavaLangInteger;
 @protocol JavaUtilFunctionFunction;
 @protocol JavaUtilFunctionToDoubleFunction;
 @protocol JavaUtilFunctionToIntFunction;
@@ -3520,7 +3525,6 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilArrays)
   based implementation.
  */
 @interface JavaUtilArrays_NaturalOrder : NSObject < JavaUtilComparator >
-@property (readonly, class, strong) JavaUtilArrays_NaturalOrder *INSTANCE NS_SWIFT_NAME(INSTANCE);
 
 #pragma mark Public
 
@@ -3554,6 +3558,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilArrays_NaturalOrder)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaUtilArrays")

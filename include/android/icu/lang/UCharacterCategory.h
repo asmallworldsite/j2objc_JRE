@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_AndroidIcuLangUCharacterCategory
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -28,6 +25,8 @@
 #define RESTRICT_AndroidIcuLangUCharacterEnums 1
 #define INCLUDE_AndroidIcuLangUCharacterEnums_ECharacterCategory 1
 #include "android/icu/lang/UCharacterEnums.h"
+
+@class JavaLangInteger;
 
 /*!
  @brief Enumerated Unicode category types from the UnicodeData.txt file.
@@ -70,6 +69,4 @@ J2OBJC_TYPE_LITERAL_HEADER(AndroidIcuLangUCharacterCategory)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_AndroidIcuLangUCharacterCategory")

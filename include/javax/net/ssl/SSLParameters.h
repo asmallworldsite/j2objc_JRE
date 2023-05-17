@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaxNetSslSSLParameters
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -26,6 +23,7 @@
 #define JavaxNetSslSSLParameters_
 
 @class IOSObjectArray;
+@class JavaLangBoolean;
 @protocol JavaSecurityAlgorithmConstraints;
 @protocol JavaUtilCollection;
 @protocol JavaUtilList;
@@ -102,6 +100,22 @@
  @since 1.7
  */
 - (id<JavaSecurityAlgorithmConstraints>)getAlgorithmConstraints;
+
+/*!
+ @brief Returns a prioritized array of application-layer protocol names that
+  can be negotiated over the SSL/TLS protocols.
+ <p>
+  The array could be empty (zero-length), in which case protocol
+  indications will not be used. 
+ <p>
+  This method will return a new array each time it is invoked.
+ @return a non-null, possibly zero-length array of application protocol
+          <code>String</code>s.  The array is ordered based on protocol
+          preference, with <code>protocols[0]</code> being the most preferred.
+ - seealso: #setApplicationProtocols
+ @since 9
+ */
+- (IOSObjectArray *)getApplicationProtocols;
 
 /*!
  @brief Returns a copy of the array of ciphersuites or null if none
@@ -221,6 +235,39 @@
 - (void)setAlgorithmConstraintsWithJavaSecurityAlgorithmConstraints:(id<JavaSecurityAlgorithmConstraints>)constraints;
 
 /*!
+ @brief Sets the prioritized array of application-layer protocol names that
+  can be negotiated over the SSL/TLS protocols.
+ <p>
+  If application-layer protocols are supported by the underlying
+  SSL/TLS implementation, this method configures which values can
+  be negotiated by protocols such as <a href="http://www.ietf.org/rfc/rfc7301.txt">
+  RFC 7301 </a>, the
+  Application Layer Protocol Negotiation (ALPN). 
+ <p>
+  If this end of the connection is expected to offer application protocol
+  values, all protocols configured by this method will be sent to the
+  peer. 
+ <p>
+  If this end of the connection is expected to select the application
+  protocol value, the <code>protocols</code> configured by this method are
+  compared with those sent by the peer.  The first matched value becomes
+  the negotiated value.  If none of the <code>protocols</code> were actually
+  requested by the peer, the underlying protocol will determine what
+  action to take.  (For example, ALPN will send a 
+ <code>"no_application_protocol"</code> alert and terminate the connection.) 
+ <p>
+ @param protocols an ordered array of application protocols,                     with 
+ <code>protocols[0]</code>  being the most preferred.                     If the array is empty (zero-length), protocol
+                      indications will not be used.
+ @throw IllegalArgumentExceptionif protocols is null, or if
+                     any element in a non-empty array is null or an
+                     empty (zero-length) string
+ - seealso: #getApplicationProtocols
+ @since 9
+ */
+- (void)setApplicationProtocolsWithNSStringArray:(IOSObjectArray *)protocols;
+
+/*!
  @brief Sets the array of ciphersuites.
  @param cipherSuites the array of ciphersuites (or null)
  */
@@ -231,9 +278,9 @@
  <p>
   If the <code>algorithm</code> parameter is non-null or non-empty, the
   endpoint identification/verification procedures must be handled during
-  SSL/TLS handshaking.  This is to prevent man-in-the-middle attacks.
+  SSL/TLS handshaking.  This is to prevent on-path attacks.
  @param algorithm The standard string name of the endpoint      identification algorithm (or null).  See Appendix A in the 
-  <a href="{@@docRoot}openjdk-redirect.html?v=8&path=/technotes/guides/security/crypto/CryptoSpec.html#AppA">
+  <a href="{@@docRoot}/../technotes/guides/security/crypto/CryptoSpec.html#AppA">
        Java Cryptography Architecture API Specification 
   &amp;  Reference  </a>      for information about standard algorithm names.
  - seealso: X509ExtendedTrustManager
@@ -343,6 +390,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaxNetSslSSLParameters)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaxNetSslSSLParameters")

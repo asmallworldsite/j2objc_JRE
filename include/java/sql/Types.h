@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaSqlTypes
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -25,6 +22,8 @@
 #if !defined (JavaSqlTypes_) && (INCLUDE_ALL_JavaSqlTypes || defined(INCLUDE_JavaSqlTypes))
 #define JavaSqlTypes_
 
+@class JavaLangInteger;
+
 /*!
  @brief <P>The class that defines the constants that are used to identify generic
   SQL types, called JDBC types.
@@ -32,42 +31,6 @@
   This class is never instantiated.
  */
 @interface JavaSqlTypes : NSObject
-@property (readonly, class) jint BIT NS_SWIFT_NAME(BIT);
-@property (readonly, class) jint TINYINT NS_SWIFT_NAME(TINYINT);
-@property (readonly, class) jint SMALLINT NS_SWIFT_NAME(SMALLINT);
-@property (readonly, class) jint INTEGER NS_SWIFT_NAME(INTEGER);
-@property (readonly, class) jint BIGINT NS_SWIFT_NAME(BIGINT);
-@property (readonly, class) jint FLOAT NS_SWIFT_NAME(FLOAT);
-@property (readonly, class) jint REAL NS_SWIFT_NAME(REAL);
-@property (readonly, class) jint DOUBLE NS_SWIFT_NAME(DOUBLE);
-@property (readonly, class) jint NUMERIC NS_SWIFT_NAME(NUMERIC);
-@property (readonly, class) jint DECIMAL NS_SWIFT_NAME(DECIMAL);
-@property (readonly, class) jint CHAR NS_SWIFT_NAME(CHAR);
-@property (readonly, class) jint VARCHAR NS_SWIFT_NAME(VARCHAR);
-@property (readonly, class) jint LONGVARCHAR NS_SWIFT_NAME(LONGVARCHAR);
-@property (readonly, class) jint DATE NS_SWIFT_NAME(DATE);
-@property (readonly, class) jint TIME NS_SWIFT_NAME(TIME);
-@property (readonly, class) jint TIMESTAMP NS_SWIFT_NAME(TIMESTAMP);
-@property (readonly, class) jint BINARY NS_SWIFT_NAME(BINARY);
-@property (readonly, class) jint VARBINARY NS_SWIFT_NAME(VARBINARY);
-@property (readonly, class) jint LONGVARBINARY NS_SWIFT_NAME(LONGVARBINARY);
-@property (readonly, class) jint NULL_ NS_SWIFT_NAME(NULL_);
-@property (readonly, class) jint OTHER NS_SWIFT_NAME(OTHER);
-@property (readonly, class) jint JAVA_OBJECT NS_SWIFT_NAME(JAVA_OBJECT);
-@property (readonly, class) jint DISTINCT NS_SWIFT_NAME(DISTINCT);
-@property (readonly, class) jint STRUCT NS_SWIFT_NAME(STRUCT);
-@property (readonly, class) jint ARRAY NS_SWIFT_NAME(ARRAY);
-@property (readonly, class) jint BLOB NS_SWIFT_NAME(BLOB);
-@property (readonly, class) jint CLOB NS_SWIFT_NAME(CLOB);
-@property (readonly, class) jint REF NS_SWIFT_NAME(REF);
-@property (readonly, class) jint DATALINK NS_SWIFT_NAME(DATALINK);
-@property (readonly, class) jint BOOLEAN NS_SWIFT_NAME(BOOLEAN);
-@property (readonly, class) jint ROWID NS_SWIFT_NAME(ROWID);
-@property (readonly, class) jint NCHAR NS_SWIFT_NAME(NCHAR);
-@property (readonly, class) jint NVARCHAR NS_SWIFT_NAME(NVARCHAR);
-@property (readonly, class) jint LONGNVARCHAR NS_SWIFT_NAME(LONGNVARCHAR);
-@property (readonly, class) jint NCLOB NS_SWIFT_NAME(NCLOB);
-@property (readonly, class) jint SQLXML NS_SWIFT_NAME(SQLXML);
 
 @end
 
@@ -413,6 +376,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaSqlTypes)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaSqlTypes")

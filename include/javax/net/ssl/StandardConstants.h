@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaxNetSslStandardConstants
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -25,12 +22,13 @@
 #if !defined (JavaxNetSslStandardConstants_) && (INCLUDE_ALL_JavaxNetSslStandardConstants || defined(INCLUDE_JavaxNetSslStandardConstants))
 #define JavaxNetSslStandardConstants_
 
+@class JavaLangInteger;
+
 /*!
  @brief Standard constants definitions
  @since 1.8
  */
 @interface JavaxNetSslStandardConstants : NSObject
-@property (readonly, class) jint SNI_HOST_NAME NS_SWIFT_NAME(SNI_HOST_NAME);
 
 @end
 
@@ -61,6 +59,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaxNetSslStandardConstants)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaxNetSslStandardConstants")

@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaSecurityGuardedObject
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -47,6 +44,7 @@
  - seealso: Permission
  @author Roland Schemers
  @author Li Gong
+ @since 1.2
  */
 @interface JavaSecurityGuardedObject : NSObject < JavaIoSerializable >
 
@@ -93,6 +91,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaSecurityGuardedObject)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaSecurityGuardedObject")

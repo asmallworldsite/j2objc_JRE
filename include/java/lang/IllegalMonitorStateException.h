@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaLangIllegalMonitorStateException
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -29,19 +26,19 @@
 #define INCLUDE_JavaLangRuntimeException 1
 #include "java/lang/RuntimeException.h"
 
+@class JavaLangBoolean;
 @class JavaLangThrowable;
 
 /*!
  @brief Thrown to indicate that a thread has attempted to wait on an
   object's monitor or to notify other threads waiting on an object's
   monitor without owning the specified monitor.
- @author unascribed
  - seealso: java.lang.Object#notify()
  - seealso: java.lang.Object#notifyAll()
  - seealso: java.lang.Object#wait()
  - seealso: java.lang.Object#wait(long)
  - seealso: java.lang.Object#wait(long, int)
- @since JDK1.0
+ @since 1.0
  */
 @interface JavaLangIllegalMonitorStateException : JavaLangRuntimeException
 
@@ -96,6 +93,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaLangIllegalMonitorStateException)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaLangIllegalMonitorStateException")

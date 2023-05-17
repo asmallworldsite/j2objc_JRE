@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_AndroidIcuTextSelectFormat
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -30,15 +27,17 @@
 #include "java/text/Format.h"
 
 @class AndroidIcuTextMessagePattern;
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @class JavaLangStringBuffer;
 @class JavaTextFieldPosition;
 @class JavaTextParsePosition;
 
 /*!
  @brief <p><code>SelectFormat</code> supports the creation of  internationalized
-  messages by selecting phrases based on keywords.
- The pattern  specifies
-  how to map keywords to phrases and provides a default phrase. The
+  messages by selecting phrases based on keywords.The pattern  specifies
+  how to map keywords to phrases and provides a default phrase.
+ The
   object provided to the format method is a string that's matched
   against the keywords. If there is a match, the corresponding phrase
   is selected; otherwise, the default phrase is used. 
@@ -267,6 +266,4 @@ J2OBJC_TYPE_LITERAL_HEADER(AndroidIcuTextSelectFormat)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_AndroidIcuTextSelectFormat")

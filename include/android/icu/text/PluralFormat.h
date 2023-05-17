@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_AndroidIcuTextPluralFormat
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -34,6 +31,9 @@
 @class AndroidIcuTextPluralRules;
 @class AndroidIcuTextPluralRules_PluralType;
 @class AndroidIcuUtilULocale;
+@class JavaLangBoolean;
+@class JavaLangDouble;
+@class JavaLangInteger;
 @class JavaLangStringBuffer;
 @class JavaTextFieldPosition;
 @class JavaTextParsePosition;
@@ -376,7 +376,7 @@
        default  <code> FORMAT </code>  locale will be used.
  - seealso: Category#FORMAT
  */
-- (void)setLocaleWithAndroidIcuUtilULocale:(AndroidIcuUtilULocale *)ulocale __attribute__((deprecated));
+- (void)setLocaleWithAndroidIcuUtilULocale:(AndroidIcuUtilULocale *)ulocale;
 
 /*!
  @brief Sets the number format used by this formatter.You only need to
@@ -537,6 +537,8 @@ J2OBJC_TYPE_LITERAL_HEADER(AndroidIcuTextPluralFormat)
 #if !defined (AndroidIcuTextPluralFormat_PluralSelector_) && (INCLUDE_ALL_AndroidIcuTextPluralFormat || defined(INCLUDE_AndroidIcuTextPluralFormat_PluralSelector))
 #define AndroidIcuTextPluralFormat_PluralSelector_
 
+@class JavaLangDouble;
+
 /*!
  @brief Interface for selecting PluralFormat keywords for numbers.
  The PluralRules class was intended to implement this interface,
@@ -568,6 +570,4 @@ J2OBJC_TYPE_LITERAL_HEADER(AndroidIcuTextPluralFormat_PluralSelector)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_AndroidIcuTextPluralFormat")

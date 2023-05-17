@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaIoBufferedInputStream
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -31,6 +28,9 @@
 
 @class IOSByteArray;
 @class JavaIoInputStream;
+@class JavaLangBoolean;
+@class JavaLangInteger;
+@class JavaLangLong;
 
 /*!
  @brief A <code>BufferedInputStream</code> adds
@@ -51,7 +51,7 @@
   reread before new bytes are  taken from
   the contained input stream.
  @author Arthur van Hoff
- @since JDK1.0
+ @since 1.0
  */
 @interface JavaIoBufferedInputStream : JavaIoFilterInputStream {
  @public
@@ -66,8 +66,8 @@
   the buffer.
    This value is always
   in the range <code>0</code> through <code>buf.length</code>;
-  elements <code>buf[0]</code>  through <code>buf[count-1]
-  </code>contain buffered input data obtained
+  elements <code>buf[0]</code> through <code>buf[count-1]</code>
+  contain buffered input data obtained
   from the underlying  input stream.
    */
   jint count_;
@@ -161,8 +161,8 @@
   many bytes will not block, but may read or skip fewer bytes. 
  <p>
   This method returns the sum of the number of bytes remaining to be read in
-  the buffer (<code>count&nbsp;- pos</code>) and the result of calling the 
- <code>in</code>.available().
+  the buffer (<code>count - pos</code>) and the result of calling the 
+ <code>in</code><code>.available()</code>.
  @return an estimate of the number of bytes that can be read (or skipped
               over) from this input stream without blocking.
  @throw IOExceptionif this input stream has been closed by
@@ -218,8 +218,8 @@
  @brief Reads bytes from this byte-input stream into the specified byte array,
   starting at the given offset.
  <p> This method implements the general contract of the corresponding 
- <code><code>read</code></code> method of
-  the <code><code>InputStream</code></code> class.  As an additional
+ <code>read</code> method of
+  the <code>InputStream</code> class.  As an additional
   convenience, it attempts to read as many bytes as possible by repeatedly
   invoking the <code>read</code> method of the underlying stream.  This
   iterated <code>read</code> continues until one of the following
@@ -271,10 +271,10 @@
 /*!
  @brief See the general contract of the <code>skip</code>
   method of <code>InputStream</code>.
- @throw IOExceptionif the stream does not support seek,
-                           or if this input stream has been closed by
-                           invoking its <code>close()</code> method, or an
-                           I/O error occurs.
+ @throw IOExceptionif this input stream has been closed by
+                       invoking its <code>close()</code> method,
+                       <code>in.skip(n)</code> throws an IOException,
+                       or an I/O error occurs.
  */
 - (jlong)skipWithLong:(jlong)n;
 
@@ -304,6 +304,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaIoBufferedInputStream)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaIoBufferedInputStream")

@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_AndroidIcuUtilTimeZone
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -39,7 +36,9 @@
 @class IOSBooleanArray;
 @class IOSIntArray;
 @class IOSObjectArray;
+@class JavaLangBoolean;
 @class JavaLangInteger;
+@class JavaLangLong;
 @class JavaUtilDate;
 @class JavaUtilLocale;
 @protocol JavaUtilSet;
@@ -99,20 +98,6 @@
  @author Mark Davis, Deborah Goldsmith, Chen-Lieh Huang, Alan Liu
  */
 @interface AndroidIcuUtilTimeZone : NSObject < JavaIoSerializable, NSCopying, AndroidIcuUtilFreezable >
-@property (readonly, class) jint TIMEZONE_ICU NS_SWIFT_NAME(TIMEZONE_ICU);
-@property (readonly, class) jint TIMEZONE_JDK NS_SWIFT_NAME(TIMEZONE_JDK);
-@property (readonly, class) jint SHORT NS_SWIFT_NAME(SHORT);
-@property (readonly, class) jint LONG NS_SWIFT_NAME(LONG);
-@property (readonly, class) jint SHORT_GENERIC NS_SWIFT_NAME(SHORT_GENERIC);
-@property (readonly, class) jint LONG_GENERIC NS_SWIFT_NAME(LONG_GENERIC);
-@property (readonly, class) jint SHORT_GMT NS_SWIFT_NAME(SHORT_GMT);
-@property (readonly, class) jint LONG_GMT NS_SWIFT_NAME(LONG_GMT);
-@property (readonly, class) jint SHORT_COMMONLY_USED NS_SWIFT_NAME(SHORT_COMMONLY_USED);
-@property (readonly, class) jint GENERIC_LOCATION NS_SWIFT_NAME(GENERIC_LOCATION);
-@property (readonly, copy, class) NSString *UNKNOWN_ZONE_ID NS_SWIFT_NAME(UNKNOWN_ZONE_ID);
-@property (readonly, copy, class) NSString *GMT_ZONE_ID NS_SWIFT_NAME(GMT_ZONE_ID);
-@property (readonly, class, strong) AndroidIcuUtilTimeZone *UNKNOWN_ZONE NS_SWIFT_NAME(UNKNOWN_ZONE);
-@property (readonly, class, strong) AndroidIcuUtilTimeZone *GMT_ZONE NS_SWIFT_NAME(GMT_ZONE);
 
 #pragma mark Public
 
@@ -652,7 +637,7 @@
  @brief Constructing a TimeZone with the given time zone ID.
  @param ID the time zone ID.
  */
-- (instancetype __nonnull)initWithNSString:(NSString *)ID __attribute__((deprecated));
+- (instancetype __nonnull)initWithNSString:(NSString *)ID;
 
 #pragma mark Package-Private
 
@@ -854,11 +839,17 @@ J2OBJC_TYPE_LITERAL_HEADER(AndroidIcuUtilTimeZone)
 
 @class IOSObjectArray;
 
-typedef NS_ENUM(NSUInteger, AndroidIcuUtilTimeZone_SystemTimeZoneType_Enum) {
+typedef NS_ENUM(jint, AndroidIcuUtilTimeZone_SystemTimeZoneType_Enum) {
   AndroidIcuUtilTimeZone_SystemTimeZoneType_Enum_ANY = 0,
   AndroidIcuUtilTimeZone_SystemTimeZoneType_Enum_CANONICAL = 1,
   AndroidIcuUtilTimeZone_SystemTimeZoneType_Enum_CANONICAL_LOCATION = 2,
 };
+#if J2OBJC_IMPORTED_BY_JAVA_IMPLEMENTATION
+#define AndroidIcuUtilTimeZone_SystemTimeZoneType_ORDINAL jint
+#else
+#define AndroidIcuUtilTimeZone_SystemTimeZoneType_ORDINAL AndroidIcuUtilTimeZone_SystemTimeZoneType_Enum
+#endif
+
 
 /*!
  @brief <strong>[icu]</strong> System time zone type constants used by filtering zones in 
@@ -866,9 +857,6 @@ typedef NS_ENUM(NSUInteger, AndroidIcuUtilTimeZone_SystemTimeZoneType_Enum) {
  */
 @interface AndroidIcuUtilTimeZone_SystemTimeZoneType : JavaLangEnum
 
-@property (readonly, class, nonnull) AndroidIcuUtilTimeZone_SystemTimeZoneType *ANY NS_SWIFT_NAME(ANY);
-@property (readonly, class, nonnull) AndroidIcuUtilTimeZone_SystemTimeZoneType *CANONICAL NS_SWIFT_NAME(CANONICAL);
-@property (readonly, class, nonnull) AndroidIcuUtilTimeZone_SystemTimeZoneType *CANONICAL_LOCATION NS_SWIFT_NAME(CANONICAL_LOCATION);
 #pragma mark Public
 
 + (AndroidIcuUtilTimeZone_SystemTimeZoneType *)valueOfWithNSString:(NSString *)name;
@@ -878,6 +866,8 @@ typedef NS_ENUM(NSUInteger, AndroidIcuUtilTimeZone_SystemTimeZoneType_Enum) {
 #pragma mark Package-Private
 
 - (AndroidIcuUtilTimeZone_SystemTimeZoneType_Enum)toNSEnum;
+
+- (AndroidIcuUtilTimeZone_SystemTimeZoneType_ORDINAL)ordinal;
 
 @end
 
@@ -908,7 +898,7 @@ FOUNDATION_EXPORT IOSObjectArray *AndroidIcuUtilTimeZone_SystemTimeZoneType_valu
 
 FOUNDATION_EXPORT AndroidIcuUtilTimeZone_SystemTimeZoneType *AndroidIcuUtilTimeZone_SystemTimeZoneType_valueOfWithNSString_(NSString *name);
 
-FOUNDATION_EXPORT AndroidIcuUtilTimeZone_SystemTimeZoneType *AndroidIcuUtilTimeZone_SystemTimeZoneType_fromOrdinal(NSUInteger ordinal);
+FOUNDATION_EXPORT AndroidIcuUtilTimeZone_SystemTimeZoneType *AndroidIcuUtilTimeZone_SystemTimeZoneType_fromOrdinal(AndroidIcuUtilTimeZone_SystemTimeZoneType_ORDINAL ordinal);
 
 J2OBJC_TYPE_LITERAL_HEADER(AndroidIcuUtilTimeZone_SystemTimeZoneType)
 
@@ -918,6 +908,4 @@ J2OBJC_TYPE_LITERAL_HEADER(AndroidIcuUtilTimeZone_SystemTimeZoneType)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_AndroidIcuUtilTimeZone")

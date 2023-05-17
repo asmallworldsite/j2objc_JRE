@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_OrgXmlSaxHandlerBase
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -42,6 +39,7 @@
 #include "org/xml/sax/ErrorHandler.h"
 
 @class IOSCharArray;
+@class JavaLangInteger;
 @class OrgXmlSaxInputSource;
 @class OrgXmlSaxSAXParseException;
 @protocol OrgXmlSaxAttributeList;
@@ -77,7 +75,6 @@
  - seealso: org.xml.sax.DocumentHandler
  - seealso: org.xml.sax.ErrorHandler
  */
-__attribute__((deprecated))
 @interface OrgXmlSaxHandlerBase : NSObject < OrgXmlSaxEntityResolver, OrgXmlSaxDTDHandler, OrgXmlSaxDocumentHandler, OrgXmlSaxErrorHandler >
 
 #pragma mark Public
@@ -307,6 +304,4 @@ J2OBJC_TYPE_LITERAL_HEADER(OrgXmlSaxHandlerBase)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_OrgXmlSaxHandlerBase")

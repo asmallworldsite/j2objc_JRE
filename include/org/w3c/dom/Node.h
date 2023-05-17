@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_OrgW3cDomNode
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -25,6 +22,8 @@
 #if !defined (OrgW3cDomNode_) && (INCLUDE_ALL_OrgW3cDomNode || defined(INCLUDE_OrgW3cDomNode))
 #define OrgW3cDomNode_
 
+@class JavaLangBoolean;
+@class JavaLangShort;
 @protocol OrgW3cDomDocument;
 @protocol OrgW3cDomNamedNodeMap;
 @protocol OrgW3cDomNodeList;
@@ -834,28 +833,6 @@
 
 @end
 
-@interface OrgW3cDomNode : NSObject
-@property (readonly, class) jshort ELEMENT_NODE NS_SWIFT_NAME(ELEMENT_NODE);
-@property (readonly, class) jshort ATTRIBUTE_NODE NS_SWIFT_NAME(ATTRIBUTE_NODE);
-@property (readonly, class) jshort TEXT_NODE NS_SWIFT_NAME(TEXT_NODE);
-@property (readonly, class) jshort CDATA_SECTION_NODE NS_SWIFT_NAME(CDATA_SECTION_NODE);
-@property (readonly, class) jshort ENTITY_REFERENCE_NODE NS_SWIFT_NAME(ENTITY_REFERENCE_NODE);
-@property (readonly, class) jshort ENTITY_NODE NS_SWIFT_NAME(ENTITY_NODE);
-@property (readonly, class) jshort PROCESSING_INSTRUCTION_NODE NS_SWIFT_NAME(PROCESSING_INSTRUCTION_NODE);
-@property (readonly, class) jshort COMMENT_NODE NS_SWIFT_NAME(COMMENT_NODE);
-@property (readonly, class) jshort DOCUMENT_NODE NS_SWIFT_NAME(DOCUMENT_NODE);
-@property (readonly, class) jshort DOCUMENT_TYPE_NODE NS_SWIFT_NAME(DOCUMENT_TYPE_NODE);
-@property (readonly, class) jshort DOCUMENT_FRAGMENT_NODE NS_SWIFT_NAME(DOCUMENT_FRAGMENT_NODE);
-@property (readonly, class) jshort NOTATION_NODE NS_SWIFT_NAME(NOTATION_NODE);
-@property (readonly, class) jshort DOCUMENT_POSITION_DISCONNECTED NS_SWIFT_NAME(DOCUMENT_POSITION_DISCONNECTED);
-@property (readonly, class) jshort DOCUMENT_POSITION_PRECEDING NS_SWIFT_NAME(DOCUMENT_POSITION_PRECEDING);
-@property (readonly, class) jshort DOCUMENT_POSITION_FOLLOWING NS_SWIFT_NAME(DOCUMENT_POSITION_FOLLOWING);
-@property (readonly, class) jshort DOCUMENT_POSITION_CONTAINS NS_SWIFT_NAME(DOCUMENT_POSITION_CONTAINS);
-@property (readonly, class) jshort DOCUMENT_POSITION_CONTAINED_BY NS_SWIFT_NAME(DOCUMENT_POSITION_CONTAINED_BY);
-@property (readonly, class) jshort DOCUMENT_POSITION_IMPLEMENTATION_SPECIFIC NS_SWIFT_NAME(DOCUMENT_POSITION_IMPLEMENTATION_SPECIFIC);
-
-@end
-
 J2OBJC_EMPTY_STATIC_INIT(OrgW3cDomNode)
 
 /*!
@@ -996,6 +973,4 @@ J2OBJC_TYPE_LITERAL_HEADER(OrgW3cDomNode)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_OrgW3cDomNode")

@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaUtilStreamDoubleStream
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -30,6 +27,9 @@
 #include "java/util/stream/BaseStream.h"
 
 @class IOSDoubleArray;
+@class JavaLangBoolean;
+@class JavaLangDouble;
+@class JavaLangLong;
 @class JavaUtilDoubleSummaryStatistics;
 @class JavaUtilOptionalDouble;
 @protocol JavaLangRunnable;
@@ -59,7 +59,7 @@
  <code>Stream</code> and <code>DoubleStream</code>, computing the sum of the weights of the
   red widgets: 
  @code
-    double sum = widgets.stream()
+     double sum = widgets.stream()
                           .filter(w -> w.getColor() == RED)
                           .mapToDouble(w -> w.getWeight())
                           .sum(); 
@@ -258,7 +258,7 @@
   accumulation function, and returns the reduced value.This is equivalent
   to: 
  @code
-    double result = identity;
+     double result = identity;
       for (double element : this stream)
           result = accumulator.applyAsDouble(result, element)
       return result; 
@@ -292,7 +292,7 @@ withJavaUtilFunctionDoubleBinaryOperator:(id<JavaUtilFunctionDoubleBinaryOperato
   function, and returns an <code>OptionalDouble</code> describing the reduced
   value, if any.This is equivalent to: 
  @code
-    boolean foundAny = false;
+     boolean foundAny = false;
       double result = null;
       for (double element : this stream) {
           if (!
@@ -328,7 +328,7 @@ withJavaUtilFunctionDoubleBinaryOperator:(id<JavaUtilFunctionDoubleBinaryOperato
  This
   produces a result equivalent to: 
  @code
-    R result = supplier.get();
+     R result = supplier.get();
       for (double element : this stream)
           accumulator.accept(result, element);
       return result; 
@@ -363,7 +363,7 @@ withJavaUtilFunctionDoubleBinaryOperator:(id<JavaUtilFunctionDoubleBinaryOperato
   floating-point summation were exact, this method would be
   equivalent to: 
  @code
-    return reduce(0, Double::sum); 
+     return reduce(0, Double::sum); 
  
 @endcode
   However, since floating-point summation is not exact, the above
@@ -397,7 +397,7 @@ withJavaUtilFunctionDoubleBinaryOperator:(id<JavaUtilFunctionDoubleBinaryOperato
  <a href="package-summary.html#Reduction">reduction</a> and is
   equivalent to: 
  @code
-    return reduce(Double::min); 
+     return reduce(Double::min); 
  
 @endcode
   
@@ -419,7 +419,7 @@ withJavaUtilFunctionDoubleBinaryOperator:(id<JavaUtilFunctionDoubleBinaryOperato
  <a href="package-summary.html#Reduction">reduction</a> and is
   equivalent to: 
  @code
-    return reduce(Double::max); 
+     return reduce(Double::max); 
  
 @endcode
   
@@ -435,7 +435,7 @@ withJavaUtilFunctionDoubleBinaryOperator:(id<JavaUtilFunctionDoubleBinaryOperato
  <a href="package-summary.html#Reduction">reduction</a> and is
   equivalent to: 
  @code
-    return mapToLong(e -> 1L).sum(); 
+     return mapToLong(e -> 1L).sum(); 
  
 @endcode
   
@@ -672,6 +672,7 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilStreamDoubleStream)
 #define INCLUDE_JavaUtilFunctionDoubleConsumer 1
 #include "java/util/function/DoubleConsumer.h"
 
+@class JavaLangDouble;
 @protocol JavaUtilStreamDoubleStream;
 
 /*!
@@ -728,6 +729,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilStreamDoubleStream_Builder)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaUtilStreamDoubleStream")

@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaUtilLoggingMemoryHandler
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -29,6 +26,8 @@
 #define INCLUDE_JavaUtilLoggingHandler 1
 #include "java/util/logging/Handler.h"
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @class JavaUtilLoggingLevel;
 @class JavaUtilLoggingLogRecord;
 
@@ -213,6 +212,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilLoggingMemoryHandler)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaUtilLoggingMemoryHandler")

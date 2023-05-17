@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaUtilConcurrentFuture
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -25,6 +22,8 @@
 #if !defined (JavaUtilConcurrentFuture_) && (INCLUDE_ALL_JavaUtilConcurrentFuture || defined(INCLUDE_JavaUtilConcurrentFuture))
 #define JavaUtilConcurrentFuture_
 
+@class JavaLangBoolean;
+@class JavaLangLong;
 @class JavaUtilConcurrentTimeUnit;
 
 /*!
@@ -42,21 +41,16 @@
   of cancellability but not provide a usable result, you can
   declare types of the form <code>Future<?></code> and
   return <code>null</code> as a result of the underlying task. 
- <p>
-  <b>Sample Usage</b> (Note that the following classes are all
+ <p><b>Sample Usage</b> (Note that the following classes are all
   made-up.) 
  @code
   interface ArchiveSearcher { String search(String target); }
   class App {
     ExecutorService executor = ...
     ArchiveSearcher searcher = ...
-    void showSearch(final String target)
-        throws InterruptedException {
-      Future<String> future
-        = executor.submit(new Callable<String>() {
-          public String call() {
-              return searcher.search(target);
-          }});
+    void showSearch(String target) throws InterruptedException {
+      Callable<String> task = () -> searcher.search(target);
+      Future<String> future = executor.submit(task);
       displayOtherThings(); // do other things while searching
       try {
         displayText(future.get()); // use future
@@ -67,11 +61,7 @@
   implements <code>Runnable</code>, and so may be executed by an <code>Executor</code>.
   For example, the above construction with <code>submit</code> could be replaced by: 
  @code
-  FutureTask<String> future =
-    new FutureTask<>(new Callable<String>() {
-      public String call() {
-        return searcher.search(target);
-    }});
+  FutureTask<String> future = new FutureTask<>(task);
   executor.execute(future);
  
 @endcode
@@ -163,6 +153,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentFuture)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaUtilConcurrentFuture")

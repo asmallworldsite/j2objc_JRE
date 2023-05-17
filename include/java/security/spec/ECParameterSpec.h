@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaSecuritySpecECParameterSpec
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -29,6 +26,7 @@
 #define INCLUDE_JavaSecuritySpecAlgorithmParameterSpec 1
 #include "java/security/spec/AlgorithmParameterSpec.h"
 
+@class JavaLangInteger;
 @class JavaMathBigInteger;
 @class JavaSecuritySpecECPoint;
 @class JavaSecuritySpecEllipticCurve;
@@ -118,6 +116,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaSecuritySpecECParameterSpec)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaSecuritySpecECParameterSpec")

@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaLangRefReferenceQueue
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -25,11 +22,13 @@
 #if !defined (JavaLangRefReferenceQueue_) && (INCLUDE_ALL_JavaLangRefReferenceQueue || defined(INCLUDE_JavaLangRefReferenceQueue))
 #define JavaLangRefReferenceQueue_
 
+@class JavaLangBoolean;
+@class JavaLangLong;
 @class JavaLangRefReference;
 
 /*!
- @brief Reference queues, to which registered reference objects are appended by the
-  garbage collector after the appropriate reachability changes are detected.
+ @brief Reference queues, to which registered reference objects are appended by the garbage collector
+  after the appropriate reachability changes are detected.
  @author Mark Reinhold
  @since 1.2
  */
@@ -86,8 +85,8 @@
 - (jboolean)enqueueWithJavaLangRefReference:(JavaLangRefReference *)reference;
 
 /*!
- @brief Test if the given reference object has been enqueued but not yet
-  removed from the queue, assuming this is the reference object's queue.
+ @brief Test if the given reference object has been enqueued but not yet removed from the queue,
+  assuming this is the reference object's queue.
  */
 - (jboolean)isEnqueuedWithJavaLangRefReference:(JavaLangRefReference *)reference;
 
@@ -109,6 +108,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaLangRefReferenceQueue)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaLangRefReferenceQueue")

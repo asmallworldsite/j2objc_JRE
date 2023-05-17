@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_AndroidIcuUtilCurrency
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -33,6 +30,9 @@
 @class AndroidIcuUtilULocale;
 @class IOSBooleanArray;
 @class IOSObjectArray;
+@class JavaLangBoolean;
+@class JavaLangDouble;
+@class JavaLangInteger;
 @class JavaTextParsePosition;
 @class JavaUtilDate;
 @class JavaUtilLocale;
@@ -56,9 +56,6 @@
  @author Alan Liu
  */
 @interface AndroidIcuUtilCurrency : AndroidIcuUtilMeasureUnit
-@property (readonly, class) jint SYMBOL_NAME NS_SWIFT_NAME(SYMBOL_NAME);
-@property (readonly, class) jint LONG_NAME NS_SWIFT_NAME(LONG_NAME);
-@property (readonly, class) jint PLURAL_LONG_NAME NS_SWIFT_NAME(PLURAL_LONG_NAME);
 
 #pragma mark Public
 
@@ -372,7 +369,7 @@
 + (NSString *)parseWithAndroidIcuUtilULocale:(AndroidIcuUtilULocale *)locale
                                 withNSString:(NSString *)text
                                      withInt:(jint)type
-                   withJavaTextParsePosition:(JavaTextParsePosition *)pos __attribute__((deprecated));
+                   withJavaTextParsePosition:(JavaTextParsePosition *)pos;
 
 /*!
  @brief Registers a new currency for the provided locale.The returned object
@@ -498,18 +495,22 @@ J2OBJC_TYPE_LITERAL_HEADER(AndroidIcuUtilCurrency)
 
 @class IOSObjectArray;
 
-typedef NS_ENUM(NSUInteger, AndroidIcuUtilCurrency_CurrencyUsage_Enum) {
+typedef NS_ENUM(jint, AndroidIcuUtilCurrency_CurrencyUsage_Enum) {
   AndroidIcuUtilCurrency_CurrencyUsage_Enum_STANDARD = 0,
   AndroidIcuUtilCurrency_CurrencyUsage_Enum_CASH = 1,
 };
+#if J2OBJC_IMPORTED_BY_JAVA_IMPLEMENTATION
+#define AndroidIcuUtilCurrency_CurrencyUsage_ORDINAL jint
+#else
+#define AndroidIcuUtilCurrency_CurrencyUsage_ORDINAL AndroidIcuUtilCurrency_CurrencyUsage_Enum
+#endif
+
 
 /*!
  @brief Currency Usage used for Decimal Format
  */
 @interface AndroidIcuUtilCurrency_CurrencyUsage : JavaLangEnum
 
-@property (readonly, class, nonnull) AndroidIcuUtilCurrency_CurrencyUsage *STANDARD NS_SWIFT_NAME(STANDARD);
-@property (readonly, class, nonnull) AndroidIcuUtilCurrency_CurrencyUsage *CASH NS_SWIFT_NAME(CASH);
 #pragma mark Public
 
 + (AndroidIcuUtilCurrency_CurrencyUsage *)valueOfWithNSString:(NSString *)name;
@@ -519,6 +520,8 @@ typedef NS_ENUM(NSUInteger, AndroidIcuUtilCurrency_CurrencyUsage_Enum) {
 #pragma mark Package-Private
 
 - (AndroidIcuUtilCurrency_CurrencyUsage_Enum)toNSEnum;
+
+- (AndroidIcuUtilCurrency_CurrencyUsage_ORDINAL)ordinal;
 
 @end
 
@@ -545,7 +548,7 @@ FOUNDATION_EXPORT IOSObjectArray *AndroidIcuUtilCurrency_CurrencyUsage_values(vo
 
 FOUNDATION_EXPORT AndroidIcuUtilCurrency_CurrencyUsage *AndroidIcuUtilCurrency_CurrencyUsage_valueOfWithNSString_(NSString *name);
 
-FOUNDATION_EXPORT AndroidIcuUtilCurrency_CurrencyUsage *AndroidIcuUtilCurrency_CurrencyUsage_fromOrdinal(NSUInteger ordinal);
+FOUNDATION_EXPORT AndroidIcuUtilCurrency_CurrencyUsage *AndroidIcuUtilCurrency_CurrencyUsage_fromOrdinal(AndroidIcuUtilCurrency_CurrencyUsage_ORDINAL ordinal);
 
 J2OBJC_TYPE_LITERAL_HEADER(AndroidIcuUtilCurrency_CurrencyUsage)
 
@@ -557,6 +560,7 @@ J2OBJC_TYPE_LITERAL_HEADER(AndroidIcuUtilCurrency_CurrencyUsage)
 @class AndroidIcuUtilCurrency;
 @class AndroidIcuUtilULocale;
 @class IOSObjectArray;
+@class JavaLangBoolean;
 
 @interface AndroidIcuUtilCurrency_ServiceShim : NSObject
 
@@ -589,6 +593,4 @@ J2OBJC_TYPE_LITERAL_HEADER(AndroidIcuUtilCurrency_ServiceShim)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_AndroidIcuUtilCurrency")

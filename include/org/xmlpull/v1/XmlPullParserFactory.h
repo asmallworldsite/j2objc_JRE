@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_OrgXmlpullV1XmlPullParserFactory
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -26,6 +23,7 @@
 #define OrgXmlpullV1XmlPullParserFactory_
 
 @class IOSClass;
+@class JavaLangBoolean;
 @class JavaUtilArrayList;
 @class JavaUtilHashMap;
 @protocol OrgXmlpullV1XmlPullParser;
@@ -47,7 +45,6 @@
   NSString *classNamesLocation_;
   JavaUtilHashMap *features_;
 }
-@property (readonly, copy, class) NSString *PROPERTY_NAME NS_SWIFT_NAME(PROPERTY_NAME);
 
 #pragma mark Public
 
@@ -174,6 +171,4 @@ J2OBJC_TYPE_LITERAL_HEADER(OrgXmlpullV1XmlPullParserFactory)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_OrgXmlpullV1XmlPullParserFactory")

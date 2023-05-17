@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaUtilSpliterators
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -29,6 +26,8 @@
 @class IOSIntArray;
 @class IOSLongArray;
 @class IOSObjectArray;
+@class JavaLangInteger;
+@class JavaLangLong;
 @protocol JavaUtilCollection;
 @protocol JavaUtilIterator;
 @protocol JavaUtilPrimitiveIterator_OfDouble;
@@ -53,6 +52,7 @@
 
 /*!
  @brief Creates an empty <code>Spliterator.OfDouble</code>
+  
  <p>The empty spliterator reports <code>Spliterator.SIZED</code> and 
  <code>Spliterator.SUBSIZED</code>.
  Calls to 
@@ -63,6 +63,7 @@
 
 /*!
  @brief Creates an empty <code>Spliterator.OfInt</code>
+  
  <p>The empty spliterator reports <code>Spliterator.SIZED</code> and 
  <code>Spliterator.SUBSIZED</code>.
  Calls to 
@@ -73,6 +74,7 @@
 
 /*!
  @brief Creates an empty <code>Spliterator.OfLong</code>
+  
  <p>The empty spliterator reports <code>Spliterator.SIZED</code> and 
  <code>Spliterator.SUBSIZED</code>.
  Calls to 
@@ -83,6 +85,7 @@
 
 /*!
  @brief Creates an empty <code>Spliterator</code>
+  
  <p>The empty spliterator reports <code>Spliterator.SIZED</code> and 
  <code>Spliterator.SUBSIZED</code>.
  Calls to 
@@ -628,6 +631,9 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilSpliterators)
 #include "java/util/Spliterator.h"
 
 @class IOSObjectArray;
+@class JavaLangBoolean;
+@class JavaLangInteger;
+@class JavaLangLong;
 @protocol JavaUtilComparator;
 @protocol JavaUtilFunctionConsumer;
 
@@ -707,6 +713,9 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilSpliterators_ArraySpliterator)
 #include "java/util/Spliterator.h"
 
 @class IOSIntArray;
+@class JavaLangBoolean;
+@class JavaLangInteger;
+@class JavaLangLong;
 @protocol JavaUtilComparator;
 @protocol JavaUtilFunctionConsumer;
 @protocol JavaUtilFunctionIntConsumer;
@@ -787,6 +796,9 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilSpliterators_IntArraySpliterator)
 #include "java/util/Spliterator.h"
 
 @class IOSLongArray;
+@class JavaLangBoolean;
+@class JavaLangInteger;
+@class JavaLangLong;
 @protocol JavaUtilComparator;
 @protocol JavaUtilFunctionConsumer;
 @protocol JavaUtilFunctionLongConsumer;
@@ -867,6 +879,9 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilSpliterators_LongArraySpliterator)
 #include "java/util/Spliterator.h"
 
 @class IOSDoubleArray;
+@class JavaLangBoolean;
+@class JavaLangInteger;
+@class JavaLangLong;
 @protocol JavaUtilComparator;
 @protocol JavaUtilFunctionConsumer;
 @protocol JavaUtilFunctionDoubleConsumer;
@@ -946,6 +961,9 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilSpliterators_DoubleArraySpliterator)
 #define INCLUDE_JavaUtilSpliterator 1
 #include "java/util/Spliterator.h"
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
+@class JavaLangLong;
 @protocol JavaUtilComparator;
 @protocol JavaUtilFunctionConsumer;
 
@@ -961,8 +979,6 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilSpliterators_DoubleArraySpliterator)
  @since 1.8
  */
 @interface JavaUtilSpliterators_AbstractSpliterator : NSObject < JavaUtilSpliterator >
-@property (readonly, class) jint BATCH_UNIT NS_SWIFT_NAME(BATCH_UNIT);
-@property (readonly, class) jint MAX_BATCH NS_SWIFT_NAME(MAX_BATCH);
 
 #pragma mark Public
 
@@ -1058,6 +1074,9 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilSpliterators_AbstractSpliterator_HoldingConsu
 #define INCLUDE_JavaUtilSpliterator_OfInt 1
 #include "java/util/Spliterator.h"
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
+@class JavaLangLong;
 @protocol JavaUtilComparator;
 @protocol JavaUtilFunctionConsumer;
 @protocol JavaUtilFunctionIntConsumer;
@@ -1074,8 +1093,6 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilSpliterators_AbstractSpliterator_HoldingConsu
  @since 1.8
  */
 @interface JavaUtilSpliterators_AbstractIntSpliterator : NSObject < JavaUtilSpliterator_OfInt >
-@property (readonly, class) jint MAX_BATCH NS_SWIFT_NAME(MAX_BATCH);
-@property (readonly, class) jint BATCH_UNIT NS_SWIFT_NAME(BATCH_UNIT);
 
 #pragma mark Public
 
@@ -1135,6 +1152,8 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilSpliterators_AbstractIntSpliterator)
 #define INCLUDE_JavaUtilFunctionIntConsumer 1
 #include "java/util/function/IntConsumer.h"
 
+@class JavaLangInteger;
+
 @interface JavaUtilSpliterators_AbstractIntSpliterator_HoldingIntConsumer : NSObject < JavaUtilFunctionIntConsumer > {
  @public
   jint value_;
@@ -1169,6 +1188,9 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilSpliterators_AbstractIntSpliterator_HoldingIn
 #define INCLUDE_JavaUtilSpliterator_OfLong 1
 #include "java/util/Spliterator.h"
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
+@class JavaLangLong;
 @protocol JavaUtilComparator;
 @protocol JavaUtilFunctionConsumer;
 @protocol JavaUtilFunctionLongConsumer;
@@ -1185,8 +1207,6 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilSpliterators_AbstractIntSpliterator_HoldingIn
  @since 1.8
  */
 @interface JavaUtilSpliterators_AbstractLongSpliterator : NSObject < JavaUtilSpliterator_OfLong >
-@property (readonly, class) jint MAX_BATCH NS_SWIFT_NAME(MAX_BATCH);
-@property (readonly, class) jint BATCH_UNIT NS_SWIFT_NAME(BATCH_UNIT);
 
 #pragma mark Public
 
@@ -1246,6 +1266,8 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilSpliterators_AbstractLongSpliterator)
 #define INCLUDE_JavaUtilFunctionLongConsumer 1
 #include "java/util/function/LongConsumer.h"
 
+@class JavaLangLong;
+
 @interface JavaUtilSpliterators_AbstractLongSpliterator_HoldingLongConsumer : NSObject < JavaUtilFunctionLongConsumer > {
  @public
   jlong value_;
@@ -1280,6 +1302,9 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilSpliterators_AbstractLongSpliterator_HoldingL
 #define INCLUDE_JavaUtilSpliterator_OfDouble 1
 #include "java/util/Spliterator.h"
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
+@class JavaLangLong;
 @protocol JavaUtilComparator;
 @protocol JavaUtilFunctionConsumer;
 @protocol JavaUtilFunctionDoubleConsumer;
@@ -1296,8 +1321,6 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilSpliterators_AbstractLongSpliterator_HoldingL
  @since 1.8
  */
 @interface JavaUtilSpliterators_AbstractDoubleSpliterator : NSObject < JavaUtilSpliterator_OfDouble >
-@property (readonly, class) jint MAX_BATCH NS_SWIFT_NAME(MAX_BATCH);
-@property (readonly, class) jint BATCH_UNIT NS_SWIFT_NAME(BATCH_UNIT);
 
 #pragma mark Public
 
@@ -1357,6 +1380,8 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilSpliterators_AbstractDoubleSpliterator)
 #define INCLUDE_JavaUtilFunctionDoubleConsumer 1
 #include "java/util/function/DoubleConsumer.h"
 
+@class JavaLangDouble;
+
 @interface JavaUtilSpliterators_AbstractDoubleSpliterator_HoldingDoubleConsumer : NSObject < JavaUtilFunctionDoubleConsumer > {
  @public
   jdouble value_;
@@ -1391,6 +1416,9 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilSpliterators_AbstractDoubleSpliterator_Holdin
 #define INCLUDE_JavaUtilSpliterator 1
 #include "java/util/Spliterator.h"
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
+@class JavaLangLong;
 @protocol JavaUtilCollection;
 @protocol JavaUtilComparator;
 @protocol JavaUtilFunctionConsumer;
@@ -1402,8 +1430,6 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilSpliterators_AbstractDoubleSpliterator_Holdin
   permit limited parallelism.
  */
 @interface JavaUtilSpliterators_IteratorSpliterator : NSObject < JavaUtilSpliterator >
-@property (readonly, class) jint BATCH_UNIT NS_SWIFT_NAME(BATCH_UNIT);
-@property (readonly, class) jint MAX_BATCH NS_SWIFT_NAME(MAX_BATCH);
 
 #pragma mark Public
 
@@ -1497,6 +1523,9 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilSpliterators_IteratorSpliterator)
 #define INCLUDE_JavaUtilSpliterator_OfInt 1
 #include "java/util/Spliterator.h"
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
+@class JavaLangLong;
 @protocol JavaUtilComparator;
 @protocol JavaUtilFunctionConsumer;
 @protocol JavaUtilFunctionIntConsumer;
@@ -1508,8 +1537,6 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilSpliterators_IteratorSpliterator)
   permit limited parallelism.
  */
 @interface JavaUtilSpliterators_IntIteratorSpliterator : NSObject < JavaUtilSpliterator_OfInt >
-@property (readonly, class) jint BATCH_UNIT NS_SWIFT_NAME(BATCH_UNIT);
-@property (readonly, class) jint MAX_BATCH NS_SWIFT_NAME(MAX_BATCH);
 
 #pragma mark Public
 
@@ -1586,14 +1613,15 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilSpliterators_IntIteratorSpliterator)
 #define INCLUDE_JavaUtilSpliterator_OfLong 1
 #include "java/util/Spliterator.h"
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
+@class JavaLangLong;
 @protocol JavaUtilComparator;
 @protocol JavaUtilFunctionConsumer;
 @protocol JavaUtilFunctionLongConsumer;
 @protocol JavaUtilPrimitiveIterator_OfLong;
 
 @interface JavaUtilSpliterators_LongIteratorSpliterator : NSObject < JavaUtilSpliterator_OfLong >
-@property (readonly, class) jint BATCH_UNIT NS_SWIFT_NAME(BATCH_UNIT);
-@property (readonly, class) jint MAX_BATCH NS_SWIFT_NAME(MAX_BATCH);
 
 #pragma mark Public
 
@@ -1670,14 +1698,15 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilSpliterators_LongIteratorSpliterator)
 #define INCLUDE_JavaUtilSpliterator_OfDouble 1
 #include "java/util/Spliterator.h"
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
+@class JavaLangLong;
 @protocol JavaUtilComparator;
 @protocol JavaUtilFunctionConsumer;
 @protocol JavaUtilFunctionDoubleConsumer;
 @protocol JavaUtilPrimitiveIterator_OfDouble;
 
 @interface JavaUtilSpliterators_DoubleIteratorSpliterator : NSObject < JavaUtilSpliterator_OfDouble >
-@property (readonly, class) jint BATCH_UNIT NS_SWIFT_NAME(BATCH_UNIT);
-@property (readonly, class) jint MAX_BATCH NS_SWIFT_NAME(MAX_BATCH);
 
 #pragma mark Public
 
@@ -1751,6 +1780,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilSpliterators_DoubleIteratorSpliterator)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaUtilSpliterators")

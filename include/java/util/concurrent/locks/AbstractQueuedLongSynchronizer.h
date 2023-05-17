@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaUtilConcurrentLocksAbstractQueuedLongSynchronizer
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -33,6 +30,9 @@
 #define INCLUDE_JavaIoSerializable 1
 #include "java/io/Serializable.h"
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
+@class JavaLangLong;
 @class JavaLangThread;
 @class JavaUtilConcurrentLocksAbstractQueuedLongSynchronizer_ConditionObject;
 @class JavaUtilConcurrentLocksAbstractQueuedSynchronizer_Node;
@@ -54,7 +54,6 @@
  @author Doug Lea
  */
 @interface JavaUtilConcurrentLocksAbstractQueuedLongSynchronizer : JavaUtilConcurrentLocksAbstractOwnableSynchronizer < JavaIoSerializable >
-@property (readonly, class) jlong SPIN_FOR_TIMEOUT_THRESHOLD NS_SWIFT_NAME(SPIN_FOR_TIMEOUT_THRESHOLD);
 
 #pragma mark Public
 
@@ -607,6 +606,9 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentLocksAbstractQueuedLongSynchronizer
 #define INCLUDE_JavaIoSerializable 1
 #include "java/io/Serializable.h"
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
+@class JavaLangLong;
 @class JavaUtilConcurrentLocksAbstractQueuedLongSynchronizer;
 @class JavaUtilConcurrentTimeUnit;
 @class JavaUtilDate;
@@ -791,6 +793,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentLocksAbstractQueuedLongSynchronizer
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaUtilConcurrentLocksAbstractQueuedLongSynchronizer")

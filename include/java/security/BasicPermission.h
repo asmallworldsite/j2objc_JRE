@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaSecurityBasicPermission
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -32,6 +29,8 @@
 #define RESTRICT_JavaIoSerializable 1
 #define INCLUDE_JavaIoSerializable 1
 #include "java/io/Serializable.h"
+
+@class JavaLangBoolean;
 
 /*!
  @brief Legacy security code; do not use.
@@ -65,6 +64,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaSecurityBasicPermission)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaSecurityBasicPermission")

@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaLangAnnotationElementType
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -31,7 +28,7 @@
 
 @class IOSObjectArray;
 
-typedef NS_ENUM(NSUInteger, JavaLangAnnotationElementType_Enum) {
+typedef NS_ENUM(jint, JavaLangAnnotationElementType_Enum) {
   JavaLangAnnotationElementType_Enum_TYPE = 0,
   JavaLangAnnotationElementType_Enum_FIELD = 1,
   JavaLangAnnotationElementType_Enum_METHOD = 2,
@@ -42,56 +39,47 @@ typedef NS_ENUM(NSUInteger, JavaLangAnnotationElementType_Enum) {
   JavaLangAnnotationElementType_Enum_PACKAGE = 7,
   JavaLangAnnotationElementType_Enum_TYPE_PARAMETER = 8,
   JavaLangAnnotationElementType_Enum_TYPE_USE = 9,
+  JavaLangAnnotationElementType_Enum_MODULE = 10,
 };
+#if J2OBJC_IMPORTED_BY_JAVA_IMPLEMENTATION
+#define JavaLangAnnotationElementType_ORDINAL jint
+#else
+#define JavaLangAnnotationElementType_ORDINAL JavaLangAnnotationElementType_Enum
+#endif
+
 
 /*!
- @brief The constants of this enumerated type provide a simple classification of the
-  syntactic locations where annotations may appear in a Java program.These
-  constants are used in <code>java.lang.annotation.Target</code>
-  meta-annotations to specify where it is legal to write annotations of a
-  given type.
- <p>The syntactic locations where annotations may appear are split into 
- <em>declaration contexts</em> , where annotations apply to declarations, and 
- <em>type contexts</em> , where annotations apply to types used in
-  declarations and expressions. 
- <p>The constants <code>ANNOTATION_TYPE</code> , <code>CONSTRUCTOR</code> , <code>FIELD</code>
-  , <code>LOCAL_VARIABLE</code> , <code>METHOD</code> , <code>PACKAGE</code> , 
- <code>PARAMETER</code> , <code>TYPE</code> , and <code>TYPE_PARAMETER</code> correspond
-  to the declaration contexts in JLS 9.6.4.1. 
+ @brief The constants of this enumerated type provide a simple classification of the syntactic locations
+  where annotations may appear in a Java program.These constants are used in <code>Target</code>
+  meta-annotations to specify where it is legal to write
+  annotations of a given type.
+ <p>The syntactic locations where annotations may appear are split into <em>declaration
+  contexts</em> , where annotations apply to declarations, and <em>type contexts</em> , where
+  annotations apply to types used in declarations and expressions. 
+ <p>The constants <code>ANNOTATION_TYPE</code>, <code>CONSTRUCTOR</code>, <code>FIELD</code>, <code>LOCAL_VARIABLE</code>
+ , <code>METHOD</code>, <code>PACKAGE</code>, <code>MODULE</code>, <code>PARAMETER</code>, <code>TYPE</code>
+ , and <code>TYPE_PARAMETER</code> correspond to the declaration contexts in JLS 9.6.4.1. 
  <p>For example, an annotation whose type is meta-annotated with 
- <code>@@Target(ElementType.FIELD)</code> may only be written as a modifier for a
-  field declaration. 
- <p>The constant <code>TYPE_USE</code> corresponds to the 15 type contexts in JLS
-  4.11, as well as to two declaration contexts: type declarations (including
-  annotation type declarations) and type parameter declarations. 
+ <code>@@Target(ElementType.FIELD)</code> may only be written as a modifier for a field declaration. 
+ <p>The constant <code>TYPE_USE</code> corresponds to the type contexts in JLS 4.11, as well as to two
+  declaration contexts: type declarations (including annotation type declarations) and type
+  parameter declarations. 
  <p>For example, an annotation whose type is meta-annotated with 
- <code>@@Target(ElementType.TYPE_USE)</code> may be written on the type of a field
-  (or within the type of the field, if it is a nested, parameterized, or array
-  type), and may also appear as a modifier for, say, a class declaration. 
- <p>The <code>TYPE_USE</code> constant includes type declarations and type
-  parameter declarations as a convenience for designers of type checkers which
-  give semantics to annotation types. For example, if the annotation type 
- <code>NonNull</code> is meta-annotated with 
- <code>@@Target(ElementType.TYPE_USE)</code>, then <code>@@NonNull</code>
-  <code>class C {...}</code> could be treated by a type checker as indicating that
-  all variables of class <code>C</code> are non-null, while still allowing
-  variables of other classes to be non-null or not non-null based on whether 
+ <code>@@Target(ElementType.TYPE_USE)</code> may be written on the type of a field (or within the type
+  of the field, if it is a nested, parameterized, or array type), and may also appear as a modifier
+  for, say, a class declaration. 
+ <p>The <code>TYPE_USE</code> constant includes type declarations and type parameter declarations as a
+  convenience for designers of type checkers which give semantics to annotation types. For example,
+  if the annotation type <code>NonNull</code> is meta-annotated with 
+ <code>@@Target(ElementType.TYPE_USE)</code>, then <code>@@NonNull</code> <code>class C {...}</code> could be
+  treated by a type checker as indicating that all variables of class <code>C</code> are non-null, while
+  still allowing variables of other classes to be non-null or not non-null based on whether 
  <code>@@NonNull</code> appears at the variable's declaration.
  @author Joshua Bloch
  @since 1.5
  */
 @interface JavaLangAnnotationElementType : JavaLangEnum
 
-@property (readonly, class, nonnull) JavaLangAnnotationElementType *TYPE NS_SWIFT_NAME(TYPE);
-@property (readonly, class, nonnull) JavaLangAnnotationElementType *FIELD NS_SWIFT_NAME(FIELD);
-@property (readonly, class, nonnull) JavaLangAnnotationElementType *METHOD NS_SWIFT_NAME(METHOD);
-@property (readonly, class, nonnull) JavaLangAnnotationElementType *PARAMETER NS_SWIFT_NAME(PARAMETER);
-@property (readonly, class, nonnull) JavaLangAnnotationElementType *CONSTRUCTOR NS_SWIFT_NAME(CONSTRUCTOR);
-@property (readonly, class, nonnull) JavaLangAnnotationElementType *LOCAL_VARIABLE NS_SWIFT_NAME(LOCAL_VARIABLE);
-@property (readonly, class, nonnull) JavaLangAnnotationElementType *ANNOTATION_TYPE NS_SWIFT_NAME(ANNOTATION_TYPE);
-@property (readonly, class, nonnull) JavaLangAnnotationElementType *PACKAGE NS_SWIFT_NAME(PACKAGE);
-@property (readonly, class, nonnull) JavaLangAnnotationElementType *TYPE_PARAMETER NS_SWIFT_NAME(TYPE_PARAMETER);
-@property (readonly, class, nonnull) JavaLangAnnotationElementType *TYPE_USE NS_SWIFT_NAME(TYPE_USE);
 #pragma mark Public
 
 + (JavaLangAnnotationElementType *)valueOfWithNSString:(NSString *)name;
@@ -101,6 +89,8 @@ typedef NS_ENUM(NSUInteger, JavaLangAnnotationElementType_Enum) {
 #pragma mark Package-Private
 
 - (JavaLangAnnotationElementType_Enum)toNSEnum;
+
+- (JavaLangAnnotationElementType_ORDINAL)ordinal;
 
 @end
 
@@ -171,11 +161,18 @@ J2OBJC_ENUM_CONSTANT(JavaLangAnnotationElementType, TYPE_PARAMETER)
 inline JavaLangAnnotationElementType *JavaLangAnnotationElementType_get_TYPE_USE(void);
 J2OBJC_ENUM_CONSTANT(JavaLangAnnotationElementType, TYPE_USE)
 
+/*!
+ @brief Module declaration.
+ @since 9
+ */
+inline JavaLangAnnotationElementType *JavaLangAnnotationElementType_get_MODULE(void);
+J2OBJC_ENUM_CONSTANT(JavaLangAnnotationElementType, MODULE)
+
 FOUNDATION_EXPORT IOSObjectArray *JavaLangAnnotationElementType_values(void);
 
 FOUNDATION_EXPORT JavaLangAnnotationElementType *JavaLangAnnotationElementType_valueOfWithNSString_(NSString *name);
 
-FOUNDATION_EXPORT JavaLangAnnotationElementType *JavaLangAnnotationElementType_fromOrdinal(NSUInteger ordinal);
+FOUNDATION_EXPORT JavaLangAnnotationElementType *JavaLangAnnotationElementType_fromOrdinal(JavaLangAnnotationElementType_ORDINAL ordinal);
 
 J2OBJC_TYPE_LITERAL_HEADER(JavaLangAnnotationElementType)
 
@@ -185,6 +182,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaLangAnnotationElementType)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaLangAnnotationElementType")

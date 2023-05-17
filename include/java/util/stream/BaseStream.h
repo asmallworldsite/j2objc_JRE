@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaUtilStreamBaseStream
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -29,6 +26,7 @@
 #define INCLUDE_JavaLangAutoCloseable 1
 #include "java/lang/AutoCloseable.h"
 
+@class JavaLangBoolean;
 @protocol JavaLangRunnable;
 @protocol JavaUtilIterator;
 @protocol JavaUtilSpliterator;
@@ -39,7 +37,7 @@
   illustrates an aggregate operation using the stream types <code>Stream</code>
   and <code>IntStream</code>, computing the sum of the weights of the red widgets: 
  @code
-    int sum = widgets.stream()
+     int sum = widgets.stream()
                        .filter(w -> w.getColor() == RED)
                        .mapToInt(w -> w.getWeight())
                        .sum(); 
@@ -151,6 +149,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilStreamBaseStream)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaUtilStreamBaseStream")

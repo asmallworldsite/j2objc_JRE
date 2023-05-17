@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaIoUTFDataFormatException
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -45,7 +42,7 @@
  - seealso: java.io.DataInput
  - seealso: java.io.DataInputStream#readUTF(java.io.DataInput)
  - seealso: java.io.IOException
- @since JDK1.0
+ @since 1.0
  */
 @interface JavaIoUTFDataFormatException : JavaIoIOException
 
@@ -61,7 +58,7 @@
  @brief Constructs a <code>UTFDataFormatException</code> with the
   specified detail message.The string <code>s</code> can be
   retrieved later by the 
- <code><code>java.lang.Throwable.getMessage</code></code>
+ <code>java.lang.Throwable.getMessage</code>
   method of class <code>java.lang.Throwable</code>.
  @param s the detail message.
  */
@@ -98,6 +95,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaIoUTFDataFormatException)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaIoUTFDataFormatException")

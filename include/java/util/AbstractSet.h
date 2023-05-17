@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaUtilAbstractSet
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -33,6 +30,8 @@
 #define INCLUDE_JavaUtilSet 1
 #include "java/util/Set.h"
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @protocol JavaUtilCollection;
 @protocol JavaUtilSpliterator;
 
@@ -161,6 +160,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilAbstractSet)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaUtilAbstractSet")

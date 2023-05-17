@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaLangStackTraceElement
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -29,13 +26,15 @@
 #define INCLUDE_JavaIoSerializable 1
 #include "java/io/Serializable.h"
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
+@class JavaLangLong;
+
 /*!
  @brief Simple iOS version of java.lang.StackTraceElement.
  @author Pankaj Kakkar
  */
 @interface JavaLangStackTraceElement : NSObject < JavaIoSerializable >
-@property (readonly, copy, class) NSString *UNKNOWN NS_SWIFT_NAME(UNKNOWN);
-@property (readonly, copy, class) NSString *STRIPPED NS_SWIFT_NAME(STRIPPED);
 
 #pragma mark Public
 
@@ -123,6 +122,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaLangStackTraceElement)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaLangStackTraceElement")

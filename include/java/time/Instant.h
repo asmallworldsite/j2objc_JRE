@@ -13,14 +13,29 @@
 #endif
 #undef RESTRICT_JavaTimeInstant
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
 #pragma GCC diagnostic ignored "-Wnullability-completeness"
 #endif
+
+#ifndef JavaTimeInstant_H
+#define JavaTimeInstant_H
+
+#include "java/util/Date.h"
+
+@class JavaTimeInstant;  // Needed because HEADER comments are grouped with #includes.
+
+@interface JavaUtilDate (JavaUtilTime)
+
+- (JavaTimeInstant *)toInstant;
++ (JavaUtilDate *)fromWithJavaTimeInstant:(JavaTimeInstant *)instant;
+
+@end
+
+FOUNDATION_EXPORT JavaUtilDate *JavaUtilDate_fromWithJavaTimeInstant_(id instant);
+
+#endif // JavaTimeInstant_H
 
 #if !defined (JavaTimeInstant_) && (INCLUDE_ALL_JavaTimeInstant || defined(INCLUDE_JavaTimeInstant))
 #define JavaTimeInstant_
@@ -41,6 +56,9 @@
 #define INCLUDE_JavaIoSerializable 1
 #include "java/io/Serializable.h"
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
+@class JavaLangLong;
 @class JavaTimeClock;
 @class JavaTimeOffsetDateTime;
 @class JavaTimeTemporalValueRange;
@@ -155,9 +173,6 @@
  @since 1.8
  */
 @interface JavaTimeInstant : NSObject < JavaTimeTemporalTemporal, JavaTimeTemporalTemporalAdjuster, JavaLangComparable, JavaIoSerializable >
-@property (readonly, class, strong) JavaTimeInstant *EPOCH NS_SWIFT_NAME(EPOCH);
-@property (readonly, class, strong) JavaTimeInstant *MIN NS_SWIFT_NAME(MIN);
-@property (readonly, class, strong) JavaTimeInstant *MAX NS_SWIFT_NAME(MAX);
 
 #pragma mark Public
 
@@ -960,6 +975,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaTimeInstant)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaTimeInstant")

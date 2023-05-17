@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaUtilZipAdler32
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -30,6 +27,8 @@
 #include "java/util/zip/Checksum.h"
 
 @class IOSByteArray;
+@class JavaLangInteger;
+@class JavaLangLong;
 @class JavaNioByteBuffer;
 
 /*!
@@ -115,6 +114,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilZipAdler32)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaUtilZipAdler32")

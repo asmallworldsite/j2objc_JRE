@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaxXmlValidationValidatorHandler
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -29,6 +26,7 @@
 #define INCLUDE_OrgXmlSaxContentHandler 1
 #include "org/xml/sax/ContentHandler.h"
 
+@class JavaLangBoolean;
 @class JavaxXmlValidationTypeInfoProvider;
 @protocol OrgW3cDomLsLSResourceResolver;
 @protocol OrgXmlSaxErrorHandler;
@@ -409,6 +407,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaxXmlValidationValidatorHandler)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaxXmlValidationValidatorHandler")

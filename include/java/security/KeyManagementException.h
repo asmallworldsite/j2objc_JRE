@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaSecurityKeyManagementException
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -42,6 +39,7 @@
   <li>ExpiredKeyException
   </ul>
  @author Benjamin Renaud
+ @since 1.1
  - seealso: Key
  - seealso: KeyException
  */
@@ -124,6 +122,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaSecurityKeyManagementException)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaSecurityKeyManagementException")

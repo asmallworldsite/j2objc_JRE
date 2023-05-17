@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaUtilConcurrentLocksAbstractQueuedSynchronizer
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -33,6 +30,9 @@
 #define INCLUDE_JavaIoSerializable 1
 #include "java/io/Serializable.h"
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
+@class JavaLangLong;
 @class JavaLangThread;
 @class JavaUtilConcurrentLocksAbstractQueuedSynchronizer_ConditionObject;
 @class JavaUtilConcurrentLocksAbstractQueuedSynchronizer_Node;
@@ -258,7 +258,6 @@
  @author Doug Lea
  */
 @interface JavaUtilConcurrentLocksAbstractQueuedSynchronizer : JavaUtilConcurrentLocksAbstractOwnableSynchronizer < JavaIoSerializable >
-@property (readonly, class) jlong SPIN_FOR_TIMEOUT_THRESHOLD NS_SWIFT_NAME(SPIN_FOR_TIMEOUT_THRESHOLD);
 
 #pragma mark Public
 
@@ -803,6 +802,9 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentLocksAbstractQueuedSynchronizer)
 #if !defined (JavaUtilConcurrentLocksAbstractQueuedSynchronizer_Node_) && (INCLUDE_ALL_JavaUtilConcurrentLocksAbstractQueuedSynchronizer || defined(INCLUDE_JavaUtilConcurrentLocksAbstractQueuedSynchronizer_Node))
 #define JavaUtilConcurrentLocksAbstractQueuedSynchronizer_Node_
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
+@class JavaLangLong;
 @class JavaLangThread;
 
 /*!
@@ -959,13 +961,6 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentLocksAbstractQueuedSynchronizer)
    */
   JavaUtilConcurrentLocksAbstractQueuedSynchronizer_Node *nextWaiter_;
 }
-@property (readonly, class, strong) JavaUtilConcurrentLocksAbstractQueuedSynchronizer_Node *SHARED NS_SWIFT_NAME(SHARED);
-@property (readonly, class, strong) JavaUtilConcurrentLocksAbstractQueuedSynchronizer_Node *EXCLUSIVE NS_SWIFT_NAME(EXCLUSIVE);
-@property (readonly, class) jint CANCELLED NS_SWIFT_NAME(CANCELLED);
-@property (readonly, class) jint SIGNAL NS_SWIFT_NAME(SIGNAL);
-@property (readonly, class) jint CONDITION NS_SWIFT_NAME(CONDITION);
-@property (readonly, class) jint PROPAGATE NS_SWIFT_NAME(PROPAGATE);
-@property (readonly, class) jlong PREV NS_SWIFT_NAME(PREV);
 
 #pragma mark Package-Private
 
@@ -1101,6 +1096,9 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentLocksAbstractQueuedSynchronizer_Nod
 #define INCLUDE_JavaIoSerializable 1
 #include "java/io/Serializable.h"
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
+@class JavaLangLong;
 @class JavaUtilConcurrentLocksAbstractQueuedSynchronizer;
 @class JavaUtilConcurrentTimeUnit;
 @class JavaUtilDate;
@@ -1284,6 +1282,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentLocksAbstractQueuedSynchronizer_Con
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaUtilConcurrentLocksAbstractQueuedSynchronizer")

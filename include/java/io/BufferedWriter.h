@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaIoBufferedWriter
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -30,6 +27,7 @@
 #include "java/io/Writer.h"
 
 @class IOSCharArray;
+@class JavaLangInteger;
 
 /*!
  @brief Writes text to a character-output stream, buffering characters so as to
@@ -37,7 +35,7 @@
  <p> The buffer size may be specified, or the default size may be accepted.
   The default is large enough for most purposes. 
  <p> A newLine() method is provided, which uses the platform's own notion of
-  line separator as defined by the system property <tt>line.separator</tt>.
+  line separator as defined by the system property <code>line.separator</code>.
   Not all platforms use the newline character ('\n') to terminate lines.
   Calling this method to terminate each output line is therefore preferred to
   writing a newline character directly. 
@@ -60,7 +58,7 @@
  - seealso: OutputStreamWriter
  - seealso: java.nio.file.Files#newBufferedWriter
  @author Mark Reinhold
- @since JDK1.1
+ @since 1.1
  */
 @interface JavaIoBufferedWriter : JavaIoWriter
 
@@ -93,7 +91,7 @@
 
 /*!
  @brief Writes a line separator.The line separator string is defined by the
-  system property <tt>line.separator</tt>, and is not necessarily a single
+  system property <code>line.separator</code>, and is not necessarily a single
   newline ('\n') character.
  @throw IOExceptionIf an I/O error occurs
  */
@@ -110,6 +108,10 @@
  @param cbuf A character array
  @param off Offset from which to start reading characters
  @param len Number of characters to write
+ @throw IndexOutOfBoundsException
+ If <code>off</code> is negative, or <code>len</code> is negative,
+           or <code>off + len</code> is negative or greater than the length
+           of the given array
  @throw IOExceptionIf an I/O error occurs
  */
 - (void)writeWithCharArray:(IOSCharArray *)cbuf
@@ -124,14 +126,13 @@
 
 /*!
  @brief Writes a portion of a String.
- <p> If the value of the <tt>len</tt> parameter is negative then no
-  characters are written.  This is contrary to the specification of this
-  method in the superclass
- , which requires that an <code>IndexOutOfBoundsException</code> be
-  thrown.
  @param s String to be written
  @param off Offset from which to start reading characters
  @param len Number of characters to be written
+ @throw IndexOutOfBoundsException
+ If <code>off</code> is negative,
+           or <code>off + len</code> is greater than the length
+           of the given string
  @throw IOExceptionIf an I/O error occurs
  */
 - (void)writeWithNSString:(NSString *)s
@@ -177,6 +178,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaIoBufferedWriter)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaIoBufferedWriter")

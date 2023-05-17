@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaIoObjectStreamClass
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -35,7 +32,10 @@
 @class JavaIoObjectInputStream;
 @class JavaIoObjectOutputStream;
 @class JavaIoObjectStreamField;
+@class JavaLangBoolean;
 @class JavaLangClassNotFoundException;
+@class JavaLangInteger;
+@class JavaLangLong;
 @class JavaLangRefReferenceQueue;
 @protocol JavaIoObjectStreamClass_DefaultSUIDCompatibilityListener;
 @protocol JavaUtilConcurrentConcurrentMap;
@@ -55,9 +55,6 @@
  @since JDK1.1
  */
 @interface JavaIoObjectStreamClass : NSObject < JavaIoSerializable >
-@property (readonly, class, strong) IOSObjectArray *NO_FIELDS NS_SWIFT_NAME(NO_FIELDS);
-@property (class, strong) id<JavaIoObjectStreamClass_DefaultSUIDCompatibilityListener> suidCompatibilityListener NS_SWIFT_NAME(suidCompatibilityListener);
-@property (readonly, class) jint MAX_SDK_TARGET_FOR_CLINIT_UIDGEN_WORKAROUND NS_SWIFT_NAME(MAX_SDK_TARGET_FOR_CLINIT_UIDGEN_WORKAROUND);
 
 #pragma mark Public
 
@@ -480,6 +477,7 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaIoObjectStreamClass)
 #define JavaIoObjectStreamClass_ClassDataSlot_
 
 @class JavaIoObjectStreamClass;
+@class JavaLangBoolean;
 
 /*!
  @brief Class representing the portion of an object's serialized form allotted
@@ -543,6 +541,7 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaIoObjectStreamClass_Digest)
 #define JavaIoObjectStreamClass_DefaultSUIDCompatibilityListener_
 
 @class IOSClass;
+@class JavaLangLong;
 
 /*!
  @brief Created for testing as there is no nice way to detect when a message is logged.
@@ -575,6 +574,8 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaIoObjectStreamClass_DefaultSUIDCompatibilityListe
 #include "java/lang/ref/WeakReference.h"
 
 @class IOSClass;
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @class JavaLangRefReferenceQueue;
 
 /*!
@@ -633,6 +634,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaIoObjectStreamClass_WeakClassKey)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaIoObjectStreamClass")

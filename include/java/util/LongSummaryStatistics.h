@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaUtilLongSummaryStatistics
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -32,6 +29,10 @@
 #define RESTRICT_JavaUtilFunctionIntConsumer 1
 #define INCLUDE_JavaUtilFunctionIntConsumer 1
 #include "java/util/function/IntConsumer.h"
+
+@class JavaLangDouble;
+@class JavaLangInteger;
+@class JavaLangLong;
 
 /*!
  @brief A state object for collecting statistics such as count, min, max, sum, and
@@ -143,6 +144,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilLongSummaryStatistics)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaUtilLongSummaryStatistics")

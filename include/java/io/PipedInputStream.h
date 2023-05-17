@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaIoPipedInputStream
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -31,212 +28,261 @@
 
 @class IOSByteArray;
 @class JavaIoPipedOutputStream;
+@class JavaLangBoolean;
+@class JavaLangInteger;
+@class JavaLangThread;
 
 /*!
- @brief Receives information from a communications pipe.When two threads want to
-  pass data back and forth, one creates a piped output stream and the other one
-  creates a piped input stream.
- - seealso: PipedOutputStream
+ @brief A piped input stream should be connected
+  to a piped output stream; the piped  input
+  stream then provides whatever data bytes
+  are written to the piped output  stream.
+ Typically, data is read from a <code>PipedInputStream</code>
+  object by one thread  and data is written
+  to the corresponding <code>PipedOutputStream</code>
+  by some  other thread. Attempting to use
+  both objects from a single thread is not
+  recommended, as it may deadlock the thread.
+  The piped input stream contains a buffer,
+  decoupling read operations from write operations,
+  within limits.
+  A pipe is said to be <a id="BROKEN"> <i>broken</i> </a> if a
+  thread that was providing data bytes to the connected
+  piped output stream is no longer alive.
+ @author James Gosling
+ - seealso: java.io.PipedOutputStream
+ @since 1.0
  */
 @interface JavaIoPipedInputStream : JavaIoInputStream {
  @public
+  jboolean closedByWriter_;
+  volatile_jboolean closedByReader_;
+  jboolean connected_;
+  JavaLangThread *readSide_;
+  JavaLangThread *writeSide_;
   /*!
-   @brief The circular buffer through which data is passed.Data is read from the
-  range <code>[out, in)</code> and written to the range <code>[in, out)</code>.
-   Data in the buffer is either sequential: @code
-
-      { - - - X X X X X X X - - - - - }
-              ^             ^
-              |             |
-             out           in
-@endcode
-  ...or wrapped around the buffer's end: @code
-
-      { X X X X - - - - - - - - X X X }
-                ^               ^
-                |               |
-               in              out
-@endcode
-  When the buffer is empty, <code>in == -1</code>. Reading when the buffer is
-  empty will block until data is available. When the buffer is full, 
- <code>in == out</code>. Writing when the buffer is full will block until free
-  space is available.
+   @brief The circular buffer into which incoming data is placed.
+   @since 1.1
    */
   IOSByteArray *buffer_;
   /*!
-   @brief The index in <code>buffer</code> where the next byte will be written.
+   @brief The index of the position in the circular buffer at which the
+  next byte of data will be stored when received from the connected
+  piped output stream.
+   <code>in&lt;0</code> implies the buffer is empty, 
+ <code>in==out</code> implies the buffer is full
+   @since 1.1
    */
   jint in_;
   /*!
-   @brief The index in <code>buffer</code> where the next byte will be read.
+   @brief The index of the position in the circular buffer at which the next
+  byte of data will be read by this piped input stream.
+   @since 1.1
    */
   jint out_;
-  /*!
-   @brief Indicates if this pipe is connected.
-   */
-  jboolean isConnected_;
 }
-@property (readonly, class) jint PIPE_SIZE NS_SWIFT_NAME(PIPE_SIZE);
 
 #pragma mark Public
 
 /*!
- @brief Constructs a new unconnected <code>PipedInputStream</code>.The resulting
-  stream must be connected to a <code>PipedOutputStream</code> before data may
-  be read from it.
+ @brief Creates a <code>PipedInputStream</code> so
+  that it is not yet connected
+ .
+ It must be connected
+  to a 
+ <code>PipedOutputStream</code> before being used.
  */
 - (instancetype __nonnull)init;
 
 /*!
- @brief Constructs a new unconnected <code>PipedInputStream</code> with the given
-  buffer size.The resulting stream must be connected to a 
- <code>PipedOutputStream</code> before data may be read from it.
- @param pipeSize the size of the buffer in bytes.
- @throw IllegalArgumentExceptionif pipeSize is less than or equal to zero.
+ @brief Creates a <code>PipedInputStream</code> so that it is not yet 
+ connected and
+  uses the specified pipe size for the pipe's buffer.
+ It must be connected
+  to a <code>PipedOutputStream</code> before being used.
+ @param pipeSize the size of the pipe's buffer.
+ @throw IllegalArgumentExceptionif <code>pipeSize <= 0</code>.
  @since 1.6
  */
 - (instancetype __nonnull)initWithInt:(jint)pipeSize;
 
 /*!
- @brief Constructs a new <code>PipedInputStream</code> connected to the 
- <code>PipedOutputStream</code> <code>out</code>.Any data written to the output
-  stream can be read from the this input stream.
- @param outArg the piped output stream to connect to.
- @throw IOException
- if this stream or <code>out</code> are already connected.
+ @brief Creates a <code>PipedInputStream</code> so
+  that it is connected to the piped output
+  stream <code>src</code>.Data bytes written
+  to <code>src</code> will then be  available
+  as input from this stream.
+ @param src the stream to connect to.
+ @throw IOExceptionif an I/O error occurs.
  */
-- (instancetype __nonnull)initWithJavaIoPipedOutputStream:(JavaIoPipedOutputStream *)outArg;
+- (instancetype __nonnull)initWithJavaIoPipedOutputStream:(JavaIoPipedOutputStream *)src;
 
 /*!
- @brief Constructs a new <code>PipedInputStream</code> connected to the given <code>PipedOutputStream</code>,
-  with the given buffer size.Any data written to the output stream can be read from this
-  input stream.
- @param outArg the <code>PipedOutputStream</code>  to connect to.
- @param pipeSize the size of the buffer in bytes.
+ @brief Creates a <code>PipedInputStream</code> so that it is
+  connected to the piped output stream 
+ <code>src</code> and uses the specified pipe size for
+  the pipe's buffer.
+ Data bytes written to <code>src</code> will then
+  be available as input from this stream.
+ @param src the stream to connect to.
+ @param pipeSize the size of the pipe's buffer.
  @throw IOExceptionif an I/O error occurs.
- @throw IllegalArgumentExceptionif pipeSize is less than or equal to zero.
+ @throw IllegalArgumentExceptionif <code>pipeSize <= 0</code>.
  @since 1.6
  */
-- (instancetype __nonnull)initWithJavaIoPipedOutputStream:(JavaIoPipedOutputStream *)outArg
+- (instancetype __nonnull)initWithJavaIoPipedOutputStream:(JavaIoPipedOutputStream *)src
                                                   withInt:(jint)pipeSize;
 
 /*!
- @brief <p>Unlike most streams, <code>PipedInputStream</code> returns 0 rather than throwing 
- <code>IOException</code> if the stream has been closed.
- Unconnected and broken pipes also
-  return 0.
- @throw IOExceptionif an I/O error occurs
+ @brief Returns the number of bytes that can be read from this input
+  stream without blocking.
+ @return the number of bytes that can be read from this input stream
+          without blocking, or <code>0</code> if this input stream has been
+          closed by invoking its <code>close()</code> method, or if the pipe
+          is <code>unconnected</code>, or
+           <a href="#BROKEN"> <code>broken</code></a>.
+ @throw IOExceptionif an I/O error occurs.
+ @since 1.0.2
  */
 - (jint)available;
 
 /*!
- @brief Closes this stream.This implementation releases the buffer used for the
-  pipe and notifies all threads waiting to read or write.
- @throw IOException
- if an error occurs while closing this stream.
+ @brief Closes this piped input stream and releases any system resources
+  associated with the stream.
+ @throw IOExceptionif an I/O error occurs.
  */
 - (void)close;
 
 /*!
- @brief Connects this <code>PipedInputStream</code> to a <code>PipedOutputStream</code>.
- Any data written to the output stream becomes readable in this input
-  stream.
- @param src the source output stream.
- @throw IOException
- if either stream is already connected.
+ @brief Causes this piped input stream to be connected
+  to the piped  output stream <code>src</code>.
+ If this object is already connected to some
+  other piped output  stream, an <code>IOException</code>
+  is thrown. 
+ <p>
+  If <code>src</code> is an
+  unconnected piped output stream and <code>snk</code>
+  is an unconnected piped input stream, they
+  may be connected by either the call: 
+ @code
+<code>snk.connect(src)</code> 
+@endcode
+  <p>
+  or the call: 
+ @code
+<code>src.connect(snk)</code> 
+@endcode
+  <p>
+  The two calls have the same effect.
+ @param src The piped output stream to connect to.
+ @throw IOExceptionif an I/O error occurs.
  */
 - (void)connectWithJavaIoPipedOutputStream:(JavaIoPipedOutputStream *)src;
 
 /*!
- @brief Reads a single byte from this stream and returns it as an integer in the
-  range from 0 to 255.Returns -1 if the end of this stream has been
-  reached.
- If there is no data in the pipe, this method blocks until data
-  is available, the end of the stream is detected or an exception is
-  thrown. 
- <p>
-  Separate threads should be used to read from a <code>PipedInputStream</code>
-  and to write to the connected <code>PipedOutputStream</code>. If the same
-  thread is used, a deadlock may occur.
- @return the byte read or -1 if the end of the source stream has been
-          reached.
- @throw IOException
- if this stream is closed or not connected to an output
-              stream, or if the thread writing to the connected output
-              stream is no longer alive.
+ @brief Reads the next byte of data from this piped input stream.The
+  value byte is returned as an <code>int</code> in the range 
+ <code>0</code> to <code>255</code>.
+ This method blocks until input data is available, the end of the
+  stream is detected, or an exception is thrown.
+ @return the next byte of data, or <code>-1</code> if the end of the
+              stream is reached.
+ @throw IOExceptionif the pipe is
+            <code>unconnected</code>,
+            <a href="#BROKEN"> <code>broken</code></a>, closed,
+            or if an I/O error occurs.
  */
 - (jint)read;
 
 /*!
- @brief Reads at most <code>byteCount</code> bytes from this stream and stores them in the
-  byte array <code>bytes</code> starting at <code>offset</code>.Blocks until at
-  least one byte has been read, the end of the stream is detected or an
-  exception is thrown.
- <p>
-  Separate threads should be used to read from a <code>PipedInputStream</code>
-  and to write to the connected <code>PipedOutputStream</code>. If the same
-  thread is used, a deadlock may occur.
- @return the number of bytes actually read or -1 if the end of the stream
-          has been reached.
- @throw IndexOutOfBoundsException
- if <code>offset < 0</code> or <code>byteCount < 0</code>, or if <code>offset + byteCount</code>
-  is greater than the size of <code>bytes</code>.
- @throw InterruptedIOException
- if the thread reading from this stream is interrupted.
- @throw IOException
- if this stream is closed or not connected to an output
-              stream, or if the thread writing to the connected output
-              stream is no longer alive.
- @throw NullPointerException
- if <code>bytes</code> is <code>null</code>.
+ @brief Reads up to <code>len</code> bytes of data from this piped input
+  stream into an array of bytes.Less than <code>len</code> bytes
+  will be read if the end of the data stream is reached or if 
+ <code>len</code> exceeds the pipe's buffer size.
+ If <code>len </code> is zero, then no bytes are read and 0 is returned;
+  otherwise, the method blocks until at least 1 byte of input is
+  available, end of the stream has been detected, or an exception is
+  thrown.
+ @param b the buffer into which the data is read.
+ @param off the start offset in the destination array  <code> b </code>
+ @param len the maximum number of bytes read.
+ @return the total number of bytes read into the buffer, or
+              <code>-1</code> if there is no more data because the end of
+              the stream has been reached.
+ @throw NullPointerExceptionIf <code>b</code> is <code>null</code>.
+ @throw IndexOutOfBoundsExceptionIf <code>off</code> is negative, 
+ <code>len</code> is negative, or <code>len</code> is greater than 
+ <code>b.length - off</code>
+ @throw IOExceptionif the pipe is <a href="#BROKEN"> <code>broken</code></a>,
+            <code>unconnected</code>,
+            closed, or if an I/O error occurs.
  */
-- (jint)readWithByteArray:(IOSByteArray *)bytes
-                  withInt:(jint)offset
-                  withInt:(jint)byteCount;
+- (jint)readWithByteArray:(IOSByteArray *)b
+                  withInt:(jint)off
+                  withInt:(jint)len;
 
 #pragma mark Protected
 
 /*!
- @brief Receives a byte and stores it in this stream's <code>buffer</code>.This
-  method is called by <code>PipedOutputStream.write(int)</code>.
- The least
-  significant byte of the integer <code>oneByte</code> is stored at index 
- <code>in</code> in the <code>buffer</code>.
-  <p>
-  This method blocks as long as <code>buffer</code> is full.
- @param oneByte the byte to store in this pipe.
- @throw InterruptedIOException
- if the <code>buffer</code> is full and the thread that has called
-              this method is interrupted.
- @throw IOException
- if this stream is closed or the thread that has last read
-              from this stream is no longer alive.
+ @brief Receives a byte of data.This method will block if no input is
+  available.
+ @param b the byte being received
+ @throw IOExceptionIf the pipe is <a href="#BROKEN"> <code>broken</code></a>,
+           <code>unconnected</code>,
+           closed, or if an I/O error occurs.
+ @since 1.1
  */
-- (void)receiveWithInt:(jint)oneByte;
+- (void)receiveWithInt:(jint)b;
 
 #pragma mark Package-Private
 
-- (void)done;
+/*!
+ @brief Receives data into an array of bytes.This method will
+  block until some input is available.
+ @param b the buffer into which the data is received
+ @param off the start offset of the data
+ @param len the maximum number of bytes received
+ @throw IOExceptionIf the pipe is <a href="#BROKEN"> broken</a>,
+            <code>unconnected</code>,
+            closed,or if an I/O error occurs.
+ */
+- (void)receiveWithByteArray:(IOSByteArray *)b
+                     withInt:(jint)off
+                     withInt:(jint)len;
 
 /*!
- @brief Establishes the connection to the PipedOutputStream.
- @throw IOException
- If this Reader is already connected.
+ @brief Notifies all waiting threads that the last byte of data has been
+  received.
  */
-- (void)establishConnection;
+- (void)receivedLast;
 
 @end
 
 J2OBJC_EMPTY_STATIC_INIT(JavaIoPipedInputStream)
 
+J2OBJC_FIELD_SETTER(JavaIoPipedInputStream, readSide_, JavaLangThread *)
+J2OBJC_FIELD_SETTER(JavaIoPipedInputStream, writeSide_, JavaLangThread *)
 J2OBJC_FIELD_SETTER(JavaIoPipedInputStream, buffer_, IOSByteArray *)
 
 /*!
- @brief The size of the default pipe in bytes.
+ @brief The default size of the pipe's circular input buffer.
+ @since 1.1
  */
 inline jint JavaIoPipedInputStream_get_PIPE_SIZE(void);
 #define JavaIoPipedInputStream_PIPE_SIZE 1024
 J2OBJC_STATIC_FIELD_CONSTANT(JavaIoPipedInputStream, PIPE_SIZE, jint)
+
+FOUNDATION_EXPORT void JavaIoPipedInputStream_initWithJavaIoPipedOutputStream_(JavaIoPipedInputStream *self, JavaIoPipedOutputStream *src);
+
+FOUNDATION_EXPORT JavaIoPipedInputStream *new_JavaIoPipedInputStream_initWithJavaIoPipedOutputStream_(JavaIoPipedOutputStream *src) NS_RETURNS_RETAINED;
+
+FOUNDATION_EXPORT JavaIoPipedInputStream *create_JavaIoPipedInputStream_initWithJavaIoPipedOutputStream_(JavaIoPipedOutputStream *src);
+
+FOUNDATION_EXPORT void JavaIoPipedInputStream_initWithJavaIoPipedOutputStream_withInt_(JavaIoPipedInputStream *self, JavaIoPipedOutputStream *src, jint pipeSize);
+
+FOUNDATION_EXPORT JavaIoPipedInputStream *new_JavaIoPipedInputStream_initWithJavaIoPipedOutputStream_withInt_(JavaIoPipedOutputStream *src, jint pipeSize) NS_RETURNS_RETAINED;
+
+FOUNDATION_EXPORT JavaIoPipedInputStream *create_JavaIoPipedInputStream_initWithJavaIoPipedOutputStream_withInt_(JavaIoPipedOutputStream *src, jint pipeSize);
 
 FOUNDATION_EXPORT void JavaIoPipedInputStream_init(JavaIoPipedInputStream *self);
 
@@ -244,23 +290,11 @@ FOUNDATION_EXPORT JavaIoPipedInputStream *new_JavaIoPipedInputStream_init(void) 
 
 FOUNDATION_EXPORT JavaIoPipedInputStream *create_JavaIoPipedInputStream_init(void);
 
-FOUNDATION_EXPORT void JavaIoPipedInputStream_initWithJavaIoPipedOutputStream_(JavaIoPipedInputStream *self, JavaIoPipedOutputStream *outArg);
-
-FOUNDATION_EXPORT JavaIoPipedInputStream *new_JavaIoPipedInputStream_initWithJavaIoPipedOutputStream_(JavaIoPipedOutputStream *outArg) NS_RETURNS_RETAINED;
-
-FOUNDATION_EXPORT JavaIoPipedInputStream *create_JavaIoPipedInputStream_initWithJavaIoPipedOutputStream_(JavaIoPipedOutputStream *outArg);
-
 FOUNDATION_EXPORT void JavaIoPipedInputStream_initWithInt_(JavaIoPipedInputStream *self, jint pipeSize);
 
 FOUNDATION_EXPORT JavaIoPipedInputStream *new_JavaIoPipedInputStream_initWithInt_(jint pipeSize) NS_RETURNS_RETAINED;
 
 FOUNDATION_EXPORT JavaIoPipedInputStream *create_JavaIoPipedInputStream_initWithInt_(jint pipeSize);
-
-FOUNDATION_EXPORT void JavaIoPipedInputStream_initWithJavaIoPipedOutputStream_withInt_(JavaIoPipedInputStream *self, JavaIoPipedOutputStream *outArg, jint pipeSize);
-
-FOUNDATION_EXPORT JavaIoPipedInputStream *new_JavaIoPipedInputStream_initWithJavaIoPipedOutputStream_withInt_(JavaIoPipedOutputStream *outArg, jint pipeSize) NS_RETURNS_RETAINED;
-
-FOUNDATION_EXPORT JavaIoPipedInputStream *create_JavaIoPipedInputStream_initWithJavaIoPipedOutputStream_withInt_(JavaIoPipedOutputStream *outArg, jint pipeSize);
 
 J2OBJC_TYPE_LITERAL_HEADER(JavaIoPipedInputStream)
 
@@ -270,6 +304,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaIoPipedInputStream)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaIoPipedInputStream")

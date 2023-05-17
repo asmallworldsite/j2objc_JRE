@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaxXmlTransformSourceLocator
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -24,6 +21,8 @@
 
 #if !defined (JavaxXmlTransformSourceLocator_) && (INCLUDE_ALL_JavaxXmlTransformSourceLocator || defined(INCLUDE_JavaxXmlTransformSourceLocator))
 #define JavaxXmlTransformSourceLocator_
+
+@class JavaLangInteger;
 
 /*!
  @brief This interface is primarily for the purposes of reporting where
@@ -98,6 +97,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaxXmlTransformSourceLocator)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaxXmlTransformSourceLocator")

@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaBeansPropertyChangeSupport
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -31,19 +28,19 @@
 
 @class IOSObjectArray;
 @class JavaBeansPropertyChangeEvent;
+@class JavaLangBoolean;
+@class JavaLangInteger;
+@class JavaLangLong;
 @protocol JavaBeansPropertyChangeListener;
 
 /*!
- @brief This is a utility class that can be used by beans that support bound
-  properties.It manages a list of listeners and dispatches 
- <code>PropertyChangeEvent</code>s to them.
- You can use an instance of this class
-  as a member field of your bean and delegate these types of work to it.
-  The <code>PropertyChangeListener</code> can be registered for all properties
-  or for a property specified by name. 
- <p>
-  Here is an example of <code>PropertyChangeSupport</code> usage that follows
-  the rules and recommendations laid out in the JavaBeans&trade; specification: 
+ @brief This is a utility class that can be used by beans that support bound properties.It manages a
+  list of listeners and dispatches <code>PropertyChangeEvent</code>s to them.
+ You can use an instance of
+  this class as a member field of your bean and delegate these types of work to it. The <code>PropertyChangeListener</code>
+  can be registered for all properties or for a property specified by name. 
+ <p>Here is an example of <code>PropertyChangeSupport</code> usage that follows the rules and
+  recommendations laid out in the JavaBeans&trade; specification: 
  @code
 
   public class MyBean {
@@ -67,16 +64,13 @@
   } 
   
 @endcode
-  <p>
-  A <code>PropertyChangeSupport</code> instance is thread-safe. 
- <p>
-  This class is serializable.  When it is serialized it will save
-  (and restore) any listeners that are themselves serializable.  Any
-  non-serializable listeners will be skipped during serialization.
- - seealso: VetoableChangeSupport
+  
+ <p>A <code>PropertyChangeSupport</code> instance is thread-safe. 
+ <p>This class is serializable. When it is serialized it will save (and restore) any listeners
+  that are themselves serializable. Any non-serializable listeners will be skipped during
+  serialization.
  */
 @interface JavaBeansPropertyChangeSupport : NSObject < JavaIoSerializable >
-@property (readonly, class) jlong serialVersionUID NS_SWIFT_NAME(serialVersionUID);
 
 #pragma mark Public
 
@@ -340,6 +334,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaBeansPropertyChangeSupport)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaBeansPropertyChangeSupport")

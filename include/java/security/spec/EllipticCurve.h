@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaSecuritySpecEllipticCurve
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -26,6 +23,8 @@
 #define JavaSecuritySpecEllipticCurve_
 
 @class IOSByteArray;
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @class JavaMathBigInteger;
 @protocol JavaSecuritySpecECField;
 
@@ -121,7 +120,7 @@
  @return a hash code value computed from the hash codes of the field, A,
   and B, as follows: 
  @code
-    (field.hashCode() << 6) + (a.hashCode() << 4) + (b.hashCode() << 2) 
+     (field.hashCode() << 6) + (a.hashCode() << 4) + (b.hashCode() << 2) 
  
 @endcode
  */
@@ -155,6 +154,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaSecuritySpecEllipticCurve)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaSecuritySpecEllipticCurve")

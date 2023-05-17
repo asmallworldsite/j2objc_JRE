@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaxCryptoSpecOAEPParameterSpec
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -77,7 +74,6 @@
  @since 1.5
  */
 @interface JavaxCryptoSpecOAEPParameterSpec : NSObject < JavaSecuritySpecAlgorithmParameterSpec >
-@property (readonly, class, strong) JavaxCryptoSpecOAEPParameterSpec *DEFAULT NS_SWIFT_NAME(DEFAULT);
 
 #pragma mark Public
 
@@ -150,6 +146,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaxCryptoSpecOAEPParameterSpec)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaxCryptoSpecOAEPParameterSpec")

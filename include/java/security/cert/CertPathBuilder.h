@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaSecurityCertCertPathBuilder
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -59,24 +56,14 @@
   
 @endcode
   
- <p> Android provides the following <code>CertPathBuilder</code> algorithms: 
- <table>
-    <thead>
-      <tr>
-        <th>Algorithm</th>
-        <th>Supported API Levels</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>PKIX</td>
-        <td>1+</td>
-      </tr>
-    </tbody>
-  </table>
-  This algorithm is described in the <a href="{@@docRoot}/../technotes/guides/security/StandardNames.html#CertPathBuilder">
+ <p>Every implementation of the Java platform is required to support the
+  following standard <code>CertPathBuilder</code> algorithm: 
+ <ul>
+  <li><code>PKIX</code></li>
+  </ul>
+  This algorithm is described in the <a href="{@@docRoot}/../specs/security/standard-names.html#certpathbuilder-algorithms">
   CertPathBuilder section</a> of the
-  Java Cryptography Architecture Standard Algorithm Name Documentation.
+  Java Security Standard Algorithm Names Specification.
   Consult the release documentation for your implementation to see if any
   other algorithms are supported. 
  <p>
@@ -148,14 +135,15 @@
  <p> Note that the list of registered providers may be retrieved via the 
  <code>Security.getProviders()</code> method.
  @param algorithm the name of the requested <code>CertPathBuilder</code>   algorithm.  See the CertPathBuilder section in the 
-  <a href="{@@docRoot}/../technotes/guides/security/StandardNames.html#CertPathBuilder">
-   Java Cryptography Architecture Standard Algorithm Name Documentation
+  <a href="{@@docRoot}/../specs/security/standard-names.html#certpathbuilder-algorithms">
+   Java Security Standard Algorithm Names Specification
   </a>  for information about standard algorithm names.
  @return a <code>CertPathBuilder</code> object that implements the
-           specified algorithm.
- @throw NoSuchAlgorithmExceptionif no Provider supports a
-           CertPathBuilderSpi implementation for the
-           specified algorithm.
+          specified algorithm
+ @throw NoSuchAlgorithmExceptionif no <code>Provider</code> supports a
+          <code>CertPathBuilderSpi</code> implementation for the
+          specified algorithm
+ @throw NullPointerExceptionif <code>algorithm</code> is <code>null</code>
  - seealso: java.security.Provider
  */
 + (JavaSecurityCertCertPathBuilder *)getInstanceWithNSString:(NSString *)algorithm;
@@ -168,17 +156,18 @@
   object is returned.  Note that the specified Provider object
   does not have to be registered in the provider list.
  @param algorithm the name of the requested <code>CertPathBuilder</code>   algorithm.  See the CertPathBuilder section in the 
-  <a href="{@@docRoot}/../technotes/guides/security/StandardNames.html#CertPathBuilder">
-   Java Cryptography Architecture Standard Algorithm Name Documentation
+  <a href="{@@docRoot}/../specs/security/standard-names.html#certpathbuilder-algorithms">
+   Java Security Standard Algorithm Names Specification
   </a>  for information about standard algorithm names.
  @param provider the provider.
  @return a <code>CertPathBuilder</code> object that implements the
-           specified algorithm.
- @throw NoSuchAlgorithmExceptionif a CertPathBuilderSpi
-           implementation for the specified algorithm is not available
-           from the specified Provider object.
+          specified algorithm
  @throw IllegalArgumentExceptionif the <code>provider</code> is
-           null.
+          <code>null</code>
+ @throw NoSuchAlgorithmExceptionif a <code>CertPathBuilderSpi</code>
+          implementation for the specified algorithm is not available
+          from the specified <code>Provider</code> object
+ @throw NullPointerExceptionif <code>algorithm</code> is <code>null</code>
  - seealso: java.security.Provider
  */
 + (JavaSecurityCertCertPathBuilder *)getInstanceWithNSString:(NSString *)algorithm
@@ -194,19 +183,20 @@
  <p> Note that the list of registered providers may be retrieved via the 
  <code>Security.getProviders()</code> method.
  @param algorithm the name of the requested <code>CertPathBuilder</code>   algorithm.  See the CertPathBuilder section in the 
-  <a href="{@@docRoot}/../technotes/guides/security/StandardNames.html#CertPathBuilder">
-   Java Cryptography Architecture Standard Algorithm Name Documentation
+  <a href="{@@docRoot}/../specs/security/standard-names.html#certpathbuilder-algorithms">
+   Java Security Standard Algorithm Names Specification
   </a>  for information about standard algorithm names.
  @param provider the name of the provider.
  @return a <code>CertPathBuilder</code> object that implements the
-           specified algorithm.
- @throw NoSuchAlgorithmExceptionif a CertPathBuilderSpi
-           implementation for the specified algorithm is not
-           available from the specified provider.
- @throw NoSuchProviderExceptionif the specified provider is not
-           registered in the security provider list.
+          specified algorithm
  @throw IllegalArgumentExceptionif the <code>provider</code> is
-           null or empty.
+          <code>null</code> or empty
+ @throw NoSuchAlgorithmExceptionif a <code>CertPathBuilderSpi</code>
+          implementation for the specified algorithm is not
+          available from the specified provider
+ @throw NoSuchProviderExceptionif the specified provider is not
+          registered in the security provider list
+ @throw NullPointerExceptionif <code>algorithm</code> is <code>null</code>
  - seealso: java.security.Provider
  */
 + (JavaSecurityCertCertPathBuilder *)getInstanceWithNSString:(NSString *)algorithm
@@ -279,6 +269,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaSecurityCertCertPathBuilder)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaSecurityCertCertPathBuilder")

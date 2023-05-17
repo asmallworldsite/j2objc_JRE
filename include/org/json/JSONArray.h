@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_OrgJsonJSONArray
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -25,6 +22,10 @@
 #if !defined (OrgJsonJSONArray_) && (INCLUDE_ALL_OrgJsonJSONArray || defined(INCLUDE_OrgJsonJSONArray))
 #define OrgJsonJSONArray_
 
+@class JavaLangBoolean;
+@class JavaLangDouble;
+@class JavaLangInteger;
+@class JavaLangLong;
 @class OrgJsonJSONObject;
 @class OrgJsonJSONStringer;
 @class OrgJsonJSONTokener;
@@ -439,6 +440,4 @@ J2OBJC_TYPE_LITERAL_HEADER(OrgJsonJSONArray)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_OrgJsonJSONArray")

@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaSecurityCertCertPathValidator
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -62,24 +59,16 @@
   
 @endcode
   
- <p> Android provides the following <code>CertPathValidator</code> algorithms: 
- <table>
-    <thead>
-      <tr>
-        <th>Algorithm</th>
-        <th>Supported API Levels</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>PKIX</td>
-        <td>1+</td>
-      </tr>
-    </tbody>
-  </table>
-  This algorithm is described in the <a href="{@@docRoot}/../technotes/guides/security/StandardNames.html#CertPathValidator">
+ <p>Every implementation of the Java platform is required to support the
+  following standard <code>CertPathValidator</code> algorithm: 
+ <ul>
+  <li><code>PKIX</code></li>
+  </ul>
+  This algorithm is described in the <a href="{@@docRoot}/../specs/security/standard-names.html#certpathvalidator-algorithms">
   CertPathValidator section</a> of the
-  Java Cryptography Architecture Standard Algorithm Name Documentation. 
+  Java Security Standard Algorithm Names Specification.
+  Consult the release documentation for your implementation to see if any
+  other algorithms are supported. 
  <p>
   <b>Concurrent Access</b>
   <p>
@@ -135,15 +124,16 @@
   Provider that supports the specified algorithm is returned. 
  <p> Note that the list of registered providers may be retrieved via the 
  <code>Security.getProviders()</code> method.
- @param algorithm the name of the requested <code>CertPathValidator</code>   algorithm. See the CertPathValidator section in the 
-  <a href="{@@docRoot}/../technotes/guides/security/StandardNames.html#CertPathValidator">
-   Java Cryptography Architecture Standard Algorithm Name Documentation
+ @param algorithm the name of the requested <code>CertPathValidator</code>  algorithm. See the CertPathValidator section in the 
+  <a href="{@@docRoot}/../specs/security/standard-names.html#certpathvalidator-algorithms">
+   Java Security Standard Algorithm Names Specification
   </a>  for information about standard algorithm names.
  @return a <code>CertPathValidator</code> object that implements the
-           specified algorithm.
- @throw NoSuchAlgorithmExceptionif no Provider supports a
-           CertPathValidatorSpi implementation for the
-           specified algorithm.
+          specified algorithm
+ @throw NoSuchAlgorithmExceptionif no <code>Provider</code> supports a
+          <code>CertPathValidatorSpi</code> implementation for the
+          specified algorithm
+ @throw NullPointerExceptionif <code>algorithm</code> is <code>null</code>
  - seealso: java.security.Provider
  */
 + (JavaSecurityCertCertPathValidator *)getInstanceWithNSString:(NSString *)algorithm;
@@ -156,17 +146,18 @@
   object is returned.  Note that the specified Provider object
   does not have to be registered in the provider list.
  @param algorithm the name of the requested <code>CertPathValidator</code>  algorithm. See the CertPathValidator section in the 
-  <a href="{@@docRoot}/../technotes/guides/security/StandardNames.html#CertPathValidator">
-   Java Cryptography Architecture Standard Algorithm Name Documentation
+  <a href="{@@docRoot}/../specs/security/standard-names.html#certpathvalidator-algorithms">
+   Java Security Standard Algorithm Names Specification
   </a>  for information about standard algorithm names.
  @param provider the provider.
  @return a <code>CertPathValidator</code> object that implements the
-           specified algorithm.
- @throw NoSuchAlgorithmExceptionif a CertPathValidatorSpi
-           implementation for the specified algorithm is not available
-           from the specified Provider object.
+           specified algorithm
  @throw IllegalArgumentExceptionif the <code>provider</code> is
-           null.
+          <code>null</code>
+ @throw NoSuchAlgorithmExceptionif a <code>CertPathValidatorSpi</code>
+          implementation for the specified algorithm is not available
+          from the specified Provider object
+ @throw NullPointerExceptionif <code>algorithm</code> is <code>null</code>
  - seealso: java.security.Provider
  */
 + (JavaSecurityCertCertPathValidator *)getInstanceWithNSString:(NSString *)algorithm
@@ -181,20 +172,21 @@
   in the security provider list. 
  <p> Note that the list of registered providers may be retrieved via the 
  <code>Security.getProviders()</code> method.
- @param algorithm the name of the requested <code>CertPathValidator</code>   algorithm. See the CertPathValidator section in the 
-  <a href="{@@docRoot}/../technotes/guides/security/StandardNames.html#CertPathValidator">
-   Java Cryptography Architecture Standard Algorithm Name Documentation
+ @param algorithm the name of the requested <code>CertPathValidator</code>  algorithm. See the CertPathValidator section in the 
+  <a href="{@@docRoot}/../specs/security/standard-names.html#certpathvalidator-algorithms">
+   Java Security Standard Algorithm Names Specification
   </a>  for information about standard algorithm names.
  @param provider the name of the provider.
  @return a <code>CertPathValidator</code> object that implements the
-           specified algorithm.
- @throw NoSuchAlgorithmExceptionif a CertPathValidatorSpi
-           implementation for the specified algorithm is not
-           available from the specified provider.
- @throw NoSuchProviderExceptionif the specified provider is not
-           registered in the security provider list.
+          specified algorithm
  @throw IllegalArgumentExceptionif the <code>provider</code> is
-           null or empty.
+          <code>null</code> or empty
+ @throw NoSuchAlgorithmExceptionif a <code>CertPathValidatorSpi</code>
+          implementation for the specified algorithm is not
+          available from the specified provider
+ @throw NoSuchProviderExceptionif the specified provider is not
+          registered in the security provider list
+ @throw NullPointerExceptionif <code>algorithm</code> is <code>null</code>
  - seealso: java.security.Provider
  */
 + (JavaSecurityCertCertPathValidator *)getInstanceWithNSString:(NSString *)algorithm
@@ -289,6 +281,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaSecurityCertCertPathValidator)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaSecurityCertCertPathValidator")

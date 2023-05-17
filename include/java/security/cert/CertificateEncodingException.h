@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaSecurityCertCertificateEncodingException
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -35,6 +32,7 @@
  @brief Certificate Encoding Exception.This is thrown whenever an error
   occurs while attempting to encode a certificate.
  @author Hemma Prafullchandra
+ @since 1.2
  */
 @interface JavaSecurityCertCertificateEncodingException : JavaSecurityCertCertificateException
 
@@ -116,6 +114,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaSecurityCertCertificateEncodingException)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaSecurityCertCertificateEncodingException")

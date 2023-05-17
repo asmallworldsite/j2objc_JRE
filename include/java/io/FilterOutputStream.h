@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaIoFilterOutputStream
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -30,6 +27,7 @@
 #include "java/io/OutputStream.h"
 
 @class IOSByteArray;
+@class JavaLangInteger;
 
 /*!
  @brief This class is the superclass of all classes that filter output
@@ -44,7 +42,7 @@
  <code>FilterOutputStream</code> may further override some of these
   methods as well as provide additional methods and fields.
  @author Jonathan Payne
- @since JDK1.0
+ @since 1.0
  */
 @interface JavaIoFilterOutputStream : JavaIoOutputStream {
  @public
@@ -60,7 +58,7 @@
  @brief Creates an output stream filter built on top of the specified
   underlying output stream.
  @param outArg the underlying output stream to be assigned to                 the field 
-  <tt> this.out </tt>  for later use, or                 
+ <code>this.out</code>  for later use, or                 
   <code> null </code>  if this instance is to be                 created without an underlying stream.
  */
 - (instancetype __nonnull)initWithJavaIoOutputStream:(JavaIoOutputStream *)outArg;
@@ -69,9 +67,9 @@
  @brief Closes this output stream and releases any system resources
   associated with the stream.
  <p>
-  The <code>close</code> method of <code>FilterOutputStream</code>
-  calls its <code>flush</code> method, and then calls the 
- <code>close</code> method of its underlying output stream.
+  When not already closed, the <code>close</code> method of <code>FilterOutputStream</code>
+  calls its <code>flush</code> method, and then
+  calls the <code>close</code> method of its underlying output stream.
  @throw IOExceptionif an I/O error occurs.
  - seealso: java.io.FilterOutputStream#flush()
  - seealso: java.io.FilterOutputStream#out
@@ -98,8 +96,8 @@
  <code>b.length</code>.
   <p>
   Note that this method does not call the one-argument 
- <code>write</code> method of its underlying stream with the single
-  argument <code>b</code>.
+ <code>write</code> method of its underlying output stream with
+  the single argument <code>b</code>.
  @param b the data to be written.
  @throw IOExceptionif an I/O error occurs.
  - seealso: java.io.FilterOutputStream#write(byte[], int, int)
@@ -116,7 +114,7 @@
  <code>byte</code> to output. 
  <p>
   Note that this method does not call the <code>write</code> method
-  of its underlying input stream with the same arguments. Subclasses of 
+  of its underlying output stream with the same arguments. Subclasses of 
  <code>FilterOutputStream</code> should provide a more efficient
   implementation of this method.
  @param b the data.
@@ -134,9 +132,9 @@
  <p>
   The <code>write</code> method of <code>FilterOutputStream</code>
   calls the <code>write</code> method of its underlying output stream,
-  that is, it performs <tt>out.write(b)</tt>.
+  that is, it performs <code>out.write(b)</code>.
   <p>
-  Implements the abstract <tt>write</tt> method of <tt>OutputStream</tt>.
+  Implements the abstract <code>write</code> method of <code>OutputStream</code>.
  @param b the  <code> byte </code> .
  @throw IOExceptionif an I/O error occurs.
  */
@@ -166,6 +164,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaIoFilterOutputStream)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaIoFilterOutputStream")

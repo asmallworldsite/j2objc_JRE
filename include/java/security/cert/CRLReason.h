@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaSecurityCertCRLReason
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -31,7 +28,7 @@
 
 @class IOSObjectArray;
 
-typedef NS_ENUM(NSUInteger, JavaSecurityCertCRLReason_Enum) {
+typedef NS_ENUM(jint, JavaSecurityCertCRLReason_Enum) {
   JavaSecurityCertCRLReason_Enum_UNSPECIFIED = 0,
   JavaSecurityCertCRLReason_Enum_KEY_COMPROMISE = 1,
   JavaSecurityCertCRLReason_Enum_CA_COMPROMISE = 2,
@@ -44,11 +41,17 @@ typedef NS_ENUM(NSUInteger, JavaSecurityCertCRLReason_Enum) {
   JavaSecurityCertCRLReason_Enum_PRIVILEGE_WITHDRAWN = 9,
   JavaSecurityCertCRLReason_Enum_AA_COMPROMISE = 10,
 };
+#if J2OBJC_IMPORTED_BY_JAVA_IMPLEMENTATION
+#define JavaSecurityCertCRLReason_ORDINAL jint
+#else
+#define JavaSecurityCertCRLReason_ORDINAL JavaSecurityCertCRLReason_Enum
+#endif
+
 
 /*!
  @brief The CRLReason enumeration specifies the reason that a certificate
-  is revoked, as defined in <a href="http://www.ietf.org/rfc/rfc3280.txt">
-  RFC 3280: Internet X.509 Public Key Infrastructure Certificate and CRL
+  is revoked, as defined in <a href="http://tools.ietf.org/html/rfc5280">
+  RFC 5280: Internet X.509 Public Key Infrastructure Certificate and CRL
   Profile</a>.
  @author Sean Mullan
  @since 1.7
@@ -57,17 +60,6 @@ typedef NS_ENUM(NSUInteger, JavaSecurityCertCRLReason_Enum) {
  */
 @interface JavaSecurityCertCRLReason : JavaLangEnum
 
-@property (readonly, class, nonnull) JavaSecurityCertCRLReason *UNSPECIFIED NS_SWIFT_NAME(UNSPECIFIED);
-@property (readonly, class, nonnull) JavaSecurityCertCRLReason *KEY_COMPROMISE NS_SWIFT_NAME(KEY_COMPROMISE);
-@property (readonly, class, nonnull) JavaSecurityCertCRLReason *CA_COMPROMISE NS_SWIFT_NAME(CA_COMPROMISE);
-@property (readonly, class, nonnull) JavaSecurityCertCRLReason *AFFILIATION_CHANGED NS_SWIFT_NAME(AFFILIATION_CHANGED);
-@property (readonly, class, nonnull) JavaSecurityCertCRLReason *SUPERSEDED NS_SWIFT_NAME(SUPERSEDED);
-@property (readonly, class, nonnull) JavaSecurityCertCRLReason *CESSATION_OF_OPERATION NS_SWIFT_NAME(CESSATION_OF_OPERATION);
-@property (readonly, class, nonnull) JavaSecurityCertCRLReason *CERTIFICATE_HOLD NS_SWIFT_NAME(CERTIFICATE_HOLD);
-@property (readonly, class, nonnull) JavaSecurityCertCRLReason *UNUSED NS_SWIFT_NAME(UNUSED);
-@property (readonly, class, nonnull) JavaSecurityCertCRLReason *REMOVE_FROM_CRL NS_SWIFT_NAME(REMOVE_FROM_CRL);
-@property (readonly, class, nonnull) JavaSecurityCertCRLReason *PRIVILEGE_WITHDRAWN NS_SWIFT_NAME(PRIVILEGE_WITHDRAWN);
-@property (readonly, class, nonnull) JavaSecurityCertCRLReason *AA_COMPROMISE NS_SWIFT_NAME(AA_COMPROMISE);
 #pragma mark Public
 
 + (JavaSecurityCertCRLReason *)valueOfWithNSString:(NSString *)name;
@@ -77,6 +69,8 @@ typedef NS_ENUM(NSUInteger, JavaSecurityCertCRLReason_Enum) {
 #pragma mark Package-Private
 
 - (JavaSecurityCertCRLReason_Enum)toNSEnum;
+
+- (JavaSecurityCertCRLReason_ORDINAL)ordinal;
 
 @end
 
@@ -165,7 +159,7 @@ FOUNDATION_EXPORT IOSObjectArray *JavaSecurityCertCRLReason_values(void);
 
 FOUNDATION_EXPORT JavaSecurityCertCRLReason *JavaSecurityCertCRLReason_valueOfWithNSString_(NSString *name);
 
-FOUNDATION_EXPORT JavaSecurityCertCRLReason *JavaSecurityCertCRLReason_fromOrdinal(NSUInteger ordinal);
+FOUNDATION_EXPORT JavaSecurityCertCRLReason *JavaSecurityCertCRLReason_fromOrdinal(JavaSecurityCertCRLReason_ORDINAL ordinal);
 
 J2OBJC_TYPE_LITERAL_HEADER(JavaSecurityCertCRLReason)
 
@@ -175,6 +169,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaSecurityCertCRLReason)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaSecurityCertCRLReason")

@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaSecuritySpecPSSParameterSpec
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -28,6 +25,8 @@
 #define RESTRICT_JavaSecuritySpecAlgorithmParameterSpec 1
 #define INCLUDE_JavaSecuritySpecAlgorithmParameterSpec 1
 #include "java/security/spec/AlgorithmParameterSpec.h"
+
+@class JavaLangInteger;
 
 /*!
  @brief This class specifies a parameter spec for RSA-PSS signature scheme,
@@ -75,7 +74,6 @@
  @since 1.4
  */
 @interface JavaSecuritySpecPSSParameterSpec : NSObject < JavaSecuritySpecAlgorithmParameterSpec >
-@property (readonly, class, strong) JavaSecuritySpecPSSParameterSpec *DEFAULT NS_SWIFT_NAME(DEFAULT);
 
 #pragma mark Public
 
@@ -179,6 +177,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaSecuritySpecPSSParameterSpec)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaSecuritySpecPSSParameterSpec")

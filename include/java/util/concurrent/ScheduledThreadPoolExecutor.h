@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaUtilConcurrentScheduledThreadPoolExecutor
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -33,6 +30,9 @@
 #define INCLUDE_JavaUtilConcurrentScheduledExecutorService 1
 #include "java/util/concurrent/ScheduledExecutorService.h"
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
+@class JavaLangLong;
 @class JavaUtilConcurrentTimeUnit;
 @protocol JavaLangRunnable;
 @protocol JavaUtilConcurrentBlockingQueue;
@@ -76,6 +76,10 @@
   is almost never a good idea to set <code>corePoolSize</code> to zero or
   use <code>allowCoreThreadTimeOut</code> because this may leave the pool
   without threads to handle tasks once they become eligible to run. 
+ <p>As with <code>ThreadPoolExecutor</code>, if not otherwise specified,
+  this class uses <code>Executors.defaultThreadFactory</code> as the
+  default thread factory, and <code>ThreadPoolExecutor.AbortPolicy</code>
+  as the default rejected execution handler. 
  <p><b>Extension notes:</b> This class overrides the 
  <code>execute</code> and 
  <code>submit</code>
@@ -192,9 +196,8 @@ withJavaUtilConcurrentRejectedExecutionHandler:(id<JavaUtilConcurrentRejectedExe
 /*!
  @brief Gets the policy on whether to continue executing existing
   periodic tasks even when this executor has been <code>shutdown</code>.
- In this case, these tasks will only terminate upon 
- <code>shutdownNow</code> or after setting the policy to 
- <code>false</code> when already shutdown.
+ In this case, executions will continue until <code>shutdownNow</code>
+  or the policy is set to <code>false</code> when already shutdown.
   This value is by default <code>false</code>.
  @return <code>true</code> if will continue after shutdown
  - seealso: #setContinueExistingPeriodicTasksAfterShutdownPolicy
@@ -258,6 +261,32 @@ withJavaUtilConcurrentRejectedExecutionHandler:(id<JavaUtilConcurrentRejectedExe
                                        withJavaUtilConcurrentTimeUnit:(JavaUtilConcurrentTimeUnit *)unit;
 
 /*!
+ @brief Submits a periodic action that becomes enabled first after the
+  given initial delay, and subsequently with the given period;
+  that is, executions will commence after 
+ <code>initialDelay</code>, then <code>initialDelay + period</code>, then 
+ <code>initialDelay + 2 * period</code>, and so on.
+ <p>The sequence of task executions continues indefinitely until
+  one of the following exceptional completions occur: 
+ <ul>
+  <li>The task is explicitly cancelled
+  via the returned future. 
+ <li>Method <code>shutdown</code> is called and the policy on
+  whether to continue after shutdown
+  is not set true, or method 
+ <code>shutdownNow</code> is called; also resulting in task
+  cancellation. 
+ <li>An execution of the task throws an exception.  In this case
+  calling <code>get</code> on the returned future will throw 
+ <code>ExecutionException</code>, holding the exception as its cause. 
+ </ul>
+  Subsequent executions are suppressed.  Subsequent calls to 
+ <code>isDone()</code> on the returned future will
+  return <code>true</code>.
+  
+ <p>If any execution of this task takes longer than its period, then
+  subsequent executions may start late, but will not concurrently
+  execute.
  @throw RejectedExecutionException
  @throw NullPointerException
  @throw IllegalArgumentException
@@ -268,6 +297,27 @@ withJavaUtilConcurrentRejectedExecutionHandler:(id<JavaUtilConcurrentRejectedExe
                                                   withJavaUtilConcurrentTimeUnit:(JavaUtilConcurrentTimeUnit *)unit;
 
 /*!
+ @brief Submits a periodic action that becomes enabled first after the
+  given initial delay, and subsequently with the given delay
+  between the termination of one execution and the commencement of
+  the next.
+ <p>The sequence of task executions continues indefinitely until
+  one of the following exceptional completions occur: 
+ <ul>
+  <li>The task is explicitly cancelled
+  via the returned future. 
+ <li>Method <code>shutdown</code> is called and the policy on
+  whether to continue after shutdown
+  is not set true, or method 
+ <code>shutdownNow</code> is called; also resulting in task
+  cancellation. 
+ <li>An execution of the task throws an exception.  In this case
+  calling <code>get</code> on the returned future will throw 
+ <code>ExecutionException</code>, holding the exception as its cause. 
+ </ul>
+  Subsequent executions are suppressed.  Subsequent calls to 
+ <code>isDone()</code> on the returned future will
+  return <code>true</code>.
  @throw RejectedExecutionException
  @throw NullPointerException
  @throw IllegalArgumentException
@@ -280,9 +330,8 @@ withJavaUtilConcurrentRejectedExecutionHandler:(id<JavaUtilConcurrentRejectedExe
 /*!
  @brief Sets the policy on whether to continue executing existing
   periodic tasks even when this executor has been <code>shutdown</code>.
- In this case, these tasks will only terminate upon 
- <code>shutdownNow</code> or after setting the policy to 
- <code>false</code> when already shutdown.
+ In this case, executions will continue until <code>shutdownNow</code>
+  or the policy is set to <code>false</code> when already shutdown.
   This value is by default <code>false</code>.
  @param value if <code>true</code> , continue after shutdown, else don't
  - seealso: #getContinueExistingPeriodicTasksAfterShutdownPolicy
@@ -406,6 +455,12 @@ withJavaUtilConcurrentRejectedExecutionHandler:(id<JavaUtilConcurrentRejectedExe
 - (jboolean)canRunInCurrentRunStateWithBoolean:(jboolean)periodic;
 
 /*!
+ @brief Returns true if can run a task given current run state and
+  run-after-shutdown parameters.
+ */
+- (jboolean)canRunInCurrentRunStateWithJavaUtilConcurrentRunnableScheduledFuture:(id<JavaUtilConcurrentRunnableScheduledFuture>)task;
+
+/*!
  @brief Cancels and clears the queue of all tasks that should not be run
   due to shutdown policy.Invoked within super.shutdown.
  */
@@ -497,6 +552,9 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentScheduledThreadPoolExecutor)
 #include "java/util/concurrent/BlockingQueue.h"
 
 @class IOSObjectArray;
+@class JavaLangBoolean;
+@class JavaLangInteger;
+@class JavaLangLong;
 @class JavaUtilConcurrentTimeUnit;
 @protocol JavaLangRunnable;
 @protocol JavaUtilCollection;
@@ -580,6 +638,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentScheduledThreadPoolExecutor_Delayed
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaUtilConcurrentScheduledThreadPoolExecutor")

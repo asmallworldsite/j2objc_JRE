@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaUtilSimpleTimeZone
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -30,6 +27,9 @@
 #include "java/util/TimeZone.h"
 
 @class IOSIntArray;
+@class JavaLangBoolean;
+@class JavaLangInteger;
+@class JavaLangLong;
 @class JavaUtilDate;
 
 /*!
@@ -132,11 +132,6 @@
  @author David Goldsmith, Mark Davis, Chen-Lieh Huang, Alan Liu
  */
 @interface JavaUtilSimpleTimeZone : JavaUtilTimeZone
-@property (readonly, class) jint WALL_TIME NS_SWIFT_NAME(WALL_TIME);
-@property (readonly, class) jint STANDARD_TIME NS_SWIFT_NAME(STANDARD_TIME);
-@property (readonly, class) jint UTC_TIME NS_SWIFT_NAME(UTC_TIME);
-@property (readonly, class) jlong serialVersionUID NS_SWIFT_NAME(serialVersionUID);
-@property (readonly, class) jint currentSerialVersion NS_SWIFT_NAME(currentSerialVersion);
 
 #pragma mark Public
 
@@ -654,6 +649,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilSimpleTimeZone)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaUtilSimpleTimeZone")

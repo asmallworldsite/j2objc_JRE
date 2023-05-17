@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaxNetSslSNIServerName
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -26,6 +23,8 @@
 #define JavaxNetSslSNIServerName_
 
 @class IOSByteArray;
+@class JavaLangBoolean;
+@class JavaLangInteger;
 
 /*!
  @brief Instances of this class represent a server name in a Server Name
@@ -149,6 +148,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaxNetSslSNIServerName)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaxNetSslSNIServerName")

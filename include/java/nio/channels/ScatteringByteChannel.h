@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaNioChannelsScatteringByteChannel
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -30,6 +27,8 @@
 #include "java/nio/channels/ReadableByteChannel.h"
 
 @class IOSObjectArray;
+@class JavaLangInteger;
+@class JavaLangLong;
 
 /*!
  @brief A channel that can read bytes into a sequence of buffers.
@@ -146,6 +145,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaNioChannelsScatteringByteChannel)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaNioChannelsScatteringByteChannel")

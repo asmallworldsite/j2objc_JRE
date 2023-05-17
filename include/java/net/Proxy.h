@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaNetProxy
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -25,6 +22,8 @@
 #if !defined (JavaNetProxy_) && (INCLUDE_ALL_JavaNetProxy || defined(INCLUDE_JavaNetProxy))
 #define JavaNetProxy_
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @class JavaNetProxy_Type;
 @class JavaNetSocketAddress;
 
@@ -38,7 +37,6 @@
  @since 1.5
  */
 @interface JavaNetProxy : NSObject
-@property (readonly, class, strong) JavaNetProxy *NO_PROXY NS_SWIFT_NAME(NO_PROXY);
 
 #pragma mark Public
 
@@ -137,11 +135,17 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaNetProxy)
 
 @class IOSObjectArray;
 
-typedef NS_ENUM(NSUInteger, JavaNetProxy_Type_Enum) {
+typedef NS_ENUM(jint, JavaNetProxy_Type_Enum) {
   JavaNetProxy_Type_Enum_DIRECT = 0,
   JavaNetProxy_Type_Enum_HTTP = 1,
   JavaNetProxy_Type_Enum_SOCKS = 2,
 };
+#if J2OBJC_IMPORTED_BY_JAVA_IMPLEMENTATION
+#define JavaNetProxy_Type_ORDINAL jint
+#else
+#define JavaNetProxy_Type_ORDINAL JavaNetProxy_Type_Enum
+#endif
+
 
 /*!
  @brief Represents the proxy type.
@@ -149,9 +153,6 @@ typedef NS_ENUM(NSUInteger, JavaNetProxy_Type_Enum) {
  */
 @interface JavaNetProxy_Type : JavaLangEnum
 
-@property (readonly, class, nonnull) JavaNetProxy_Type *DIRECT NS_SWIFT_NAME(DIRECT);
-@property (readonly, class, nonnull) JavaNetProxy_Type *HTTP NS_SWIFT_NAME(HTTP);
-@property (readonly, class, nonnull) JavaNetProxy_Type *SOCKS NS_SWIFT_NAME(SOCKS);
 #pragma mark Public
 
 + (JavaNetProxy_Type *)valueOfWithNSString:(NSString *)name;
@@ -161,6 +162,8 @@ typedef NS_ENUM(NSUInteger, JavaNetProxy_Type_Enum) {
 #pragma mark Package-Private
 
 - (JavaNetProxy_Type_Enum)toNSEnum;
+
+- (JavaNetProxy_Type_ORDINAL)ordinal;
 
 @end
 
@@ -191,7 +194,7 @@ FOUNDATION_EXPORT IOSObjectArray *JavaNetProxy_Type_values(void);
 
 FOUNDATION_EXPORT JavaNetProxy_Type *JavaNetProxy_Type_valueOfWithNSString_(NSString *name);
 
-FOUNDATION_EXPORT JavaNetProxy_Type *JavaNetProxy_Type_fromOrdinal(NSUInteger ordinal);
+FOUNDATION_EXPORT JavaNetProxy_Type *JavaNetProxy_Type_fromOrdinal(JavaNetProxy_Type_ORDINAL ordinal);
 
 J2OBJC_TYPE_LITERAL_HEADER(JavaNetProxy_Type)
 
@@ -201,6 +204,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaNetProxy_Type)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaNetProxy")

@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaNioFileAttributeFileOwnerAttributeView
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -56,7 +53,7 @@
 
 /*!
  @brief Read the file owner.
- <p> It it implementation specific if the file owner can be a <code>group</code>
+ <p> It is implementation specific if the file owner can be a <code>group</code>
  .
  @return the file owner
  @throw IOException
@@ -64,7 +61,7 @@
  @throw SecurityException
  In the case of the default provider, a security manager is
            installed, and it denies <code>RuntimePermission</code>
- <tt>("accessUserInformation")</tt> or its
+ <code>("accessUserInformation")</code> or its
            <code>checkRead</code> method
            denies read access to the file.
  */
@@ -72,7 +69,7 @@
 
 /*!
  @brief Updates the file owner.
- <p> It it implementation specific if the file owner can be a <code>group</code>
+ <p> It is implementation specific if the file owner can be a <code>group</code>
  . To ensure consistent and correct behavior
   across platforms it is recommended that this method should only be used
   to set the file owner to a user principal that is not a group.
@@ -84,7 +81,7 @@
  @throw SecurityException
  In the case of the default provider, a security manager is
            installed, and it denies <code>RuntimePermission</code>
- <tt>("accessUserInformation")</tt> or its
+ <code>("accessUserInformation")</code> or its
            <code>checkWrite</code> method
            denies write access to the file.
  */
@@ -102,6 +99,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaNioFileAttributeFileOwnerAttributeView)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaNioFileAttributeFileOwnerAttributeView")

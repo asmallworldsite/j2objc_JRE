@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaUtilConcurrentCopyOnWriteArraySet
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -34,6 +31,8 @@
 #include "java/io/Serializable.h"
 
 @class IOSObjectArray;
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @protocol JavaUtilCollection;
 @protocol JavaUtilFunctionConsumer;
 @protocol JavaUtilFunctionPredicate;
@@ -41,7 +40,7 @@
 @protocol JavaUtilSpliterator;
 
 /*!
- @brief A <code>java.util.Set</code> that uses an internal <code>CopyOnWriteArrayList</code>
+ @brief A <code>Set</code> that uses an internal <code>CopyOnWriteArrayList</code>
   for all of its operations.Thus, it shares the same basic properties: 
  <ul>
    <li>It is best suited for applications in which set sizes generally
@@ -77,6 +76,10 @@
     }  }
  
 @endcode
+  
+ <p>This class is a member of the 
+ <a href="{@@docRoot}/java.base/java/util/package-summary.html#CollectionsFramework">
+  Java Collections Framework</a>.
  - seealso: CopyOnWriteArrayList
  @since 1.5
  @author Doug Lea
@@ -170,6 +173,9 @@
  */
 - (jboolean)isEqual:(id)o;
 
+/*!
+ @throw NullPointerException
+ */
 - (void)forEachWithJavaUtilFunctionConsumer:(id<JavaUtilFunctionConsumer>)action;
 
 /*!
@@ -210,15 +216,18 @@
  @return <code>true</code> if this set changed as a result of the call
  @throw ClassCastExceptionif the class of an element of this set
           is incompatible with the specified collection
-  (<a href="../Collection.html#optional-restrictions">optional</a>)
+  (<a href="{@@docRoot}/java.base/java/util/Collection.html#optional-restrictions">optional</a>)
  @throw NullPointerExceptionif this set contains a null element and the
           specified collection does not permit null elements
-  (<a href="../Collection.html#optional-restrictions">optional</a>),
+  (<a href="{@@docRoot}/java.base/java/util/Collection.html#optional-restrictions">optional</a>),
           or if the specified collection is null
  - seealso: #remove(Object)
  */
 - (jboolean)removeAllWithJavaUtilCollection:(id<JavaUtilCollection>)c;
 
+/*!
+ @throw NullPointerException
+ */
 - (jboolean)removeIfWithJavaUtilFunctionPredicate:(id<JavaUtilFunctionPredicate>)filter;
 
 /*!
@@ -233,10 +242,10 @@
  @return <code>true</code> if this set changed as a result of the call
  @throw ClassCastExceptionif the class of an element of this set
           is incompatible with the specified collection
-  (<a href="../Collection.html#optional-restrictions">optional</a>)
+  (<a href="{@@docRoot}/java.base/java/util/Collection.html#optional-restrictions">optional</a>)
  @throw NullPointerExceptionif this set contains a null element and the
           specified collection does not permit null elements
-  (<a href="../Collection.html#optional-restrictions">optional</a>),
+  (<a href="{@@docRoot}/java.base/java/util/Collection.html#optional-restrictions">optional</a>),
           or if the specified collection is null
  - seealso: #remove(Object)
  */
@@ -342,6 +351,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilConcurrentCopyOnWriteArraySet)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaUtilConcurrentCopyOnWriteArraySet")

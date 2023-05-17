@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_AndroidIcuUtilCalendar
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -40,6 +37,9 @@
 @class AndroidIcuUtilULocale_Type;
 @class IOSIntArray;
 @class IOSObjectArray;
+@class JavaLangBoolean;
+@class JavaLangInteger;
+@class JavaLangLong;
 @class JavaUtilDate;
 @class JavaUtilLocale;
 
@@ -612,84 +612,6 @@ Calendar cal = Calendar.getInstance(new ULocale("en_US@@calendar=japanese"));
  @author Mark Davis, Deborah Goldsmith, Chen-Lieh Huang, Alan Liu, Laura Werner
  */
 @interface AndroidIcuUtilCalendar : NSObject < JavaIoSerializable, NSCopying, JavaLangComparable >
-@property (readonly, class) jint ERA NS_SWIFT_NAME(ERA);
-@property (readonly, class) jint YEAR NS_SWIFT_NAME(YEAR);
-@property (readonly, class) jint MONTH NS_SWIFT_NAME(MONTH);
-@property (readonly, class) jint WEEK_OF_YEAR NS_SWIFT_NAME(WEEK_OF_YEAR);
-@property (readonly, class) jint WEEK_OF_MONTH NS_SWIFT_NAME(WEEK_OF_MONTH);
-@property (readonly, class) jint DATE NS_SWIFT_NAME(DATE);
-@property (readonly, class) jint DAY_OF_MONTH NS_SWIFT_NAME(DAY_OF_MONTH);
-@property (readonly, class) jint DAY_OF_YEAR NS_SWIFT_NAME(DAY_OF_YEAR);
-@property (readonly, class) jint DAY_OF_WEEK NS_SWIFT_NAME(DAY_OF_WEEK);
-@property (readonly, class) jint DAY_OF_WEEK_IN_MONTH NS_SWIFT_NAME(DAY_OF_WEEK_IN_MONTH);
-@property (readonly, class) jint AM_PM NS_SWIFT_NAME(AM_PM);
-@property (readonly, class) jint HOUR NS_SWIFT_NAME(HOUR);
-@property (readonly, class) jint HOUR_OF_DAY NS_SWIFT_NAME(HOUR_OF_DAY);
-@property (readonly, class) jint MINUTE NS_SWIFT_NAME(MINUTE);
-@property (readonly, class) jint SECOND NS_SWIFT_NAME(SECOND);
-@property (readonly, class) jint MILLISECOND NS_SWIFT_NAME(MILLISECOND);
-@property (readonly, class) jint ZONE_OFFSET NS_SWIFT_NAME(ZONE_OFFSET);
-@property (readonly, class) jint DST_OFFSET NS_SWIFT_NAME(DST_OFFSET);
-@property (readonly, class) jint YEAR_WOY NS_SWIFT_NAME(YEAR_WOY);
-@property (readonly, class) jint DOW_LOCAL NS_SWIFT_NAME(DOW_LOCAL);
-@property (readonly, class) jint EXTENDED_YEAR NS_SWIFT_NAME(EXTENDED_YEAR);
-@property (readonly, class) jint JULIAN_DAY NS_SWIFT_NAME(JULIAN_DAY);
-@property (readonly, class) jint MILLISECONDS_IN_DAY NS_SWIFT_NAME(MILLISECONDS_IN_DAY);
-@property (readonly, class) jint IS_LEAP_MONTH NS_SWIFT_NAME(IS_LEAP_MONTH);
-@property (readonly, class) jint BASE_FIELD_COUNT NS_SWIFT_NAME(BASE_FIELD_COUNT);
-@property (readonly, class) jint MAX_FIELD_COUNT NS_SWIFT_NAME(MAX_FIELD_COUNT);
-@property (readonly, class) jint SUNDAY NS_SWIFT_NAME(SUNDAY);
-@property (readonly, class) jint MONDAY NS_SWIFT_NAME(MONDAY);
-@property (readonly, class) jint TUESDAY NS_SWIFT_NAME(TUESDAY);
-@property (readonly, class) jint WEDNESDAY NS_SWIFT_NAME(WEDNESDAY);
-@property (readonly, class) jint THURSDAY NS_SWIFT_NAME(THURSDAY);
-@property (readonly, class) jint FRIDAY NS_SWIFT_NAME(FRIDAY);
-@property (readonly, class) jint SATURDAY NS_SWIFT_NAME(SATURDAY);
-@property (readonly, class) jint JANUARY NS_SWIFT_NAME(JANUARY);
-@property (readonly, class) jint FEBRUARY NS_SWIFT_NAME(FEBRUARY);
-@property (readonly, class) jint MARCH NS_SWIFT_NAME(MARCH);
-@property (readonly, class) jint APRIL NS_SWIFT_NAME(APRIL);
-@property (readonly, class) jint MAY NS_SWIFT_NAME(MAY);
-@property (readonly, class) jint JUNE NS_SWIFT_NAME(JUNE);
-@property (readonly, class) jint JULY NS_SWIFT_NAME(JULY);
-@property (readonly, class) jint AUGUST NS_SWIFT_NAME(AUGUST);
-@property (readonly, class) jint SEPTEMBER NS_SWIFT_NAME(SEPTEMBER);
-@property (readonly, class) jint OCTOBER NS_SWIFT_NAME(OCTOBER);
-@property (readonly, class) jint NOVEMBER NS_SWIFT_NAME(NOVEMBER);
-@property (readonly, class) jint DECEMBER NS_SWIFT_NAME(DECEMBER);
-@property (readonly, class) jint UNDECIMBER NS_SWIFT_NAME(UNDECIMBER);
-@property (readonly, class) jint AM NS_SWIFT_NAME(AM);
-@property (readonly, class) jint PM NS_SWIFT_NAME(PM);
-@property (readonly, class) jint WEEKDAY NS_SWIFT_NAME(WEEKDAY);
-@property (readonly, class) jint WEEKEND NS_SWIFT_NAME(WEEKEND);
-@property (readonly, class) jint WEEKEND_ONSET NS_SWIFT_NAME(WEEKEND_ONSET);
-@property (readonly, class) jint WEEKEND_CEASE NS_SWIFT_NAME(WEEKEND_CEASE);
-@property (readonly, class) jint WALLTIME_LAST NS_SWIFT_NAME(WALLTIME_LAST);
-@property (readonly, class) jint WALLTIME_FIRST NS_SWIFT_NAME(WALLTIME_FIRST);
-@property (readonly, class) jint WALLTIME_NEXT_VALID NS_SWIFT_NAME(WALLTIME_NEXT_VALID);
-@property (readonly, class) jint ONE_SECOND NS_SWIFT_NAME(ONE_SECOND);
-@property (readonly, class) jint ONE_MINUTE NS_SWIFT_NAME(ONE_MINUTE);
-@property (readonly, class) jint ONE_HOUR NS_SWIFT_NAME(ONE_HOUR);
-@property (readonly, class) jlong ONE_DAY NS_SWIFT_NAME(ONE_DAY);
-@property (readonly, class) jlong ONE_WEEK NS_SWIFT_NAME(ONE_WEEK);
-@property (readonly, class) jint JAN_1_1_JULIAN_DAY NS_SWIFT_NAME(JAN_1_1_JULIAN_DAY);
-@property (readonly, class) jint EPOCH_JULIAN_DAY NS_SWIFT_NAME(EPOCH_JULIAN_DAY);
-@property (readonly, class) jint MIN_JULIAN NS_SWIFT_NAME(MIN_JULIAN);
-@property (readonly, class) jlong MIN_MILLIS NS_SWIFT_NAME(MIN_MILLIS);
-@property (readonly, class, strong) JavaUtilDate *MIN_DATE NS_SWIFT_NAME(MIN_DATE);
-@property (readonly, class) jint MAX_JULIAN NS_SWIFT_NAME(MAX_JULIAN);
-@property (readonly, class) jlong MAX_MILLIS NS_SWIFT_NAME(MAX_MILLIS);
-@property (readonly, class, strong) JavaUtilDate *MAX_DATE NS_SWIFT_NAME(MAX_DATE);
-@property (readonly, class) jint UNSET NS_SWIFT_NAME(UNSET);
-@property (readonly, class) jint INTERNALLY_SET NS_SWIFT_NAME(INTERNALLY_SET);
-@property (readonly, class) jint MINIMUM_USER_STAMP NS_SWIFT_NAME(MINIMUM_USER_STAMP);
-@property (readonly, class) jint MINIMUM NS_SWIFT_NAME(MINIMUM);
-@property (readonly, class) jint GREATEST_MINIMUM NS_SWIFT_NAME(GREATEST_MINIMUM);
-@property (readonly, class) jint LEAST_MAXIMUM NS_SWIFT_NAME(LEAST_MAXIMUM);
-@property (readonly, class) jint MAXIMUM NS_SWIFT_NAME(MAXIMUM);
-@property (readonly, class) jint RESOLVE_REMAP NS_SWIFT_NAME(RESOLVE_REMAP);
-@property (readonly, class, strong) IOSObjectArray *DATE_PRECEDENCE NS_SWIFT_NAME(DATE_PRECEDENCE);
-@property (readonly, class, strong) IOSObjectArray *DOW_PRECEDENCE NS_SWIFT_NAME(DOW_PRECEDENCE);
 
 #pragma mark Public
 
@@ -964,7 +886,7 @@ Calendar cal = Calendar.getInstance(new ULocale("en_US@@calendar=japanese"));
  */
 + (NSString *)getDateTimePatternWithAndroidIcuUtilCalendar:(AndroidIcuUtilCalendar *)cal
                                  withAndroidIcuUtilULocale:(AndroidIcuUtilULocale *)uLocale
-                                                   withInt:(jint)dateStyle __attribute__((deprecated));
+                                                   withInt:(jint)dateStyle;
 
 /*!
  @brief <strong>[icu]</strong> Returns whether the given day of the week is a weekday, a
@@ -991,7 +913,7 @@ Calendar cal = Calendar.getInstance(new ULocale("en_US@@calendar=japanese"));
  - seealso: #isWeekend(Date)
  - seealso: #isWeekend()
  */
-- (jint)getDayOfWeekTypeWithInt:(jint)dayOfWeek __attribute__((deprecated));
+- (jint)getDayOfWeekTypeWithInt:(jint)dayOfWeek;
 
 /*!
  @brief Returns the name of this calendar in the language of the given locale.
@@ -1146,7 +1068,7 @@ Calendar cal = Calendar.getInstance(new ULocale("en_US@@calendar=japanese"));
 
 /*!
  */
-- (jint)getRelatedYear __attribute__((deprecated));
+- (jint)getRelatedYear;
 
 /*!
  @brief <strong>[icu]</strong>Gets the behavior for handling wall time repeating multiple times
@@ -1228,7 +1150,7 @@ Calendar cal = Calendar.getInstance(new ULocale("en_US@@calendar=japanese"));
  - seealso: #isWeekend(Date)
  - seealso: #isWeekend()
  */
-- (jint)getWeekendTransitionWithInt:(jint)dayOfWeek __attribute__((deprecated));
+- (jint)getWeekendTransitionWithInt:(jint)dayOfWeek;
 
 /*!
  @brief Returns a hash code for this calendar.
@@ -1244,7 +1166,7 @@ Calendar cal = Calendar.getInstance(new ULocale("en_US@@calendar=japanese"));
   Chinese calendar and Japanese calendar).
  @return <code>true</code> if this calendar has a default century.
  */
-- (jboolean)haveDefaultCentury __attribute__((deprecated));
+- (jboolean)haveDefaultCentury;
 
 /*!
  @brief <strong>[icu]</strong> Returns true if the given Calendar object is equivalent to this
@@ -1504,7 +1426,7 @@ Calendar cal = Calendar.getInstance(new ULocale("en_US@@calendar=japanese"));
 
 /*!
  */
-- (void)setRelatedYearWithInt:(jint)year __attribute__((deprecated));
+- (void)setRelatedYearWithInt:(jint)year;
 
 /*!
  @brief <strong>[icu]</strong>Sets the behavior for handling wall time repeating multiple times
@@ -1673,7 +1595,7 @@ Calendar cal = Calendar.getInstance(new ULocale("en_US@@calendar=japanese"));
  This value
   reflects local zone wall time.
  */
-- (jint)computeMillisInDay __attribute__((deprecated));
+- (jint)computeMillisInDay;
 
 /*!
  @brief Converts the current field values in <code>fields[]</code> to the
@@ -1688,7 +1610,7 @@ Calendar cal = Calendar.getInstance(new ULocale("en_US@@calendar=japanese"));
  @return total zone offset (raw + DST) for the given moment
  */
 - (jint)computeZoneOffsetWithLong:(jlong)millis
-                          withInt:(jint)millisInDay __attribute__((deprecated));
+                          withInt:(jint)millisInDay;
 
 /*!
  @brief Returns a string name for a field, for debugging and exceptions.
@@ -3154,7 +3076,6 @@ J2OBJC_TYPE_LITERAL_HEADER(AndroidIcuUtilCalendar_PatternData)
   date format configuration and used for calling the ICU private
   SimpleDateFormat factory method.
  */
-__attribute__((deprecated))
 @interface AndroidIcuUtilCalendar_FormatConfiguration : NSObject
 
 #pragma mark Public
@@ -3163,29 +3084,29 @@ __attribute__((deprecated))
  @brief Returns the calendar
  @return the calendar
  */
-- (AndroidIcuUtilCalendar *)getCalendar __attribute__((deprecated));
+- (AndroidIcuUtilCalendar *)getCalendar;
 
 /*!
  @brief Returns the format symbols
  @return the format symbols
  */
-- (AndroidIcuTextDateFormatSymbols *)getDateFormatSymbols __attribute__((deprecated));
+- (AndroidIcuTextDateFormatSymbols *)getDateFormatSymbols;
 
 /*!
  @brief Returns the locale
  @return the locale
  */
-- (AndroidIcuUtilULocale *)getLocale __attribute__((deprecated));
+- (AndroidIcuUtilULocale *)getLocale;
 
 /*!
  */
-- (NSString *)getOverrideString __attribute__((deprecated));
+- (NSString *)getOverrideString;
 
 /*!
  @brief Returns the pattern string
  @return the format pattern string
  */
-- (NSString *)getPatternString __attribute__((deprecated));
+- (NSString *)getPatternString;
 
 @end
 
@@ -3197,6 +3118,9 @@ J2OBJC_TYPE_LITERAL_HEADER(AndroidIcuUtilCalendar_FormatConfiguration)
 
 #if !defined (AndroidIcuUtilCalendar_WeekData_) && (INCLUDE_ALL_AndroidIcuUtilCalendar || defined(INCLUDE_AndroidIcuUtilCalendar_WeekData))
 #define AndroidIcuUtilCalendar_WeekData_
+
+@class JavaLangBoolean;
+@class JavaLangInteger;
 
 /*!
  @brief Simple, immutable struct-like class for access to the CLDR weekend data.
@@ -3282,6 +3206,4 @@ J2OBJC_TYPE_LITERAL_HEADER(AndroidIcuUtilCalendar_WeekData)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_AndroidIcuUtilCalendar")

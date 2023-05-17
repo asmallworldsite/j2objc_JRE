@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_AndroidSystemInt64Ref
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -24,6 +21,8 @@
 
 #if !defined (AndroidSystemInt64Ref_) && (INCLUDE_ALL_AndroidSystemInt64Ref || defined(INCLUDE_AndroidSystemInt64Ref))
 #define AndroidSystemInt64Ref_
+
+@class JavaLangLong;
 
 /*!
  @brief A signed 64bit integer reference suitable for passing to lower-level system calls.
@@ -61,6 +60,4 @@ J2OBJC_TYPE_LITERAL_HEADER(AndroidSystemInt64Ref)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_AndroidSystemInt64Ref")

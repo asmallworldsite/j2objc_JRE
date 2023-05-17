@@ -16,9 +16,6 @@
 #define INCLUDE_JavaLangThreadLocal 1
 #endif
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -28,6 +25,7 @@
 #if !defined (JavaLangThreadLocal_) && (INCLUDE_ALL_JavaLangThreadLocal || defined(INCLUDE_JavaLangThreadLocal))
 #define JavaLangThreadLocal_
 
+@class JavaLangBoolean;
 @class JavaLangThread;
 @class JavaLangThreadLocal_ThreadLocalMap;
 @protocol JavaUtilFunctionSupplier;
@@ -180,6 +178,14 @@
  @return the map
  */
 - (JavaLangThreadLocal_ThreadLocalMap *)getMapWithJavaLangThread:(JavaLangThread *)t;
+
+/*!
+ @brief Returns <code>true</code> if there is a value in the current thread's copy of
+  this thread-local variable, even if that values is <code>null</code>.
+ @return <code>true</code> if current thread has associated value in this
+          thread-local variable; <code>false</code> if not
+ */
+- (jboolean)isPresent;
 
 @end
 
@@ -345,6 +351,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaLangThreadLocal_ThreadLocalMap_Entry)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaLangThreadLocal")

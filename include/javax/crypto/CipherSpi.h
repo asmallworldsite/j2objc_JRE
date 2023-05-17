@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaxCryptoCipherSpi
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -26,6 +23,7 @@
 #define JavaxCryptoCipherSpi_
 
 @class IOSByteArray;
+@class JavaLangInteger;
 @class JavaNioByteBuffer;
 @class JavaSecurityAlgorithmParameters;
 @class JavaSecuritySecureRandom;
@@ -61,9 +59,8 @@
   provider-specific default values for the mode and padding scheme are used).
   For example, the following is a valid transformation: 
  @code
-
-      Cipher c = Cipher.getInstance("<i>DES/CBC/PKCS5Padding</i>");
-   
+     Cipher c = Cipher.getInstance("DES/CBC/PKCS5Padding"); 
+ 
 @endcode
   
  <p>A provider may supply a separate class for each combination
@@ -790,6 +787,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaxCryptoCipherSpi)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaxCryptoCipherSpi")

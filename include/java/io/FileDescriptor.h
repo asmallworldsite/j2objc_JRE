@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaIoFileDescriptor
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -24,6 +21,10 @@
 
 #if !defined (JavaIoFileDescriptor_) && (INCLUDE_ALL_JavaIoFileDescriptor || defined(INCLUDE_JavaIoFileDescriptor))
 #define JavaIoFileDescriptor_
+
+@class JavaLangBoolean;
+@class JavaLangInteger;
+@class JavaLangLong;
 
 /*!
  @brief Instances of the file descriptor class serve as an opaque handle
@@ -43,10 +44,6 @@
  @public
   jint descriptor_;
 }
-@property (readonly, class) jlong NO_OWNER NS_SWIFT_NAME(NO_OWNER);
-@property (readonly, class, strong) JavaIoFileDescriptor *in NS_SWIFT_NAME(in);
-@property (readonly, class, strong) JavaIoFileDescriptor *out NS_SWIFT_NAME(out);
-@property (readonly, class, strong) JavaIoFileDescriptor *err NS_SWIFT_NAME(err);
 
 #pragma mark Public
 
@@ -75,6 +72,8 @@
 
 /*!
  @brief Returns a copy of this FileDescriptor, and sets this to an invalid state.
+ The returned instance is not necessarily <code>valid()</code>, if the original FileDescriptor
+  was invalid, or if another thread concurrently calls <code>release$()</code>.
  */
 - (JavaIoFileDescriptor *)release$;
 
@@ -122,8 +121,6 @@
  @since JDK1.1
  */
 - (void)sync;
-
-- (NSString *)description;
 
 /*!
  @brief Tests if this file descriptor object is valid.
@@ -190,6 +187,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaIoFileDescriptor)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaIoFileDescriptor")

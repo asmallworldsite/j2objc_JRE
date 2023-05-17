@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaLangVoid
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -31,11 +28,9 @@
  @brief The <code>Void</code> class is an uninstantiable placeholder class to hold a
   reference to the <code>Class</code> object representing the Java keyword
   void.
- @author unascribed
- @since JDK1.1
+ @since 1.1
  */
 @interface JavaLangVoid : NSObject
-@property (readonly, class, strong) IOSClass *TYPE NS_SWIFT_NAME(TYPE);
 
 @end
 
@@ -58,6 +53,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaLangVoid)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaLangVoid")

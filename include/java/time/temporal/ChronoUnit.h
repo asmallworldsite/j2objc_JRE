@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaTimeTemporalChronoUnit
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -34,10 +31,12 @@
 #include "java/time/temporal/TemporalUnit.h"
 
 @class IOSObjectArray;
+@class JavaLangBoolean;
+@class JavaLangLong;
 @class JavaTimeDuration;
 @protocol JavaTimeTemporalTemporal;
 
-typedef NS_ENUM(NSUInteger, JavaTimeTemporalChronoUnit_Enum) {
+typedef NS_ENUM(jint, JavaTimeTemporalChronoUnit_Enum) {
   JavaTimeTemporalChronoUnit_Enum_NANOS = 0,
   JavaTimeTemporalChronoUnit_Enum_MICROS = 1,
   JavaTimeTemporalChronoUnit_Enum_MILLIS = 2,
@@ -55,6 +54,12 @@ typedef NS_ENUM(NSUInteger, JavaTimeTemporalChronoUnit_Enum) {
   JavaTimeTemporalChronoUnit_Enum_ERAS = 14,
   JavaTimeTemporalChronoUnit_Enum_FOREVER = 15,
 };
+#if J2OBJC_IMPORTED_BY_JAVA_IMPLEMENTATION
+#define JavaTimeTemporalChronoUnit_ORDINAL jint
+#else
+#define JavaTimeTemporalChronoUnit_ORDINAL JavaTimeTemporalChronoUnit_Enum
+#endif
+
 
 /*!
  @brief A standard set of date periods units.
@@ -70,22 +75,6 @@ typedef NS_ENUM(NSUInteger, JavaTimeTemporalChronoUnit_Enum) {
  */
 @interface JavaTimeTemporalChronoUnit : JavaLangEnum < JavaTimeTemporalTemporalUnit >
 
-@property (readonly, class, nonnull) JavaTimeTemporalChronoUnit *NANOS NS_SWIFT_NAME(NANOS);
-@property (readonly, class, nonnull) JavaTimeTemporalChronoUnit *MICROS NS_SWIFT_NAME(MICROS);
-@property (readonly, class, nonnull) JavaTimeTemporalChronoUnit *MILLIS NS_SWIFT_NAME(MILLIS);
-@property (readonly, class, nonnull) JavaTimeTemporalChronoUnit *SECONDS NS_SWIFT_NAME(SECONDS);
-@property (readonly, class, nonnull) JavaTimeTemporalChronoUnit *MINUTES NS_SWIFT_NAME(MINUTES);
-@property (readonly, class, nonnull) JavaTimeTemporalChronoUnit *HOURS NS_SWIFT_NAME(HOURS);
-@property (readonly, class, nonnull) JavaTimeTemporalChronoUnit *HALF_DAYS NS_SWIFT_NAME(HALF_DAYS);
-@property (readonly, class, nonnull) JavaTimeTemporalChronoUnit *DAYS NS_SWIFT_NAME(DAYS);
-@property (readonly, class, nonnull) JavaTimeTemporalChronoUnit *WEEKS NS_SWIFT_NAME(WEEKS);
-@property (readonly, class, nonnull) JavaTimeTemporalChronoUnit *MONTHS NS_SWIFT_NAME(MONTHS);
-@property (readonly, class, nonnull) JavaTimeTemporalChronoUnit *YEARS NS_SWIFT_NAME(YEARS);
-@property (readonly, class, nonnull) JavaTimeTemporalChronoUnit *DECADES NS_SWIFT_NAME(DECADES);
-@property (readonly, class, nonnull) JavaTimeTemporalChronoUnit *CENTURIES NS_SWIFT_NAME(CENTURIES);
-@property (readonly, class, nonnull) JavaTimeTemporalChronoUnit *MILLENNIA NS_SWIFT_NAME(MILLENNIA);
-@property (readonly, class, nonnull) JavaTimeTemporalChronoUnit *ERAS NS_SWIFT_NAME(ERAS);
-@property (readonly, class, nonnull) JavaTimeTemporalChronoUnit *FOREVER NS_SWIFT_NAME(FOREVER);
 #pragma mark Public
 
 - (id<JavaTimeTemporalTemporal>)addToWithJavaTimeTemporalTemporal:(id<JavaTimeTemporalTemporal>)temporal
@@ -144,6 +133,8 @@ typedef NS_ENUM(NSUInteger, JavaTimeTemporalChronoUnit_Enum) {
 #pragma mark Package-Private
 
 - (JavaTimeTemporalChronoUnit_Enum)toNSEnum;
+
+- (JavaTimeTemporalChronoUnit_ORDINAL)ordinal;
 
 @end
 
@@ -287,11 +278,10 @@ inline JavaTimeTemporalChronoUnit *JavaTimeTemporalChronoUnit_get_ERAS(void);
 J2OBJC_ENUM_CONSTANT(JavaTimeTemporalChronoUnit, ERAS)
 
 /*!
- @brief Artificial unit that represents the concept of forever.
- This is primarily used with <code>TemporalField</code> to represent unbounded fields
-  such as the year or era.
-  The estimated duration of the era is artificially defined as the largest duration
-  supported by <code>Duration</code>.
+ @brief Artificial unit that represents the concept of forever.This is primarily used with <code>TemporalField</code>
+  to represent unbounded fields such as the year or era.
+ The estimated duration of
+  this unit is artificially defined as the largest duration supported by <code>Duration</code>.
  */
 inline JavaTimeTemporalChronoUnit *JavaTimeTemporalChronoUnit_get_FOREVER(void);
 J2OBJC_ENUM_CONSTANT(JavaTimeTemporalChronoUnit, FOREVER)
@@ -300,7 +290,7 @@ FOUNDATION_EXPORT IOSObjectArray *JavaTimeTemporalChronoUnit_values(void);
 
 FOUNDATION_EXPORT JavaTimeTemporalChronoUnit *JavaTimeTemporalChronoUnit_valueOfWithNSString_(NSString *name);
 
-FOUNDATION_EXPORT JavaTimeTemporalChronoUnit *JavaTimeTemporalChronoUnit_fromOrdinal(NSUInteger ordinal);
+FOUNDATION_EXPORT JavaTimeTemporalChronoUnit *JavaTimeTemporalChronoUnit_fromOrdinal(JavaTimeTemporalChronoUnit_ORDINAL ordinal);
 
 J2OBJC_TYPE_LITERAL_HEADER(JavaTimeTemporalChronoUnit)
 
@@ -310,6 +300,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaTimeTemporalChronoUnit)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaTimeTemporalChronoUnit")

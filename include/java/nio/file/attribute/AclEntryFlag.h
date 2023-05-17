@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaNioFileAttributeAclEntryFlag
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -31,12 +28,18 @@
 
 @class IOSObjectArray;
 
-typedef NS_ENUM(NSUInteger, JavaNioFileAttributeAclEntryFlag_Enum) {
+typedef NS_ENUM(jint, JavaNioFileAttributeAclEntryFlag_Enum) {
   JavaNioFileAttributeAclEntryFlag_Enum_FILE_INHERIT = 0,
   JavaNioFileAttributeAclEntryFlag_Enum_DIRECTORY_INHERIT = 1,
   JavaNioFileAttributeAclEntryFlag_Enum_NO_PROPAGATE_INHERIT = 2,
   JavaNioFileAttributeAclEntryFlag_Enum_INHERIT_ONLY = 3,
 };
+#if J2OBJC_IMPORTED_BY_JAVA_IMPLEMENTATION
+#define JavaNioFileAttributeAclEntryFlag_ORDINAL jint
+#else
+#define JavaNioFileAttributeAclEntryFlag_ORDINAL JavaNioFileAttributeAclEntryFlag_Enum
+#endif
+
 
 /*!
  @brief Defines the flags for used by the flags component of an ACL <code>entry</code>
@@ -47,10 +50,6 @@ typedef NS_ENUM(NSUInteger, JavaNioFileAttributeAclEntryFlag_Enum) {
  */
 @interface JavaNioFileAttributeAclEntryFlag : JavaLangEnum
 
-@property (readonly, class, nonnull) JavaNioFileAttributeAclEntryFlag *FILE_INHERIT NS_SWIFT_NAME(FILE_INHERIT);
-@property (readonly, class, nonnull) JavaNioFileAttributeAclEntryFlag *DIRECTORY_INHERIT NS_SWIFT_NAME(DIRECTORY_INHERIT);
-@property (readonly, class, nonnull) JavaNioFileAttributeAclEntryFlag *NO_PROPAGATE_INHERIT NS_SWIFT_NAME(NO_PROPAGATE_INHERIT);
-@property (readonly, class, nonnull) JavaNioFileAttributeAclEntryFlag *INHERIT_ONLY NS_SWIFT_NAME(INHERIT_ONLY);
 #pragma mark Public
 
 + (JavaNioFileAttributeAclEntryFlag *)valueOfWithNSString:(NSString *)name;
@@ -60,6 +59,8 @@ typedef NS_ENUM(NSUInteger, JavaNioFileAttributeAclEntryFlag_Enum) {
 #pragma mark Package-Private
 
 - (JavaNioFileAttributeAclEntryFlag_Enum)toNSEnum;
+
+- (JavaNioFileAttributeAclEntryFlag_ORDINAL)ordinal;
 
 @end
 
@@ -102,7 +103,7 @@ FOUNDATION_EXPORT IOSObjectArray *JavaNioFileAttributeAclEntryFlag_values(void);
 
 FOUNDATION_EXPORT JavaNioFileAttributeAclEntryFlag *JavaNioFileAttributeAclEntryFlag_valueOfWithNSString_(NSString *name);
 
-FOUNDATION_EXPORT JavaNioFileAttributeAclEntryFlag *JavaNioFileAttributeAclEntryFlag_fromOrdinal(NSUInteger ordinal);
+FOUNDATION_EXPORT JavaNioFileAttributeAclEntryFlag *JavaNioFileAttributeAclEntryFlag_fromOrdinal(JavaNioFileAttributeAclEntryFlag_ORDINAL ordinal);
 
 J2OBJC_TYPE_LITERAL_HEADER(JavaNioFileAttributeAclEntryFlag)
 
@@ -112,6 +113,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaNioFileAttributeAclEntryFlag)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaNioFileAttributeAclEntryFlag")

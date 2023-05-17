@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaUtilHashtable
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -37,6 +34,9 @@
 #define INCLUDE_JavaIoSerializable 1
 #include "java/io/Serializable.h"
 
+@class JavaLangBoolean;
+@class JavaLangFloat;
+@class JavaLangInteger;
 @protocol JavaUtilCollection;
 @protocol JavaUtilEnumeration;
 @protocol JavaUtilFunctionBiConsumer;
@@ -79,7 +79,7 @@
   This example creates a hashtable of numbers. It uses the names of
   the numbers as keys: 
  @code
-     Hashtable<String, Integer> numbers
+      Hashtable<String, Integer> numbers
       = new Hashtable<String, Integer>();
     numbers.put("one", 1);
     numbers.put("two", 2);
@@ -89,7 +89,7 @@
   
  <p>To retrieve a number, use the following code: 
  @code
-     Integer n = numbers.get("two");
+      Integer n = numbers.get("two");
     if (n != null) {
       System.out.println("two = " + n);
     }
@@ -475,6 +475,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaUtilHashtable)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaUtilHashtable")

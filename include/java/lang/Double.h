@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaLangDouble
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -30,6 +27,12 @@
 #include "java/lang/Comparable.h"
 
 @class IOSClass;
+@class JavaLangBoolean;
+@class JavaLangByte;
+@class JavaLangFloat;
+@class JavaLangInteger;
+@class JavaLangLong;
+@class JavaLangShort;
 
 /*!
  @brief The <code>Double</code> class wraps a value of the primitive type 
@@ -41,23 +44,101 @@
  <code>String</code> to a <code>double</code>, as well as other
   constants and methods useful when dealing with a 
  <code>double</code>.
+  
+ <!-- Android-removed: paragraph on ValueBased
+ <p>This is a <a href="{@@docRoot}/java.base/java/lang/doc-files/ValueBased.html">value-based</a>
+ class; programmers should treat instances that are
+ {@@linkplain #equals(Object) equal} as interchangeable and should not
+ use instances for synchronization, or unpredictable behavior may
+ occur. For example, in a future release, synchronization may fail.
+ -->
+  
+ <h2><a id=equivalenceRelation>Floating-point Equality, Equivalence,
+  and Comparison</a></h2>
+  IEEE 754 floating-point values include finite nonzero values,
+  signed zeros (<code>+0.0</code> and <code>-0.0</code>), signed infinities 
+ positive infinity and 
+ negative infinity), and 
+ NaN (not-a-number). 
+ <p>An <em>equivalence relation</em> on a set of values is a boolean
+  relation on pairs of values that is reflexive, symmetric, and
+  transitive. For more discussion of equivalence relations and object
+  equality, see the <code>Object.equals</code>
+  specification. An equivalence relation partitions the values it
+  operates over into sets called <i>equivalence classes</i>.  All the
+  members of the equivalence class are equal to each other under the
+  relation. An equivalence class may contain only a single member. At
+  least for some purposes, all the members of an equivalence class
+  are substitutable for each other.  In particular, in a numeric
+  expression equivalent values can be <em>substituted</em> for one
+  another without changing the result of the expression, meaning
+  changing the equivalence class of the result of the expression. 
+ <p>Notably, the built-in <code>==</code> operation on floating-point
+  values is <em>not</em> an equivalence relation. Despite not
+  defining an equivalence relation, the semantics of the IEEE 754 
+ <code>==</code> operator were deliberately designed to meet other needs
+  of numerical computation. There are two exceptions where the
+  properties of an equivalence relation are not satisfied by <code>==</code>
+  on floating-point values: 
+ <ul>
+  
+ <li>If <code>v1</code> and <code>v2</code> are both NaN, then <code>v1
+  == v2</code>
+  has the value <code>false</code>. Therefore, for two NaN
+  arguments the <em>reflexive</em> property of an equivalence
+  relation is <em>not</em> satisfied by the <code>==</code> operator. 
+ <li>If <code>v1</code> represents <code>+0.0</code> while <code>v2</code>
+  represents <code>-0.0</code>, or vice versa, then <code>v1 == v2</code> has
+  the value <code>true</code> even though <code>+0.0</code> and <code>-0.0</code>
+  are distinguishable under various floating-point operations. For
+  example, <code>1.0/+0.0</code> evaluates to positive infinity while 
+ <code>1.0/-0.0</code> evaluates to <em>negative</em> infinity and
+  positive infinity and negative infinity are neither equal to each
+  other nor equivalent to each other. Thus, while a signed zero input
+  most commonly determines the sign of a zero result, because of
+  dividing by zero, <code>+0.0</code> and <code>-0.0</code> may not be
+  substituted for each other in general. The sign of a zero input
+  also has a non-substitutable effect on the result of some math
+  library methods. 
+ </ul>
+  
+ <p>For ordered comparisons using the built-in comparison operators
+  (<code><</code>, <code><=</code>, etc.), NaN values have another anomalous
+  situation: a NaN is neither less than, nor greater than, nor equal
+  to any value, including itself. This means the <i>trichotomy of
+  comparison</i> does <em>not</em> hold. 
+ <p>To provide the appropriate semantics for <code>equals</code> and 
+ <code>compareTo</code> methods, those methods cannot simply be wrappers
+  around <code>==</code> or ordered comparison operations. Instead, <code>equals</code>
+  defines NaN arguments to be equal to each
+  other and defines <code>+0.0</code> to <em>not</em> be equal to <code>-0.0</code>
+ , restoring reflexivity. For comparisons, <code>compareTo</code>
+  defines a total order where <code>-0.0</code>
+  is less than <code>+0.0</code> and where a NaN is equal to itself
+  and considered greater than positive infinity. 
+ <p>The operational semantics of <code>equals</code> and <code>compareTo</code>
+  are expressed in terms of bit-wise converting
+  the floating-point values to integral values. 
+ <p>The <em>natural ordering</em> implemented by <code>compareTo</code>
+  is consistent with equals. That
+  is, two objects are reported as equal by <code>equals</code> if and only if 
+ <code>compareTo</code> on those objects returns zero. 
+ <p>The adjusted behaviors defined for <code>equals</code> and <code>compareTo</code>
+  allow instances of wrapper classes to work properly with
+  conventional data structures. For example, defining NaN
+  values to be <code>equals</code> to one another allows NaN to be used as
+  an element of a <code>HashSet</code> or as the key of
+  a <code>HashMap</code>. Similarly, defining <code>compareTo</code>
+  as a total ordering, including <code>+0.0</code>, <code>-0.0</code>
+ , and NaN, allows instances of wrapper classes to be used as
+  elements of a <code>SortedSet</code> or as keys of a 
+ <code>SortedMap</code>.
  @author Lee Boynton
  @author Arthur van Hoff
  @author Joseph D. Darcy
- @since JDK1.0
+ @since 1.0
  */
 @interface JavaLangDouble : NSNumber < JavaLangComparable >
-@property (readonly, class) jdouble POSITIVE_INFINITY NS_SWIFT_NAME(POSITIVE_INFINITY);
-@property (readonly, class) jdouble NEGATIVE_INFINITY NS_SWIFT_NAME(NEGATIVE_INFINITY);
-@property (readonly, class) jdouble NaN NS_SWIFT_NAME(NaN);
-@property (readonly, class) jdouble MAX_VALUE NS_SWIFT_NAME(MAX_VALUE);
-@property (readonly, class) jdouble MIN_NORMAL NS_SWIFT_NAME(MIN_NORMAL);
-@property (readonly, class) jdouble MIN_VALUE NS_SWIFT_NAME(MIN_VALUE);
-@property (readonly, class) jint MAX_EXPONENT NS_SWIFT_NAME(MAX_EXPONENT);
-@property (readonly, class) jint MIN_EXPONENT NS_SWIFT_NAME(MIN_EXPONENT);
-@property (readonly, class) jint SIZE NS_SWIFT_NAME(SIZE);
-@property (readonly, class) jint BYTES NS_SWIFT_NAME(BYTES);
-@property (readonly, class, strong) IOSClass *TYPE NS_SWIFT_NAME(TYPE);
 
 #pragma mark Public
 
@@ -76,7 +157,6 @@
  @param s a string to be converted to a <code>Double</code> .
  @throw NumberFormatExceptionif the string does not contain a
              parsable number.
- - seealso: java.lang.Double#valueOf(java.lang.String)
  */
 - (instancetype __nonnull)initWithNSString:(NSString *)s;
 
@@ -85,7 +165,7 @@
   after a narrowing primitive conversion.
  @return the <code>double</code> value represented by this object
            converted to type <code>byte</code>
- @since JDK1.1
+ @since 1.1
  */
 - (jbyte)charValue;
 
@@ -112,23 +192,28 @@
                withDouble:(jdouble)d2;
 
 /*!
- @brief Compares two <code>Double</code> objects numerically.There
-  are two ways in which comparisons performed by this method
-  differ from those performed by the Java language numerical
-  comparison operators (<code><, <=, ==, >=, ></code>)
-  when applied to primitive <code>double</code> values: 
- <ul><li>
-           <code>Double.NaN</code> is considered by this method
-           to be equal to itself and greater than all other          
- <code>double</code> values (including
-           <code>Double.POSITIVE_INFINITY</code>).
- <li>
-           <code>0.0d</code> is considered by this method to be greater
-           than <code>-0.0d</code>.
+ @brief Compares two <code>Double</code> objects numerically.
+ This method imposes a total order on <code>Double</code> objects
+  with two differences compared to the incomplete order defined by
+  the Java language numerical comparison operators (<code><, <=,
+  ==, >=, ></code>
+ ) on <code>double</code> values. 
+ <ul><li> A NaN is <em>unordered</em> with respect to other
+           values and unequal to itself under the comparison
+           operators.  This method chooses to define <code>Double.NaN</code>
+  to be equal to itself and greater than all
+           other <code>double</code> values (including <code>Double.POSITIVE_INFINITY</code>
+ ).
+       <li> Positive zero and negative zero compare equal
+       numerically, but are distinct and distinguishable values.
+       This method chooses to define positive zero (<code>+0.0d</code>),
+       to be greater than negative zero (<code>-0.0d</code>).
   </ul>
-  This ensures that the <i>natural ordering</i> of 
- <code>Double</code> objects imposed by this method is <i>consistent
-  with equals</i>.
+  This ensures that the <i>natural ordering</i> of <code>Double</code>
+  objects imposed by this method is <i>consistent with
+  equals</i>; see <a href="#equivalenceRelation">this
+  discussion</a> for details of floating-point comparison and
+  ordering.
  @param anotherDouble the <code>Double</code>  to be compared.
  @return the value <code>0</code> if <code>anotherDouble</code> is
            numerically equal to this <code>Double</code>; a value
@@ -222,32 +307,7 @@
   purpose, two <code>double</code> values are considered to be
   the same if and only if the method <code>doubleToLongBits(double)</code>
   returns the identical 
- <code>long</code> value when applied to each. 
- <p>Note that in most cases, for two instances of class 
- <code>Double</code>, <code>d1</code> and <code>d2</code>, the
-  value of <code>d1.equals(d2)</code> is <code>true</code> if and
-  only if 
- <blockquote>
-   <code>d1.doubleValue() == d2.doubleValue()</code>
-  </blockquote>
-  
- <p>also has the value <code>true</code>. However, there are two
-  exceptions: 
- <ul>
-  <li>If <code>d1</code> and <code>d2</code> both represent
-      <code>Double.NaN</code>, then the <code>equals</code> method
-      returns <code>true</code>, even though
-      <code>Double.NaN==Double.NaN</code> has the value
-      <code>false</code>.
-  <li>If <code>d1</code> represents <code>+0.0</code> while
-      <code>d2</code> represents <code>-0.0</code>, or vice versa,
-      the <code>equal</code> test has the value <code>false</code>,
-      even though <code>+0.0==-0.0</code> has the value <code>true</code>.
-  </ul>
-  This definition allows hash tables to operate properly.
- @param obj the object to compare with.
- @return <code>true</code> if the objects are the same;
-           <code>false</code> otherwise.
+ <code>long</code> value when applied to each.
  - seealso: java.lang.Double#doubleToLongBits(double)
  */
 - (jboolean)isEqual:(id)obj;
@@ -257,7 +317,7 @@
   after a narrowing primitive conversion.
  @return the <code>double</code> value represented by this object
            converted to type <code>float</code>
- @since JDK1.0
+ @since 1.0
  */
 - (jfloat)floatValue;
 
@@ -454,7 +514,7 @@
   after a narrowing primitive conversion.
  @return the <code>double</code> value represented by this object
            converted to type <code>short</code>
- @since JDK1.1
+ @since 1.1
  */
 - (jshort)shortValue;
 
@@ -517,23 +577,27 @@
   
  </ul>
   
- <table border>
+ <table class="striped">
   <caption>Examples</caption>
-  <tr><th>Floating-point Value</th><th>Hexadecimal String</th>
-  <tr><td><code>1.0</code></td> <td><code>0x1.0p0</code></td>
-  <tr><td><code>-1.0</code></td>        <td><code>-0x1.0p0</code></td>
-  <tr><td><code>2.0</code></td> <td><code>0x1.0p1</code></td>
-  <tr><td><code>3.0</code></td> <td><code>0x1.8p1</code></td>
-  <tr><td><code>0.5</code></td> <td><code>0x1.0p-1</code></td>
-  <tr><td><code>0.25</code></td>        <td><code>0x1.0p-2</code></td>
-  <tr><td><code>Double.MAX_VALUE</code></td>
+  <thead>
+  <tr><th scope="col">Floating-point Value</th><th scope="col">Hexadecimal String</th>
+  </thead>
+  <tbody style="text-align:right">
+  <tr><th scope="row"><code>1.0</code></th> <td><code>0x1.0p0</code></td>
+  <tr><th scope="row"><code>-1.0</code></th>        <td><code>-0x1.0p0</code></td>
+  <tr><th scope="row"><code>2.0</code></th> <td><code>0x1.0p1</code></td>
+  <tr><th scope="row"><code>3.0</code></th> <td><code>0x1.8p1</code></td>
+  <tr><th scope="row"><code>0.5</code></th> <td><code>0x1.0p-1</code></td>
+  <tr><th scope="row"><code>0.25</code></th>        <td><code>0x1.0p-2</code></td>
+  <tr><th scope="row"><code>Double.MAX_VALUE</code></th>
       <td><code>0x1.fffffffffffffp1023</code></td>
-  <tr><td><code>Minimum Normal Value</code></td>
+  <tr><th scope="row"><code>Minimum Normal Value</code></th>
       <td><code>0x1.0p-1022</code></td>
-  <tr><td><code>Maximum Subnormal Value</code></td>
+  <tr><th scope="row"><code>Maximum Subnormal Value</code></th>
       <td><code>0x0.fffffffffffffp-1022</code></td>
-  <tr><td><code>Double.MIN_VALUE</code></td>
+  <tr><th scope="row"><code>Double.MIN_VALUE</code></th>
       <td><code>0x0.0000000000001p-1022</code></td>
+  </tbody>
   </table>
  @param d the <code>double</code>  to be converted.
  @return a hex string representation of the argument.
@@ -682,7 +746,7 @@
   <i>HexNumeral</i>, <i>HexDigits</i>, <i>SignedInteger</i> and 
  <i>FloatTypeSuffix</i> are as defined in the lexical structure
   sections of 
- <cite>The Java&trade; Language Specification</cite>,
+ <cite>The Java Language Specification</cite>,
   except that underscores are not accepted between digits.
   If <code>s</code> does not have the form of
   a <i>FloatValue</i>, then a <code>NumberFormatException</code>
@@ -730,7 +794,7 @@
   a <code>NumberFormatException</code> be thrown, the regular
   expression below can be used to screen the input string: 
  @code
- final String Digits     = "(\\p{Digit}+)";
+  final String Digits     = "(\\p{Digit}+)";
    final String HexDigits  = "(\\p{XDigit}+)";
    // an exponent is 'e' or 'E' followed by an optionally
    // signed decimal integer.
@@ -886,7 +950,7 @@ J2OBJC_STATIC_FIELD_CONSTANT(JavaLangDouble, BYTES, jint)
 /*!
  @brief The <code>Class</code> instance representing the primitive type 
  <code>double</code>.
- @since JDK1.1
+ @since 1.1
  */
 inline IOSClass *JavaLangDouble_get_TYPE(void);
 /*! INTERNAL ONLY - Use accessor function from above. */
@@ -949,6 +1013,4 @@ BOXED_COMPOUND_ASSIGN_FPMOD(Double, doubleValue, jdouble, JavaLangDouble)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaLangDouble")

@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaLangReadable
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -25,11 +22,12 @@
 #if !defined (JavaLangReadable_) && (INCLUDE_ALL_JavaLangReadable || defined(INCLUDE_JavaLangReadable))
 #define JavaLangReadable_
 
+@class JavaLangInteger;
 @class JavaNioCharBuffer;
 
 /*!
- @brief A <tt>Readable</tt> is a source of characters.Characters from
-  a <tt>Readable</tt> are made available to callers of the read
+ @brief A <code>Readable</code> is a source of characters.Characters from
+  a <code>Readable</code> are made available to callers of the read
   method via a <code>CharBuffer</code>.
  @since 1.5
  */
@@ -61,6 +59,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaLangReadable)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaLangReadable")

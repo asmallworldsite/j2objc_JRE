@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaxNetSslSSLEngine
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -26,11 +23,14 @@
 #define JavaxNetSslSSLEngine_
 
 @class IOSObjectArray;
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @class JavaNioByteBuffer;
 @class JavaxNetSslSSLEngineResult;
 @class JavaxNetSslSSLEngineResult_HandshakeStatus;
 @class JavaxNetSslSSLParameters;
 @protocol JavaLangRunnable;
+@protocol JavaUtilFunctionBiFunction;
 @protocol JavaxNetSslSSLSession;
 
 /*!
@@ -204,7 +204,7 @@
   that the source buffer has enough room to hold a record (enlarging if
   necessary), and then obtain more inbound data. 
  @code
-  SSLEngineResult r = engine.unwrap(src, dst);
+   SSLEngineResult r = engine.unwrap(src, dst);
     switch (r.getStatus()) {
     BUFFER_OVERFLOW:
         // Could attempt to drain the dst buffer of any already obtained
@@ -346,7 +346,7 @@
  </OL>
   
  <h3>Default configuration for different Android versions</h3>
-  <p><code>SSLEngine</code> instances obtained from default <code>SSLContext</code> are configured as
+  <p><code>SSLEngine</code> instances obtained from the default <code>SSLContext</code> are configured as
   follows: 
  
  
@@ -385,6 +385,11 @@
               <td>TLSv1.2</td>
               <td>20+</td>
               <td>20+</td>
+          </tr>
+          <tr>
+              <td>TLSv1.3</td>
+              <td>29+</td>
+              <td>29+</td>
           </tr>
       </tbody>
   </table>
@@ -493,6 +498,21 @@
         <td>SSL_RSA_WITH_RC4_128_SHA</td>
         <td>9-25</td>
         <td>9-23</td>
+      </tr>
+      <tr>
+        <td>TLS_AES_128_GCM_SHA256</td>
+        <td>29+</td>
+        <td>29+</td>
+      </tr>
+      <tr>
+        <td>TLS_AES_256_GCM_SHA384</td>
+        <td>29+</td>
+        <td>29+</td>
+      </tr>
+      <tr>
+        <td>TLS_CHACHA20_POLY1305_SHA256</td>
+        <td>29+</td>
+        <td>29+</td>
       </tr>
       <tr class="deprecated">
         <td>TLS_DHE_DSS_EXPORT_WITH_DES40_CBC_SHA</td>
@@ -669,9 +689,9 @@
         <td>20+</td>
         <td>20+</td>
       </tr>
-      <tr>
+      <tr class="deprecated">
         <td>TLS_ECDHE_ECDSA_WITH_AES_128_CBC_SHA256</td>
-        <td>20+</td>
+        <td>20-28</td>
         <td></td>
       </tr>
       <tr>
@@ -684,9 +704,9 @@
         <td>20+</td>
         <td>20+</td>
       </tr>
-      <tr>
+      <tr class="deprecated">
         <td>TLS_ECDHE_ECDSA_WITH_AES_256_CBC_SHA384</td>
-        <td>20+</td>
+        <td>20-28</td>
         <td></td>
       </tr>
       <tr>
@@ -734,9 +754,9 @@
         <td>20+</td>
         <td>20+</td>
       </tr>
-      <tr>
+      <tr class="deprecated">
         <td>TLS_ECDHE_RSA_WITH_AES_128_CBC_SHA256</td>
-        <td>20+</td>
+        <td>20-28</td>
         <td></td>
       </tr>
       <tr>
@@ -749,9 +769,9 @@
         <td>20+</td>
         <td>20+</td>
       </tr>
-      <tr>
+      <tr class="deprecated">
         <td>TLS_ECDHE_RSA_WITH_AES_256_CBC_SHA384</td>
-        <td>20+</td>
+        <td>20-28</td>
         <td></td>
       </tr>
       <tr>
@@ -939,9 +959,9 @@
         <td>9+</td>
         <td>9+</td>
       </tr>
-      <tr>
+      <tr class="deprecated">
         <td>TLS_RSA_WITH_AES_128_CBC_SHA256</td>
-        <td>20+</td>
+        <td>20-28</td>
         <td></td>
       </tr>
       <tr>
@@ -954,9 +974,9 @@
         <td>9+</td>
         <td>20+</td>
       </tr>
-      <tr>
+      <tr class="deprecated">
         <td>TLS_RSA_WITH_AES_256_CBC_SHA256</td>
-        <td>20+</td>
+        <td>20-28</td>
         <td></td>
       </tr>
       <tr>
@@ -1078,6 +1098,27 @@
 - (void)closeOutbound;
 
 /*!
+ @brief Returns the most recent application protocol value negotiated for this
+  connection.
+ <p>
+  If supported by the underlying SSL/TLS implementation,
+  application name negotiation mechanisms such as <a href="http://www.ietf.org/rfc/rfc7301.txt">
+  RFC 7301 </a>, the
+  Application-Layer Protocol Negotiation (ALPN), can negotiate
+  application-level values between peers. 
+ <p>
+ @return null if it has not yet been determined if application
+          protocols might be used for this connection, an empty         
+ <code>String</code> if application protocols values will not
+          be used, or a non-empty application protocol <code>String</code>
+          if a value was successfully negotiated.
+ @throw UnsupportedOperationExceptionif the underlying provider
+          does not implement the operation.
+ @since 9
+ */
+- (NSString *)getApplicationProtocol;
+
+/*!
  @brief Returns a delegated <code>Runnable</code> task for
   this <code>SSLEngine</code>.
  <P>
@@ -1135,6 +1176,37 @@
  - seealso: #setEnableSessionCreation(boolean)
  */
 - (jboolean)getEnableSessionCreation;
+
+/*!
+ @brief Returns the application protocol value negotiated on a SSL/TLS
+  handshake currently in progress.
+ <p>
+  Like <code>getHandshakeSession()</code>,
+  a connection may be in the middle of a handshake. The
+  application protocol may or may not yet be available. 
+ <p>
+ @return null if it has not yet been determined if application
+          protocols might be used for this handshake, an empty         
+ <code>String</code> if application protocols values will not
+          be used, or a non-empty application protocol <code>String</code>
+          if a value was successfully negotiated.
+ @throw UnsupportedOperationExceptionif the underlying provider
+          does not implement the operation.
+ @since 9
+ */
+- (NSString *)getHandshakeApplicationProtocol;
+
+/*!
+ @brief Retrieves the callback function that selects an application protocol
+  value during a SSL/TLS handshake.
+ See <code>setHandshakeApplicationProtocolSelector</code>
+  for the function's type parameters.
+ @return the callback function, or null if none has been set.
+ @throw UnsupportedOperationExceptionif the underlying provider
+          does not implement the operation.
+ @since 9
+ */
+- (id<JavaUtilFunctionBiFunction>)getHandshakeApplicationProtocolSelector;
 
 /*!
  @brief Returns the <code>SSLSession</code> being constructed during a SSL/TLS
@@ -1245,7 +1317,14 @@
   be enabled by default, since this list may include cipher suites which
   do not meet quality of service requirements for those defaults.
  Such
-  cipher suites might be useful in specialized applications.
+  cipher suites might be useful in specialized applications. 
+ <p class="caution">Applications should not blindly enable all supported
+  cipher suites.  The supported cipher suites can include signaling cipher suite
+  values that can cause connection problems if enabled inappropriately. 
+ <p>The proper way to use this method is to either check if a specific cipher
+  suite is supported via <code>Arrays.asList(getSupportedCipherSuites()).contains(...)</code>
+  or to filter a desired list of cipher suites to only the supported ones via 
+ <code>desiredSuiteSet.retainAll(Arrays.asList(getSupportedCipherSuites()))</code>.
  @return an array of cipher suite names
  - seealso: #getEnabledCipherSuites()
  - seealso: #setEnabledCipherSuites(String [])
@@ -1330,7 +1409,12 @@
   The protocols must have been listed by getSupportedProtocols()
   as being supported.  Following a successful call to this method,
   only protocols listed in the <code>protocols</code> parameter
-  are enabled for use.
+  are enabled for use. 
+ <p>
+  Because of the way the protocol version is negotiated, connections
+  will only be able to use a member of the lowest set of contiguous
+  enabled protocol versions.  For example, enabling TLSv1.2 and TLSv1
+  will result in connections only being able to use TLSv1.
  @param protocols Names of all the protocols to enable.
  @throw IllegalArgumentExceptionwhen one or more of
            the protocols named by the parameter is not supported or
@@ -1349,6 +1433,55 @@
  - seealso: #getEnableSessionCreation()
  */
 - (void)setEnableSessionCreationWithBoolean:(jboolean)flag;
+
+/*!
+ @brief Registers a callback function that selects an application protocol
+  value for a SSL/TLS handshake.
+ The function overrides any values supplied using 
+ <code>SSLParameters.setApplicationProtocols</code>
+  and it supports the following
+  type parameters: 
+ <blockquote>
+  <dl>
+  <dt> <code>SSLEngine</code>
+  <dd> The function's first argument allows the current <code>SSLEngine</code>
+       to be inspected, including the handshake session and configuration
+       settings. 
+ <dt> <code>List<String></code>
+  <dd> The function's second argument lists the application protocol names
+       advertised by the TLS peer. 
+ <dt> <code>String</code>
+  <dd> The function's result is an application protocol name, or null to
+       indicate that none of the advertised names are acceptable.
+       If the return value is an empty <code>String</code> then application
+       protocol indications will not be used.
+       If the return value is null (no value chosen) or is a value that
+       was not advertised by the peer, the underlying protocol will
+       determine what action to take. (For example, ALPN will send a
+       "no_application_protocol" alert and terminate the connection.) 
+ </dl>
+  </blockquote>
+  For example, the following call registers a callback function that
+  examines the TLS handshake parameters and selects an application protocol
+  name: 
+ @code
+     serverEngine.setHandshakeApplicationProtocolSelector(
+          (serverEngine, clientProtocols) -> {
+              SSLSession session = serverEngine.getHandshakeSession();
+              return chooseApplicationProtocol(
+                  serverEngine,
+                  clientProtocols,
+                  session.getProtocol(),
+                  session.getCipherSuite());
+          }); 
+ 
+@endcode
+ @param selector the callback function, or null to disable the callback          functionality.
+ @throw UnsupportedOperationExceptionif the underlying provider
+          does not implement the operation.
+ @since 9
+ */
+- (void)setHandshakeApplicationProtocolSelectorWithJavaUtilFunctionBiFunction:(id<JavaUtilFunctionBiFunction>)selector;
 
 /*!
  @brief Configures the engine to <i>require</i> client authentication.This
@@ -1692,7 +1825,7 @@
   If this <code>SSLEngine</code> has not yet started its initial
   handshake, this method will automatically start the handshake. 
  <P>
-  This method will attempt to produce one SSL/TLS packet, and will
+  This method will attempt to produce SSL/TLS records, and will
   consume as much source data as possible, but will never consume
   more than the sum of the bytes remaining in each buffer.  Each 
  <code>ByteBuffer</code>'s position is updated to reflect the
@@ -1789,6 +1922,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaxNetSslSSLEngine)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaxNetSslSSLEngine")

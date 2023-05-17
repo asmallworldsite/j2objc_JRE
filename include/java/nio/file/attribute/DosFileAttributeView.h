@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaNioFileAttributeDosFileAttributeView
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -29,6 +26,7 @@
 #define INCLUDE_JavaNioFileAttributeBasicFileAttributeView 1
 #include "java/nio/file/attribute/BasicFileAttributeView.h"
 
+@class JavaLangBoolean;
 @protocol JavaNioFileAttributeDosFileAttributes;
 
 /*!
@@ -44,27 +42,32 @@
  , and in addition, the following attributes are
   supported: 
  <blockquote>
-  <table border="1" cellpadding="8" summary="Supported attributes">
+  <table class="striped">
+  <caption style="display:none">Supported attributes</caption>
+  <thead>
     <tr>
-      <th> Name </th>
-      <th> Type </th>
+      <th scope="col"> Name </th>
+      <th scope="col"> Type </th>
     </tr>
+  </thead>
+  <tbody>
     <tr>
-      <td> readonly </td>
+      <th scope="row"> readonly </th>
       <td> <code>Boolean</code> </td>
     </tr>
     <tr>
-      <td> hidden </td>
+      <th scope="row"> hidden </th>
       <td> <code>Boolean</code> </td>
     </tr>
     <tr>
-      <td> system </td>
+      <th scope="row"> system </th>
       <td> <code>Boolean</code> </td>
     </tr>
     <tr>
-      <td> archive </td>
+      <th scope="row"> archive </th>
       <td> <code>Boolean</code> </td>
     </tr>
+  </tbody>
   </table>
   </blockquote>
   
@@ -170,6 +173,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaNioFileAttributeDosFileAttributeView)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaNioFileAttributeDosFileAttributeView")

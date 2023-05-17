@@ -13,9 +13,6 @@
 #endif
 #undef RESTRICT_JavaTimeYear
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -41,6 +38,9 @@
 #define INCLUDE_JavaIoSerializable 1
 #include "java/io/Serializable.h"
 
+@class JavaLangBoolean;
+@class JavaLangInteger;
+@class JavaLangLong;
 @class JavaTimeClock;
 @class JavaTimeFormatDateTimeFormatter;
 @class JavaTimeLocalDate;
@@ -84,8 +84,6 @@
  @since 1.8
  */
 @interface JavaTimeYear : NSObject < JavaTimeTemporalTemporal, JavaTimeTemporalTemporalAdjuster, JavaLangComparable, JavaIoSerializable >
-@property (readonly, class) jint MIN_VALUE NS_SWIFT_NAME(MIN_VALUE);
-@property (readonly, class) jint MAX_VALUE NS_SWIFT_NAME(MAX_VALUE);
 
 #pragma mark Public
 
@@ -835,6 +833,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaTimeYear)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaTimeYear")

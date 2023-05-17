@@ -16,9 +16,6 @@
 #define INCLUDE_JavaLangClassLoader 1
 #endif
 
-#pragma clang diagnostic push
-#pragma GCC diagnostic ignored "-Wdeprecated-declarations"
-
 #if __has_feature(nullability)
 #pragma clang diagnostic push
 #pragma GCC diagnostic ignored "-Wnullability"
@@ -32,6 +29,8 @@
 @class IOSClass;
 @class IOSObjectArray;
 @class JavaIoInputStream;
+@class JavaLangBoolean;
+@class JavaLangInteger;
 @class JavaLangPackage;
 @class JavaNetURL;
 @class JavaNioByteBuffer;
@@ -166,6 +165,7 @@
   status settings associated with the class loader.This method is
   provided so that class loaders can be made to ignore any command line or
   persistent assertion status settings and "start with a clean slate."
+ Android-note: AssertionStatuses are unsupported. This method is a no-op.
  @since 1.4
  */
 - (void)clearAssertionStatus;
@@ -251,15 +251,6 @@
   
  <p> The default system class loader is an implementation-dependent
   instance of this class. 
- <p> If the system property "<tt>java.system.class.loader</tt>" is defined
-  when this method is first invoked then the value of that property is
-  taken to be the name of a class that will be returned as the system
-  class loader.  The class is loaded using the default system class loader
-  and must define a public constructor that takes a single parameter of
-  type <tt>ClassLoader</tt> which is used as the delegation parent.  An
-  instance is then created using this constructor with the default system
-  class loader as the parameter.  The resulting class loader is defined
-  to be the system class loader. 
  <p> If a security manager is present, and the invoker's class loader is
   not <tt>null</tt> and the invoker's class loader is not the same as or
   an ancestor of the system class loader, then this method invokes the
@@ -351,6 +342,7 @@
   initialized, its assertion status cannot change.) 
  <p> If the named class is not a top-level class, this invocation will
   have no effect on the actual assertion status of any class. </p>
+  Android-note: AssertionStatuses are unsupported. This method is a no-op.
  @param className_ The fully qualified class name of the top-level class whose
            assertion status is to be set.
  @param enabled <tt>
@@ -368,6 +360,7 @@
  This setting may be overridden on a per-package or per-class basis by
   invoking <code>setPackageAssertionStatus(String, boolean)</code> or <code>setClassAssertionStatus(String, boolean)</code>
  .
+  Android-note: AssertionStatuses are unsupported. This method is a no-op.
  @param enabled <tt>
   true </tt>  if classes loaded by this class loader will          henceforth have assertions enabled by default, 
   <tt> false </tt>          if they will have assertions disabled by default.
@@ -395,6 +388,7 @@
  <p> Package defaults take precedence over the class loader's default
   assertion status, and may be overridden on a per-class basis by invoking 
  <code>setClassAssertionStatus(String, boolean)</code>.  </p>
+  Android-note: AssertionStatuses are unsupported. This method is a no-op.
  @param packageName The name of the package whose package default assertion status
            is to be set. A 
   <tt> null </tt>  value indicates the unnamed          package that is "current"
@@ -471,7 +465,7 @@
  */
 - (IOSClass *)defineClassWithByteArray:(IOSByteArray *)b
                                withInt:(jint)off
-                               withInt:(jint)len __attribute__((deprecated));
+                               withInt:(jint)len;
 
 /*!
  @brief Converts an array of bytes into an instance of class <tt>Class</tt>.
@@ -544,8 +538,8 @@
   all classes in the "<tt>java.*</tt> packages can only be defined by the
   bootstrap class loader.  If <tt>name</tt> is not <tt>null</tt>, it
   must be equal to the <a href="#name">binary name</a> of the class
-  specified by the byte array "<tt>b</tt>", otherwise a <code>NoClassDefFoundError</code>
-  will be thrown.  </p>
+  specified by the byte array "<tt>b</tt>", otherwise a <code><tt>NoClassDefFoundError</tt></code>
+  will be thrown. </p>
  @param name The expected 
   <a href="#name"> binary name </a>  of the class, or           <tt>
   null </tt>  if not known
@@ -853,6 +847,10 @@
 - (void)setSignersWithIOSClass:(IOSClass *)c
              withNSObjectArray:(IOSObjectArray *)signers;
 
+#pragma mark Package-Private
+
++ (JavaLangClassLoader *)getClassLoaderWithIOSClass:(IOSClass *)caller;
+
 @end
 
 J2OBJC_EMPTY_STATIC_INIT(JavaLangClassLoader)
@@ -873,6 +871,8 @@ FOUNDATION_EXPORT JavaIoInputStream *JavaLangClassLoader_getSystemResourceAsStre
 
 FOUNDATION_EXPORT JavaLangClassLoader *JavaLangClassLoader_getSystemClassLoader(void);
 
+FOUNDATION_EXPORT JavaLangClassLoader *JavaLangClassLoader_getClassLoaderWithIOSClass_(IOSClass *caller);
+
 J2OBJC_TYPE_LITERAL_HEADER(JavaLangClassLoader)
 
 #endif
@@ -882,6 +882,7 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaLangClassLoader)
 
 @class IOSClass;
 @class JavaIoInputStream;
+@class JavaLangBoolean;
 @class JavaLangClassLoader;
 @class JavaLangPackage;
 @class JavaNetURL;
@@ -891,7 +892,6 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaLangClassLoader)
  @brief ClassLoader for iOS and OS X.
  */
 @interface JavaLangSystemClassLoader : JavaLangClassLoader
-@property (class, strong) JavaLangClassLoader *loader NS_SWIFT_NAME(loader);
 
 #pragma mark Public
 
@@ -948,6 +948,4 @@ J2OBJC_TYPE_LITERAL_HEADER(JavaLangSystemClassLoader)
 #if __has_feature(nullability)
 #pragma clang diagnostic pop
 #endif
-
-#pragma clang diagnostic pop
 #pragma pop_macro("INCLUDE_ALL_JavaLangClassLoader")
