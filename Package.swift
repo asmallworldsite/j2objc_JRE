@@ -11,6 +11,6 @@ let package = Package(
 	            targets: ["JRE"]),
 	    ],
 	targets: [
-	    .binaryTarget(name: "JRE", url: "https://devassets.asmallworld.net/JRE.zip", checksum: "6c0afa42546dfc62a6eb0ba6809a98faa974ffe0ab9eb01fdf7899890157c9fa")
+	    .binaryTarget(name: "JRE", url: "https://devassets.asmallworld.net/JRE.zip", checksum: "47fd11edaf77e5dea93d049cd3b1b76db598c42e8f6d21e9721071ee3f31bff4")
 	]
 )
